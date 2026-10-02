@@ -1,0 +1,119 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 5 — 원리④ 통신 : 원격측정 · 링크 버짓 (교과서 파동 · 전자기파 · 로그)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab5" role="tabpanel" aria-labelledby="tabbtn5" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>📡 원리④ 통신 — 신호는 얼마나 멀리 갈까?</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 캔위성은 센서 값을 <b>전파(전자기파)</b>로 지상국에 보냅니다(<b>원격측정, telemetry</b>). 전파의 세기는 거리가 멀어질수록 <b>거리의 제곱에 반비례해</b> 약해지고(2 배 멀리 = ¼ = −6 dB), 이 신호가 수신기의 <b>감도</b>보다 강해야 데이터가 전달됩니다. 「송신 출력 − 경로 손실 ≥ 수신 감도」 를 따지는 계산이 <b>링크 버짓</b>입니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 파동과 에너지의 퍼짐</div>
+      점 광원에서 나온 빛의 세기가 거리의 제곱에 반비례해 어두워지는 것(구면파의 넓이 $4\pi r^2$ 에 에너지가 퍼짐)을 배웠습니다. 전파도 같은 전자기파이므로 송신 안테나에서 나온 에너지가 구면으로 퍼져 <b>세기 $S\propto1/r^2$</b> 가 됩니다. 신호 세기는 값의 범위가 너무 넓어서 <b>로그 단위 dB(데시벨)</b>로 나타냅니다: $10\log_{10}(P_2/P_1)$ — 세기가 ¼ 이면 −6 dB.
+      <div class="bridge"><span class="st old">구면파 $S\propto1/r^2$</span><span class="ar">→</span><span class="st">로그 단위 dB</span><span class="ar">→</span><span class="st">송신 − 손실 = 수신</span><span class="ar">→</span><span class="st new">수신 ≥ 감도 → 통신 성공</span></div>
+    </div>
+    <div class="poe" data-q="자유 공간에서 송신 전력을 +3 dB(2 배)로 올리면 통신 가능한 최대 거리는 대략 몇 배가 될까?"
+         data-opts="2 배||약 1.4 배||약 1.2 배||변하지 않는다"
+         data-ans="1"
+         data-exp="자유 공간의 경로 손실은 거리에 대해 $20\log_{10}d$ 로 늘어나므로 송신 전력 +3 dB 는 거리 $10^{3/20}\approx$ <b>1.41 배</b> 에 해당합니다. 전력을 2 배 올려도 거리는 √2 배! 같은 거리를 2 배로 늘리려면 전력은 4 배(+6 dB)가 필요합니다. 오른쪽 시뮬레이션에서 송신 출력을 3 dBm 올렸을 때 「최대 통신 거리」 값을 비교해 보세요."></div>
+    <div id="t5-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 통신 링크 — 송신 · 경로 손실 · 수신 · 링크 버짓 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 290" role="img" aria-label="통신 링크 도해. 캔위성이 14 dBm 으로 송신하고, 경로 손실로 약해진 신호가 지상국에 −71 dBm 으로 도착한다. 링크 버짓은 송신에서 손실을 빼고 감도와 비교한 여유로 나타낸다.">
+        <text x="390" y="28" fill="#9db0cc" font-size="12" text-anchor="middle">예 : 433 MHz · 1 km · 자유 공간(n = 2) — 송신 14 dBm − 손실 85 dB = 수신 −71 dBm</text>
+        {{FIG:link}}
+      </svg>
+    </div>
+    <div class="figcap">그림 5-1. 캔위성(송신) → 전파가 퍼지며 약해짐(경로 손실) → 지상국(수신). 아래 막대가 링크 버짓: 송신 세기에서 경로 손실을 빼면 수신 세기, 이것이 수신기 감도보다 클수록(여유 dB 가 클수록) 안전하다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 송신 출력 $P_{tx}$</b>dBm 단위(1 mW = 0 dBm). 캔위성 모듈은 보통 10 ~ 20 dBm(10 ~ 100 mW). <i>법으로 허용된 출력</i> 이하로만 쓴다.</div>
+      <div class="part"><b>② 경로 손실 PL</b>$PL(d)=PL(1\,\text{m})+10n\log_{10}d$. 자유 공간 $n=2$, 건물 · 숲이 있으면 $n=2.7\sim4$. 주파수가 높을수록 $PL(1\,\text{m})$ 가 크다.</div>
+      <div class="part"><b>③ 수신 감도</b>수신기가 읽을 수 있는 가장 약한 신호(예 −100 dBm). LoRa 는 느린 속도를 쓰면 <i>−120 dBm 이하</i>도 가능 → 멀리 간다.</div>
+      <div class="part"><b>④ 링크 여유 margin</b>$P_{rx}-S$. 0 dB 면 겨우 되는 한계. 실제로는 <i>10 ~ 20 dB 여유</i>를 두어 날씨 · 자세 변화에 대비한다.</div>
+      <div class="part"><b>⑤ 안테나</b>방향성 안테나는 한쪽으로 에너지를 모아 이득(dBi)을 준다. 캔위성은 낙하하며 회전하므로 <i>무지향성</i> 안테나를 쓴다. 안테나 길이 ≈ λ/4 (433 MHz 에서 약 17 cm).</div>
+      <div class="part"><b>⑥ 원격측정 패킷</b>시각 · 고도 · 기압 · 위치 · 가속도를 한 줄로 묶어 1 ~ 10 Hz 로 전송. 패킷이 빠지면(<i>손실</i>) 그래프에 구멍이 생긴다.</div>
+    </div>
+    <div class="h4">🧪 운동장 실험 — RSSI 로 경로 손실 지수 n 찾기</div>
+    <div class="steps">
+      <div class="step">LoRa(또는 ESP-NOW · XBee) 모듈 한 쌍을 준비해, 송신기가 1 초마다 번호가 붙은 패킷을 보내고 수신기가 <b>RSSI(dBm)</b>를 함께 기록하게 한다(14번 탭 스타터 코드).</div>
+      <div class="step">송신기를 땅에서 1 m 높이에 두고 수신기와의 거리를 <b>10 · 20 · 40 · 80 · 160 m</b> 로 바꾸며 각 거리에서 30 개 패킷의 RSSI 평균과 수신율을 적는다.</div>
+      <div class="step">가로축 $\log_{10}d$, 세로축 RSSI 그래프를 그려 직선 기울기 $=-10n$ 에서 <b>경로 손실 지수 $n$</b> 을 구한다(→ 같은 방법이 R&amp;E 07).</div>
+      <div class="step">장소를 바꿔(열린 운동장 · 건물 사이 · 나무 아래) 같은 측정을 해 $n$ 이 어떻게 달라지는지 비교한다.</div>
+      <div class="step">구한 $n$ 과 모듈의 수신 감도로 <b>최대 통신 거리</b>를 예측한 뒤 실제로 패킷이 끊어지는 거리와 비교한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🔦 쉽게 이해하기 — 손전등 불빛과 거리</div>
+      손전등을 벽에 비출 때, 벽에서 멀어질수록 불빛이 더 넓게 퍼져 흐려집니다. 거리가 2 배가 되면 비치는 넓이는 4 배가 되어 밝기는 ¼ 입니다. 전파도 똑같이 사방으로 퍼집니다. 수신기는 「아주 흐린 불빛」 도 읽어 낼 수 있는 눈이고 — 그 눈이 얼마나 좋은지가 <b>수신 감도</b>입니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“거리가 2 배면 신호는 절반으로 약해진다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>자유 공간에서 신호 세기는 거리의 <strong>제곱</strong>에 반비례하므로 2 배 멀면 <strong>¼</strong>(−6 dB)입니다. 건물 · 숲이 있으면 더 빨리 약해집니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 링크 시뮬레이션 — 거리 · 출력 · 환경 · 감도</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">거리 d (조작 — 로그 눈금)</span><span class="vl" id="t5-dV">—</span></div>
+          <input type="range" id="t5-d" min="0" max="1000" step="1" value="703" aria-label="거리">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">송신 출력 P_tx</span><span class="vl" id="t5-pV">—</span></div>
+          <input type="range" id="t5-p" min="0" max="20" step="1" value="14" aria-label="송신 출력">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">경로 손실 지수 n (환경)</span><span class="vl" id="t5-nV">—</span></div>
+          <input type="range" id="t5-n" min="2" max="4" step="0.1" value="2.7" aria-label="경로 손실 지수">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">수신 감도 S</span><span class="vl" id="t5-sV">—</span></div>
+          <input type="range" id="t5-s" min="-125" max="-85" step="1" value="-100" aria-label="수신 감도">
+        </div>
+        <div class="row" role="group" aria-label="주파수 프리셋"><span class="tiny">주파수 :</span>
+          <button type="button" class="btn sm" id="t5-f0">433 MHz</button>
+          <button type="button" class="btn sm" id="t5-f1">915 MHz</button>
+          <button type="button" class="btn sm" id="t5-f2">2.4 GHz</button>
+          <button type="button" class="btn sm am" id="t5-new">🎲 새 패킷</button>
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">수신 세기 P_rx</span><span class="v" id="t5-oR">—</span></div>
+          <div class="cell"><span class="k">경로 손실 PL(d)</span><span class="v" id="t5-oL">—</span></div>
+          <div class="cell g"><span class="k">링크 여유 (P_rx − S)</span><span class="v" id="t5-oM">—</span></div>
+          <div class="cell v2"><span class="k">패킷 수신 확률</span><span class="v" id="t5-oK">—</span></div>
+          <div class="cell r"><span class="k">최대 통신 거리 (여유 0)</span><span class="v" id="t5-oX">—</span></div>
+          <div class="cell"><span class="k">거리 2 배 → 손실 증가</span><span class="v" id="t5-oD">—</span></div>
+        </div>
+        <p class="tiny">모형 : 로그 거리 경로 손실 $PL(d)=20\log_{10}f_{\text{MHz}}-27.55+10n\log_{10}d$, 안테나 이득 0 dBi, 수신 확률 = 시그모이드(여유 dB / 1.5). 실제로는 지면 반사 · 안테나 자세 · 간섭으로 ±10 dB 이상 흔들립니다. <b>주파수 · 출력은 나라마다 허용 범위가 다르니</b> 반드시 허가된 대역의 인증 모듈을 쓰세요(한국은 KC 인증 · 920 MHz 대 LoRa 등).</p>
+      </div>
+      <div class="poe" data-q="같은 송신 출력 14 dBm · 수신 감도 −100 dBm · 433 MHz 에서, 자유 공간(n = 2)과 숲속(n = 3.5)의 최대 통신 거리 비율은?"
+           data-opts="숲속이 약 ½ 배||숲속이 약 1/10 배||숲속이 약 1/80 배||똑같다"
+           data-ans="2"
+           data-exp="링크 버짓 $14-(-100)=114$ dB, $PL(1\,\text{m})=25.2$ dB 이므로 $10n\log_{10}d=88.8$ dB → $d=10^{88.8/(10n)}$. $n=2$ 이면 약 27 km, $n=3.5$ 이면 약 340 m — 비율 <b>약 1/80</b>. (실제 자유 공간 27 km 는 지구 곡률 · 지면 반사 때문에 어렵지만) 환경이 거리 한계를 좌우합니다. 시뮬레이션에서 n 을 2 → 3.5 로 바꾸고 「최대 통신 거리」 를 보세요."></div>
+      <div class="hintbox" data-hints="① 먼저 n = 2, 거리 100 m 에서 링크 여유를 보세요. 거리를 2 배(200 m)로 하면 여유가 몇 dB 줄까요? (−6 dB 에 가까운가?)||② 거리를 천천히 늘리며 아래 그래프에서 파란 점(수신 세기)이 빨간 점선(감도)을 지나는 순간 패킷 수신 확률이 어떻게 변하나요? 「서서히」 인가 「뚝」 인가?||③ n 을 3.5 로 올리고 같은 거리에서 패킷이 끊기는 것을 확인하세요. 낙하 중인 캔위성이 땅 가까이 내려오면 n 이 커질 수 있는 까닭을 설명해 보세요.||④ 주파수만 433 MHz → 2.4 GHz 로 바꾸면 최대 거리가 몇 배 달라지나요? 안테나가 작아지는 대신 무엇을 잃나요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t5" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t5-cv" data-pngname="cansat-radio-link">🖼 PNG</button></div>
+          <canvas id="t5-cv" role="img" aria-label="캔위성이 보내는 전파와 패킷, 지상국 수신 신호 세기 막대" style="height:300px"></canvas>
+          <div class="cv-cap">캔위성(오른쪽)이 1 초마다 패킷을 보냅니다. 초록 = 수신 성공, 빨강 ✕ = 손실. 아래 막대 = 수신 세기(dBm)와 수신기 감도(빨간 선). 거리는 로그 눈금입니다.</div>
+        </div>
+        <div id="t5-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t5-cv2" role="img" aria-label="거리에 따른 수신 세기와 패킷 수신 확률 그래프" style="height:330px"></canvas>
+          <div class="cv-cap">📊 위 : 거리에 따른 수신 세기(노랑 = 지금 n, 점선 = n 2) — 거리 눈금이 로그라 직선이고 기울기가 −10n dB/decade. 빨간 선 = 감도. 아래 : 패킷 수신 확률 — 한계 근처에서 급격히 떨어지는 「절벽」.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>dB : $L=10\log_{10}\dfrac{P_2}{P_1}$ (전력비). 자유 공간 손실 $PL=20\log_{10}\dfrac{4\pi d}{\lambda}$ → 1 m 에서 433 MHz: $\lambda=0.69$ m, $PL=20\log_{10}(4\pi/0.69)\approx25.2$ dB.</p>
+        <p>링크 버짓 : $P_{rx}=P_{tx}-PL(d)$, 통신 가능 조건 $P_{rx}\ge S$. 예 : $14-(25.2+20\log_{10}1000)=-71.2$ dBm, 감도 −100 dBm → 여유 28.8 dB.</p>
+        <p class="lv-uni">교과서 밖 : 프리스(Friis) 식 $P_r=P_tG_tG_r\left(\dfrac{\lambda}{4\pi d}\right)^2$. 실제 환경은 로그 거리 모형 $PL=PL_0+10n\log_{10}(d/d_0)+X_\sigma$ (그늘 효과 $X_\sigma$ : 평균 0, 표준편차 4 ~ 8 dB 의 정규 분포)로 나타내며, 안테나 높이가 낮은 지면 근처에서는 직접파와 지면 반사파가 간섭해 $n\to4$ 에 가까워집니다(2선 모형, $PL\propto d^4$). 수신 확률은 LoRa 의 경우 확산 계수(SF)가 클수록 감도가 좋아지지만 전송 시간이 길어집니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
