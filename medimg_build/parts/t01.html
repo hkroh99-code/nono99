@@ -1,0 +1,125 @@
+<!-- ═══ TAB 1 — 🩻 도입 — 몸속을 들여다보는 네 가지 눈 ═══ -->
+<section class="panel" id="tab1" role="tabpanel" aria-labelledby="tabbtn1" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🩻 도입 — 몸속을 들여다보는 네 가지 눈</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 의료영상진단기는 몸을 열지 않고 속을 보는 <b>네 가지 눈</b>입니다. <b>X선 · CT</b>는 몸을 통과한 X선의 <b>흡수 차이</b>, <b>초음파</b>는 소리의 <b>반사 시간 · 세기</b>, <b>MRI</b>는 자기장 속 수소 핵의 <b>공명 신호</b>를 영상으로 만듭니다. 같은 몸이라도 무엇을 알고 싶은지에 따라 알맞은 눈이 다르고, 방사선 · 비용 · 속도 · 안전 사이의 균형이 선택을 정합니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자(Advance Organizer) — 오수벨</div>
+      「파동과 정보통신」에서 배운 <b>전자기파와 소리(역학적 파동)</b>의 반사 · 흡수 · 공명이 모두 의료영상의 바탕입니다. X선은 파장이 매우 짧은 전자기파로 물질에서 <b>흡수</b>되어 그림자를 만들고(2번 탭), 초음파는 매질 경계에서 <b>반사</b>되어 시간으로 거리를 알려 주며(4번 탭), MRI 는 <b>공명</b>(5번 탭)을 이용합니다. 여기에 컴퓨터가 여러 방향의 투영을 합쳐 단면을 만드는 CT(3번 탭)와, 영상의 질 · 선량 · 안전(6번 탭)이 더해집니다.
+      <div class="bridge"><span class="st old">흡수 · 반사 · 공명</span><span class="ar">→</span><span class="st">네 가지 영상 원리</span><span class="ar">→</span><span class="st">영상의 질 · 선량 · 안전</span><span class="ar">→</span><span class="st new">내가 설계하는 의료영상 프로젝트</span></div>
+    </div>
+    <div class="poe" data-q="다음 중 몸 속에 이온화 방사선(X선 · 감마선)을 쓰지 않는 영상 검사만 모은 것은?"
+         data-opts="X선 · CT||초음파 · MRI||CT · MRI||X선 · 초음파"
+         data-ans="1"
+         data-exp="<b>초음파</b>(소리)와 <b>MRI</b>(자기장 + 라디오파)는 이온화 방사선을 쓰지 않습니다. X선과 CT 는 X선을 쓰므로 선량 관리가 필요합니다. 하지만 「방사선이 없다 = 항상 더 좋다」는 아닙니다 — 초음파는 뼈 · 공기 뒤를 못 보고, MRI 는 검사 시간이 길고 금속에 제약이 있습니다. 오른쪽 검사 선택 도우미에서 상황을 바꿔 보세요."></div>
+    <div id="t1-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 의료영상 — 네 가지 눈과 알아내는 것 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="네 가지 의료영상 장비. X선은 통과한 세기, CT 는 여러 각도 X선으로 단면, 초음파는 소리의 반사, MRI 는 자기장 속 수소 핵의 공명을 이용한다.">
+        {{FIG:flow}}
+      </svg>
+    </div>
+    <div class="figcap">그림 1-1. 의료영상의 네 가지 눈 — ① X선: 몸을 통과한 세기의 그림자 → ② CT: 여러 각도의 X선을 컴퓨터로 합쳐 단면 → ③ 초음파: 소리의 반사 시간으로 깊이와 구조 → ④ MRI: 강한 자기장과 라디오파로 수소 핵 신호. 어느 눈을 쓸지는 「무엇을 알고 싶은가」가 정한다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① X선 영상</b>X선이 조직마다 다르게 흡수되는 차이를 그림자로. 뼈 · 폐 · 응급 선별에 빠르고 값싸다(2번 탭).</div>
+      <div class="part"><b>② CT</b>여러 각도의 X선 투영을 컴퓨터가 합쳐 단면 영상(HU)을 만든다. 뇌출혈 · 폐 · 복부 응급(3번 탭).</div>
+      <div class="part"><b>③ 초음파</b>소리 펄스의 에코로 깊이 $d=ct/2$ 와 경계를 본다. 태아 · 심장 · 복부, 실시간 · 이동 가능(4번 탭).</div>
+      <div class="part"><b>④ MRI</b>$f=\gamma B$ 로 공명하는 수소 핵 신호. 연조직 대조가 가장 좋아 뇌 · 척추 · 인대에 쓰인다(5번 탭).</div>
+      <div class="part"><b>⑤ 영상의 질</b>대조도 · 잡음 · 해상도. 선량(방사선)을 늘리면 잡음이 줄지만 $\sigma\propto1/\sqrt{\text{선량}}$ 이라 비효율적(6번 탭).</div>
+      <div class="part"><b>⑥ 프로젝트 사이클</b>문제 정의 → 모형 · 시뮬레이션 → 안전한 유사 실험 → 분석 → 한계 논의. 실제 장비 대신 빛 · 소리 · 팬텀을 쓴다(8 ~ 14번 탭).</div>
+    </div>
+    <div class="h4">🧪 이 학습실의 길 — 탭 안내</div>
+    <div class="steps">
+      <div class="step"><b>탭 2 ~ 6</b> — 원리 : X선 감약 → CT 재구성 → 초음파 → MRI → 영상 품질 · 선량 · 안전.</div>
+      <div class="step"><b>탭 7</b> — 활용 현황 : 한국 · 미국 · 일본의 장비 보급 · 제도 · 산업, 그리고 나의 진로.</div>
+      <div class="step"><b>탭 8 ~ 14</b> — 프로젝트 공방 : 실시 가능한 <b>R&amp;E 10선</b> · <b>창의 프로젝트 10선</b> · <b>발명 10선</b>(준비물 · 방법 5단계 · 예측 결과 · 실패 대처 · 평가)과 연구 도구함.</div>
+      <div class="step"><b>탭 15 ~ 17</b> — 종합 모의실험 3개 : 감약계수(램버트–비어 직선) · 초음파 음속(깊이–시간 직선) · 잡음의 √N 법칙.</div>
+      <div class="step"><b>탭 18 · 19</b> — 오개념 진단과 실험보고서(인쇄 · PDF 저장). <b>안전 : 이 자료의 모든 실험은 방사선 · 강자기장 · 고출력 초음파를 쓰지 않는 안전한 유사 실험입니다.</b></div>
+    </div>
+    <div class="easy">
+      <div class="et">🔦 쉽게 이해하기 — 어둠 속에서 물체의 모양을 아는 네 가지 방법</div>
+      어두운 방 안의 상자 속을 알고 싶다고 해 봅시다. ① 손전등을 한쪽에서 비추고 반대쪽 그림자를 본다(X선), ② 상자를 돌려가며 그림자를 모아 입체로 합친다(CT), ③ 소리를 내어 메아리가 돌아오는 시간으로 안쪽 벽을 잰다(초음파), ④ 속에 든 작은 소리굽쇠들을 같은 진동수로 울려 그 반응을 듣는다(MRI). 방법마다 알아내는 것과 약점이 다릅니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“가장 비싼 장비(MRI)가 항상 가장 좋은 검사이다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>검사는 <strong>알고 싶은 것</strong>에 맞게 고릅니다. 골절은 X선, 태아는 초음파, 인대는 MRI 가 먼저인 이유가 있습니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 검사 선택 도우미 — 어떤 눈이 알맞을까?</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">알고 싶은 것(질환 · 상황)</span><span class="vl" id="t1-tV">—</span></div>
+          <input type="range" id="t1-t" min="1" max="6" step="1" value="1" aria-label="알고 싶은 것(질환 · 상황)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">방사선을 줄이는 것의 중요도</span><span class="vl" id="t1-sV">—</span></div>
+          <input type="range" id="t1-s" min="0" max="10" step="1" value="3" aria-label="방사선을 줄이는 것의 중요도">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">가장 알맞은 검사</span><span class="v" id="t1-oB">—</span></div>
+          <div class="cell g"><span class="k">점수(상대)</span><span class="v" id="t1-oS">—</span></div>
+          <div class="cell v2"><span class="k">2순위</span><span class="v" id="t1-oN">—</span></div>
+          <div class="cell r"><span class="k">선택 이유</span><span class="v" id="t1-oW">—</span></div>
+          <div class="cell "><span class="k">주의</span><span class="v" id="t1-oC">—</span></div>
+        </div>
+        <p class="tiny">모형 : 점수 = 진단 가치(0 ~ 10, 질환별) + 가중 × (속도 + 저비용 + 방사선 없음). 값은 교육용 어림 판단이며 <b>실제 진료의 검사 선택은 의사가 환자 상태 · 지침 · 장비 여건에 맞춰 정합니다</b>. 임신 · 소아 · 금속 이식 환자는 별도 안전 점검이 필요합니다.</p>
+      </div>
+      <div class="poe" data-q="다음 중 초음파가 가장 알맞은 검사 상황은?"
+           data-opts="머리뼈 속 뇌출혈 응급 확인||임신 중 태아의 성장 확인||무릎 연골 손상 정밀 진단||폐 속 작은 결절 정밀 확인"
+           data-ans="1"
+           data-exp="<b>태아 검사</b>는 이온화 방사선이 없고 실시간으로 볼 수 있는 초음파가 기본입니다. 뇌 응급은 두개골이 소리를 막으므로 CT, 연골은 연조직 대조가 좋은 MRI, 폐 결절은 공기 · 소리 때문에 CT 를 씁니다. 오른쪽에서 상황 번호를 바꾸며 확인해 보세요."></div>
+      <div class="hintbox" data-hints="① 먼저 1번(골절)에서 어떤 검사가 1위인지 보고, 6번 상황까지 돌려 보며 1위가 어떻게 바뀌는지 표로 적어 보세요.||② 「방사선을 줄이는 것의 중요도」를 0 과 10 으로 바꾸면 폐 상황(2번)의 순위가 어떻게 달라지나요?||③ 3번(응급 뇌출혈)에서 MRI 가 1위가 아닌 까닭을 속도 점수와 연결해 설명해 보세요.||④ 아래 표에서 4개 검사의 장점과 약점을 한 줄씩 말로 정리해 보세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t1" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t1-cv" data-pngname="modality-chooser">🖼 PNG</button></div>
+          <canvas id="t1-cv" role="img" aria-label="검사 선택 도우미의 네 검사 점수 막대" style="height:330px"></canvas>
+          <div class="cv-cap">막대 = 선택한 상황에서 각 검사의 점수(상대). 가장 높은 검사가 초록으로 강조됩니다(시간이 흐르며 막대가 자랍니다). 아래 글씨 = 그 검사로 알 수 있는 것과 주의점.</div>
+        </div>
+        <div id="t1-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t1-cv2" role="img" aria-label="검사별 특성 점수 표" style="height:300px"></canvas>
+          <div class="cv-cap">📊 검사별 특성(0 ~ 10) : 각 상황에서의 진단 가치 · 속도 · 저비용 · 방사선 없음. 밝을수록 높은 점수. 선택한 상황의 열이 테두리로 표시됩니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>점수 $S_m=V_{m}(\text{상황})+w_v\,v_m+w_c\,c_m+w_s\,s_m$ — $V$ : 그 상황에서의 진단 가치, $v$ 속도, $c$ 저비용, $s$ 방사선 없음, $w$ 가중. 응급이면 $w_v$ 가 크고, 방사선을 줄이는 것이 중요할수록 $w_s$ 가 큽니다. 가중을 바꾸면 순위가 바뀌는 것이 「의사결정」입니다.</p><p class="lv-uni">교과서 밖 : 실제 임상에서는 <b>검사 전 확률(유병률)</b>과 검사의 민감도 · 특이도가 함께 쓰입니다. 베이즈 정리로 양성 예측도 $\mathrm{PPV}=\dfrac{\mathrm{sens}\cdot p}{\mathrm{sens}\cdot p+(1-\mathrm{spec})(1-p)}$ 가 정해지며(I09), 영상검사의 「적정성 기준」은 이런 근거로 만들어집니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🧠 이 학습실은 이렇게 설계되었습니다 <span class="badge b-poe">학습모형</span></div>
+    <p class="muted">화면 곳곳의 장치가 각각 어떤 학습 원리에서 나온 것인지 알아 두면 훨씬 효과적으로 쓸 수 있습니다.</p>
+    <div id="t1-models"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🕰 의료영상의 역사 <span class="tiny">(카드를 누르면 해당 탭으로 이동)</span></div>
+    <div class="tline" id="t1-timeline"></div>
+  </div>
+  <div class="card">
+    <div class="h3">⚖️ 네 가지 진단기 비교표 <span class="badge b-high">원리 한눈에</span></div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:640px">
+      <thead><tr><th style="text-align:left">항목</th><th>X선</th><th>CT</th><th>초음파</th><th>MRI</th></tr></thead>
+      <tbody>
+        <tr><td style="text-align:left"><b>쓰는 에너지</b></td><td>X선(전리 방사선)</td><td>X선(전리 방사선)</td><td>소리(2 ~ 15 MHz)</td><td>정자기장 + 라디오파(약 64 MHz @1.5 T)</td></tr>
+        <tr><td style="text-align:left"><b>읽는 물리량</b></td><td>감약 $\mu x$(투영)</td><td>감약 $\mu$ (HU 단면)</td><td>에코 시간 · 세기 · 도플러</td><td>$T_1$ · $T_2$ · 양성자밀도</td></tr>
+        <tr><td style="text-align:left"><b>영상이 만들어지는 방식</b></td><td>한 방향 그림자</td><td>여러 각도 투영 → 재구성</td><td>줄별 에코 → B-모드</td><td>기울기 자기장 → k-공간 → 역푸리에</td></tr>
+        <tr><td style="text-align:left"><b>잘 보는 것</b></td><td>뼈 · 폐</td><td>뼈 · 폐 · 출혈 · 혈관</td><td>태아 · 심장 · 복부 · 혈류</td><td>뇌 · 척추 · 인대 · 종양</td></tr>
+        <tr><td style="text-align:left"><b>공간 해상도(대략)</b></td><td>약 0.1 ~ 0.2 mm</td><td>약 0.3 ~ 0.6 mm</td><td>약 0.3 ~ 1 mm(주파수 의존)</td><td>약 0.5 ~ 1 mm</td></tr>
+        <tr><td style="text-align:left"><b>약점</b></td><td>겹침 · 연조직 대조 낮음</td><td>선량 · 연조직 대조 중간</td><td>공기 · 뼈 뒤 · 시술자 의존</td><td>시간 · 비용 · 금속 · 소음</td></tr>
+        <tr><td style="text-align:left"><b>핵심 안전 이슈</b></td><td>방사선량</td><td>방사선량(상대적으로 큼)</td><td>열 · 공동화(ALARA)</td><td>자기장 · 금속 · RF 가열</td></tr>
+      </tbody></table></div>
+    <p class="tiny">※ 해상도 · 선량은 장비와 프로토콜에 따라 크게 다른 대략적 범위입니다.</p>
+  </div>
+</section>

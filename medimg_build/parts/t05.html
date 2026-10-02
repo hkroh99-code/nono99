@@ -1,0 +1,116 @@
+<!-- ═══ TAB 5 — 🧲 원리④ MRI — 강한 자기장 속 수소 핵의 공명을 읽는다 ═══ -->
+<section class="panel" id="tab5" role="tabpanel" aria-labelledby="tabbtn5" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🧲 원리④ MRI — 강한 자기장 속 수소 핵의 공명을 읽는다</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — MRI 는 X선이 아니라 <b>강한 정자기장 $B_0$</b> 와 <b>라디오파</b>를 씁니다. 수소 핵(양성자)은 $B_0$ 에서 <b>라모어 진동수 $f=\gamma B_0$</b>(1.5 T 에서 약 64 MHz)로 세차운동을 하고, 그 진동수의 RF 펄스를 쏘면 공명하여 신호를 냅니다. 신호가 되돌아오는 속도(<b>이완 시간 $T_1$ · $T_2$</b>)가 조직마다 달라 <b>TR · TE</b> 를 바꾸면 영상의 대조가 달라집니다. 방사선은 없지만 강한 자기장 때문에 금속 안전이 중요합니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 자기장 · 전자기 유도 · 공명(교과서)</div>
+      팽이가 기울면 중력 때문에 쓰러지지 않고 <b>세차운동</b>(원뿔을 그리며 돎)을 하듯 자기장 속 원자핵도 세차운동을 합니다. 진동수는 자기장에 비례($f=\gamma B$). 같은 진동수의 라디오파를 쏘면 <b>공명</b>해 핵의 방향이 뒤집히고, 코일에서 <b>전자기 유도</b>로 신호를 읽습니다. 신호가 사라지는 빠르기가 조직마다 다르고, 그 차이가 영상의 명암이 됩니다.
+      <div class="bridge"><span class="st old">자기장 · 세차</span><span class="ar">→</span><span class="st">라모어 $f=\gamma B$</span><span class="ar">→</span><span class="st">RF 공명 · 신호</span><span class="ar">→</span><span class="st">$T_1$ · $T_2$ 이완</span><span class="ar">→</span><span class="st new">TR · TE 대조</span></div>
+    </div>
+    <div class="poe" data-q="같은 MRI 장비에서 TR 이 짧고(500 ms) TE 도 짧으면(15 ms) 뇌척수액(CSF, T1 길다)은 어떻게 보일까?"
+         data-opts="밝게 보인다||어둡게 보인다||회색질과 같다||보이지 않는다"
+         data-ans="1"
+         data-exp="TR 이 짧으면 $T_1$ 이 긴 조직(CSF)은 아직 회복하지 못해 신호가 작아 <b>어둡게</b> 보이고, $T_1$ 이 짧은 지방은 밝게 보입니다(<b>T1 강조 영상</b>). 반대로 TR · TE 를 길게 하면 $T_2$ 가 긴 CSF 가 밝은 <b>T2 강조 영상</b>이 됩니다. 오른쪽에서 TR · TE 를 바꿔 보세요."></div>
+    <div id="t5-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 MRI — 정렬 · 라모어 세차 · RF 신호 · 이완 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 272" role="img" aria-label="MRI 원리 도해. 자기장에서 수소 스핀이 정렬하고, 라모어 진동수로 세차하며, RF 펄스 뒤 신호가 감쇠하고, T1 회복과 T2 감소 곡선이 조직마다 다르다.">
+        {{FIG:mri}}
+      </svg>
+    </div>
+    <div class="figcap">그림 5-1. MRI 의 순서 — ① 강한 자기장 $B_0$ 가 수소 핵 스핀을 나란히 정렬 → ② 정렬된 스핀은 라모어 진동수 $f=\gamma B$ 로 세차 → ③ 같은 진동수의 RF 펄스로 스핀을 눕히면 코일이 감쇠하는 신호를 받는다 → ④ $T_1$(회복)과 $T_2$(감소)가 조직마다 달라 TR · TE 로 대조를 고른다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 정자기장 $B_0$</b>초전도 자석 1.5 T · 3 T(지구 자기장의 약 3만 ~ 6만 배). 클수록 신호가 크다. 자기장은 항상 켜져 있다.</div>
+      <div class="part"><b>② 라모어 진동수</b>$f=\gamma B$, 수소는 $\gamma/2\pi=42.58$ MHz/T. 1.5 T → 63.9 MHz, 3 T → 127.7 MHz(FM 라디오와 비슷한 대역).</div>
+      <div class="part"><b>③ RF 펄스 · 코일</b>같은 진동수의 라디오파로 스핀을 90° 눕히고, 코일이 신호(자유 유도 감쇠 FID)를 받는다(전자기 유도).</div>
+      <div class="part"><b>④ 이완 시간 $T_1$ · $T_2$</b>$T_1$ : 세로 자화가 회복하는 시간 · $T_2$ : 가로 신호가 사라지는 시간. 조직 · 병변마다 다르다(예 : 백색질 $T_1\approx600$ ms · CSF $\approx4000$).</div>
+      <div class="part"><b>⑤ TR · TE</b>TR = 펄스 반복 시간, TE = 신호를 받는 시각. TR 짧음 · TE 짧음 → T1 강조 / TR 김 · TE 김 → T2 강조 / TR 김 · TE 짧음 → 양성자밀도.</div>
+      <div class="part"><b>⑥ 기울기 자기장</b>위치마다 자기장을 다르게 해 진동수로 위치를 부호화한다. 켜질 때의 진동이 MRI 의 큰 소음이다.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 팽이 · 자이로로 보는 세차운동 (R08, 안전한 유사 실험)</div>
+    <div class="steps">
+      <div class="step">자전거 바퀴(또는 자이로 팽이)를 손으로 돌려 한쪽 끝을 줄에 매단다. 바퀴가 쓰러지지 않고 <b>돌며 버티는 세차운동</b>을 관찰한다.</div>
+      <div class="step">바퀴 회전 속도(스톱워치와 마커)를 바꾸며 세차 주기를 재고, 회전이 빠를수록 세차가 느려지는지 확인한다($\Omega=\tau/L$).</div>
+      <div class="step">추 위치를 바꿔 토크를 달리하며 세차 속도 $\Omega$ 가 토크에 비례하는지 본다.</div>
+      <div class="step">MRI 에서는 「토크 대신 자기장」, 「각운동량 대신 핵 스핀」이 같은 역할임을 비교표로 정리하고 라모어 $\omega=\gamma B$ 가 어떻게 같은 꼴인지 설명한다.</div>
+      <div class="step">시뮬레이션에서 TR · TE 를 바꾸며 T1 · T2 강조 영상을 직접 만들고 어떤 조직이 밝게 보이는지 정리한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🎸 쉽게 이해하기 — 기타 줄과 같은 소리굽쇠</div>
+      소리굽쇠 두 개 중 하나를 울리면 다른 하나도 같은 진동수일 때만 따라 울립니다(<b>공명</b>). 몸속 수소 핵은 자기장 세기에 정확히 비례하는 진동수로 도는 「작은 소리굽쇠」입니다. 같은 진동수의 라디오파를 쏘아야 공명하고, 그 뒤 소리가 사라지는 속도(이완)가 조직마다 다릅니다 — 지방 · 물 · 뇌 조직이 서로 다른 목소리를 내는 셈입니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“MRI 는 X선 같은 방사선으로 찍는다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>MRI 는 <strong>강한 자기장과 라디오파</strong>로 수소 핵의 공명 신호를 읽습니다. <strong>이온화 방사선은 쓰지 않지만</strong> 금속 · 이식 기기에는 위험할 수 있어 검사 전 확인이 필수입니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 MRI 대조 시뮬레이션 — TR · TE 로 만드는 T1 · T2 영상</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">반복 시간 TR</span><span class="vl" id="t5-trV">—</span></div>
+          <input type="range" id="t5-tr" min="100" max="4000" step="50" value="500" aria-label="반복 시간 TR">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">에코 시간 TE</span><span class="vl" id="t5-teV">—</span></div>
+          <input type="range" id="t5-te" min="5" max="200" step="5" value="15" aria-label="에코 시간 TE">
+        </div>
+        <div class="row"><button type="button" class="btn sm" id="t5-p0">T1 강조 (TR 500 · TE 15)</button><button type="button" class="btn sm" id="t5-p1">T2 강조 (TR 4000 · TE 100)</button><button type="button" class="btn sm" id="t5-p2">양성자밀도 (TR 4000 · TE 15)</button></div>
+        <div class="kv">
+          <div class="cell a"><span class="k">라모어 진동수 (1.5 T · 3 T)</span><span class="v" id="t5-oF">—</span></div>
+          <div class="cell g"><span class="k">회색질 · 백색질 · CSF 신호</span><span class="v" id="t5-oG">—</span></div>
+          <div class="cell v2"><span class="k">회색질 대 백색질 대조</span><span class="v" id="t5-oC">—</span></div>
+          <div class="cell r"><span class="k">병변 · 백색질 대조</span><span class="v" id="t5-oV">—</span></div>
+          <div class="cell "><span class="k">영상 종류</span><span class="v" id="t5-oS">—</span></div>
+        </div>
+        <p class="tiny">모형 : 스핀에코 $S=\mathrm{PD}\,(1-e^{-TR/T_1})\,e^{-TE/T_2}$, 1.5 T 어림 조직값 — 백색질(T1 600 · T2 80) · 회색질(920 · 100) · CSF(4000 · 2000) · 지방(260 · 85) · 병변(1200 · 150). 두개골은 신호가 거의 없습니다. 교육용 어림이며 실제 값은 장비 · 자기장 세기에 따라 다릅니다.</p>
+      </div>
+      <div class="poe" data-q="T2 강조 영상(TR 김 · TE 김)에서 물이 많은 병변(부종 · 종양)과 뇌척수액은 어떻게 보일까?"
+           data-opts="어둡게||밝게||검은색(신호 없음)||백색질과 같은 회색"
+           data-ans="1"
+           data-exp="$T_2$ 가 긴 조직(물이 많은 병변 · CSF)은 TE 가 길어도 신호가 많이 남아 <b>밝게</b> 보입니다. 그래서 T2 강조 영상은 부종 · 염증 · 종양 같은 병변을 찾는 데 쓰입니다. 시뮬레이션에서 TE 를 15 → 100 으로 바꾸어 병변이 어떻게 변하는지 보세요."></div>
+      <div class="hintbox" data-hints="① 먼저 [T1 강조] 버튼을 눌러 두개골 안쪽(회색질 · 백색질)과 지방(두피), CSF(뇌실)의 밝기를 순서대로 비교하세요.||② [T2 강조] 로 바꾸면 무엇이 밝아지고 무엇이 어두워지나요? 병변은 어느 영상에서 더 잘 보이나요?||③ TR 을 아주 길게(4000)하고 TE 를 짧게(15)하면 영상은 어떻게 되나요? 이 영상은 무엇의 분포를 보는 영상인가요?||④ 아래 곡선에서 TR · TE 선이 곡선과 만나는 높이가 신호의 크기입니다. 두 조직의 곡선이 가장 많이 벌어지는 때를 찾으세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t5" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t5-cv" data-pngname="mri-contrast">🖼 PNG</button></div>
+          <canvas id="t5-cv" role="img" aria-label="스핀 세차운동 애니메이션과 TR TE 에 따른 MRI 가중 영상" style="height:340px"></canvas>
+          <div class="cv-cap">왼쪽 : 자기장 $B_0$(위 방향) 속의 스핀(화살표)이 라모어 진동수로 세차하는 모습(시간을 매우 느리게 보임). 오른쪽 : 지금의 TR · TE 로 만든 MRI 영상 — 두개골(검은 띠) 안쪽의 회색질 · 백색질 · 뇌실(CSF) · 병변.</div>
+        </div>
+        <div id="t5-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t5-cv2" role="img" aria-label="T1 회복 곡선과 T2 감소 곡선" style="height:330px"></canvas>
+          <div class="cv-cap">📊 위 : 세로 자화 회복(T1) — 조직별 곡선과 TR(수직 점선). 아래 : 가로 신호 감소(T2) — 조직별 곡선과 TE. 두 곡선 높이의 차이가 영상의 대조입니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>라모어 진동수 $f=\dfrac{\gamma}{2\pi}B$ (수소 $\gamma/2\pi=42.58$ MHz/T). 회복 $M_z(t)=M_0(1-e^{-t/T_1})$, 감소 $M_{xy}(t)=M_0e^{-t/T_2}$. 스핀에코 신호 $S=\mathrm{PD}\,(1-e^{-TR/T_1})\,e^{-TE/T_2}$.</p><p>예 : 1.5 T, TR 500, TE 15 — 백색질 $S=0.7(1-e^{-0.83})e^{-0.19}=0.28$, CSF $S=1.0(1-e^{-0.125})e^{-0.0075}=0.12$ → 백색질이 CSF 보다 밝다(T1 강조).</p><p class="lv-uni">교과서 밖 : 블로흐 방정식 $\dfrac{d\vec M}{dt}=\gamma\vec M\times\vec B-\dfrac{M_x\hat x+M_y\hat y}{T_2}-\dfrac{(M_z-M_0)\hat z}{T_1}$. 위치 부호화 : 기울기 자기장 $G$ 에서 진동수 $f(x)=\gamma(B_0+Gx)$ 가 위치 정보. 신호는 푸리에 공간(k-공간)에서 채워지고 역푸리에 변환으로 영상이 된다(R/C 프로젝트에서 k-공간 자르기).</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 MRI 는 어떻게 작동하나 — 자화 → 공명 → 이완 → 위치 부호화 → 영상 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">MRI 는 몸 속 수소 핵의 자기적 성질(스핀)을 이용합니다. 한 장의 영상이 얻어지는 과정을 따라가 봅니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 장치 구성</b> — 가운데 통 안에 <b>초전도 주자석</b>(NbTi 코일을 액체 헬륨으로 약 4 K 로 냉각)이 1.5 ~ 3 T 의 균일한 정자기장 $B_0$ 를 항상 만듭니다. 그 안쪽에 영상 위치를 정하는 <b>기울기 코일</b> 3 쌍(x · y · z), 라디오파를 보내고 받는 <b>RF 코일</b>, 외부 전파를 막는 차폐가 있습니다.</div>
+      <div class="step"><b>② 순자화(스핀 정렬)</b> — 수소 핵(양성자)은 작은 자석(스핀 ½)입니다. 자기장이 없으면 제멋대로이고, $B_0$ 안에서는 <b>자기장 방향이 조금 더 많이</b> 정렬됩니다. 1.5 T 에서 그 초과분은 약 100 만 개당 5 개 정도지만, 몸에 수소 핵이 워낙 많아 합친 <b>순자화 $M_0\propto B_0$</b> 가 신호의 원천이 됩니다.</div>
+      <div class="step"><b>③ 라모어 세차</b> — 자기장 속의 핵 스핀은 축 둘레를 팽이처럼 <b>세차</b>합니다. 진동수는 자기장에 비례하는 <b>라모어 진동수 $f=\gamma B_0$</b> ($\gamma/2\pi=42.58$ MHz/T; 1.5 T → 63.9 MHz, 3 T → 127.7 MHz).</div>
+      <div class="step"><b>④ RF 펄스 · 신호</b> — 같은 진동수의 라디오파 펄스 $B_1$ 을 짧게 보내면 <b>공명</b>해 순자화가 눕습니다(90° 펄스). 눕혀진 가로 자화가 돌며 코일에 <b>전자기 유도</b>로 신호(FID)를 만듭니다. 위상이 흩어지며 빨리 줄어드는 것을 180° 펄스로 되돌려 얻는 것이 <b>스핀 에코</b>입니다.</div>
+      <div class="step"><b>⑤ 이완 $T_1$ · $T_2$</b> — 신호가 사라지고 원상으로 돌아가는 속도가 조직마다 다릅니다. <b>$T_1$</b> (세로 자화가 격자에 에너지를 내주며 회복, $1-e^{-t/T_1}$) · <b>$T_2$</b> (스핀끼리의 위상이 흐트러지며 가로 신호 감소, $e^{-t/T_2}$). 예: 지방은 $T_1$ 짧아 T1 영상에서 밝고, 물(CSF)은 $T_1 \cdot T_2$ 가 길어 T1 에서 어둡고 T2 에서 밝습니다.</div>
+      <div class="step"><b>⑥ 위치 부호화</b> — 신호가 몸 어디서 왔는지 알려면 <b>기울기 자기장</b>으로 위치마다 진동수를 다르게 만듭니다. <b>슬라이스 선택</b>(z 기울기 + 좁은 대역 RF 로 한 단면만 공명) → <b>주파수 부호화</b>(읽는 동안 x 기울기, 진동수 = 위치) → <b>위상 부호화</b>(y 기울기를 단계마다 바꿔 위상 = 위치). 이렇게 얻은 신호는 <b>k-공간</b>(푸리에 공간)에 채워집니다.</div>
+      <div class="step"><b>⑦ 영상 재구성</b> — k-공간 데이터를 <b>2 차원 역푸리에 변환</b>하면 영상이 됩니다. k-공간의 중심은 대조도 · 신호 세기를, 바깥은 윤곽(해상도)을 담습니다. TR · TE · 반전 시간으로 T1 · T2 · 양성자밀도 · FLAIR · 확산강조 영상을 선택하고, <b>조영제</b>(가돌리늄)는 $T_1$ 을 짧게 해 혈관 · 병변을 밝게 합니다.</div>
+      <div class="step"><b>⑧ 안전과 쓰임</b> — 이온화 방사선이 없고 연조직 대조가 가장 좋아 <b>뇌 · 척추 · 관절 · 인대 · 종양</b>에 쓰입니다. 위험은 강한 자기장 때문의 <b>투사체 효과</b>(금속이 날아듦) · 심박조율기 · 일부 임플란트 · RF 에너지의 <b>가열(SAR)</b> · 큰 소음(기울기 코일 진동) · 폐쇄 공포입니다. 검사 시간이 길고 비용이 큽니다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">대조 종류</th><th>TR</th><th>TE</th><th>밝게 보이는 것</th></tr></thead><tbody><tr><td style="text-align:left">T1 강조</td><td>짧음(약 500 ms)</td><td>짧음(약 15 ms)</td><td>지방 · 단백질이 많은 액체</td></tr><tr><td style="text-align:left">T2 강조</td><td>김(약 4000 ms)</td><td>김(약 100 ms)</td><td>물 · 부종 · 염증 · 많은 병변</td></tr><tr><td style="text-align:left">양성자밀도</td><td>김</td><td>짧음</td><td>수소가 많은 조직</td></tr></tbody></table></div>
+    <p class="tiny">※ 조직의 $T_1$ · $T_2$ 값은 자기장 세기에 따라 변합니다(위 표와 시뮬레이션은 1.5 T 어림). MRI 검사 전에는 반드시 금속 · 이식물 점검표를 확인합니다.</p>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+</head>
+<body class="app" data-level="high">
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="brandrow">
+      <!-- ★2 화면 제목 / 부제 -->
+      <h1 class="brand">🩻 16. 의료영상진단기</h1>
+      <span class="brand-sub">몸을 열지 않고 보는 눈 — X선 감약 · CT 재구성 · 초음파 반사 · MRI 공명 · 영상 품질과 선량 · 한국/미국/일본 현황 · R&amp;E 10선 · 창의 10선 · 발명 10선 · 고등학교 「파동과 정보통신」 「전자기」 「물질과 에너지」</span>
+      <span class="spacer"></span>
+      <div class="levelbar" role="group" aria-label="학습 수준 선택">
+        <span class="lb">수준</span>
+        <button type="button" class="lv-pill" data-lv="mid"  aria-pressed="false">중등</button>
+        <button type="button" class="lv-pill" data-lv="high" aria-pressed="true">고등</button>
+        <button type="button" class="lv-pill" data-lv="uni"  aria-pressed="false">대학</button>
+        <button type="button" class="btn sm" id="btnReset" title="학습 기록 초기화">↺ 초기화</button>
+      </div>
+      <!-- 테마 5종 전환 UI — 엔진(THEMES/COL/applyTheme)이 이미 갖춰져 있으므로 버튼만 있으면 동작합니다.
+           수정 금지 구역은 아니지만 클래스·data-th 값은 그대로 두세요. -->
+      <div class="levelbar" role="group" aria-label="화면 테마 선택">
+        <span class="lb">테마</span>
+        <button type="button" class="th-pill" data-th="deep"  aria-pressed="true"  title="심우주(기본, 어두운 화면)">🌌</button>
+        <button type="button" class="th-pill" data-th="board" aria-pressed="false" title="칠판(수업용, 초록 칠판)">🖍️</button>
+        <button type="button" class="th-pill" data-th="paper" aria-pressed="false" title="종이(인쇄용, 흰 배경)">📄</button>
+        <button type="button" class="th-pill" data-th="sepia" aria-pressed="false" title="양피지(세피아, 따뜻한 색)">📜</button>
+        <button type="button" class="th-pill" data-th="sky"   aria-pressed="false" title="하늘(밝은 파랑)">🌤️</button>
+      </div>
+    </div>
+    <nav class="tabbar" id="tabbar" role="tablist" aria-label="학습 단계 탭"></nav>
+  </div>
+</header>
+<main class="wrap" id="main">

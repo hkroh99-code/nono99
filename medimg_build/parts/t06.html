@@ -1,0 +1,100 @@
+<!-- ═══ TAB 6 — ⚖️ 원리⑤ 영상 품질 · 선량 · 안전 — 더 잘 보려면 무엇을 치르나? ═══ -->
+<section class="panel" id="tab6" role="tabpanel" aria-labelledby="tabbtn6" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>⚖️ 원리⑤ 영상 품질 · 선량 · 안전 — 더 잘 보려면 무엇을 치르나?</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 영상의 질은 <b>대조도 · 잡음 · 해상도</b>로 말합니다. 병변이 보이려면 대조 대 잡음비 $\mathrm{CNR}$ 이 충분히(대략 4 ~ 5 이상) 커야 합니다. CT 에서 잡음을 줄이려면 선량을 늘려야 하는데 $\sigma\propto1/\sqrt{\text{선량}}$ 이므로 <b>잡음을 ½ 로 하려면 선량이 4 배</b>가 듭니다. 그래서 의료에서는 <b>정당화</b>(검사의 이득이 위험보다 큰가?)와 <b>최적화 ALARA</b>(합리적으로 달성 가능한 한 낮게)가 기본 원칙입니다. MRI 에는 자기장 안전, 초음파에는 열 · 공동화 안전이 따로 있습니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 통계의 √N 법칙과 위험 비교</div>
+      측정의 불확실성은 $1/\sqrt N$ 로 줄어듭니다(여론조사 표본 4 배 → 오차 ½). 광자 수가 선량에 비례하므로 영상 잡음도 같은 법칙을 따릅니다. 방사선의 위험은 숫자의 크기(<b>mSv</b>)로 비교하며, 자연에서 받는 연간 선량(세계 평균 약 2.4 mSv)이 좋은 기준점입니다. 다만 같은 선량이라도 검사의 <b>이득</b>(진단 정보)과 함께 판단해야 합니다.
+      <div class="bridge"><span class="st old">√N 법칙</span><span class="ar">→</span><span class="st">잡음 · CNR</span><span class="ar">→</span><span class="st">선량 · mSv</span><span class="ar">→</span><span class="st">정당화 · ALARA</span><span class="ar">→</span><span class="st new">안전한 선택</span></div>
+    </div>
+    <div class="poe" data-q="CT 검사에서 같은 부위의 영상 잡음을 절반으로 줄이려면 선량(mAs)은 대략 몇 배가 필요할까?"
+         data-opts="½ 배||2 배||4 배||16 배"
+         data-ans="2"
+         data-exp="잡음 $\sigma\propto1/\sqrt{\text{선량}}$ 이므로 잡음을 ½ 로 하려면 선량을 <b>4 배</b>로 해야 합니다. 그래서 필요 이상으로 선명한 영상을 얻으려고 선량을 올리는 것은 효율이 나쁜 거래입니다. 오른쪽 시뮬레이션에서 mAs 를 바꿔 잡음과 CNR 을 확인하세요."></div>
+    <div id="t6-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 선량의 크기 — 검사마다 100 배 이상 차이 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="검사별 유효선량의 로그 막대그래프. 치과 X선 0.005, 흉부 X선 0.1, 두부 CT 2, 흉부 CT 7, 복부 CT 9, 연간 자연방사선 2.4 mSv 이며 초음파와 MRI 는 이온화 방사선이 없다.">
+        {{FIG:dose}}
+      </svg>
+    </div>
+    <div class="figcap">그림 6-1. 검사별 유효선량(어림, 세로 로그 눈금) — 단순 X선은 자연방사선 며칠 ~ 몇 주 분량, CT 는 몇 달 ~ 몇 년 분량이다. 초음파 · MRI 는 이온화 방사선이 없다. 값은 장비 · 프로토콜 · 체격에 따라 달라지므로 <b>참고용 어림</b>이다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 대조도 · 대조 대 잡음비</b>병변과 배경 신호의 차이 $\Delta S$ 를 잡음 $\sigma$ 로 나눈 $\mathrm{CNR}=\Delta S/\sigma$. 대략 4 ~ 5 이상이어야 안정적으로 보인다(로즈 기준).</div>
+      <div class="part"><b>② 공간 해상도</b>얼마나 가까운 두 점을 구별하나. 화소 크기 · 절편 두께 · 필터 · 움직임 번짐이 정한다.</div>
+      <div class="part"><b>③ 유효선량(mSv)</b>장기별 위험 가중을 한 값으로 요약한 선량. 흉부 X선 약 0.1 · 두부 CT 약 2 · 복부 CT 약 8 안팎 · 자연방사선 연 약 2.4.</div>
+      <div class="part"><b>④ ALARA · 정당화</b>검사가 꼭 필요한지(정당화), 필요하다면 영상 목적에 맞는 가장 낮은 선량으로(최적화). 임신 · 소아는 특히 신중.</div>
+      <div class="part"><b>⑤ MRI 안전</b>강한 자기장에 끌려오는 금속(투사체 효과), 심박조율기 · 일부 임플란트, 소음 · RF 가열. 검사 전 금속 점검표는 필수.</div>
+      <div class="part"><b>⑥ 초음파 안전</b>이온화 방사선은 없지만 열 · 공동화 가능성이 있어 「진단에 필요한 만큼」만 쓴다. 태아 검사에서는 특히 출력 · 시간에 유의.</div>
+    </div>
+    <div class="h4">🧪 교실 활동 — 선량 · 잡음의 거래를 계산과 모의실험으로 체험 (실제 방사선 사용 없음)</div>
+    <div class="steps">
+      <div class="step">스마트폰 영상을 어두운 곳에서 찍어 같은 장면의 잡음(픽셀 표준편차)을 잰다. 프레임을 4 장 · 16 장 평균하면 잡음이 ½ · ¼ 이 되는지 확인한다(R09 · 17번 탭).</div>
+      <div class="step">시뮬레이션에서 mAs 를 50 · 100 · 200 · 400 으로 바꾸며 병변이 보이기 시작하는 CNR 값을 읽는다.</div>
+      <div class="step">절편 두께를 얇게 하면 해상도는 좋아지는데 같은 mAs 에서 잡음은 어떻게 되는지 확인한다.</div>
+      <div class="step">검사 목록(흉부 X선 · 두부 CT · 복부 CT 등)을 고르고 합계 선량이 자연방사선 며칠 분량인지 계산한다(C06 · I06).</div>
+      <div class="step">MRI 안전 점검표를 직접 만들고 어떤 질문이 필요한지 이유를 쓴다(C04 · I05).</div>
+    </div>
+    <div class="easy">
+      <div class="et">🔊 쉽게 이해하기 — 소음 속에서 대화하기</div>
+      시끄러운 카페에서 친구와 대화한다고 생각해 보세요. 말소리(신호)를 크게 하거나, 주변 소음이 작아지면 잘 들립니다. 신호를 2 배 키우려면 큰 노력이 들 듯, 영상의 잡음을 반으로 줄이려면 방사선(광자)을 4 배 써야 합니다. 그래서 의사는 「꼭 필요한 만큼만 선명하게」 찍습니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“선명한 영상을 위해서는 선량을 마음껏 늘려도 된다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>선량을 4 배 늘려도 잡음은 <strong>겨우 ½</strong> 입니다. 진단에 충분한 화질에서 멈추는 <strong>ALARA</strong> 가 환자의 이득을 지킵니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 영상 품질과 선량 — mAs · 절편 두께</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">관전류 시간 (상대 mAs)</span><span class="vl" id="t6-mV">—</span></div>
+          <input type="range" id="t6-m" min="20" max="400" step="10" value="100" aria-label="관전류 시간 (상대 mAs)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">절편 두께 t</span><span class="vl" id="t6-zV">—</span></div>
+          <input type="range" id="t6-z" min="1" max="10" step="1" value="5" aria-label="절편 두께 t">
+        </div>
+        <div class="row"><button type="button" class="btn sm" id="t6-p0">저선량 (mAs 40)</button><button type="button" class="btn sm" id="t6-p1">표준 (mAs 200)</button><button type="button" class="btn sm" id="t6-go">🎲 잡음 새로 뽑기</button></div>
+        <div class="kv">
+          <div class="cell a"><span class="k">영상 잡음 σ</span><span class="v" id="t6-oS">—</span></div>
+          <div class="cell g"><span class="k">병변 CNR (35 HU 차이)</span><span class="v" id="t6-oC">—</span></div>
+          <div class="cell v2"><span class="k">유효선량(어림)</span><span class="v" id="t6-oD">—</span></div>
+          <div class="cell r"><span class="k">자연방사선 환산</span><span class="v" id="t6-oB">—</span></div>
+          <div class="cell "><span class="k">병변 보임?</span><span class="v" id="t6-oJ">—</span></div>
+        </div>
+        <p class="tiny">모형 : 머리 CT 팬텀 + 가우시안 잡음 $\sigma=12\sqrt{(200/\mathrm{mAs})(5/t)}$ HU(교육용 어림). 선량 $E\approx2\times(\mathrm{mAs}/200)$ mSv(두부 CT 기본값 2 mSv 기준). 병변 대비 35 HU, 로즈 기준 CNR ≥ 4. 실제 선량은 장비 · 프로토콜 · 체격 · 스캔 길이에 따라 크게 다릅니다.</p>
+      </div>
+      <div class="poe" data-q="연간 자연방사선(약 2.4 mSv)은 흉부 X선(약 0.1 mSv)의 대략 몇 번 분량일까?"
+           data-opts="약 2 번||약 10 번||약 24 번||약 240 번"
+           data-ans="2"
+           data-exp="$2.4/0.1=24$ — <b>약 24 번</b> 분량입니다(자연방사선은 라돈 · 우주선 · 음식 · 땅 등에서 옴). 흉부 X선 한 장은 자연방사선 약 2 주 분량이라는 뜻이며, 검사의 이득이 위험보다 훨씬 클 때가 대부분입니다. 오른쪽 그래프에서 환산 값을 확인하세요."></div>
+      <div class="hintbox" data-hints="① 먼저 표준(mAs 200)에서 병변이 보이는지 확인하세요. CNR 값과 판정 칸을 같이 보세요.||② mAs 를 40 까지 낮추면 CNR 이 어떻게 변하나요? 병변이 사라지는 mAs 를 찾아보세요.||③ 절편 두께를 1 mm 로 하면 잡음은? 반대로 10 mm 로 하면? 해상도와의 거래를 말해 보세요.||④ 아래 그래프의 CNR 곡선이 로즈 기준선과 만나는 mAs 가 이 병변을 보기 위한 최소 선량입니다."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t6" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t6-cv" data-pngname="image-quality-dose">🖼 PNG</button></div>
+          <canvas id="t6-cv" role="img" aria-label="잡음이 있는 CT 팬텀 영상. 선량과 절편 두께에 따라 병변이 보이거나 사라진다" style="height:340px"></canvas>
+          <div class="cv-cap">왼쪽 : 지금 설정의 CT 영상(뇌 창 WL 35 · WW 100). 가운데 오른쪽의 밝은 점이 병변(+65 HU)입니다. 잡음이 커지면 점이 묻혀 보이지 않습니다. 오른쪽 : 같은 영상에서 선량을 4 배로 한 경우(비교).</div>
+        </div>
+        <div id="t6-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t6-cv2" role="img" aria-label="선량 대 CNR 그래프와 검사별 선량 비교 막대" style="height:330px"></canvas>
+          <div class="cv-cap">📊 위 : 선량(mAs) 대 병변 CNR — 곡선이 로즈 기준 4 를 넘는 곳부터 병변이 보입니다. 아래 : 지금 검사 선량과 흉부 X선 · 두부 CT · 자연방사선(연)의 비교(로그 막대).</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$\mathrm{CNR}=\dfrac{|S_{\text{병변}}-S_{\text{배경}}|}{\sigma}$. 잡음 $\sigma\propto\dfrac{1}{\sqrt{\mathrm{mAs}\cdot t}}$ → 선량 4 배 = 잡음 ½. 같은 CNR 에서 절편 두께를 ½ 로 하려면 mAs 를 2 배.</p><p>유효선량 $E=\sum_T w_T H_T$ (조직 가중계수 $w_T$ 의 합 1). 단위 sievert. 예 : 두부 CT 2 mSv ≈ 자연방사선 약 8 개월분(2.4 mSv/년 기준).</p><p class="lv-uni">교과서 밖 : 방사선 위험의 선형 무문턱(LNT) 모형은 낮은 선량에서도 위험이 선량에 비례한다고 가정하며 국제방사선방호위원회(ICRP)가 방어 목적으로 쓴다. 암 위험 계수는 약 5 %/Sv 로 어림하며, 낮은 선량의 실제 위험은 불확실하다 — 그래서 정당화와 최적화가 원칙이다(I06).</p>
+      </div>
+    </div>
+  </div>
+</section>
