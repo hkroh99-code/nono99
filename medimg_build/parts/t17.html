@@ -1,16 +1,16 @@
 <section class="panel" id="tab17" role="tabpanel" aria-labelledby="tabbtn17" tabindex="0">
   <div class="card">
-    <div class="h3"><span class="badge b-high">고등/수능</span><span class="badge b-exp">실험</span><span class="badge b-poe">POE</span>📊 [종합3] 복귀 정밀도 — 착륙 오차의 분포</div>
-    <div class="goal">🎯 이 실험에서 하는 것 — 같은 조건에서 파라포일 복귀 비행을 <b>여러 번</b> 반복해 착륙 오차의 <b>분포</b>(평균 · 중앙값 · 90 % 값 · 성공률)를 구합니다. 한 번의 성공 · 실패가 아니라 <b>통계로 성능을 말하는 법</b>을 배웁니다. 결과는 <b>보고서의 실험 D</b>(점 · 분포형)가 됩니다.</div>
+    <div class="h3"><span class="badge b-high">고등/수능</span><span class="badge b-exp">실험</span><span class="badge b-poe">POE</span>📊 [종합3] 잡음과 평균 — SNR 의 √N 법칙</div>
+    <div class="goal">🎯 이 실험에서 하는 것 — 같은 대상을 <b>N 장 찍어 평균</b>하면 신호 대 잡음비(SNR)가 얼마나 좋아지는지 측정합니다. $\mathrm{SNR}$ 대 $\sqrt N$ 그래프는 <b>원점을 지나는 직선</b>이고 기울기가 한 장의 SNR 입니다. 결과는 <b>보고서의 실험 D</b>가 됩니다. (CT · MRI · 초음파의 평균 · 선량 · 촬영 시간 거래의 핵심)</div>
     <div class="organizer">
-      <div class="ot">🧭 선행조직자 — 한 번이 아니라 분포</div>
-      바람 · GPS 잡음 때문에 착륙 위치는 매번 다릅니다. 성능은 「평균 오차」와 「얼마나 흩어지는가」, 그리고 <b>중앙값(CEP₅₀ : 절반이 들어오는 반경)</b> · 90 % 값 · 성공률로 말합니다. 시험 횟수가 늘수록 이 값들이 안정됩니다.
-      <div class="bridge"><span class="st">한 번의 착륙 오차</span><span class="ar">→</span><span class="st">여러 번의 분포</span><span class="ar">→</span><span class="st">중앙값 · 90 % · 성공률</span><span class="ar">→</span><span class="st new">신뢰할 수 있는 성능</span></div>
+      <div class="ot">🧭 선행조직자 — 평균은 잡음을 √N 만큼 줄인다</div>
+      신호는 쌓이면 N 배, 서로 독립인 잡음은 √N 배로만 커지므로 평균하면 SNR 은 √N 배 좋아집니다. 화질을 2 배 좋게 하려면 촬영 시간(또는 선량)이 <b>4 배</b> 필요합니다 — 의료영상에서 선량과 화질의 거래.
+      <div class="bridge"><span class="st">신호 N 배</span><span class="ar">→</span><span class="st">잡음 √N 배</span><span class="ar">→</span><span class="st">SNR ∝ √N</span><span class="ar">→</span><span class="st new">선량 4 배 = 화질 2 배</span></div>
     </div>
-    <div class="poe" data-q="조건이 같은 복귀 비행을 10 번 했더니 평균 오차가 18 m, 중앙값이 12 m 였다. 이 분포의 모양은?"
-         data-opts="좌우 대칭이다||오른쪽(큰 오차)으로 길게 꼬리가 늘어진다||왼쪽으로 꼬리가 길다||평균과 중앙값은 항상 같다"
+    <div class="poe" data-q="한 장의 SNR 이 3 인 영상을 16 장 평균하면 SNR 은 대략?"
+         data-opts="6||12||24||48"
          data-ans="1"
-         data-exp="오차(거리)는 0 이상이고 가끔 큰 값이 나오므로 <b>오른쪽으로 꼬리가 긴</b> 분포(레일리 분포 모양)입니다. 큰 값이 평균을 끌어올려 평균 &gt; 중앙값이 됩니다. 그래서 오차에는 평균보다 <b>중앙값 · 90 % 값</b>을 함께 보고합니다."></div>
+         data-exp="$\mathrm{SNR}_N=\sqrt N\cdot\mathrm{SNR}_1=4\times3=12$. 16 배 시간을 써도 화질은 4 배 좋아질 뿐입니다."></div>
     <div id="k17-misc"></div>
   </div>
   <div class="grid2">
@@ -18,16 +18,8 @@
       <div class="card">
         <div class="h3">🎛 가상 실험실 — 조건을 정하고 [측정 기록]</div>
         <div class="ctrl">
-          <div class="ctrl-top"><span class="nm">활공비 L/D</span><span class="vl" id="k17-LDV">—</span></div>
-          <input type="range" id="k17-LD" min="0" max="4" step="0.25" value="2" aria-label="활공비 L/D">
-        </div>
-        <div class="ctrl">
-          <div class="ctrl-top"><span class="nm">바람(동쪽) 세기</span><span class="vl" id="k17-WV">—</span></div>
-          <input type="range" id="k17-W" min="0" max="8" step="0.5" value="4" aria-label="바람(동쪽) 세기">
-        </div>
-        <div class="ctrl">
-          <div class="ctrl-top"><span class="nm">GPS 잡음 σ</span><span class="vl" id="k17-GV">—</span></div>
-          <input type="range" id="k17-G" min="0" max="10" step="0.5" value="3" aria-label="GPS 잡음 σ">
+          <div class="ctrl-top"><span class="nm">평균 프레임 수 N</span><span class="vl" id="k17-NfV">—</span></div>
+          <input type="range" id="k17-Nf" min="1" max="64" step="1" value="8" aria-label="평균 프레임 수 N">
         </div>
         <div class="row">
           <button type="button" class="btn sm" id="k17-new">🎲 새 조건(숨은 값 다시 뽑기)</button>
@@ -35,38 +27,38 @@
           <button type="button" class="btn sm" id="k17-rec10">📏×5 연속 기록</button>
           <button type="button" class="btn sm rd" id="k17-clr">🧹 측정 초기화</button>
         </div>
-        <div class="kv"><div class="cell a"><span class="k">시도 횟수</span><span class="v" id="k17-oN">—</span></div><div class="cell g"><span class="k">평균 오차</span><span class="v" id="k17-oMe">—</span></div><div class="cell v2"><span class="k">중앙값(CEP₅₀)</span><span class="v" id="k17-oMd">—</span></div><div class="cell r"><span class="k">90 % 값</span><span class="v" id="k17-oP9">—</span></div><div class="cell "><span class="k">성공률(≤20 m)</span><span class="v" id="k17-oOk">—</span></div></div>
-        <p class="tiny">모형 : 방출 (120, 80) m · 고도 300 m · 침하 5 m/s · 조향 선회율 1 rad/s · 풍속 평균 ± 0.8 m/s(동쪽) · 남북 0.4 배의 변동. 한 번 [측정 기록]하면 한 번의 비행이 시뮬레이션됩니다. 목표 20 m 안에 착륙하면 성공.</p>
+        <div class="kv"><div class="cell a"><span class="k">이론 SNR</span><span class="v" id="k17-oS">—</span></div><div class="cell g"><span class="k">측정 SNR</span><span class="v" id="k17-oM">—</span></div><div class="cell v2"><span class="k">추정 SNR₁(기울기)</span><span class="v" id="k17-oF">—</span></div><div class="cell r"><span class="k">필요한 노력 비</span><span class="v" id="k17-oR">—</span></div><div class="cell "><span class="k">기록 개수</span><span class="v" id="k17-oN">—</span></div></div>
+        <p class="tiny">모형 : 측정 SNR = SNR₁ √N (1 + 0.07 ε), ε 는 가우시안 잡음(측정 SNR 자체의 흔들림). 한 장의 숨은 SNR₁ 은 [새 조건]마다 2 ~ 5 에서 뽑힙니다.</p>
       </div>
       <div class="card">
         <div class="h4">📋 측정 기록표 <span class="tiny" id="k17-cnt">0개</span></div>
         <div class="tblscroll"><table id="k17-tbl"><thead></thead><tbody></tbody></table></div>
         <p class="tiny">기록한 값은 <b>실험보고서(19번 탭)</b>의 표 · 그래프 · 결과로 자동으로 이어집니다. 5개 이상 모으세요.</p>
       </div>
-      <div class="hintbox" data-hints="① [측정 기록]을 1 번만 눌러 보고 성공 · 실패를 말해 보세요. 이제 10 번 이상 모으면 결론이 달라지나요?||② 평균과 중앙값이 같은가요? 히스토그램의 꼬리 모양을 보세요.||③ GPS 잡음을 0 으로 하면 분포가 어떻게 달라지나요? 바람이 활공 속도보다 세면(L/D × 5 m/s &lt; 바람) 어떻게 되나요?||④ 같은 조건에서 시도 횟수 5 번과 30 번의 중앙값 값이 얼마나 흔들리는지 비교하세요."></div>
+      <div class="hintbox" data-hints="① N 을 1, 4, 9, 16, 25, 49 로 바꾸며 [측정 기록] 하세요(√N 이 정수가 되도록).||② SNR 대 √N 점이 원점을 지나는 직선인가요? 기울기가 한 장의 SNR 인가요?||③ SNR 을 2 배로 하려면 N 을 몇 배로 해야 하나요? 선량이면 어떤 뜻인가요?||④ 평균해도 잡음이 √N 으로 줄지 않는 경우(잡음이 서로 독립이 아닐 때)를 생각해 보세요."></div>
     </div>
     <div>
       <div class="card tight">
         <div class="cv-wrap">
-          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k17" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k17-cv" data-pngname="cansat-synth-17">🖼 PNG</button></div>
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k17" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k17-cv" data-pngname="medimg-synth-17">🖼 PNG</button></div>
           <canvas id="k17-cv" role="img" aria-label="가상 실험 장면" style="height:300px"></canvas>
-          <div class="cv-cap">위에서 본 착륙 지점 분포 : 점 = 이번 세션의 착륙 위치, 선 = 마지막 비행 경로, 초록 원 = 목표 20 m. 흰 원 = CEP₅₀(절반이 들어오는 반경).</div>
+          <div class="cv-cap">왼쪽 : 한 장(잡음 많음), 오른쪽 : N 장 평균(깨끗). 같은 팬텀 · 같은 신호입니다(10 초 반복).</div>
         </div>
         <div id="k17-time"></div>
         <div class="cv-wrap" style="margin-top:9px">
           <canvas id="k17-cv2" role="img" aria-label="측정 결과 그래프" style="height:320px"></canvas>
-          <div class="cv-cap">📊 위 : 착륙 오차 히스토그램(막대) · 아래 : 누적 분포(계단) — 중앙값 · 90 % 값 · 성공 기준 20 m 표시.</div>
+          <div class="cv-cap">📊 가로 $\sqrt N$ · 세로 SNR. 빨강 = 내 회귀직선, 흰 점선 = 숨은 참 직선. 기울기 = 한 장의 SNR.</div>
         </div>
       </div>
       <div class="card lv-high">
         <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
-        <p>CEP₅₀ 은 오차 크기의 중앙값. 오차의 두 방향 성분이 같은 크기 $\sigma$ 의 정규분포라면(레일리 분포) $\mathrm{CEP}_{50}=1.1774\,\sigma$, $90\,\%$ 값 $=2.146\,\sigma$. 평균 $=1.253\,\sigma$. 표본 평균의 표준오차는 $\dfrac{s}{\sqrt n}$ — 시도가 4 배면 불확실성이 ½.</p><p class="lv-uni">교과서 밖 : 바람에 의한 편향(한쪽으로 치우침)이 있으면 레일리가 아니라 비중심 분포이며, CEP 는 편향까지 포함해 정의합니다. 몬테카를로 시뮬레이션(발명 02 · 창의 09)으로 수백 번 반복해 분포를 얻는 방법도 같습니다.</p>
+        <p>$\mathrm{SNR}_N=\sqrt N\,\mathrm{SNR}_1$ → 기울기 $s=\mathrm{SNR}_1$. 필요한 평균 장 수 $N=(\mathrm{SNR}_목표/\mathrm{SNR}_1)^2$. 예 : $s=3.0$ 에서 목표 12 → $N=16$.</p><p class="lv-uni">교과서 밖 : X선 · CT 는 광자 수 $N_\gamma$ 의 포아송 잡음이라 $\mathrm{SNR}\propto\sqrt{N_\gamma}\propto\sqrt{\text{선량}}$. MRI 는 신호 평균 횟수(NEX) $\sqrt{\mathrm{NEX}}$. 상관된 잡음에서는 평균 효과가 줄어듭니다.</p>
       </div>
     </div>
   </div>
   <div class="card">
     <div class="h4">🧪 이 실험을 진짜로 하려면</div>
-    <div class="steps"><div class="step"><b>준비</b> : 조향 파라포일이 없으면 「일반 낙하산 + 같은 방출 위치 · 같은 목표」로 시작해도 좋다. 줄자 · 깃발 · GPS 기록 · 풍속계.</div><div class="step"><b>반복</b> : 같은 조건(방출 위치 · 높이 · 풍향)에서 최소 10 번 방출하고 착륙 위치(목표와의 거리)를 줄자 · GPS 로 기록한다.</div><div class="step"><b>분포</b> : 거리를 구간(0 ~ 10, 10 ~ 20 …)으로 나누어 히스토그램과 누적 분포를 그린다.</div><div class="step"><b>통계</b> : 평균 · 표준편차 · 중앙값 · 90 % 값 · 성공률을 구하고, 시도 횟수에 따른 안정성을 논의한다.</div><div class="step"><b>비교</b> : 조향 장치를 켠 경우와 끈 경우의 중앙값을 비교해 효과를 숫자로 정리한다(발명 02).</div></div>
+    <div class="steps"><div class="step"><b>준비</b> : 스마트폰으로 어두운 장면(저조도)을 같은 위치에서 고정해 연속 촬영(삼각대).</div><div class="step"><b>측정</b> : 한 장의 관심영역(ROI) 평균 밝기 대비 표준편차로 SNR₁ 을 구한다(R09 참고).</div><div class="step"><b>평균</b> : N = 1, 4, 9, 16 장을 평균한 영상의 SNR 을 계산한다(파이썬 numpy).</div><div class="step"><b>그래프</b> : SNR 대 √N 점을 찍고 기울기가 SNR₁ 과 일치하는지 본다.</div><div class="step"><b>결론</b> : 선량 · 시간 · 화질 거래와 한계(움직임, 비독립 잡음)를 서술한다.</div></div>
     
   </div>
 </section>

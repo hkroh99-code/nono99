@@ -3,7 +3,7 @@
     <div class="h3"><span class="badge b-exp">실험보고서</span>📝 실험보고서 작성 &amp; 인쇄 / PDF 저장</div>
     <div class="goal">🎯 이 탭에서 하는 것 — 정식 실험보고서를 작성합니다. 보고서는 <b>부분마다 새 장</b>에서 시작합니다(표지·실험 A·실험 B·실험 C·실험 D·결론 = 6부분). 할 말이 많아 <b>8쪽까지 늘어나도 괜찮습니다.</b>
       <b>실험 A · C · D</b> 는 [종합] 탭(15 · 16 · 17번)에서 측정할 때마다 <b>자동으로</b> 표·그래프가 채워지고,
-      <b>실험 B</b> 는 교실에서 커피 필터를 떨어뜨려 <b>장수에 따른 낙하 시간을 직접 재고</b> <b>학생이 직접 적고 직접 계산</b>합니다.
+      <b>실험 B</b> 는 교실에서 투명 OHP 필름 여러 장을 겹쳐 <b>장수에 따른 빛의 세기(조도)를 직접 재고</b> <b>학생이 직접 적고 직접 계산</b>합니다.
       목적·가설·오차 분석·고찰은 모두 직접 쓰는 칸입니다. 다 쓰면 인쇄하거나 PDF로 저장하세요.</div>
     <div class="row">
       <button type="button" class="btn sm" id="t11-import">🔄 최신 측정 데이터 불러오기</button>
@@ -25,8 +25,8 @@
     <!-- ══════════ 1부분 : 표지 · 목적 · 이론 · 가설 ══════════ -->
     <div class="card report-paper rpt-page">
       <div style="text-align:center;border-bottom:2px solid #334155;padding-bottom:10px;margin-bottom:14px">
-        <div style="font-size:1.3rem;font-weight:800">캔위성 &mdash; 실험보고서</div>
-        <div style="font-size:.98rem;margin-top:4px;color:#334155">낙하산의 항력계수 · 기압의 스케일 높이와 기온 · 복귀 착륙의 정밀도 재기</div>
+        <div style="font-size:1.3rem;font-weight:800">의료영상진단기 &mdash; 실험보고서</div>
+        <div style="font-size:.98rem;margin-top:4px;color:#334155">빛 · X선의 감약계수 · 초음파의 음속과 깊이 · 평균과 잡음(SNR) 재기</div>
       </div>
       <div class="rgrid">
         <label class="report-field">학교 / 학년 <input type="text" id="t11-school"></label>
@@ -38,70 +38,70 @@
       </div>
 
       <h4>1. 실험 목적 <span class="tiny" style="font-weight:400">— 무엇을 확인하려는지 내 말로 쓰기</span></h4>
-      <textarea id="t11-purpose" rows="3">낙하산 달린 물체의 종단속도를 재어 항력계수(Cd)를 구하고, 높이에 따른 기압 변화에서 공기의 스케일 높이와 평균 기온을 구하며, 복귀 비행의 착륙 오차를 분포(중앙값 · 90 % 값 · 성공률)로 나타낸다. 모델의 가정과 측정의 한계를 논의한다.</textarea>
+      <textarea id="t11-purpose" rows="3">두께에 따른 투과 세기에서 감약계수 μ 와 반가층(HVL)을 구하고, 초음파의 왕복 시간에서 조직의 음속을 구하며, 평균 프레임 수에 따른 SNR 의 √N 법칙을 확인한다. 모델의 가정과 측정의 한계, 이 자료가 실제 방사선이 아닌 안전한 유사 실험임을 논의한다.</textarea>
 
       <h4>2. 이론 &mdash; 아는 것을 정리하기</h4>
       <div class="rpt-hint">아래 식의 빈칸을 채우고, 왜 그렇게 되는지 오른쪽 칸에 한 줄로 설명해 보자.</div>
       <table>
         <thead><tr><th style="width:34%">관계식</th><th style="width:22%">빈칸 채우기</th><th>왜 그런가? (내 설명)</th></tr></thead>
         <tbody>
-          <tr><td>종단속도에서 중력 mg = ( &nbsp; ) (항력)</td>
+          <tr><td>램버트–비어 법칙 : I = I₀ e<sup>( &nbsp; )</sup></td>
               <td><input type="text" id="t11-f1" class="rpt-blank" placeholder="?"></td>
-              <td><input type="text" id="t11-w1" placeholder="예 : 가속도가 0 이므로 알짜힘이 0 …"></td></tr>
-          <tr><td>질량이 같고 낙하산 면적이 4 배이면 종단속도는 ( &nbsp; ) 배</td>
+              <td><input type="text" id="t11-w1" placeholder="예 : 얇은 층마다 같은 비율로 흡수되므로 …"></td></tr>
+          <tr><td>반가층 HVL = ( &nbsp; ) ÷ μ</td>
               <td><input type="text" id="t11-f2" class="rpt-blank" placeholder="?"></td>
               <td><input type="text" id="t11-w2"></td></tr>
-          <tr><td>기압 : P = P₀ e<sup>( &nbsp; )</sup></td>
+          <tr><td>초음파 깊이 : d = ( &nbsp; ) × c × t</td>
               <td><input type="text" id="t11-f3" class="rpt-blank" placeholder="?"></td>
               <td><input type="text" id="t11-w3"></td></tr>
-          <tr><td>착륙 오차의 절반이 들어오는 반경 = ( &nbsp; ) (약자 CEP₅₀)</td>
+          <tr><td>N 장을 평균한 영상의 SNR = SNR₁ × ( &nbsp; )</td>
               <td><input type="text" id="t11-f4" class="rpt-blank" placeholder="?"></td>
               <td><input type="text" id="t11-w4"></td></tr>
         </tbody>
       </table>
 
       <h4>3. 가설(예상) &mdash; 측정하기 <b>전에</b> 쓰기</h4>
-      <div class="rpt-q">① 같은 낙하산에서 질량을 4 배로 하면 종단속도는 몇 배일까? 왜 그렇게 되는가?</div>
-      <textarea id="t11-hyp1" rows="2" placeholder="예상 : … 배일 것이다. 왜냐하면 종단속도는 …"></textarea>
-      <div class="rpt-q">② 높이 올라가면 기압은 직선으로 줄어들까, 곡선으로 줄어들까? 기온이 높으면 기압이 줄어드는 속도는?</div>
+      <div class="rpt-q">① 같은 흡수체의 두께를 2 배로 하면 투과 세기는 몇 배가 될까? 왜 그렇게 되는가?</div>
+      <textarea id="t11-hyp1" rows="2" placeholder="예상 : … 일 것이다. 왜냐하면 투과 세기는 …"></textarea>
+      <div class="rpt-q">② 같은 시간 동안 초음파가 갔다 오는 깊이는 음속이 빠른 조직과 느린 조직 중 어느 쪽이 더 깊을까? 음속을 잘못 가정하면 영상에서 깊이는 어떻게 될까?</div>
       <textarea id="t11-hyp2" rows="2"></textarea>
-      <div class="rpt-q">③ 같은 조건으로 10 번 날리면 착륙 오차는 모두 같을까? 평균과 중앙값 중 무엇이 더 대표적일까?</div>
+      <div class="rpt-q">③ 같은 영상을 16 장 평균하면 잡음은 몇 배가 될까? 화질을 2 배 좋게 하려면 선량(시간)은 몇 배가 필요할까?</div>
       <textarea id="t11-hyp3" rows="2"></textarea>
-      <div class="rpt-foot"><span class="rpt-no">[1 / 6]</span> &nbsp;·&nbsp; 캔위성 실험보고서</div>
+      <div class="rpt-foot"><span class="rpt-no">[1 / 6]</span> &nbsp;·&nbsp; 의료영상 실험보고서</div>
     </div>
 
     <!-- ══════════ 2부분 : 실험 A (자동 수집) ══════════ -->
     <div class="card report-paper rpt-page">
-      <h4>4. 실험 A &mdash; 낙하산으로 재는 항력계수 <span class="tiny" style="font-weight:400">(데이터 자동 수집)</span></h4>
+      <h4>4. 실험 A &mdash; 감약계수 μ 재기(램버트–비어) <span class="tiny" style="font-weight:400">(데이터 자동 수집)</span></h4>
       <div class="rpt-hint"><b>[15. 종합1]</b> 탭에서 <b>[측정 기록]</b> 을 누르면 아래 표 · 그래프가 자동으로 채워집니다(5개 이상).</div>
 
       <div class="rpt-q"><b>실험 방법</b> &mdash; 내가 한 순서대로 쓰기</div>
-      <textarea id="t11-methodA" rows="3">① 낙하산 달린 물체의 질량 m 과 지름 D 를 바꾸어 종단속도 구간(3 m)의 통과 시간을 쟀다
-② v = L/t, v² 와 m/A 를 계산해 표에 모았다
-③ v² 대 m/A 직선의 기울기 s 로 Cd = 2g/(ρ s) 를 구했다</textarea>
+      <textarea id="t11-methodA" rows="3">① 흡수체 두께 x 를 바꾸어 통과한 광자 수(세기) I 를 쟀다
+② ln(I₀/I) 를 계산해 표에 모았다
+③ ln(I₀/I) 대 x 직선의 기울기로 μ 를 구하고 HVL = ln2/μ 를 계산했다</textarea>
 
       <div class="rpt-q"><b>측정 데이터</b> <span class="tiny" id="t11-cnt2">0개</span></div>
       <div style="overflow-x:auto"><table id="t11-tbl"><thead></thead><tbody></tbody></table></div>
 
-      <div class="rpt-q"><b>그래프와 회귀직선</b> (가로 m/A · 세로 v²)</div>
+      <div class="rpt-q"><b>그래프와 회귀직선</b> (가로 두께 x · 세로 ln(I₀/I))</div>
       <canvas id="t11-cv" width="640" height="225" style="width:100%;max-width:560px;height:200px;border:1px solid #d3dae3;border-radius:6px"></canvas>
 
       <div class="rpt-q"><b>결과</b></div>
       <div id="t11-result" style="font-size:.88rem"></div>
-      <div class="rpt-q">이 결과를 보고 알게 된 것을 한두 문장으로 쓰자. (세로축을 v 가 아니라 v² 로 잡은 까닭은? 참 Cd 와의 차이는 어디서 왔을까?)</div>
+      <div class="rpt-q">이 결과를 보고 알게 된 것을 한두 문장으로 쓰자. (세로축을 I 가 아니라 ln(I₀/I) 로 잡은 까닭은? 참 μ 와의 차이는 어디서 왔을까?)</div>
       <textarea id="t11-obsA" rows="3"></textarea>
       <div class="rpt-foot"><span class="rpt-no">[2 / 6]</span> &nbsp;·&nbsp; 실험 A</div>
     </div>
 
     <!-- ══════════ 3부분 : 실험 B (학생이 직접 측정·직접 계산) ══════════ -->
     <div class="card report-paper rpt-page">
-      <h4>5. 실험 B &mdash; 커피 필터 장수와 낙하 시간 <span class="tiny" style="font-weight:400">(내가 직접 재어서 채우기)</span></h4>
-      <div class="rpt-hint">커피 필터(같은 크기)를 <b>1 · 2 · 3 · 4 · 5 장</b> 겹쳐 같은 높이에서 놓고, 속도가 일정해진 <b>마지막 구간 L</b> 의 통과 시간 t 를 여러 번 재어 평균해 적으세요. 필터 1 장의 질량 m₁ 과 펼친 단면적 A 도 재어 아래 칸에 쓰세요.</div>
+      <h4>5. 실험 B &mdash; OHP 필름 장수와 빛의 세기 <span class="tiny" style="font-weight:400">(내가 직접 재어서 채우기)</span></h4>
+      <div class="rpt-hint">투명 OHP 필름(같은 종류)을 <b>1 · 2 · 3 · 4 · 5 장</b> 겹쳐 LED 와 스마트폰 조도 앱 사이에 두고, 조도 E(lux)를 3 번 재어 평균해 적으세요. <b>필름이 없을 때의 조도 E₀</b> 도 같은 위치에서 재어 아래 칸에 쓰세요. (같은 거리 · 어두운 방)</div>
 
       <div class="rpt-tools" id="t11-auxwrap">
-        <span class="lbl" id="t11-auxlabel">보조 상수 =</span>
+        <span class="lbl" id="t11-auxlabel">E₀ =</span>
         <input type="text" id="t11-LB" style="width:70px;text-align:center">
-        <span class="lbl" id="t11-auxunit"></span> <span class="lbl">필터 1 장 질량 m₁ =</span><input type="text" id="t11-m1" style="width:60px;text-align:center" placeholder="1.0"><span class="lbl">g</span> <span class="lbl">단면적 A =</span><input type="text" id="t11-AA" style="width:60px;text-align:center" placeholder="110"><span class="lbl">cm²</span>
+        <span class="lbl" id="t11-auxunit"></span>
       </div>
       <div class="rpt-tools noprint">
         <button type="button" id="t11-addrow">＋ 측정 칸 추가</button>
@@ -110,16 +110,16 @@
       </div>
       <div style="overflow-x:auto"><table id="t11-tblB"><thead></thead><tbody></tbody></table></div>
 
-      <div class="rpt-q"><b>그래프</b> &mdash; 내가 적은 값으로 그려집니다 (가로 필터 장수 N · 세로 v²)</div>
+      <div class="rpt-q"><b>그래프</b> &mdash; 내가 적은 값으로 그려집니다 (가로 필름 장수 N · 세로 ln(E₀/E))</div>
       <canvas id="t11-cv2" width="640" height="265" style="width:100%;max-width:560px;height:225px;border:1px solid #d3dae3;border-radius:6px"></canvas>
 
       <div class="rpt-q"><b>직접 계산하기</b> &mdash; 그래프의 기울기와 절편을 읽고 아래 빈칸을 <u>내가 계산해서</u> 채우자.</div>
       <table>
         <thead><tr><th style="width:46%">계산할 것</th><th style="width:27%">내가 구한 값</th><th style="width:27%">확인 (버튼을 누르면 표시)</th></tr></thead>
         <tbody>
-          <tr><td>그래프의 기울기 k ((m/s)²/장) 와 절편</td>
+          <tr><td>그래프의 기울기 k (장당 감약 지수) 와 절편</td>
               <td><input type="text" id="t11-mk"></td><td id="t11-ck" class="rpt-auto">—</td></tr>
-          <tr><td>항력계수 Cd = 2g·m₁ ÷ (ρ·A·k) (ρ = 1.225 kg/m³)</td>
+          <tr><td>반가층 HVL = ln2 ÷ k (장)</td>
               <td><input type="text" id="t11-mlam"></td><td id="t11-clam" class="rpt-auto">—</td></tr>
           <tr><td id="t11-cmplabel">다른 실험과의 비교</td>
               <td><input type="text" id="t11-mdiff"></td><td id="t11-cdiff" class="rpt-auto">—</td></tr>
@@ -129,7 +129,7 @@
         <button type="button" class="pri" id="t11-check">✅ 내 계산 확인하기</button>
         <span class="tiny" style="color:#64748b">먼저 스스로 계산해서 적은 뒤에 누르세요.</span>
       </div>
-      <div class="rpt-q">실험 A(가상 낙하산)의 Cd 와 값이 다르다면 그 까닭은? (낙하산 모양 · 종단속도에 못 이른 구간 · 시간 측정 오차 · 필터의 변형)</div>
+      <div class="rpt-q">측정한 직선이 원점을 지나지 않거나 점이 곡선으로 휜다면 그 까닭은? (반사 손실 · 필름 사이 틈 · 센서 포화 · 조명 불균일 · 산란)</div>
       <textarea id="t11-obsB" rows="2"></textarea>
       <div class="rpt-foot"><span class="rpt-no">[3 / 6]</span> &nbsp;·&nbsp; 실험 B (직접 측정)</div>
     </div>
@@ -138,25 +138,25 @@
     <!-- ══════════ 끝 부분 : 결론 · 오차 · 자유기록 · 자기평가 ══════════ -->
     <div class="card report-paper rpt-page" id="t11-pageEnd">
       <h4>6. 결론</h4>
-      <div class="rpt-q">네 실험(A~D)에서 어떤 그래프의 무엇(기울기 · 분포)을 읽어 어떤 물리량을 구했는지 정리하자.</div>
-      <textarea id="t11-concl" rows="4" placeholder="항력계수(A)는 v² 대 m/A 의 기울기로 …, 커피 필터(B)에서는 … , 기압(C)에서는 ln(P₀/P) 의 기울기로 …, 복귀 정밀도(D)에서는 중앙값과 90 % 값으로 … 따라서 캔위성은 …"></textarea>
+      <div class="rpt-q">세 가지 실험(A · B · C · D)에서 어떤 그래프의 무엇(기울기 · 분포)을 읽어 어떤 물리량을 구했는지 정리하자.</div>
+      <textarea id="t11-concl" rows="4" placeholder="감약계수(A)는 ln(I₀/I) 대 두께의 기울기로 …, OHP 필름(B)에서는 … , 초음파(C)에서는 왕복 시간 대 깊이의 기울기 2/c 로 …, 잡음(D)에서는 SNR 대 √N 의 기울기로 … 따라서 의료영상 장치는 …"></textarea>
 
       <h4>7. 오차 분석 &mdash; 왜 참값과 어긋났을까?</h4>
       <table>
         <thead><tr><th style="width:32%">오차의 원인</th><th style="width:20%">크게/작게?</th><th>줄이는 방법</th></tr></thead>
         <tbody>
-          <tr><td><input type="text" id="t11-e1a" placeholder="예 : 낙하 시간 측정 오차(±0.05 s)"></td>
-              <td><input type="text" id="t11-e1b" placeholder="Cd 에 ±5 %"></td>
-              <td><input type="text" id="t11-e1c" placeholder="예 : 영상 슬로모션으로 시간 재기"></td></tr>
-          <tr><td><input type="text" id="t11-e2a" placeholder="예 : 센서 잡음 · 기준 기압 변화"></td><td><input type="text" id="t11-e2b"></td><td><input type="text" id="t11-e2c"></td></tr>
+          <tr><td><input type="text" id="t11-e1a" placeholder="예 : 포아송 계수 잡음 · 조도계 오차(±5 %)"></td>
+              <td><input type="text" id="t11-e1b" placeholder="μ 에 ±5 %"></td>
+              <td><input type="text" id="t11-e1c" placeholder="예 : 같은 조건 반복 측정 · 광자 수 늘리기"></td></tr>
+          <tr><td><input type="text" id="t11-e2a" placeholder="예 : 타이머 잡음 · 반사체 각도"></td><td><input type="text" id="t11-e2b"></td><td><input type="text" id="t11-e2c"></td></tr>
           <tr><td><input type="text" id="t11-e3a"></td><td><input type="text" id="t11-e3b"></td><td><input type="text" id="t11-e3c"></td></tr>
         </tbody>
       </table>
 
       <h4>8. 더 생각해 보기</h4>
-      <div class="rpt-q">① 같은 낙하산이라도 높은 곳(공기가 희박)에서는 종단속도가 어떻게 달라질까? 그래서 낙하산은 어느 고도에서 펴야 안전할까?</div>
+      <div class="rpt-q">① 같은 영상 품질을 얻으면서 X선 선량을 줄이려면 어떤 장치 · 방법(필터 · 평균 · 노출 제어 · 잡음 제거)을 쓸 수 있을까? 각각의 대가는?</div>
       <textarea id="t11-q1" rows="2"></textarea>
-      <div class="rpt-q">② 이 보고서의 실험 중 하나를 개선한다면 무엇을 바꿀까? (어떤 센서 · 장치 · 시험 횟수를 바꾸면 오차가 줄까?)</div>
+      <div class="rpt-q">② 이 보고서의 실험 중 하나를 개선한다면 무엇을 바꿀까? (어떤 센서 · 장치 · 측정 횟수를 바꾸면 오차가 줄까?)</div>
       <textarea id="t11-q2" rows="3" placeholder="근거 : …   내 생각 : …"></textarea>
 
       <h4>9. 자유 기록 <span class="tiny" style="font-weight:400">— 측정 사진·그림·추가 계산을 자유롭게 (칸은 쓰는 만큼 늘어납니다)</span></h4>

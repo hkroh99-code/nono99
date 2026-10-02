@@ -8,7 +8,7 @@
 .idea-cell .iv{ font-size:.9rem; color:var(--tx); font-weight:700; line-height:1.4; }
 .idea-cell button{ background:none; border:0; cursor:pointer; font-size:.95rem; padding:0 2px; opacity:.55; color:var(--tx); }
 .idea-cell.lock{ border-color:var(--cy); } .idea-cell.lock button{ opacity:1; }
-.partlist{ display:grid; grid-template-columns:1fr 1fr; gap:4px 12px; margin:8px 0; }
+.partlist{ display:grid; grid-template-columns:1fr; gap:4px 12px; margin:8px 0; }
 @media (max-width:560px){ .partlist{ grid-template-columns:1fr; } }
 .partlist label{ display:flex; align-items:center; gap:7px; font-size:.8rem; color:var(--mut); cursor:pointer; background:var(--panel2); border:1px solid var(--bd); border-radius:8px; padding:4px 8px; }
 .partlist label input{ accent-color:var(--cy); width:15px; height:15px; flex:none; }
