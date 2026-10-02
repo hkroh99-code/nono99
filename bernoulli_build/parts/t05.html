@@ -1,0 +1,118 @@
+<!-- ═══ TAB 5 — 🧪 원리④ 응용 — 피토관 · 벤투리 유량계 · 분무기 · 토리첼리 ═══ -->
+<section class="panel" id="tab5" role="tabpanel" aria-labelledby="tabbtn5" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🧪 원리④ 응용 — 피토관 · 벤투리 유량계 · 분무기 · 토리첼리</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 베르누이 식은 <b>측정 장치</b>의 원리입니다. ① <b>피토관</b> : 흐름을 마주 본 구멍의 압력(전압)과 옆 구멍의 압력(정압)의 차이 $\Delta p=\tfrac12\rho v^2$ 로 속도를 구합니다(비행기 속도계). ② <b>벤투리 유량계</b> : 좁은 목의 압력 강하로 유량 $Q$ 를 구합니다. ③ <b>분무기</b> : 빠른 공기가 만든 낮은 압력이 액체를 끌어올립니다. ④ <b>토리첼리 정리</b> : 깊이 $h$ 의 구멍에서 나오는 물의 속력은 $\sqrt{2gh}$ 입니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 압력 차이를 속도로 바꾸기</div>
+      베르누이 식은 압력과 속력을 연결하므로 <b>압력 차이를 재면 속력(또는 유량)을 알 수 있다</b>는 뜻입니다. 피토관은 정체점(속력 0)의 전압과 옆의 정압의 차이가 $\tfrac12\rho v^2$, 벤투리는 넓은 곳과 목의 정압 차이가 $\tfrac12\rho(v_2^2-v_1^2)$, 토리첼리는 수면(속력 ≈ 0)과 구멍(대기압)의 비교입니다.
+      <div class="bridge"><span class="st old">압력 차이</span><span class="ar">→</span><span class="st">베르누이 식 거꾸로</span><span class="ar">→</span><span class="st">속력 · 유량</span><span class="ar">→</span><span class="st new">4 가지 장치</span></div>
+    </div>
+    <div class="poe" data-q="공기 중에서 피토관의 압력 차이(전압 − 정압)가 1,500 Pa 이었다. 속력은 대략? (공기 1.2 kg/m³)"
+         data-opts="약 25 m/s||약 50 m/s||약 100 m/s||약 1,250 m/s"
+         data-ans="1"
+         data-exp="$v=\sqrt{2\Delta p/\rho}=\sqrt{2\times1500/1.2}=\sqrt{2500}=50$ m/s (180 km/h). 속력은 압력 차이의 <b>제곱근</b>에 비례하므로 압력 차이가 4 배면 속력은 2 배입니다."></div>
+    <div id="t5-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 응용 — 피토관 · 벤투리 · 분무기 · 토리첼리 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="베르누이 원리의 응용 도해 세 장면. 피토관의 전압과 정압 차이로 속도를 재고, 벤투리 유량계에서 목의 압력 강하로 유량을 재며, 분무기와 구멍에서 나오는 물줄기를 보여 준다.">
+        {{FIG:ship}}
+      </svg>
+    </div>
+    <div class="figcap">그림 5-1. 응용 — ① 피토관: $\Delta p=\tfrac12\rho v^2$ → $v=\sqrt{2\Delta p/\rho}$ → ② 벤투리 유량계: 목의 압력 강하로 유량 $Q$ → ③ 분무기(낮은 압력이 액체를 끌어올림) · 토리첼리($v=\sqrt{2gh}$)</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 피토관</b>흐름을 마주 보는 구멍(전압)과 옆 구멍(정압)의 압력 차이. 항공기 속도계. 얼음으로 막히면 오판할 수 있다.</div>
+      <div class="part"><b>② 벤투리 유량계</b>넓은 곳과 목의 압력 차이 $\Delta p$ 에서 $Q=C\,A_2\sqrt{2\Delta p/\rho(1-\beta^4)}$ ($\beta=D_2/D_1$, $C\approx0.98$).</div>
+      <div class="part"><b>③ 분무기</b>좁은 노즐 앞의 빠른 공기가 압력을 낮춰 액체관 속 액체가 빨려 올라가 안개가 된다.</div>
+      <div class="part"><b>④ 토리첼리 정리</b>큰 용기 깊이 $h$ 의 작은 구멍에서 $v=\sqrt{2gh}$ (자유 낙하 속력과 같다). 유량 $Q=C_dAv$, $C_d\approx0.6$.</div>
+      <div class="part"><b>⑤ 캐브레터 · 에어브러시</b>같은 벤투리 원리로 연료 · 물감을 공기 흐름에 섞는다(캐브레터는 지금은 연료 분사로 대체).</div>
+      <div class="part"><b>⑥ 한계</b>점성 손실 · 압축성 · 막힘 · 방향 오차(피토관 정렬)가 오차를 만든다. 유출 계수 $C$ 로 보정.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 안전한 재료로 응용 장치 만들어 보기</div>
+    <div class="steps">
+      <div class="step">빨대 · 플라스틱 병 · 물로 분무기를 만든다: 세로 빨대를 물컵에 꽂고 가로 빨대로 바람을 불어 물이 올라오는 입김 속력을 비교한다(I 프로젝트).</div>
+      <div class="step">페트병 옆면에 높이가 다른 구멍을 뚫고(교사 시연) 물줄기의 도달 거리로 $v=\sqrt{2gh}$ 를 확인한다.</div>
+      <div class="step">투명 호스 + 빨대로 벤투리 유량계를 만들어 압력 차이(수주 높이)로 유량을 구하고 물통 + 스톱워치와 비교한다.</div>
+      <div class="step">선풍기 앞에 피토관(빨대 + U자관 · 물)을 놓고 압력 차이를 읽어 풍속을 구한다(종합1, 15번 탭).</div>
+      <div class="step">각 장치의 오차 원인(정렬 · 점성 · 눈금)을 적고 정확도를 비교한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🎯 쉽게 이해하기 — 수영장에서 손을 흐름에 맞대기</div>
+      물이 흐르는 개울에 손바닥을 정면으로 대면 물이 손을 <b>세게 밀죠</b>. 흐름이 빠를수록 더 세게 밀려요. 피토관은 바로 이 「정면에서 받는 힘(전압)」과 「옆에서 받는 힘(정압)」의 차이를 재서 얼마나 빠른지 알아내는 거예요. 압력 차이가 곧 속력의 거울입니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“속도계는 관 속으로 들어온 공기의 양으로 속도를 직접 잰다 · 구멍이 크면 물이 더 빨리 나온다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>속도계는 <strong>압력 차이를 재서 계산</strong>하고, 구멍에서 나오는 속력은 <strong>깊이</strong>로만 정해지며 구멍이 크면 유량만 커집니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 응용 시뮬레이션 — 장치 고르기와 조건 바꾸기</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">장치(1~4)</span><span class="vl" id="t5-modeV">—</span></div>
+          <input type="range" id="t5-mode" min="1" max="4" step="1" value="1" aria-label="장치(1~4)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">조건 ① (장치마다 의미가 다름)</span><span class="vl" id="t5-aV">—</span></div>
+          <input type="range" id="t5-a" min="1" max="100" step="1" value="40" aria-label="조건 ① (장치마다 의미가 다름)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">조건 ② (장치마다 의미가 다름)</span><span class="vl" id="t5-bV">—</span></div>
+          <input type="range" id="t5-b" min="1" max="100" step="1" value="1" aria-label="조건 ② (장치마다 의미가 다름)">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">압력 차이 Δp</span><span class="v" id="t5-oD">—</span></div>
+          <div class="cell g"><span class="k">구한 속력</span><span class="v" id="t5-oV">—</span></div>
+          <div class="cell v2"><span class="k">유량</span><span class="v" id="t5-oQ">—</span></div>
+          <div class="cell r"><span class="k">부가 정보</span><span class="v" id="t5-oR">—</span></div>
+          <div class="cell "><span class="k">한계 · 판정</span><span class="v" id="t5-oL">—</span></div>
+        </div>
+        <p class="tiny">모형 : 1 피토관 $v=\sqrt{2\Delta p/\rho}$ (ISA 고도 0 ~ 11 km) · 2 벤투리 $D_1=4$ cm, 유출 계수 0.98 · 3 분무기 $\Delta p=\tfrac12\rho_av^2>\rho_lgh$ 이면 분무 · 4 토리첼리 $v=\sqrt{2gh}$, $C_d=0.62$. 각 장치의 점성 손실 · 정렬 오차는 무시한 교육용 모형입니다.</p>
+      </div>
+      <div class="poe" data-q="토리첼리 : 같은 깊이에 지름 2 mm 와 6 mm 구멍이 있다. 나오는 물의 속력과 유량은?"
+           data-opts="속력 같음 · 큰 구멍 유량이 9 배||속력은 큰 구멍이 3 배 · 유량 같음||속력 · 유량 모두 같음||속력은 작은 구멍이 더 빠름"
+           data-ans="0"
+           data-exp="속력은 $v=\sqrt{2gh}$ 로 <b>같고</b>, 유량은 $Q=C_dAv\propto D^2$ 이므로 지름이 3 배면 <b>9 배</b>입니다. 장치 4 에서 조건 ② (구멍 지름)를 바꿔 속력이 변하지 않는 것을 확인하세요."></div>
+      <div class="hintbox" data-hints="① 장치 1(피토관)에서 속력 슬라이더를 올리고 압력 차이가 어떻게 커지는지 보세요. 속력이 2 배면 압력 차이는?||② 장치 1 에서 고도(조건 ②)를 올리면 같은 속력에서 압력 차이는 어떻게 되나요? 계기 속도(IAS)와 실제 속도를 비교해 보세요.||③ 장치 3(분무기)에서 Δp 가 ρgh 를 넘는 최소 속력은? 액면 높이를 키우면 어떻게 되나요?||④ 장치 4(토리첼리)에서 구멍 지름만 바꿔 보세요. 속력은 변하나요? 유량은요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t5" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t5-cv" data-pngname="applications">🖼 PNG</button></div>
+          <canvas id="t5-cv" role="img" aria-label="선택한 응용 장치의 애니메이션" style="height:360px"></canvas>
+          <div class="cv-cap">선택한 장치의 동작. 피토관은 흐름을 마주 본 관의 압력 차이, 벤투리는 목의 압력 강하, 분무기는 빠른 공기와 액체 상승, 토리첼리는 구멍에서 나오는 물줄기입니다.</div>
+        </div>
+        <div id="t5-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t5-cv2" role="img" aria-label="선택한 장치의 입력 대 출력 그래프" style="height:340px"></canvas>
+          <div class="cv-cap">📊 장치마다 달라지는 그래프 — 피토관 : $\Delta p\propto v^2$ · 벤투리 : $\Delta p\propto Q^2$ · 분무기 : $\Delta p$ 와 $\rho gh$ 비교 · 토리첼리 : $v\propto\sqrt h$. 노란 점이 지금 조건입니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>피토관 $v=\sqrt{\dfrac{2\Delta p}{\rho}}$. 벤투리 $Q=C\,A_2\sqrt{\dfrac{2\Delta p}{\rho(1-\beta^4)}}$. 토리첼리 $v=\sqrt{2gh}$, $Q=C_dA\sqrt{2gh}$. 분무 조건 $\tfrac12\rho_av^2>\rho_lgh$.</p><p>예 : 피토 $\Delta p=1500$ Pa → 50 m/s. 벤투리 $D_1=4$ cm, $D_2=2$ cm, $\Delta p=10$ kPa → $Q\approx1.4$ L/s. 토리첼리 $h=0.5$ m → $v=3.1$ m/s.</p><p class="lv-uni">교과서 밖 : 항공기 속도계는 압축성 보정 $q_c=p[(1+0.2M^2)^{3.5}-1]$ 로 마하 수를 구하고 교정 속도(CAS) · 진대기속도(TAS)를 구분합니다. 피토관은 각도(≤ 약 15°)에 둔감하게 설계합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 응용 장치는 어떻게 압력 차이를 속력으로 바꾸나 — 피토관 · 벤투리 · 분무기 · 토리첼리 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">네 가지 장치를 베르누이 식 한 줄에서 시작해 단계별로 유도합니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 피토관의 정체점</b> — 흐름을 마주 보는 구멍에서는 유체가 정지(속력 0)해 전압 $p_t=p+\tfrac12\rho v^2$ 이 됩니다. 옆 구멍은 정압 $p$ 를 읽습니다.</div>
+      <div class="step"><b>② 속력 구하기</b> — 압력 차이 $\Delta p=p_t-p=\tfrac12\rho v^2$ → $v=\sqrt{2\Delta p/\rho}$. 항공기는 고도에 따른 $\rho$ 변화 때문에 지시 대기속도(IAS)와 진대기속도(TAS)가 다릅니다.</div>
+      <div class="step"><b>③ 벤투리 유량계</b> — 연속 방정식 $v_2=v_1A_1/A_2$ 와 베르누이 $p_1-p_2=\tfrac12\rho(v_2^2-v_1^2)$ 를 연립하면 $Q=A_2\sqrt{\dfrac{2\Delta p}{\rho(1-\beta^4)}}$ ($\beta=D_2/D_1$). 유출 계수 $C$ 로 점성 손실을 보정합니다.</div>
+      <div class="step"><b>④ 분무기</b> — 공기가 노즐을 빠르게 지나면 압력이 낮아져 액체관 속 대기압(액면)과의 차이 $\Delta p>\rho_lgh$ 가 되어 액체가 올라가 안개가 됩니다.</div>
+      <div class="step"><b>⑤ 토리첼리</b> — 큰 용기에서 수면 속력은 0, 압력은 대기압, 구멍 출구 압력도 대기압이므로 $\rho gh=\tfrac12\rho v^2$ → $v=\sqrt{2gh}$. 구멍 크기는 식에 없으므로 속력과 무관합니다.</div>
+      <div class="step"><b>⑥ 실제 보정</b> — 구멍 근처에서 흐름이 모여 실제 유량은 $Q=C_dAv$ ($C_d\approx0.6$). 호스 · 노즐은 점성 손실로 속력이 이론보다 작습니다.</div>
+      <div class="step"><b>⑦ 한계</b> — 피토관은 정렬 오차 · 얼음 막힘, 벤투리는 기포 · 점성, 분무기는 점성 · 표면 장력, 토리첼리는 수면 하강 · 구멍 모양의 영향이 있습니다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">장치</th><th>측정하는 것</th><th>핵심 식</th><th>구하는 것</th></tr></thead><tbody><tr><td style="text-align:left">피토관</td><td>전압 − 정압</td><td>$\Delta p=\tfrac12\rho v^2$</td><td>속력</td></tr><tr><td style="text-align:left">벤투리</td><td>목의 압력 강하</td><td>$Q=CA_2\sqrt{2\Delta p/\rho(1-\beta^4)}$</td><td>유량</td></tr><tr><td style="text-align:left">분무기</td><td>Δp 대 ρgh</td><td>$\tfrac12\rho_av^2>\rho_lgh$</td><td>분무 조건</td></tr><tr><td style="text-align:left">토리첼리</td><td>구멍 깊이</td><td>$v=\sqrt{2gh}$</td><td>유출 속력</td></tr></tbody></table></div>
+    <p class="tiny">모든 응용은 「압력 차이 ↔ 속력」 하나의 관계입니다. 정확한 측정에는 유출 계수 · 교정(캘리브레이션)이 필요합니다.</p>
+  </div>
+</section>

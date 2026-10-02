@@ -1,0 +1,122 @@
+<!-- ═══ TAB 6 — ⚖️ 원리⑤ 적용 한계 · 측정 · 안전 — 베르누이 식은 언제 틀리나 ═══ -->
+<section class="panel" id="tab6" role="tabpanel" aria-labelledby="tabbtn6" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>⚖️ 원리⑤ 적용 한계 · 측정 · 안전 — 베르누이 식은 언제 틀리나</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 베르누이 식은 <b>같은 유선 · 정상 · 비점성 · 비압축성</b>일 때 정확합니다. 현실에서는 ① <b>점성</b>(관 마찰 · 난류, 레이놀즈 수 $Re=\rho vD/\mu$) ② <b>압축성</b>(마하 수 $M=v/c$, 약 0.3 이상) ③ <b>에너지 공급</b>(펌프 · 팬) ④ <b>비정상 흐름</b>에서 어긋납니다. 이 탭에서 <b>얼마나 어긋나는지를 수로 확인</b>하는 법과 측정 · 안전 수칙을 익힙니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 이상과 현실의 차이</div>
+      물리 법칙의 식은 이상적인 조건에서 가장 간단합니다. 「어긋남이 몇 %인가」를 계산하는 것이 공학의 일입니다. 압축성 오차는 $\approx M^2/4$ (마하 0.3 에서 약 2 %), 관 마찰 손실은 $\Delta p=f\dfrac LD\tfrac12\rho v^2$ ($f$ 는 마찰 계수 · 층류 $64/Re$, 난류 $\approx0.316Re^{-1/4}$). 이 값이 작으면 베르누이 식을 써도 되고, 크면 보정합니다.
+      <div class="bridge"><span class="st old">이상 조건</span><span class="ar">→</span><span class="st">어긋남 크기 계산</span><span class="ar">→</span><span class="st">보정 · 선택</span><span class="ar">→</span><span class="st new">안전한 측정</span></div>
+    </div>
+    <div class="poe" data-q="속력 100 m/s (약 마하 0.3)의 공기 흐름에서 비압축성 베르누이 식으로 구한 동압의 오차는 대략?"
+         data-opts="약 0.2 %||약 2 %||약 20 %||약 50 %"
+         data-ans="1"
+         data-exp="압축성 오차는 대략 $M^2/4$ 입니다. $M=0.3$ 이면 $0.09/4\approx2.3$ %. 마하 0.3 이 「비압축성으로 봐도 되는 한계」로 쓰이는 이유입니다. 마하 0.8 에서는 약 16 % 로 커집니다. 오른쪽 위 그래프를 보세요."></div>
+    <div id="t6-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 적용 한계 — 유선 · 레이놀즈 수 · 압축성 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="베르누이 식의 적용 한계 도해 세 장면. 같은 유선 위의 두 점에서만 적용하고, 레이놀즈 수가 커지면 층류가 난류로 바뀌며, 마하 0.3 이상에서 압축성 오차가 커진다.">
+        {{FIG:measure}}
+      </svg>
+    </div>
+    <div class="figcap">그림 6-1. 적용 한계 — ① 같은 유선의 두 점 · 정상 · 비점성 · 비압축성 → ② 레이놀즈 수 $Re=\rho vD/\mu$ : 층류(약 2300 이하) ↔ 난류(약 4000 이상) → ③ 압축성 오차 ≈ $M^2/4$ (마하 0.3 부터 눈에 띔)</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 레이놀즈 수 $Re$</b>관성력 ÷ 점성력. 원관에서 약 2300 이하는 층류, 약 4000 이상은 난류.</div>
+      <div class="part"><b>② 마하 수 $M$</b>$v/c$. 0.3 미만이면 공기도 거의 비압축성. 초음속에서는 충격파가 생긴다.</div>
+      <div class="part"><b>③ 점성 손실</b>긴 관에서는 마찰 손실 $\Delta p=f(L/D)\tfrac12\rho v^2$ 이 커서 베르누이 단독 사용은 부적절.</div>
+      <div class="part"><b>④ 에너지 공급</b>펌프 · 팬 · 터빈이 있으면 그 일(양정)을 식에 더하거나 빼야 한다.</div>
+      <div class="part"><b>⑤ 캐비테이션</b>압력이 증기압 근처까지 내려가면 기포가 생겨 식이 성립하지 않고 소음 · 부식이 생긴다.</div>
+      <div class="part"><b>⑥ 안전 수칙</b>바람 · 물 실험은 저속 · 저압만, 회전체(프로펠러)는 보호망, 전기 기기는 물과 분리, 바닥 물기 제거, 보호안경 착용.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 한계를 직접 확인하기 (물 · 저속 바람)</div>
+    <div class="steps">
+      <div class="step">긴 호스(5 m)와 짧은 호스(0.5 m)로 같은 수두의 물이 흘러나오는 유량을 비교해 관 마찰 손실을 확인한다.</div>
+      <div class="step">잉크 한 방울을 호스 중심에 떨어뜨려 유속이 느리면 직선(층류), 빨라지면 퍼지는(난류) 모습을 관찰한다(R 프로젝트).</div>
+      <div class="step">같은 압력 차이를 읽어도 공기 온도 · 고도가 다르면 속도가 달라짐을 계산으로 확인한다(밀도 보정).</div>
+      <div class="step">실험에서 예측과 어긋남을 크기 비교: 점성 · 정렬 · 눈금 · 기포 중 어느 것이 가장 큰지 정한다.</div>
+      <div class="step">안전 점검표(14번 탭)를 모두 읽고 실험 계획서에 위험 요인을 쓴다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🏃 쉽게 이해하기 — 마찰 없는 얼음판과 거친 땅</div>
+      마찰 없는 얼음판에서는 에너지가 그대로 보존되지만, 거친 땅에서는 달릴수록 에너지가 열로 사라져요. 베르누이 식은 「얼음판」이고, 점성이 큰 긴 관은 「거친 땅」이에요. 둘의 차이가 얼마나 큰지(몇 %)를 계산해 보면 얼음판 식을 써도 되는지 알 수 있습니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“베르누이 식은 어떤 흐름에서도 정확하다 · 공기는 속도와 상관없이 비압축성이다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b><strong>조건 확인(Re · M · 손실)</strong>을 먼저 하고, 어긋남이 작을 때만 베르누이 식을 그대로 씁니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 적용 한계 시뮬레이션 — 유체 · 속력 · 관 지름 · 길이</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">유체(1~3)</span><span class="vl" id="t6-flV">—</span></div>
+          <input type="range" id="t6-fl" min="1" max="3" step="1" value="1" aria-label="유체(1~3)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">속력 v</span><span class="vl" id="t6-vV">—</span></div>
+          <input type="range" id="t6-v" min="1" max="340" step="1" value="30" aria-label="속력 v">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">관 지름 D</span><span class="vl" id="t6-DV">—</span></div>
+          <input type="range" id="t6-D" min="0.5" max="50" step="0.5" value="5" aria-label="관 지름 D">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">관 길이 L</span><span class="vl" id="t6-LV">—</span></div>
+          <input type="range" id="t6-L" min="0.1" max="50" step="0.1" value="2" aria-label="관 길이 L">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">레이놀즈 수 Re</span><span class="v" id="t6-oR">—</span></div>
+          <div class="cell g"><span class="k">흐름 형태</span><span class="v" id="t6-oT">—</span></div>
+          <div class="cell v2"><span class="k">마하 수 M</span><span class="v" id="t6-oM">—</span></div>
+          <div class="cell r"><span class="k">압축성 오차(전압)</span><span class="v" id="t6-oE">—</span></div>
+          <div class="cell "><span class="k">관 마찰 손실</span><span class="v" id="t6-oL">—</span></div>
+        </div>
+        <p class="tiny">모형 : 공기 · 물 · 글리세린(20 ℃)의 밀도 · 점성 · 음속은 대표값. 마찰 계수 $f=64/Re$(층류), 전이 구간 보간, $0.316Re^{-1/4}$(난류, 블라지우스 식, $Re<10^5$). 압축성 오차 = 정확한 $q_c/(\tfrac12\rho v^2)-1$. 표면 거칠기 · 입구 효과는 무시한 교육용 모형입니다.</p>
+      </div>
+      <div class="poe" data-q="같은 속력 · 같은 관에서 유체를 물에서 매우 끈적한 글리세린으로 바꾸면 레이놀즈 수와 흐름은 어떻게 될까?"
+           data-opts="Re 커지고 더 난류||Re 작아지고 층류에 가까워짐||변화 없음||Re 는 같고 마찰만 변함"
+           data-ans="1"
+           data-exp="$Re=\rho vD/\mu$ 에서 글리세린은 점성 $\mu$ 가 물의 약 1400 배라 $Re$ 가 훨씬 작아져 <b>층류</b>가 됩니다. 이때 마찰 손실은 $f=64/Re$ 로 크지만 흐름은 매끄럽습니다. 장치를 글리세린으로 바꿔 확인하세요."></div>
+      <div class="hintbox" data-hints="① 공기 · 30 m/s · 지름 5 cm 로 두고 Re 가 층류인지 난류인지 보세요.||② 속력을 200 m/s 로 올리면 압축성 오차는 몇 %가 되나요? 마하 0.3 선과 비교하세요.||③ 관 길이를 50 m 로 늘리면 마찰 손실은 어떻게 되나요? 베르누이 식을 그대로 써도 될까요?||④ 물로 바꾸고 1 m/s 에서 Re 를 구해 보세요. 층류가 되려면 지름을 어떻게 해야 할까요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t6" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t6-cv" data-pngname="limits">🖼 PNG</button></div>
+          <canvas id="t6-cv" role="img" aria-label="층류와 난류 관 흐름 애니메이션" style="height:340px"></canvas>
+          <div class="cv-cap">관 속 입자의 흐름. 레이놀즈 수가 작으면 매끄러운 층(파랑), 크면 소용돌이(노랑)가 보입니다. 아래 글자에 마하 수 · 압축성 오차 · 마찰 손실이 표시됩니다.</div>
+        </div>
+        <div id="t6-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t6-cv2" role="img" aria-label="마하 수 대 압축성 오차와 관 길이 대 마찰 손실 그래프" style="height:350px"></canvas>
+          <div class="cv-cap">📊 위 : 마하 수 대 압축성 오차(점선 $M^2/4$, 마하 0.3 선). 아래 : 관 길이 대 마찰 손실(전압 대비) — 길수록 베르누이 식(손실 무시)이 어긋납니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$Re=\dfrac{\rho vD}{\mu}$, $M=\dfrac vc$. 압축성 : $q_c=p\left[(1+0.2M^2)^{3.5}-1\right]\approx\tfrac12\rho v^2\left(1+\dfrac{M^2}{4}\right)$. 관 마찰 : $\Delta p=f\dfrac LD\tfrac12\rho v^2$ ($f=64/Re$ 층류).</p><p>예 : 공기 $v=30$ m/s, $D=5$ cm → $Re\approx1.0\times10^5$(난류), $M=0.087$ → 오차 약 0.2 %. 길이 2 m 에서 손실 $\approx f(L/D)\tfrac12\rho v^2$ — 매끄러운 짧은 관이라면 작은 편.</p><p class="lv-uni">교과서 밖 : 무차원수($Re$, $M$, $Fr$)로 유사한 흐름을 비교하는 것이 풍동 시험의 기본(상사 법칙). 경계층 이론(프란틀)은 벽 근처의 얇은 점성 층에서 박리가 생기는 이유를 설명합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 측정의 신뢰도 — 속도 · 유량 측정의 오차를 단계로 따져 보기 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">압력 차이로 속도 · 유량을 구할 때 오차가 어디서 어떻게 커지는지 정리합니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 직접 측정과 간접 측정</b> — 압력계는 $\Delta p$ 를 직접 읽고, 속력 $v=\sqrt{2\Delta p/\rho}$ 는 계산으로 구하는 간접 측정입니다. 오차는 식을 통해 전파됩니다.</div>
+      <div class="step"><b>② 오차 전파</b> — $v\propto\sqrt{\Delta p}$ 이므로 상대 오차 $\delta v/v=\tfrac12\,\delta\Delta p/\Delta p$. 압력 차이가 작을수록 상대 오차가 커집니다(느린 바람에서 피토관이 부정확).</div>
+      <div class="step"><b>③ 밀도 보정</b> — 공기 밀도는 온도 · 고도 · 습도에 따라 변합니다. 20 ℃ 해수면 1.204, 0 ℃ 1.293, 고도 5 km 약 0.736 kg/m³. 밀도를 무시하면 속도 오차가 몇 % 생깁니다.</div>
+      <div class="step"><b>④ 정렬 · 위치 오차</b> — 피토관이 흐름과 어긋나면(수 도 이내는 둔감) 전압이 줄어듭니다. 관 벽 가까이 · 선풍기 날개 바로 뒤는 흐름이 균일하지 않습니다.</div>
+      <div class="step"><b>⑤ 점성 · 압축성 · 난류</b> — 레이놀즈 수가 작으면 피토관 보정이 필요하고, 마하 0.3 이상이면 압축성 보정을 합니다(6번 탭 그래프).</div>
+      <div class="step"><b>⑥ 안전 수칙</b> — 선풍기 · 드라이어는 저속으로, 회전 날개에 손 · 머리카락 접근 금지, 전기 기기와 물 분리, 바닥 물기 제거, 보호안경. 고압 공기 · 연소 · 압축 가스는 쓰지 않습니다.</div>
+      <div class="step"><b>⑦ 결과의 표현</b> — 평균 ± 불확도와 단위를 함께 쓰고 이론값과의 차이가 불확도 안인지 비교합니다. 안 맞으면 계통 오차(정렬 · 밀도 · 영점)를 의심합니다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">오차 종류</th><th>원인 예</th><th>줄이는 방법</th><th>평균의 효과</th></tr></thead><tbody><tr><td style="text-align:left">우연 오차</td><td>압력계 눈금 · 바람 흔들림</td><td>반복 측정 · 평균</td><td>줄어든다</td></tr><tr><td style="text-align:left">계통 오차</td><td>영점 · 밀도 · 정렬</td><td>보정 · 교정</td><td>줄지 않는다</td></tr><tr><td style="text-align:left">증폭</td><td>작은 Δp(느린 바람)</td><td>민감한 센서 · 큰 속도</td><td>부분적</td></tr></tbody></table></div>
+    <p class="tiny">안전 : 이 자료의 모든 실험은 저속 바람 · 물 · 빨대 · 저울만 쓰는 안전한 실험입니다.</p>
+  </div>
+</section>

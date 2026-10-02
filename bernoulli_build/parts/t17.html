@@ -1,0 +1,68 @@
+<section class="panel" id="tab17" role="tabpanel" aria-labelledby="tabbtn17" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-high">고등/수능</span><span class="badge b-exp">실험</span><span class="badge b-poe">POE</span>📊 [종합3] 양력 대 속력 — 날개의 양력 계수 C_L</div>
+    <div class="goal">🎯 이 실험에서 하는 것 — 날개 모형의 받음각을 고정(약 6°)하고 풍속 $v$ 를 바꾸며 양력 $L$ (저울 읽음 감소 × g)을 재서 $L$ 대 $\tfrac12\rho v^2S$ 그래프를 그립니다. 날개 면적 $S=0.03$ m² 를 알면 이 그래프는 <b>원점을 지나는 직선</b>이고 <b>기울기 = 양력 계수 $C_L$</b> 입니다. 숨은 $C_L$ 을 구하세요. 결과는 <b>보고서의 실험 D</b>가 됩니다. (저속 선풍기 · 저울만 쓰는 안전한 실험)</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 양력 = 동압 × 면적 × 계수</div>
+      양력은 $L=\tfrac12\rho v^2\,S\,C_L$ 입니다. 그래서 가로축을 <b>동압 × 면적</b>($=\tfrac12\rho v^2S$, 단위 N)으로 하면 기울기 하나가 날개의 양력 계수 $C_L$ 입니다. 같은 받음각이면 속력이 바뀌어도 기울기(= $C_L$)는 같아야 합니다.
+      <div class="bridge"><span class="st">$L=\tfrac12\rho v^2SC_L$</span><span class="ar">→</span><span class="st">$L$ 대 $\tfrac12\rho v^2S$</span><span class="ar">→</span><span class="st">기울기 = $C_L$</span><span class="ar">→</span><span class="st new">받음각이 바뀌면 $C_L$ 이 바뀐다</span></div>
+    </div>
+    <div class="poe" data-q="같은 날개가 풍속 6 m/s 에서 양력 0.4 N 이었다. 풍속이 12 m/s 로 2 배가 되면 양력은? (받음각 같음)"
+         data-opts="0.8 N||1.2 N||1.6 N||3.2 N"
+         data-ans="2"
+         data-exp="$L\propto v^2$ 이므로 4 배, 즉 <b>1.6 N</b> 입니다. $C_L$ 은 받음각이 같으면 거의 일정하므로 속력이 2 배면 양력은 4 배가 됩니다. 오른쪽 직선으로 확인하세요."></div>
+    <div id="k17-misc"></div>
+  </div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 가상 실험실 — 조건을 정하고 [측정 기록]</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">풍속 v</span><span class="vl" id="k17-vV">—</span></div>
+          <input type="range" id="k17-v" min="4" max="16" step="0.5" value="10" aria-label="풍속 v">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">저울 잡음 σ (g중)</span><span class="vl" id="k17-SV">—</span></div>
+          <input type="range" id="k17-S" min="0" max="2" step="0.1" value="0.3" aria-label="저울 잡음 σ (g중)">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm" id="k17-new">🎲 새 조건(숨은 값 다시 뽑기)</button>
+          <button type="button" class="btn sm pri" id="k17-rec">📏 측정 기록</button>
+          <button type="button" class="btn sm" id="k17-rec10">📏×5 연속 기록</button>
+          <button type="button" class="btn sm rd" id="k17-clr">🧹 측정 초기화</button>
+        </div>
+        <div class="kv"><div class="cell a"><span class="k">동압 × 면적</span><span class="v" id="k17-oX">—</span></div><div class="cell g"><span class="k">측정 양력 L</span><span class="v" id="k17-oM">—</span></div><div class="cell v2"><span class="k">추정 양력 계수 C_L</span><span class="v" id="k17-oF">—</span></div><div class="cell r"><span class="k">양력 / 무게 비교(날개 30 g)</span><span class="v" id="k17-oE">—</span></div><div class="cell "><span class="k">기록 개수</span><span class="v" id="k17-oN">—</span></div></div>
+        <p class="tiny">모형 : $L=C_L\cdot\tfrac12\rho v^2S+\varepsilon$ ($S=0.03$ m², $\rho=1.204$, 받음각 약 6° 고정, 저울 잡음 σ g중). 숨은 $C_L$ 은 [새 조건]마다 0.5 ~ 1.0 에서 뽑힙니다. 날개 끝 효과 · 표면 · 지지대 항력은 무시한 교육용 모형입니다.</p>
+      </div>
+      <div class="card">
+        <div class="h4">📋 측정 기록표 <span class="tiny" id="k17-cnt">0개</span></div>
+        <div class="tblscroll"><table id="k17-tbl"><thead></thead><tbody></tbody></table></div>
+        <p class="tiny">기록한 값은 <b>실험보고서(19번 탭)</b>의 표 · 그래프 · 결과로 자동으로 이어집니다. 5개 이상 모으세요.</p>
+      </div>
+      <div class="hintbox" data-hints="① 풍속을 4 ~ 16 m/s 로 넓게 바꾸며 [측정 기록] 하세요(가로축은 동압 × 면적).||② 점이 원점을 지나는 직선인가요? 기울기는 얼마인가요?||③ 받음각을 크게 하면 기울기(C_L)는 어떻게 될까요? (R04 참고)||④ 저울 잡음이 크면 낮은 풍속의 점이 어떻게 흩어지나요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k17" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k17-cv" data-pngname="fluid-synth-17">🖼 PNG</button></div>
+          <canvas id="k17-cv" role="img" aria-label="가상 실험 장면" style="height:300px"></canvas>
+          <div class="cv-cap">선풍기 바람(왼쪽)이 날개 모형(가운데)에 닿아 위로 향한 양력이 저울(오른쪽) 읽음을 줄입니다(10 초 반복).</div>
+        </div>
+        <div id="k17-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k17-cv2" role="img" aria-label="측정 결과 그래프" style="height:320px"></canvas>
+          <div class="cv-cap">📊 가로 $\tfrac12\rho v^2S$ (N) · 세로 양력 $L$ (N). 빨강 = 내 회귀직선, 흰 점선 = 숨은 참 직선. 기울기 = $C_L$.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$L=C_L\cdot\tfrac12\rho v^2S$ → 기울기 $s=C_L$. 예 : $s=0.78$ → 받음각 약 6° 의 $C_L\approx0.78$. 이륙 속력 : $v=\sqrt{2W/(\rho SC_L)}$.</p><p class="lv-uni">교과서 밖 : 낮은 레이놀즈 수(작은 모형)에서는 $C_L$ 이 실제 항공기 날개와 다르며 레이놀즈 수 · 표면 거칠기에 의존합니다. 유한 날개의 유도 항력 $C_{D,i}=C_L^2/(\pi eAR)$ 도 풍동 시험에서 함께 확인합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h4">🧪 이 실험을 진짜로 하려면</div>
+    <div class="steps"><div class="step"><b>준비</b> : 날개 모형(시위 15 cm · 폭 20 cm), 주방 저울(0.1 g), 지지대, 선풍기, 풍속계 앱(R04 참고).</div><div class="step"><b>측정</b> : 받음각 6° 로 고정하고 풍속 6 가지에서 저울 읽음 감소(g)를 5 초 평균으로 기록한다.</div><div class="step"><b>그래프</b> : $L=m g$ 대 $\tfrac12\rho v^2S$ 를 그려 기울기 $C_L$ 을 구한다.</div><div class="step"><b>해석</b> : 받음각별 $C_L$ 곡선과 비교해 실속각을 추정한다.</div><div class="step"><b>결론</b> : 지지대 항력 · 바람의 균일도 · 저울 영점 오차를 서술한다.</div></div>
+    
+  </div>
+</section>

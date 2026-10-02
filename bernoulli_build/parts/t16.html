@@ -1,0 +1,68 @@
+<section class="panel" id="tab16" role="tabpanel" aria-labelledby="tabbtn16" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-high">고등/수능</span><span class="badge b-exp">실험</span><span class="badge b-poe">POE</span>📊 [종합2] 벤투리 압력 강하 — 면적비와 손실 계수</div>
+    <div class="goal">🎯 이 실험에서 하는 것 — 벤투리 관의 면적비 $r=A_1/A_2$ 를 바꾸며 입구와 목의 압력 강하 $\Delta p$ 를 재서 $\Delta p$ 대 $(r^2-1)$ 그래프를 그립니다. 입구 속력 $v_1=0.3$ m/s 로 고정하면 이론 기울기는 $\tfrac12\rho v_1^2=45$ Pa 입니다. 실제 기울기는 <b>손실 계수 $C^2$</b> 만큼 작습니다. 이 손실 계수를 구하세요. 결과는 <b>보고서의 실험 C</b>가 됩니다. (물 · 낮은 속도의 안전한 실험)</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 연속 방정식 + 베르누이</div>
+      목에서 속력이 $v_2=rv_1$ 이므로 $\Delta p=\tfrac12\rho(v_2^2-v_1^2)=\tfrac12\rho v_1^2(r^2-1)$. 그래서 $\Delta p$ 를 $(r^2-1)$ 에 대해 그리면 <b>원점을 지나는 직선</b>이고 기울기가 $\tfrac12\rho v_1^2\times C^2$ (손실 포함) 입니다.
+      <div class="bridge"><span class="st">$v_2=rv_1$</span><span class="ar">→</span><span class="st">$\Delta p=\tfrac12\rho v_1^2(r^2-1)$</span><span class="ar">→</span><span class="st">$\Delta p$ 대 $(r^2-1)$</span><span class="ar">→</span><span class="st new">기울기 = $45\,C^2$</span></div>
+    </div>
+    <div class="poe" data-q="면적비가 2 에서 4 로 커지면 압력 강하는 몇 배가 될까? (입구 속력 같음)"
+         data-opts="2 배||4 배||5 배||16 배"
+         data-ans="2"
+         data-exp="$\Delta p\propto r^2-1$ 이므로 $(16-1)/(4-1)=5$ 배입니다. 면적비 자체는 2 배인데 압력 강하는 5 배 — 속력의 제곱이 작용하기 때문입니다. 오른쪽 직선으로 확인하세요."></div>
+    <div id="k16-misc"></div>
+  </div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 가상 실험실 — 조건을 정하고 [측정 기록]</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">면적비 r = A₁/A₂</span><span class="vl" id="k16-rV">—</span></div>
+          <input type="range" id="k16-r" min="1.5" max="6" step="0.5" value="3" aria-label="면적비 r = A₁/A₂">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">압력 측정 잡음 σ</span><span class="vl" id="k16-SV">—</span></div>
+          <input type="range" id="k16-S" min="0" max="15" step="0.5" value="3" aria-label="압력 측정 잡음 σ">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm" id="k16-new">🎲 새 조건(숨은 값 다시 뽑기)</button>
+          <button type="button" class="btn sm pri" id="k16-rec">📏 측정 기록</button>
+          <button type="button" class="btn sm" id="k16-rec10">📏×5 연속 기록</button>
+          <button type="button" class="btn sm rd" id="k16-clr">🧹 측정 초기화</button>
+        </div>
+        <div class="kv"><div class="cell a"><span class="k">이론 Δp(손실 없음)</span><span class="v" id="k16-oT">—</span></div><div class="cell g"><span class="k">측정 Δp</span><span class="v" id="k16-oM">—</span></div><div class="cell v2"><span class="k">추정 기울기</span><span class="v" id="k16-oF">—</span></div><div class="cell r"><span class="k">추정 손실 계수 C²</span><span class="v" id="k16-oE">—</span></div><div class="cell "><span class="k">기록 개수</span><span class="v" id="k16-oN">—</span></div></div>
+        <p class="tiny">모형 : $\Delta p=C^2\cdot45\,(r^2-1)+\varepsilon$ (Pa, 입구 속력 0.3 m/s · 물 1000 kg/m³). 숨은 손실 계수 $C^2$ 는 [새 조건]마다 0.85 ~ 0.99 에서 뽑힙니다. 점성 · 기포 · 입구 효과는 단순화한 교육용 모형입니다.</p>
+      </div>
+      <div class="card">
+        <div class="h4">📋 측정 기록표 <span class="tiny" id="k16-cnt">0개</span></div>
+        <div class="tblscroll"><table id="k16-tbl"><thead></thead><tbody></tbody></table></div>
+        <p class="tiny">기록한 값은 <b>실험보고서(19번 탭)</b>의 표 · 그래프 · 결과로 자동으로 이어집니다. 5개 이상 모으세요.</p>
+      </div>
+      <div class="hintbox" data-hints="① 면적비를 1.5 ~ 6 으로 넓게 바꾸며 [측정 기록] 하세요.||② 기울기가 45 보다 얼마나 작은가요? 그 비율이 손실 계수 $C^2$ 입니다.||③ 입구 속력이 2 배(0.6 m/s)면 기울기는 몇 배가 될까요?||④ 압력 강하가 너무 커 목의 압력이 0 에 가까워지면 어떤 일이 생길까요(캐비테이션)?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k16" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k16-cv" data-pngname="fluid-synth-16">🖼 PNG</button></div>
+          <canvas id="k16-cv" role="img" aria-label="가상 실험 장면" style="height:300px"></canvas>
+          <div class="cv-cap">물이 벤투리 관(가운데)을 지나며 목에서 빨라지고 입구 · 목의 압력 관 수위가 달라집니다(10 초 반복).</div>
+        </div>
+        <div id="k16-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k16-cv2" role="img" aria-label="측정 결과 그래프" style="height:320px"></canvas>
+          <div class="cv-cap">📊 가로 $r^2-1$ · 세로 압력 강하 $\Delta p$. 빨강 = 내 회귀직선, 흰 점선 = 숨은 참 직선. 기울기 $=45C^2$.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$\Delta p=\tfrac12\rho v_1^2(r^2-1)\,C^2$ → 기울기 $s=45C^2$ Pa, $C^2=s/45$. 예 : $s=42$ → $C^2=0.93$ (손실 약 7 %).</p><p class="lv-uni">교과서 밖 : 벤투리 유량계의 유출 계수 $C_d=0.95\sim0.99$ 는 레이놀즈 수 · 목 지름비 $\beta$ 에 따라 달라지며 ISO 5167 이 설계 규격을 정합니다. 영구 압력 손실은 확산부 각도(약 7°)가 작을수록 줄어듭니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h4">🧪 이 실험을 진짜로 하려면</div>
+    <div class="steps"><div class="step"><b>준비</b> : 투명 호스(2 cm), 면적비가 다른 목 부품, 투명 빨대 압력 관, 물통 · 메스실린더 · 스톱워치(R02 참고).</div><div class="step"><b>측정</b> : 유량을 일정(입구 속력 약 0.3 m/s)하게 하고 면적비별로 입구 · 목 수위 차 Δh(cm)를 3 회씩 읽는다.</div><div class="step"><b>그래프</b> : $\Delta p=\rho g\Delta h$ 를 $(r^2-1)$ 에 대해 그려 기울기를 구한다.</div><div class="step"><b>해석</b> : 이론 기울기 $\tfrac12\rho v_1^2$ 와 비교해 손실 계수를 구한다.</div><div class="step"><b>결론</b> : 기포 · 점성 · 입구 모서리 효과와 안전(물 · 바닥)을 서술한다.</div></div>
+    
+  </div>
+</section>
