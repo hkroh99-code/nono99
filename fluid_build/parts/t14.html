@@ -1,0 +1,192 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 14 — 공방 ⑦ 연구 도구함 (발상기 · 비용 · 시간 예산 · 연구계획서 · 코드 · 안전 점검)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab14" role="tabpanel" aria-labelledby="tabbtn14" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🧰 공방 ⑦ 연구 도구함 — 아이디어에서 계획서 · 코드 · 안전까지</div>
+    <div class="goal">🎯 이 탭에서 하는 것 — 프로젝트를 시작할 때 필요한 <b>도구</b>를 한곳에 모았습니다. ① <b>발상기</b>(주제 · 방법 · 제약 · 평가를 섞어 연구 문장 만들기) ② <b>비용 · 시간 예산 계산기</b> ③ <b>연구계획서 양식</b>(자동 저장) ④ <b>시작 코드</b>(아두이노 · 파이썬) ⑤ <b>안전 · 윤리 · 규정 점검표</b>. 모두 이 화면에서 직접 눌러 보며 쓸 수 있습니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 좋은 연구 질문은 「변인」으로 말한다</div>
+      「더 좋은 유압 장치를 만들자」는 연구가 아니라 소망입니다. <b>무엇(독립변인)을 바꾸면 무엇(종속변인)이 어떻게 변하는가? 그동안 무엇을 같게 둘 것인가(통제변인)?</b> 로 바꾸어 말하면 비로소 실험이 됩니다. 이 도구함의 발상기와 계획서 양식은 그 문장을 만들어 주는 도우미입니다.
+      <div class="bridge"><span class="st old">막연한 소망</span><span class="ar">→</span><span class="st">변인으로 쓴 질문</span><span class="ar">→</span><span class="st">예산 · 안전 점검</span><span class="ar">→</span><span class="st new">실행 가능한 계획서</span></div>
+    </div>
+    <div class="poe" data-q="같은 일을 혼자 하면 10 시간 걸린다. 4 명이 나누어 하면 걸리는 시간은? (협업 효율 0.8 가정)"
+         data-opts="2.5 시간||약 3.1 시간||5 시간||10 시간"
+         data-ans="1"
+         data-exp="이상적으로는 10 ÷ 4 = 2.5 시간이지만 소통 · 대기 · 합치기에 드는 시간 때문에 효율 0.8 이면 10 ÷ (4×0.8) ≈ <b>3.1 시간</b>입니다. 사람 수를 늘린다고 시간이 정확히 반으로 줄지 않으며, 계획을 짤 때 이 손실을 넣어야 합니다. 아래 계산기에서 확인하세요."></div>
+    <div id="k14-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🎲 ① 발상기 — 주제 · 방법 · 제약 · 평가를 섞어 연구 문장 만들기</div>
+    <div class="goal">🎯 칸의 🔒 를 눌러 마음에 드는 것은 고정하고 나머지를 다시 뽑아 보세요. 마음에 드는 조합이 나오면 <b>[연구계획서에 넣기]</b>.</div>
+    <div class="idea-grid" id="k14-ideagrid"></div>
+    <div class="row">
+      <button type="button" class="btn pri" id="k14-roll">🎲 다시 뽑기</button>
+      <button type="button" class="btn sm" id="k14-toplan">📝 연구계획서에 넣기</button>
+    </div>
+    <div class="easy"><div class="et" id="k14-sentence">…</div></div>
+    <p class="tiny">이 문장은 <b>출발점</b>일 뿐입니다. 「무엇을 바꾸고 무엇을 잴지」(변인)와 「어떻게 확인할지」(방법)를 계획서에서 직접 채워야 연구가 됩니다.</p>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">⚖️ ② 비용 · 시간 예산 계산기 <span class="badge b-mid">중등부터</span></div>
+        <div class="goal">🎯 활동을 켜고 끄며 <b>총 비용</b>이 한도 안인지, <b>팀 작업 시간</b>이 쓸 수 있는 시간 안인지 확인하세요. 값은 학교 실험실 · 문구점 기준 <b>대표 어림값</b>이며 실제 가격과 시간으로 바꿔야 합니다.</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">비용 한도 (학교 · 대회 규정에서 확인)</span><span class="vl" id="k14-limV">—</span></div>
+          <input type="range" id="k14-lim" min="10" max="100" step="5" value="50" aria-label="비용 한도">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">쓸 수 있는 작업 시간 (준비 + 제작 + 측정 + 정리)</span><span class="vl" id="k14-needV">—</span></div>
+          <input type="range" id="k14-need" min="10" max="80" step="5" value="30" aria-label="쓸 수 있는 작업 시간">
+        </div>
+        <div class="row" role="radiogroup" aria-label="팀 규모 고르기"><span class="tiny">팀 규모 :</span>
+          <label class="chk"><input type="radio" name="k14-bat" value="0"> 1 명(혼자)</label>
+          <label class="chk"><input type="radio" name="k14-bat" value="1" checked> 2 명</label>
+          <label class="chk"><input type="radio" name="k14-bat" value="2"> 4 명</label>
+        </div>
+        <div class="partlist" id="k14-parts" role="group" aria-label="활동 목록"></div>
+        <div class="kv">
+          <div class="cell a"><span class="k">총 비용</span><span class="v" id="k14-oM">—</span></div>
+          <div class="cell"><span class="k">비용 여유</span><span class="v" id="k14-oMl">—</span></div>
+          <div class="cell g"><span class="k">총 작업량(1인 기준)</span><span class="v" id="k14-oI">—</span></div>
+          <div class="cell v2"><span class="k">팀 작업 시간 (작업량 ÷ 인원 ÷ 0.8)</span><span class="v" id="k14-oH">—</span></div>
+          <div class="cell r"><span class="k">판정</span><span class="v" id="k14-oJ">—</span></div>
+          <div class="cell"><span class="k">시간 여유</span><span class="v" id="k14-oC">—</span></div>
+        </div>
+        <p class="tiny">모형 : 총 작업량(1인 기준)은 켜진 활동의 어림 작업 시간의 합, 팀 작업 시간 = 총 작업량 ÷ (인원 × 0.8). 혼자(1 명)는 협업 손실이 없어 효율 1 로 계산합니다. 비용 한도 50 천 원은 「예시」이며 학교 · 대회마다 다릅니다. 사람 수를 늘려도 시간이 정확히 반이 되지 않음을 확인하세요.</p>
+      </div>
+      <div class="hintbox" data-hints="① 처음 켜진 활동만으로 비용과 시간을 읽어 보세요. 판정이 통과인가요?||② 「Arduino 초음파 센서」를 켜 보세요. 비용과 작업 시간은 어떻게 변하나요?||③ 팀 규모를 2 명에서 4 명으로 늘려 보세요. 시간은 정확히 절반이 되나요(협업 효율 0.8)?||④ 비용 한도를 줄여 가며 어떤 활동을 먼저 빼야 연구 질문에 영향이 가장 적을지 토론하세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k14" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k14-cv" data-pngname="fluid-budget">🖼 PNG</button></div>
+          <canvas id="k14-cv" role="img" aria-label="비용 예산과 시간 예산 막대 그래프" style="height:360px"></canvas>
+          <div class="cv-cap">📊 위 : 활동별 비용(누적 막대)과 비용 한도(빨간 선) · 아래 : 활동별 팀 작업 시간(누적 막대)과 쓸 수 있는 시간(초록 선). 선을 넘으면 계획을 고쳐야 합니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>비용 예산 $C=\sum_k c_k\le C_{\lim}$. 시간 예산 : 팀 $n$ 명, 협업 효율 $\varepsilon$ 일 때 $t=\dfrac{W}{n\,\varepsilon}\le t_{\rm avail}$ ($W$ : 1인 기준 총 작업량). 필요한 인원은 $n\ge \dfrac{W}{\varepsilon\,t_{\rm avail}}$ 입니다. 인원을 늘리면 $t$ 는 $1/n$ 보다 느리게 줄어듭니다($\varepsilon<1$) — <b>비용과 시간의 거래</b>.</p>
+        <p class="lv-uni">교과서 밖 : 여러 제약이 있는 계획은 「실행 가능 영역」을 그리는 최적화 문제입니다. 목적함수(예 : 측정 점 개수)를 정하고 비용 · 시간 제약 아래서 최대로 만드는 선형계획으로 활동 조합을 찾아볼 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📝 ③ 연구계획서 양식 <span class="badge b-high">자동 저장</span></div>
+    <div class="goal">🎯 칸을 채우면 이 브라우저에 <b>자동 저장</b>됩니다. 다 쓰면 [복사] 하거나 [텍스트 저장]으로 내려받아 선생님께 제출하세요.</div>
+    <div class="plan">
+      <label class="pf">① 연구 제목 <input type="text" id="k14-p-title" placeholder="예 : 주사기 유압 장치의 효율 η — 공기 방울은 얼마나 손해인가"></label>
+      <label class="pf">② 연구 질문 <span class="tiny">(바꾸면 → 어떻게 변하는가?)</span> <textarea id="k14-p-q" rows="2" placeholder="예 : 유압 관 속 공기 방울 부피를 늘리면 출력 힘 F₂ 와 효율 η 는 어떻게 변하는가?"></textarea></label>
+      <label class="pf">③ 가설 <span class="tiny">(이유 포함)</span> <textarea id="k14-p-h" rows="2" placeholder="예 : 공기는 압축되어 부피가 변하므로(보일 법칙) 움직임이 낭비되어 η 가 줄 것이다. 물만 있으면 비압축성이라 η ≈ 1 일 것이다."></textarea></label>
+      <div class="pgrid">
+        <label class="pf">④ 독립변인(바꾸는 것) <input type="text" id="k14-p-iv" placeholder="예 : 관 속 공기 방울 부피 (0, 1, 2, 4 mL)"></label>
+        <label class="pf">⑤ 종속변인(재는 것) <input type="text" id="k14-p-dv" placeholder="예 : 출력 힘 F₂(저울 g 환산)와 효율 η = F₂/(F₁·A₂/A₁)"></label>
+        <label class="pf">⑥ 통제변인(같게 둘 것) <input type="text" id="k14-p-cv" placeholder="예 : 주사기 크기 · 입력 힘 · 관 길이 · 물 온도"></label>
+        <label class="pf">⑦ 측정 도구 · 정밀도 <input type="text" id="k14-p-tool" placeholder="예 : 주방 저울(±1 g), 자(±1 mm), 눈금 주사기(±0.5 mL)"></label>
+      </div>
+      <label class="pf">⑧ 실험 방법 <span class="tiny">(순서대로)</span> <textarea id="k14-p-m" rows="3" placeholder="① … ② … ③ …"></textarea></label>
+      <label class="pf">⑨ 예상 결과 · 분석 방법 <textarea id="k14-p-a" rows="2" placeholder="예 : 공기량 대 η 그래프, 이상 유압(η=1)과 비교"></textarea></label>
+      <label class="pf">⑩ 위험 요인과 안전 대책 <textarea id="k14-p-r" rows="2" placeholder="예 : 물 · 저압만 사용, 주사기에 바늘 금지, 바닥 물기 닦기, 보안경 착용"></textarea></label>
+      <label class="pf">⑪ 일정 · 역할 <textarea id="k14-p-s" rows="2" placeholder="예 : 1 주 재료 준비, 2 주 측정, 3 주 분석 / 역할 : 측정 · 기록 · 그래프"></textarea></label>
+    </div>
+    <div class="row">
+      <button type="button" class="btn pri" id="k14-copy">📋 계획서 복사</button>
+      <button type="button" class="btn sm" id="k14-save">💾 텍스트 저장</button>
+      <button type="button" class="btn sm rd" id="k14-clear">🗑 지우기</button>
+      <span class="tiny" id="k14-planmsg"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">💻 ④ 시작 코드 — 복사해서 시작하고, 내 것으로 고치기 <span class="badge b-high">고등</span></div>
+    <div class="goal">🎯 완성품이 아니라 <b>출발점</b>입니다. 핀 번호 · 보정값은 내 부품에 맞게 바꾸고 데이터시트와 라이브러리 문서를 확인하세요. 모든 활동은 <b>물 · 저압</b>이며 고압 · 가열 · 가스는 쓰지 않습니다.</div>
+    <details class="code" open><summary>① 파이썬 — 부력으로 액체 밀도 구하기 (종합1 · R01 · R02)</summary>
+      <button type="button" class="btn sm" data-copy="code-rho">📋 복사</button>
+      <pre><code id="code-rho">import numpy as np
+V  = np.array([0, 20, 40, 60, 80, 100.])        # 잠긴 부피(mL) — 내 측정값으로 바꾸기
+dm = np.array([0, 20, 41, 60, 82, 101.])        # 저울 읽음 감소(g)
+slope = (V * dm).sum() / (V * V).sum()          # 원점 통과 최소제곱 기울기 (g/mL)
+rho = slope * 1000                              # kg/m³
+res = dm - slope * V
+se = np.sqrt((res**2).sum() / (len(V) - 1) / (V**2).sum())
+print(f"rho = {rho:.0f} ± {se*1000:.0f} kg/m3")</code></pre>
+    </details>
+    <details class="code"><summary>② 파이썬 — 주사기 유압 효율 η (종합2 · R04)</summary>
+      <button type="button" class="btn sm" data-copy="code-eta">📋 복사</button>
+      <pre><code id="code-eta">import numpy as np
+d1, d2 = 10.0, 30.0                              # 내경(mm)
+ratio = (d2 / d1) ** 2                           # 이론 면적비 A2/A1
+F1 = np.array([1, 2, 3, 4, 5.])                  # 입력 힘(N) = 저울 g × 0.00981
+F2 = np.array([8.1, 16.8, 25.0, 33.5, 41.0])     # 출력 힘(N)
+k = (F1 * F2).sum() / (F1 * F1).sum()            # 기울기
+print("기울기", round(k, 2), " 이론", ratio, " η =", round(k / ratio, 3))</code></pre>
+    </details>
+    <details class="code"><summary>③ 파이썬 — 압력-깊이 기울기 ρg (종합3 · R03 · I02)</summary>
+      <button type="button" class="btn sm" data-copy="code-pg">📋 복사</button>
+      <pre><code id="code-pg">import numpy as np
+h = np.array([0, 5, 10, 15, 20, 25.]) / 100      # 깊이(m)
+p = np.array([0, 0.5, 1.0, 1.5, 2.0, 2.5]) * 1e3 # 게이지압(Pa)
+g = 9.80
+slope = (h * p).sum() / (h * h).sum()
+print("rho =", slope / g, "kg/m3")</code></pre>
+    </details>
+    <details class="code"><summary>④ 파이썬 — 보일 법칙 pV=일정 (R05 · 카르테시안 잠수부 R10)</summary>
+      <button type="button" class="btn sm" data-copy="code-boyle">📋 복사</button>
+      <pre><code id="code-boyle">p0 = 101.3e3                       # 대기압(Pa)
+rho, g = 998.0, 9.80
+for h in [0, 0.5, 1, 2, 5]:        # 물 깊이(m)
+    p = p0 + rho * g * h
+    print(f"{h:4.1f} m  p={p/1e3:6.1f} kPa  부피비 V/V0={p0/p:.3f}")</code></pre>
+    </details>
+    <details class="code"><summary>⑤ 아두이노 — 저가 압력센서로 수심 재기 (I02 · 선택)</summary>
+      <button type="button" class="btn sm" data-copy="code-ard">📋 복사</button>
+      <pre><code id="code-ard">// 저압(0~40 kPa) 아날로그 압력센서 + 튜브. 센서 사양서의 출력 범위와 전원 전압을 확인하세요.
+const int PIN = A0;
+const float P0V = 0.5, P1V = 4.5;     // 0 kPa, 최대압에서의 출력 전압(사양서 값으로 바꾸기)
+const float PMAX = 40.0;              // kPa
+void setup() { Serial.begin(115200); }
+void loop() {
+  float v = analogRead(PIN) * 5.0 / 1023.0;
+  float p = (v - P0V) / (P1V - P0V) * PMAX;     // kPa (게이지)
+  float h = p * 1000.0 / (998.0 * 9.80);        // 수심(m) = p/(ρg)
+  Serial.print(p, 2); Serial.print(','); Serial.println(h, 3);
+  delay(200);
+}</code></pre>
+    </details>
+    <details class="code"><summary>⑥ 파이썬 — 배의 흘수와 GM (R06 · R07)</summary>
+      <button type="button" class="btn sm" data-copy="code-ship">📋 복사</button>
+      <pre><code id="code-ship">L, B, rho = 0.20, 0.10, 1000.0      # 상자형 배 길이·폭(m), 물 밀도
+m, KG = 0.30, 0.04                  # 질량(kg), 무게중심 높이(m)
+d  = m / (rho * L * B)              # 흘수
+KB = d / 2
+BM = B**2 / (12 * d)
+GM = KB + BM - KG
+print(f"흘수 {d*100:.1f} cm, GM = {GM*100:.1f} cm ->", "안정" if GM > 0 else "불안정")</code></pre>
+    </details>
+  </div>
+
+  <div class="card">
+    <div class="h3">🦺 ⑤ 안전 · 윤리 · 규정 점검표 <span class="badge b-poe">체크는 자동 저장</span></div>
+    <div class="goal">🎯 <b>시작하기 전에</b> 모두 확인하세요. 학교 · 대회 규정은 시기에 따라 바뀌므로 지도교사와 규정집의 최신 안내를 따릅니다.</div>
+    <div class="checklist" id="k14-safe"></div>
+    <div class="row"><span class="tiny" id="k14-safemsg">0 / 0 확인</span></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📚 ⑥ 더 찾아볼 곳 — 이름만 알려 드립니다(주소는 직접 검색)</div>
+    <div class="steps">
+      <div class="step"><b>한국</b> : 한국해양과학기술원(KIOST) · 한국해양진흥공사(KOBC) · 한국조선해양플랜트협회 · 한국수력원자력 · 한국기계연구원(유압 · 구동) · 행정안전부 · 해양경찰청(구명 · 안전) · 학교 R&amp;E · 영재학급 · 학생과학탐구대회.</div>
+      <div class="step"><b>미국</b> : NOAA(수심 · 조석) · WHOI(Woods Hole 해양연구소 · 심해 잠수정 Alvin) · U.S. Coast Guard(구명조끼 승인 기준) · NASA Neutral Buoyancy Lab · ASME(유압 · 압력용기 규격) · NSF.</div>
+      <div class="step"><b>일본</b> : JAMSTEC(해양연구개발기구, 유인잠수정 「신카이 6500」 · 지구심부탐사선) · 国土交通省(조선 · 해사) · 日本機械学会 · 日本フルードパワーシステム学会.</div>
+      <div class="step"><b>국제</b> : ISO 12402(구명동의 규격) · IMO(국제해사기구, 선박 복원성 규정) · ISO 4413(유압 안전) · BIPM(SI 단위, 압력 Pa).</div>
+      <div class="step"><b>이론</b> : 교과서 역학 · 유체(정수압, 파스칼, 아르키메데스) · 열 · 기체 법칙(보일) · 수학(선형회귀 · 오차 전파).</div>
+      <div class="step"><b>특허</b> : 한국특허정보원 KIPRIS 에서 비슷한 발명을 검색해 「내 것의 새로운 점」을 정리합니다(발명 10선).</div>
+    </div>
+    <p class="tiny">※ 이 자료의 통계 · 연도 · 규모는 공개된 자료를 바탕으로 정리한 것이며 해마다 바뀔 수 있습니다. 활용 전 <b>반드시 공식 최신 자료</b>를 확인하세요.</p>
+  </div>
+</section>

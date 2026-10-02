@@ -1,0 +1,68 @@
+<section class="panel" id="tab16" role="tabpanel" aria-labelledby="tabbtn16" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-high">고등/수능</span><span class="badge b-exp">실험</span><span class="badge b-poe">POE</span>📊 [종합2] 주사기 유압의 힘 증폭 — 파스칼 원리</div>
+    <div class="goal">🎯 이 실험에서 하는 것 — 단면적이 다른 두 주사기를 물로 연결하고 작은 쪽 피스톤을 $F_1$ 로 눌러 큰 쪽이 내는 힘 $F_2$ 를 잽니다. $F_2$ 대 $F_1$ 그래프는 <b>원점을 지나는 직선</b>이고 <b>기울기 = $\eta\,A_2/A_1$</b> 입니다. 이론 면적비(여기서는 9)와 비교해 <b>효율 $\eta$</b>(마찰 · 공기 손실)를 구합니다. 결과는 <b>보고서의 실험 C</b>가 됩니다. (물 · 낮은 힘만 쓰는 안전한 실험)</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 압력은 같고 면적이 다르다</div>
+      밀폐된 물에서 압력은 어디서나 같으므로 $F_1/A_1=F_2/A_2$ → $F_2=F_1A_2/A_1$. 이상적이면 기울기는 면적비(안지름비의 제곱). 실제는 피스톤 마찰 · 공기 방울 때문에 기울기가 작아져 $\eta<1$ 입니다. 힘은 커지지만 <b>움직인 거리는 면적비만큼 줄어</b> 일은 얻지 못합니다.
+      <div class="bridge"><span class="st">$p=F_1/A_1=F_2/A_2$</span><span class="ar">→</span><span class="st">$F_2=\eta\dfrac{A_2}{A_1}F_1$</span><span class="ar">→</span><span class="st">기울기 = $\eta A_2/A_1$</span><span class="ar">→</span><span class="st new">$\eta=\text{기울기}/9$</span></div>
+    </div>
+    <div class="poe" data-q="안지름 10 mm 와 30 mm 주사기를 물로 연결했다(이상적). 작은 쪽을 5 N 으로 누르면 큰 쪽의 힘은? 큰 쪽이 1 cm 움직이려면 작은 쪽은 몇 cm 눌러야 할까?"
+         data-opts="5 N, 1 cm||15 N, 3 cm||45 N, 9 cm||45 N, 1/9 cm"
+         data-ans="2"
+         data-exp="면적비 $(30/10)^2=9$ → $F_2=45$ N. 물은 비압축성이라 부피가 보존되므로 $A_1d_1=A_2d_2$ → 작은 쪽을 <b>9 cm</b> 눌러야 큰 쪽이 1 cm 움직입니다. 힘이 9 배면 거리는 1/9 이어서 일은 같습니다."></div>
+    <div id="k16-misc"></div>
+  </div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 가상 실험실 — 조건을 정하고 [측정 기록]</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">입력 힘 F₁ (N)</span><span class="vl" id="k16-FV">—</span></div>
+          <input type="range" id="k16-F" min="1" max="10" step="0.5" value="5" aria-label="입력 힘 F₁ (N)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">저울 잡음 σ (N)</span><span class="vl" id="k16-SV">—</span></div>
+          <input type="range" id="k16-S" min="0" max="1.5" step="0.1" value="0.4" aria-label="저울 잡음 σ (N)">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm" id="k16-new">🎲 새 조건(숨은 값 다시 뽑기)</button>
+          <button type="button" class="btn sm pri" id="k16-rec">📏 측정 기록</button>
+          <button type="button" class="btn sm" id="k16-rec10">📏×5 연속 기록</button>
+          <button type="button" class="btn sm rd" id="k16-clr">🧹 측정 초기화</button>
+        </div>
+        <div class="kv"><div class="cell a"><span class="k">이상 F₂ = 9F₁</span><span class="v" id="k16-oT">—</span></div><div class="cell g"><span class="k">측정 F₂</span><span class="v" id="k16-oM">—</span></div><div class="cell v2"><span class="k">추정 기울기</span><span class="v" id="k16-oF">—</span></div><div class="cell r"><span class="k">추정 효율 η</span><span class="v" id="k16-oE">—</span></div><div class="cell "><span class="k">기록 개수</span><span class="v" id="k16-oN">—</span></div></div>
+        <p class="tiny">모형 : $F_2=\eta\cdot9F_1+\varepsilon$ (σ N). 숨은 효율 $\eta$ 는 [새 조건]마다 0.70 ~ 0.95 에서 뽑힙니다. 면적비 9(안지름 10 mm · 30 mm)는 고정입니다. 관 길이 · 점성 · 가속은 무시한 교육용 모형입니다.</p>
+      </div>
+      <div class="card">
+        <div class="h4">📋 측정 기록표 <span class="tiny" id="k16-cnt">0개</span></div>
+        <div class="tblscroll"><table id="k16-tbl"><thead></thead><tbody></tbody></table></div>
+        <p class="tiny">기록한 값은 <b>실험보고서(19번 탭)</b>의 표 · 그래프 · 결과로 자동으로 이어집니다. 5개 이상 모으세요.</p>
+      </div>
+      <div class="hintbox" data-hints="① F₁ 을 1 ~ 10 N 으로 넓게 바꾸며 [측정 기록] 하세요.||② 기울기가 9 보다 얼마나 작은가요? 그 비율이 효율 η 입니다.||③ 공기 방울이 있으면 η 가 어떻게 변할지 예상해 보세요(R05 참고).||④ 큰 피스톤이 1 cm 움직일 때 작은 쪽이 몇 cm 움직여야 하는지 계산해 일이 같은지 확인하세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k16" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k16-cv" data-pngname="fluid-synth-16">🖼 PNG</button></div>
+          <canvas id="k16-cv" role="img" aria-label="가상 실험 장면" style="height:300px"></canvas>
+          <div class="cv-cap">작은 피스톤(왼쪽)을 누르면 물을 통해 큰 피스톤(오른쪽)이 올라가며 힘이 면적비만큼 커집니다(10 초 반복).</div>
+        </div>
+        <div id="k16-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k16-cv2" role="img" aria-label="측정 결과 그래프" style="height:320px"></canvas>
+          <div class="cv-cap">📊 가로 입력 힘 $F_1$ · 세로 출력 힘 $F_2$. 빨강 = 내 회귀직선, 흰 점선 = 숨은 참 직선. 기울기 = $\eta\cdot9$.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$F_2=\eta\dfrac{A_2}{A_1}F_1$ → 기울기 $s=9\eta$, $\eta=s/9$. 예 : $s=7.65$ → $\eta=0.85$. 이상 효율 1 이면 $s=9$. 일 보존 : $F_1d_1=F_2d_2/\eta$ 이므로 실제 일은 손실만큼 줄어듭니다.</p><p class="lv-uni">교과서 밖 : 실제 유압 장비(굴착기 · 브레이크)는 압력 10 ~ 30 MPa 이상을 쓰며 점성 · 누설 · 가열이 효율을 정합니다. 이 실험은 안전을 위해 kPa 수준의 물 · 낮은 힘만 씁니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h4">🧪 이 실험을 진짜로 하려면</div>
+    <div class="steps"><div class="step"><b>준비</b> : 안지름이 다른 주사기 두 개(10 mL 와 60 mL 등), 투명 튜브, 물, 주방 저울 2 개 또는 한 개(R04 참고). <b>바늘은 쓰지 않는다.</b></div><div class="step"><b>측정</b> : 큰 주사기를 저울 위에 세우고 작은 주사기를 눌러 큰 쪽 저울 증가(g)를 읽는다. 작은 쪽 힘은 다른 저울로 잰다. 무게(g) × 0.00981 = N.</div><div class="step"><b>그래프</b> : F₂ 대 F₁ 직선의 기울기를 구한다. 안지름을 자로 재어 면적비 $(d_2/d_1)^2$ 를 계산한다.</div><div class="step"><b>해석</b> : 효율 η = 기울기 / 면적비. 공기 방울을 일부러 넣었을 때와 비교한다.</div><div class="step"><b>결론</b> : 손실 원인(마찰 · 공기 · 누설)과 안전하게 낮은 힘을 쓴 이유를 서술한다.</div></div>
+    
+  </div>
+</section>

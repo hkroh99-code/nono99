@@ -1,0 +1,105 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 9 — 프로젝트 공방 ② 실시 가능한 R&amp;E · 프로젝트 6~10 (R06~R10 · 카드 5개 · 고르면 장치 도해 · 예산 · 방법 · 예측 결과 · 미니 모의실험 · 실패 대처 · 평가가 펼쳐짐)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab9" role="tabpanel" aria-labelledby="tabbtn9" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-exp">R&amp;E · 프로젝트 ②</span><span class="badge b-high">고등</span><span class="badge b-poe">POE</span>🔬 프로젝트 공방 ② 실시 가능한 R&amp;E · 프로젝트 6~10</div>
+    <div class="goal">🎯 이 공방에서 하는 것 — 모형 배의 흘수 · 안정성과 흔들림 주기 · 물 온도와 부력 · U자 마노미터 · 카르테시안 잠수부 5개 R&amp;E 입니다(R06 ~ R10). 앞 공방보다 측정이 조금 더 정밀해야 하지만 학교 예산 안에서 가능합니다. 데이터가 <b>직선 · 거듭제곱 · 쌍곡선</b> 중 어떤 그래프가 되는지를 먼저 생각해 보세요. <b>안전 : 이 공방의 모든 활동은 물 · 주사기 · 저울 · 낮은 압력만 쓰는 안전한 실험입니다(고압 · 가열 · 가스 · 탱크 실험은 하지 않습니다).</b></div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 측정 그래프의 세 가지 모양</div>
+      R&amp;E 데이터는 대개 세 모양 중 하나입니다 — ① <b>직선</b>(두 양이 비례 : 흘수 ∝ 적재 질량), ② <b>거듭제곱 · 쌍곡선</b>(주기 ∝ 1/√GM, 비중계 눈금 ∝ 1/ρ), ③ <b>문턱이 있는 곡선</b>(잠수부가 가라앉는 압력). 어느 모양이 나올지 예측하면 어떤 그래프를 쓸지 정할 수 있습니다.
+      <div class="bridge"><span class="st old">그래프 모양 예측</span><span class="ar">→</span><span class="st">측정 설계</span><span class="ar">→</span><span class="st">되풀이 · 분포</span><span class="ar">→</span><span class="st">분석 · 오차</span><span class="ar">→</span><span class="st new">결론</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🧭 공방 안내 — 이렇게 진행합니다 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="R&amp;E 진행 흐름. 여섯 단계가 이어지고 되돌아가 고친다.">
+        {{FIG:wf_re}}
+      </svg>
+    </div>
+    <div class="figcap">그림 9-1. R&amp;E 의 흐름 — 여섯 단계를 거치며 <b>되돌아가 고치는</b> 것이 핵심이다</div>
+    <div class="h4">🧰 이 공방의 도구와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 변인 표</b>조작 · 종속 · 통제를 한 장에. 통제가 새면 결론이 흐려진다.</div>
+      <div class="part"><b>② 장비 점검</b>저울 영점 · 수온 · 눈금 읽는 위치를 매 실험 전에 기록한다.</div>
+      <div class="part"><b>③ 반복 횟수</b>분포를 보려면 10 회 이상. 평균의 오차는 $\sigma/\sqrt N$ 로 줄어든다.</div>
+      <div class="part"><b>④ 원자료 보관</b>이상한 값도 지우지 말고 표시해 둔다.</div>
+      <div class="part"><b>⑤ 이론 곡선 비교</b>식으로 예측한 곡선과 점을 한 그래프에 그린다.</div>
+      <div class="part"><b>⑥ 한계 서술</b>모형이 틀리는 곳을 정직하게 적는다.</div>
+    </div>
+    <div class="h4">🧪 진행 순서</div>
+    <div class="steps">
+      <div class="step"><b>변인 정하기</b> — 조작 변인 하나만 바꾸고 나머지는 모두 같게(통제 변인 표).</div>
+      <div class="step"><b>예측</b> — 모의실험으로 그래프 모양과 대략의 값을 먼저 예측한다.</div>
+      <div class="step"><b>예비 실험</b> — 장비가 안정적으로 값을 주는지 확인한다(저울 영점 · 수온 · 수면 고요).</div>
+      <div class="step"><b>본 실험</b> — 조건마다 충분한 횟수(통계에는 최소 10 회)를 반복한다.</div>
+      <div class="step"><b>분석 · 발표</b> — 회귀 · 오차 · 한계를 정리하고 이론 곡선과 비교한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🎯 쉽게 이해하기 — 양궁 선수의 화살 자국</div>
+      양궁 선수가 같은 자리에서 화살을 여러 번 쏘면 과녁에 <b>흩어진 자국</b>이 남습니다. 자국이 모인 중심이 정확도, 흩어진 정도가 정밀도입니다. 실험 측정도 똑같아서 「한 번의 값」보다 「반복했을 때 분포」를 보아야 합니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“한 번 잰 값이 그 장치의 성능이다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>여러 번 되풀이해 <strong>평균(중심)</strong>과 <strong>표준편차(흩어짐)</strong>를 함께 보고해야 장치의 성능을 말할 수 있습니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🗂 프로젝트 5선 (R&amp;E · 프로젝트 ②) — 카드를 누르면 아래에 자세한 안내가 펼쳐집니다</div>
+    <div class="tline" id="t9-pick" role="group" aria-label="프로젝트 고르기"></div>
+  </div>
+
+  <div id="t9-d1"></div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 미니 모의실험 — <span id="t9-simT">—</span></div>
+        <p class="muted" id="t9-simQ">—</p>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="t9-aN">—</span><span class="vl" id="t9-aV">—</span></div>
+          <input type="range" id="t9-a" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 1">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="t9-bN">—</span><span class="vl" id="t9-bV">—</span></div>
+          <input type="range" id="t9-b" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 2">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm pri" id="t9-go">🎲 새로 측정 (새 난수)</button>
+          <button type="button" class="btn sm" id="t9-def">↺ 기본값</button>
+        </div>
+        <div class="kv" id="t9-kv"></div>
+        <p class="tiny" id="t9-note">—</p>
+      </div>
+      <div class="poe" data-q="R06 에서 가로 1 m · 세로 0.5 m 직육면체 모형 배(담수)에 질량 100 kg 을 더 싣으면 흘수는 대략 몇 cm 더 깊어질까?"
+           data-opts="약 2 cm||약 20 cm||약 0.2 cm||약 200 cm"
+           data-ans="1"
+           data-exp="$\Delta d=\Delta m/(\rho LB)=100/(1000\times1\times0.5)=0.2$ m = <b>20 cm</b>. 질량 대 흘수는 기울기가 $1/(\rho LB)$ 인 직선입니다."></div>
+      <div class="poe" data-q="R09 U자 마노미터에서 한쪽에 깊이 10 cm 의 물 속 압력을 연결했더니 수은(밀도 13600)과 물 사이의 높이차는 대략?"
+           data-opts="약 0.7 cm||약 7 cm||약 10 cm||약 136 cm"
+           data-ans="0"
+           data-exp="압력 $\rho_w g h=\rho_{Hg}g\,\Delta h$ → $\Delta h=10\times1000/13600\approx0.74$ cm. 수은은 밀도가 커서 같은 압력에 눈금이 작게 움직입니다(안전 때문에 교실에서는 물 · 기름을 씁니다)."></div>
+      <div id="t9-misc"></div>
+      <div class="hintbox" data-hints="① 먼저 카드 5개 중 내 장비로 할 수 있는 것을 고르세요(R06 은 비닐 배 + 동전, R09 는 투명 호스).||② 미니 모의실험으로 「그래프가 어떤 모양으로 나올지」를 먼저 스케치하세요.||③ 결과 표의 평균 ± 표준편차를 한 줄 결론으로 바꿔 보세요.||④ R06 의 직선 기울기는 15번 탭 [종합1] 의 기울기 해석과 같은 방법입니다."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t9" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t9-cv" data-pngname="project-9-sim">🖼 PNG</button></div>
+          <canvas id="t9-cv" role="img" aria-label="프로젝트 미니 모의실험 애니메이션" style="height:300px"></canvas>
+          <div class="cv-cap" id="t9-cap1">—</div>
+        </div>
+        <div id="t9-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t9-cv2" role="img" aria-label="프로젝트 예상 결과 그래프" style="height:250px"></canvas>
+          <div class="cv-cap" id="t9-cap2">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="t9-d2"></div>
+</section>

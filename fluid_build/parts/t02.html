@@ -1,0 +1,118 @@
+<!-- ═══ TAB 2 — 📏 원리① 유체의 압력과 깊이 — 위에 쌓인 유체의 무게가 누른다 ═══ -->
+<section class="panel" id="tab2" role="tabpanel" aria-labelledby="tabbtn2" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>📏 원리① 유체의 압력과 깊이 — 위에 쌓인 유체의 무게가 누른다</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 정지한 유체 속의 압력은 <b>깊이 $h$ 에 비례</b>하여 커집니다: $p=p_0+\rho gh$. 압력은 <b>모든 방향</b>으로 같은 크기로 작용하고(옆면 · 아랫면도), <b>용기의 모양이나 물의 양과 상관없이</b> 깊이와 밀도로만 정해집니다(파스칼의 역설). 수심이 10 m 늘 때마다 약 1기압씩 커집니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 압력과 무게(교과서 힘과 운동)</div>
+      깊이 $h$ 의 한 점 위에는 단면적 $A$ 인 유체 기둥이 있습니다. 기둥의 무게 $\rho(Ah)g$ 를 면적 $A$ 로 나누면 $\rho gh$ — 이것이 그 점의 <b>게이지 압력</b>입니다. 여기에 수면에 작용하는 대기압 $p_0$ 를 더하면 <b>절대 압력</b>. 압력은 방향이 없는 양(스칼라)이라 한 점에서는 모든 방향으로 같고, 면에는 수직으로 힘을 줍니다.
+      <div class="bridge"><span class="st old">압력 $F/A$</span><span class="ar">→</span><span class="st">유체 기둥의 무게</span><span class="ar">→</span><span class="st">$p=p_0+ho gh$</span><span class="ar">→</span><span class="st new">모든 방향 · 모양 무관</span></div>
+    </div>
+    <div class="poe" data-q="수영장 바닥(수심 2 m)의 압력은 수심 1 m 인 곳의 압력의 몇 배일까? (대기압 포함하지 않은 게이지 압력으로)"
+         data-opts="½ 배||같다||2 배||4 배"
+         data-ans="2"
+         data-exp="게이지 압력 $\rho gh$ 는 깊이에 비례하므로 <b>2 배</b>입니다. (절대 압력은 대기압 1기압이 더해져 $\dfrac{1+0.2}{1+0.1}\approx1.1$ 배가 아니라 $\dfrac{1.2}{1.1}$ — 수심 10 m 마다 +1기압이므로 절대 압력으로 보면 2 m 에서 약 1.2기압, 1 m 에서 약 1.1기압입니다.)"></div>
+    <div id="t2-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 정수압 — 깊이 · 모양 · 직선 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="정수압 도해 세 장면. 깊을수록 사방으로 커지는 압력, 모양이 달라도 같은 수심에서는 같은 바닥 압력, 깊이에 비례하는 직선 그래프.">
+        {{FIG:hydro}}
+      </svg>
+    </div>
+    <div class="figcap">그림 2-1. 정수압 — ① 깊을수록 압력이 커지고 사방으로 같다 → ② 용기 모양이 달라도 수면 높이가 같으면 바닥 압력이 같다(파스칼의 역설) → ③ 깊이 대 압력은 기울기 $\rho g$ 인 직선</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 게이지 압력 $\rho gh$</b>대기압을 뺀 압력. 압력계가 읽는 값. 물은 10 m 마다 약 98 kPa.</div>
+      <div class="part"><b>② 절대 압력</b>게이지 압력 + 대기압 $p_0$(약 101 kPa). 기체 법칙 등에는 절대 압력을 쓴다.</div>
+      <div class="part"><b>③ 모든 방향</b>한 점의 압력은 방향에 상관없이 같다. 옆 · 아래 · 위 어디서나 같은 크기로 수직으로 민다.</div>
+      <div class="part"><b>④ 용기 모양 무관</b>바닥 압력은 수면 높이만으로 정해진다. 용기가 넓든 좁든 바닥이 받는 힘은 $\rho ghA$ 로 같다.</div>
+      <div class="part"><b>⑤ 압력 단위</b>1기압 = 101.3 kPa = 1.013 bar = 760 mmHg ≈ 10.3 m 수주.</div>
+      <div class="part"><b>⑥ 밀도 $\rho$</b>압력이 커지는 비율을 정한다. 해수(1025)는 물(1000)보다 약간 더 빨리, 수은(13600)은 훨씬 빨리 커진다.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 안전하게 압력과 깊이 확인하기 (고압 장치는 쓰지 않는다)</div>
+    <div class="steps">
+      <div class="step">페트병 옆면에 높이가 다른 구멍 3 개를 뚫고(교사 시연) 물을 채워 구멍에서 나오는 물줄기의 세기와 도달 거리를 비교한다 → 깊은 구멍일수록 세게 나온다(R·C 프로젝트).</div>
+      <div class="step">투명 관(또는 빨대 + 주사기)에 물을 넣고 깊이에 따라 고무막이 휘는 정도를 비교해 압력이 깊이에 비례하는지 본다.</div>
+      <div class="step">모양이 다른 병(위가 넓은 병 · 좁은 병)에 같은 높이로 물을 채우고 바닥 가까이에서 나오는 물줄기를 비교한다 → 같다.</div>
+      <div class="step">저울 위의 비커에 손가락을 넣어 눌러 보면 물의 깊이가 늘어 압력(저울 읽기)이 변한다(R03).</div>
+      <div class="step">종합실험 3(17번 탭)에서 압력-깊이 직선의 기울기 $\rho g$ 로 액체 밀도를 구한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🧱 쉽게 이해하기 — 책 더미 속의 책</div>
+      책을 쌓아 올린 더미의 맨 아래 책은 위의 책들의 무게를 모두 받아 가장 세게 눌립니다. 물속 깊은 곳도 그 위에 쌓인 <b>물기둥의 무게</b>를 받치므로 깊을수록 압력이 커져요. 그런데 물은 흘러서 옆으로도 같은 크기로 밀어요 — 그래서 압력은 방향이 없고 한 깊이에서는 어디서나 같습니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“물이 많은 용기의 바닥 압력이 더 크다 · 압력은 아래로만 작용한다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>바닥 압력은 <strong>수면까지의 깊이</strong>로 정해지고(모양 · 양 무관), 압력은 <strong>모든 방향</strong>으로 같은 크기로 작용합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 정수압 시뮬레이션 — 깊이 · 액체 밀도 · 용기 모양</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">수면에서의 깊이 h</span><span class="vl" id="t2-hV">—</span></div>
+          <input type="range" id="t2-h" min="0.5" max="40" step="0.5" value="10" aria-label="수면에서의 깊이 h">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">액체 밀도 ρ</span><span class="vl" id="t2-rhoV">—</span></div>
+          <input type="range" id="t2-rho" min="700" max="1400" step="25" value="1000" aria-label="액체 밀도 ρ">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">용기 모양(1~4)</span><span class="vl" id="t2-shV">—</span></div>
+          <input type="range" id="t2-sh" min="1" max="4" step="1" value="1" aria-label="용기 모양(1~4)">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">게이지 압력 ρgh</span><span class="v" id="t2-oG">—</span></div>
+          <div class="cell g"><span class="k">절대 압력</span><span class="v" id="t2-oA">—</span></div>
+          <div class="cell v2"><span class="k">바닥이 받는 힘(1 m²)</span><span class="v" id="t2-oF">—</span></div>
+          <div class="cell r"><span class="k">액체의 무게</span><span class="v" id="t2-oW">—</span></div>
+          <div class="cell "><span class="k">무게 ÷ 바닥 힘</span><span class="v" id="t2-oR">—</span></div>
+        </div>
+        <p class="tiny">모형 : 정지한 비압축성 액체 $p=p_0+\rho gh$ · $g=9.8$ m/s² · 용기 바닥 면적 1 m². 용기 모양에 따라 액체의 부피(무게)만 다르고 바닥이 받는 힘은 같습니다(파스칼의 역설). 모양 계수 : 곧은 통 1 · 위로 넓은 통 1.8 · 위로 좁은 통 0.45 · 불룩한 통 1.3(교육용 어림).</p>
+      </div>
+      <div class="poe" data-q="같은 높이까지 물을 채운 곧은 통과 「위로 넓어지는 통」(바닥 면적 같음)의 바닥 압력을 비교하면?"
+           data-opts="넓어지는 통이 더 크다||곧은 통이 더 크다||같다||물의 무게가 큰 쪽이 더 크다"
+           data-ans="2"
+           data-exp="바닥 압력은 $\rho gh$ 로 <b>같습니다</b>. 위로 넓어지는 통은 물이 더 많아 무게는 크지만, 늘어난 무게는 비스듬한 옆벽이 받아 냅니다(파스칼의 역설). 오른쪽 아래 막대에서 「바닥 힘」은 모든 용기에서 같습니다."></div>
+      <div class="hintbox" data-hints="① 먼저 깊이를 10 m 로 두고 「절대 압력」이 몇 기압인지 보세요(약 2기압).||② 깊이를 2 배로 하면 게이지 압력은 몇 배가 되나요? 절대 압력은요?||③ 액체 밀도를 1000 에서 1360 으로 바꾸면 압력이 어떻게 달라지나요? (수은은 13600)||④ 용기 모양을 바꿔 보세요. 바닥이 받는 힘과 액체의 무게 중 어느 것이 변하고 어느 것이 변하지 않나요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t2" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t2-cv" data-pngname="hydrostatic">🖼 PNG</button></div>
+          <canvas id="t2-cv" role="img" aria-label="액체가 든 용기와 깊이별 압력 화살표, 바닥 힘과 액체 무게 막대" style="height:360px"></canvas>
+          <div class="cv-cap">왼쪽 : 선택한 모양의 용기 — 깊이마다 노란 화살표가 사방으로 같은 크기로 누릅니다(깊을수록 길다). 오른쪽 : 바닥이 받는 힘(초록)과 액체의 무게(파랑) 막대 — 모양이 달라도 초록은 그대로입니다.</div>
+        </div>
+        <div id="t2-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t2-cv2" role="img" aria-label="깊이 대 압력 직선과 용기 모양별 바닥 힘 비교 그래프" style="height:340px"></canvas>
+          <div class="cv-cap">📊 위 : 깊이 대 게이지 압력(직선, 기울기 $\rho g$) — 물 · 해수 · 지금 밀도. 아래 : 용기 모양마다 바닥 힘(초록, 모두 1)과 액체의 무게(파랑)가 다르다는 것을 한눈에.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$p=p_0+\rho gh$. 바닥 힘 $F=pA=(p_0+\rho gh)A$. 수영장 · 댐의 벽에 작용하는 합력은 깊이에 따라 달라져 $F=\tfrac12\rho gh^2w$ (직사각형 벽, 폭 $w$)입니다.</p><p>예 : 물 10 m → $\rho gh=1000\times9.8\times10=98$ kPa $\approx0.97$ 기압. 바닥 1 m² 의 힘 98 kN(약 10 톤중).</p><p class="lv-uni">교과서 밖 : 정수압의 일반식은 $dp/dz=-\rho g$ 이며, 압축성 유체(기체)에서는 $p(z)=p_0\exp(-Mgz/RT)$. 바다 깊이에서는 물이 약간 압축되어 $\rho$ 가 5 % 정도 커집니다(해구 바닥).</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 정수압은 어떻게 만들어지나 — 유체 기둥의 무게에서 모든 방향의 압력까지 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">정지한 액체 속 한 점의 압력이 왜 깊이에 비례하는지 단계별로 따라가 봅니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 유체 기둥을 떠올리기</b> — 수면에서 깊이 $h$ 까지 단면적 $A$ 인 가상의 기둥을 생각합니다. 기둥 속 액체의 부피는 $Ah$, 질량은 $\rho Ah$, 무게는 $\rho Ahg$ 입니다.</div>
+      <div class="step"><b>② 기둥을 받치는 힘</b> — 기둥은 정지해 있으므로 알짜 힘이 0 입니다. 기둥의 밑면이 아래쪽 액체에서 받는 위쪽 힘 $pA$ 가 (기둥의 무게 + 수면에 작용하는 대기의 힘 $p_0A$)와 같아야 합니다.</div>
+      <div class="step"><b>③ 압력의 식</b> — $pA=p_0A+\rho Ahg$ → $p=p_0+\rho gh$. 깊이가 2 배면 $\rho gh$ 도 2 배입니다. 그림 3 의 직선입니다.</div>
+      <div class="step"><b>④ 왜 모든 방향인가</b> — 액체가 정지하려면 한 점 둘레의 아주 작은 부피에서도 힘이 평형이어야 합니다. 어느 방향의 면에서도 압력이 같지 않으면 액체가 흐릅니다. 그래서 정지한 유체의 한 점에서 압력은 방향과 무관합니다(스칼라).</div>
+      <div class="step"><b>⑤ 왜 모양과 무관한가</b> — 용기가 옆으로 퍼져 있어도 같은 깊이의 같은 높이 수평면에서 압력은 같아야 합니다(그렇지 않으면 수평 방향으로 흐름이 생기므로). 그래서 U자관 양쪽의 수면 높이가 같아지고, 파스칼의 역설이 성립합니다.</div>
+      <div class="step"><b>⑥ 압력계와 측정</b> — 압력계는 게이지 압력(대기압 기준)을 읽습니다. 수은 기압계는 $p_0=\rho_{Hg}gh$ 에서 $h\approx760$ mm. 물 기둥이면 약 10.3 m — 우물에서 펌프가 물을 끌어올릴 수 있는 한계입니다.</div>
+      <div class="step"><b>⑦ 한계</b> — 비압축성 · 균일한 밀도 · 정지 상태를 가정했습니다. 흐르는 유체(베르누이) · 큰 깊이에서의 압축 · 가속하는 용기에서는 식이 바뀝니다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">단계</th><th>물리 법칙</th><th>핵심 식</th><th>결과</th></tr></thead><tbody><tr><td style="text-align:left">기둥의 무게</td><td>$W=\rho Ahg$</td><td>$\rho,g,h$</td><td>압력의 원인</td></tr><tr><td style="text-align:left">힘의 평형</td><td>$\sum F=0$</td><td>$pA=p_0A+W$</td><td>$p=p_0+\rho gh$</td></tr><tr><td style="text-align:left">모든 방향</td><td>국소 평형</td><td>스칼라 압력</td><td>방향 무관</td></tr><tr><td style="text-align:left">수평면 동압</td><td>흐름이 없음</td><td>같은 깊이 = 같은 압력</td><td>모양 무관</td></tr></tbody></table></div>
+    <p class="tiny">물 10 m = 1 기압 = 약 101 kPa 는 암기하기 좋은 값입니다(정확히 10.3 m).</p>
+  </div>
+</section>

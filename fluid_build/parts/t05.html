@@ -1,0 +1,118 @@
+<!-- ═══ TAB 5 — 🚢 원리④ 뜨기 · 가라앉기 · 안정 — 배는 어떻게 뜨고 뒤집히지 않는가 ═══ -->
+<section class="panel" id="tab5" role="tabpanel" aria-labelledby="tabbtn5" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🚢 원리④ 뜨기 · 가라앉기 · 안정 — 배는 어떻게 뜨고 뒤집히지 않는가</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 쇠로 만든 배가 뜨는 까닭은 속이 비어 <b>전체의 평균 밀도</b>가 물보다 작기 때문입니다. 배가 잠기는 깊이(<b>흘수</b>) $d=m/(\rho LB)$ 는 싣는 질량에 비례하고, 해수(밀도가 큰)에서는 더 얕아집니다. 뜨는 것만큼 중요한 것이 <b>안정</b> : 기울었을 때 바로 세우는 힘이 있어야 하며, <b>무게중심 G · 부력중심 B · 메타센터 M</b> 에서 $\overline{GM}=\overline{KB}+\overline{BM}-\overline{KG}>0$ 이면 안정입니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 평형 · 돌림힘</div>
+      물체가 평형이려면 알짜 힘과 알짜 돌림힘이 0 이어야 합니다. 배가 기울면 부력의 작용점(부력중심 B)이 옆으로 이동하고, 무게는 무게중심 G 에 작용하므로 두 힘이 <b>짝힘(돌림힘)</b>을 만듭니다. 이 돌림힘이 배를 되돌리면 안정(복원), 더 기울이면 불안정(전복)입니다. 그 경계를 정하는 점이 <b>메타센터 M</b> 입니다.
+      <div class="bridge"><span class="st old">평균 밀도</span><span class="ar">→</span><span class="st">흘수 $d=m/\rho LB$</span><span class="ar">→</span><span class="st">G · B · M 위치</span><span class="ar">→</span><span class="st new">복원력 → 안정</span></div>
+    </div>
+    <div class="poe" data-q="같은 배가 강(담수, 밀도 1000)에서 바다(해수, 밀도 1025)로 들어가면 잠기는 깊이(흘수)는?"
+         data-opts="더 깊어진다||얕아진다(약 2.4 % 감소)||변하지 않는다||배가 가라앉는다"
+         data-ans="1"
+         data-exp="배의 무게가 같으므로 밀어낼 유체의 무게도 같아야 하고, 밀도가 큰 해수는 더 적은 부피로 같은 무게를 담으니 흘수가 $1000/1025\approx0.976$ 배로 <b>얕아집니다</b>(약 2.4 %). 그래서 만재흘수선에 담수선 · 해수선이 따로 있습니다."></div>
+    <div id="t5-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 배 — 평균 밀도 · 안정 · 만재흘수선 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="배의 도해 세 장면. 쇠공은 가라앉고 속이 빈 쇠 배는 뜬다, 무게중심과 부력중심과 메타센터의 위치가 안정을 정한다, 만재흘수선 표시가 과적을 막는다.">
+        {{FIG:ship}}
+      </svg>
+    </div>
+    <div class="figcap">그림 5-1. 배 — ① 쇠공은 가라앉지만 속이 빈 쇠 배는 전체의 평균 밀도가 작아 뜬다 → ② 기울었을 때 M 이 G 보다 위에 있으면(GM > 0) 부력과 무게가 배를 바로 세운다 → ③ 만재흘수선(과적 방지)은 물의 밀도(담수 · 해수 · 계절)별로 표시한다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 평균 밀도</b>$\bar\rho=m_{전체}/V_{전체}$ (빈 공간 포함). $\bar\rho<\rho_f$ 이면 뜬다.</div>
+      <div class="part"><b>② 흘수 $d$</b>배의 바닥에서 수면까지의 깊이. 직육면체 배는 $d=m/(\rho_fLB)$.</div>
+      <div class="part"><b>③ 건현</b>수면에서 갑판까지의 높이 $H-d$. 건현이 0 이 되면 물이 들어와 침몰.</div>
+      <div class="part"><b>④ 무게중심 G · 부력중심 B</b>G : 배 전체의 무게가 작용하는 점. B : 잠긴 부분의 부피 중심.</div>
+      <div class="part"><b>⑤ 메타센터 M</b>작은 각으로 기울 때 부력의 작용선이 중심선과 만나는 점. $\overline{BM}=I/V=B^2/(12d)$.</div>
+      <div class="part"><b>⑥ 복원력 · 안정</b>$GM=KB+BM-KG>0$ 이면 안정. 무거운 짐을 높이 실으면 $KG$ 가 커져 불안정해질 수 있다.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 모형 배로 흘수와 안정 확인</div>
+    <div class="steps">
+      <div class="step">직육면체 상자(지퍼팩 · 플라스틱 용기) 배의 크기를 재고 빈 배의 질량을 잰다.</div>
+      <div class="step">동전(추)을 하나씩 실어 가며 흘수(눈금자)와 질량의 관계를 표로 만든다 → $d=m/\rho LB$ 확인(R05).</div>
+      <div class="step">같은 짐을 바닥에 실을 때와 높이 올려 실을 때 기울여 보고 되돌아오는 정도(진동 횟수)를 비교한다.</div>
+      <div class="step">담수와 소금물에서 같은 배의 흘수를 비교한다.</div>
+      <div class="step">만재흘수선 눈금을 배에 그려 과적 방지 장치를 설계해 본다(I05 · 창의 프로젝트).</div>
+    </div>
+    <div class="easy">
+      <div class="et">🧸 쉽게 이해하기 — 오뚝이는 왜 서 있을까?</div>
+      오뚝이는 아래쪽이 무거워서(무게중심이 낮아서) 기울어도 다시 일어서요. 배도 같아요. 무거운 짐을 <b>낮게</b> 실으면 무게중심이 낮아져 안정하고, 높이 실으면 불안정해져요. 배가 기울면 물에 잠긴 모양이 바뀌어 부력의 작용점이 옆으로 이동하는데, 이 변화가 배를 다시 세우는 쪽의 돌림힘을 만들 수 있다면 안정합니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“쇠는 물에 가라앉으니 쇠로 만든 배도 쇠가 가벼워져서 뜬다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>배는 <strong>속이 빈 모양</strong> 때문에 전체의 평균 밀도가 물보다 작아져 뜹니다. 안정은 <strong>G · B · M 의 위치</strong>(GM &gt; 0)로 정해집니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 배 시뮬레이션 — 싣는 질량 · 무게중심 높이 · 물의 종류</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">적재 포함 질량 m</span><span class="vl" id="t5-mV">—</span></div>
+          <input type="range" id="t5-m" min="50" max="1050" step="25" value="400" aria-label="적재 포함 질량 m">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">무게중심 높이 KG</span><span class="vl" id="t5-KGV">—</span></div>
+          <input type="range" id="t5-KG" min="0.1" max="0.6" step="0.02" value="0.3" aria-label="무게중심 높이 KG">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">물 종류(1 담수 · 2 해수)</span><span class="vl" id="t5-wV">—</span></div>
+          <input type="range" id="t5-w" min="1" max="2" step="1" value="1" aria-label="물 종류(1 담수 · 2 해수)">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">흘수 d</span><span class="v" id="t5-oD">—</span></div>
+          <div class="cell g"><span class="k">건현 H−d</span><span class="v" id="t5-oFb">—</span></div>
+          <div class="cell v2"><span class="k">메타센터 높이 KM</span><span class="v" id="t5-oK">—</span></div>
+          <div class="cell r"><span class="k">복원 지표 GM</span><span class="v" id="t5-oG">—</span></div>
+          <div class="cell "><span class="k">판정</span><span class="v" id="t5-oJ">—</span></div>
+        </div>
+        <p class="tiny">모형 : 직육면체 배 길이 2 m · 폭 1 m · 높이 0.5 m(빈 배 포함 총 질량 $m$) · $d=m/(\rho LB)$ · $\overline{KB}=d/2$ · $\overline{BM}=B^2/(12d)$ · $\overline{GM}=\overline{KB}+\overline{BM}-\overline{KG}$. 작은 각 가정. 실제 선박은 형태 · 자유 표면 · 유량 등을 더 고려합니다.</p>
+      </div>
+      <div class="poe" data-q="같은 배에서 무거운 짐을 바닥에 두는 것과 높은 곳에 두는 것 중 안정에 유리한 것은?"
+           data-opts="높은 곳 — 흘수가 줄어서||바닥 — 무게중심 KG 가 낮아져서||차이 없다||짐은 안정과 무관하다"
+           data-ans="1"
+           data-exp="짐을 바닥에 두면 전체의 무게중심 KG 가 낮아져 $GM=KB+BM-KG$ 가 커지므로 안정합니다. 높이 둘수록 GM 이 작아져 전복 위험이 커집니다. 오른쪽에서 무게중심 높이를 올려 GM 이 0 아래로 내려가는 것을 보세요."></div>
+      <div class="hintbox" data-hints="① 질량 400 kg 일 때 흘수가 몇 m 인지 계산해 보고 오른쪽 값과 비교하세요(담수).||② 질량을 늘려 가며 어느 순간 「침몰」이 되는지 보세요. 선체 높이가 몇 m 인가요?||③ 무게중심 높이 KG 를 0.1 에서 0.6 으로 올리면 GM 이 어떻게 바뀌나요? 배가 어떻게 흔들리나요?||④ 담수에서 해수로 바꾸면 흘수가 얼마나 줄까요? 안정에는 어떤 영향이 있나요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t5" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t5-cv" data-pngname="ship-stability">🖼 PNG</button></div>
+          <canvas id="t5-cv" role="img" aria-label="배의 단면. 수면, 무게중심 G, 부력중심 B, 메타센터 M 과 흔들림" style="height:380px"></canvas>
+          <div class="cv-cap">배의 단면(수면 위에 떠 있음). 빨강 G(무게중심) · 초록 B(부력중심) · 노랑 M(메타센터). GM &gt; 0 이면 흔들림이 점점 줄고, GM &lt; 0 이면 기울기가 계속 커져 뒤집힙니다.</div>
+        </div>
+        <div id="t5-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t5-cv2" role="img" aria-label="적재 질량 대 GM 곡선과 질량 대 흘수 그래프" style="height:340px"></canvas>
+          <div class="cv-cap">📊 위 : 적재 질량에 따른 GM(0 선 위가 안정). 아래 : 질량에 따른 흘수 — 선체 높이 0.5 m(빨강 점선)를 넘으면 침몰. 담수(파랑) · 해수(초록).</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>흘수 $d=\dfrac{m}{\rho_fLB}$. $\overline{KB}=\dfrac d2$, $\overline{BM}=\dfrac{I}{V}=\dfrac{LB^3/12}{LBd}=\dfrac{B^2}{12d}$. $\overline{GM}=\overline{KB}+\overline{BM}-\overline{KG}$. 안정 조건 $\overline{GM}>0$. 작은 각 $\theta$ 에서 복원 모멘트 $M_R=\rho gV\,\overline{GM}\sin\theta$.</p><p>예 : $m=400$ kg · 담수 → $d=0.2$ m, $KB=0.1$, $BM=1/(12\times0.2)=0.417$, $KG=0.3$ → $GM=0.217$ m > 0 (안정).</p><p class="lv-uni">교과서 밖 : 자유 표면(탱크 속 액체)은 유효 $GM$ 을 줄이고, 큰 각도에서는 복원력 곡선 $GZ(\theta)$ 전체를 봅니다. 해양 규정은 최소 $GM$ 과 복원 면적을 요구합니다(IMO 안정성 기준).</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 배는 어떻게 뜨고 안정을 유지하나 — 흘수 · 무게중심 · 부력중심 · 메타센터 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">뜨는 조건과 기울어졌을 때 되돌아오는 조건을 나누어 따라가 봅니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 뜨는 조건(평균 밀도)</b> — 배 + 짐 + 속 빈 공간 전체의 평균 밀도 $\bar\rho=m/V_{전체}$ 가 물보다 작으면 뜹니다. 쇠로 속이 빈 큰 그릇을 만들면 $V_{전체}$ 가 커져 평균 밀도가 작아집니다.</div>
+      <div class="step"><b>② 흘수 계산</b> — $m=\rho_fV_{잠긴}=\rho_fLBd$ → $d=m/(\rho_fLB)$. 짐을 실을수록 $d$ 가 커지고 건현 $H-d$ 가 줄며, $d>H$ 면 물이 들어와 침몰합니다.</div>
+      <div class="step"><b>③ 무게중심 G 와 부력중심 B</b> — 무게 $W$ 는 G 에, 부력 $B$ 는 잠긴 모양의 부피 중심 B 에 작용합니다. 똑바로 떠 있을 때 두 힘은 같은 수직선 위에서 크기가 같고 방향이 반대입니다.</div>
+      <div class="step"><b>④ 기울면 B 가 이동</b> — 기울어지면 잠긴 모양이 바뀌어 B 가 낮은 쪽(잠긴 쪽)으로 이동합니다. 부력의 작용선과 선체 중심선이 만나는 점이 메타센터 M 입니다.</div>
+      <div class="step"><b>⑤ 복원 돌림힘</b> — M 이 G 보다 위에 있으면 ($GM>0$) 부력과 무게가 만드는 짝힘이 배를 바로 세우는 방향입니다 — 안정. M 이 G 보다 아래이면 ($GM<0$) 더 기울이는 방향 — 불안정(전복).</div>
+      <div class="step"><b>⑥ GM 의 계산</b> — $GM=KB+BM-KG$ — $KB=d/2$, $BM=B^2/(12d)$(직육면체 배). 짐을 높이 실어 $KG$ 가 커지면 GM 이 작아집니다. 폭 $B$ 가 넓으면 $BM$ 이 커져 안정합니다.</div>
+      <div class="step"><b>⑦ 만재흘수선 · 한계</b> — 과적을 막는 최대 흘수 표시(담수 · 해수 · 계절별). 작은 각도 근사 · 자유 표면(탱크 속 액체) 효과 · 파도 · 바람은 이 모형에서 제외했습니다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">단계</th><th>물리 법칙</th><th>핵심 식</th><th>영향</th></tr></thead><tbody><tr><td style="text-align:left">뜨는 조건</td><td>$B=W$</td><td>$d=m/(\rho LB)$</td><td>흘수 · 건현</td></tr><tr><td style="text-align:left">기울기</td><td>돌림힘 평형</td><td>G, B 의 이동</td><td>복원력</td></tr><tr><td style="text-align:left">안정 판정</td><td>메타센터 높이</td><td>$GM=KB+BM-KG$</td><td>GM>0 안정</td></tr><tr><td style="text-align:left">과적 방지</td><td>안전 기준</td><td>만재흘수선</td><td>침몰 방지</td></tr></tbody></table></div>
+    <p class="tiny">실제 선박의 안정성은 큰 각도까지 복원력 곡선 GZ(θ)로 평가하며, 국제 규정(IMO)이 최소 기준을 정합니다.</p>
+  </div>
+</section>

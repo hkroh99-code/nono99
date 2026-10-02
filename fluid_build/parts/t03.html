@@ -1,0 +1,122 @@
+<!-- ═══ TAB 3 — 🔧 원리② 파스칼의 원리 — 밀폐된 유체는 압력을 똑같이 전한다 ═══ -->
+<section class="panel" id="tab3" role="tabpanel" aria-labelledby="tabbtn3" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🔧 원리② 파스칼의 원리 — 밀폐된 유체는 압력을 똑같이 전한다</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — <b>파스칼의 원리</b> : 밀폐된 유체의 한 곳에 가한 압력은 유체의 <b>모든 곳에 같은 크기로 전달</b>됩니다. 작은 피스톤(면적 $A_1$)에 힘 $F_1$ 을 주면 압력 $P=F_1/A_1$ 이 생기고, 큰 피스톤(면적 $A_2$)은 $F_2=P\,A_2=F_1A_2/A_1$ 의 큰 힘을 냅니다. 그러나 <b>이동 거리는 $d_2=d_1A_1/A_2$ 로 줄어</b> 일은 같습니다($F_1d_1=F_2d_2$). 마찰이 있으면 일부가 손실됩니다(효율 $\eta$).</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 지레와 일의 원리</div>
+      지레나 도르래처럼 <b>힘을 줄이는 대신 거리가 늘어나는</b> 장치는 일의 양이 같습니다(일의 원리). 유압은 <b>유체를 지레</b>로 쓰는 것입니다. 면적비 $A_2/A_1$ 이 지레의 팔 길이 비와 같은 역할을 합니다. 액체는 거의 압축되지 않으므로 한 쪽을 $d_1$ 만큼 밀면 같은 부피 $A_1d_1=A_2d_2$ 가 다른 쪽으로 이동합니다.
+      <div class="bridge"><span class="st old">압력 $F/A$</span><span class="ar">→</span><span class="st">밀폐 · 비압축성</span><span class="ar">→</span><span class="st">$F_2=F_1A_2/A_1$</span><span class="ar">→</span><span class="st new">일 $F_1d_1=F_2d_2$</span></div>
+    </div>
+    <div class="poe" data-q="면적비 20 : 1 의 이상적인 유압 잭에 입력 힘 100 N 을 주면 출력 힘은? 그리고 입력 피스톤을 20 cm 눌렀을 때 출력 피스톤은 몇 cm 올라갈까?"
+         data-opts="2000 N · 20 cm||2000 N · 1 cm||100 N · 20 cm||5 N · 400 cm"
+         data-ans="1"
+         data-exp="$F_2=F_1\cdot A_2/A_1=100\times20=2000$ N. 부피 보존 $A_1d_1=A_2d_2$ → $d_2=d_1/20=1$ cm. 힘이 20 배 커진 만큼 거리는 20 분의 1 — 일 $100\times0.20=20$ J $=2000\times0.01=20$ J 로 <b>같습니다</b>."></div>
+    <div id="t3-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 파스칼의 원리 — 압력 전달 · 유압 잭 · 일의 보존 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="파스칼의 원리 도해 세 장면. 밀폐된 구형 용기에서 압력이 모든 방향으로 같게 전달되고, 유압 잭에서 작은 힘이 큰 힘이 되며, 힘이 커져도 일은 같다.">
+        {{FIG:pascal}}
+      </svg>
+    </div>
+    <div class="figcap">그림 3-1. 파스칼의 원리 — ① 밀폐된 유체의 한 곳에 가한 압력은 모든 방향 · 모든 곳에 같다 → ② 유압 잭: 같은 압력이 큰 면적에 작용해 큰 힘 $F_2=F_1A_2/A_1$ → ③ 큰 힘은 짧은 거리 — 일은 같다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 밀폐 · 비압축성</b>액체는 거의 압축되지 않고 밀폐된 곳에서 압력이 빠짐없이 전달된다. 공기가 섞이면 압력 전달이 무뎌진다(공기 빼기).</div>
+      <div class="part"><b>② 입력 피스톤 $A_1$</b>작은 단면. 힘 $F_1$ 으로 눌러 압력 $P=F_1/A_1$ 을 만든다.</div>
+      <div class="part"><b>③ 출력 피스톤 $A_2$</b>큰 단면. 같은 압력이 작용해 $F_2=PA_2$ 의 큰 힘을 낸다.</div>
+      <div class="part"><b>④ 거리 보존 $A_1d_1=A_2d_2$</b>액체의 부피가 보존되므로 큰 피스톤은 작은 피스톤보다 $A_1/A_2$ 배만 움직인다.</div>
+      <div class="part"><b>⑤ 효율 $\eta$</b>실이는 씰(패킹) 마찰 · 누유 · 호스 저항으로 $F_2$ 가 이상값보다 작다(보통 80 ~ 95 %).</div>
+      <div class="part"><b>⑥ 쓰임</b>자동차 유압 브레이크, 굴착기, 프레스, 리프트, 항공기 조종면, 치과 의자 — 힘 전달과 변환.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 주사기 유압 장치 (고압 · 가열 없음)</div>
+    <div class="steps">
+      <div class="step">지름이 다른 주사기 2 개(예 : 5 mL 와 20 mL)를 투명 호스로 연결하고 공기가 없게 물을 채운다.</div>
+      <div class="step">작은 주사기에 무게추를 올려 누르고(입력), 큰 주사기가 들어 올리는 무게(출력)를 저울로 잰다.</div>
+      <div class="step">면적비 $A_2/A_1=(d_2/d_1)^2$ 를 지름으로 계산하고 $F_2/F_1$ 과 비교해 효율 $\eta$ 를 구한다(R·종합2 · 16번 탭).</div>
+      <div class="step">입력 피스톤이 움직인 거리 $d_1$ 과 출력 피스톤 $d_2$ 를 자로 재어 $d_2=d_1A_1/A_2$ 를 확인한다.</div>
+      <div class="step">공기를 일부러 넣고 같은 실험을 반복해 증폭이 어떻게 달라지는지 본다(공기는 압축된다).</div>
+    </div>
+    <div class="easy">
+      <div class="et">💉 쉽게 이해하기 — 두 주사기를 호스로 이어 보기</div>
+      작은 주사기와 큰 주사기를 물이 가득 찬 호스로 이으면, 작은 주사기를 살짝 눌러도 큰 주사기 쪽은 <b>세게</b> 밀려 나가요. 대신 작은 쪽은 많이 눌러야 큰 쪽이 조금 움직입니다. 힘을 얻은 만큼 <b>거리를 내준 것</b>이라 힘 × 거리(일)는 같아요. 유압 잭으로 무거운 자동차를 번쩍 드는 원리와 같습니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“유압 장치는 작은 힘으로 큰 일(에너지)을 하므로 에너지를 공짜로 얻는다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>유압은 <strong>힘을 바꾸는 장치</strong>입니다. 힘은 면적비만큼 커지지만 거리는 그만큼 줄어 <strong>일(에너지)은 같거나 마찰 때문에 오히려 손해</strong>입니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 유압 잭 시뮬레이션 — 입력 힘 · 면적비 · 효율</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">입력 힘 F₁</span><span class="vl" id="t3-F1V">—</span></div>
+          <input type="range" id="t3-F1" min="10" max="400" step="10" value="100" aria-label="입력 힘 F₁">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">면적비 A₂/A₁</span><span class="vl" id="t3-rV">—</span></div>
+          <input type="range" id="t3-r" min="1" max="40" step="1" value="10" aria-label="면적비 A₂/A₁">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">효율 η</span><span class="vl" id="t3-etaV">—</span></div>
+          <input type="range" id="t3-eta" min="50" max="100" step="5" value="90" aria-label="효율 η">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">입력 피스톤 이동 d₁</span><span class="vl" id="t3-d1V">—</span></div>
+          <input type="range" id="t3-d1" min="1" max="20" step="1" value="10" aria-label="입력 피스톤 이동 d₁">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">압력 P=F₁/A₁</span><span class="v" id="t3-oP">—</span></div>
+          <div class="cell g"><span class="k">출력 힘 F₂</span><span class="v" id="t3-oF">—</span></div>
+          <div class="cell v2"><span class="k">힘 증폭</span><span class="v" id="t3-oG">—</span></div>
+          <div class="cell r"><span class="k">출력 이동 d₂</span><span class="v" id="t3-oD">—</span></div>
+          <div class="cell "><span class="k">입력 일 → 출력 일</span><span class="v" id="t3-oW">—</span></div>
+        </div>
+        <p class="tiny">모형 : 입력 단면 $A_1=2$ cm² 고정, 출력 단면 $A_2=rA_1$. 비압축성 유체 · 새는 곳 없음 · 효율 $\eta$ 는 마찰 손실을 한 번에 나타낸 값(교육용). 출력 이동 거리는 부피 보존으로 $d_2=d_1/r$ (효율과 무관), 출력 일 $=F_2d_2=\eta F_1d_1$.</p>
+      </div>
+      <div class="poe" data-q="유압 잭의 효율이 90 % 일 때, 입력 일 100 J 을 들이면 출력 일은?"
+           data-opts="100 J||90 J||1000 J||10 J"
+           data-ans="1"
+           data-exp="출력 일 $=\eta\times$ 입력 일 $=0.9\times100=90$ J. 힘이 아무리 커져도 <b>에너지는 늘지 않습니다</b>(손실 10 J 는 마찰열로). 오른쪽 아래 막대에서 입력 일(노랑) &gt; 출력 일(초록)입니다."></div>
+      <div class="hintbox" data-hints="① 먼저 면적비를 10 으로 두고 출력 힘이 입력 힘의 몇 배인지 보세요. 효율을 100 % 로 하면 정확히 10 배인가요?||② 입력 이동 d₁ 은 그대로 두고 면적비를 2 배로 하면 출력 이동 d₂ 는 어떻게 되나요?||③ 입력 일과 출력 일을 비교해 보세요. 어떤 설정에서 두 값이 같아지나요?||④ 효율을 50 % 로 낮추면 어떤 값은 변하고(F₂, 출력 일) 어떤 값은 변하지 않나요(P, d₂)?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t3" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t3-cv" data-pngname="hydraulic-jack">🖼 PNG</button></div>
+          <canvas id="t3-cv" role="img" aria-label="유압 잭 애니메이션. 작은 입력 피스톤이 내려가고 큰 출력 피스톤이 올라간다." style="height:380px"></canvas>
+          <div class="cv-cap">입력 피스톤(왼쪽, 작은 단면)을 누르면 압력 P 가 유체 전체에 같게 전해져 큰 피스톤(오른쪽)이 들려 올라갑니다. 짐의 질량은 $F_2/g$. 피스톤 이동 거리의 비가 면적비의 역수인 것에 주의(그림은 비율을 줄여 표시).</div>
+        </div>
+        <div id="t3-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t3-cv2" role="img" aria-label="입력 힘 대 출력 힘 직선, 입력 일 · 출력 일 · 손실 막대" style="height:340px"></canvas>
+          <div class="cv-cap">📊 위 : 입력 힘 대 출력 힘 — 기울기 = 면적비 × 효율(초록), 점선 = 이상(η=100 %). 아래 : 입력 일 · 출력 일 · 손실 — 일은 늘지 않는다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$P=\dfrac{F_1}{A_1}=\dfrac{F_2}{A_2}$ → $F_2=F_1\dfrac{A_2}{A_1}$. 부피 보존 $A_1d_1=A_2d_2$ → $d_2=d_1\dfrac{A_1}{A_2}$. 일 $W=F_1d_1=F_2d_2$ (이상). 효율 $\eta=\dfrac{F_2d_2}{F_1d_1}$.</p><p>예 : 면적비 10, $F_1=100$ N → $F_2=1000$ N (효율 100 %). $d_1=10$ cm → $d_2=1$ cm. 입력 일 10 J = 출력 일 10 J.</p><p class="lv-uni">교과서 밖 : 실제 유압 시스템에서는 펌프 유량 $Q=Av$ 와 압력 $P$ 로 동력 $=PQ$ 를 다룹니다. 밸브 · 호스의 압력 강하는 베르누이 방정식과 점성 손실($\Delta p\propto Q$)로 설명합니다. 공압은 기체가 압축되므로 $PV^\gamma$ 의 영향을 받습니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 유압 장치는 어떻게 작동하나 — 압력 전달 · 면적비 · 일 보존 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">유압 잭 · 브레이크 · 굴착기 팔의 공통 구조를 단계별로 이해합니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 밀폐된 유체</b> — 실린더 · 호스 · 피스톤으로 닫힌 계에 오일(작동유)이나 물을 채웁니다. 액체는 거의 압축되지 않아($\kappa\sim5\times10^{-10}$ Pa⁻¹) 부피가 일정하게 유지됩니다.</div>
+      <div class="step"><b>② 압력의 생성</b> — 작은 피스톤(단면 $A_1$)에 힘 $F_1$ 을 주면 접촉한 액체의 압력이 $P=F_1/A_1$ 만큼 올라갑니다. 이 압력 상승은 정지한 액체 어디에서나 같은 크기입니다(파스칼).</div>
+      <div class="step"><b>③ 큰 피스톤의 힘</b> — 같은 압력이 큰 단면 $A_2$ 에 작용하므로 힘은 $F_2=PA_2=F_1A_2/A_1$. 면적비 20 이면 힘이 20 배입니다.</div>
+      <div class="step"><b>④ 대가 : 거리</b> — 액체의 부피가 보존되어 $A_1d_1=A_2d_2$. 힘이 20 배가 되면 큰 피스톤은 20 분의 1 만 움직입니다. 일 $F_1d_1=F_2d_2$ 로 같습니다.</div>
+      <div class="step"><b>⑤ 반복 동작(펌프 + 밸브)</b> — 한 번 누르는 거리가 작으므로 유압 잭은 체크밸브와 펌프로 여러 번 반복해 눌러 큰 피스톤을 조금씩 올립니다. 작동유가 역류하지 않도록 밸브가 막아 줍니다.</div>
+      <div class="step"><b>⑥ 손실과 효율</b> — 씰 마찰 · 누유 · 호스 저항 · 공기 혼입으로 실제 $F_2$ 는 이상값보다 작아 효율이 80 ~ 95 % 입니다. 공기가 섞이면 압축되어 반응이 무뎌집니다(브레이크 에어 빼기).</div>
+      <div class="step"><b>⑦ 응용</b> — 자동차 마스터 실린더 → 휠 실린더(브레이크 4 바퀴에 같은 압력), 굴착기 · 지게차 · 리프트 · 프레스. 안전을 위해 릴리프 밸브가 과압을 막습니다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">단계</th><th>물리 법칙</th><th>핵심 식</th><th>영향</th></tr></thead><tbody><tr><td style="text-align:left">압력 생성</td><td>압력 $=F/A$</td><td>$P=F_1/A_1$</td><td>유체 전체의 압력</td></tr><tr><td style="text-align:left">압력 전달</td><td>파스칼의 원리</td><td>$P$ 모든 곳 동일</td><td>큰 단면 힘</td></tr><tr><td style="text-align:left">힘 증폭</td><td>$F=PA$</td><td>$F_2=F_1A_2/A_1$</td><td>힘 ↑</td></tr><tr><td style="text-align:left">거리 보존</td><td>부피 보존</td><td>$A_1d_1=A_2d_2$</td><td>거리 ↓ (일 일정)</td></tr></tbody></table></div>
+    <p class="tiny">고압 유압 장치는 위험합니다(누유 시 오일 분출). 교실에서는 물 · 주사기 같은 낮은 압력의 안전한 장치만 쓰세요.</p>
+  </div>
+</section>

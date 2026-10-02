@@ -1,0 +1,38 @@
+
+/* ── 캔위성 확장 : 도구함 · 종합실험 보조 스타일 ───────────────────────── */
+.idea-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:8px 0; }
+@media (max-width:820px){ .idea-grid{ grid-template-columns:1fr 1fr; } }
+@media (max-width:480px){ .idea-grid{ grid-template-columns:1fr; } }
+.idea-cell{ background:var(--panel2); border:1px solid var(--bd); border-radius:10px; padding:8px 10px; display:flex; flex-direction:column; gap:4px; min-height:84px; }
+.idea-cell .ik{ font-size:.72rem; color:var(--dim); font-weight:800; display:flex; justify-content:space-between; align-items:center; }
+.idea-cell .iv{ font-size:.9rem; color:var(--tx); font-weight:700; line-height:1.4; }
+.idea-cell button{ background:none; border:0; cursor:pointer; font-size:.95rem; padding:0 2px; opacity:.55; color:var(--tx); }
+.idea-cell.lock{ border-color:var(--cy); } .idea-cell.lock button{ opacity:1; }
+.partlist{ display:grid; grid-template-columns:1fr; gap:4px 12px; margin:8px 0; }
+@media (max-width:560px){ .partlist{ grid-template-columns:1fr; } }
+.partlist label{ display:flex; align-items:center; gap:7px; font-size:.8rem; color:var(--mut); cursor:pointer; background:var(--panel2); border:1px solid var(--bd); border-radius:8px; padding:4px 8px; }
+.partlist label input{ accent-color:var(--cy); width:15px; height:15px; flex:none; }
+.partlist label .sw{ width:10px; height:10px; border-radius:3px; flex:none; }
+.partlist label .nm{ flex:1 1 auto; min-width:0; }
+.partlist label .sp{ font-size:.7rem; color:var(--dim); white-space:nowrap; }
+.plan{ display:grid; gap:10px; margin:8px 0; }
+.pgrid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; }
+@media (max-width:640px){ .pgrid{ grid-template-columns:1fr; } }
+.pf{ display:grid; gap:4px; font-size:.83rem; color:var(--mut); font-weight:700; }
+.pf .tiny{ font-weight:400; }
+.pf input, .pf textarea{ width:100%; box-sizing:border-box; background:var(--panel2); color:var(--tx); border:1px solid var(--bd); border-radius:8px; padding:7px 9px; font:inherit; font-weight:400; }
+.pf textarea{ resize:vertical; }
+details.code{ border:1px solid var(--bd); border-radius:10px; background:var(--panel2); margin:8px 0; padding:0 10px 8px; }
+details.code summary{ cursor:pointer; padding:9px 0; font-weight:800; color:var(--cy); font-size:.88rem; }
+details.code pre{ margin:6px 0 0; padding:10px 12px; background:#0a1020; border:1px solid var(--bd); border-radius:8px; overflow-x:auto; max-width:100%; }
+details.code pre code{ font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace; color:#d7e3f5; white-space:pre; }
+.checklist{ display:grid; gap:6px; margin:8px 0; }
+.checklist label{ display:flex; gap:9px; align-items:flex-start; background:var(--panel2); border:1px solid var(--bd); border-radius:9px; padding:7px 10px; font-size:.84rem; color:var(--tx); cursor:pointer; line-height:1.5; }
+.checklist label input{ accent-color:var(--gr); width:16px; height:16px; margin-top:2px; flex:none; }
+.checklist label.on{ border-color:var(--gr); }
+.checklist label b{ color:var(--cy); }
+.tblscroll{ overflow-x:auto; max-width:100%; }
+.tblscroll table{ border-collapse:collapse; font-size:.8rem; width:100%; }
+.tblscroll th, .tblscroll td{ border:1px solid var(--bd); padding:4px 8px; text-align:center; white-space:nowrap; }
+.tblscroll th{ background:var(--panel2); color:var(--mut); }
+.tblscroll tr.cur td{ background:rgba(251,191,36,.12); }
