@@ -1,0 +1,122 @@
+<!-- ═══ TAB 5 — ⛸ 원리④ 각운동량과 보존 — $L=I\omega$ ═══ -->
+<section class="panel" id="tab5" role="tabpanel" aria-labelledby="tabbtn5" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>⛸ 원리④ 각운동량과 보존 — $L=I\omega$</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — <b>각운동량 $L=I\omega$</b> 는 회전의 운동량입니다. 알짜 외부 토크가 없으면 $L$ 은 <b>보존</b>됩니다($\tau_{net}=dL/dt$). 따라서 관성 모멘트가 줄면($I_1\omega_1=I_2\omega_2$) 각속도가 늘어납니다 — 팔을 오므린 피겨 스케이터가 빨라지는 이유입니다. 이때 운동 에너지 $\tfrac12I\omega^2$ 은 늘어나는데, 팔이 안으로 당기는 일을 하기 때문입니다. 자이로스코프와 위성의 반작용 휠도 이 원리입니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 운동량 보존</div>
+      직선 운동에서 외력이 없으면 $p=mv$ 가 보존되듯, 회전에서 외부 토크가 없으면 $L=I\omega$ 가 보존됩니다. 뉴턴 제2법칙의 일반형 $F=dp/dt$ 에 대응해 $\tau=dL/dt$. 회전 의자에서 팔을 오므리면 $I$ 가 줄고 $\omega$ 가 늘어 $L$ 은 그대로입니다. 이때 안쪽으로 끌어당기는 구심력이 일을 하므로 운동 에너지가 늘어납니다.
+      <div class="bridge"><span class="st old">운동량 보존</span><span class="ar">→</span><span class="st">τ = dL/dt</span><span class="ar">→</span><span class="st">L = Iω 보존</span><span class="ar">→</span><span class="st new">I↓ ω↑</span></div>
+    </div>
+    <div class="poe" data-q="회전 의자에서 양손에 추를 들고 팔을 벌려 $I_1=4$ kg·m², $\omega_1=2$ rad/s 로 돌다가 팔을 오므려 $I_2=2$ kg·m² 가 되었다. 각속도는?"
+         data-opts="1 rad/s||2 rad/s||4 rad/s||8 rad/s"
+         data-ans="2"
+         data-exp="$I_1\omega_1=I_2\omega_2$ → $\omega_2=4\times2/2=4$ rad/s (2 배). 운동 에너지는 $\tfrac12\cdot4\cdot4=8$ J 에서 $\tfrac12\cdot2\cdot16=16$ J 로 늘었습니다 — 팔이 안쪽으로 당기는 일을 했기 때문입니다."></div>
+    <div id="t5-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 각운동량 — 스케이터 · 의자와 바퀴 · 반작용 휠 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="각운동량 보존 도해 세 장면. 팔을 벌리면 느리고 오므리면 빨라지는 스케이터, 회전 의자 위에서 바퀴의 각운동량이 의자를 반대로 돌리는 장면, 위성의 반작용 휠이 위성 자세를 바꾸는 장면.">
+        {{FIG:ship}}
+      </svg>
+    </div>
+    <div class="figcap">그림 5-1. 각운동량 — ① 팔을 오므리면 $I$ 가 줄어 $\omega$ 가 는다 → ② 의자 위의 바퀴를 뒤집으면 의자가 반대로 돈다(총 $L$ 보존) → ③ 위성은 내부 휠을 돌려 반대로 자세를 바꾼다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 각운동량 $L=I\omega$</b>단위 kg·m²/s. 회전의 「양」. 큰 $I$ 와 큰 $\omega$ 일수록 방향을 바꾸기 어렵다.</div>
+      <div class="part"><b>② 외부 토크 = 0</b>계에 바깥에서 주는 토크가 없을 때만 보존. 내부 힘(팔 당기기)은 총 $L$ 을 바꾸지 못한다.</div>
+      <div class="part"><b>③ 관성 모멘트 변화</b>$I$ 를 줄이면 $\omega$ 가 늘고, 늘리면 줄어든다(다이빙 · 피겨 · 체조).</div>
+      <div class="part"><b>④ 에너지 변화</b>$I$ 를 줄이는 동안 안쪽으로 당기는 일을 해서 $K=\tfrac12I\omega^2=L^2/2I$ 가 늘어난다.</div>
+      <div class="part"><b>⑤ 자이로 효과</b>회전하는 바퀴는 축의 방향을 유지하려 하고, 옆에서 토크를 주면 세차 운동을 한다.</div>
+      <div class="part"><b>⑥ 쓰임</b>피겨 · 다이빙 · 위성 자세 제어(반작용 휠) · 항법 자이로 · 헬리콥터 꼬리 로터 · 팽이.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 회전 의자와 각운동량 (저속, 보조자와 함께)</div>
+    <div class="steps">
+      <div class="step">회전 의자에 앉아 양팔을 벌리고 가볍게 한 번 돌려 달라고 한 뒤 팔을 오므려 회전이 빨라지는 것을 느낀다(어지러우면 즉시 중단).</div>
+      <div class="step">양손에 1 kg 미만 추를 들면 효과가 커지는지 비교한다(5번 탭의 m 슬라이더). 속도는 한 바퀴/2 초 이하로.</div>
+      <div class="step">천천히 돌리는 의자에서 서 있는 사람이 손에 든 자전거 바퀴(손으로 돌린 낮은 속도)의 축 방향을 뒤집으면 의자가 반대로 도는 것을 본다(C03 — 지도교사 감독).</div>
+      <div class="step">영상 프레임으로 팔을 벌렸을 때와 오므렸을 때 한 바퀴 시간을 재서 $T_1/T_2=I_2/I_1$ 를 확인한다(R05).</div>
+      <div class="step">결과를 에너지 변화 $K_2/K_1=I_1/I_2$ 와 함께 정리한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🌀 쉽게 이해하기 — 얼음 위의 스핀</div>
+      스케이터가 팔을 벌리고 천천히 돌다가 <b>팔을 몸에 붙이면 갑자기 빨라져요</b>. 돌려 주는 사람도, 밀어 주는 힘도 없었는데도요. 돌림의 양(각운동량)은 그대로인데, 질량이 축에 가까워져서 같은 양을 만들려면 더 빨리 돌아야 하기 때문이에요. 팔을 다시 벌리면 느려지고요.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“각운동량 보존이면 회전 속도는 변하지 않는다 · 외부 토크가 0 이면 곧 멈춘다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>보존되는 것은 $L=I\omega$ 이므로 <strong>$I$ 가 변하면 $\omega$ 가 변합니다</strong>. 외부 토크가 없으면 같은 각운동량으로 계속 돕니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 각운동량 시뮬레이션 — 추의 질량 · 벌린 반지름 · 오므린 반지름 · 처음 각속도</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">한 손의 추 질량 m</span><span class="vl" id="t5-mV">—</span></div>
+          <input type="range" id="t5-m" min="0" max="5" step="0.5" value="2" aria-label="한 손의 추 질량 m">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">팔 벌린 반지름 r_out</span><span class="vl" id="t5-roV">—</span></div>
+          <input type="range" id="t5-ro" min="20" max="90" step="1" value="80" aria-label="팔 벌린 반지름 r_out">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">오므린 반지름 r_in</span><span class="vl" id="t5-riV">—</span></div>
+          <input type="range" id="t5-ri" min="5" max="40" step="1" value="20" aria-label="오므린 반지름 r_in">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">처음 각속도 ω₁</span><span class="vl" id="t5-w1V">—</span></div>
+          <input type="range" id="t5-w1" min="1" max="6" step="0.5" value="2" aria-label="처음 각속도 ω₁">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">관성 모멘트 I₁ → I₂</span><span class="v" id="t5-oI">—</span></div>
+          <div class="cell g"><span class="k">각운동량 L (보존)</span><span class="v" id="t5-oL">—</span></div>
+          <div class="cell v2"><span class="k">오므린 뒤 각속도 ω₂</span><span class="v" id="t5-oW">—</span></div>
+          <div class="cell r"><span class="k">운동 에너지 K₁ → K₂</span><span class="v" id="t5-oK">—</span></div>
+          <div class="cell "><span class="k">회전수</span><span class="v" id="t5-oS">—</span></div>
+        </div>
+        <p class="tiny">모형 : 사람 + 의자의 관성 모멘트 $I_{몸}=1.5$ kg·m² (고정) + 양손의 추 $2mr^2$. 외부 토크 · 마찰 없음, $L=I\omega$ 보존. 안전을 위해 실제 실험은 저속 · 가벼운 추로 합니다. 교육용 어림입니다.</p>
+      </div>
+      <div class="poe" data-q="팔을 오므리는 동안 스케이터의 운동 에너지는 어떻게 될까? (마찰 무시)"
+           data-opts="변하지 않는다||줄어든다||늘어난다(팔이 안쪽으로 당기는 일)||0 이 된다"
+           data-ans="2"
+           data-exp="$K=L^2/2I$ 이므로 $L$ 이 같을 때 $I$ 가 줄면 $K$ 가 늘어납니다. 근육이 몸 안으로 팔을 당기는 일을 해서 에너지가 늘어납니다. 오른쪽 kv 의 「운동 에너지 K₁ → K₂」를 확인하세요."></div>
+      <div class="hintbox" data-hints="① 먼저 m = 2 · r_out = 80 · r_in = 20 · ω₁ = 2 로 두고 ω₂ 가 약 4.9 rad/s 인지 확인하세요.||② 추의 질량을 0 으로 해 보세요. 오므려도 속도가 많이 변하지 않는 까닭은?||③ r_in 을 10 cm 로 줄이면 ω₂ 가 어떻게 변하나요? 한계는 무엇일까요?||④ 아래 그래프에서 I 가 클 때 ω 가 작은 이유를 L 이 일정하다는 사실로 설명해 보세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t5" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t5-cv" data-pngname="angular-momentum">🖼 PNG</button></div>
+          <canvas id="t5-cv" role="img" aria-label="회전 의자 위에서 팔을 벌렸다 오므리는 모습과 I · ω 막대" style="height:340px"></canvas>
+          <div class="cv-cap">위에서 본 회전 의자. 점선 원은 벌린 · 오므린 반지름입니다. 팔을 오므리는 동안 관성 모멘트(파랑)는 줄고 각속도(초록)는 늘며 각운동량(노랑 글자)은 일정합니다.</div>
+        </div>
+        <div id="t5-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t5-cv2" role="img" aria-label="추의 반지름 대 관성 모멘트와 각속도 그래프" style="height:340px"></canvas>
+          <div class="cv-cap">📊 위 : 반지름 대 $I$ (포물선, 두 점이 벌림 · 오므림). 아래 : 반지름 대 $\omega=L/I$ — 오므릴수록 빨라집니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$L=I\omega$, $\tau_{net}=\dfrac{dL}{dt}$. $\tau_{net}=0$ → $I_1\omega_1=I_2\omega_2$. $K=\tfrac12I\omega^2=\dfrac{L^2}{2I}$ → $K_2/K_1=I_1/I_2$.</p><p>예 : $I_{몸}=1.5$, $m=2$ kg, $r_{out}=0.8$, $r_{in}=0.2$ → $I_1=4.06$, $I_2=1.66$, $\omega_1=2$ → $\omega_2=4.89$ rad/s. $K_1=8.1$ J → $K_2=19.9$ J.</p><p class="lv-uni">교과서 밖 : 회전하는 팽이의 세차 각속도 $\Omega=\dfrac{mgr}{I\omega}$ (빠르게 돌수록 느리게 세차). 지구의 자전축은 약 26,000 년 주기로 세차하며 이는 달 · 태양이 지구의 적도 부풀음에 거는 토크 때문입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 각운동량 보존은 어떻게 나오나 — $\tau=dL/dt$ 에서 스케이터까지 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">각운동량의 정의와 보존 조건을 단계별로 확인합니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 각운동량 정의</b> — 질량 $m$ 이 반지름 $r$ 에서 속력 $v$ 로 돌면 $L=rmv=mr^2\omega$. 강체는 $L=I\omega$.</div>
+      <div class="step"><b>② 시간 변화</b> — $\dfrac{dL}{dt}=I\dfrac{d\omega}{dt}=I\alpha=\tau_{net}$ ($I$ 일정). 일반적으로 $\tau_{net}=dL/dt$ — 직선의 $F=dp/dt$ 대응.</div>
+      <div class="step"><b>③ 보존</b> — $\tau_{net}=0$ 이면 $L$ 은 변하지 않는다: $I_1\omega_1=I_2\omega_2$.</div>
+      <div class="step"><b>④ $I$ 가 변하는 경우</b> — 팔을 오므리면 $I$ 가 줄고 $L$ 이 같으므로 $\omega=L/I$ 가 커진다. 내부 힘(근육)만 작용하므로 총 $L$ 은 불변.</div>
+      <div class="step"><b>⑤ 에너지</b> — $K=\tfrac12I\omega^2=L^2/2I$. $I$ 가 줄면 $K$ 가 늘어난다 — 구심 방향으로 팔을 당기는 일이 에너지가 되었다.</div>
+      <div class="step"><b>⑥ 의자 + 바퀴</b> — 바퀴의 $L_w$ 가 뒤집히면 총 $L$ 이 같아야 하므로 의자(+사람)가 $-2L_w$ 에 해당하는 반대 각운동량을 얻는다.</div>
+      <div class="step"><b>⑦ 한계</b> — 회전축이 고정되고 평면 운동일 때의 스칼라 모형입니다. 3차원에서는 $\mathbf L$ 벡터가 보존되며 세차 · 장동이 나타납니다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">상황</th><th>관성 모멘트</th><th>각속도</th><th>각운동량</th></tr></thead><tbody><tr><td style="text-align:left">팔 벌림</td><td>$I_1$ (큼)</td><td>$\omega_1$ (작음)</td><td>$I_1\omega_1$</td></tr><tr><td style="text-align:left">팔 오므림</td><td>$I_2$ (작음)</td><td>$\omega_2=\omega_1I_1/I_2$ (큼)</td><td>같다</td></tr><tr><td style="text-align:left">의자 + 바퀴</td><td>$I_{의자}$</td><td>반대로</td><td>합 일정</td></tr><tr><td style="text-align:left">위성 휠</td><td>$I_{휠}$ ↑ 회전</td><td>위성 반대로</td><td>합 0 유지</td></tr></tbody></table></div>
+    <p class="tiny">어지러움 · 낙상 위험이 있으므로 회전 의자 실험은 보조자와 함께 저속으로, 어지러우면 즉시 멈춥니다.</p>
+  </div>
+</section>

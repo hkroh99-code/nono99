@@ -1,0 +1,105 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 13 — 프로젝트 공방 ⑥ 발명 6~10 (I06~I10 · 카드 5개 · 고르면 장치 도해 · 예산 · 방법 · 예측 결과 · 미니 모의실험 · 실패 대처 · 평가가 펼쳐짐)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab13" role="tabpanel" aria-labelledby="tabbtn13" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-exp">발명 ②</span><span class="badge b-high">고등</span><span class="badge b-poe">POE</span>🛠 프로젝트 공방 ⑥ 발명 6~10</div>
+    <div class="goal">🎯 이 공방에서 하는 것 — 자이로 세차 · 안전 제동기 · 기어드 모터 선택기 · 플라이휠 에너지 저장 · 휠 균형 장치 5개 발명입니다(I06 ~ I10). 「제어 · 에너지 · 안전 · 감도와 손실의 맞바꿈」을 다룹니다. 모두 300 rpm 이하의 낮은 속도에서, 덮개와 보조자와 함께 하는 안전한 시제품입니다. <b>안전 : 이 공방의 모든 활동은 손으로 천천히 돌리는 낮은 속도 · 작은 질량 · 5 V 이하 전자 부품만 씁니다(고속 플라이휠 · 고전압 · 큰 아령 · 모터를 단 높은 회전체는 쓰지 않으며, 의자 · 큰 바퀴 실험은 반드시 보조자와 함께).</b></div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 설계의 균형(성능 · 속도 · 안전)</div>
+      좋은 설계는 하나를 얻으려면 다른 하나를 내줘야 하는 <b>균형(trade-off)</b>을 아는 일입니다. 기어비를 높이면 힘은 세지만 느려지고, 플라이휠을 빨리 돌리면 에너지는 속도의 제곱으로 늘지만 위험도 커집니다. 그래서 장치는 「교육용 모형」임을 밝히고 한계 속도를 정해 둡니다.
+      <div class="bridge"><span class="st old">측정</span><span class="ar">→</span><span class="st">설계 계산</span><span class="ar">→</span><span class="st">균형(trade-off)</span><span class="ar">→</span><span class="st">시험</span><span class="ar">→</span><span class="st new">개선</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🧭 공방 안내 — 이렇게 진행합니다 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="발명 진행 흐름. 여섯 단계가 이어지고 되돌아가 고친다.">
+        {{FIG:wf_in}}
+      </svg>
+    </div>
+    <div class="figcap">그림 13-1. 발명 의 흐름 — 여섯 단계를 거치며 <b>되돌아가 고치는</b> 것이 핵심이다</div>
+    <div class="h4">🧰 이 공방의 도구와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 설계 목표</b>측정 · 제어하려는 양과 목표값.</div>
+      <div class="part"><b>② 균형 변수</b>기어비 · 제동 힘 · 보정 질량 같은 설계 변수.</div>
+      <div class="part"><b>③ 안전 한도</b>회전수 · 질량 · 전압의 상한을 먼저 정한다.</div>
+      <div class="part"><b>④ 성능 지표</b>정지 시간 · 일률 · 진동 감소율.</div>
+      <div class="part"><b>⑤ 시험 입력</b>한계 조건에서의 거동을 일부러 시험한다.</div>
+      <div class="part"><b>⑥ 보고</b>측정값과 이론값을 같은 그래프에.</div>
+    </div>
+    <div class="h4">🧪 진행 순서</div>
+    <div class="steps">
+      <div class="step"><b>측정할 양 정하기</b> — 세차 · 정지 시간 · 일률 · 에너지 · 진동.</div>
+      <div class="step"><b>목표값</b> — 얼마가 되어야 성공인지.</div>
+      <div class="step"><b>설계 계산</b> — 식으로 예측한다.</div>
+      <div class="step"><b>시험</b> — 안전한 낮은 속도에서 입력을 바꿔 출력을 잰다.</div>
+      <div class="step"><b>개선</b> — 목표와 비교해 고치고 한계를 정직하게 쓴다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🧭 쉽게 이해하기 — 자전거 브레이크</div>
+      브레이크를 세게 잡으면 빨리 서지만 바퀴가 미끄러질 수 있고, 약하게 잡으면 안전하지만 오래 걸립니다. 설계자는 「정지 시간」과 「안정성」 사이의 균형점을 정합니다. 제동기도 똑같아서 목표 시간과 한계 힘을 정해 두면 성공이 분명해집니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“한계 속도 이상으로 돌려도 괜찮다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>회전 장치는 <strong>한계 속도와 안전 덮개</strong>를 먼저 정하고, 교육용 모형은 반드시 낮은 속도에서만 시험합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🗂 프로젝트 5선 (발명 ②) — 카드를 누르면 아래에 자세한 안내가 펼쳐집니다</div>
+    <div class="tline" id="k13-pick" role="group" aria-label="프로젝트 고르기"></div>
+  </div>
+
+  <div id="k13-d1"></div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 미니 모의실험 — <span id="k13-simT">—</span></div>
+        <p class="muted" id="k13-simQ">—</p>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="k13-aN">—</span><span class="vl" id="k13-aV">—</span></div>
+          <input type="range" id="k13-a" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 1">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="k13-bN">—</span><span class="vl" id="k13-bV">—</span></div>
+          <input type="range" id="k13-b" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 2">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm pri" id="k13-go">🎲 새로 측정 (새 난수)</button>
+          <button type="button" class="btn sm" id="k13-def">↺ 기본값</button>
+        </div>
+        <div class="kv" id="k13-kv"></div>
+        <p class="tiny" id="k13-note">—</p>
+      </div>
+      <div class="poe" data-q="I09 플라이휠의 회전수를 2 배로 올리면 저장되는 운동 에너지는 몇 배가 될까?"
+           data-opts="2 배||4 배||8 배||같다"
+           data-ans="1"
+           data-exp="$K=\tfrac12I\omega^2$ 이므로 회전수(ω)가 2 배면 에너지는 <b>4 배</b>입니다. 같은 에너지를 얻을 때 속도를 올리는 것이 질량을 늘리는 것보다 효과적이지만 위험도 함께 커집니다."></div>
+      <div class="poe" data-q="I10 에서 불균형 질량이 있는 원판의 회전수를 2 배로 하면 진동을 일으키는 힘 $F=m_ur_u\omega^2$ 은?"
+           data-opts="2 배||4 배||8 배||같다"
+           data-ans="1"
+           data-exp="원심력은 $\omega^2$ 에 비례하므로 회전수가 2 배면 힘은 <b>4 배</b>입니다. 그래서 고속에서는 작은 불균형도 큰 진동을 일으킵니다."></div>
+      <div id="k13-misc"></div>
+      <div class="hintbox" data-hints="① I07 · I09 는 숫자로 먼저 정지 시간 · 에너지 곡선을 그려 보세요.||② I06(자이로)은 반드시 보조자와, 300 rpm 이하로 하세요.||③ I10(휠 균형)은 덮개를 씌우고 진동을 앱으로 측정하세요.||④ I08 은 부하를 바꿔 최적 기어비가 달라지는지 확인하세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k13" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k13-cv" data-pngname="project-13-sim">🖼 PNG</button></div>
+          <canvas id="k13-cv" role="img" aria-label="프로젝트 미니 모의실험 애니메이션" style="height:300px"></canvas>
+          <div class="cv-cap" id="k13-cap1">—</div>
+        </div>
+        <div id="k13-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k13-cv2" role="img" aria-label="프로젝트 예상 결과 그래프" style="height:250px"></canvas>
+          <div class="cv-cap" id="k13-cap2">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="k13-d2"></div>
+</section>

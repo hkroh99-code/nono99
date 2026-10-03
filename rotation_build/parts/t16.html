@@ -1,0 +1,68 @@
+<section class="panel" id="tab16" role="tabpanel" aria-labelledby="tabbtn16" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-high">고등/수능</span><span class="badge b-exp">실험</span><span class="badge b-poe">POE</span>📊 [종합2] 각운동량 보존 — 회전 의자 팔 오므리기와 관성 모멘트 비</div>
+    <div class="goal">🎯 이 실험에서 하는 것 — 회전 의자(보조자와 함께, 낮은 속도)에서 팔을 벌린 채 처음 각속도 $\omega_1$ 로 돌다가 팔을 오므린 뒤의 각속도 $\omega_2$ 를 영상으로 재서 $\omega_2$ 대 $\omega_1$ 그래프를 그립니다. 외부 토크가 없으면 $L=I\omega$ 가 보존되므로 이 그래프는 <b>원점을 지나는 직선</b>이고 <b>기울기 = $I_1/I_2$</b> 입니다. 숨은 관성 모멘트 비를 알아내 보세요.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 각운동량이 같으면 I 가 작을수록 빠르다</div>
+      외부 토크가 0 이면 $I_1\omega_1=I_2\omega_2$ 이므로 $\omega_2=(I_1/I_2)\,\omega_1$ 입니다. $\omega_2$ 를 세로로, $\omega_1$ 을 가로로 그리면 <b>원점을 지나는 직선</b>이고 기울기가 곧 관성 모멘트의 비입니다. 이 비는 팔 벌림 거리와 아령 질량이 정합니다.
+      <div class="bridge"><span class="st">$I_1\omega_1=I_2\omega_2$</span><span class="ar">→</span><span class="st">$\omega_2$ 대 $\omega_1$ 직선</span><span class="ar">→</span><span class="st">기울기 = $I_1/I_2$</span><span class="ar">→</span><span class="st new">운동 에너지는 $I_1/I_2$ 배로 증가</span></div>
+    </div>
+    <div class="poe" data-q="처음 ω₁ = 1 rad/s 로 돌다 팔을 오므려 I 가 1/3 로 줄었다. 나중 ω₂ 와 운동 에너지 K 는? (마찰 무시)"
+         data-opts="ω₂ = 1/3, K 는 1/3||ω₂ = 3, K 는 같다||ω₂ = 3, K 는 3 배||ω₂ = 1, K 는 3 배"
+         data-ans="2"
+         data-exp="$L$ 보존: $\omega_2=3\omega_1=3$ rad/s. $K=\tfrac12I\omega^2=\tfrac{L^2}{2I}$ 이므로 I 가 1/3 이면 K 는 <b>3 배</b>가 됩니다. 늘어난 에너지는 팔을 오므리는 몸이 한 일에서 옵니다."></div>
+    <div id="k16-misc"></div>
+  </div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 가상 실험실 — 조건을 정하고 [측정 기록]</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">처음 각속도 ω₁</span><span class="vl" id="k16-wV">—</span></div>
+          <input type="range" id="k16-w" min="0.3" max="2" step="0.1" value="1" aria-label="처음 각속도 ω₁">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">각속도 측정 잡음 σ</span><span class="vl" id="k16-SV">—</span></div>
+          <input type="range" id="k16-S" min="0" max="0.3" step="0.02" value="0.08" aria-label="각속도 측정 잡음 σ">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm" id="k16-new">🎲 새 조건(숨은 값 다시 뽑기)</button>
+          <button type="button" class="btn sm pri" id="k16-rec">📏 측정 기록</button>
+          <button type="button" class="btn sm" id="k16-rec10">📏×5 연속 기록</button>
+          <button type="button" class="btn sm rd" id="k16-clr">🧹 측정 초기화</button>
+        </div>
+        <div class="kv"><div class="cell a"><span class="k">처음 ω₁</span><span class="v" id="k16-oT">—</span></div><div class="cell g"><span class="k">측정 ω₂</span><span class="v" id="k16-oM">—</span></div><div class="cell v2"><span class="k">추정 기울기 (I₁/I₂)</span><span class="v" id="k16-oF">—</span></div><div class="cell r"><span class="k">운동 에너지 증가 배율</span><span class="v" id="k16-oE">—</span></div><div class="cell "><span class="k">기록 개수</span><span class="v" id="k16-oN">—</span></div></div>
+        <p class="tiny">모형 : $\omega_2=(I_1/I_2)\omega_1+\varepsilon$ (측정 잡음 σ rad/s, 의자 마찰 무시). 숨은 비 $I_1/I_2$ 는 [새 조건]마다 1.8 ~ 3.2 에서 뽑힙니다. 낮은 속도(2 rad/s 이하)만 다루는 교육용 모형입니다.</p>
+      </div>
+      <div class="card">
+        <div class="h4">📋 측정 기록표 <span class="tiny" id="k16-cnt">0개</span></div>
+        <div class="tblscroll"><table id="k16-tbl"><thead></thead><tbody></tbody></table></div>
+        <p class="tiny">기록한 값은 <b>실험보고서(19번 탭)</b>의 표 · 그래프 · 결과로 자동으로 이어집니다. 5개 이상 모으세요.</p>
+      </div>
+      <div class="hintbox" data-hints="① 처음 각속도를 0.3 ~ 2 rad/s 로 바꾸며 [측정 기록] 하세요(가로축은 ω₁).||② 직선이 원점을 지나나요? 지나지 않는다면 의자 마찰 때문일까요?||③ 기울기가 크려면 아령을 어떻게 하면 좋을까요?||④ 운동 에너지가 몇 배로 늘었나요? 그 에너지는 어디서 왔을까요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k16" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k16-cv" data-pngname="rotation-synth-16">🖼 PNG</button></div>
+          <canvas id="k16-cv" role="img" aria-label="가상 실험 장면" style="height:300px"></canvas>
+          <div class="cv-cap">위에서 본 회전 의자(왼쪽)의 팔이 벌려졌다 오므려지며 속도가 변합니다(10 초 반복).</div>
+        </div>
+        <div id="k16-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k16-cv2" role="img" aria-label="측정 결과 그래프" style="height:320px"></canvas>
+          <div class="cv-cap">📊 가로 처음 각속도 $\omega_1$ · 세로 나중 각속도 $\omega_2$. 빨강 = 내 회귀직선, 흰 점선 = 숨은 참 직선. 기울기 = $I_1/I_2$.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$I_1\omega_1=I_2\omega_2$ → 기울기 $s=I_1/I_2$. 예 : $s=2.4$ → 팔을 오므려 관성 모멘트가 약 $1/2.4$ 로 줄었다. $K_2/K_1=I_1/I_2=s$ 이므로 운동 에너지도 $s$ 배.</p><p class="lv-uni">교과서 밖 : 실제 의자 마찰이 있으면 $\omega$ 가 시간에 따라 서서히 줄어들어 오므린 직후의 값을 읽어야 합니다. 마찰 토크가 있을 때는 $d(I\omega)/dt=-\tau_f$ 로 모델링합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h4">🧪 이 실험을 진짜로 하려면</div>
+    <div class="steps"><div class="step"><b>준비</b> : 회전 의자, 아령(0.5 ~ 2 kg 이하) 또는 물병 2 개, 스마트폰(위에서 촬영), 보조자 2 명(R05 참고).</div><div class="step"><b>측정</b> : 낮은 속도(약 0.3 ~ 2 rad/s)로 팔을 벌려 돌리고 영상으로 ω₁ 을 잰 뒤 오므려 ω₂ 를 잰다(3 회).</div><div class="step"><b>그래프</b> : $\omega_2$ 대 $\omega_1$ 을 그려 원점을 지나는 직선으로 맞춘다(기울기 $I_1/I_2$).</div><div class="step"><b>분석</b> : 기울기를 팔 길이로 예측한 $I_1/I_2$ 와 비교한다. 의자 마찰과 읽기 오차를 쓴다.</div><div class="step"><b>안전</b> : 보조자 2 명 필수, 어지러우면 즉시 중단, 아령은 놓치지 않는다.</div></div>
+    
+  </div>
+</section>

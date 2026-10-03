@@ -1,0 +1,110 @@
+<!-- ═══ TAB 1 — 🌀 도입 — 돌리는 힘, 토크: 회전운동의 뉴턴 법칙 ═══ -->
+<section class="panel" id="tab1" role="tabpanel" aria-labelledby="tabbtn1" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🌀 도입 — 돌리는 힘, 토크: 회전운동의 뉴턴 법칙</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 직선 운동에 힘 $F$ · 질량 $m$ · 가속도 $a$ 가 있듯이, 회전 운동에는 <b>토크 $\tau$ · 관성 모멘트 $I$ · 각가속도 $\alpha$</b> 가 있고 $\tau=I\alpha$ 입니다. 문 손잡이가 경첩에서 먼 곳에 있는 이유, 긴 렌치로 볼트가 쉽게 풀리는 이유, 팔을 오므리면 스케이터가 빨라지는 이유, 경사면에서 속이 빈 바퀴가 늦게 내려오는 이유를 <b>하나의 틀</b>로 설명합니다. 이 학습실은 <b>① 각운동학 ② 토크와 평형 ③ 관성 모멘트 ④ 각운동량 ⑤ 회전 에너지와 구르기</b>를 직접 만져 보며 배우고, 한국 · 미국 · 일본의 활용 현황을 살펴본 뒤 R&amp;E · 창의 · 발명 프로젝트 30가지를 설계해 봅니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자(Advance Organizer) — 오수벨</div>
+      이미 배운 <b>뉴턴의 운동 법칙</b>($F=ma$), <b>원운동</b>($v=r\omega$, $a_c=r\omega^2$), <b>일과 에너지</b>($K=\tfrac12mv^2$)가 바탕입니다. 회전 운동은 직선 운동의 모든 양을 <b>짝</b>으로 바꾼 것입니다 — 변위 $x$ ↔ 각도 $\theta$, 속도 $v$ ↔ 각속도 $\omega$, 가속도 $a$ ↔ 각가속도 $\alpha$, 힘 $F$ ↔ 토크 $\tau$, 질량 $m$ ↔ 관성 모멘트 $I$, 운동량 $p$ ↔ 각운동량 $L$. 그래서 $F=ma$ 가 $\tau=I\alpha$ 로, $p=mv$ 가 $L=I\omega$ 로, $\tfrac12mv^2$ 이 $\tfrac12I\omega^2$ 로 바뀝니다.
+      <div class="bridge"><span class="st old">직선 운동 F=ma</span><span class="ar">→</span><span class="st">원운동 v=rω</span><span class="ar">→</span><span class="st">토크 · 관성 모멘트</span><span class="ar">→</span><span class="st new">τ=Iα · L=Iω</span></div>
+    </div>
+    <div class="poe" data-q="길이 30 cm 렌치의 끝을 렌치에 수직으로 20 N 의 힘으로 당길 때 볼트에 걸리는 토크는?"
+         data-opts="0.6 N·m||6 N·m||60 N·m||600 N·m"
+         data-ans="1"
+         data-exp="$\tau=rF\sin\theta=0.30\times20\times1=6$ N·m (렌치에 수직이므로 $\sin90^\circ=1$). 렌치가 2 배 길면 같은 힘으로 토크도 2 배 — 긴 렌치로 볼트가 쉽게 풀리는 이유입니다. 3번 탭에서 거리와 각도를 바꿔 확인하세요."></div>
+    <div id="t1-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 회전운동 — 렌치 · 시소 · 스케이터 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="회전운동의 세 장면. 렌치는 길수록 같은 힘으로 큰 토크를 내고, 시소는 양쪽 토크가 같을 때 평형이며, 스케이터는 팔을 오므리면 관성 모멘트가 줄어 더 빨리 돈다.">
+        {{FIG:flow}}
+      </svg>
+    </div>
+    <div class="figcap">그림 1-1. 회전운동의 세 장면 — ① 렌치 : 거리 $r$ 가 길수록 토크 $\tau=rF$ 가 크다 → ② 시소 : 양쪽 토크가 같으면 평형($m_1d_1=m_2d_2$) → ③ 스케이터 : 팔을 오므리면 $I$ 가 줄어 $\omega$ 가 는다($L=I\omega$ 일정)</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 각도 · 각속도 · 각가속도</b>$\theta$ (rad) · $\omega=\Delta\theta/\Delta t$ · $\alpha=\Delta\omega/\Delta t$. 직선 운동의 $x,v,a$ 와 짝.</div>
+      <div class="part"><b>② 토크 $\tau$</b>돌리는 효과. $\tau=rF\sin\theta$ (N·m). 힘의 크기 · 작용점의 거리 · 방향이 모두 중요.</div>
+      <div class="part"><b>③ 관성 모멘트 $I$</b>돌기 어려운 정도. $I=\sum mr^2$ — 질량이 축에서 멀리 분포할수록 크다.</div>
+      <div class="part"><b>④ 회전 운동 방정식</b>$\tau_{net}=I\alpha$. 직선 운동의 $F_{net}=ma$ 에 해당.</div>
+      <div class="part"><b>⑤ 각운동량 $L$</b>$L=I\omega$. 외부 토크가 없으면 보존된다.</div>
+      <div class="part"><b>⑥ 안전한 교실 실험</b>손으로 돌리는 정도의 저속 회전, 작은 질량, 저울 · 자 · 영상만 쓴다. 고속 회전체 · 큰 플라이휠은 쓰지 않는다.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 토크와 회전 체험하기 (안전한 재료만)</div>
+    <div class="steps">
+      <div class="step">문을 경첩 가까이 · 중간 · 손잡이 끝에서 밀어 보고 스프링 저울(또는 주방 저울)로 문이 열리기 시작하는 힘을 비교한다 → 멀수록 작은 힘(3번 탭).</div>
+      <div class="step">자(30 cm)를 책상 가장자리에 걸치고 가운데 · 끝에 동전을 올려 평형을 찾는다 → $m_1d_1=m_2d_2$.</div>
+      <div class="step">회전 의자에 앉아 팔을 벌렸다 오므리며 회전 속도가 변하는 것을 느낀다(저속으로, 보조자와 함께 — 5번 탭).</div>
+      <div class="step">같은 지름 · 같은 질량의 속이 찬 캔과 속 빈 캔을 경사면에서 굴려 어느 쪽이 먼저 도착하는지 본다(6번 탭).</div>
+      <div class="step">종합실험 3개(15 ~ 17번 탭)에서 직접 기울기를 구해 관성 모멘트 · 질량 · 관성 계수를 확인한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🚪 쉽게 이해하기 — 문을 어디서 미는가</div>
+      문을 경첩 바로 옆에서 밀면 아주 세게 밀어야 겨우 열리지만, 손잡이 끝에서 밀면 손가락으로도 열려요. 힘은 같은데 <b>돌리는 효과(토크)가 달라서</b>예요. 토크는 「힘 × 축에서 떨어진 거리」이기 때문입니다. 거기에 문이 무거울수록(관성 모멘트가 클수록) 열리는 속도가 천천히 늘고요 — 이것이 $\tau=I\alpha$ 입니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“센 힘이면 항상 센 토크이다 · 회전 속도가 같으면 멈추기 쉬운 정도도 같다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>토크는 <strong>힘 × 거리 × sinθ</strong> 로 정해지고, 돌기 어려운 정도는 질량뿐 아니라 <strong>질량의 분포($I=\sum mr^2$)</strong>가 정합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 상황 도우미 — 토크일까, 관성 · 각운동량일까?</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">상황 고르기(1~6)</span><span class="vl" id="t1-sV">—</span></div>
+          <input type="range" id="t1-s" min="1" max="6" step="1" value="1" aria-label="상황 고르기(1~6)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">규모 단계</span><span class="vl" id="t1-kV">—</span></div>
+          <input type="range" id="t1-k" min="1" max="10" step="1" value="5" aria-label="규모 단계">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">핵심 원리</span><span class="v" id="t1-oB">—</span></div>
+          <div class="cell g"><span class="k">토크 : 관성·각운동량 (0~10)</span><span class="v" id="t1-oS">—</span></div>
+          <div class="cell v2"><span class="k">규모 조건</span><span class="v" id="t1-oN">—</span></div>
+          <div class="cell r"><span class="k">대표 값</span><span class="v" id="t1-oW">—</span></div>
+          <div class="cell "><span class="k">대표 값의 뜻</span><span class="v" id="t1-oC">—</span></div>
+        </div>
+        <p class="tiny">모형 : 6가지 상황마다 토크와 관성 · 각운동량의 중요도(0 ~ 10)는 교육용 어림 판단입니다. 대표 값 — 문 $\tau=rF$ (F=10 N) · 렌치 $\tau=rF$ (F=50 N) · 시소 $\tau=mgd$ (20 kg) · 스케이터 $\omega_2/\omega_1=I_1/I_2$ (어림) · 자전거 바퀴 $L=I\omega$ ($I=0.1$ kg·m²) · 구르기 $a=g\sin\theta/(1+k)$ (원통).</p>
+      </div>
+      <div class="poe" data-q="문 손잡이를 경첩에서 20 cm 인 곳에서 80 cm 인 곳으로 옮기면, 같은 크기의 힘(문에 수직)이 만드는 토크는 몇 배가 될까?"
+           data-opts="1/4 배||같다||2 배||4 배"
+           data-ans="3"
+           data-exp="$\tau=rF$ 에서 거리가 4 배이므로 토크도 <b>4 배</b>입니다. 그래서 문 손잡이는 경첩의 반대편 끝에 달려 있습니다. 오른쪽 「문 열기」에서 규모 단계를 바꿔 확인하세요."></div>
+      <div class="hintbox" data-hints="① 먼저 상황 1(문)에서 규모 단계를 바꿔 손잡이 위치에 따른 토크가 어떻게 변하는지 보세요.||② 상황 2(렌치)에서 길이가 2 배가 되면 토크는 몇 배가 되나요?||③ 상황 4(스케이터)의 두 막대는 왜 「관성 · 각운동량」이 더 길까요? 팔을 오므리면 무엇이 변하나요?||④ 상황 6(구르기)에서 경사각이 2 배가 되면 가속도는 정확히 2 배가 되나요? (sin 의 성질)"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t1" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t1-cv" data-pngname="rotation-intro">🖼 PNG</button></div>
+          <canvas id="t1-cv" role="img" aria-label="상황별로 토크와 관성 · 각운동량의 중요도를 비교한 막대 그래프" style="height:350px"></canvas>
+          <div class="cv-cap">여섯 상황에서 토크(파랑)와 관성 · 각운동량(초록)의 중요도. 선택한 상황이 노란 테두리로 강조되고 아래에 대표 값이 표시됩니다.</div>
+        </div>
+        <div id="t1-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t1-cv2" role="img" aria-label="규모에 따른 대표 값 그래프" style="height:330px"></canvas>
+          <div class="cv-cap">📊 선택한 상황의 대표 값이 규모(1~10)에 따라 어떻게 변하는지 — 토크는 거리에 비례하는 직선, 구르기 가속도는 $\sin\theta$ 곡선입니다. 노란 점이 지금 규모입니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>토크 $\tau=rF\sin\theta$. 회전 운동 방정식 $\tau_{net}=I\alpha$. 관성 모멘트 $I=\sum m_ir_i^2$. 각운동량 $L=I\omega$ (외부 토크 0 이면 보존). 회전 운동 에너지 $K=\tfrac12I\omega^2$. 원운동 $v=r\omega$, $a_c=r\omega^2$.</p><p>직선 ↔ 회전 대응 : $x\leftrightarrow\theta$, $v\leftrightarrow\omega$, $a\leftrightarrow\alpha$, $m\leftrightarrow I$, $F\leftrightarrow\tau$, $p\leftrightarrow L$, $\tfrac12mv^2\leftrightarrow\tfrac12I\omega^2$.</p><p class="lv-uni">교과서 밖 : 3차원에서 토크는 벡터 $\boldsymbol\tau=\mathbf r\times\mathbf F$, 각운동량은 $\mathbf L=\mathbf r\times\mathbf p$ 이며 $\boldsymbol\tau=d\mathbf L/dt$ 입니다. 강체의 회전은 관성 텐서와 오일러 방정식으로 기술합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🧠 이 학습실은 이렇게 설계되었습니다 <span class="badge b-poe">학습모형</span></div>
+    <p class="muted">화면 곳곳의 장치가 각각 어떤 학습 원리에서 나온 것인지 알아 두면 훨씬 효과적으로 쓸 수 있습니다.</p>
+    <div id="t1-models"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🕰 회전운동과 토크의 역사 <span class="tiny">(카드를 누르면 해당 탭으로 이동)</span></div>
+    <div class="tline" id="t1-timeline"></div>
+  </div>
+</section>

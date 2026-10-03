@@ -1,0 +1,135 @@
+<!-- ═══ TAB 7 — 🌏 활용 현황 — 한국 · 미국 · 일본에서 토크와 회전은 어떻게 쓰이나? ═══ -->
+<section class="panel" id="tab7" role="tabpanel" aria-labelledby="tabbtn7" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🌏 활용 현황 — 한국 · 미국 · 일본에서 토크와 회전은 어떻게 쓰이나?</div>
+    <div class="goal">🎯 이 탭에서 배우는 것 — 토크 · 관성 모멘트 · 각운동량은 <b>전기차 모터 · 로봇 관절 · 풍력 터빈 · 위성 자세 제어 · 토크 렌치 · 스포츠</b> 곳곳에 쓰입니다. 동력은 $P=\tau\omega$ 이므로 같은 동력도 토크가 크고 느리게(풍력 터빈 · 선박) 혹은 토크가 작고 빠르게(믹서 모터) 낼 수 있고, <b>기어</b>로 토크와 속도를 맞바꿉니다. 한국은 전기차 · 협동 로봇 · 지구관측 위성, 미국은 우주 망원경 · 로봇 · 풍력, 일본은 정밀 모터 · 감속기 · 탐사선이 대표적입니다. 수치는 <b>공개 자료의 예시</b>이며 해마다 바뀝니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 1~6번 탭 정리와 숫자 읽기</div>
+      지금까지 배운 것 : ① 각운동학 $v=r\omega$ ② 토크 $\tau=rF\sin\theta$, 평형 ③ $\tau=I\alpha$ ④ $L=I\omega$ 보존 ⑤ 회전 에너지 · 구르기. 기계의 성능은 <b>토크 · 회전수 · 동력($P=\tau\omega$) · 효율</b>로 말하고, 모터 뒤의 감속기(기어 비 $n:1$)는 $\tau_{out}=n\tau$, $\omega_{out}=\omega/n$ 으로 힘(토크)을 키웁니다. 숫자를 볼 때는 최대 토크 · 정격 토크 · 연속 · 순간을 구분합니다.
+      <div class="bridge"><span class="st old">τ · ω · I · L</span><span class="ar">→</span><span class="st">동력 P=τω · 기어</span><span class="ar">→</span><span class="st">숫자를 비판적으로 읽기</span><span class="ar">→</span><span class="st new">나의 진로</span></div>
+    </div>
+    <div class="poe" data-q="토크 250 N·m, 4,000 rpm 으로 도는 전기차 모터의 기계적 동력은 대략? ($P=\tau\omega$, 4,000 rpm ≈ 419 rad/s)"
+         data-opts="약 10 kW||약 100 kW||약 1 MW||약 10 MW"
+         data-ans="1"
+         data-exp="$P=250\times419\approx105$ kW. 같은 모터가 기어 비 10 : 1 로 바퀴에 전달하면 토크 2,500 N·m, 400 rpm — 동력은 그대로이고 토크와 회전수만 맞바뀝니다(손실 무시). 오른쪽 시뮬레이션에서 기어 비를 바꿔 보세요."></div>
+    <div id="t7-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 세 나라의 활용 — 모터 · 로봇 · 우주 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 272" role="img" aria-label="한국, 미국, 일본의 활용 현황 카드. 전기차와 협동 로봇, 우주 망원경의 반작용 휠, 정밀 모터와 탐사선 사례.">
+        {{FIG:eco}}
+      </svg>
+    </div>
+    <div class="figcap">그림 7-1. 한국 · 미국 · 일본 — 전기차(현대 아이오닉 5 등) · 협동 로봇, 허블 · 케플러 우주망원경의 반작용 휠, 일본의 정밀 소형 모터(니덱) · 탐사선(하야부사) · 감속기(하모닉 드라이브)</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 전동기(모터)</b>전기 에너지를 토크로 바꾼다. 정지 상태에서도 큰 토크를 내 전기차에 유리하다.</div>
+      <div class="part"><b>② 감속기 · 기어</b>토크를 키우고 회전수를 줄인다. 로봇 관절에는 정밀 감속기(하모닉 드라이브 등)를 쓴다.</div>
+      <div class="part"><b>③ 풍력 터빈</b>저속 대토크 축 + 증속기 + 발전기. 날개 피치 · 요(방향) 제어도 토크 제어.</div>
+      <div class="part"><b>④ 반작용 휠</b>위성 · 우주망원경이 내부 휠의 각운동량으로 자세를 바꾼다. 허블은 반작용 휠과 자이로로 자세를 유지한다.</div>
+      <div class="part"><b>⑤ 토크 렌치</b>볼트를 규정 토크로 조인다. 국제 규격 ISO 6789 가 교정과 정확도를 정한다.</div>
+      <div class="part"><b>⑥ 진로</b>기계 · 전기 · 로봇 · 항공우주 · 자동차 · 에너지 · 스포츠 과학 · 정책.</div>
+    </div>
+    <div class="h4">🧪 활동 — 현황 자료를 비판적으로 읽기 (공식 최신 자료로 확인)</div>
+    <div class="steps">
+      <div class="step">관심 분야(전기차 · 로봇 · 풍력 · 우주 중 하나)를 고르고 한국 · 미국 · 일본의 대표 기업 · 기관 · 제품을 표로 정리한다(공식 홈페이지 · 학회 자료).</div>
+      <div class="step">수치(토크 · 회전수 · 동력)는 <b>최대인지 정격인지, 연속인지 순간인지</b>와 시험 조건을 같이 적는다.</div>
+      <div class="step">오른쪽 시뮬레이션에서 항목별 동력 $P=\tau\omega$ 와 기어 비에 따른 출력 토크를 계산해 말로 설명한다.</div>
+      <div class="step">한 장치(예 : 로봇 관절)를 골라 토크 · 관성 · 각운동량 중 어떤 원리가 어디에 쓰였는지 그림으로 설명한다.</div>
+      <div class="step">R&E · 창의 · 발명 프로젝트 주제와 연결한다(8~14번 탭).</div>
+    </div>
+    <div class="easy">
+      <div class="et">🗺 쉽게 이해하기 — 같은 원리, 다른 선택</div>
+      같은 토크 · 회전 원리라도 나라마다 중점이 달라요. 자동차 산업이 큰 나라는 전기 모터와 변속기에, 로봇 산업이 큰 나라는 정밀 감속기와 관절 모터에, 우주 기술이 발달한 나라는 위성 자세 제어에 투자합니다. 숫자를 볼 때는 「누가 · 어떤 조건에서 · 몇 년도에 발표했는가」를 꼭 확인해요.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“모터 토크가 크면 항상 힘이 세다 · 회전수가 낮으면 약한 기계이다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b><strong>동력은 토크와 회전수의 곱($P=\tau\omega$)</strong>이므로 토크가 커도 느리면 동력이 작을 수 있고, 기어는 토크와 회전수를 맞바꿉니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 동력 시뮬레이션 — 기계 · 기어 비</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">기계 고르기(1~8)</span><span class="vl" id="t7-kV">—</span></div>
+          <input type="range" id="t7-k" min="1" max="8" step="1" value="4" aria-label="기계 고르기(1~8)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">기어 비 n : 1</span><span class="vl" id="t7-nV">—</span></div>
+          <input type="range" id="t7-n" min="1" max="20" step="1" value="1" aria-label="기어 비 n : 1">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">토크 τ</span><span class="v" id="t7-oT">—</span></div>
+          <div class="cell g"><span class="k">회전수 · 각속도</span><span class="v" id="t7-oW">—</span></div>
+          <div class="cell v2"><span class="k">동력 P = τω</span><span class="v" id="t7-oP">—</span></div>
+          <div class="cell r"><span class="k">기어 후 토크 @ 회전수</span><span class="v" id="t7-oO">—</span></div>
+          <div class="cell "><span class="k">참고</span><span class="v" id="t7-oN">—</span></div>
+        </div>
+        <p class="tiny">모형 : 항목별 대표 토크 · 회전수(예시 값) — 자전거 페달 20 N·m @ 90 rpm · 믹서 0.3 N·m @ 15,000 rpm · 전동 드릴 3 N·m @ 1,000 rpm · 전기차 모터 250 N·m @ 4,000 rpm · 풍력 터빈(1.5 MW급) 955 kN·m @ 15 rpm · 대형 선박 엔진 1.9 MN·m @ 100 rpm · 협동 로봇 관절 100 N·m @ 30 rpm · 위성 반작용 휠 0.05 N·m @ 2,000 rpm. 기어 손실은 무시. 교육용 어림입니다.</p>
+      </div>
+      <div class="poe" data-q="모터 출력이 일정할 때 기어 비를 5 : 1 로 하면 출력축의 토크와 회전수는? (손실 무시)"
+           data-opts="토크 5 배 · 회전수 1/5||토크 1/5 · 회전수 5 배||토크 5 배 · 회전수 5 배||둘 다 변하지 않음"
+           data-ans="0"
+           data-exp="$P=\tau\omega$ 가 일정하므로 토크가 5 배면 각속도는 1/5 입니다. 오른쪽 그래프에서 기어 비를 올릴 때 토크 직선과 회전수 곡선을 확인하세요."></div>
+      <div class="hintbox" data-hints="① 항목 4(전기차 모터)의 동력은 몇 kW 인가요? 항목 2(믹서)와 비교해 보세요.||② 항목 5(풍력 터빈)는 토크가 아주 큰데 회전수는 낮습니다. 동력은 얼마인가요?||③ 항목 8(위성 휠)은 토크도 작고 동력도 작은데 왜 쓰일까요? (각운동량 보존)||④ 기어 비를 10 으로 하면 출력 토크와 회전수는 각각 몇 배가 되나요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t7" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t7-cv" data-pngname="power">🖼 PNG</button></div>
+          <canvas id="t7-cv" role="img" aria-label="항목별 동력 막대 그래프" style="height:400px"></canvas>
+          <div class="cv-cap">여덟 기계의 동력 P = τω (로그 눈금 막대). 선택한 항목이 노란색으로 강조됩니다.</div>
+        </div>
+        <div id="t7-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t7-cv2" role="img" aria-label="기어 비 대 출력 토크와 출력 회전수 그래프" style="height:340px"></canvas>
+          <div class="cv-cap">📊 위 : 기어 비 대 출력 토크 — 직선(비례). 아래 : 기어 비 대 출력 회전수 — $1/n$ 로 감소. 동력은 그대로입니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>동력 $P=\tau\omega$ ($\omega=2\pi\,\text{rpm}/60$). 기어 비 $n:1$ → $\tau_{out}=n\tau$, $\omega_{out}=\omega/n$ (손실 무시, $P$ 보존).</p><p>예 : 전기차 모터 $\tau=250$, 4,000 rpm → $P=105$ kW. 풍력 터빈 $\tau=955$ kN·m, 15 rpm ($\omega=1.57$ rad/s) → $P=1.5$ MW.</p><p class="lv-uni">교과서 밖 : 모터의 토크–속도 특성은 직류 모터에서 $\tau=\tau_s(1-\omega/\omega_0)$ 로 선형 감소하고 최대 출력은 $\omega=\omega_0/2$ 에서 $P_{max}=\tau_s\omega_0/4$ 입니다. 감속기의 효율 · 백래시 · 강성이 로봇 정밀도를 정합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🏭 ① 분야별 비교표 — 한국 · 미국 · 일본 <span class="badge b-high">대표 사례</span></div>
+    <p class="muted">공개 자료를 바탕으로 정리한 <b>대표 사례</b>입니다(전체 현황이 아닙니다). 수치 · 연도는 해마다 바뀌므로 <b>연도와 출처를 확인해 최신 자료로 갱신</b>하세요.</p>
+    <div class="tblscroll"><table class="tbl" style="min-width:640px"><thead><tr><th style="text-align:left">분야</th><th>한국</th><th>미국</th><th>일본</th></tr></thead><tbody>
+      <tr><td style="text-align:left"><b>전기차 · 모터</b></td><td>현대 아이오닉 5 등 — 모델 · 트림에 따라 최대 토크 수백 N·m 급(제원은 제조사 최신 자료 확인)</td><td>테슬라 등 — 전기차 모터의 정지 시 즉시 최대 토크가 특징</td><td>니덱(Nidec) — 정밀 소형 모터 · 전기차 구동 모터 개발, 도요타 등 하이브리드</td></tr>
+      <tr><td style="text-align:left"><b>로봇 · 감속기</b></td><td>두산로보틱스 · 레인보우로보틱스 등 협동 로봇 · 로봇 팔(관절 모터 + 감속기)</td><td>산업용 · 연구용 로봇 팔, 대학 로봇 연구</td><td>화낙(Fanuc) · 야스카와 산업용 로봇, 하모닉 드라이브 시스템즈(정밀 감속기)</td></tr>
+      <tr><td style="text-align:left"><b>우주 · 위성</b></td><td>다목적 실용위성 아리랑 등 지구관측 위성(반작용 휠 등으로 자세 제어, 한국항공우주연구원)</td><td>허블 우주망원경(반작용 휠 + 자이로) · 케플러 망원경은 2013년 반작용 휠 2 개 고장으로 임무 방식을 바꿨다</td><td>소행성 탐사선 하야부사 · 하야부사2 — 반작용 휠로 자세 제어, 일부 휠 고장에도 운용 방식을 바꿔 임무 수행</td></tr>
+      <tr><td style="text-align:left"><b>풍력 · 에너지</b></td><td>해상풍력 · 터빈 국산화(최신 현황은 에너지 부처 자료 확인)</td><td>육상 · 해상풍력(전 세계 누적 설비는 약 1 TW 대로 보고 — GWEC 자료 확인)</td><td>해상풍력 확대 계획</td></tr>
+      <tr><td style="text-align:left"><b>공구 · 규격</b></td><td>토크 렌치 교정(한국표준과학연구원 등 국가 교정 체계)</td><td>NIST 의 토크 표준</td><td>산업기술종합연구소(AIST) 토크 표준</td></tr>
+      <tr><td style="text-align:left"><b>스포츠 과학</b></td><td>피겨 · 다이빙 · 체조의 회전 동작 분석 연구</td><td>야구 · 골프 · 체조의 회전 · 토크 데이터 분석</td><td>체조 · 스케이팅 동작 분석 연구</td></tr>
+    </tbody></table></div>
+    <p class="tiny">※ 이 표는 학습용 요약입니다. 제원 · 기업 현황은 해마다 바뀌므로 공식 최신 자료를 직접 확인하세요. 우주 탐사선의 휠 고장 사례는 공개된 임무 보고를 요약한 것입니다.</p>
+  </div>
+
+  <div class="card">
+    <div class="h3">📊 ② 숫자를 비판적으로 읽기 <span class="badge b-poe">POE</span></div>
+    <div class="steps">
+      <div class="step"><b>최대 대 정격</b> — 모터의 최대 토크는 짧은 순간의 값이고 연속으로 낼 수 있는 정격 토크는 더 작다. 같은 종류끼리 비교하자.</div>
+      <div class="step"><b>토크만 보면 안 된다</b> — 동력 $P=\tau\omega$ 와 회전수 범위를 함께 본다. 감속기가 있으면 출력축 기준인지 모터축 기준인지 확인한다.</div>
+      <div class="step"><b>제조사 발표</b> — 시험 조건(전압 · 온도 · 변속비)을 확인하고 독립 시험 값과 비교한다.</div>
+      <div class="step"><b>식의 한계</b> — 이 학습실은 강체 · 마찰 무시의 이상 모형이다. 실제 기계는 마찰 · 백래시 · 진동이 있다.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🎓 ③ 진로 탐색 — 토크와 회전운동과 이어지는 길</div>
+    <div class="steps">
+      <div class="step"><b>기계 · 자동차공학</b> — 구동계 · 변속기 · 진동 · 소음 설계.</div>
+      <div class="step"><b>전기 · 전자 · 로봇</b> — 모터 제어, 관절 로봇, 드론.</div>
+      <div class="step"><b>항공우주공학</b> — 위성 자세 제어, 발사체 동역학, 탐사선.</div>
+      <div class="step"><b>에너지 · 환경</b> — 풍력 터빈, 수력 터빈, 플라이휠 저장.</div>
+      <div class="step"><b>스포츠 과학 · 재활</b> — 관절 토크 분석, 동작 최적화.</div>
+      <div class="step"><b>정밀 계측 · 표준</b> — 토크 표준 · 교정, 센서 개발.</div>
+    </div>
+  </div>
+</section>
