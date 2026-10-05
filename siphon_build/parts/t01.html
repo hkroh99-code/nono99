@@ -1,0 +1,110 @@
+<!-- ═══ TAB 1 — 🚰 도입 — 물이 고개를 넘는 사이펀 ═══ -->
+<section class="panel" id="tab1" role="tabpanel" aria-labelledby="tabbtn1" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🚰 도입 — 물이 고개를 넘는 사이펀</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 휘어진 관 하나로 물이 <b>위 수면보다 높은 고개를 넘어</b> 아래로 흘러가는 신기한 장치, <b>사이펀(siphon)</b>입니다. 흐름의 속력은 높이차로 $v=\sqrt{2gh}$ 가 되고, 정점의 압력은 대기압에서 물기둥의 무게를 뺀 만큼 줄어들며($p_c=p_{atm}-\rho gH_c-\tfrac12\rho v^2$), 관이 가늘고 길수록 마찰 때문에 느려집니다. 어항 물갈이, 논 물 대기, 변기, 피타고라스 컵, 간헐 샘이 모두 같은 원리입니다. 이 학습실은 <b>① 높이차와 유속 ② 정점 압력과 시동 ③ 마찰과 점성 ④ 배수 시간 ⑤ 응용과 안전</b>을 직접 만져 보며 배우고, 한국 · 미국 · 일본의 활용 현황을 살펴본 뒤 R&amp;E · 창의 · 발명 프로젝트 30가지를 설계해 봅니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자(Advance Organizer) — 오수벨</div>
+      이미 배운 <b>압력과 수압</b>($p=p_0+\rho gh$), <b>일과 에너지</b>($mgh=\tfrac12mv^2$), <b>연속 방정식</b>($Av=$ 일정), <b>베르누이 방정식</b>($p+\tfrac12\rho v^2+\rho gh=$ 일정)이 바탕입니다. 사이펀은 위 수면의 물이 출구로 내려가며 위치 에너지를 운동 에너지로 바꾸는 것이어서 속력은 토리첼리 정리와 같은 $\sqrt{2gh}$ 입니다. 정점에서는 물이 높이 올라간 만큼 압력이 낮아지므로, 압력이 물의 증기압 밑으로 내려가면 기포가 생겨 흐름이 끊깁니다.
+      <div class="bridge"><span class="st old">압력 · 수압</span><span class="ar">→</span><span class="st">베르누이 · 토리첼리</span><span class="ar">→</span><span class="st">정점 압력 · 증기압</span><span class="ar">→</span><span class="st new">사이펀의 작동 · 한계</span></div>
+    </div>
+    <div class="poe" data-q="위 통의 수면이 출구보다 40 cm 높은 사이펀이 있다. 마찰을 무시하면 출구의 물 속력은 대략? ($\sqrt{2\times9.8\times0.4}$)"
+         data-opts="약 0.9 m/s||약 2.8 m/s||약 7.8 m/s||약 28 m/s"
+         data-ans="1"
+         data-exp="$v=\sqrt{2gh}=\sqrt{2\times9.8\times0.4}\approx2.8$ m/s. 높이차 $h$ 는 「위 수면에서 출구까지」의 높이이고 정점의 높이와는 상관이 없습니다(이상적인 경우). 2번 탭에서 높이차 · 관 지름 · 마찰을 바꾸며 확인하세요."></div>
+    <div id="t1-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 사이펀 — 어항 · 피타고라스 컵 · 정점의 한계 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="사이펀의 세 장면. 어항 물갈이는 위 수면이 출구보다 높아야 흐르고, 피타고라스 컵은 정점을 넘기면 모두 빠지며, 정점은 약 10미터를 넘을 수 없다.">
+        {{FIG:flow}}
+      </svg>
+    </div>
+    <div class="figcap">그림 1-1. 사이펀의 세 장면 — ① 어항 물갈이 : 위 수면이 출구보다 $h$ 만큼 높으면 흐른다 → ② 피타고라스 컵 : 정점을 넘게 채우면 한꺼번에 비워진다 → ③ 정점의 높이 한계 : 정점 압력이 증기압 밑이면 기포가 생겨 끊긴다(약 10 m)</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 높이차 $h$</b>위 통 수면에서 출구까지의 높이. 흐름의 구동력이며 정점의 높이는 속력을 정하지 않는다.</div>
+      <div class="part"><b>② 유속과 유량</b>$v=\sqrt{2gh/K}$ ($K$ : 손실 계수), $Q=Av$. 지름 · 길이 · 점성이 $K$ 를 키운다.</div>
+      <div class="part"><b>③ 정점 압력 $p_c$</b>$p_c=p_{atm}-\rho gH_c-\tfrac12\rho v^2$. 증기압 $p_v$ 보다 커야 물이 끊기지 않는다.</div>
+      <div class="part"><b>④ 시동(프라이밍)</b>관 속 공기를 물로 바꾸는 단계. 주사기 · 손펌프를 쓰고 입으로 빨지 않는다.</div>
+      <div class="part"><b>⑤ 정지 조건</b>출구가 위 수면보다 낮지 않거나, 정점에서 공기가 들어오면 멈춘다.</div>
+      <div class="part"><b>⑥ 안전한 교실 실험</b>투명 호스 · 상온의 물 · 작은 통만 쓴다. 입으로 빨기 · 가열 · 연료 · 약품은 하지 않는다.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 사이펀 체험하기 (안전한 재료만)</div>
+    <div class="steps">
+      <div class="step">투명 호스에 물을 채우고 양 끝을 손가락으로 막은 채 한쪽을 위 통에, 다른 끝을 더 낮은 통에 넣고 손가락을 떼어 흐름을 본다(입으로 빨지 않는다).</div>
+      <div class="step">출구를 위 수면과 같은 높이로 올려 보며 흐름이 멈추는 순간을 찾는다 → 높이차 $h$ 가 구동력.</div>
+      <div class="step">출구를 아래로 내려 가며 1 L 를 받는 시간을 재서 $h$ 가 클수록 빨라지는지 본다(2번 탭).</div>
+      <div class="step">정점을 높여 보며(수십 cm) 관 속에 기포가 생겨 끊기는지 관찰한다(3번 탭).</div>
+      <div class="step">종합실험 3개(15 ~ 17번 탭)에서 직접 기울기를 구해 손실 계수 · 배수 시간 · 점성을 확인한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🪣 쉽게 이해하기 — 물의 줄타기</div>
+      사이펀의 관 속 물은 길게 이어진 <b>물 줄</b>과 같아요. 출구 쪽 줄이 입구 쪽 줄보다 길어서(높이차) 무거우니 줄이 아래로 끌려가고, 줄이 끊기지만 않으면 입구의 물이 계속 따라 올라와 고개를 넘어요. 줄이 끊기는 경우는 정점에서 압력이 너무 낮아 기포가 생기거나 공기가 들어올 때입니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“대기압이 물을 눌러서 올려 주거나, 입으로 계속 빨아야 사이펀이 된다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b><strong>구동은 높이차에 의한 중력</strong>이고, 대기압은 정점에서 물기둥이 끊기지 않게 하는 <strong>한계 조건</strong>입니다. 시동 때만 공기를 몰아내면 됩니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 상황 도우미 — 높이차일까, 마찰 · 관일까?</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">상황 고르기(1~6)</span><span class="vl" id="t1-sV">—</span></div>
+          <input type="range" id="t1-s" min="1" max="6" step="1" value="1" aria-label="상황 고르기(1~6)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">규모 단계</span><span class="vl" id="t1-kV">—</span></div>
+          <input type="range" id="t1-k" min="1" max="10" step="1" value="5" aria-label="규모 단계">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">핵심 원리</span><span class="v" id="t1-oB">—</span></div>
+          <div class="cell g"><span class="k">높이차 : 마찰·관 (0~10)</span><span class="v" id="t1-oS">—</span></div>
+          <div class="cell v2"><span class="k">규모 조건</span><span class="v" id="t1-oN">—</span></div>
+          <div class="cell r"><span class="k">대표 값</span><span class="v" id="t1-oW">—</span></div>
+          <div class="cell "><span class="k">대표 값의 뜻</span><span class="v" id="t1-oC">—</span></div>
+        </div>
+        <p class="tiny">모형 : 6가지 상황마다 높이차(중력)와 마찰 · 관의 중요도(0 ~ 10)는 교육용 어림 판단입니다. 대표 값 — 어항 $v=\sqrt{2gh}$ · 논 관개 튜브 $Q=Av$ (지름 4 cm · 길이 3 m) · 변기 비우는 시간 · 피타고라스 컵 남는 물(기둥 6 cm) · 간헐 샘 주기(통 100 cm²) · 정점 압력 $p_c$ (유속 0.5 m/s).</p>
+      </div>
+      <div class="poe" data-q="어항 물갈이에서 높이차를 4 배로 하면 이상 유속은 몇 배가 될까?"
+           data-opts="1/2 배||2 배||4 배||16 배"
+           data-ans="1"
+           data-exp="$v=\sqrt{2gh}\propto\sqrt h$ 이므로 높이차가 4 배면 유속은 $\sqrt4=2$ 배입니다. 오른쪽 「어항」에서 규모 단계를 바꿔 확인하세요."></div>
+      <div class="hintbox" data-hints="① 먼저 상황 1(어항)에서 규모 단계를 바꿔 높이차에 따른 유속이 어떻게 변하는지 보세요.||② 상황 4(피타고라스 컵)에서 채운 높이가 6 cm 를 넘는 순간 값이 어떻게 변하나요?||③ 상황 6(정점의 높이 한계)에서 정점 압력이 증기압(2.3 kPa)에 가까워지는 단계는 어디인가요?||④ 상황 2(논 관개)에서 관이 길어지면 유량이 어떻게 변할지 4번 탭에서 예측해 보세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t1" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t1-cv" data-pngname="siphon-intro">🖼 PNG</button></div>
+          <canvas id="t1-cv" role="img" aria-label="상황별로 높이차와 마찰 · 관의 중요도를 비교한 막대 그래프" style="height:350px"></canvas>
+          <div class="cv-cap">여섯 상황에서 높이차(파랑)와 마찰 · 관(초록)의 중요도. 선택한 상황이 노란 테두리로 강조되고 아래에 대표 값이 표시됩니다.</div>
+        </div>
+        <div id="t1-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t1-cv2" role="img" aria-label="규모에 따른 대표 값 그래프" style="height:330px"></canvas>
+          <div class="cv-cap">📊 선택한 상황의 대표 값이 규모(1~10)에 따라 어떻게 변하는지 — 어항은 $\sqrt h$ 곡선, 피타고라스 컵은 문턱(6 cm)에서 뚝 떨어지는 계단. 노란 점이 지금 규모입니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>유속 $v=\sqrt{\dfrac{2gh}{K}}$ ($K=1+K_m+f\dfrac LD$). 유량 $Q=Av$. 정점 압력 $p_c=p_{atm}-\rho gH_c-\tfrac12\rho v^2\ge p_v$ → $H_c\le\dfrac{p_{atm}-p_v}{\rho g}-\dfrac{v^2}{2g}\approx10$ m (20 °C). 배수 시간 $T=\dfrac{A_t}{a}\sqrt{\dfrac{2Kh_0}{g}}$.</p><p>예 : $h=0.4$ m → $v=2.8$ m/s. $D=10$ mm → $A=7.85\times10^{-5}$ m² → $Q=0.22$ L/s (마찰 무시).</p><p class="lv-uni">교과서 밖 : 사이펀을 베르누이 방정식(정점 포함)과 다르시–바이스바흐 마찰 손실로 풀면 $gh=(1+K_m+fL/D)v^2/2$ 입니다. 관 속 액체가 장력을 견디는 한계(응집력 · 용존 기체)는 아직 연구 · 논의 중인 주제입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🧠 이 학습실은 이렇게 설계되었습니다 <span class="badge b-poe">학습모형</span></div>
+    <p class="muted">화면 곳곳의 장치가 각각 어떤 학습 원리에서 나온 것인지 알아 두면 훨씬 효과적으로 쓸 수 있습니다.</p>
+    <div id="t1-models"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🕰 사이펀의 역사 <span class="tiny">(카드를 누르면 해당 탭으로 이동)</span></div>
+    <div class="tline" id="t1-timeline"></div>
+  </div>
+</section>

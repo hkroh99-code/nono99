@@ -1,0 +1,180 @@
+<section class="panel" id="tab19" data-role="report" role="tabpanel" aria-labelledby="tabbtn19" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-exp">실험보고서</span>📝 실험보고서 작성 &amp; 인쇄 / PDF 저장</div>
+    <div class="goal">🎯 이 탭에서 하는 것 — 정식 실험보고서를 작성합니다. 보고서는 <b>부분마다 새 장</b>에서 시작합니다(표지·실험 A·실험 B·실험 C·실험 D·결론 = 6부분). 할 말이 많아 <b>8쪽까지 늘어나도 괜찮습니다.</b>
+      <b>실험 A · C · D</b> 는 [종합] 탭(15 · 16 · 17번)에서 측정할 때마다 <b>자동으로</b> 표·그래프가 채워지고,
+      <b>실험 B</b> 는 교실에서 투명 호스 사이펀으로 <b>높이차와 유량을 직접 재어</b> <b>학생이 직접 적고 직접 계산</b>합니다.
+      목적·가설·오차 분석·고찰은 모두 직접 쓰는 칸입니다. 다 쓰면 인쇄하거나 PDF로 저장하세요.</div>
+    <div class="row">
+      <button type="button" class="btn sm" id="t11-import">🔄 최신 측정 데이터 불러오기</button>
+      <button type="button" class="btn sm" id="t11-clear">자동 수집 데이터 초기화</button>
+      <span class="tiny" id="t11-cnt" style="margin-left:auto">0개</span>
+      <button type="button" class="btn sm rd" id="t11-reset">🗑 작성 내용 전체 지우기</button>
+    </div>
+    <div class="row">
+      <button type="button" class="btn pri" id="t11-print">🖨 인쇄 / PDF로 저장 (A4 4~8쪽)</button>
+      <span class="tiny" id="t11-pages" style="color:var(--dim);font-weight:700">예상 인쇄 분량 —</span>
+      <span class="tiny" style="color:var(--dim)">※ 인쇄 대화상자에서 "PDF로 저장"을 고르면 파일로 내려받을 수 있습니다.
+        적은 내용은 자동 저장되어 새로고침해도 남습니다.
+        <b>8쪽까지는 정상입니다</b> — 분량을 맞추려고 내용을 억지로 줄이지 마세요.</span>
+    </div>
+  </div>
+
+  <div id="t11-printarea">
+
+    <!-- ══════════ 1부분 : 표지 · 목적 · 이론 · 가설 ══════════ -->
+    <div class="card report-paper rpt-page">
+      <div style="text-align:center;border-bottom:2px solid #334155;padding-bottom:10px;margin-bottom:14px">
+        <div style="font-size:1.3rem;font-weight:800">사이펀 &mdash; 실험보고서</div>
+        <div style="font-size:.98rem;margin-top:4px;color:#334155">총 손실 계수 · 유량과 높이차 · 배수 시간 · 물의 점성 재기</div>
+      </div>
+      <div class="rgrid">
+        <label class="report-field">학교 / 학년 <input type="text" id="t11-school"></label>
+        <label class="report-field">반 / 모둠 <input type="text" id="t11-group"></label>
+        <label class="report-field">이름 <input type="text" id="t11-name"></label>
+        <label class="report-field">함께한 사람 <input type="text" id="t11-mates"></label>
+        <label class="report-field">실험 일시 <input type="date" id="t11-date"></label>
+        <label class="report-field">교사 확인 <input type="text" id="t11-teacher"></label>
+      </div>
+
+      <h4>1. 실험 목적 <span class="tiny" style="font-weight:400">— 무엇을 확인하려는지 내 말로 쓰기</span></h4>
+      <textarea id="t11-purpose" rows="3">높이차 대 유속의 제곱에서 사이펀의 총 손실 계수를 구하고, 투명 호스로 높이차와 유량의 관계(Q ∝ √h)를 직접 확인하며, 통 · 관 면적비와 배수 시간에서 손실 계수를 다시 구하고, 가는 관 유량에서 물의 점성을 구한다. 모형의 가정과 측정의 한계, 이 자료가 물 · 상온 · 입으로 빨지 않는 안전한 실험임을 논의한다.</textarea>
+
+      <h4>2. 이론 &mdash; 아는 것을 정리하기</h4>
+      <div class="rpt-hint">아래 식의 빈칸을 채우고, 왜 그렇게 되는지 오른쪽 칸에 한 줄로 설명해 보자.</div>
+      <table>
+        <thead><tr><th style="width:34%">관계식</th><th style="width:22%">빈칸 채우기</th><th>왜 그런가? (내 설명)</th></tr></thead>
+        <tbody>
+          <tr><td>사이펀 유속 : v = √( &nbsp; · g h / K )</td>
+              <td><input type="text" id="t11-f1" class="rpt-blank" placeholder="?"></td>
+              <td><input type="text" id="t11-w1"></td></tr>
+          <tr><td>정점 압력 : p꜀ = p₀ − ρ g ( &nbsp; ) − ½ρv²</td>
+              <td><input type="text" id="t11-f2" class="rpt-blank" placeholder="?"></td>
+              <td><input type="text" id="t11-w2" placeholder="예 : 정점이 높을수록 압력이 …"></td></tr>
+          <tr><td>하겐–푸아죄유 : Q = π ρ g h D⁴ / ( &nbsp; μ L)</td>
+              <td><input type="text" id="t11-f3" class="rpt-blank" placeholder="?"></td>
+              <td><input type="text" id="t11-w3"></td></tr>
+          <tr><td>배수 시간 : T = (A / a) √(2 K h₀ / ( &nbsp; ))</td>
+              <td><input type="text" id="t11-f4" class="rpt-blank" placeholder="?"></td>
+              <td><input type="text" id="t11-w4"></td></tr>
+        </tbody>
+      </table>
+
+      <h4>3. 가설(예상) &mdash; 측정하기 <b>전에</b> 쓰기</h4>
+      <div class="rpt-q">① 높이차 h 가 4 배가 되면 사이펀의 유속과 유량은 몇 배가 될까? 왜 그렇게 되는가?</div>
+      <textarea id="t11-hyp1" rows="2" placeholder="예상 : … 일 것이다. 왜냐하면 v = √(2gh/K) 에서 …"></textarea>
+      <div class="rpt-q">② 정점을 높이면 정점의 압력은 어떻게 될까? 정점이 너무 높으면 왜 물줄기가 끊길까?</div>
+      <textarea id="t11-hyp2" rows="2"></textarea>
+      <div class="rpt-q">③ 같은 호스에서 수온을 10 °C 에서 40 °C 로 올리면 가는 관 유량은 어떻게 될까? 지름을 2 배로 하면?</div>
+      <textarea id="t11-hyp3" rows="2"></textarea>
+      <div class="rpt-foot"><span class="rpt-no">[1 / 6]</span> &nbsp;·&nbsp; 사이펀 실험보고서</div>
+    </div>
+
+    <!-- ══════════ 2부분 : 실험 A (자동 수집) ══════════ -->
+    <div class="card report-paper rpt-page">
+      <h4>4. 실험 A &mdash; 높이차 대 v²(총 손실 계수 K) <span class="tiny" style="font-weight:400">(데이터 자동 수집)</span></h4>
+      <div class="rpt-hint"><b>[15. 종합1]</b> 탭에서 <b>[측정 기록]</b> 을 누르면 아래 표 · 그래프가 자동으로 채워집니다(5개 이상).</div>
+
+      <div class="rpt-q"><b>실험 방법</b> &mdash; 내가 한 순서대로 쓰기</div>
+      <textarea id="t11-methodA" rows="3">① 투명 호스 사이펀의 높이차 h 를 바꾸며 500 mL 를 받는 시간을 쟀다(입으로 빨지 않고 주사기로 시동)
+② 유속 v = Q/A 와 v² 를 계산해 표에 모았다
+③ v² 대 h 직선의 기울기 2g/K 로 총 손실 계수 K 를 구했다</textarea>
+
+      <div class="rpt-q"><b>측정 데이터</b> <span class="tiny" id="t11-cnt2">0개</span></div>
+      <div style="overflow-x:auto"><table id="t11-tbl"><thead></thead><tbody></tbody></table></div>
+
+      <div class="rpt-q"><b>그래프와 회귀직선</b> (가로 높이차 h · 세로 유속의 제곱 v²)</div>
+      <canvas id="t11-cv" width="640" height="225" style="width:100%;max-width:560px;height:200px;border:1px solid #d3dae3;border-radius:6px"></canvas>
+
+      <div class="rpt-q"><b>결과</b></div>
+      <div id="t11-result" style="font-size:.88rem"></div>
+      <div class="rpt-q">이 결과를 보고 알게 된 것을 한두 문장으로 쓰자. (왜 h 에 대해 원점을 지나는 직선이 되는가? 참 손실 계수와의 차이는 어디서 왔을까?)</div>
+      <textarea id="t11-obsA" rows="3"></textarea>
+      <div class="rpt-foot"><span class="rpt-no">[2 / 6]</span> &nbsp;·&nbsp; 실험 A</div>
+    </div>
+
+    <!-- ══════════ 3부분 : 실험 B (학생이 직접 측정·직접 계산) ══════════ -->
+    <div class="card report-paper rpt-page">
+      <h4>5. 실험 B &mdash; 사이펀 유량 : 높이차와 유량 <span class="tiny" style="font-weight:400">(내가 직접 재어서 채우기)</span></h4>
+      <div class="rpt-hint">투명 호스(지름 10 mm · 길이 1 m)로 사이펀을 만들어 위 수면과 출구의 <b>높이차 h (cm)</b> 를 바꾸며 500 mL 를 받는 시간을 재고 <b>유량 Q (mL/s) = 500 ÷ 시간</b> 을 적으세요. 이론 기울기 $Q/\sqrt h$ (mL/s per cm^½, 총 손실 계수 K = 5 일 때 약 15.5)도 아래 칸에 쓰세요. (입으로 빨지 않고 주사기로 시동 · 물 · 상온 · 바닥 물기 닦기)</div>
+
+      <div class="rpt-tools" id="t11-auxwrap">
+        <span class="lbl" id="t11-auxlabel">E₀ =</span>
+        <input type="text" id="t11-LB" style="width:70px;text-align:center">
+        <span class="lbl" id="t11-auxunit"></span>
+      </div>
+      <div class="rpt-tools noprint">
+        <button type="button" id="t11-addrow">＋ 측정 칸 추가</button>
+        <button type="button" id="t11-delrow">− 마지막 칸 삭제</button>
+        <button type="button" id="t11-clearB">직접 측정값 지우기</button>
+      </div>
+      <div style="overflow-x:auto"><table id="t11-tblB"><thead></thead><tbody></tbody></table></div>
+
+      <div class="rpt-q"><b>그래프</b> &mdash; 내가 적은 값으로 그려집니다 (가로 √h · 세로 유량 Q)</div>
+      <canvas id="t11-cv2" width="640" height="265" style="width:100%;max-width:560px;height:225px;border:1px solid #d3dae3;border-radius:6px"></canvas>
+
+      <div class="rpt-q"><b>직접 계산하기</b> &mdash; 그래프의 기울기와 절편을 읽고 아래 빈칸을 <u>내가 계산해서</u> 채우자.</div>
+      <table>
+        <thead><tr><th style="width:46%">계산할 것</th><th style="width:27%">내가 구한 값</th><th style="width:27%">확인 (버튼을 누르면 표시)</th></tr></thead>
+        <tbody>
+          <tr><td>그래프의 기울기 k (mL/s per cm^½) 와 절편</td>
+              <td><input type="text" id="t11-mk"></td><td id="t11-ck" class="rpt-auto">—</td></tr>
+          <tr><td>총 손실 계수 K = 5 × (이론 기울기 ÷ k)²</td>
+              <td><input type="text" id="t11-mlam"></td><td id="t11-clam" class="rpt-auto">—</td></tr>
+          <tr><td id="t11-cmplabel">이상 유량 대비 (측정/이상 %) 어림</td>
+              <td><input type="text" id="t11-mdiff"></td><td id="t11-cdiff" class="rpt-auto">—</td></tr>
+        </tbody>
+      </table>
+      <div class="rpt-tools noprint">
+        <button type="button" class="pri" id="t11-check">✅ 내 계산 확인하기</button>
+        <span class="tiny" style="color:#64748b">먼저 스스로 계산해서 적은 뒤에 누르세요.</span>
+      </div>
+      <div class="rpt-q">측정한 기울기가 이론 기울기와 다르다면 그 까닭은? (호스 길이 · 곡관 · 기포 · 위 통 수위 변화 · 시간 읽기)</div>
+      <textarea id="t11-obsB" rows="2"></textarea>
+      <div class="rpt-foot"><span class="rpt-no">[3 / 6]</span> &nbsp;·&nbsp; 실험 B (직접 측정)</div>
+    </div>
+
+    <!-- ══════════ 실험 C·D (reportDefine) 의 부분은 엔진이 이 자리(결론 바로 앞)에 끼워 넣는다 ══════════ -->
+    <!-- ══════════ 끝 부분 : 결론 · 오차 · 자유기록 · 자기평가 ══════════ -->
+    <div class="card report-paper rpt-page" id="t11-pageEnd">
+      <h4>6. 결론</h4>
+      <div class="rpt-q">네 가지 실험(A · B · C · D)에서 어떤 그래프의 무엇(기울기 · 분포)을 읽어 어떤 물리량을 구했는지 정리하자.</div>
+      <textarea id="t11-concl" rows="4" placeholder="v² 대 h(A)는 기울기 2g/K 로 …, 직접 측정한 유량(B)에서는 … , 배수 시간(C)은 T 대 x 의 기울기 √K 로 …, 가는 관(D)에서는 Q 대 x 의 기울기 1/μ 로 … 따라서 …"></textarea>
+
+      <h4>7. 오차 분석 &mdash; 왜 참값과 어긋났을까?</h4>
+      <table>
+        <thead><tr><th style="width:32%">오차의 원인</th><th style="width:20%">크게/작게?</th><th>줄이는 방법</th></tr></thead>
+        <tbody>
+          <tr><td><input type="text" id="t11-e1a" placeholder="예 : 시간 읽기 · 호스 길이 · 기포"></td>
+              <td><input type="text" id="t11-e1b" placeholder="K 에 ±10 %"></td>
+              <td><input type="text" id="t11-e1c" placeholder="예 : 같은 조건 반복 측정 · 영점 보정"></td></tr>
+          <tr><td><input type="text" id="t11-e2a" placeholder="예 : 수위 변화 · 곡관 · 온도"></td><td><input type="text" id="t11-e2b"></td><td><input type="text" id="t11-e2c"></td></tr>
+          <tr><td><input type="text" id="t11-e3a"></td><td><input type="text" id="t11-e3b"></td><td><input type="text" id="t11-e3c"></td></tr>
+        </tbody>
+      </table>
+
+      <h4>8. 더 생각해 보기</h4>
+      <div class="rpt-q">① 실제 관개 수로 · 사이펀 여수로 · 변기는 이 실험의 어떤 원리를 쓸까? 실제로는 왜 용존 기체 · 난류 때문에 이 식이 어긋나고 어떤 보정이 필요할까?</div>
+      <textarea id="t11-q1" rows="2"></textarea>
+      <div class="rpt-q">② 이 보고서의 실험 중 하나를 개선한다면 무엇을 바꿀까? (어떤 센서 · 영상 · 측정 횟수를 바꾸면 오차가 줄까?)</div>
+      <textarea id="t11-q2" rows="3" placeholder="근거 : …   내 생각 : …"></textarea>
+
+      <h4>9. 자유 기록 <span class="tiny" style="font-weight:400">— 측정 사진·그림·추가 계산을 자유롭게 (칸은 쓰는 만큼 늘어납니다)</span></h4>
+      <div class="rpt-lines"></div>
+      <textarea id="t11-free" rows="2" placeholder="(글로 남기고 싶은 내용을 여기에 적어도 됩니다)"></textarea>
+
+      <h4>10. 스스로 평가</h4>
+      <table>
+        <thead><tr><th>평가 항목</th><th style="width:120px">잘함 / 보통 / 부족</th></tr></thead>
+        <tbody>
+          <tr><td>가설을 근거를 들어 세웠는가?</td><td><input type="text" id="t11-s1"></td></tr>
+          <tr><td>데이터를 빠뜨리지 않고 정확히 기록했는가?</td><td><input type="text" id="t11-s2"></td></tr>
+          <tr><td>그래프에서 기울기 · 꼭짓점 · 절편의 의미를 설명할 수 있는가?</td><td><input type="text" id="t11-s3"></td></tr>
+          <tr><td>오차의 원인을 스스로 찾아냈는가?</td><td><input type="text" id="t11-s4"></td></tr>
+        </tbody>
+      </table>
+      <div class="rpt-foot"><span class="rpt-no">[6 / 6]</span> &nbsp;·&nbsp; 결론 · 오차 분석 · 자기평가</div>
+    </div>
+
+  </div>
+</section>

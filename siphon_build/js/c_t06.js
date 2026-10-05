@@ -1,0 +1,29 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   TAB 6 — 원리⑤ 응용 : ① 피타고라스(탄탈루스) 컵 ② 마리오트 병 ③ 간헐 샘
+   검증(손계산) : ① 기둥 6 cm · 컵 반지름 4 cm → 채움 5 cm → 남는 물 π·4²·5 ≈ 251 mL · 7 cm → 모두 빠짐  ② 공기관 끝 h=5 cm · D=6 mm → Q = a√(2g·0.05/K)
+   ③ 통 100 cm² · 수위 7 cm 변동 · 유입 10 mL/s · 최대 배출 40 mL/s → 채움 70 s · 배출 23 s · 주기 93 s
+   ─────────────────────────────────────────────────────────────────────────── */
+var APPN=['','피타고라스 컵(공평 컵)','마리오트 병(일정 유량)','간헐 샘(주기 사이펀)'];
+function t6calc(S){
+  if(S.app===1){ var R=4, crest=6, fill=S.p, V=PI*R*R*fill; var over=fill>crest; return {over:over,V:V,txt:over?'모두 빠짐(공평 컵이 작동)':'컵에 그대로 남음',q:over?PI*R*R*(fill-1):0,T:over? PI*R*R*(fill-1)/siphon(0.06,0.006,0.3,1e-3,1).Q/1e0/1e6*1e0 : 0}; }
+  if(S.app===2){ var hm=S.p/100, r=siphon(hm,0.006,0.3,1e-3,1), Q=r.Q, V=0.5e-3, Tm=V/Q; return {Q:Q,Tm:Tm,hm:hm}; }
+  var Qi=S.p*2, Qo=40, A=100, dh=7, Tf=A*dh/Qi, Td=Qo>Qi? A*dh/(Qo-Qi):1e9; return {Qi:Qi,Qo:Qo,Tf:Tf,Td:Td,Tp:Tf+Td,duty:Td/(Tf+Td)}; }
+var T6=mkTab(6,{ state:{app:1,p:5}, dur:12, fmt:{app:function(v){ return APPN[v]; },p:function(v,S){ return S.app===1? v+' cm 채움' : (S.app===2? '공기관 끝 '+v+' cm' : '유입 '+(2*v)+' mL/s'); }},
+  readout:function(S){ var c=t6calc(S);
+    if(S.app===1){ setTxt('t6-oA',c.txt); setTxt('t6-oQ',c.over? (c.q).toFixed(0)+' mL 가 빠져나감' : c.V.toFixed(0)+' mL 남음'); setTxt('t6-oT',c.over? '약 '+(c.T).toFixed(1)+' s':'—'); setTxt('t6-oS','정점을 넘으면 모두 빠짐'); setTxt('t6-oN','채운 높이 '+S.p+' cm'); }
+    else if(S.app===2){ setTxt('t6-oA','수위가 변해도 일정한 유량'); setTxt('t6-oQ',(c.Q*1e6).toFixed(2)+' mL/s (일정)'); setTxt('t6-oT',(c.Tm/60).toFixed(1)+' 분 (500 mL)'); setTxt('t6-oS','공기관 끝이 압력을 고정'); setTxt('t6-oN','h = '+S.p+' cm'); }
+    else { setTxt('t6-oA','채움 → 사이펀 시동 → 배출 → 정지 반복'); setTxt('t6-oQ','유입 '+c.Qi+' · 배출 '+c.Qo+' mL/s'); setTxt('t6-oT','주기 '+c.Tp.toFixed(0)+' s (채움 '+c.Tf.toFixed(0)+' · 배출 '+c.Td.toFixed(0)+')'); setTxt('t6-oS','통 100 cm² · 수위 변동 7 cm (예시)'); setTxt('t6-oN','배출 비율 '+(c.duty*100).toFixed(0)+' %'); } },
+  anim:function(ctx,w,h,t,S){ var c=t6calc(S), cx=w*0.3, cy=h*0.9;
+    if(S.app===1){ var lv=Math.min(S.p,6.4), cupW=150, ph=((t%10)/10); var go=c.over, vis=go? Math.max(1,S.p*(1-Math.min(1,Math.max(0,(ph-0.3)/0.5)))) : S.p; cx=w*0.4;
+      cvRect(ctx,cx-cupW/2,cy-150,cupW,150,'rgba(56,189,248,.0)',COL.axis2,2); ctx.fillStyle='rgba(56,189,248,.35)'; var hh=vis*15; ctx.fillRect(cx-cupW/2+2,cy-hh,cupW-4,hh); cvRect(ctx,cx-7,cy-90,14,90,'#64748b',COL.white,1.5); cvLine(ctx,[[cx,cy-90],[cx,cy-102]],COL.white,2);
+      cvLine(ctx,[[cx-cupW/2-16,cy-90],[cx+cupW/2+16,cy-90]],COL.grav,1.4,[5,4]); cvText(ctx,'정점(기둥 꼭대기) 6 cm',cx+cupW/2+20,cy-90,COL.grav,'11px system-ui,sans-serif'); if(go&&ph>0.3&&ph<0.8){ cvCirc(ctx,cx+4,cy-4,3,'#e0f2fe',null); cvLine(ctx,[[cx,cy],[cx,cy+22]],COL.blue,3); cvText(ctx,'💧 빠져나간다!',cx,cy+34,COL.blue,'12px system-ui,sans-serif','center'); }
+      cvText(ctx,'채운 높이 '+S.p+' cm → '+c.txt,12,16,go?COL.grav:COL.ok,'bold 12.5px system-ui,sans-serif'); }
+    else if(S.app===2){ var hm=S.p, lv=(1-(t%12)/12*0.8)*120; cx=w*0.3; cvRect(ctx,cx-50,cy-190,100,190,'rgba(148,163,184,.1)',COL.axis2,2); ctx.fillStyle='rgba(56,189,248,.3)'; ctx.fillRect(cx-48,cy-lv,96,lv); var ty=cy-hm*8; cvLine(ctx,[[cx,cy-215],[cx,ty]],COL.white,3); cvCirc(ctx,cx,ty,4,COL.amber,null); cvText(ctx,'공기관 끝 h = '+hm+' cm',cx+58,ty,COL.amber,'11px system-ui,sans-serif');
+      cvLine(ctx,[[cx+50,cy-8],[w*0.62,cy-8]],COL.tick,4); for(var i=0;i<6;i++){ var ff=((i/6)+t*0.7)%1; cvCirc(ctx,cx+50+ff*(w*0.62-cx-50),cy-8,2.3,'#e0f2fe',null); } cvText(ctx,'수위가 내려가도 유량 일정 = '+(c.Q*1e6).toFixed(2)+' mL/s',12,16,COL.ok,'bold 12.5px system-ui,sans-serif'); }
+    else { var Tp=c.Tp, ph3=(t*Tp/12*1)%Tp, up=ph3<c.Tf, lv3=up? 1+6*ph3/c.Tf : 7-6*(ph3-c.Tf)/c.Td; cx=w*0.32; cvRect(ctx,cx-60,cy-150,120,150,'rgba(148,163,184,.1)',COL.axis2,2); ctx.fillStyle='rgba(56,189,248,.35)'; ctx.fillRect(cx-58,cy-lv3*18,116,lv3*18); cvLine(ctx,[[cx-30,cy-5],[cx-30,cy-8*18],[cx+30,cy-8*18],[cx+30,cy+25]],COL.tick,4); cvLine(ctx,[[cx-70,cy-7*18],[cx+70,cy-7*18]],COL.grav,1.2,[5,4]); cvText(ctx,'시동 수위 7 cm',cx+72,cy-7*18,COL.grav,'11px system-ui,sans-serif');
+      if(!up){ for(var j=0;j<6;j++){ var f2=((j/6)+t*1.2)%1; cvCirc(ctx,cx+30,cy-8*18+f2*(8*18+25),2.3,'#e0f2fe',null); } } cvText(ctx,(up?'채우는 중':'사이펀이 쏟아내는 중')+' · 수위 '+lv3.toFixed(1)+' cm · 주기 '+Tp.toFixed(0)+' s',12,16,up?COL.blue:COL.grav,'bold 12.5px system-ui,sans-serif'); } },
+  graph:function(ctx,w,h,S){ var c=t6calc(S), pts=[], k;
+    if(S.app===1){ for(k=1;k<=10;k+=0.5) pts.push([k,k<=6? PI*16*k : 0]); var P=makePlot(ctx,w,h,{xmin:1,xmax:10,ymin:0,ymax:PI*16*6.5,xlabel:'채운 높이 (cm)',ylabel:'컵에 남는 물 (mL)',title:'6 cm 를 넘기는 순간 모두 빠진다 (문턱)',left:60,xfmt:function(v){ return v.toFixed(0); },yfmt:function(v){ return v.toFixed(0); }}); plotLine(ctx,P,pts.slice(0,11),COL.ok,2.4); plotLine(ctx,P,[[6,0],[6,PI*16*6.2]],COL.grav,1.4,[5,4]); plotPoints(ctx,P,[[S.p,S.p<=6?PI*16*S.p:0]],COL.amber,7); }
+    else if(S.app===2){ var pn=[], pm=[]; for(k=0;k<=100;k+=2){ var lvl=30*(1-k/100*0.9); pn.push([k,siphon(lvl/100+0.05,0.006,0.3,1e-3,1).Q*1e6]); pm.push([k,c.Q*1e6]); } var P2=makePlot(ctx,w,h,{xmin:0,xmax:100,ymin:0,ymax:pn[0][1]*1.15,xlabel:'경과(전체 비움의 %)',ylabel:'유량 (mL/s)',title:'보통 사이펀(파랑)은 느려지고 마리오트 병(초록)은 일정',left:60,xfmt:function(v){ return v.toFixed(0); },yfmt:function(v){ return v.toFixed(1); }}); plotLine(ctx,P2,pn,COL.blue,2.4); plotLine(ctx,P2,pm,COL.ok,2.4); }
+    else { var Tp2=c.Tp*2.2, lv; for(k=0;k<=200;k++){ var tt=Tp2*k/200, ph=tt%c.Tp, v=ph<c.Tf? 1+6*ph/c.Tf : 7-6*(ph-c.Tf)/c.Td; pts.push([tt,v]); } var P3=makePlot(ctx,w,h,{xmin:0,xmax:Tp2,ymin:0,ymax:8,xlabel:'시간 (s)',ylabel:'수위 (cm)',title:'톱니 모양 수위 — 천천히 차올랐다 빠르게 비워진다',left:60,xfmt:function(v){ return v.toFixed(0); },yfmt:function(v){ return v.toFixed(0); }}); plotLine(ctx,P3,pts,COL.blue,2.4); plotLine(ctx,P3,[[0,7],[Tp2,7]],COL.grav,1.2,[5,4]); } }
+});
