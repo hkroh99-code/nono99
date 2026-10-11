@@ -52,5 +52,51 @@ class Core(unittest.TestCase):
         self.assertIn("carchive.db", names); self.assertTrue(any(n.startswith("photos/") for n in names))
 
 
+class Smart(unittest.TestCase):
+    def setUp(self):
+        import suggest
+        self.suggest = suggest
+        self.a = Archive(tempfile.mkdtemp())
+        self.cid = {(c["sub_part"], c["defect_type"]): c["id"] for c in self.a.categories()}
+
+    def test_keyword(self):
+        r = self.suggest.keyword_scores("안전벨트 끝단 진흙 확인", self.a.categories())
+        self.assertGreaterEqual(r[self.cid[("안전벨트", "끝단 진흙/모래")]][0], 0.9)
+        self.assertEqual(self.suggest.keyword_scores("", self.a.categories()), {})
+
+    def test_prior_and_log(self):
+        key = self.cid[("프레임/서브프레임", "부식(녹)")]
+        for i in range(3):
+            v = self.a.create_vehicle("현대", "그랜저 IG", 2019, 1000)
+            self.a.add_photo(v, jpg((i, 20, 30)), defects=[(key, "주의", "")])
+        v = self.a.create_vehicle("현대", "그랜저 IG", 2020, 1000)
+        pid, _ = self.a.add_photo(v, jpg((200, 10, 10)))
+        s = self.suggest.suggest(self.a, pid)
+        self.assertEqual(s[0].category["id"], key)
+        self.a.resolve_suggestions(pid, {key})
+        st = {x["source"]: x for x in self.a.suggestion_stats()}
+        self.assertEqual(st["prior"]["accepted"], 1)
+
+    def test_ai_parse(self):
+        out = self.suggest._parse_ai('앞말 {"candidates":[{"id":5,"confidence":2},{"id":999,"confidence":0.9},{"x":1}]} 뒷말', {5})
+        self.assertEqual(out, [{"id": 5, "confidence": 1.0, "reason": ""}])
+        self.assertEqual(self.suggest._parse_ai("json 없음", {5}), [])
+
+
+class Pdf(unittest.TestCase):
+    def test_report_and_coverage(self):
+        import report
+        a = Archive(tempfile.mkdtemp())
+        cid = {(c["sub_part"], c["defect_type"]): c["id"] for c in a.categories()}
+        v = a.create_vehicle("기아", "K5", 2021, 50000)
+        a.add_photo(v, jpg((1, 1, 1)), defects=[(cid[("퓨즈박스/전장", "침수 진흙/모래")], "심각", "")], inspector="홍")
+        a.add_photo(v, jpg((2, 2, 2)), area="도어")
+        cov = {c["area"]: c["state"] for c in a.vehicle_coverage(v, ["퓨즈박스/전장", "도어", "타이어"])}
+        self.assertEqual(cov, {"퓨즈박스/전장": "하자 있음", "도어": "정상 확인", "타이어": "미촬영"})
+        data, no = report.build_report(a, v, inspector="홍", summary="테스트")
+        self.assertTrue(data.startswith(b"%PDF")); self.assertIn("CC-", no)
+        self.assertIn("침수", report.flood_opinion(a.vehicle_photos(v))[0])
+
+
 if __name__ == "__main__":
     unittest.main()

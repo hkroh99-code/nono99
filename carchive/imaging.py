@@ -5,6 +5,7 @@ import hashlib
 import io
 from datetime import datetime
 
+import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 THUMB_MAX = 480
@@ -83,3 +84,20 @@ def render_with_boxes(path: str, boxes: list[dict], pending: dict | None = None)
     if pending:
         draw(pending, (37, 99, 235))
     return im
+
+
+def embed(thumb_bytes: bytes) -> bytes:
+    """사진을 비교하기 위한 가벼운 특징값(색 분포 64 + 질감 8 + 밝기 격자 16 = 88개). 딥러닝이 아니라 ‘비슷하게 생긴 사진’ 찾기용."""
+    im = Image.open(io.BytesIO(thumb_bytes)).convert("RGB").resize((96, 96))
+    a = np.asarray(im, dtype=np.float32)
+    q = (a // 64).astype(int)
+    hist = np.bincount((q[..., 0] * 16 + q[..., 1] * 4 + q[..., 2]).ravel(), minlength=64).astype(np.float32)
+    hist /= hist.sum()
+    g = a.mean(axis=2)
+    gx, gy = np.abs(np.diff(g, axis=1))[:-1], np.abs(np.diff(g, axis=0))[:, :-1]
+    mag = np.hypot(gx, gy)
+    tex = np.histogram(mag, bins=8, range=(0, 120))[0].astype(np.float32)
+    tex /= max(1.0, tex.sum())
+    grid = g.reshape(4, 24, 4, 24).mean(axis=(1, 3)).ravel() / 255.0
+    v = np.concatenate([hist * 2.0, tex * 2.0, grid]).astype(np.float32)
+    return v.tobytes()

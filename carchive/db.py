@@ -40,6 +40,19 @@ CREATE TABLE IF NOT EXISTS boxes(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   photo_id INTEGER NOT NULL REFERENCES photos(id) ON DELETE CASCADE,
   x REAL NOT NULL, y REAL NOT NULL, w REAL NOT NULL, h REAL NOT NULL, label TEXT);
+CREATE TABLE IF NOT EXISTS photo_emb(photo_id INTEGER PRIMARY KEY REFERENCES photos(id) ON DELETE CASCADE, vec BLOB NOT NULL);
+CREATE TABLE IF NOT EXISTS suggestion_log(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  photo_id INTEGER NOT NULL REFERENCES photos(id) ON DELETE CASCADE,
+  category_id INTEGER NOT NULL REFERENCES categories(id),
+  sources TEXT NOT NULL, score REAL NOT NULL, accepted INTEGER,
+  UNIQUE(photo_id, category_id));
+CREATE TABLE IF NOT EXISTS ai_cache(photo_id INTEGER PRIMARY KEY REFERENCES photos(id) ON DELETE CASCADE,
+  result TEXT NOT NULL, model TEXT, created_at TEXT NOT NULL DEFAULT (datetime('now','localtime')));
+CREATE TABLE IF NOT EXISTS reports(
+  id INTEGER PRIMARY KEY AUTOINCREMENT, vehicle_id INTEGER NOT NULL REFERENCES vehicles(id),
+  report_no TEXT NOT NULL, file_path TEXT NOT NULL, inspector TEXT, n_photos INTEGER,
+  created_at TEXT NOT NULL DEFAULT (datetime('now','localtime')));
 CREATE INDEX IF NOT EXISTS ix_photos_vehicle ON photos(vehicle_id);
 CREATE INDEX IF NOT EXISTS ix_pd_photo ON photo_defects(photo_id);
 CREATE INDEX IF NOT EXISTS ix_pd_cat ON photo_defects(category_id);
@@ -62,9 +75,13 @@ class Archive:
         self.backup_dir = self.root / "backups"
         for d in (self.photos_dir, self.thumbs_dir, self.backup_dir):
             d.mkdir(parents=True, exist_ok=True)
+        self.report_dir = self.root / "reports"
+        self.report_dir.mkdir(parents=True, exist_ok=True)
         self.db_path = self.root / "carchive.db"
         with self.conn() as c:
             c.executescript(SCHEMA)
+            if "area" not in {r[1] for r in c.execute("PRAGMA table_info(photos)")}:   # 구버전 DB 자동 업그레이드
+                c.execute("ALTER TABLE photos ADD COLUMN area TEXT")
             if c.execute("SELECT COUNT(*) FROM categories").fetchone()[0] == 0:
                 for main, sub, items in DEFAULT_TAXONOMY:
                     for dt, fl in items:
@@ -164,7 +181,7 @@ class Archive:
 
     # ---------- 사진 ----------
     def add_photo(self, vehicle_id: int, data: bytes, original_name="", inspector="", comment="", angle="",
-                  defects: list[tuple[int, str, str]] | None = None) -> tuple[int, bool]:
+                  defects: list[tuple[int, str, str]] | None = None, area: str = "") -> tuple[int, bool]:
         """사진을 저장한다. 같은 파일(해시 동일)이 이미 있으면 새로 저장하지 않고 (기존 id, False)를 돌려준다."""
         h = imaging.sha256(data)
         dup = self.q1("SELECT id, deleted_at FROM photos WHERE sha256=?", (h,))
@@ -178,14 +195,19 @@ class Archive:
         fpath = rel / f"{h[:20]}{info['ext']}"
         tpath = rel / f"{h[:20]}.jpg"
         (self.photos_dir / fpath).write_bytes(data)
-        (self.thumbs_dir / tpath).write_bytes(imaging.make_thumb(data))
+        thumb_bytes = imaging.make_thumb(data)
+        (self.thumbs_dir / tpath).write_bytes(thumb_bytes)
         with self.conn() as c:
             cur = c.execute(
-                "INSERT INTO photos(vehicle_id,file_path,thumb_path,sha256,original_name,width,height,shot_at,angle,inspector,comment)"
-                " VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                "INSERT INTO photos(vehicle_id,file_path,thumb_path,sha256,original_name,width,height,shot_at,angle,inspector,comment,area)"
+                " VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
                 (vehicle_id, fpath.as_posix(), tpath.as_posix(), h, original_name, info["width"], info["height"],
-                 info["shot_at"], angle, inspector.strip(), comment.strip()))
+                 info["shot_at"], angle, inspector.strip(), comment.strip(), area or ""))
             pid = cur.lastrowid
+            try:
+                c.execute("INSERT OR REPLACE INTO photo_emb(photo_id,vec) VALUES(?,?)", (pid, imaging.embed(thumb_bytes)))
+            except Exception:  # noqa: BLE001  (특징 계산 실패는 저장을 막지 않는다)
+                pass
             for cid, sev, note in defects or []:
                 c.execute("INSERT OR REPLACE INTO photo_defects(photo_id,category_id,severity,note) VALUES(?,?,?,?)",
                           (pid, cid, sev, note))
@@ -219,7 +241,7 @@ class Archive:
                           (pid, cid, sev, note or ""))
 
     def update_photo(self, pid, **f):
-        cols = {"vehicle_id", "angle", "inspector", "comment"}
+        cols = {"vehicle_id", "angle", "inspector", "comment", "area"}
         f = {k: v for k, v in f.items() if k in cols}
         if f:
             with self.conn() as c:
@@ -423,6 +445,110 @@ class Archive:
     def uploads_by_day(self, days=30) -> list[dict]:
         return self.q("SELECT date(created_at) day, COUNT(*) n FROM photos WHERE deleted_at IS NULL "
                       "AND created_at>=datetime('now','localtime',?) GROUP BY day ORDER BY day", (f"-{int(days)} days",))
+
+    # ---------- 추천(자동 하자 후보) 지원 ----------
+    def model_category_counts(self, manufacturer: str, model_name: str) -> tuple[dict[int, int], int]:
+        """같은 차종에서 카테고리별로 하자가 확인된 차량 수와, 태그가 한 번이라도 달린 해당 차종 차량 수."""
+        rows = self.q("SELECT pd.category_id cid, COUNT(DISTINCT v.id) n FROM photo_defects pd JOIN photos p ON p.id=pd.photo_id "
+                      "JOIN vehicles v ON v.id=p.vehicle_id WHERE p.deleted_at IS NULL AND v.manufacturer=? AND v.model_name=? "
+                      "GROUP BY pd.category_id", (manufacturer, model_name))
+        n = self.q1("SELECT COUNT(DISTINCT v.id) n FROM photos p JOIN vehicles v ON v.id=p.vehicle_id WHERE p.deleted_at IS NULL "
+                    "AND v.manufacturer=? AND v.model_name=?", (manufacturer, model_name))["n"]
+        return {r["cid"]: r["n"] for r in rows}, n
+
+    def global_category_rates(self) -> dict[int, float]:
+        n = max(1, self.q1("SELECT COUNT(DISTINCT vehicle_id) n FROM photos WHERE deleted_at IS NULL")["n"])
+        return {r["cid"]: r["k"] / n for r in self.q(
+            "SELECT pd.category_id cid, COUNT(DISTINCT p.vehicle_id) k FROM photo_defects pd JOIN photos p ON p.id=pd.photo_id "
+            "WHERE p.deleted_at IS NULL GROUP BY pd.category_id")}
+
+    def ensure_embeddings(self, limit=400) -> int:
+        """특징값이 없는 사진(옛 데이터)에 대해 썸네일에서 계산해 채운다."""
+        miss = self.q("SELECT p.id, p.thumb_path FROM photos p LEFT JOIN photo_emb e ON e.photo_id=p.id "
+                      "WHERE p.deleted_at IS NULL AND e.photo_id IS NULL LIMIT ?", (limit,))
+        n = 0
+        with self.conn() as c:
+            for r in miss:
+                f = self.thumbs_dir / r["thumb_path"]
+                if f.exists():
+                    try:
+                        c.execute("INSERT OR REPLACE INTO photo_emb(photo_id,vec) VALUES(?,?)", (r["id"], imaging.embed(f.read_bytes())))
+                        n += 1
+                    except Exception:  # noqa: BLE001
+                        pass
+        return n
+
+    def tagged_embeddings(self, exclude_vehicle: int) -> list[tuple[int, bytes, list[int]]]:
+        rows = self.q("SELECT e.photo_id pid, e.vec, GROUP_CONCAT(pd.category_id) cids FROM photo_emb e "
+                      "JOIN photos p ON p.id=e.photo_id JOIN photo_defects pd ON pd.photo_id=p.id "
+                      "WHERE p.deleted_at IS NULL AND p.vehicle_id<>? GROUP BY e.photo_id", (exclude_vehicle,))
+        return [(r["pid"], r["vec"], [int(x) for x in r["cids"].split(",")]) for r in rows]
+
+    def photo_embedding(self, pid) -> bytes | None:
+        r = self.q1("SELECT vec FROM photo_emb WHERE photo_id=?", (pid,))
+        return r["vec"] if r else None
+
+    def log_suggestions(self, pid, items: list[tuple[int, str, float]]):
+        with self.conn() as c:
+            for cid, sources, score in items:
+                c.execute("INSERT OR IGNORE INTO suggestion_log(photo_id,category_id,sources,score) VALUES(?,?,?,?)", (pid, cid, sources, score))
+
+    def resolve_suggestions(self, pid, accepted_ids: set[int]):
+        """사용자가 태그를 저장했을 때: 추천됐던 항목이 채택됐는지 기록(추천 적중률 통계용)."""
+        with self.conn() as c:
+            for r in c.execute("SELECT id, category_id FROM suggestion_log WHERE photo_id=?", (pid,)).fetchall():
+                c.execute("UPDATE suggestion_log SET accepted=? WHERE id=?", (1 if r["category_id"] in accepted_ids else 0, r["id"]))
+
+    def suggestion_stats(self) -> list[dict]:
+        rows = self.q("SELECT sources, accepted FROM suggestion_log WHERE accepted IS NOT NULL")
+        agg: dict[str, list[int]] = {}
+        for r in rows:
+            for s in set(r["sources"].split(",")):
+                a = agg.setdefault(s, [0, 0])
+                a[0] += 1
+                a[1] += r["accepted"]
+        return [{"source": k, "shown": v[0], "accepted": v[1], "rate": v[1] / v[0]} for k, v in agg.items()]
+
+    def ai_cache_get(self, pid):
+        r = self.q1("SELECT result FROM ai_cache WHERE photo_id=?", (pid,))
+        return r["result"] if r else None
+
+    def ai_cache_set(self, pid, result: str, model: str):
+        with self.conn() as c:
+            c.execute("INSERT OR REPLACE INTO ai_cache(photo_id,result,model) VALUES(?,?,?)", (pid, result, model))
+
+    # ---------- 차량 단위: 촬영 커버리지 / 보고서 ----------
+    def vehicle_photos(self, vid) -> list[dict]:
+        rows = self.q("SELECT p.*, v.manufacturer, v.model_name, v.model_year, v.mileage, v.plate FROM photos p "
+                      "JOIN vehicles v ON v.id=p.vehicle_id WHERE p.vehicle_id=? AND p.deleted_at IS NULL ORDER BY p.id", (vid,))
+        self._attach_defects(rows)
+        return rows
+
+    def vehicle_coverage(self, vid, required: list[str]) -> list[dict]:
+        """필수 촬영 부위별 상태: 하자 있음 / 정상 확인 / 미촬영."""
+        photos = self.vehicle_photos(vid)
+        out = []
+        for area in required:
+            hit = [p for p in photos if (p.get("area") == area) or any(d["sub_part"] == area for d in p["defects"])]
+            defects = [d for p in hit for d in p["defects"] if d["sub_part"] == area]
+            if defects:
+                worst = max(defects, key=lambda d: SEV_RANK.get(d["severity"], 0))["severity"]
+                state = "하자 있음"
+            elif hit:
+                worst, state = "", "정상 확인"
+            else:
+                worst, state = "", "미촬영"
+            out.append({"area": area, "state": state, "severity": worst, "n_photos": len(hit),
+                        "defects": sorted({d["defect_type"] for d in defects})})
+        return out
+
+    def add_report_record(self, vid, report_no, file_path, inspector, n_photos):
+        with self.conn() as c:
+            c.execute("INSERT INTO reports(vehicle_id,report_no,file_path,inspector,n_photos) VALUES(?,?,?,?,?)",
+                      (vid, report_no, file_path, inspector, n_photos))
+
+    def reports_of(self, vid) -> list[dict]:
+        return self.q("SELECT * FROM reports WHERE vehicle_id=? ORDER BY id DESC", (vid,))
 
     # ---------- 내보내기 / 백업 ----------
     def export_rows(self) -> list[dict]:

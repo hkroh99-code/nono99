@@ -12,14 +12,16 @@ import streamlit as st
 
 import demo
 import imaging
-from db import NORMAL, Archive
-from taxonomy import ANGLES, SEVERITIES
+import report
+import suggest
+from db import NORMAL, SEV_RANK, Archive
+from taxonomy import ANGLES, REQUIRED_AREAS, SEVERITIES
 
 st.set_page_config(page_title="Car-chive 점검 사진 아카이브", page_icon="🚗", layout="wide")
 
 SEV_ICON = {"경미": "🟢", "주의": "🟡", "심각": "🔴"}
 FUELS = ["가솔린", "디젤", "LPG", "하이브리드", "전기", "기타"]
-PAGES = ["📊 대시보드", "📤 사진 등록", "🏷️ 분류 대기함", "🔎 검색·갤러리", "🚘 차종별 취약 리포트", "🧩 분류체계 관리", "💾 데이터 관리"]
+PAGES = ["📊 대시보드", "📤 사진 등록", "🏷️ 분류 대기함", "🔎 검색·갤러리", "🚗 차량·보고서", "🚘 차종별 취약 리포트", "🧩 분류체계 관리", "💾 데이터 관리"]
 
 
 @st.cache_resource
@@ -28,6 +30,24 @@ def get_archive() -> Archive:
 
 
 A = get_archive()
+
+
+def gate():
+    """환경변수 CARCHIVE_PASSWORD 가 있으면 비밀번호를 입력해야 들어갈 수 있다(간이 보호, 사내망용)."""
+    pw = os.environ.get("CARCHIVE_PASSWORD")
+    if not pw or st.session_state.get("authed"):
+        return
+    st.title("🚗 Car-chive")
+    got = st.text_input("비밀번호", type="password")
+    if got and got == pw:
+        st.session_state["authed"] = True
+        st.rerun()
+    elif got:
+        st.error("비밀번호가 맞지 않습니다.")
+    st.stop()
+
+
+gate()
 
 
 # ───────────────────────── 공용 부품 ─────────────────────────
@@ -94,6 +114,44 @@ def go(page: str):
     st.session_state["page"] = page
 
 
+
+def area_options() -> list[str]:
+    return REQUIRED_AREAS + sorted({c["sub_part"] for c in A.categories(active_only=False)} - set(REQUIRED_AREAS))
+
+
+def _add_to_picker(key: str, cid: int):
+    st.session_state[key] = list(dict.fromkeys(st.session_state.get(key, []) + [cid]))
+
+
+def suggest_panel(pid: int, picker_key: str | None, comment: str | None, key: str, on_add=None):
+    """하자 후보 추천 카드. picker_key 가 있으면 그 멀티셀렉트에 추가, 없으면 on_add(cid) 호출."""
+    with st.container(border=True):
+        st.markdown("**💡 하자 후보 추천** <small>— 후보일 뿐입니다. 눌러서 확정하세요.</small>", unsafe_allow_html=True)
+        sugg = suggest.suggest(A, pid, comment=comment)
+        if not sugg:
+            st.caption("지금은 뚜렷한 후보가 없습니다. 코멘트를 적으면 단어로 찾아 주고, 같은 차종 사진이 쌓일수록 정확해집니다.")
+        for s in sugg:
+            c1, c2 = st.columns([5, 1])
+            bar = "▰" * max(1, round(s.score * 6)) + "▱" * (6 - max(1, round(s.score * 6)))
+            c1.markdown(f"{'💧' if s.category['is_flood'] else ''} **{s.category['sub_part']} · {s.category['defect_type']}**  `{bar} {s.score:.0%}`")
+            c1.caption(" / ".join(s.reasons))
+            if picker_key:
+                c2.button("＋", key=f"{key}_{s.category['id']}", on_click=_add_to_picker, args=(picker_key, s.category["id"]), help="태그에 추가")
+            elif c2.button("＋", key=f"{key}_{s.category['id']}", help="태그에 추가"):
+                on_add(s.category["id"])
+        if suggest.ai_available():
+            ok = st.checkbox("사진을 AI 서비스(Anthropic)로 전송하는 데 동의", key=f"{key}_ok", help="체크하고 버튼을 눌렀을 때만, 이 사진 1장이 외부로 전송됩니다. 번호판·사람 얼굴이 보이면 쓰지 마세요.")
+            cached = A.ai_cache_get(pid) is not None
+            if st.button("🤖 AI로 판독" + (" (다시)" if cached else ""), key=f"{key}_ai", disabled=not ok):
+                try:
+                    with st.spinner("판독 중…"):
+                        suggest.ai_run(A, pid)
+                    st.rerun(scope="fragment") if on_add else st.rerun()
+                except Exception as e:  # noqa: BLE001
+                    st.error(f"AI 판독 실패: {e}")
+        else:
+            st.caption("🤖 AI 사진 판독(선택): `ANTHROPIC_API_KEY` 환경변수를 설정하면 켜집니다. README 참고.")
+
 # ───────────────────────── 사진 상세(팝업) ─────────────────────────
 @st.dialog("사진 상세", width="large")
 def photo_dialog(pid: int):
@@ -124,6 +182,13 @@ def photo_dialog(pid: int):
             meta.append(f"차량번호 {p['plate']}")
         st.caption(" · ".join(meta) + f" · {p['width']}×{p['height']}")
         t1, t2, t3, t4 = st.tabs(["🏷️ 태그·코멘트", "📍 위치 표시", "🔗 비슷한 사례", "🚘 차량"])
+        def _dlg_add(cid):
+            cur_ids = {d["category_id"]: (d["severity"], d["note"] or "") for d in A.photo_defects(pid)}
+            cur_ids.setdefault(cid, ("주의", ""))
+            A.set_photo_defects(pid, [(k, v[0], v[1]) for k, v in cur_ids.items()])
+            A.resolve_suggestions(pid, set(cur_ids))
+            st.session_state.pop(f"{pk}_ed", None)
+            st.rerun(scope="fragment")
 
         with t1:
             cats = A.categories(active_only=False)
@@ -141,6 +206,9 @@ def photo_dialog(pid: int):
                                                "메모": st.column_config.TextColumn(width="small")})
             st.caption("표 아래 빈 줄을 눌러 태그를 추가하고, 줄 왼쪽을 선택해 Delete 로 지웁니다.")
             comment = st.text_area("점검자 코멘트", p.get("comment") or "", key=f"{pk}_cm")
+            areas = area_options()
+            area = st.selectbox("촬영 부위(보고서의 ‘촬영 커버리지’에 쓰임)", areas, index=areas.index(p["area"]) if p.get("area") in areas else None,
+                                key=f"{pk}_ar", placeholder="선택(생략 가능)")
             c1, c2 = st.columns(2)
             inspector = c1.text_input("점검자", p.get("inspector") or "", key=f"{pk}_in")
             angles = ANGLES if (p.get("angle") or "") in ANGLES + [""] else ANGLES + [p["angle"]]
@@ -152,9 +220,11 @@ def photo_dialog(pid: int):
                     rows[inv[r["하자 항목"]]] = (inv[r["하자 항목"]], r["심각도"] if r["심각도"] in SEVERITIES else "주의",
                                                   "" if pd.isna(r["메모"]) else str(r["메모"]))
                 A.set_photo_defects(pid, list(rows.values()))
-                A.update_photo(pid, comment=comment.strip(), inspector=inspector.strip(), angle=angle or "")
+                A.update_photo(pid, comment=comment.strip(), inspector=inspector.strip(), angle=angle or "", area=area or "")
+                A.resolve_suggestions(pid, set(rows))
                 st.session_state.pop(f"{pk}_showpend", None)
                 st.rerun()
+            suggest_panel(pid, None, comment, f"{pk}_sg", on_add=_dlg_add)
             with st.expander("🗑️ 이 사진 삭제"):
                 st.caption("휴지통으로 이동합니다. ‘데이터 관리 › 휴지통’에서 되살릴 수 있습니다.")
                 if st.button("휴지통으로 보내기", key=f"{pk}_del"):
@@ -253,6 +323,12 @@ def page_dashboard():
             st.altair_chart(alt.Chart(pd.DataFrame(up)).mark_bar(color="#ea580c").encode(
                 x=alt.X("day:T", title=None), y=alt.Y("n:Q", title="등록 장수")).properties(title="최근 30일 등록 추이", height=220),
                 width="stretch")
+    stats = A.suggestion_stats()
+    if stats:
+        st.subheader("💡 하자 후보 추천 적중률")
+        df = pd.DataFrame([{"단서": suggest.SOURCE_NAMES[x["source"]], "추천 횟수": x["shown"], "채택": x["accepted"], "적중률(%)": round(x["rate"] * 100, 1)} for x in stats])
+        st.dataframe(df, hide_index=True, width="stretch", column_config={"적중률(%)": st.column_config.ProgressColumn(min_value=0, max_value=100, format="%.1f")})
+        st.caption("추천 후보가 실제 태그로 채택된 비율입니다. 낮은 단서는 신뢰하지 마세요. 사진이 쌓일수록 ‘차종 통계’ 단서가 좋아집니다.")
     st.subheader("최근 등록")
     rows, _ = A.search_photos({}, limit=8)
     cols = st.columns(4)
@@ -307,6 +383,7 @@ def page_upload():
     c1, c2 = st.columns([2, 1])
     inspector = c1.text_input("점검자", st.session_state.get("inspector", ""), key=f"up_in{n}")
     angle = c2.selectbox("촬영 구분", ANGLES, index=None, key=f"up_an{n}", placeholder="선택(생략 가능)")
+    area = st.selectbox("촬영 부위 (선택 · 정상 사진도 ‘촬영 커버리지’에 반영하려면 지정)", area_options(), index=None, key=f"up_ar{n}", placeholder="예: 퓨즈박스/전장")
     tags = tag_picker("하자 항목 (여러 개 가능, 비워 두면 ‘분류 대기함’으로 갑니다)", f"up_tg{n}")
     sev = st.radio("심각도", SEVERITIES, index=1, horizontal=True, key=f"up_sv{n}", captions=["사용에 지장 없음", "추적·설명 필요", "보증 판단 영향"])
     comment = st.text_area("코멘트", key=f"up_cm{n}", placeholder="예: 조수석 프레임 하단부 심한 부식, 미션팬 누유")
@@ -325,7 +402,7 @@ def page_upload():
         for i, f in enumerate(files):
             try:
                 pid, new = A.add_photo(vid, f.getvalue(), f.name, inspector, comment, angle or "",
-                                       [(c["id"], sev, "") for c in tags])
+                                       [(c["id"], sev, "") for c in tags], area=area or "")
                 if new:
                     ok += 1
                 else:
@@ -356,19 +433,23 @@ def page_triage():
     with r:
         st.markdown(car_caption(p))
         st.caption(f"사진 #{pid} · 점검자 {p.get('inspector') or '-'} · 등록 {p['created_at'][:16]}")
+        suggest_panel(pid, f"tri_tg{pid}", st.session_state.get(f"tri_cm{pid}", p.get("comment") or ""), f"tri_sg{pid}")
         tags = tag_picker("하자 항목", f"tri_tg{pid}")
         sev = st.radio("심각도", SEVERITIES, index=1, horizontal=True, key=f"tri_sv{pid}")
         cm = st.text_area("코멘트", p.get("comment") or "", key=f"tri_cm{pid}")
+        ar = st.selectbox("촬영 부위(선택)", area_options(), index=None, key=f"tri_ar{pid}", placeholder="비워 두면 태그의 부위로 계산")
         b1, b2, b3 = st.columns(3)
         if b1.button("💾 저장 → 다음", type="primary", disabled=not tags, key=f"tri_s{pid}", width="stretch"):
             A.set_photo_defects(pid, [(c["id"], sev, "") for c in tags])
-            A.update_photo(pid, comment=cm.strip())
+            A.update_photo(pid, comment=cm.strip(), area=ar or "")
+            A.resolve_suggestions(pid, {c["id"] for c in tags})
             st.rerun()
         if b2.button("⏭️ 건너뛰기", key=f"tri_k{pid}", width="stretch"):
             st.session_state["tri_i"] = (i + 1) % len(ids)
             st.rerun()
         if b3.button("✅ 정상 사진", key=f"tri_n{pid}", width="stretch", help="하자가 없는 정상 부위 사진(비교용)으로 표시하고 대기함에서 뺍니다."):
-            A.update_photo(pid, angle=NORMAL, comment=cm.strip())
+            A.update_photo(pid, angle=NORMAL, comment=cm.strip(), area=ar or "")
+            A.resolve_suggestions(pid, set())
             st.rerun()
         with st.expander("🗑️ 쓸 수 없는 사진(흔들림 등) 삭제"):
             if st.button("휴지통으로", key=f"tri_d{pid}"):
@@ -426,6 +507,72 @@ def page_gallery():
         with cols[i % 4]:
             photo_card(p, f"g{p['id']}")
 
+
+
+# ───────────────────────── 페이지: 차량·보고서 ─────────────────────────
+def page_vehicle():
+    st.title("🚗 차량·보고서")
+    vs = [v for v in A.vehicles() if v["n_photos"]]
+    if not vs:
+        st.info("사진이 있는 차량이 없습니다.")
+        return
+    byid = {v["id"]: v for v in vs}
+    vid = st.selectbox("차량 선택 (글자를 쳐서 검색)", [v["id"] for v in vs], format_func=lambda i: f"{A.vehicle_label(byid[i])} · 사진 {byid[i]['n_photos']}장", key="veh_pick")
+    v = byid[vid]
+    photos = A.vehicle_photos(vid)
+    tags = [d for p in photos for d in p["defects"]]
+    cov = A.vehicle_coverage(vid, REQUIRED_AREAS)
+    done = sum(1 for c in cov if c["state"] != "미촬영")
+    txt, n_flood, flood_items = report.flood_opinion(photos)
+    m = st.columns(5)
+    m[0].metric("사진", f"{len(photos)}장")
+    m[1].metric("하자 태그", f"{len(tags)}건")
+    m[2].metric("‘심각’", f"{sum(1 for d in tags if d['severity'] == '심각')}건")
+    m[3].metric("💧 침수 관련 항목", f"{n_flood}개")
+    m[4].metric("촬영 커버리지", f"{done}/{len(cov)}")
+    (st.error if n_flood >= 3 else st.warning if n_flood else st.success)(f"침수 참고 소견: {txt}")
+    t1, t2, t3 = st.tabs(["✅ 촬영 체크리스트", "🖼️ 사진", "📄 PDF 보고서"])
+    with t1:
+        icon = {"하자 있음": "🔴", "정상 확인": "🟢", "미촬영": "⚪"}
+        st.dataframe(pd.DataFrame([{"상태": icon[c["state"]] + " " + c["state"], "부위": c["area"], "사진 수": c["n_photos"],
+                                    "하자": ", ".join(c["defects"])} for c in cov]), hide_index=True, width="stretch", height=min(740, 38 * len(cov) + 40))
+        miss = [c["area"] for c in cov if c["state"] == "미촬영"]
+        if miss:
+            st.warning("아직 촬영·기록되지 않은 필수 부위: " + ", ".join(miss))
+        st.caption("정상인 부위도 사진을 올릴 때 ‘촬영 부위’를 지정하면 🟢 정상 확인으로 계산됩니다.")
+    with t2:
+        cols = st.columns(4)
+        for i, p in enumerate(photos):
+            with cols[i % 4]:
+                photo_card(p, f"vp{p['id']}")
+    with t3:
+        st.caption("선택한 사진과 요약·하자표·촬영 커버리지·침수 참고 소견을 담은 A4 PDF를 만듭니다. 사진에는 저장해 둔 결함 위치 네모가 함께 그려집니다.")
+        c = st.columns(2)
+        insp = c[0].text_input("점검자(보고서 표기)", st.session_state.get("inspector", ""), key=f"rp_in{vid}")
+        stat = c[1].checkbox("차종 참고 통계 포함", True, key=f"rp_st{vid}")
+        summ = st.text_area("점검자 총평(선택)", key=f"rp_sm{vid}", placeholder="예: 프레임 하단 부식 진행. 미션 미세누유 관찰 필요.")
+        lab = {p["id"]: f"#{p['id']} " + (", ".join(d["defect_type"] for d in p["defects"][:2]) or "태그 없음") for p in photos}
+        order = sorted(lab, key=lambda i: -max([SEV_RANK.get(d["severity"], 0) for d in next(p for p in photos if p["id"] == i)["defects"]] or [0]))
+        sel = st.multiselect("보고서에 넣을 사진", order, default=order[:30], format_func=lambda i: lab[i], key=f"rp_ph{vid}")
+        if len(sel) > 30:
+            st.caption("사진이 많으면 PDF가 길어집니다(30장 이하 권장).")
+        if st.button("📄 PDF 만들기", type="primary", disabled=not sel, key=f"rp_go{vid}"):
+            with st.spinner("PDF 만드는 중…"):
+                path, data, no = report.save_report(A, vid, photo_ids=sel, inspector=insp, summary=summ, include_model_stats=stat)
+            st.session_state[f"rp_out{vid}"] = (data, no)
+        if out := st.session_state.get(f"rp_out{vid}"):
+            st.success(f"만들었습니다: {out[1]}.pdf  (data/reports 폴더에도 저장됨)")
+            st.download_button("⬇️ PDF 내려받기", out[0], file_name=f"{out[1]}.pdf", mime="application/pdf", type="primary", key=f"rp_dl{vid}")
+        old = A.reports_of(vid)
+        if old:
+            with st.expander(f"이전에 만든 보고서 {len(old)}건"):
+                for r in old:
+                    f = A.report_dir / r["file_path"]
+                    cc = st.columns([3, 2, 1])
+                    cc[0].write(f"📄 {r['report_no']}")
+                    cc[1].caption(f"{r['created_at'][:16]} · 사진 {r['n_photos']}장 · {r['inspector'] or '-'}")
+                    if f.exists():
+                        cc[2].download_button("받기", f.read_bytes(), file_name=f.name, mime="application/pdf", key=f"old{r['id']}")
 
 # ───────────────────────── 페이지: 차종별 취약 리포트 ─────────────────────────
 def page_report():
@@ -625,5 +772,5 @@ with st.sidebar:
     st.divider()
     st.caption(f"사진 {t['photos']:,}장 · 차량 {t['vehicles']:,}대 · 분류 대기 {t['untagged']:,}장")
 
-{PAGES[0]: page_dashboard, PAGES[1]: page_upload, PAGES[2]: page_triage, PAGES[3]: page_gallery,
- PAGES[4]: page_report, PAGES[5]: page_taxonomy, PAGES[6]: page_data}[st.session_state["page"]]()
+PAGE_FN = dict(zip(PAGES, [page_dashboard, page_upload, page_triage, page_gallery, page_vehicle, page_report, page_taxonomy, page_data]))
+PAGE_FN[st.session_state["page"]]()

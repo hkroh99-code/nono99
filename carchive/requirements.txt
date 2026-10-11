@@ -1,3 +1,6 @@
 streamlit>=1.52
 pillow>=10
 pandas>=2
+numpy
+fpdf2>=2.7
+# anthropic   # (선택) AI 사진 판독을 쓰려면 주석을 풀고 설치
