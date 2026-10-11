@@ -12,6 +12,7 @@ import streamlit as st
 
 import demo
 import imaging
+import ml
 import report
 import suggest
 from db import NORMAL, SEV_RANK, Archive
@@ -698,7 +699,7 @@ def page_taxonomy():
 # ───────────────────────── 페이지: 데이터 관리 ─────────────────────────
 def page_data():
     st.title("💾 데이터 관리")
-    t1, t2, t3, t4, t5 = st.tabs(["내보내기", "백업", "차량 목록·수정", "휴지통", "데모 데이터"])
+    t1, t2, t3, t4, t5, t6 = st.tabs(["내보내기", "백업", "차량 목록·수정", "휴지통", "데모 데이터", "🧠 학습 모델"])
     with t1:
         rows = A.export_rows()
         st.write(f"사진×태그 {len(rows):,}행. 엑셀에서 바로 열립니다(UTF-8).")
@@ -760,6 +761,56 @@ def page_data():
             st.success(f"{demo.load_demo(A)}장 추가"); st.rerun()
         if c[1].button("🧹 데모 데이터 모두 지우기"):
             st.success(f"{demo.remove_demo(A)}장 삭제"); st.rerun()
+
+    with t6:
+        st.write("태그가 달린 사진으로 **이 아카이브 전용 하자 분류 모델**을 학습합니다. 학습된 모델은 ‘💡 하자 후보 추천’에 **학습 모델** 단서로 더해집니다(사람이 확정하는 방식은 그대로).")
+        stt = ml.extractor_status()
+        cc = ml.class_counts(A)
+        if cc:
+            st.dataframe(pd.DataFrame([{"하자 항목": c["label"], "사진": c["photos"], "차량": c["vehicles"], "학습 가능": "✅" if c["ok"] else f"❌ (사진 {ml.MIN_PHOTOS}장·차량 {ml.MIN_VEHICLES}대 필요)"} for c in cc]),
+                         hide_index=True, width="stretch", height=min(420, 38 * len(cc) + 40))
+        else:
+            st.info("태그가 달린 사진이 아직 없습니다.")
+        opts = ["auto", "basic"] + (["torch"] if stt["torch"] else [])
+        names = {"auto": "자동(사전학습 CNN이 있으면 그것, 없으면 간이)", "basic": "간이 특징(설치 불필요·약함)", "torch": "사전학습 CNN(MobileNetV3, 권장)"}
+        ext = st.radio("특징 추출 방식", opts, format_func=lambda k: names[k], horizontal=True)
+        if not stt["torch"]:
+            st.warning("지금은 ‘간이 특징’만 쓸 수 있습니다. 더 정확한 사진 인식을 원하면 `pip install torch torchvision` 후 앱을 다시 켜세요(첫 학습 때 가중치를 내려받아 인터넷이 필요합니다).")
+        if st.button("🧠 학습 시작", type="primary", disabled=not any(c["ok"] for c in cc)):
+            bar = st.progress(0.0, text="준비 중…")
+            try:
+                info = ml.train(A, ext, progress=lambda f, t: bar.progress(min(1.0, f), text=t))
+                bar.empty()
+                st.session_state["ml_last"] = info["id"]
+                st.rerun()
+            except (ml.NotEnoughData, ml.ExtractorUnavailable) as e:
+                bar.empty()
+                st.error(str(e))
+        models = ml.list_models(A)
+        act = ml.active_id(A)
+        if models:
+            st.subheader("학습 결과")
+            pick = st.selectbox("모델", [m["id"] for m in models], format_func=lambda i: next(f"{m['trained_at'][:16]} · {m['extractor']} · 사진 {m['n_photos']}장" + (" ⭐사용 중" if m["id"] == i == act else "") for m in models if m["id"] == i))
+            m = next(x for x in models if x["id"] == pick)
+            st.dataframe(pd.DataFrame([{"하자 항목": x["label"], "검증 정밀도": None if x["precision"] is None else round(x["precision"] * 100), "검증 재현율": None if x["recall"] is None else round(x["recall"] * 100),
+                                        "검증 양성 사진": x["val_pos"], "추천에 사용": "✅" if x["enabled"] else "보류", "비고": x.get("note", "")} for x in m["metrics"]]), hide_index=True, width="stretch",
+                         column_config={"검증 정밀도": st.column_config.ProgressColumn(format="%d%%", min_value=0, max_value=100), "검증 재현율": st.column_config.ProgressColumn(format="%d%%", min_value=0, max_value=100)})
+            st.caption(f"검증은 차량 단위로 나눠(같은 차량 사진이 학습·검증에 섞이지 않게) 계산했습니다. 정밀도 {int(ml.MIN_PRECISION * 100)}% 이상인 항목만 추천에 쓰입니다. "
+                       "‘정밀도’= 모델이 맞다고 한 것 중 실제로 맞은 비율, ‘재현율’= 실제 하자 중 모델이 찾아낸 비율.")
+            if any(x["val_pos"] < 10 for x in m["metrics"]):
+                st.warning("‘검증 양성 사진’이 10장 미만인 항목은 정밀도·재현율이 우연에 크게 흔들립니다(예: 4장 중 3장 맞으면 75%). 항목마다 사진 30장·차량 10대 이상 쌓은 뒤 다시 학습해 보세요.")
+            c = st.columns(3)
+            if c[0].button("⭐ 이 모델 사용", disabled=(pick == act) or not m["enabled"]):
+                ml.set_active(A, pick); st.rerun()
+            if c[1].button("⏸️ 모델 사용 안 함", disabled=act is None):
+                ml.set_active(A, None); st.rerun()
+        st.divider()
+        st.caption("외부 도구(클라우드 GPU 등)로 더 큰 모델을 직접 학습하고 싶다면 사진+라벨을 zip 으로 내보낼 수 있습니다.")
+        if st.button("📦 학습용 데이터셋 만들기 (images/ + labels.csv)"):
+            p = A.backup_dir / f"dataset_{pd.Timestamp.now():%Y%m%d_%H%M%S}.zip"
+            n = ml.export_dataset(A, p)
+            st.success(f"{n}장을 {p.name} 로 만들었습니다 (data/backups).")
+            st.download_button("내려받기", p.read_bytes(), file_name=p.name, key="dsdl")
 
 
 # ───────────────────────── 메인 ─────────────────────────

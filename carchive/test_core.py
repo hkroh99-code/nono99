@@ -98,5 +98,35 @@ class Pdf(unittest.TestCase):
         self.assertIn("침수", report.flood_opinion(a.vehicle_photos(v))[0])
 
 
+class Learn(unittest.TestCase):
+    def test_train_predict(self):
+        import random, ml
+        a = Archive(tempfile.mkdtemp())
+        cats = a.categories()
+        cls = [cats[0], cats[10]]
+        cols = [(220, 30, 30), (30, 30, 220)]
+        rnd = random.Random(3)
+        def im(col):
+            b = io.BytesIO()
+            Image.new("RGB", (200, 150), tuple(max(0, min(255, c + rnd.randint(-40, 40))) for c in col)).save(b, "JPEG")
+            return b.getvalue()
+        with self.assertRaises(ml.NotEnoughData):
+            ml.train(a, "basic")
+        for v in range(8):
+            vid = a.create_vehicle("현대", "X", 2020, 1)
+            for c, col in zip(cls, cols):
+                for _ in range(2):
+                    a.add_photo(vid, im(col), defects=[(c["id"], "주의", "")])
+        info = ml.train(a, "basic")
+        self.assertTrue(all(m["enabled"] for m in info["metrics"]))
+        self.assertEqual(ml.active_id(a), info["id"])
+        vid = a.create_vehicle("현대", "X", 2021, 1)
+        pid, _ = a.add_photo(vid, im(cols[1]))
+        pred = ml.predict(a, pid)
+        self.assertEqual(max(pred, key=lambda k: pred[k][0]), cls[1]["id"])
+        ml.set_active(a, None)
+        self.assertEqual(ml.predict(a, pid), {})
+
+
 if __name__ == "__main__":
     unittest.main()

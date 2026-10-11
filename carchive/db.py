@@ -41,6 +41,8 @@ CREATE TABLE IF NOT EXISTS boxes(
   photo_id INTEGER NOT NULL REFERENCES photos(id) ON DELETE CASCADE,
   x REAL NOT NULL, y REAL NOT NULL, w REAL NOT NULL, h REAL NOT NULL, label TEXT);
 CREATE TABLE IF NOT EXISTS photo_emb(photo_id INTEGER PRIMARY KEY REFERENCES photos(id) ON DELETE CASCADE, vec BLOB NOT NULL);
+CREATE TABLE IF NOT EXISTS photo_feat(photo_id INTEGER NOT NULL REFERENCES photos(id) ON DELETE CASCADE, extractor TEXT NOT NULL,
+  vec BLOB NOT NULL, PRIMARY KEY(photo_id, extractor));
 CREATE TABLE IF NOT EXISTS suggestion_log(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   photo_id INTEGER NOT NULL REFERENCES photos(id) ON DELETE CASCADE,
@@ -76,6 +78,8 @@ class Archive:
         for d in (self.photos_dir, self.thumbs_dir, self.backup_dir):
             d.mkdir(parents=True, exist_ok=True)
         self.report_dir = self.root / "reports"
+        self.model_dir = self.root / "models"
+        self.model_dir.mkdir(parents=True, exist_ok=True)
         self.report_dir.mkdir(parents=True, exist_ok=True)
         self.db_path = self.root / "carchive.db"
         with self.conn() as c:
@@ -549,6 +553,28 @@ class Archive:
 
     def reports_of(self, vid) -> list[dict]:
         return self.q("SELECT * FROM reports WHERE vehicle_id=? ORDER BY id DESC", (vid,))
+
+    # ---------- 학습 모델용 ----------
+    def labeled_photos(self) -> list[dict]:
+        """태그가 달린 사진(학습 데이터). cids = 카테고리 id 목록."""
+        rows = self.q("SELECT p.id, p.vehicle_id, p.thumb_path, p.file_path, GROUP_CONCAT(pd.category_id) cids FROM photos p "
+                      "JOIN photo_defects pd ON pd.photo_id=p.id WHERE p.deleted_at IS NULL GROUP BY p.id ORDER BY p.id")
+        for r in rows:
+            r["cids"] = [int(x) for x in r["cids"].split(",")]
+        return rows
+
+    def feats_get(self, extractor: str, ids: list[int]) -> dict[int, bytes]:
+        out = {}
+        for i in range(0, len(ids), 500):
+            chunk = ids[i:i + 500]
+            for r in self.q(f"SELECT photo_id, vec FROM photo_feat WHERE extractor=? AND photo_id IN ({','.join('?' * len(chunk))})", (extractor, *chunk)):
+                out[r["photo_id"]] = r["vec"]
+        return out
+
+    def feats_put(self, extractor: str, items: dict[int, bytes]):
+        with self.conn() as c:
+            for pid, vec in items.items():
+                c.execute("INSERT OR REPLACE INTO photo_feat(photo_id,extractor,vec) VALUES(?,?,?)", (pid, extractor, vec))
 
     # ---------- 내보내기 / 백업 ----------
     def export_rows(self) -> list[dict]:

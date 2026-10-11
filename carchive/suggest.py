@@ -6,6 +6,7 @@
   prior    같은 차종에서 자주 나온 하자(데이터가 쌓일수록 정확)
   keyword  점검자 코멘트에 적힌 부위·증상 단어
   visual   색·질감이 비슷한 기존 사진에 달린 태그(간이 유사도 — 하자를 ‘알아보는’ 것이 아님)
+  ml       이 아카이브의 태그된 사진으로 학습한 전용 분류 모델(데이터 관리 › 학습 모델)
   ai       Claude 비전 판독(선택. API 키가 있고 사용자가 버튼을 눌렀을 때만, 사진이 외부로 전송됨)
 """
 from __future__ import annotations
@@ -20,8 +21,8 @@ import numpy as np
 
 from db import Archive
 
-SOURCE_NAMES = {"prior": "차종 통계", "keyword": "코멘트 단어", "visual": "비슷한 사진", "ai": "AI 판독"}
-WEIGHT = {"ai": 1.0, "keyword": 0.9, "prior": 0.6, "visual": 0.5}
+SOURCE_NAMES = {"ml": "학습 모델", "prior": "차종 통계", "keyword": "코멘트 단어", "visual": "비슷한 사진", "ai": "AI 판독"}
+WEIGHT = {"ml": 0.85, "ai": 1.0, "keyword": 0.9, "prior": 0.6, "visual": 0.5}
 MIN_SCORE = 0.12
 
 # 증상 단어 → 같은 뜻으로 보는 표현들
@@ -166,6 +167,11 @@ def suggest(a: Archive, pid: int, comment: str | None = None, include_ai: bool =
         "keyword": keyword_scores(comment or "", cats),
         "visual": visual_scores(a, pid, p["vehicle_id"]),
     }
+    try:   # 학습된 모델이 있으면 사용(scikit-learn 이 없거나 모델이 없으면 조용히 건너뜀)
+        import ml
+        layers["ml"] = ml.predict(a, pid)
+    except Exception:  # noqa: BLE001
+        pass
     if include_ai:
         layers["ai"] = ai_cached_scores(a, pid)
     res: dict[int, Suggestion] = {}
