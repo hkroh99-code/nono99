@@ -1,0 +1,269 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 14 — 공방 ⑦ 연구 도구함 (발상기 · 질량 · 전력 예산 · 연구계획서 · 코드 · 안전 점검)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab14" role="tabpanel" aria-labelledby="tabbtn14" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🧰 공방 ⑦ 연구 도구함 — 아이디어에서 계획서 · 코드 · 안전까지</div>
+    <div class="goal">🎯 이 탭에서 하는 것 — 프로젝트를 시작할 때 필요한 <b>도구 다섯 가지</b>를 한곳에 모았습니다. ① <b>발상기</b>(임무 · 기술 · 제약 · 평가를 섞어 연구 문장 만들기) ② <b>질량 · 전력 예산 계산기</b> ③ <b>연구계획서 양식</b>(자동 저장) ④ <b>시작 코드</b>(아두이노 · 파이썬) ⑤ <b>안전 · 윤리 · 규정 점검표</b>. 모두 이 화면에서 직접 눌러 보며 쓸 수 있습니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 좋은 연구 질문은 「변인」으로 말한다</div>
+      「더 좋은 캔위성을 만들자」는 연구가 아니라 소망입니다. <b>무엇(독립변인)을 바꾸면 무엇(종속변인)이 어떻게 변하는가? 그동안 무엇을 같게 둘 것인가(통제변인)?</b> 로 바꾸어 말하면 비로소 실험이 됩니다. 이 도구함의 발상기와 계획서 양식은 그 문장을 만들어 주는 도우미입니다.
+      <div class="bridge"><span class="st old">막연한 소망</span><span class="ar">→</span><span class="st">변인으로 쓴 질문</span><span class="ar">→</span><span class="st">예산 · 안전 점검</span><span class="ar">→</span><span class="st new">실행 가능한 계획서</span></div>
+    </div>
+    <div class="poe" data-q="배터리를 500 mAh 에서 1000 mAh 로 바꾸면 동작 시간은? (배터리 무게가 13 g → 24 g 로 늘고 다른 부품은 그대로)"
+         data-opts="정확히 2 배||2 배보다 약간 짧다(무게 · 효율 때문에 다른 곳에서 손해)||변화 없다||절반이 된다"
+         data-ans="1"
+         data-exp="동작 시간 = 0.8 × 용량 ÷ 평균 전류 이므로 전류가 같다면 용량에 비례해 2 배입니다. 그러나 배터리 무게가 늘어 <b>총 질량 한도</b>에 가까워지면 다른 센서를 빼야 하거나 낙하 속도가 변하는 등 <b>설계 전체의 균형</b>이 달라집니다. 아래 계산기에서 배터리를 바꿔 질량 막대와 동작 시간을 함께 보세요 — 한 변수만 바꾸는 것 같아도 연결된 변수가 있습니다."></div>
+    <div id="k14-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🎲 ① 발상기 — 임무 · 기술 · 제약 · 평가를 섞어 연구 문장 만들기</div>
+    <div class="goal">🎯 칸의 🔒 를 눌러 마음에 드는 것은 고정하고 나머지를 다시 뽑아 보세요. 마음에 드는 조합이 나오면 <b>[연구계획서에 넣기]</b>.</div>
+    <div class="idea-grid" id="k14-ideagrid"></div>
+    <div class="row">
+      <button type="button" class="btn pri" id="k14-roll">🎲 다시 뽑기</button>
+      <button type="button" class="btn sm" id="k14-toplan">📝 연구계획서에 넣기</button>
+    </div>
+    <div class="easy"><div class="et" id="k14-sentence">…</div></div>
+    <p class="tiny">이 문장은 <b>출발점</b>일 뿐입니다. 「무엇을 바꾸고 무엇을 잴지」(변인)와 「어떻게 확인할지」(방법)를 계획서에서 직접 채워야 연구가 됩니다.</p>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">⚖️ ② 질량 · 전력 예산 계산기 <span class="badge b-mid">중등부터</span></div>
+        <div class="goal">🎯 부품을 켜고 끄며 <b>총 질량</b>이 한도 안인지, <b>동작 시간</b>이 임무 시간보다 긴지 확인하세요. 값은 시판 모듈의 <b>대표 어림값</b>이며 실제는 데이터시트와 측정으로 바꿔야 합니다.</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">질량 한도 (대회 규정에서 확인)</span><span class="vl" id="k14-limV">—</span></div>
+          <input type="range" id="k14-lim" min="150" max="500" step="10" value="350" aria-label="질량 한도">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">필요한 동작 시간 (대기 + 비행 + 회수)</span><span class="vl" id="k14-needV">—</span></div>
+          <input type="range" id="k14-need" min="0.5" max="6" step="0.5" value="2" aria-label="필요한 동작 시간">
+        </div>
+        <div class="row" role="radiogroup" aria-label="배터리 용량 고르기"><span class="tiny">배터리 :</span>
+          <label class="chk"><input type="radio" name="k14-bat" value="0"> 250 mAh · 7 g</label>
+          <label class="chk"><input type="radio" name="k14-bat" value="1" checked> 500 mAh · 13 g</label>
+          <label class="chk"><input type="radio" name="k14-bat" value="2"> 1000 mAh · 24 g</label>
+        </div>
+        <div class="partlist" id="k14-parts" role="group" aria-label="부품 목록"></div>
+        <div class="kv">
+          <div class="cell a"><span class="k">총 질량</span><span class="v" id="k14-oM">—</span></div>
+          <div class="cell"><span class="k">질량 여유</span><span class="v" id="k14-oMl">—</span></div>
+          <div class="cell g"><span class="k">평균 전류</span><span class="v" id="k14-oI">—</span></div>
+          <div class="cell v2"><span class="k">동작 시간 (용량 × 0.8)</span><span class="v" id="k14-oH">—</span></div>
+          <div class="cell r"><span class="k">판정</span><span class="v" id="k14-oJ">—</span></div>
+          <div class="cell"><span class="k">예산(대략)</span><span class="v" id="k14-oC">—</span></div>
+        </div>
+        <p class="tiny">모형 : 평균 전류는 켜져 있는 부품의 대표 평균 전류의 합, 동작 시간 = 0.8 × 용량 ÷ 평균 전류. 송신 · 서보 · 카메라는 순간 전류(피크)가 훨씬 크므로 전압 강하(리셋)도 따로 점검하세요(6번 탭). 질량 한도 350 g 은 「예시」이며 대회마다 다릅니다.</p>
+      </div>
+      <div class="hintbox" data-hints="① 먼저 처음 켜진 부품으로 질량과 동작 시간을 읽어 보세요. 판정이 통과인가요?||② 카메라(ESP32-CAM)를 켜 보세요. 평균 전류가 얼마나 늘고 동작 시간은 어떻게 변하나요?||③ 열화상 센서를 켜면 예산(비용)은 어떻게 되나요? 질량 한도가 아니라 비용이 먼저 한계가 되는 경우가 많습니다.||④ 같은 임무에서 꼭 필요한 부품과 「있으면 좋은」 부품을 나누어 보세요. 이것이 요구사항 정리입니다."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k14" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k14-cv" data-pngname="cansat-budget">🖼 PNG</button></div>
+          <canvas id="k14-cv" role="img" aria-label="질량 예산과 전류 예산 막대 그래프" style="height:360px"></canvas>
+          <div class="cv-cap">📊 위 : 부품별 질량(누적 막대)과 질량 한도(빨간 선) · 아래 : 부품별 평균 전류(누적 막대)와 필요한 동작 시간에 맞는 한계 전류(초록 선). 선을 넘으면 설계를 고쳐야 합니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>질량 예산 $M=\sum_k m_k\le M_{\lim}$. 전력 예산 : 평균 전류 $I=\sum_k I_k\eta_k$, 동작 시간 $t=\dfrac{0.8\,C}{I}$. 필요 시간 $t_{\rm need}$ 를 맞추려면 $I\le\dfrac{0.8\,C}{t_{\rm need}}$ — 계산기의 초록 선입니다. 배터리 용량 $C$ 를 올리면 질량 $m_b$ 도 늘어나므로 <b>질량 여유와 동작 시간의 거래</b>가 생깁니다.</p>
+        <p class="lv-uni">교과서 밖 : 제약 조건이 여럿인 설계는 「실행 가능 영역」을 그리는 최적화 문제입니다. 목적함수(예 : 과학 데이터량)를 정하고 질량 · 전력 · 비용 제약 아래서 최대로 만드는 선형계획으로 부품 조합을 찾아볼 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📝 ③ 연구계획서 양식 <span class="badge b-high">자동 저장</span></div>
+    <div class="goal">🎯 칸을 채우면 이 브라우저에 <b>자동 저장</b>됩니다. 다 쓰면 [복사] 하거나 [텍스트 저장]으로 내려받아 선생님께 제출하세요.</div>
+    <div class="plan">
+      <label class="pf">① 연구 제목 <input type="text" id="k14-p-title" placeholder="예 : 센서 잡음에 강한 낙하산 자동 전개 규칙"></label>
+      <label class="pf">② 연구 질문 <span class="tiny">(바꾸면 → 어떻게 변하는가?)</span> <textarea id="k14-p-q" rows="2" placeholder="예 : 연속 판정 횟수 N 을 늘리면 조기 전개 비율과 평균 지연은 어떻게 변하는가?"></textarea></label>
+      <label class="pf">③ 가설 <span class="tiny">(이유 포함)</span> <textarea id="k14-p-h" rows="2" placeholder="예 : N 이 커지면 조기 전개는 줄고 지연은 늘 것이다. 잡음이 독립이면 연속 N 회 확률이 p^N 이기 때문이다."></textarea></label>
+      <div class="pgrid">
+        <label class="pf">④ 독립변인(바꾸는 것) <input type="text" id="k14-p-iv" placeholder="예 : 연속 횟수 N (1, 3, 5, 8)"></label>
+        <label class="pf">⑤ 종속변인(재는 것) <input type="text" id="k14-p-dv" placeholder="예 : 전개 고도 오차(m), 조기 전개 비율(%)"></label>
+        <label class="pf">⑥ 통제변인(같게 둘 것) <input type="text" id="k14-p-cv" placeholder="예 : 기준 고도 · 낙하 속도 · 센서 · 표본율"></label>
+        <label class="pf">⑦ 측정 도구 · 정밀도 <input type="text" id="k14-p-tool" placeholder="예 : BMP280(±1 m), 스톱워치(±0.05 s)"></label>
+      </div>
+      <label class="pf">⑧ 실험 방법 <span class="tiny">(순서대로)</span> <textarea id="k14-p-m" rows="3" placeholder="① … ② … ③ …"></textarea></label>
+      <label class="pf">⑨ 예상 결과 · 분석 방법 <textarea id="k14-p-a" rows="2" placeholder="예 : N 대 조기 전개 비율 그래프, 이론 p^N 과 비교"></textarea></label>
+      <label class="pf">⑩ 위험 요인과 안전 대책 <textarea id="k14-p-r" rows="2" placeholder="예 : 낮은 높이에서 시험, 전지 보호회로, 낙하 구역 통제"></textarea></label>
+      <label class="pf">⑪ 일정 · 역할 <textarea id="k14-p-s" rows="2" placeholder="예 : 1 주 측정 준비, 2 주 시험, 3 주 분석 / 역할 : 센서 · 코드 · 기록"></textarea></label>
+    </div>
+    <div class="row">
+      <button type="button" class="btn pri" id="k14-copy">📋 계획서 복사</button>
+      <button type="button" class="btn sm" id="k14-save">💾 텍스트 저장</button>
+      <button type="button" class="btn sm rd" id="k14-clear">🗑 지우기</button>
+      <span class="tiny" id="k14-planmsg"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">💻 ④ 시작 코드 — 복사해서 시작하고, 내 것으로 고치기 <span class="badge b-high">고등</span></div>
+    <div class="goal">🎯 완성품이 아니라 <b>출발점</b>입니다. 핀 번호 · 주소 · 주파수는 내 부품에 맞게 바꾸고, 반드시 <b>데이터시트와 라이브러리 문서</b>를 확인하세요. 아두이노 IDE 에서 [라이브러리 관리]로 필요한 라이브러리(Adafruit BMP280, LoRa, TinyGPSPlus, Servo)를 설치합니다.</div>
+    <details class="code" open><summary>① BMP280 기압 · 고도 로거 (아두이노 · 100 ms 마다 CSV)</summary>
+      <button type="button" class="btn sm" data-copy="code-bmp">📋 복사</button>
+      <pre><code id="code-bmp">#include &lt;Wire.h&gt;
+#include &lt;Adafruit_BMP280.h&gt;
+
+Adafruit_BMP280 bmp;     // I2C
+float P0;                // 방출 직전 지상 기압(hPa) — 기준 기압 (오개념 5 !)
+
+void setup() {
+  Serial.begin(115200);
+  if (!bmp.begin(0x76)) {                       // 모듈에 따라 0x77 일 수 있음
+    Serial.println("BMP280 not found");
+    while (1);
+  }
+  bmp.setSampling(Adafruit_BMP280::MODE_NORMAL,
+                  Adafruit_BMP280::SAMPLING_X2,   // 온도
+                  Adafruit_BMP280::SAMPLING_X16,  // 기압(잡음 줄이기)
+                  Adafruit_BMP280::FILTER_X4,
+                  Adafruit_BMP280::STANDBY_MS_1);
+  delay(500);
+  P0 = bmp.readPressure() / 100.0;              // Pa → hPa
+}
+
+void loop() {
+  float p = bmp.readPressure() / 100.0;                       // hPa
+  float h = 44330.77 * (1.0 - pow(p / P0, 0.190263));         // 상대 고도(m)
+  Serial.print(millis()); Serial.print(',');
+  Serial.print(p, 2);     Serial.print(',');
+  Serial.println(h, 1);
+  delay(100);
+}</code></pre>
+    </details>
+    <details class="code"><summary>② 자동 전개 규칙 — 「연속 N 회 기준 아래」 (발명 I01)</summary>
+      <button type="button" class="btn sm" data-copy="code-dep">📋 복사</button>
+      <pre><code id="code-dep">// 위 로거 코드에 이어 붙이는 판정 부분 (Servo 라이브러리 필요)
+#include &lt;Servo.h&gt;
+Servo latch;
+const float H_ARM = 400;    // 이 고도를 넘은 적이 있어야 「무장」 — 지상 오작동 방지
+const float H_TH  = 300;    // 전개 기준 고도(m)
+const int   N     = 5;      // 연속 횟수
+int  cnt = 0;
+bool armed = false, deployed = false;
+
+// setup() 안 :  latch.attach(9); latch.write(0);   // 0 = 잠금
+
+// loop() 안, h 를 계산한 뒤 :
+if (h &gt; H_ARM) armed = true;
+if (armed &amp;&amp; !deployed) {
+  if (h &lt; H_TH) cnt++; else cnt = 0;      // 아래로 읽히면 +1, 한 번이라도 위면 0
+  if (cnt &gt;= N) {
+    latch.write(90);                       // 걸쇠 풀기
+    deployed = true;
+  }
+}</code></pre>
+    </details>
+    <details class="code"><summary>③ 고도를 음높이로 — tone() 소리 낙하 (창의 C03)</summary>
+      <button type="button" class="btn sm" data-copy="code-tone">📋 복사</button>
+      <pre><code id="code-tone">// h : 상대 고도(m).  H 에서 0 m 까지 2 옥타브를 올라간다(지수 매핑 = 같은 높이 차는 같은 음정 차).
+const float H = 20.0, F0 = 262.0, OCT = 2.0;     // 도(C4) 에서 시작
+float f = F0 * pow(2.0, OCT * (1.0 - constrain(h, 0, H) / H));
+tone(8, (int)f);                                  // 8번 핀 수동 부저</code></pre>
+    </details>
+    <details class="code"><summary>④ LoRa 수신 — RSSI 로거 (지상국 · 발명 I06 · I08)</summary>
+      <button type="button" class="btn sm" data-copy="code-lora">📋 복사</button>
+      <pre><code id="code-lora">#include &lt;SPI.h&gt;
+#include &lt;LoRa.h&gt;
+
+#define LORA_FREQ 920E6     // 사용 지역의 허용 대역 · 출력 규정을 반드시 확인 (국내는 전파 인증 모듈 사용)
+
+void setup() {
+  Serial.begin(115200);
+  if (!LoRa.begin(LORA_FREQ)) { Serial.println("LoRa fail"); while (1); }
+}
+
+void loop() {
+  int sz = LoRa.parsePacket();
+  if (sz) {
+    String s = "";
+    while (LoRa.available()) s += (char)LoRa.read();
+    Serial.print(millis());            Serial.print(',');
+    Serial.print(LoRa.packetRssi());   Serial.print(',');   // dBm
+    Serial.print(LoRa.packetSnr());    Serial.print(',');   // dB
+    Serial.println(s);
+  }
+}</code></pre>
+    </details>
+    <details class="code"><summary>⑤ GPS → 목표 방위 · 거리 · 오차각 (아두이노 나노 + SoftwareSerial · 발명 I02 · I07)</summary>
+      <button type="button" class="btn sm" data-copy="code-gps">📋 복사</button>
+      <pre><code id="code-gps">#include &lt;SoftwareSerial.h&gt;
+#include &lt;TinyGPSPlus.h&gt;
+
+SoftwareSerial ss(4, 3);          // GPS TX → 4번, RX → 3번
+TinyGPSPlus gps;
+const double TGT_LAT = 37.0000, TGT_LON = 127.0000;   // 목표 좌표(내 시험장 좌표로 바꾸기)
+
+void setup() { Serial.begin(115200); ss.begin(9600); }
+
+void loop() {
+  while (ss.available()) gps.encode(ss.read());
+  if (gps.location.isUpdated() &amp;&amp; gps.course.isValid()) {
+    double brg  = TinyGPSPlus::courseTo(gps.location.lat(), gps.location.lng(), TGT_LAT, TGT_LON);
+    double dist = TinyGPSPlus::distanceBetween(gps.location.lat(), gps.location.lng(), TGT_LAT, TGT_LON);
+    double err  = brg - gps.course.deg();          // 목표 방위 − 진행 방향
+    if (err &gt; 180) err -= 360;                     // −180 ~ +180 으로 감싸기
+    if (err &lt; -180) err += 360;
+    Serial.print(dist, 1); Serial.print(" m, 오차각 "); Serial.println(err, 0);
+  }
+}</code></pre>
+    </details>
+    <details class="code"><summary>⑥ 파이썬 분석 — 항력계수 Cd (종합1 · 로그 CSV)</summary>
+      <button type="button" class="btn sm" data-copy="code-py1">📋 복사</button>
+      <pre><code id="code-py1">import numpy as np
+
+g, rho = 9.8, 1.225
+# 한 줄 = (질량 kg, 지름 m, 낙하 거리 m, 낙하 시간 s) — 내 측정값으로 바꾸기
+data = np.array([[0.020, 0.30, 3.0, 1.61],     # 예시 값 — 내 측정값으로 바꾸기
+                 [0.040, 0.30, 3.0, 1.14],
+                 [0.080, 0.30, 3.0, 0.80]])
+m, D, L, t = data.T
+v  = L / t                         # 종단속도(m/s)
+x  = m / (np.pi * (D / 2) ** 2)    # m/A (kg/m²)
+y  = v ** 2
+s  = np.sum(x * y) / np.sum(x * x) # 원점을 지나는 최소제곱 기울기
+Cd = 2 * g / (rho * s)
+print(f"기울기 = {s:.2f} (m/s)^2/(kg/m^2),  Cd = {Cd:.2f}")</code></pre>
+    </details>
+    <details class="code"><summary>⑦ 파이썬 분석 — 스케일 높이와 평균 기온 (종합2)</summary>
+      <button type="button" class="btn sm" data-copy="code-py2">📋 복사</button>
+      <pre><code id="code-py2">import numpy as np
+
+R, M, g = 8.314, 0.02897, 9.80
+# 고도 h(m) 와 기압 P(hPa) — 내 로그로 바꾸기. 첫 줄이 기준(지상)
+h = np.array([0, 100, 200, 400, 600, 800, 1000.])
+P = np.array([1013.2, 1001.2, 989.3, 965.8, 942.6, 920.0, 897.8])
+y = np.log(P[0] / P)              # ln(P0/P) = h / H
+slope = np.sum(h * y) / np.sum(h * h)   # 원점을 지나는 기울기 = 1/H
+H = 1 / slope                      # 스케일 높이(m)
+T = H * M * g / R                  # 평균 기온(K)
+print(f"H = {H:.0f} m,  평균 기온 = {T - 273.15:.1f} ℃")</code></pre>
+    </details>
+  </div>
+
+  <div class="card">
+    <div class="h3">🦺 ⑤ 안전 · 윤리 · 규정 점검표 <span class="badge b-poe">체크는 자동 저장</span></div>
+    <div class="goal">🎯 <b>시험하기 전에</b> 모두 확인하세요. 규정 · 법규는 <b>나라 · 지역 · 시기에 따라 바뀌므로</b> 학교 · 지도교사 · 대회 규정집 · 관할 기관의 최신 안내를 따릅니다.</div>
+    <div class="checklist" id="k14-safe"></div>
+    <div class="row"><span class="tiny" id="k14-safemsg">0 / 0 확인</span></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📚 ⑥ 더 찾아볼 곳 — 이름만 알려 드립니다(주소는 직접 검색)</div>
+    <div class="steps">
+      <div class="step"><b>한국</b> : 「캔위성 경연대회」(KAIST 인공위성연구센터 주관) · 학교 R&amp;E · 영재학급 · 과학전시회 · 학생발명대회 규정집.</div>
+      <div class="step"><b>미국</b> : AAS/AIAA CanSat Competition 의 해당 연도 Mission Guide · ARLISS(블랙록 사막) · 각 대학 우주공학 동아리 공개 보고서.</div>
+      <div class="step"><b>일본</b> : UNISEC(대학우주공학컨소시엄) · 「능대 우주이벤트」(아키타현 노시로) · CanSat Leader Training Program.</div>
+      <div class="step"><b>유럽</b> : ESA 교육국 CanSat · 각국 ESERO 의 학생 안내서.</div>
+      <div class="step"><b>부품 · 이론</b> : 기압센서 BMP280 · 열화상 MLX90640 · 통신 모듈 SX127x · GPS NEO-6M 데이터시트, 표준대기(ISA) 표, 교과서 일 · 에너지 · 충격량 · 전자기파 단원.</div>
+      <div class="step"><b>특허</b> : 한국특허정보원 KIPRIS 에서 비슷한 발명을 검색해 「내 것의 새로운 점」을 정리합니다(발명 10선).</div>
+    </div>
+    <p class="tiny">※ 이 자료의 대회 · 연도 · 규모는 공개된 자료를 바탕으로 정리한 것이며 해마다 바뀔 수 있습니다. 참가 전에 <b>반드시 공식 최신 안내</b>를 확인하세요.</p>
+  </div>
+</section>

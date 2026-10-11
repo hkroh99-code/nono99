@@ -1,0 +1,122 @@
+<!-- ═══ TAB 3 — 📉 원리② 베르누이 방정식 — 빠르면 압력이 낮다 ($p+\tfrac12\rho v^2+\rho gz=$ 일정) ═══ -->
+<section class="panel" id="tab3" role="tabpanel" aria-labelledby="tabbtn3" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>📉 원리② 베르누이 방정식 — 빠르면 압력이 낮다 ($p+\tfrac12\rho v^2+\rho gz=$ 일정)</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 같은 유선을 따라 흐르는 비압축성 · 비점성 유체에서 <b>압력 에너지 · 운동 에너지 · 위치 에너지의 합</b>이 일정합니다: $p+\tfrac12\rho v^2+\rho gz=$ 일정. 수평 관이 좁아져 속력이 커지면 압력은 작아지고(<b>벤투리 효과</b>), 높이가 올라가면 압력이 그만큼 줄어듭니다. 이것은 <b>일 · 에너지 정리</b>를 유체 한 덩어리에 적용한 결과입니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 일 · 에너지 정리</div>
+      작은 유체 덩어리가 유선을 따라 움직일 때, 압력이 한 일(앞에서 미는 힘 − 뒤에서 미는 힘)은 운동 에너지와 위치 에너지의 증가와 같습니다. 단위 부피로 나누면 $\Delta p+\Delta(\tfrac12\rho v^2)+\Delta(\rho gz)=0$. 즉 <b>압력이 낮아진 만큼 속력이 커지거나 높이가 올라가는 쪽으로 에너지가 바뀝니다</b>.
+      <div class="bridge"><span class="st old">일 · 에너지 정리</span><span class="ar">→</span><span class="st">압력 · 운동 · 위치 에너지</span><span class="ar">→</span><span class="st">$p+\tfrac12\rho v^2+\rho gz$</span><span class="ar">→</span><span class="st new">벤투리 · 종이 불기</span></div>
+    </div>
+    <div class="poe" data-q="수평 관에서 물이 $v_1=2$ m/s 로 넓은 곳을 지나 면적이 1/4 인 좁은 곳($v_2=8$ m/s)으로 들어간다. 넓은 곳의 압력이 40 kPa 이면 좁은 곳의 압력은? (물 1000 kg/m³)"
+         data-opts="10 kPa||30 kPa||40 kPa||70 kPa"
+         data-ans="0"
+         data-exp="$p_2=p_1+\tfrac12\rho(v_1^2-v_2^2)=40000+\tfrac12\times1000\times(4-64)=10000$ Pa = <b>10 kPa</b>. 속력이 6 m/s 늘어난 만큼 동압이 30 kPa 늘고 정압이 30 kPa 줄었습니다. 오른쪽 벤투리 관에서 확인하세요."></div>
+    <div id="t3-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 베르누이 방정식 — 벤투리 · 에너지 · 종이 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="베르누이 방정식 도해 세 장면. 벤투리 관의 압력 관에서 좁은 곳의 수주가 낮고, 압력 · 운동 · 위치 에너지의 합이 두 지점에서 같으며, 종이 두 장 사이로 불면 종이가 서로 모인다.">
+        {{FIG:pascal}}
+      </svg>
+    </div>
+    <div class="figcap">그림 3-1. 베르누이 방정식 — ① 벤투리 관: 좁은 곳에서 속력 ↑ → 압력 관의 수주 ↓ → ② 에너지 보존: 압력 + 운동 + 위치의 합은 일정 → ③ 종이 두 장 사이로 불면 사이의 압력이 낮아져 종이가 모인다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 정압 $p$</b>유체가 모든 방향으로 미는 압력. 압력계(마노미터)의 수주 높이로 읽는다 $h=p/\rho g$.</div>
+      <div class="part"><b>② 동압 $\tfrac12\rho v^2$</b>운동 에너지를 부피로 나눈 값. 흐름을 마주 보는 면이 받는 압력(전압 − 정압).</div>
+      <div class="part"><b>③ 위치 항 $\rho gz$</b>높이에 따른 위치 에너지 밀도. 높은 곳은 같은 전압에서 정압이 낮다.</div>
+      <div class="part"><b>④ 전압(전수두)</b>$p+\tfrac12\rho v^2+\rho gz$. 이상 유체에서는 같은 유선 위에서 일정하다.</div>
+      <div class="part"><b>⑤ 적용 조건</b>같은 유선 · 정상 · 비점성 · 비압축성 · 펌프 · 터빈 없음. 어기면 보정(손실 항 · 압축성)이 필요하다.</div>
+      <div class="part"><b>⑥ 한계 경고</b>목의 압력이 대기압 − 약 100 kPa(진공 근처)까지 내려가면 물이 끓듯 기포가 생겨(캐비테이션) 식이 성립하지 않는다.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 안전하게 베르누이 효과 확인하기 (저속 바람 · 물)</div>
+    <div class="steps">
+      <div class="step">종이 두 장을 2 ~ 3 cm 간격으로 세우고 사이로 불어 서로 가까워지는 것을 관찰한다(입김).</div>
+      <div class="step">투명 호스를 중간에서 좁히고(손가락 · 클립) 물을 흘려 앞 · 뒤에 세운 투명 빨대의 수위를 비교한다 → 좁은 곳 근처에서 낮다.</div>
+      <div class="step">주사기 · 빨대로 간단한 벤투리 관을 만들어 압력 차이(수주 높이)를 자로 잰다(R·I 프로젝트).</div>
+      <div class="step">계산 : $\Delta p=\tfrac12\rho(v_2^2-v_1^2)$ 로 예측한 수주차와 측정값을 비교한다(종합2, 16번 탭).</div>
+      <div class="step">실험이 예측과 다를 때 점성 손실 · 난류 · 기포를 의심한다(6번 탭).</div>
+    </div>
+    <div class="easy">
+      <div class="et">🎢 쉽게 이해하기 — 롤러코스터의 에너지</div>
+      롤러코스터는 높은 곳에서 느리고 낮은 곳에서 빨라요 — 위치 에너지와 운동 에너지가 서로 바뀌죠. 유체의 베르누이 식은 여기에 <b>압력 에너지</b>가 하나 더 있는 것뿐이에요. 높이가 같은 수평 관에서는 속력이 커진 만큼 압력 에너지가 줄어듭니다. 합은 늘 같아요(에너지 보존).
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“속력이 큰 곳은 압력도 크다 · 베르누이 식은 어디서나 쓸 수 있다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b><strong>같은 유선</strong>에서 속력이 커지면 압력은 작아집니다. 점성 · 펌프 · 압축성이 있으면 <strong>보정</strong>이 필요합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 베르누이 방정식 시뮬레이션 — 벤투리 관과 압력 관</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">입구 속력 v₁</span><span class="vl" id="t3-v1V">—</span></div>
+          <input type="range" id="t3-v1" min="0.5" max="4" step="0.1" value="2.0" aria-label="입구 속력 v₁">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">면적비 A₁/A₂</span><span class="vl" id="t3-rV">—</span></div>
+          <input type="range" id="t3-r" min="1.5" max="6" step="0.25" value="4" aria-label="면적비 A₁/A₂">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">목의 높이 변화 Δz</span><span class="vl" id="t3-dzV">—</span></div>
+          <input type="range" id="t3-dz" min="-20" max="40" step="5" value="0" aria-label="목의 높이 변화 Δz">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">입구 압력 p₁(게이지)</span><span class="vl" id="t3-p1V">—</span></div>
+          <input type="range" id="t3-p1" min="20" max="80" step="5" value="40" aria-label="입구 압력 p₁(게이지)">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">목의 속력 v₂</span><span class="v" id="t3-oV">—</span></div>
+          <div class="cell g"><span class="k">목의 압력 p₂(게이지)</span><span class="v" id="t3-oP">—</span></div>
+          <div class="cell v2"><span class="k">압력 강하 p₁−p₂</span><span class="v" id="t3-oD">—</span></div>
+          <div class="cell r"><span class="k">p₂ 의 수주 높이</span><span class="v" id="t3-oH">—</span></div>
+          <div class="cell "><span class="k">상태</span><span class="v" id="t3-oC">—</span></div>
+        </div>
+        <p class="tiny">모형 : 물(1000 kg/m³) · 비점성 · 정상 · $p_2=p_1+\tfrac12\rho(v_1^2-v_2^2)-\rho g\Delta z$ · 면적비 $r=A_1/A_2$ → $v_2=rv_1$. 게이지 압력이 −99 kPa 이하이면 절대 압력이 거의 0 이 되어 기포가 생기므로 식이 맞지 않습니다. 점성 손실 · 난류는 무시했습니다.</p>
+      </div>
+      <div class="poe" data-q="같은 벤투리 관에서 입구 속력을 2 배로 하면 압력 강하 $p_1-p_2$ 는 몇 배가 될까? (면적비 같음)"
+           data-opts="2 배||4 배||8 배||변화 없음"
+           data-ans="1"
+           data-exp="$p_1-p_2=\tfrac12\rho(v_2^2-v_1^2)=\tfrac12\rho v_1^2(r^2-1)$ 이므로 $v_1^2$ 에 비례 → <b>4 배</b>입니다. 속력의 제곱에 비례하는 것이 동압의 특징입니다. 오른쪽 그래프로 확인하세요."></div>
+      <div class="hintbox" data-hints="① 먼저 v₁ = 2 m/s · 면적비 4 · Δz = 0 · p₁ = 40 kPa 로 두고 p₂ 가 10 kPa 인지 보세요.||② 면적비를 4 에서 6 으로 키우면 p₂ 는 어떻게 되나요? 어느 값부터 위험 경고가 나오나요?||③ 목의 높이를 +20 cm 올려 보세요. 압력은 얼마나 더 낮아지나요? ($\rho g\Delta z$ 로 계산해 보세요)||④ 아래 그래프에서 세 가지 항(압력 · 운동 · 위치)과 합의 점선을 보세요. 합은 두 지점에서 같은가요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t3" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t3-cv" data-pngname="bernoulli-equation">🖼 PNG</button></div>
+          <canvas id="t3-cv" role="img" aria-label="벤투리 관과 압력 관(마노미터)과 흐르는 입자" style="height:360px"></canvas>
+          <div class="cv-cap">벤투리 관을 지나는 입자와 두 곳의 압력 관. 목(오른쪽 관)의 수주가 낮아집니다. 목의 높이를 바꾸면 관이 위로 올라갑니다.</div>
+        </div>
+        <div id="t3-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t3-cv2" role="img" aria-label="관을 따른 압력 분포와 에너지 항별 막대 그래프" style="height:340px"></canvas>
+          <div class="cv-cap">📊 위 : 관을 따라 게이지 압력 $p(x)$ — 목에서 최소. 아래 : 두 지점에서 압력(파랑) · 운동(노랑) · 위치(초록) 항과 합(흰 점선, 두 지점에서 같다).</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$p_1+\tfrac12\rho v_1^2+\rho gz_1=p_2+\tfrac12\rho v_2^2+\rho gz_2$. 수평($z_1=z_2$) 관 : $p_1-p_2=\tfrac12\rho(v_2^2-v_1^2)=\tfrac12\rho v_1^2\left[\left(\dfrac{A_1}{A_2}\right)^2-1\right]$.</p><p>예 : $v_1=2$ m/s, 면적비 4 → $v_2=8$ m/s, $p_1-p_2=30$ kPa. 수주 높이 차 $\Delta h=\Delta p/\rho g\approx3.1$ m (아주 큰 값 — 실험은 작은 속력으로).</p><p class="lv-uni">교과서 밖 : 점성이 있으면 $p_1+\tfrac12\rho v_1^2+\rho gz_1=p_2+\tfrac12\rho v_2^2+\rho gz_2+\Delta p_{손실}$ (달시–바이스바흐). 와류가 있는 회전 흐름에서는 서로 다른 유선 사이의 압력 비교에 주의합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 베르누이 방정식은 어떻게 나오나 — 일 · 에너지 정리에서 압력 · 속력 · 높이까지 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">유체 덩어리 하나에 일 · 에너지 정리를 적용해 식을 만들어 봅니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 유체 덩어리 고르기</b> — 유선을 따라 움직이는 작은 유체 덩어리(부피 $\Delta V$)를 생각합니다. 점 1 에서 점 2 로 이동합니다.</div>
+      <div class="step"><b>② 압력이 한 일</b> — 앞에서 미는 압력과 뒤에서 미는 압력의 차이가 한 일은 $(p_1-p_2)\Delta V$ 입니다(비압축성이면 부피가 같다).</div>
+      <div class="step"><b>③ 운동 에너지의 변화</b> — $\Delta K=\tfrac12\rho\Delta V(v_2^2-v_1^2)$. 속력이 커지면 운동 에너지가 늘어납니다.</div>
+      <div class="step"><b>④ 위치 에너지의 변화</b> — $\Delta U=\rho\Delta Vg(z_2-z_1)$. 높이가 올라가면 위치 에너지가 늘어납니다.</div>
+      <div class="step"><b>⑤ 일 · 에너지 정리</b> — 압력이 한 일 = 에너지 증가: $(p_1-p_2)=\tfrac12\rho(v_2^2-v_1^2)+\rho g(z_2-z_1)$. 정리하면 $p+\tfrac12\rho v^2+\rho gz=$ 일정.</div>
+      <div class="step"><b>⑥ 의미 읽기</b> — 수평($z$ 같음)이면 속력이 늘어난 곳에서 압력이 줄어듭니다. 압력이 줄어든 만큼이 유체를 가속시키는 알짜 힘입니다.</div>
+      <div class="step"><b>⑦ 한계</b> — 비점성 · 정상 · 같은 유선 · 비압축성. 열 · 펌프 · 마찰이 있으면 항을 더하고, 회전이 있으면 유선 사이 비교는 주의합니다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">단계</th><th>물리 법칙</th><th>핵심 식</th><th>결과</th></tr></thead><tbody><tr><td style="text-align:left">압력의 일</td><td>$W=\Delta p\,\Delta V$</td><td>$(p_1-p_2)\Delta V$</td><td>에너지 공급</td></tr><tr><td style="text-align:left">운동 에너지</td><td>$\tfrac12mv^2$</td><td>$\tfrac12\rho\Delta V(v_2^2-v_1^2)$</td><td>가속</td></tr><tr><td style="text-align:left">위치 에너지</td><td>$mgh$</td><td>$\rho\Delta Vg\Delta z$</td><td>상승</td></tr><tr><td style="text-align:left">합</td><td>일 · 에너지 정리</td><td>$p+\tfrac12\rho v^2+\rho gz$</td><td>일정</td></tr></tbody></table></div>
+    <p class="tiny">같은 유선이라는 조건이 중요합니다. 서로 다른 유선의 두 점은 전압이 다를 수 있습니다(펌프 · 소용돌이).</p>
+  </div>
+</section>

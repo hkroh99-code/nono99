@@ -1,0 +1,68 @@
+<section class="panel" id="tab17" role="tabpanel" aria-labelledby="tabbtn17" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-high">고등/수능</span><span class="badge b-exp">실험</span><span class="badge b-poe">POE</span>📊 [종합3] 구르기 가속도 — 경사면에서 모양 계수 k 구하기</div>
+    <div class="goal">🎯 이 실험에서 하는 것 — 경사면의 각도 $\theta$ 를 바꾸며 구르는 물체(원통 · 공)의 가속도 $a$ 를 재서 $a$ 대 $g\sin\theta$ 그래프를 그립니다. 미끄러짐 없이 구르면 이 그래프는 <b>원점을 지나는 직선</b>이고 <b>기울기 = $1/(1+k)$</b> 입니다. 기울기에서 <b>숨은 모양 계수 $k$</b> 를 알아내 보세요(속이 찬 구 0.4, 원통 0.5, 고리 1).</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 구르면 회전에도 에너지를 쓴다</div>
+      구르는 물체는 위치 에너지의 일부를 회전 운동 에너지로 씁니다: $mgh=\tfrac12mv^2(1+k)$. 그래서 가속도는 $a=g\sin\theta/(1+k)$ 로 미끄러질 때($g\sin\theta$)보다 작습니다. $a$ 를 세로로, $g\sin\theta$ 를 가로로 그리면 <b>원점을 지나는 직선</b>이고 기울기가 $1/(1+k)$ 입니다. 질량과 반지름은 약분됩니다.
+      <div class="bridge"><span class="st">$a=g\sin\theta/(1+k)$</span><span class="ar">→</span><span class="st">$a$ 대 $g\sin\theta$ 직선</span><span class="ar">→</span><span class="st">기울기 = $1/(1+k)$</span><span class="ar">→</span><span class="st new">$k=1/$기울기$-1$</span></div>
+    </div>
+    <div class="poe" data-q="같은 경사면에서 속이 찬 구와 속 빈 고리가 동시에 출발하면 먼저 도착하는 것은? (미끄러짐 없이)"
+         data-opts="고리||구||동시||질량에 따라 다르다"
+         data-ans="1"
+         data-exp="$a=g\sin\theta/(1+k)$ 에서 k 가 작은 구(0.4)가 고리(1)보다 가속도가 큽니다: 구 $\approx0.71\,g\sin\theta$, 고리 $0.5\,g\sin\theta$. 질량과 반지름은 상관이 없습니다."></div>
+    <div id="k17-misc"></div>
+  </div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 가상 실험실 — 조건을 정하고 [측정 기록]</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">경사각 θ</span><span class="vl" id="k17-thV">—</span></div>
+          <input type="range" id="k17-th" min="2" max="20" step="1" value="10" aria-label="경사각 θ">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">가속도 측정 잡음 σ</span><span class="vl" id="k17-SV">—</span></div>
+          <input type="range" id="k17-S" min="0" max="0.2" step="0.01" value="0.05" aria-label="가속도 측정 잡음 σ">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm" id="k17-new">🎲 새 조건(숨은 값 다시 뽑기)</button>
+          <button type="button" class="btn sm pri" id="k17-rec">📏 측정 기록</button>
+          <button type="button" class="btn sm" id="k17-rec10">📏×5 연속 기록</button>
+          <button type="button" class="btn sm rd" id="k17-clr">🧹 측정 초기화</button>
+        </div>
+        <div class="kv"><div class="cell a"><span class="k">g sinθ</span><span class="v" id="k17-oX">—</span></div><div class="cell g"><span class="k">측정 a</span><span class="v" id="k17-oM">—</span></div><div class="cell v2"><span class="k">추정 기울기 1/(1+k)</span><span class="v" id="k17-oF">—</span></div><div class="cell r"><span class="k">추정 모양 계수 k</span><span class="v" id="k17-oE">—</span></div><div class="cell "><span class="k">기록 개수</span><span class="v" id="k17-oN">—</span></div></div>
+        <p class="tiny">모형 : $a=g\sin\theta/(1+k)+\varepsilon$ (측정 잡음 σ m/s², 미끄러짐 · 공기 저항 무시). 숨은 모양 계수 $k$ 는 [새 조건]마다 0.35 ~ 1.0 에서 뽑힙니다(구 · 원통 · 공 · 고리). 경사각 20° 이하의 교육용 모형입니다.</p>
+      </div>
+      <div class="card">
+        <div class="h4">📋 측정 기록표 <span class="tiny" id="k17-cnt">0개</span></div>
+        <div class="tblscroll"><table id="k17-tbl"><thead></thead><tbody></tbody></table></div>
+        <p class="tiny">기록한 값은 <b>실험보고서(19번 탭)</b>의 표 · 그래프 · 결과로 자동으로 이어집니다. 5개 이상 모으세요.</p>
+      </div>
+      <div class="hintbox" data-hints="① 경사각을 2 ~ 20° 로 넓게 바꾸며 [측정 기록] 하세요(가로축은 g sinθ).||② 점이 원점을 지나는 직선인가요? 기울기는 얼마인가요?||③ 기울기에서 k 를 구해 물체가 구인지 원통인지 고리인지 추리해 보세요.||④ 질량을 2 배로 하면 기울기가 달라질까요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k17" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k17-cv" data-pngname="rotation-synth-17">🖼 PNG</button></div>
+          <canvas id="k17-cv" role="img" aria-label="가상 실험 장면" style="height:300px"></canvas>
+          <div class="cv-cap">경사면(가운데)에서 구르는 물체가 점점 빨라지며 내려옵니다(10 초 반복).</div>
+        </div>
+        <div id="k17-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k17-cv2" role="img" aria-label="측정 결과 그래프" style="height:320px"></canvas>
+          <div class="cv-cap">📊 가로 $g\sin\theta$ (m/s²) · 세로 가속도 $a$ (m/s²). 빨강 = 내 회귀직선, 흰 점선 = 숨은 참 직선. 기울기 = $1/(1+k)$.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$a=\dfrac{g\sin\theta}{1+k}$ → 기울기 $s=\dfrac1{1+k}$, $k=\dfrac1s-1$. 예 : $s=0.714$ → $k=0.40$ (속이 찬 구). 미끄러지면 $s$ 가 1 에 가까워집니다.</p><p class="lv-uni">교과서 밖 : 정지 마찰이 부족하면 미끄러지며 구르는 조건은 $\mu_s\ge\dfrac{k}{1+k}\tan\theta$ 입니다. 경사가 커질수록 미끄러지기 쉬워 이 직선은 큰 각도에서 휘어집니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h4">🧪 이 실험을 진짜로 하려면</div>
+    <div class="steps"><div class="step"><b>준비</b> : 경사판(1 m), 받침 책, 각도기, 구르는 물체(원통 · 공), 스마트폰 슬로 모션(R04 참고).</div><div class="step"><b>측정</b> : 경사각 6 가지에서 출발 위치와 시간을 영상으로 재어 $a=2L/t^2$ 을 구한다(3 회 평균).</div><div class="step"><b>그래프</b> : $a$ 대 $g\sin\theta$ 를 그려 원점을 지나는 직선으로 맞춘다(기울기 $1/(1+k)$).</div><div class="step"><b>분석</b> : $k=1/s-1$ 을 구하고 물체의 이론 k 와 비교한다. 미끄러짐의 영향도 쓴다.</div><div class="step"><b>안전</b> : 구르는 물체가 책상에서 떨어지지 않게 막이를 두고 발등에 주의한다.</div></div>
+    
+  </div>
+</section>

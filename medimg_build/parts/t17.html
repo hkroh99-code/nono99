@@ -1,0 +1,64 @@
+<section class="panel" id="tab17" role="tabpanel" aria-labelledby="tabbtn17" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-high">고등/수능</span><span class="badge b-exp">실험</span><span class="badge b-poe">POE</span>📊 [종합3] 잡음과 평균 — SNR 의 √N 법칙</div>
+    <div class="goal">🎯 이 실험에서 하는 것 — 같은 대상을 <b>N 장 찍어 평균</b>하면 신호 대 잡음비(SNR)가 얼마나 좋아지는지 측정합니다. $\mathrm{SNR}$ 대 $\sqrt N$ 그래프는 <b>원점을 지나는 직선</b>이고 기울기가 한 장의 SNR 입니다. 결과는 <b>보고서의 실험 D</b>가 됩니다. (CT · MRI · 초음파의 평균 · 선량 · 촬영 시간 거래의 핵심)</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 평균은 잡음을 √N 만큼 줄인다</div>
+      신호는 쌓이면 N 배, 서로 독립인 잡음은 √N 배로만 커지므로 평균하면 SNR 은 √N 배 좋아집니다. 화질을 2 배 좋게 하려면 촬영 시간(또는 선량)이 <b>4 배</b> 필요합니다 — 의료영상에서 선량과 화질의 거래.
+      <div class="bridge"><span class="st">신호 N 배</span><span class="ar">→</span><span class="st">잡음 √N 배</span><span class="ar">→</span><span class="st">SNR ∝ √N</span><span class="ar">→</span><span class="st new">선량 4 배 = 화질 2 배</span></div>
+    </div>
+    <div class="poe" data-q="한 장의 SNR 이 3 인 영상을 16 장 평균하면 SNR 은 대략?"
+         data-opts="6||12||24||48"
+         data-ans="1"
+         data-exp="$\mathrm{SNR}_N=\sqrt N\cdot\mathrm{SNR}_1=4\times3=12$. 16 배 시간을 써도 화질은 4 배 좋아질 뿐입니다."></div>
+    <div id="k17-misc"></div>
+  </div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 가상 실험실 — 조건을 정하고 [측정 기록]</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">평균 프레임 수 N</span><span class="vl" id="k17-NfV">—</span></div>
+          <input type="range" id="k17-Nf" min="1" max="64" step="1" value="8" aria-label="평균 프레임 수 N">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm" id="k17-new">🎲 새 조건(숨은 값 다시 뽑기)</button>
+          <button type="button" class="btn sm pri" id="k17-rec">📏 측정 기록</button>
+          <button type="button" class="btn sm" id="k17-rec10">📏×5 연속 기록</button>
+          <button type="button" class="btn sm rd" id="k17-clr">🧹 측정 초기화</button>
+        </div>
+        <div class="kv"><div class="cell a"><span class="k">이론 SNR</span><span class="v" id="k17-oS">—</span></div><div class="cell g"><span class="k">측정 SNR</span><span class="v" id="k17-oM">—</span></div><div class="cell v2"><span class="k">추정 SNR₁(기울기)</span><span class="v" id="k17-oF">—</span></div><div class="cell r"><span class="k">필요한 노력 비</span><span class="v" id="k17-oR">—</span></div><div class="cell "><span class="k">기록 개수</span><span class="v" id="k17-oN">—</span></div></div>
+        <p class="tiny">모형 : 측정 SNR = SNR₁ √N (1 + 0.07 ε), ε 는 가우시안 잡음(측정 SNR 자체의 흔들림). 한 장의 숨은 SNR₁ 은 [새 조건]마다 2 ~ 5 에서 뽑힙니다.</p>
+      </div>
+      <div class="card">
+        <div class="h4">📋 측정 기록표 <span class="tiny" id="k17-cnt">0개</span></div>
+        <div class="tblscroll"><table id="k17-tbl"><thead></thead><tbody></tbody></table></div>
+        <p class="tiny">기록한 값은 <b>실험보고서(19번 탭)</b>의 표 · 그래프 · 결과로 자동으로 이어집니다. 5개 이상 모으세요.</p>
+      </div>
+      <div class="hintbox" data-hints="① N 을 1, 4, 9, 16, 25, 49 로 바꾸며 [측정 기록] 하세요(√N 이 정수가 되도록).||② SNR 대 √N 점이 원점을 지나는 직선인가요? 기울기가 한 장의 SNR 인가요?||③ SNR 을 2 배로 하려면 N 을 몇 배로 해야 하나요? 선량이면 어떤 뜻인가요?||④ 평균해도 잡음이 √N 으로 줄지 않는 경우(잡음이 서로 독립이 아닐 때)를 생각해 보세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k17" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k17-cv" data-pngname="medimg-synth-17">🖼 PNG</button></div>
+          <canvas id="k17-cv" role="img" aria-label="가상 실험 장면" style="height:300px"></canvas>
+          <div class="cv-cap">왼쪽 : 한 장(잡음 많음), 오른쪽 : N 장 평균(깨끗). 같은 팬텀 · 같은 신호입니다(10 초 반복).</div>
+        </div>
+        <div id="k17-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k17-cv2" role="img" aria-label="측정 결과 그래프" style="height:320px"></canvas>
+          <div class="cv-cap">📊 가로 $\sqrt N$ · 세로 SNR. 빨강 = 내 회귀직선, 흰 점선 = 숨은 참 직선. 기울기 = 한 장의 SNR.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$\mathrm{SNR}_N=\sqrt N\,\mathrm{SNR}_1$ → 기울기 $s=\mathrm{SNR}_1$. 필요한 평균 장 수 $N=(\mathrm{SNR}_목표/\mathrm{SNR}_1)^2$. 예 : $s=3.0$ 에서 목표 12 → $N=16$.</p><p class="lv-uni">교과서 밖 : X선 · CT 는 광자 수 $N_\gamma$ 의 포아송 잡음이라 $\mathrm{SNR}\propto\sqrt{N_\gamma}\propto\sqrt{\text{선량}}$. MRI 는 신호 평균 횟수(NEX) $\sqrt{\mathrm{NEX}}$. 상관된 잡음에서는 평균 효과가 줄어듭니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h4">🧪 이 실험을 진짜로 하려면</div>
+    <div class="steps"><div class="step"><b>준비</b> : 스마트폰으로 어두운 장면(저조도)을 같은 위치에서 고정해 연속 촬영(삼각대).</div><div class="step"><b>측정</b> : 한 장의 관심영역(ROI) 평균 밝기 대비 표준편차로 SNR₁ 을 구한다(R09 참고).</div><div class="step"><b>평균</b> : N = 1, 4, 9, 16 장을 평균한 영상의 SNR 을 계산한다(파이썬 numpy).</div><div class="step"><b>그래프</b> : SNR 대 √N 점을 찍고 기울기가 SNR₁ 과 일치하는지 본다.</div><div class="step"><b>결론</b> : 선량 · 시간 · 화질 거래와 한계(움직임, 비독립 잡음)를 서술한다.</div></div>
+    
+  </div>
+</section>

@@ -1,0 +1,64 @@
+<section class="panel" id="tab16" role="tabpanel" aria-labelledby="tabbtn16" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-high">고등/수능</span><span class="badge b-exp">실험</span><span class="badge b-poe">POE</span>📊 [종합2] 기압으로 재는 고도 — 스케일 높이와 평균 기온</div>
+    <div class="goal">🎯 이 실험에서 하는 것 — 여러 높이에서 기압 $P$ 를 재어 $\ln(P_0/P)$ 대 높이 $h$ 의 그래프를 그리면 <b>원점을 지나는 직선</b>이 되고, 기울기가 $1/H$ (스케일 높이의 역수)입니다. 여기서 <b>공기의 평균 기온 $T=HMg/R$</b> 까지 구할 수 있습니다. 숨은 날씨(기온 · 기압)는 [새 조건]마다 달라지며, 결과는 <b>보고서의 실험 C</b>가 됩니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 지수를 로그로 펴기</div>
+      기압은 높이에 따라 <b>지수적으로</b> 줄어듭니다($P=P_0e^{-h/H}$). 양변에 로그를 취하면 $\ln(P_0/P)=h/H$ — 직선입니다. 높이가 낮을 때는 거의 직선이라 「100 m 당 약 12 hPa」처럼 말하지만, 높아질수록 구부러지는 까닭이 여기에 있습니다.
+      <div class="bridge"><span class="st">$P=P_0e^{-h/H}$</span><span class="ar">→</span><span class="st">$\ln(P_0/P)=h/H$</span><span class="ar">→</span><span class="st">$H=\dfrac{RT}{Mg}$</span><span class="ar">→</span><span class="st new">평균 기온 $T$</span></div>
+    </div>
+    <div class="poe" data-q="같은 날 같은 장소에서 기온이 더 높으면, 높이 1 km 올라갔을 때 기압은 어떻게 변할까?"
+         data-opts="더 많이 줄어든다||더 적게 줄어든다(기압이 천천히 줄어든다)||같다||기온은 기압과 무관하다"
+         data-ans="1"
+         data-exp="따뜻한 공기는 더 부풀어(밀도 ↓) 스케일 높이 $H=RT/Mg$ 가 커져 <b>기압이 천천히 줄어듭니다</b>. 그래서 기압 고도를 쓸 때는 기온(날씨)도 오차 요인입니다 — 이 실험이 보여 줍니다."></div>
+    <div id="k16-misc"></div>
+  </div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 가상 실험실 — 조건을 정하고 [측정 기록]</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">올라간 높이 h</span><span class="vl" id="k16-hV">—</span></div>
+          <input type="range" id="k16-h" min="0" max="1500" step="50" value="500" aria-label="올라간 높이 h">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm" id="k16-new">🎲 새 조건(숨은 값 다시 뽑기)</button>
+          <button type="button" class="btn sm pri" id="k16-rec">📏 측정 기록</button>
+          <button type="button" class="btn sm" id="k16-rec10">📏×5 연속 기록</button>
+          <button type="button" class="btn sm rd" id="k16-clr">🧹 측정 초기화</button>
+        </div>
+        <div class="kv"><div class="cell a"><span class="k">이론 기압 P (hPa)</span><span class="v" id="k16-oP">—</span></div><div class="cell g"><span class="k">ln(P₀/P)</span><span class="v" id="k16-oY">—</span></div><div class="cell v2"><span class="k">현재 추정 H</span><span class="v" id="k16-oH">—</span></div><div class="cell r"><span class="k">추정 평균 기온</span><span class="v" id="k16-oT">—</span></div><div class="cell "><span class="k">기록 개수</span><span class="v" id="k16-oN">—</span></div></div>
+        <p class="tiny">모형 : 등온 대기 $P=P_0e^{-h/H}$, $H=RT/Mg$. 센서 잡음은 기압 ±0.15 hPa(BMP280 급 어림), 지상 기준 기압도 같은 잡음으로 [측정 기록]할 때마다 한 번 더 잰다. 숨은 값 : 평균 기온 T(−5 ~ 30 ℃) · 지상 기압 P₀(1000 ~ 1025 hPa). 실제 대기는 높이에 따라 기온이 변하므로(ISA) 교육용 어림입니다.</p>
+      </div>
+      <div class="card">
+        <div class="h4">📋 측정 기록표 <span class="tiny" id="k16-cnt">0개</span></div>
+        <div class="tblscroll"><table id="k16-tbl"><thead></thead><tbody></tbody></table></div>
+        <p class="tiny">기록한 값은 <b>실험보고서(19번 탭)</b>의 표 · 그래프 · 결과로 자동으로 이어집니다. 5개 이상 모으세요.</p>
+      </div>
+      <div class="hintbox" data-hints="① 높이를 0, 250, 500 … 1000 m 로 바꾸며 [측정 기록] 하세요. 가까운 높이만 모으면 기울기가 불안합니다.||② ln(P₀/P) 점들이 원점을 지나는 직선인가요? 기울기에서 H 와 T 를 구하는 식을 직접 계산해 보세요.||③ [새 조건]으로 날씨(기온)를 바꾸고 같은 실험을 다시 하면 기울기는 어떻게 달라지나요?||④ 높이 300 m 까지만 측정했을 때와 1500 m 까지 측정했을 때 추정 기온의 오차가 어떻게 다른지 비교하세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k16" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k16-cv" data-pngname="cansat-synth-16">🖼 PNG</button></div>
+          <canvas id="k16-cv" role="img" aria-label="가상 실험 장면" style="height:300px"></canvas>
+          <div class="cv-cap">기압계를 단 풍선 · 캔위성이 올라가며 기압 눈금이 줄어드는 모습입니다(10 초에 0 → 선택한 높이).</div>
+        </div>
+        <div id="k16-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k16-cv2" role="img" aria-label="측정 결과 그래프" style="height:320px"></canvas>
+          <div class="cv-cap">📊 위 : 기압 대 높이(곡선 = 숨은 참 모형, 점 = 측정) · 아래 : $\ln(P_0/P)$ 대 높이 — 직선의 기울기 = 1/H.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$\dfrac{dP}{dh}=-\rho g=-\dfrac{PMg}{RT}$ → $P=P_0e^{-h/H}$, $H=\dfrac{RT}{Mg}$. 288 K 에서 $H\approx8.4$ km. 그래프의 기울기 $s=1/H$ 에서 $T=\dfrac{Mg}{R\,s}$. 예 : $s=1.19\times10^{-4}$ m⁻¹ → $H=8.4$ km → $T=288$ K.</p><p class="lv-uni">교과서 밖 : 실제 대기의 높이에 따른 기온 감률($-6.5$ K/km)을 넣으면 $P=P_0(1-Lh/T_0)^{Mg/RL}$ (ISA). 기압 고도계가 날씨에 따라 수십 m 틀리는 까닭이 기준 기압 변화입니다(오개념 5).</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h4">🧪 이 실험을 진짜로 하려면</div>
+    <div class="steps"><div class="step"><b>준비</b> : 기압 센서(BMP280 · 스마트폰 기압계), 높이를 아는 장소(건물 층별 계단 · 승강기), 기록지.</div><div class="step"><b>측정</b> : 1 층(기준)에서 기압을 5 회 재어 평균하고, 이후 3 m 씩(한 층) 올라가며 기압을 기록한다(14번 탭 코드 ①).</div><div class="step"><b>그래프</b> : $\ln(P_0/P)$ 대 높이를 그려 기울기를 구한다. 기압 변화가 작으므로(10 층에서 약 4 hPa) 센서 잡음에 민감하다.</div><div class="step"><b>확장</b> : 언덕 · 산 · 풍선(교사 시연) 등 더 큰 높이 차에서 측정해 기울기의 불확실성을 줄인다.</div><div class="step"><b>결론</b> : 구한 평균 기온을 기상청 관측값과 비교하고, 오차 원인(날씨 변화 · 센서 온도 · 기준 기압 변화)을 쓴다.</div></div>
+    
+  </div>
+</section>

@@ -1,0 +1,110 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 2 — 원리① 낙하와 종단속도 (교과서 힘과 운동 · 알짜힘 · 공기 저항)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab2" role="tabpanel" aria-labelledby="tabbtn2" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🪂 원리① 낙하와 종단속도 — 낙하산은 무엇을 바꾸는가?</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 떨어지는 물체에는 <b>중력(아래)</b>과 <b>공기 저항(위)</b> 두 힘이 작용합니다. 공기 저항은 속력이 커질수록 커지므로 어느 순간 두 힘이 같아지고, 그 뒤로는 <b>일정한 속도(종단속도)</b>로 떨어집니다. 낙하산은 중력을 줄이는 것이 아니라 <b>공기 저항을 훨씬 크게 만들어</b> 종단속도를 낮춥니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 힘과 운동(뉴턴 제2법칙)</div>
+      알짜힘이 0 이면 속도가 변하지 않고(<b>관성</b>), 알짜힘이 있으면 $F_{\text{알짜}}=ma$ 로 가속됩니다. 진공에서는 무엇이든 같은 가속도 $g$ 로 떨어지지만, 공기 속에서는 위로 향하는 <b>공기 저항</b> $F_d=\tfrac12\rho C_dAv^2$ 이 속력의 제곱에 비례해 커집니다. 그래서 속도가 커지면 알짜힘이 줄어 <b>가속도가 점점 작아지다가 0</b> 이 됩니다.
+      <div class="bridge"><span class="st old">알짜힘 = 중력 − 저항</span><span class="ar">→</span><span class="st">속력↑ → 저항↑ → 가속도↓</span><span class="ar">→</span><span class="st">저항 = 중력</span><span class="ar">→</span><span class="st new">종단속도 $v_t$</span></div>
+    </div>
+    <div class="poe" data-q="낙하산의 지름을 0.2 m 에서 0.4 m 로 두 배로 키우면 종단속도는 대략 몇 배가 될까? (캔의 질량은 같다)"
+         data-opts="약 2 배||약 ½ 배||약 ¼ 배||변하지 않는다"
+         data-ans="1"
+         data-exp="종단속도 $v_t\propto1/\sqrt{C_dA}$ 이고 면적은 $A\propto D^2$ 이므로 낙하산만 보면 $v_t\propto1/D$ — 지름 두 배면 <b>약 ½ 배</b>입니다(면적은 4 배, 종단속도는 √4 = 2 배 작아짐). 캔 몸통의 항력 면적이 조금 더해져 있어서 모형 수치는 약 10.5 m/s → 5.4 m/s (0.51 배)로 정확한 ½ 보다 아주 조금 큽니다. 오른쪽 시뮬레이션에서 지름 0.2 → 0.4 로 바꾸며 v_t 값을 비교해 보세요."></div>
+    <div id="t2-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 낙하의 세 장면 — 힘의 균형이 바뀌어 가는 과정 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 304" role="img" aria-label="낙하산이 달린 캔위성의 자유물체도 세 장면. 방출 직후에는 중력만 크고, 가속 중에는 공기 저항이 커지며, 종단속도에서는 두 힘이 같다.">
+        <text x="390" y="34" fill="#9db0cc" font-size="12" text-anchor="middle">빨강 화살표 = 중력 mg (늘 일정) · 파랑 화살표 = 공기 저항 F (속력이 커지면 커진다)</text>
+        {{FIG:fbd}}
+      </svg>
+    </div>
+    <div class="figcap">그림 2-1. 낙하산이 달린 캔위성의 힘 — ① 방출 직후에는 중력만 크다 → ② 속력이 커지며 공기 저항이 자란다 → ③ 두 힘이 같아지면 합력 0, 속도가 일정해진다(종단속도). 낙하산은 파랑 화살표를 훨씬 일찍 키우는 장치다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 중력 $mg$</b>질량에 비례하고 속력과 무관하다. 낙하산을 펴도 <i>변하지 않는다</i>. 0.35 kg 이면 약 3.4 N.</div>
+      <div class="part"><b>② 공기 저항 $\tfrac12\rho C_dAv^2$</b>속력의 <i>제곱</i>에 비례. 낙하산이 펼쳐지면 면적 $A$ 가 크게 늘어 같은 속력에서도 저항이 훨씬 크다.</div>
+      <div class="part"><b>③ 유효 면적 $C_dA$</b>모양 계수 $C_d$ 와 면적 $A$ 의 곱. 캔 혼자 ≈ 0.0034 m², 지름 40 cm 낙하산 ≈ 0.19 m² — <i>약 56 배</i>.</div>
+      <div class="part"><b>④ 종단속도 $v_t$</b>$mg=\tfrac12\rho C_dAv_t^2$ 일 때의 속력. $v_t\propto\sqrt{m}$, $v_t\propto1/D$(낙하산 지름).</div>
+      <div class="part"><b>⑤ 시간 상수 $\tau=v_t/g$</b>종단속도의 약 76 % 에 이르는 시간. 낙하산이 클수록 $v_t$ 가 작아 금방 안정된다.</div>
+      <div class="part"><b>⑥ 개방 충격</b>낙하산이 펼쳐지는 순간 저항이 급증해 가속도가 크게 나타난다(음의 가속도 = 감속). 줄과 천이 견뎌야 한다.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 커피 필터 낙하산 (재료비 거의 0원)</div>
+    <div class="steps">
+      <div class="step">같은 높이(약 2 m)에서 <b>커피 필터를 1 장 · 2 장 · 3 장 · 4 장</b> 겹쳐(= 질량만 달라짐) 떨어뜨려 스마트폰 슬로모션(240 fps)으로 찍는다.</div>
+      <div class="step">영상에서 마지막 1 m 구간(가속이 끝난 구간)의 통과 시간을 재어 속력 $v=1\ \text{m}/\Delta t$ 를 구한다. 장당 3 번씩 되풀이해 평균을 낸다.</div>
+      <div class="step">질량 $m$ (장수)에 대한 $v^2$ 그래프를 그려 <b>원점을 지나는 직선</b>인지 확인한다 — 이것이 15번 탭 [종합1] 과 같은 분석이다.</div>
+      <div class="step">같은 방법으로 <b>낙하산 지름</b>(비닐 원 · 지름 20 · 30 · 40 cm)만 바꾸고 질량은 같게 해 $v$ 를 구해 $v$ – $1/D$ 그래프를 그린다.</div>
+      <div class="step">각 낙하의 영상에서 속도가 일정해지는 때를 찾아 <b>종단속도</b>로 정하고, 이론 $v_t=\sqrt{2mg/\rho C_dA}$ 와 비교해 $C_d$ 를 추정한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🚗 쉽게 이해하기 — 달리는 차에서 손바닥 내밀기</div>
+      달리는 자동차 창밖으로 손을 내밀면 천천히 갈 때는 바람이 약하지만, 빨리 갈수록 손바닥이 세게 밀립니다. 손바닥을 <b>넓게</b> 펴면 더 세게 밀립니다. 낙하산은 이 「넓은 손바닥」입니다. 떨어지는 속력이 커질수록 위로 밀어 올리는 힘이 커져서, 어느 속력이 되면 <b>내려가려는 힘 = 밀어 올리는 힘</b> 이 되어 더 빨라지지 않습니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“낙하산을 펴면 중력이 줄어든다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>중력 $mg$ 는 <strong>그대로</strong>이고, 넓은 면적 때문에 <strong>공기 저항이 커져서</strong> 더 낮은 속력에서 두 힘이 같아집니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 낙하 시뮬레이션 — 힘과 속도의 변화 <span class="tiny">(방출 고도 200 m, 바람 없음)</span></div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">캔위성 질량 m (조작)</span><span class="vl" id="t2-mV">—</span></div>
+          <input type="range" id="t2-m" min="0.2" max="0.6" step="0.05" value="0.35" aria-label="질량">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">낙하산 지름 D (0 = 펴지 않음)</span><span class="vl" id="t2-dV">—</span></div>
+          <input type="range" id="t2-d" min="0" max="0.6" step="0.05" value="0.4" aria-label="낙하산 지름">
+        </div>
+        <div class="row">
+          <label class="chk"><input type="checkbox" id="t2-vac" checked> 진공에서 떨어뜨린 경우 겹쳐 보기(점선)</label>
+          <button type="button" class="btn sm" id="t2-p0">낙하산 없음</button>
+          <button type="button" class="btn sm" id="t2-p1">지름 20 cm</button>
+          <button type="button" class="btn sm" id="t2-p2">지름 40 cm</button>
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">종단속도 v_t</span><span class="v" id="t2-oV">—</span></div>
+          <div class="cell"><span class="k">시간 상수 τ = v_t / g</span><span class="v" id="t2-oTau">—</span></div>
+          <div class="cell g"><span class="k">낙하 시간 (공기 속)</span><span class="v" id="t2-oT">—</span></div>
+          <div class="cell v2"><span class="k">진공에서의 낙하 시간</span><span class="v" id="t2-oTv">—</span></div>
+          <div class="cell r"><span class="k">중력 mg · 저항 (지금)</span><span class="v" id="t2-oF">—</span></div>
+        </div>
+        <p class="tiny">모형 : 캔(Cd 1.0, 지름 66 mm) + 반구형 낙하산(Cd 1.5), 고도에 따른 밀도(표준대기). 낙하산은 방출 1 s 뒤 1.2 s 동안 펼쳐집니다. 점선 = 진공에서의 자유낙하($h=H_0-\tfrac12gt^2$).</p>
+      </div>
+      <div class="poe" data-q="낙하산 지름은 그대로 두고 질량만 0.2 kg → 0.6 kg (3 배)로 늘리면 종단속도는?"
+           data-opts="그대로||약 1.7 배(√3 배)||3 배||9 배"
+           data-ans="1"
+           data-exp="$v_t=\sqrt{2mg/\rho C_dA}$ 이므로 $v_t\propto\sqrt{m}$ — 질량 3 배면 약 <b>1.73 배</b>입니다. 무거운 물체가 더 빨리 떨어지긴 하지만 질량에 비례하지는 않습니다. 15번 탭 [종합1] 에서는 $v_t^2$ 를 $m/A$ 에 대해 그려 직선으로 만듭니다."></div>
+      <div class="hintbox" data-hints="① 먼저 [낙하산 없음] 을 누르고, 오른쪽 위 막대에서 중력(빨강)과 저항(파랑)의 길이가 같아지는 순간을 찾아보세요.||② [지름 40 cm] 로 바꾸면 낙하산이 펼쳐지는 1 ~ 2 초 동안 파랑 막대가 중력보다 훨씬 길어집니다. 이때 속도는 줄어들까요, 늘어날까요?||③ 아래 그래프의 가속도 곡선이 0 이 되는 때가 종단속도에 닿은 때입니다. 그때 속도 그래프는 어떻게 생겼나요?||④ 점선(진공)과 실선(공기)이 갈라지기 시작하는 시각은 언제인가요? 그 까닭을 힘으로 설명해 보세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t2" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t2-cv" data-pngname="cansat-fall-forces">🖼 PNG</button></div>
+          <canvas id="t2-cv" role="img" aria-label="낙하하는 캔위성과 중력 및 공기 저항의 크기 막대" style="height:340px"></canvas>
+          <div class="cv-cap">왼쪽 : 캔위성(실선)과 진공에서 떨어지는 경우(점선). 오른쪽 : 지금 작용하는 <b style="color:var(--rd)">중력 mg</b> 와 <b style="color:var(--cy)">공기 저항 F</b> 의 크기(N). 둘이 같아지면 합력이 0 입니다.</div>
+        </div>
+        <div id="t2-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t2-cv2" role="img" aria-label="낙하 속도와 알짜 가속도의 시간 그래프" style="height:330px"></canvas>
+          <div class="cv-cap">📊 위 : 낙하 속도 v(t) — 점선 = 진공(v = gt, 곧 그래프 밖으로 나감), 분홍 점선 = 종단속도. 아래 : 알짜 가속도 $a=(mg-F)/m$ — 낙하산이 펼쳐질 때 음수(감속)가 되었다가 0 으로 수렴.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>종단속도 : $mg=\tfrac12\rho C_dA\,v_t^2\ \Rightarrow\ v_t=\sqrt{\dfrac{2mg}{\rho C_dA}}$. 지름 $D$ 인 원형 낙하산이면 $A=\pi D^2/4$ → $v_t\propto 1/D$.</p>
+        <p>예 : $m=0.35$ kg, $D=0.40$ m, $C_d=1.5$ → $A=0.126\ \text{m}^2$, $C_dA=0.188+0.003=0.192$ → $v_t\approx5.4$ m/s. 낙하산이 없으면 $C_dA=0.0034$ → $v_t\approx40$ m/s.</p>
+        <p class="lv-uni">교과서 밖 : 제곱 저항에서의 속도 변화는 $v(t)=v_t\tanh\!\left(\dfrac{g t}{v_t}\right)$ 로 풀립니다. $t=\tau=v_t/g$ 에서 $v=v_t\tanh1\approx0.76\,v_t$, 이동 거리는 $y(t)=\dfrac{v_t^2}{g}\ln\cosh\dfrac{gt}{v_t}$. 위 시뮬레이션은 낙하산이 펼쳐지는 동안 $C_dA(t)$ 가 변하는 경우까지 수치 적분(Δt = 0.02 s)한 것입니다. 큰 낙하산은 속도가 느려 레이놀즈 수가 작아져도 $C_d$ 가 거의 일정(약 1.3 ~ 1.5)하다고 둡니다.</p>
+      </div>
+    </div>
+  </div>
+</section>

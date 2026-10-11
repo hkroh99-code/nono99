@@ -1,0 +1,199 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 14 — 공방 ⑦ 연구 도구함 (발상기 · 비용 · 시간 예산 · 연구계획서 · 코드 · 안전 점검)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab14" role="tabpanel" aria-labelledby="tabbtn14" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🧰 공방 ⑦ 연구 도구함 — 아이디어에서 계획서 · 코드 · 안전까지</div>
+    <div class="goal">🎯 이 탭에서 하는 것 — 프로젝트를 시작할 때 필요한 <b>도구</b>를 한곳에 모았습니다. ① <b>발상기</b>(주제 · 방법 · 제약 · 평가를 섞어 연구 문장 만들기) ② <b>비용 · 시간 예산 계산기</b> ③ <b>연구계획서 양식</b>(자동 저장) ④ <b>시작 코드</b>(아두이노 · 파이썬) ⑤ <b>안전 · 윤리 · 규정 점검표</b>. 모두 이 화면에서 직접 눌러 보며 쓸 수 있습니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 좋은 연구 질문은 「변인」으로 말한다</div>
+      「더 좋은 회전 장치를 만들자」는 연구가 아니라 소망입니다. <b>무엇(독립변인)을 바꾸면 무엇(종속변인)이 어떻게 변하는가? 그동안 무엇을 같게 둘 것인가(통제변인)?</b> 로 바꾸어 말하면 비로소 실험이 됩니다. 이 도구함의 발상기와 계획서 양식은 그 문장을 만들어 주는 도우미입니다.
+      <div class="bridge"><span class="st old">막연한 소망</span><span class="ar">→</span><span class="st">변인으로 쓴 질문</span><span class="ar">→</span><span class="st">예산 · 안전 점검</span><span class="ar">→</span><span class="st new">실행 가능한 계획서</span></div>
+    </div>
+    <div class="poe" data-q="같은 일을 혼자 하면 10 시간 걸린다. 4 명이 나누어 하면 걸리는 시간은? (협업 효율 0.8 가정)"
+         data-opts="2.5 시간||약 3.1 시간||5 시간||10 시간"
+         data-ans="1"
+         data-exp="이상적으로는 10 ÷ 4 = 2.5 시간이지만 소통 · 대기 · 합치기에 드는 시간 때문에 효율 0.8 이면 10 ÷ (4×0.8) ≈ <b>3.1 시간</b>입니다. 사람 수를 늘린다고 시간이 정확히 반으로 줄지 않으며, 계획을 짤 때 이 손실을 넣어야 합니다. 아래 계산기에서 확인하세요."></div>
+    <div id="k14-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🎲 ① 발상기 — 주제 · 방법 · 제약 · 평가를 섞어 연구 문장 만들기</div>
+    <div class="goal">🎯 칸의 🔒 를 눌러 마음에 드는 것은 고정하고 나머지를 다시 뽑아 보세요. 마음에 드는 조합이 나오면 <b>[연구계획서에 넣기]</b>.</div>
+    <div class="idea-grid" id="k14-ideagrid"></div>
+    <div class="row">
+      <button type="button" class="btn pri" id="k14-roll">🎲 다시 뽑기</button>
+      <button type="button" class="btn sm" id="k14-toplan">📝 연구계획서에 넣기</button>
+    </div>
+    <div class="easy"><div class="et" id="k14-sentence">…</div></div>
+    <p class="tiny">이 문장은 <b>출발점</b>일 뿐입니다. 「무엇을 바꾸고 무엇을 잴지」(변인)와 「어떻게 확인할지」(방법)를 계획서에서 직접 채워야 연구가 됩니다.</p>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">⚖️ ② 비용 · 시간 예산 계산기 <span class="badge b-mid">중등부터</span></div>
+        <div class="goal">🎯 활동을 켜고 끄며 <b>총 비용</b>이 한도 안인지, <b>동작 시간</b>이 임무 시간보다 긴지 확인하세요. 값은 학교·문구점 재료의 <b>대표 어림값</b>이며 실제는 가격과 측정으로 바꿔야 합니다.</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">비용 한도 (학교 · 대회 규정에서 확인)</span><span class="vl" id="k14-limV">—</span></div>
+          <input type="range" id="k14-lim" min="10" max="100" step="5" value="50" aria-label="비용 한도">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">쓸 수 있는 작업 시간 (준비 + 제작 + 측정 + 정리)</span><span class="vl" id="k14-needV">—</span></div>
+          <input type="range" id="k14-need" min="10" max="80" step="5" value="30" aria-label="쓸 수 있는 작업 시간">
+        </div>
+        <div class="row" role="radiogroup" aria-label="팀 규모 고르기"><span class="tiny">팀 규모 :</span>
+          <label class="chk"><input type="radio" name="k14-bat" value="0"> 1 명(혼자)</label>
+          <label class="chk"><input type="radio" name="k14-bat" value="1" checked> 2 명</label>
+          <label class="chk"><input type="radio" name="k14-bat" value="2"> 4 명</label>
+        </div>
+        <div class="partlist" id="k14-parts" role="group" aria-label="활동 목록"></div>
+        <div class="kv">
+          <div class="cell a"><span class="k">총 비용</span><span class="v" id="k14-oM">—</span></div>
+          <div class="cell"><span class="k">비용 여유</span><span class="v" id="k14-oMl">—</span></div>
+          <div class="cell g"><span class="k">총 작업량(1인 기준)</span><span class="v" id="k14-oI">—</span></div>
+          <div class="cell v2"><span class="k">팀 작업 시간 (작업량 ÷ 인원 ÷ 0.8)</span><span class="v" id="k14-oH">—</span></div>
+          <div class="cell r"><span class="k">판정</span><span class="v" id="k14-oJ">—</span></div>
+          <div class="cell"><span class="k">시간 여유</span><span class="v" id="k14-oC">—</span></div>
+        </div>
+        <p class="tiny">모형 : 총 작업량(1인 기준)은 켜져 있는 활동의 대표 작업 시간의 합, 팀 시간 = 작업량 ÷ (인원 × 0.8). 비용 한도 50 천 원은 「예시」이며 학교 · 대회마다 다릅니다.</p>
+      </div>
+      <div class="hintbox" data-hints="① 처음 켜진 활동만으로 비용과 시간을 읽어 보세요. 판정이 통과인가요?||② 「Arduino 초음파 센서」를 켜 보세요. 비용과 작업 시간은 어떻게 변하나요?||③ 팀 규모를 2 명에서 4 명으로 늘려 보세요. 시간은 정확히 절반이 되나요(협업 효율 0.8)?||④ 비용 한도를 줄여 가며 어떤 활동을 먼저 빼야 연구 질문에 영향이 가장 적을지 토론하세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k14" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k14-cv" data-pngname="rotation-budget">🖼 PNG</button></div>
+          <canvas id="k14-cv" role="img" aria-label="비용 예산과 시간 예산 막대 그래프" style="height:360px"></canvas>
+          <div class="cv-cap">📊 위 : 활동별 비용(누적 막대)과 비용 한도(빨간 선) · 아래 : 활동별 팀 작업 시간(누적 막대)과 쓸 수 있는 시간(초록 선). 선을 넘으면 계획을 고쳐야 합니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>비용 예산 $C=\sum_k c_k\le C_{\lim}$. 시간 예산 : 팀 $n$ 명, 협업 효율 $\varepsilon$ 일 때 $t=\dfrac{W}{n\,\varepsilon}\le t_{\rm avail}$ ($W$ : 1인 기준 총 작업량). 필요한 인원은 $n\ge \dfrac{W}{\varepsilon\,t_{\rm avail}}$ 입니다. 인원을 늘려도 소통 손실 때문에 시간이 정확히 반으로 줄지는 않으며, 이는 <b>회전운동에서 토크를 더해도 관성 때문에 가속이 바로 늘지 않는 것</b>과 닮은 「효율」 문제입니다.</p>
+        <p class="lv-uni">교과서 밖 : 제약이 여럿인 설계는 「실행 가능 영역」을 그리는 최적화 문제입니다. 목적함수(예 : 정확한 측정 개수)를 정하고 비용 · 시간 제약 아래서 최대로 만드는 선형계획으로 활동 조합을 찾아볼 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📝 ③ 연구계획서 양식 <span class="badge b-high">자동 저장</span></div>
+    <div class="goal">🎯 칸을 채우면 이 브라우저에 <b>자동 저장</b>됩니다. 다 쓰면 [복사] 하거나 [텍스트 저장]으로 내려받아 선생님께 제출하세요.</div>
+    <div class="plan">
+      <label class="pf">① 연구 제목 <input type="text" id="k14-p-title" placeholder="예 : 손잡이를 길게 하면 문은 얼마나 쉽게 열릴까 — 토크 F ∝ 1/r 검증"></label>
+      <label class="pf">② 연구 질문 <span class="tiny">(바꾸면 → 어떻게 변하는가?)</span> <textarea id="k14-p-q" rows="2" placeholder="예 : 경첩에서 손잡이까지의 거리 r 을 2 배로 하면 문이 움직이기 시작하는 힘 F 는 어떻게 변하는가?"></textarea></label>
+      <label class="pf">③ 가설 <span class="tiny">(이유 포함)</span> <textarea id="k14-p-h" rows="2" placeholder="예 : 토크 τ = rF 가 일정해야 문이 열리므로 r 이 2 배면 F 는 1/2 이 될 것이다."></textarea></label>
+      <div class="pgrid">
+        <label class="pf">④ 독립변인(바꾸는 것) <input type="text" id="k14-p-iv" placeholder="예 : 경첩에서 손잡이까지 거리 r (10, 30, 50, 70 cm)"></label>
+        <label class="pf">⑤ 종속변인(재는 것) <input type="text" id="k14-p-dv" placeholder="예 : 문이 움직이기 시작하는 힘 F (N)"></label>
+        <label class="pf">⑥ 통제변인(같게 둘 것) <input type="text" id="k14-p-cv" placeholder="예 : 문 · 경첩 · 당기는 방향(직각) · 사람"></label>
+        <label class="pf">⑦ 측정 도구 · 정밀도 <input type="text" id="k14-p-tool" placeholder="예 : 용수철 저울(±0.5 N), 자(±1 mm), 스프레드시트"></label>
+      </div>
+      <label class="pf">⑧ 실험 방법 <span class="tiny">(순서대로)</span> <textarea id="k14-p-m" rows="3" placeholder="① … ② … ③ …"></textarea></label>
+      <label class="pf">⑨ 예상 결과 · 분석 방법 <textarea id="k14-p-a" rows="2" placeholder="예 : F 대 1/r 그래프(원점을 지나는 직선), 기울기 = 필요 토크"></textarea></label>
+      <label class="pf">⑩ 위험 요인과 안전 대책 <textarea id="k14-p-r" rows="2" placeholder="예 : 문에 손이 끼지 않게 주의, 낮은 힘, 주변에 사람이 없을 때만"></textarea></label>
+      <label class="pf">⑪ 일정 · 역할 <textarea id="k14-p-s" rows="2" placeholder="예 : 1 주 재료 준비, 2 주 측정, 3 주 분석 / 역할 : 측정 · 기록 · 그래프"></textarea></label>
+    </div>
+    <div class="row">
+      <button type="button" class="btn pri" id="k14-copy">📋 계획서 복사</button>
+      <button type="button" class="btn sm" id="k14-save">💾 텍스트 저장</button>
+      <button type="button" class="btn sm rd" id="k14-clear">🗑 지우기</button>
+      <span class="tiny" id="k14-planmsg"></span>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="h3">💻 ④ 시작 코드 — 복사해서 시작하고, 내 것으로 고치기 <span class="badge b-high">고등</span></div>
+    <div class="goal">🎯 완성품이 아니라 <b>출발점</b>입니다. 핀 번호 · 보정값은 내 부품에 맞게 바꾸고 라이브러리 문서를 확인하세요. 모든 활동은 <b>낮은 속도 · 작은 질량 · 5 V 이하 저전압</b>이며 고속 회전체 · 고전압은 쓰지 않습니다.</div>
+    <details class="code" open><summary>① 파이썬 — 토크 평형과 지렛대 직선 맞춤 (종합1 · R01 · R02)</summary>
+      <button type="button" class="btn sm" data-copy="code-lev">📋 복사</button>
+      <pre><code id="code-lev">import numpy as np
+m1 = np.array([30, 60, 90, 120, 150, 180.])      # 왼쪽 질량(g) — 내 측정값으로 바꾸기
+d2 = np.array([3.1, 6.2, 8.8, 12.1, 14.9, 18.2]) # 평형 거리 d2 (cm)
+d1, m2 = 10.0, 100.0                             # 왼쪽 거리(cm), 오른쪽 추(g)
+k = (m1 * d2).sum() / (m1**2).sum()              # d2 = k m1 (원점 통과 최소제곱)
+print("기울기 k =", round(k, 4), " 이론 d1/m2 =", d1 / m2)</code></pre>
+    </details>
+    <details class="code"><summary>② 파이썬 — 도르래로 관성 모멘트 구하기 (종합1 · R03)</summary>
+      <button type="button" class="btn sm" data-copy="code-pul">📋 복사</button>
+      <pre><code id="code-pul">import numpy as np
+g, m, r = 9.8, 0.050, 0.025                      # 추 질량(kg), 도르래 반지름(m)
+h = 0.80                                         # 낙하 높이(m)
+t = np.array([2.31, 2.28, 2.35, 2.30])           # 낙하 시간(s) — 4 회 측정
+a = 2 * h / t.mean()**2                          # 가속도
+I = m * r**2 * (g / a - 1)                       # m g - T = m a, T r = I a/r
+print("a =", round(a, 3), "m/s2   I =", round(I * 1e4, 2), "x1e-4 kg m2")</code></pre>
+    </details>
+    <details class="code"><summary>③ 파이썬 — 구르기 가속도와 모양 계수 k (종합3 · R04 · C04)</summary>
+      <button type="button" class="btn sm" data-copy="code-roll">📋 복사</button>
+      <pre><code id="code-roll">import numpy as np
+g, th = 9.8, np.radians(10)                      # 경사각 10도
+L = 1.0                                          # 경사 길이(m)
+for name, k in [("고리", 1.0), ("원판", 0.5), ("속 빈 공", 2/3), ("구슬", 0.4), ("미끄러짐", 0.0)]:
+    a = g * np.sin(th) / (1 + k)
+    t = np.sqrt(2 * L / a)
+    print(f"{name:6s} k={k:.2f}  a={a:.3f} m/s2  내려오는 시간 {t:.2f} s")</code></pre>
+    </details>
+    <details class="code"><summary>④ 파이썬 — 각운동량 보존과 에너지 (종합2 · R05 · C03)</summary>
+      <button type="button" class="btn sm" data-copy="code-ang">📋 복사</button>
+      <pre><code id="code-ang">import numpy as np
+I0, m = 1.2, 1.0                                 # 몸 관성 모멘트(kg m2), 아령 1 kg 두 개
+r_out, r_in, w1 = 0.60, 0.15, 1.0                # 팔 벌림·오므림 거리(m), 처음 각속도(rad/s)
+I1 = I0 + 2 * m * r_out**2
+I2 = I0 + 2 * m * r_in**2
+w2 = w1 * I1 / I2                                # L = I w 보존
+W = 0.5 * I2 * w2**2 - 0.5 * I1 * w1**2         # 몸이 한 일
+print("w2 =", round(w2, 2), "rad/s   K 증가 =", round(W, 2), "J")</code></pre>
+    </details>
+    <details class="code"><summary>⑤ 아두이노 — 홀 센서로 회전수 재기 (I03 · I10)</summary>
+      <button type="button" class="btn sm" data-copy="code-ard">📋 복사</button>
+      <pre><code id="code-ard">// 홀 센서 출력이 D2 로 들어온다. 센서 사양서의 전원(5 V 이하)을 확인하세요.
+const int PIN = 2;
+const int NMAG = 4;                       // 회전판에 붙인 자석 개수
+const unsigned long WIN = 1000;           // 측정 창 T (ms)
+volatile unsigned long cnt = 0;
+void onPulse() { cnt++; }
+void setup() { Serial.begin(115200); pinMode(PIN, INPUT); attachInterrupt(digitalPinToInterrupt(PIN), onPulse, FALLING); }
+void loop() {
+  cnt = 0; delay(WIN);
+  float rpm = 60.0 * cnt / (NMAG * (WIN / 1000.0));
+  Serial.print("rpm = "); Serial.println(rpm, 1);
+  if (rpm >= 200) Serial.println("경고: 설정 회전수 초과");   // 교육용 경고 — 실제 안전장치 아님
+}</code></pre>
+    </details>
+    <details class="code"><summary>⑥ 파이썬 — 비틀림 진자로 κ 구하기 (R07 · I02)</summary>
+      <button type="button" class="btn sm" data-copy="code-tor">📋 복사</button>
+      <pre><code id="code-tor">import numpy as np
+m_d, R = 0.050, 0.05                             # 원판 질량(kg), 반지름(m)
+Id = 0.5 * m_d * R**2
+m = np.array([0.0, 0.010, 0.020, 0.030])         # 가장자리에 붙인 질량(kg, 2 개 합)
+r = 0.04
+I = Id + m * r**2
+T = np.array([2.01, 2.55, 2.97, 3.36])           # 10 회 진동 시간 ÷ 10
+T2 = T**2                                        # T^2 = 4 pi^2 I / kappa
+slope = (I * T2).sum() / (I * I).sum()           # 원점 통과 기울기
+print("kappa =", round(4 * np.pi**2 / slope * 1e3, 3), "mN m/rad")</code></pre>
+    </details>
+  </div>
+
+  <div class="card">
+    <div class="h3">🦺 ⑤ 안전 · 윤리 · 규정 점검표 <span class="badge b-poe">체크는 자동 저장</span></div>
+    <div class="goal">🎯 <b>시작하기 전에</b> 모두 확인하세요. 학교 · 대회 규정은 시기에 따라 바뀌므로 지도교사와 규정집의 최신 안내를 따릅니다.</div>
+    <div class="checklist" id="k14-safe"></div>
+    <div class="row"><span class="tiny" id="k14-safemsg">0 / 0 확인</span></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📚 ⑥ 더 찾아볼 곳 — 이름만 알려 드립니다(주소는 직접 검색)</div>
+    <div class="steps">
+      <div class="step"><b>한국</b> : 한국과학창의재단 · 국립과천과학관(회전 · 균형 전시) · 한국기계연구원 · 한국항공우주연구원(KARI, 위성 자세 제어) · 학교 R&amp;E · 영재학급 · 학생과학탐구대회.</div>
+      <div class="step"><b>미국</b> : NASA(반작용 휠 · 모멘텀 휠 · 우주선 자세 제어 교육 자료) · NIST(토크 표준) · 대학 공개 강의(MIT OpenCourseWare 역학) · AAPT(미국물리교사협회) · NSF.</div>
+      <div class="step"><b>일본</b> : JAXA(위성 자세 제어) · 日本物理学会 · 日本機械学会 · 産業技術総合研究所(AIST, 토크 표준) · 日本科学未来館.</div>
+      <div class="step"><b>국제</b> : ISO 6789(토크 공구 시험), BIPM(국제도량형국, SI 단위 N·m) · IEC 62061(기계 안전 기능) · IOP(영국 물리학회) 교육 자료.</div>
+      <div class="step"><b>이론</b> : 교과서 역학(토크 · 평형 · 각운동량) · 강체 회전 · 통계(회귀 · 오차 전파) · 샘플링 이론(착시).</div>
+      <div class="step"><b>특허</b> : 한국특허정보원 KIPRIS 에서 비슷한 발명을 검색해 「내 것의 새로운 점」을 정리합니다(발명 10선).</div>
+    </div>
+    <p class="tiny">※ 이 자료의 통계 · 연도 · 규모는 공개된 자료를 바탕으로 정리한 것이며 해마다 바뀔 수 있습니다. 활용 전 <b>반드시 공식 최신 자료</b>를 확인하세요.</p>
+  </div>
+</section>

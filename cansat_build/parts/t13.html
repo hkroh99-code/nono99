@@ -1,0 +1,105 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 13 — 프로젝트 공방 ⑥ 발명 6~10 (I06~I10 · 카드 5개 · 고르면 장치 도해 · 예산 · 방법 · 예측 결과 · 미니 모의실험 · 실패 대처 · 평가가 펼쳐짐)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab13" role="tabpanel" aria-labelledby="tabbtn13" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-exp">발명 ②</span><span class="badge b-high">고등</span><span class="badge b-poe">POE</span>🛠 프로젝트 공방 ⑥ 발명 6~10</div>
+    <div class="goal">🎯 이 공방에서 하는 것 — 지향 안테나 지상국 · 착지점 예측 앱 · 회수 비컨 · 열화상 낙하 관측기 · 리액션 휠 자세제어 5개 발명입니다(I06 ~ I10). 통신 · 소프트웨어 · 센서 · 제어 분야로 확장해 <b>팀 프로젝트 · 대학 연구</b>의 시작점으로 삼을 수 있습니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 센서와 제어는 「재고 → 판단 → 움직임」</div>
+      자세제어 · 안테나 추적 · 비컨 방향탐지는 모두 <b>측정 → 오차 계산 → 보정</b> 반복(피드백)입니다. 이 구조를 이해하면 서보 · 모터 · 휠 같은 장치가 모두 같은 틀로 보입니다. 이 탭은 그 틀을 5 가지 응용으로 시험합니다.
+      <div class="bridge"><span class="st old">측정</span><span class="ar">→</span><span class="st">오차 계산</span><span class="ar">→</span><span class="st">보정(제어)</span><span class="ar">→</span><span class="st">결과 평가</span><span class="ar">→</span><span class="st new">반복</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🧭 공방 안내 — 이렇게 진행합니다 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="발명 진행 흐름. 여섯 단계가 이어지고 되돌아가 고친다.">
+        {{FIG:wf_in}}
+      </svg>
+    </div>
+    <div class="figcap">그림 13-1. 발명 의 흐름 — 여섯 단계를 거치며 <b>되돌아가 고치는</b> 것이 핵심이다</div>
+    <div class="h4">🧰 이 공방의 도구와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 센서</b>잡음 크기를 먼저 잰다.</div>
+      <div class="part"><b>② 구동기</b>서보 · 모터 · 휠. 한계(속도 · 힘)를 확인.</div>
+      <div class="part"><b>③ 제어 규칙</b>P 제어부터. 필요하면 D 를 더한다.</div>
+      <div class="part"><b>④ 시험 입력</b>계단 · 사인파로 응답을 본다.</div>
+      <div class="part"><b>⑤ 성능 지표</b>오버슈트 · 정착 시간 · 정상 오차.</div>
+      <div class="part"><b>⑥ 안전</b>서보 · 모터가 사람에게 닿지 않게.</div>
+    </div>
+    <div class="h4">🧪 진행 순서</div>
+    <div class="steps">
+      <div class="step"><b>측정할 양 정하기</b> — 각도 · 방위 · 신호 세기 · 온도.</div>
+      <div class="step"><b>목표값(설정값)</b> — 얼마가 되어야 성공인지.</div>
+      <div class="step"><b>제어 규칙</b> — 비례 · 적분 · 미분 중 간단한 것부터.</div>
+      <div class="step"><b>시험</b> — 계단 입력(갑자기 목표를 바꿈)에 대한 응답을 기록.</div>
+      <div class="step"><b>이득 조정</b> — 오버슈트 · 정착 시간 · 정상 오차를 표로.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🚲 쉽게 이해하기 — 자전거 균형 잡기</div>
+      자전거가 한쪽으로 기울면 우리는 핸들을 그쪽으로 조금 꺾어 균형을 되찾습니다. 기울기를 <b>느끼고(측정)</b>, 얼마나 기울었는지 <b>판단하고(오차)</b>, 핸들을 <b>꺾는 것(보정)</b> — 이 반복이 피드백 제어입니다. 너무 크게 꺾으면 흔들리고, 너무 작게 꺾으면 쓰러집니다 — 그 「세기」가 제어 이득입니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“제어는 센서 값이 크면 무조건 세게 반응하면 된다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>이득이 너무 크면 <strong>진동</strong>, 너무 작으면 <strong>느림</strong>. 알맞은 이득은 시뮬레이션과 시험으로 찾습니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🗂 프로젝트 5선 (발명 ②) — 카드를 누르면 아래에 자세한 안내가 펼쳐집니다</div>
+    <div class="tline" id="k13-pick" role="group" aria-label="프로젝트 고르기"></div>
+  </div>
+
+  <div id="k13-d1"></div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 미니 모의실험 — <span id="k13-simT">—</span></div>
+        <p class="muted" id="k13-simQ">—</p>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="k13-aN">—</span><span class="vl" id="k13-aV">—</span></div>
+          <input type="range" id="k13-a" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 1">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="k13-bN">—</span><span class="vl" id="k13-bV">—</span></div>
+          <input type="range" id="k13-b" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 2">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm pri" id="k13-go">🎲 새로 측정 (새 난수)</button>
+          <button type="button" class="btn sm" id="k13-def">↺ 기본값</button>
+        </div>
+        <div class="kv" id="k13-kv"></div>
+        <p class="tiny" id="k13-note">—</p>
+      </div>
+      <div class="poe" data-q="I10 리액션 휠 캔위성에서 안쪽 휠을 시계 방향으로 돌리면 캔 몸체는?"
+           data-opts="시계 방향으로 돈다||반시계 방향으로 돈다||그대로 있다||위로 뜬다"
+           data-ans="1"
+           data-exp="휠 + 몸체의 전체 각운동량이 보존되므로 휠이 시계 방향 각운동량을 얻으면 몸체는 <b>반대 방향</b>으로 돕니다. 몸체가 도는 정도는 관성 모멘트의 비 $I_w/I_b$ 로 정해집니다 — 휠이 클수록 효과가 큽니다."></div>
+      <div class="poe" data-q="I09 열화상 센서가 시야각 55° 에 32 칸(가로)이라면 고도 100 m 에서 한 칸이 보는 지상 폭은 대략?"
+           data-opts="약 0.3 m||약 3 m||약 30 m||약 300 m"
+           data-ans="1"
+           data-exp="가로 시야 폭 $\approx2h\tan(27.5^\circ)=2\times100\times0.52\approx104$ m, 32 칸이면 한 칸이 약 <b>3.3 m</b> 를 봅니다. 고도가 높을수록 한 칸이 넓어져 작은 열점은 안 보입니다."></div>
+      <div id="k13-misc"></div>
+      <div class="hintbox" data-hints="① I10 리액션 휠은 먼저 책상 위 회전 의자에서 사람이 몸을 돌리는 것으로 원리를 느껴 보세요(각운동량 보존).||② I08 비컨은 RSSI 가 가장 센 방향을 찾는 것 — 방향성 안테나가 필요합니다.||③ I09 열화상은 해상도(칸 수)와 고도에 따른 칸 크기를 먼저 계산하세요.||④ I06 · I07 은 앞의 4 · 5번 탭 모형이 바로 설계식입니다."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k13" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k13-cv" data-pngname="project-13-sim">🖼 PNG</button></div>
+          <canvas id="k13-cv" role="img" aria-label="프로젝트 미니 모의실험 애니메이션" style="height:300px"></canvas>
+          <div class="cv-cap" id="k13-cap1">—</div>
+        </div>
+        <div id="k13-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k13-cv2" role="img" aria-label="프로젝트 예상 결과 그래프" style="height:250px"></canvas>
+          <div class="cv-cap" id="k13-cap2">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="k13-d2"></div>
+</section>

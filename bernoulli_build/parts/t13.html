@@ -1,0 +1,105 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 13 — 프로젝트 공방 ⑥ 발명 6~10 (I06~I10 · 카드 5개 · 고르면 장치 도해 · 예산 · 방법 · 예측 결과 · 미니 모의실험 · 실패 대처 · 평가가 펼쳐짐)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab13" role="tabpanel" aria-labelledby="tabbtn13" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-exp">발명 ②</span><span class="badge b-high">고등</span><span class="badge b-poe">POE</span>🛠 프로젝트 공방 ⑥ 발명 6~10</div>
+    <div class="goal">🎯 이 공방에서 하는 것 — 풍력 터빈 피치 제어 · 실속 경보기 · 윈드콘 경보등 · 문틈 누설 진단기 · 덕트 벤투리 풍량 센서 5개 발명입니다(I06 ~ I10). 「제어 · 확률 · 안전 · 감도와 손실의 균형」을 다루는 설계 프로젝트로 <b>팀 프로젝트 · 대학 연구</b>의 시작점으로 삼을 수 있습니다. <b>안전 : 이 공방의 모든 활동은 저속 선풍기 · 헤어드라이어(냉풍 · 약풍) · 물 · 빨대 · 주사기 · 저울만 쓰는 안전한 실험입니다(고압 공기 · 연소 · 가열 · 압축 가스 · 고속 회전체는 쓰지 않습니다).</b></div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 설계의 균형(감도 · 손실 · 거짓 경보)</div>
+      좋은 설계는 하나를 얻으려면 다른 하나를 내줘야 하는 <b>균형(trade-off)</b>을 아는 일입니다. 벤투리 목을 좁히면 감도는 오르지만 압력 손실이 커지고, 경보 설정각을 낮추면 안전은 오르지만 거짓 경보가 늘어납니다. 이 균형점을 식과 그래프로 찾는 것이 공학 설계입니다.
+      <div class="bridge"><span class="st old">측정</span><span class="ar">→</span><span class="st">설계 계산</span><span class="ar">→</span><span class="st">균형(trade-off)</span><span class="ar">→</span><span class="st">시험</span><span class="ar">→</span><span class="st new">개선</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🧭 공방 안내 — 이렇게 진행합니다 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="발명 진행 흐름. 여섯 단계가 이어지고 되돌아가 고친다.">
+        {{FIG:wf_in}}
+      </svg>
+    </div>
+    <div class="figcap">그림 13-1. 발명 의 흐름 — 여섯 단계를 거치며 <b>되돌아가 고치는</b> 것이 핵심이다</div>
+    <div class="h4">🧰 이 공방의 도구와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 설계 목표</b>측정 · 제어하려는 양과 목표값.</div>
+      <div class="part"><b>② 균형 변수</b>β · 설정각 · 이득 같은 설계 변수.</div>
+      <div class="part"><b>③ 시험 입력</b>경계 조건 · 센서 오프셋 · 잡음을 일부러 넣는다.</div>
+      <div class="part"><b>④ 성능 지표</b>오차 · 응답 시간 · 거짓 경보율.</div>
+      <div class="part"><b>⑤ 한계 표시</b>어떤 조건에서 실패하는지.</div>
+      <div class="part"><b>⑥ 윤리</b>안전 우선 · 「실제 안전 장치 아님」 표기 · 정직한 보고.</div>
+    </div>
+    <div class="h4">🧪 진행 순서</div>
+    <div class="steps">
+      <div class="step"><b>측정할 양 정하기</b> — 풍량 · 각도 · 풍속 · 압력.</div>
+      <div class="step"><b>목표값</b> — 얼마가 되어야 성공인지.</div>
+      <div class="step"><b>설계 계산</b> — 감도 · 손실 · 확률을 식으로.</div>
+      <div class="step"><b>시험</b> — 입력 변화에 대한 출력을 기록.</div>
+      <div class="step"><b>성능 지표 · 한계</b> — 정확도 · 거짓 경보율 · 실패 사례를 표로.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🧭 쉽게 이해하기 — 화재 경보기의 민감도</div>
+      화재 경보기가 너무 민감하면 요리할 때마다 울리고, 너무 둔하면 진짜 불을 놓쳐요. 그래서 설계자는 「거짓 경보」와 「놓침」 사이의 균형점을 정합니다. 실속 경보기도 똑같아서 설정각 하나가 안전과 편의를 가릅니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“센서 값이 한계에 닿을 때까지 써도 괜찮다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>센서 · 장치는 <strong>측정 범위와 한계</strong>를 먼저 확인하고, 안전 장치는 「교육용 모형」임을 반드시 밝혀야 합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🗂 프로젝트 5선 (발명 ②) — 카드를 누르면 아래에 자세한 안내가 펼쳐집니다</div>
+    <div class="tline" id="k13-pick" role="group" aria-label="프로젝트 고르기"></div>
+  </div>
+
+  <div id="k13-d1"></div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 미니 모의실험 — <span id="k13-simT">—</span></div>
+        <p class="muted" id="k13-simQ">—</p>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="k13-aN">—</span><span class="vl" id="k13-aV">—</span></div>
+          <input type="range" id="k13-a" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 1">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="k13-bN">—</span><span class="vl" id="k13-bV">—</span></div>
+          <input type="range" id="k13-b" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 2">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm pri" id="k13-go">🎲 새로 측정 (새 난수)</button>
+          <button type="button" class="btn sm" id="k13-def">↺ 기본값</button>
+        </div>
+        <div class="kv" id="k13-kv"></div>
+        <p class="tiny" id="k13-note">—</p>
+      </div>
+      <div class="poe" data-q="I10 덕트 벤투리에서 같은 풍량일 때 목을 좁게(β 작게) 하면 차압 Δp 와 압력 손실은?"
+           data-opts="Δp 작아지고 손실 작아진다||Δp 커지고 손실도 커진다||Δp 커지고 손실은 작아진다||변화 없음"
+           data-ans="1"
+           data-exp="$Q=C A_2\sqrt{2\Delta p/\rho(1-\beta^4)}$ 에서 목 면적 $A_2$ 가 작으면 같은 Q 에 Δp 가 커져 <b>감도는 높아지지만 압력 손실도 커집니다</b>. 그래서 설계자는 β 를 0.5 ~ 0.7 정도에서 정하는 경우가 많습니다."></div>
+      <div class="poe" data-q="I09 에서 방 안팎의 압력 차이가 4 배가 되면 문틈으로 새는 공기량은 대략 몇 배가 될까?"
+           data-opts="2 배||4 배||8 배||16 배"
+           data-ans="0"
+           data-exp="유출 속력은 $v=\sqrt{2\Delta p/\rho}$ 이므로 Δp 가 4 배면 속력은 $\sqrt4=2$ 배, 틈 면적이 같으면 누설량도 <b>2 배</b>입니다. 유량은 √Δp 에 비례합니다."></div>
+      <div id="k13-misc"></div>
+      <div class="hintbox" data-hints="① I06 · I07 은 숫자로 먼저 제어 · 확률 곡선을 그려 보세요.||② I08 은 윈드콘이 강풍에서 포화한다는 한계를 반드시 다루세요.||③ I09 는 틈 폭 · 압력 차이를 각각 바꾸어 √Δp 직선을 확인하세요.||④ I10 은 목 지름비 β 를 바꿔 감도 대 손실의 표를 만드세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k13" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k13-cv" data-pngname="project-13-sim">🖼 PNG</button></div>
+          <canvas id="k13-cv" role="img" aria-label="프로젝트 미니 모의실험 애니메이션" style="height:300px"></canvas>
+          <div class="cv-cap" id="k13-cap1">—</div>
+        </div>
+        <div id="k13-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k13-cv2" role="img" aria-label="프로젝트 예상 결과 그래프" style="height:250px"></canvas>
+          <div class="cv-cap" id="k13-cap2">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="k13-d2"></div>
+</section>

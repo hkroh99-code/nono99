@@ -1,0 +1,105 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 13 — 프로젝트 공방 ⑥ 발명 6~10 (I06~I10 · 카드 5개 · 고르면 장치 도해 · 예산 · 방법 · 예측 결과 · 미니 모의실험 · 실패 대처 · 평가가 펼쳐짐)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab13" role="tabpanel" aria-labelledby="tabbtn13" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-exp">발명 ②</span><span class="badge b-high">고등</span><span class="badge b-poe">POE</span>🛠 프로젝트 공방 ⑥ 발명 6~10</div>
+    <div class="goal">🎯 이 공방에서 하는 것 — 선량 기록 앱 · 초음파 탐촉자 압력 가이드 · 영상 전송 압축 · AI 불확실성 표시 · 저선량 영상 잡음 제거 5개 발명입니다(I06 ~ I10). 소프트웨어 · 센서 · 데이터 분야로 확장해 <b>팀 프로젝트 · 대학 연구</b>의 시작점으로 삼을 수 있습니다. <b>안전 : 이 공방의 모든 활동은 방사선 · 강자기장 · 고출력 초음파를 쓰지 않는 안전한 유사 실험입니다.</b></div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 측정 · 데이터 · 판단의 순환</div>
+      영상 장비 하나는 「측정 → 처리 → 표시 → 판단」의 순환입니다. 이 탭의 발명들은 각각 그 순환의 한 곳을 개선합니다 — 기록(선량), 측정 품질(압력 · 각도), 처리(압축 · 잡음 제거), 판단(AI 의 불확실성). 어느 곳을 고치든 <b>정직한 숫자</b>가 설득력의 근거입니다.
+      <div class="bridge"><span class="st old">측정</span><span class="ar">→</span><span class="st">처리</span><span class="ar">→</span><span class="st">표시</span><span class="ar">→</span><span class="st">판단</span><span class="ar">→</span><span class="st new">개선</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🧭 공방 안내 — 이렇게 진행합니다 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="발명 진행 흐름. 여섯 단계가 이어지고 되돌아가 고친다.">
+        {{FIG:wf_in}}
+      </svg>
+    </div>
+    <div class="figcap">그림 13-1. 발명 의 흐름 — 여섯 단계를 거치며 <b>되돌아가 고치는</b> 것이 핵심이다</div>
+    <div class="h4">🧰 이 공방의 도구와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 입력 데이터</b>공개 데이터 · 모의 데이터. 실제 환자 정보는 쓰지 않는다.</div>
+      <div class="part"><b>② 처리 규칙</b>알고리즘 · 임계값 · 필터.</div>
+      <div class="part"><b>③ 성능 지표</b>민감도 · 특이도 · PSNR · CNR.</div>
+      <div class="part"><b>④ 시험 입력</b>경계 조건 · 어려운 사례를 일부러 넣는다.</div>
+      <div class="part"><b>⑤ 한계 표시</b>모형이 틀리는 곳을 정직하게.</div>
+      <div class="part"><b>⑥ 윤리</b>개인정보 · 편향 · 설명 가능성.</div>
+    </div>
+    <div class="h4">🧪 진행 순서</div>
+    <div class="steps">
+      <div class="step"><b>측정할 양 정하기</b> — 선량 · 압력 · 화질 · 확률.</div>
+      <div class="step"><b>목표값</b> — 얼마가 되어야 성공인지.</div>
+      <div class="step"><b>규칙 · 알고리즘</b> — 간단한 것부터.</div>
+      <div class="step"><b>시험</b> — 입력 변화에 대한 출력을 기록.</div>
+      <div class="step"><b>성능 지표 · 한계</b> — 정확도 · 오차 · 실패 사례를 표로.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🧭 쉽게 이해하기 — 내비게이션의 도착 예정 시간</div>
+      내비게이션이 「도착 12 분」이라고만 하면 믿기 어렵지만 「10 ~ 15 분 사이」라고 알려 주면 계획을 세울 수 있습니다. 영상 AI 도 「암일 확률 70 %」만이 아니라 <b>얼마나 믿을 만한지(불확실성)</b>를 함께 보여 줄 때 의사가 올바르게 판단합니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“AI 가 확률을 알려 주면 그대로 믿으면 된다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>유병률이 낮으면 양성 판정의 상당수가 <strong>가짜 양성</strong>입니다. 베이즈 정리로 계산한 <strong>양성 예측도</strong>를 함께 봐야 합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🗂 프로젝트 5선 (발명 ②) — 카드를 누르면 아래에 자세한 안내가 펼쳐집니다</div>
+    <div class="tline" id="k13-pick" role="group" aria-label="프로젝트 고르기"></div>
+  </div>
+
+  <div id="k13-d1"></div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 미니 모의실험 — <span id="k13-simT">—</span></div>
+        <p class="muted" id="k13-simQ">—</p>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="k13-aN">—</span><span class="vl" id="k13-aV">—</span></div>
+          <input type="range" id="k13-a" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 1">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="k13-bN">—</span><span class="vl" id="k13-bV">—</span></div>
+          <input type="range" id="k13-b" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 2">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm pri" id="k13-go">🎲 새로 측정 (새 난수)</button>
+          <button type="button" class="btn sm" id="k13-def">↺ 기본값</button>
+        </div>
+        <div class="kv" id="k13-kv"></div>
+        <p class="tiny" id="k13-note">—</p>
+      </div>
+      <div class="poe" data-q="I09 에서 질환 유병률 1 %, 민감도 95 %, 특이도 90 % 인 검사에서 양성이 나왔다. 실제로 환자일 확률(양성 예측도)은 대략?"
+           data-opts="약 95 %||약 90 %||약 9 %||약 50 %"
+           data-ans="2"
+           data-exp="1000 명 중 환자 10 명 → 진짜 양성 9.5, 건강한 990 명 중 10 % = 99 명이 가짜 양성 → PPV $=9.5/(9.5+99)\approx8.8\%$. 유병률이 낮으면 양성의 대부분이 가짜입니다."></div>
+      <div class="poe" data-q="I10 저선량 영상 잡음 제거에서 평균 필터 반지름을 키우면 잡음과 병변은?"
+           data-opts="잡음도 병변도 그대로||잡음은 줄고 병변은 흐려진다||잡음이 늘어난다||병변이 더 선명해진다"
+           data-ans="1"
+           data-exp="평균 필터는 이웃을 평균해 잡음($\propto1/\sqrt{\text{화소 수}}$)을 줄이지만 작은 병변의 윤곽도 함께 흐려져 <b>잡음 대 해상도의 거래</b>가 생깁니다."></div>
+      <div id="k13-misc"></div>
+      <div class="hintbox" data-hints="① I09 는 먼저 숫자로 연습하세요(1000 명 중 몇 명이 양성이 될까?).||② I08 은 압축률이 높을수록 용량이 작아지지만 병변이 사라지는 점을 찾아보세요.||③ I10 은 필터 반지름이 너무 크면 병변이 흐려지는 것을 확인하세요.||④ I06 · I07 의 수치는 교육용 어림입니다."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k13" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k13-cv" data-pngname="project-13-sim">🖼 PNG</button></div>
+          <canvas id="k13-cv" role="img" aria-label="프로젝트 미니 모의실험 애니메이션" style="height:300px"></canvas>
+          <div class="cv-cap" id="k13-cap1">—</div>
+        </div>
+        <div id="k13-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k13-cv2" role="img" aria-label="프로젝트 예상 결과 그래프" style="height:250px"></canvas>
+          <div class="cv-cap" id="k13-cap2">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="k13-d2"></div>
+</section>

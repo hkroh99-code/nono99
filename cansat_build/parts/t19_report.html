@@ -1,0 +1,180 @@
+<section class="panel" id="tab19" data-role="report" role="tabpanel" aria-labelledby="tabbtn19" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-exp">실험보고서</span>📝 실험보고서 작성 &amp; 인쇄 / PDF 저장</div>
+    <div class="goal">🎯 이 탭에서 하는 것 — 정식 실험보고서를 작성합니다. 보고서는 <b>부분마다 새 장</b>에서 시작합니다(표지·실험 A·실험 B·실험 C·실험 D·결론 = 6부분). 할 말이 많아 <b>8쪽까지 늘어나도 괜찮습니다.</b>
+      <b>실험 A · C · D</b> 는 [종합] 탭(15 · 16 · 17번)에서 측정할 때마다 <b>자동으로</b> 표·그래프가 채워지고,
+      <b>실험 B</b> 는 교실에서 커피 필터를 떨어뜨려 <b>장수에 따른 낙하 시간을 직접 재고</b> <b>학생이 직접 적고 직접 계산</b>합니다.
+      목적·가설·오차 분석·고찰은 모두 직접 쓰는 칸입니다. 다 쓰면 인쇄하거나 PDF로 저장하세요.</div>
+    <div class="row">
+      <button type="button" class="btn sm" id="t11-import">🔄 최신 측정 데이터 불러오기</button>
+      <button type="button" class="btn sm" id="t11-clear">자동 수집 데이터 초기화</button>
+      <span class="tiny" id="t11-cnt" style="margin-left:auto">0개</span>
+      <button type="button" class="btn sm rd" id="t11-reset">🗑 작성 내용 전체 지우기</button>
+    </div>
+    <div class="row">
+      <button type="button" class="btn pri" id="t11-print">🖨 인쇄 / PDF로 저장 (A4 4~8쪽)</button>
+      <span class="tiny" id="t11-pages" style="color:var(--dim);font-weight:700">예상 인쇄 분량 —</span>
+      <span class="tiny" style="color:var(--dim)">※ 인쇄 대화상자에서 "PDF로 저장"을 고르면 파일로 내려받을 수 있습니다.
+        적은 내용은 자동 저장되어 새로고침해도 남습니다.
+        <b>8쪽까지는 정상입니다</b> — 분량을 맞추려고 내용을 억지로 줄이지 마세요.</span>
+    </div>
+  </div>
+
+  <div id="t11-printarea">
+
+    <!-- ══════════ 1부분 : 표지 · 목적 · 이론 · 가설 ══════════ -->
+    <div class="card report-paper rpt-page">
+      <div style="text-align:center;border-bottom:2px solid #334155;padding-bottom:10px;margin-bottom:14px">
+        <div style="font-size:1.3rem;font-weight:800">캔위성 &mdash; 실험보고서</div>
+        <div style="font-size:.98rem;margin-top:4px;color:#334155">낙하산의 항력계수 · 기압의 스케일 높이와 기온 · 복귀 착륙의 정밀도 재기</div>
+      </div>
+      <div class="rgrid">
+        <label class="report-field">학교 / 학년 <input type="text" id="t11-school"></label>
+        <label class="report-field">반 / 모둠 <input type="text" id="t11-group"></label>
+        <label class="report-field">이름 <input type="text" id="t11-name"></label>
+        <label class="report-field">함께한 사람 <input type="text" id="t11-mates"></label>
+        <label class="report-field">실험 일시 <input type="date" id="t11-date"></label>
+        <label class="report-field">교사 확인 <input type="text" id="t11-teacher"></label>
+      </div>
+
+      <h4>1. 실험 목적 <span class="tiny" style="font-weight:400">— 무엇을 확인하려는지 내 말로 쓰기</span></h4>
+      <textarea id="t11-purpose" rows="3">낙하산 달린 물체의 종단속도를 재어 항력계수(Cd)를 구하고, 높이에 따른 기압 변화에서 공기의 스케일 높이와 평균 기온을 구하며, 복귀 비행의 착륙 오차를 분포(중앙값 · 90 % 값 · 성공률)로 나타낸다. 모델의 가정과 측정의 한계를 논의한다.</textarea>
+
+      <h4>2. 이론 &mdash; 아는 것을 정리하기</h4>
+      <div class="rpt-hint">아래 식의 빈칸을 채우고, 왜 그렇게 되는지 오른쪽 칸에 한 줄로 설명해 보자.</div>
+      <table>
+        <thead><tr><th style="width:34%">관계식</th><th style="width:22%">빈칸 채우기</th><th>왜 그런가? (내 설명)</th></tr></thead>
+        <tbody>
+          <tr><td>종단속도에서 중력 mg = ( &nbsp; ) (항력)</td>
+              <td><input type="text" id="t11-f1" class="rpt-blank" placeholder="?"></td>
+              <td><input type="text" id="t11-w1" placeholder="예 : 가속도가 0 이므로 알짜힘이 0 …"></td></tr>
+          <tr><td>질량이 같고 낙하산 면적이 4 배이면 종단속도는 ( &nbsp; ) 배</td>
+              <td><input type="text" id="t11-f2" class="rpt-blank" placeholder="?"></td>
+              <td><input type="text" id="t11-w2"></td></tr>
+          <tr><td>기압 : P = P₀ e<sup>( &nbsp; )</sup></td>
+              <td><input type="text" id="t11-f3" class="rpt-blank" placeholder="?"></td>
+              <td><input type="text" id="t11-w3"></td></tr>
+          <tr><td>착륙 오차의 절반이 들어오는 반경 = ( &nbsp; ) (약자 CEP₅₀)</td>
+              <td><input type="text" id="t11-f4" class="rpt-blank" placeholder="?"></td>
+              <td><input type="text" id="t11-w4"></td></tr>
+        </tbody>
+      </table>
+
+      <h4>3. 가설(예상) &mdash; 측정하기 <b>전에</b> 쓰기</h4>
+      <div class="rpt-q">① 같은 낙하산에서 질량을 4 배로 하면 종단속도는 몇 배일까? 왜 그렇게 되는가?</div>
+      <textarea id="t11-hyp1" rows="2" placeholder="예상 : … 배일 것이다. 왜냐하면 종단속도는 …"></textarea>
+      <div class="rpt-q">② 높이 올라가면 기압은 직선으로 줄어들까, 곡선으로 줄어들까? 기온이 높으면 기압이 줄어드는 속도는?</div>
+      <textarea id="t11-hyp2" rows="2"></textarea>
+      <div class="rpt-q">③ 같은 조건으로 10 번 날리면 착륙 오차는 모두 같을까? 평균과 중앙값 중 무엇이 더 대표적일까?</div>
+      <textarea id="t11-hyp3" rows="2"></textarea>
+      <div class="rpt-foot"><span class="rpt-no">[1 / 6]</span> &nbsp;·&nbsp; 캔위성 실험보고서</div>
+    </div>
+
+    <!-- ══════════ 2부분 : 실험 A (자동 수집) ══════════ -->
+    <div class="card report-paper rpt-page">
+      <h4>4. 실험 A &mdash; 낙하산으로 재는 항력계수 <span class="tiny" style="font-weight:400">(데이터 자동 수집)</span></h4>
+      <div class="rpt-hint"><b>[15. 종합1]</b> 탭에서 <b>[측정 기록]</b> 을 누르면 아래 표 · 그래프가 자동으로 채워집니다(5개 이상).</div>
+
+      <div class="rpt-q"><b>실험 방법</b> &mdash; 내가 한 순서대로 쓰기</div>
+      <textarea id="t11-methodA" rows="3">① 낙하산 달린 물체의 질량 m 과 지름 D 를 바꾸어 종단속도 구간(3 m)의 통과 시간을 쟀다
+② v = L/t, v² 와 m/A 를 계산해 표에 모았다
+③ v² 대 m/A 직선의 기울기 s 로 Cd = 2g/(ρ s) 를 구했다</textarea>
+
+      <div class="rpt-q"><b>측정 데이터</b> <span class="tiny" id="t11-cnt2">0개</span></div>
+      <div style="overflow-x:auto"><table id="t11-tbl"><thead></thead><tbody></tbody></table></div>
+
+      <div class="rpt-q"><b>그래프와 회귀직선</b> (가로 m/A · 세로 v²)</div>
+      <canvas id="t11-cv" width="640" height="225" style="width:100%;max-width:560px;height:200px;border:1px solid #d3dae3;border-radius:6px"></canvas>
+
+      <div class="rpt-q"><b>결과</b></div>
+      <div id="t11-result" style="font-size:.88rem"></div>
+      <div class="rpt-q">이 결과를 보고 알게 된 것을 한두 문장으로 쓰자. (세로축을 v 가 아니라 v² 로 잡은 까닭은? 참 Cd 와의 차이는 어디서 왔을까?)</div>
+      <textarea id="t11-obsA" rows="3"></textarea>
+      <div class="rpt-foot"><span class="rpt-no">[2 / 6]</span> &nbsp;·&nbsp; 실험 A</div>
+    </div>
+
+    <!-- ══════════ 3부분 : 실험 B (학생이 직접 측정·직접 계산) ══════════ -->
+    <div class="card report-paper rpt-page">
+      <h4>5. 실험 B &mdash; 커피 필터 장수와 낙하 시간 <span class="tiny" style="font-weight:400">(내가 직접 재어서 채우기)</span></h4>
+      <div class="rpt-hint">커피 필터(같은 크기)를 <b>1 · 2 · 3 · 4 · 5 장</b> 겹쳐 같은 높이에서 놓고, 속도가 일정해진 <b>마지막 구간 L</b> 의 통과 시간 t 를 여러 번 재어 평균해 적으세요. 필터 1 장의 질량 m₁ 과 펼친 단면적 A 도 재어 아래 칸에 쓰세요.</div>
+
+      <div class="rpt-tools" id="t11-auxwrap">
+        <span class="lbl" id="t11-auxlabel">보조 상수 =</span>
+        <input type="text" id="t11-LB" style="width:70px;text-align:center">
+        <span class="lbl" id="t11-auxunit"></span> <span class="lbl">필터 1 장 질량 m₁ =</span><input type="text" id="t11-m1" style="width:60px;text-align:center" placeholder="1.0"><span class="lbl">g</span> <span class="lbl">단면적 A =</span><input type="text" id="t11-AA" style="width:60px;text-align:center" placeholder="110"><span class="lbl">cm²</span>
+      </div>
+      <div class="rpt-tools noprint">
+        <button type="button" id="t11-addrow">＋ 측정 칸 추가</button>
+        <button type="button" id="t11-delrow">− 마지막 칸 삭제</button>
+        <button type="button" id="t11-clearB">직접 측정값 지우기</button>
+      </div>
+      <div style="overflow-x:auto"><table id="t11-tblB"><thead></thead><tbody></tbody></table></div>
+
+      <div class="rpt-q"><b>그래프</b> &mdash; 내가 적은 값으로 그려집니다 (가로 필터 장수 N · 세로 v²)</div>
+      <canvas id="t11-cv2" width="640" height="265" style="width:100%;max-width:560px;height:225px;border:1px solid #d3dae3;border-radius:6px"></canvas>
+
+      <div class="rpt-q"><b>직접 계산하기</b> &mdash; 그래프의 기울기와 절편을 읽고 아래 빈칸을 <u>내가 계산해서</u> 채우자.</div>
+      <table>
+        <thead><tr><th style="width:46%">계산할 것</th><th style="width:27%">내가 구한 값</th><th style="width:27%">확인 (버튼을 누르면 표시)</th></tr></thead>
+        <tbody>
+          <tr><td>그래프의 기울기 k ((m/s)²/장) 와 절편</td>
+              <td><input type="text" id="t11-mk"></td><td id="t11-ck" class="rpt-auto">—</td></tr>
+          <tr><td>항력계수 Cd = 2g·m₁ ÷ (ρ·A·k) (ρ = 1.225 kg/m³)</td>
+              <td><input type="text" id="t11-mlam"></td><td id="t11-clam" class="rpt-auto">—</td></tr>
+          <tr><td id="t11-cmplabel">다른 실험과의 비교</td>
+              <td><input type="text" id="t11-mdiff"></td><td id="t11-cdiff" class="rpt-auto">—</td></tr>
+        </tbody>
+      </table>
+      <div class="rpt-tools noprint">
+        <button type="button" class="pri" id="t11-check">✅ 내 계산 확인하기</button>
+        <span class="tiny" style="color:#64748b">먼저 스스로 계산해서 적은 뒤에 누르세요.</span>
+      </div>
+      <div class="rpt-q">실험 A(가상 낙하산)의 Cd 와 값이 다르다면 그 까닭은? (낙하산 모양 · 종단속도에 못 이른 구간 · 시간 측정 오차 · 필터의 변형)</div>
+      <textarea id="t11-obsB" rows="2"></textarea>
+      <div class="rpt-foot"><span class="rpt-no">[3 / 6]</span> &nbsp;·&nbsp; 실험 B (직접 측정)</div>
+    </div>
+
+    <!-- ══════════ 실험 C·D (reportDefine) 의 부분은 엔진이 이 자리(결론 바로 앞)에 끼워 넣는다 ══════════ -->
+    <!-- ══════════ 끝 부분 : 결론 · 오차 · 자유기록 · 자기평가 ══════════ -->
+    <div class="card report-paper rpt-page" id="t11-pageEnd">
+      <h4>6. 결론</h4>
+      <div class="rpt-q">네 실험(A~D)에서 어떤 그래프의 무엇(기울기 · 분포)을 읽어 어떤 물리량을 구했는지 정리하자.</div>
+      <textarea id="t11-concl" rows="4" placeholder="항력계수(A)는 v² 대 m/A 의 기울기로 …, 커피 필터(B)에서는 … , 기압(C)에서는 ln(P₀/P) 의 기울기로 …, 복귀 정밀도(D)에서는 중앙값과 90 % 값으로 … 따라서 캔위성은 …"></textarea>
+
+      <h4>7. 오차 분석 &mdash; 왜 참값과 어긋났을까?</h4>
+      <table>
+        <thead><tr><th style="width:32%">오차의 원인</th><th style="width:20%">크게/작게?</th><th>줄이는 방법</th></tr></thead>
+        <tbody>
+          <tr><td><input type="text" id="t11-e1a" placeholder="예 : 낙하 시간 측정 오차(±0.05 s)"></td>
+              <td><input type="text" id="t11-e1b" placeholder="Cd 에 ±5 %"></td>
+              <td><input type="text" id="t11-e1c" placeholder="예 : 영상 슬로모션으로 시간 재기"></td></tr>
+          <tr><td><input type="text" id="t11-e2a" placeholder="예 : 센서 잡음 · 기준 기압 변화"></td><td><input type="text" id="t11-e2b"></td><td><input type="text" id="t11-e2c"></td></tr>
+          <tr><td><input type="text" id="t11-e3a"></td><td><input type="text" id="t11-e3b"></td><td><input type="text" id="t11-e3c"></td></tr>
+        </tbody>
+      </table>
+
+      <h4>8. 더 생각해 보기</h4>
+      <div class="rpt-q">① 같은 낙하산이라도 높은 곳(공기가 희박)에서는 종단속도가 어떻게 달라질까? 그래서 낙하산은 어느 고도에서 펴야 안전할까?</div>
+      <textarea id="t11-q1" rows="2"></textarea>
+      <div class="rpt-q">② 이 보고서의 실험 중 하나를 개선한다면 무엇을 바꿀까? (어떤 센서 · 장치 · 시험 횟수를 바꾸면 오차가 줄까?)</div>
+      <textarea id="t11-q2" rows="3" placeholder="근거 : …   내 생각 : …"></textarea>
+
+      <h4>9. 자유 기록 <span class="tiny" style="font-weight:400">— 측정 사진·그림·추가 계산을 자유롭게 (칸은 쓰는 만큼 늘어납니다)</span></h4>
+      <div class="rpt-lines"></div>
+      <textarea id="t11-free" rows="2" placeholder="(글로 남기고 싶은 내용을 여기에 적어도 됩니다)"></textarea>
+
+      <h4>10. 스스로 평가</h4>
+      <table>
+        <thead><tr><th>평가 항목</th><th style="width:120px">잘함 / 보통 / 부족</th></tr></thead>
+        <tbody>
+          <tr><td>가설을 근거를 들어 세웠는가?</td><td><input type="text" id="t11-s1"></td></tr>
+          <tr><td>데이터를 빠뜨리지 않고 정확히 기록했는가?</td><td><input type="text" id="t11-s2"></td></tr>
+          <tr><td>그래프에서 기울기 · 꼭짓점 · 절편의 의미를 설명할 수 있는가?</td><td><input type="text" id="t11-s3"></td></tr>
+          <tr><td>오차의 원인을 스스로 찾아냈는가?</td><td><input type="text" id="t11-s4"></td></tr>
+        </tbody>
+      </table>
+      <div class="rpt-foot"><span class="rpt-no">[6 / 6]</span> &nbsp;·&nbsp; 결론 · 오차 분석 · 자기평가</div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,118 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 6 — 원리⑤ 전력 · 충격 · 안전 (교과서 일 · 에너지 · 충격량 · 전류와 에너지)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab6" role="tabpanel" aria-labelledby="tabbtn6" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🔋 원리⑤ 전력 · 충격 · 안전 — 임무를 끝까지, 망가지지 않게</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 캔위성이 임무를 마치려면 <b>배터리가 충분해야 하고</b>(전력 예산), 땅에 닿을 때의 <b>충격을 견뎌야</b> 합니다. 충격은 착지 속도 $v$ 와 <b>멈추는 거리 $d$</b> 로 정해지고($a=v^2/2d$), 배터리 사용 시간은 <b>용량 ÷ 평균 전류</b>입니다. 그리고 무엇보다 <b>사람과 환경의 안전</b>을 설계에 넣어야 합니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 일 · 에너지와 충격량</div>
+      운동하는 물체가 멈추려면 운동 에너지 $\tfrac12mv^2$ 가 모두 일 $F\,d$ 로 바뀌어야 합니다(일–에너지 정리). 같은 에너지를 <b>더 긴 거리에 걸쳐</b> 흡수하면 평균 힘이 작아집니다 — 에어백 · 헬멧 · 무릎을 굽히는 착지가 그 예입니다. 전기에서는 전지의 에너지(용량)를 전류가 얼마나 빨리 쓰느냐가 <b>동작 시간</b>을 정합니다.
+      <div class="bridge"><span class="st old">$\tfrac12mv^2=F\,d$</span><span class="ar">→</span><span class="st">$a=v^2/2d$ (충격 완화)</span><span class="ar">→</span><span class="st">용량 ÷ 평균 전류</span><span class="ar">→</span><span class="st new">안전한 임무 설계</span></div>
+    </div>
+    <div class="poe" data-q="같은 완충재로 착지 속도가 6 m/s 에서 12 m/s 로 두 배가 되면 평균 충격 가속도는?"
+         data-opts="2 배||4 배||8 배||같다"
+         data-ans="1"
+         data-exp="$a=\dfrac{v^2}{2d}$ 이므로 속도의 <b>제곱</b>에 비례 — 속도 두 배면 충격은 <b>4 배</b>. 운동 에너지 $\tfrac12mv^2$ 가 4 배가 되는 것과 같은 이야기입니다. 그래서 낙하산으로 착지 속도를 줄이는 것이 완충재보다 훨씬 효과적입니다(속도를 ½ 로 하면 충격 ¼). 오른쪽 시뮬레이션에서 착지 속도 슬라이더를 움직여 확인하세요."></div>
+    <div id="t6-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 전력 · 충격 · 안전 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 290" role="img" aria-label="전력 충격 안전 도해. 충격은 멈추는 거리에 반비례한다. 전력 예산은 부하별 평균 전류의 합으로 배터리 시간을 구한다. 안전 수칙 다섯 가지.">
+        <text x="390" y="28" fill="#9db0cc" font-size="12" text-anchor="middle">끝까지 동작하고(전력) · 부서지지 않고(충격) · 누구도 다치지 않게(안전)</text>
+        {{FIG:power}}
+      </svg>
+    </div>
+    <div class="figcap">그림 6-1. ① 충격 : 완충재가 멈추는 거리 d 를 늘리면 평균 가속도가 줄어든다 → ② 전력 : 부하별 평균 전류를 합해 배터리 시간을 예측 → ③ 안전 : 전지 · 낙하 · 전파 · 비행에 대한 수칙. 이 세 가지가 임무의 「성공 조건」</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 착지 속도 $v$</b>낙하산이 정하는 종단속도(2번 탭). $v$ 를 줄이는 것이 <i>제일 효과가 큰 충격 대책</i>이다(운동 에너지 ∝ $v^2$).</div>
+      <div class="part"><b>② 완충 거리 $d$</b>스펀지 · 폼 · 종이 허니콤 · 3D 프린트 격자가 찌그러지며 멈추는 거리. 평균 충격 $a=v^2/(2d)$. <i>g 단위</i>로 말하면 $a/9.8$.</div>
+      <div class="part"><b>③ 충격 지속 시간</b>$t_s=2d/v$. 6 m/s · 20 mm 완충이면 약 6.7 ms. 시간이 짧을수록 높은 주파수의 충격 — 납땜 · 커넥터가 <i>떨어질 수 있다</i>.</div>
+      <div class="part"><b>④ 배터리 용량 (mAh)</b>전류 × 시간. 실제로 쓸 수 있는 양은 약 <i>80 %</i>, 추우면 더 줄어든다. LiPo 3.7 V · 리튬이온 18650 등.</div>
+      <div class="part"><b>⑤ 평균 전류</b>켜져 있는 비율(듀티)을 곱한 값의 합. 송신(LoRa) · 서보 · 카메라는 순간 전류가 크므로 <i>피크</i>도 따로 확인한다(전압 강하 → 리셋).</div>
+      <div class="part"><b>⑥ 안전</b>리튬 전지는 단락 · 과충전 · 찌그러짐에 위험. 낙하 시험 지역 · 전파법 · 비행 허가는 <i>설계 단계부터</i> 확인.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 달걀 보호와 스마트폰 가속도계</div>
+    <div class="steps">
+      <div class="step"><b>충격 재기</b> : 스마트폰(가속도 앱, 100 Hz 이상)을 푹신한 방석에 놓고 약 1 m 높이에서 베개 위로 떨어뜨려 가속도 − 시간 그래프를 기록한다(폰 파손 주의 — 두꺼운 완충을 쓸 것).</div>
+      <div class="step">완충재 두께를 <b>1 · 2 · 4 cm</b> 로 바꿔 최대 가속도(g)를 읽어 $a_{\max}$ 와 $1/d$ 의 관계를 그래프로 그린다(이론 : 반비례).</div>
+      <div class="step">같은 높이에서 <b>작은 낙하산을 단 경우</b>와 비교해 착지 속도가 줄면 충격이 얼마나 줄어드는지(≈ $v^2$) 확인한다(C06 · R06).</div>
+      <div class="step"><b>전력</b> : 멀티미터(전류 측정)로 컨트롤러 · GPS · 무선 · 서보를 하나씩 켜며 평균 전류를 재어 <b>전력 예산표</b>를 만든다(14번 탭 서식).</div>
+      <div class="step">예산표로 예측한 동작 시간과 배터리가 끊길 때까지 실제로 돌려 본 시간을 비교해 「사용 가능 용량 비율」을 구한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🤸 쉽게 이해하기 — 점프 착지에서 무릎 굽히기</div>
+      높은 데서 뛰어내릴 때 다리를 뻣뻣하게 펴고 착지하면 순식간에 멈춰서 발목 · 무릎이 아픕니다. 무릎을 굽히면 멈추는 거리가 길어져 같은 속도에서도 힘이 훨씬 작습니다. 완충재는 캔위성의 「굽히는 무릎」이고, 낙하산은 「뛰어내리는 높이를 낮추는」 장치입니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“착지 속도만 같으면 완충재를 두껍게 하든 얇게 하든 충격은 같다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>평균 충격 $a=v^2/(2d)$ — 멈추는 거리 $d$ 가 <strong>2 배</strong>면 충격은 <strong>½</strong>. 완충은 「멈추는 거리와 시간을 늘리는 일」입니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 충격 · 전력 시뮬레이션</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">착지 속도 v (조작)</span><span class="vl" id="t6-vV">—</span></div>
+          <input type="range" id="t6-v" min="2" max="15" step="0.5" value="6" aria-label="착지 속도">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">완충 두께(멈추는 거리) d</span><span class="vl" id="t6-dV">—</span></div>
+          <input type="range" id="t6-d" min="2" max="60" step="1" value="20" aria-label="완충 두께">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">배터리 용량 C</span><span class="vl" id="t6-cV">—</span></div>
+          <input type="range" id="t6-c" min="200" max="3000" step="50" value="1000" aria-label="배터리 용량">
+        </div>
+        <div class="row" role="group" aria-label="켜 둘 부하"><span class="tiny">켜 둔 부하 :</span>
+          <label class="chk"><input type="checkbox" id="t6-l0" checked> 컨트롤러 80</label>
+          <label class="chk"><input type="checkbox" id="t6-l1" checked> GPS 25</label>
+          <label class="chk"><input type="checkbox" id="t6-l2" checked> 센서 5</label>
+          <label class="chk"><input type="checkbox" id="t6-l3" checked> LoRa 25</label>
+          <label class="chk"><input type="checkbox" id="t6-l4"> 서보 60</label>
+          <label class="chk"><input type="checkbox" id="t6-l5"> 카메라 150</label>
+          <button type="button" class="btn sm am" id="t6-go">▶ 다시 떨어뜨리기</button>
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">평균 충격 가속도</span><span class="v" id="t6-oA">—</span></div>
+          <div class="cell"><span class="k">멈추는 시간 t_s = 2d/v</span><span class="v" id="t6-oT">—</span></div>
+          <div class="cell g"><span class="k">착지 운동 에너지 ½mv²</span><span class="v" id="t6-oE">—</span></div>
+          <div class="cell r"><span class="k">판정 (목표 ≤ 100 g)</span><span class="v" id="t6-oJ">—</span></div>
+          <div class="cell v2"><span class="k">평균 전류</span><span class="v" id="t6-oI">—</span></div>
+          <div class="cell"><span class="k">동작 시간 (용량 × 0.8)</span><span class="v" id="t6-oH">—</span></div>
+        </div>
+        <p class="tiny">모형 : 일정한 감속(평균 충격)으로 멈춘다고 가정 — 실제 충격은 순간 최댓값이 평균의 1.5 ~ 3 배일 수 있습니다. 100 g 목표는 「교육용 설계 예시」(부품 · 납땜 · 배터리에 따라 다름 — 센서 칩은 수천 g 도 견디지만 기판 · 커넥터 · 렌즈는 더 약합니다). 질량 0.35 kg. 부하 전류는 평균값 가정(순간 피크는 더 큼).</p>
+      </div>
+      <div class="poe" data-q="평균 전류가 100 mA 인 캔위성에 1000 mAh 배터리를 달면 실제로 대략 몇 시간 동작할까? (사용 가능 비율 80 %)"
+           data-opts="약 1 시간||약 8 시간||약 10 시간(이론값 그대로)||약 100 시간"
+           data-ans="1"
+           data-exp="동작 시간 = 사용 가능 용량 ÷ 평균 전류 = (1000 mAh × 0.8) ÷ 100 mA = <b>약 8 시간</b>. 배터리 표기 용량을 전부 쓰지 못하고, 낮은 온도 · 큰 순간 전류에서는 더 줄어듭니다. 시뮬레이션에서 카메라(150 mA)를 켜 보세요 — 평균 전류가 2.5 배가 되어 시간이 크게 줄어듭니다."></div>
+      <div class="hintbox" data-hints="① 먼저 착지 속도 6 m/s · 완충 20 mm 에서 평균 충격이 몇 g 인지 읽어 보세요. 100 g 목표를 넘나요?||② 완충 두께를 두 배(40 mm)로 하면 충격이 정확히 절반이 되나요? 이번엔 착지 속도를 ½(3 m/s)로 바꿔 충격이 얼마나 줄어드는지 비교해 보세요.||③ 아래 그래프(충격 – 완충 두께)에서 곡선이 점점 완만해지는 까닭은? 두께를 계속 늘리면 무엇이 문제가 될까요(무게 · 부피)?||④ 부하 체크를 모두 켜 보세요. 배터리 시간이 임무 시간(낙하 약 1 분 + 회수 대기 30 분)보다 짧아지나요? 어떤 부하를 줄이면 좋을까요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t6" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t6-cv" data-pngname="cansat-impact">🖼 PNG</button></div>
+          <canvas id="t6-cv" role="img" aria-label="캔위성이 완충재 위에 착지해 멈추는 느린 화면과 가속도 표시" style="height:320px"></canvas>
+          <div class="cv-cap">앞 3 초 : 캔위성이 일정한 속도로 접근 → 3 ~ 7 초 : <b>실제로는 몇 ms 인 충격을 느리게 보여 줍니다</b>(완충재가 눌리며 멈춤). 빨간 화살표 = 감속(가속도) 크기, 오른쪽 막대 = 가속도(g).</div>
+        </div>
+        <div id="t6-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t6-cv2" role="img" aria-label="충격 가속도 시간 그래프와 완충 두께에 따른 충격 그래프" style="height:330px"></canvas>
+          <div class="cv-cap">📊 위 : 충격 가속도 a(t)(일정 감속 모형) — 면적 = 속도 변화 = v. 아래 : 평균 충격 가속도 대 완충 두께(세로 로그) — 곡선 = 지금 착지 속도, 점선 = ½ 속도, 빨간 선 = 설계 목표 100 g.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>일 – 에너지 정리 : $\tfrac12mv^2=\bar F\,d$ → $\bar F=\dfrac{mv^2}{2d}$, 평균 가속도 $\bar a=\dfrac{v^2}{2d}$. 예 : $v=6$ m/s, $d=0.02$ m → $\bar a=900\ \text{m/s}^2\approx92g$. 정지 시간 $t_s=\dfrac{2d}{v}=6.7$ ms, 충격량 $\bar F\,t_s=mv$.</p>
+        <p>배터리 : 동작 시간 $t=\dfrac{0.8\,C}{I_{\text{평균}}}$, 평균 전류 $I=\sum_k I_k\,\eta_k$ ($\eta_k$ : 켜져 있는 비율). 예 : 컨트롤러 80 + GPS 25 + 센서 5 + LoRa 25 = 135 mA → 1000 mAh 로 5.9 시간.</p>
+        <p class="lv-uni">교과서 밖 : 실제 완충재는 일정한 힘이 아니라 <b>압축 응력 고원(plateau stress) $\sigma_p$</b> 를 갖는 폼이 많아 $\bar F=\sigma_pA$ 로 두고 필요한 두께 $d=\dfrac{mv^2}{2\sigma_pA}$ 를 설계합니다(→ 발명 04 3D 프린트 격자). 전압 강하는 $V=E-Ir$ (내부 저항 $r$)로, 순간 전류가 큰 서보 · 송신기는 배터리 내부 저항 때문에 기판 전압을 순간적으로 떨어뜨려 리셋을 일으킬 수 있어 큰 용량의 콘덴서(100 ~ 470 μF)를 붙입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>

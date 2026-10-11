@@ -1,0 +1,118 @@
+<!-- ═══ TAB 3 — 🫧 원리② 정점 압력과 최대 높이 · 시동과 정지 ═══ -->
+<section class="panel" id="tab3" role="tabpanel" aria-labelledby="tabbtn3" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🫧 원리② 정점 압력과 최대 높이 · 시동과 정지</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 사이펀 관의 가장 높은 곳(정점)에서는 물이 높이 올라온 만큼 <b>압력이 낮아집니다</b>: $p_c=p_{atm}-\rho gH_c-\tfrac12\rho v^2$. 이 압력이 물의 <b>증기압</b> $p_v$(20 °C 에서 약 2.3 kPa) 아래로 내려가면 물이 끓듯 기포가 생겨 물줄기가 끊깁니다. 그래서 이론적 최대 정점 높이는 약 10 m 이고 온도가 높을수록 더 낮아집니다. 또한 사이펀은 <b>시동(프라이밍)</b>으로 관을 물로 채워야 시작되고, 출구가 위 수면보다 낮지 않거나 공기가 들어오면 <b>멈춥니다</b>.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 토리첼리의 기압계</div>
+      물기둥은 대기압이 받칠 수 있는 높이까지만 올라갈 수 있습니다: $H_{max}=\dfrac{p_{atm}}{\rho g}\approx10.3$ m (수은은 약 760 mm). 사이펀의 오르막 쪽 물기둥은 정점까지 매달려 있으므로 같은 한계를 가집니다. 정점이 높을수록 그곳의 압력 $p_c$ 는 낮아지고, 물의 증기압에 도달하면 액체가 기화(캐비테이션)해 기포가 생겨 흐름이 끊깁니다. (진공에서도 응집력 덕분에 작동한다는 실험 보고가 있어, 정점 한계는 물의 순도 · 용존 기체에 따라 달라지는 논의 중인 주제입니다.)
+      <div class="bridge"><span class="st old">대기압 ↔ 물기둥 10 m</span><span class="ar">→</span><span class="st">정점 압력 p꜀</span><span class="ar">→</span><span class="st">증기압 p_v</span><span class="ar">→</span><span class="st new">시동 · 정지 조건</span></div>
+    </div>
+    <div class="poe" data-q="정점의 높이(위 수면 기준)를 높일수록 정점 관 속의 압력은 어떻게 될까?"
+         data-opts="높아진다||낮아진다||변하지 않는다||0 이 된다"
+         data-ans="1"
+         data-exp="$p_c=p_{atm}-\rho gH_c-\tfrac12\rho v^2$ 이므로 $H_c$ 가 클수록 $p_c$ 는 낮아집니다. 증기압(2.3 kPa @ 20 °C) 아래로 내려가면 기포가 생겨 끊깁니다. 오른쪽에서 정점 높이를 바꿔 보세요."></div>
+    <div id="t3-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 정점 압력과 시동 — 압력 곡선 · 증기압 · 프라이밍 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="정점 압력 도해. 정점의 압력이 가장 낮고, 증기압 아래로 내려가면 기포가 생기며, 시동은 주사기나 펌프로 공기를 물로 바꾸는 것이다.">
+        {{FIG:pascal}}
+      </svg>
+    </div>
+    <div class="figcap">그림 3-1. 정점 압력과 시동 — ① 정점의 압력이 관을 따라 가장 낮다 → ② 증기압 $p_v$ 아래면 기포(캐비테이션)로 끊긴다 → ③ 시동(프라이밍)은 주사기 · 손펌프로, 입으로 빨지 않는다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 정점 높이 $H_c$</b>위 수면에서 정점까지의 높이. 높을수록 정점 압력이 낮아진다.</div>
+      <div class="part"><b>② 정점 압력 $p_c$</b>$p_{atm}-\rho gH_c-\tfrac12\rho v^2$ (절대 압력). 대기압 101.3 kPa 에서 10 m 당 약 98 kPa 가 줄어든다.</div>
+      <div class="part"><b>③ 증기압 $p_v$</b>물이 끓는 압력. 20 °C 약 2.3 kPa, 60 °C 약 19.9 kPa, 100 °C 101.3 kPa — 온도가 높을수록 커진다.</div>
+      <div class="part"><b>④ 용존 공기</b>물에 녹은 공기는 압력이 낮은 정점에서 기포로 나와 흐름을 막는다. 실제 한계가 이론보다 낮은 까닭.</div>
+      <div class="part"><b>⑤ 시동(프라이밍)</b>관을 물로 가득 채워 시작한다. 주사기 · 손펌프 · 물에 담가 채우기 중 안전한 방법을 쓴다.</div>
+      <div class="part"><b>⑥ 정지 조건</b>출구가 위 수면보다 높거나 같다, 입구가 수면 위로 드러나 공기가 들어온다, 정점에서 기포가 쌓인다.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 정점 압력 측정 (투명 호스 · 마노미터 관)</div>
+    <div class="steps">
+      <div class="step">정점에 투명 빨대 압력 관(위가 막히지 않은 가는 관)을 달아 U자 마노미터를 만들고 수주 높이차를 읽는다(R06).</div>
+      <div class="step">정점 높이 $H_c$ 를 20, 40, 60, 80 cm 로 바꾸며 수주 높이차가 거의 $H_c$ 만큼 커지는지 확인한다.</div>
+      <div class="step">정점을 아주 높이거나 따뜻한 물(40 °C)을 써서 정점에 기포가 생기는 순간을 관찰한다(안전하게 낮은 높이에서).</div>
+      <div class="step">시동할 때 관 속에 공기 방울을 일부러 남겨 흐름이 느려지거나 멈추는지 본다(R05).</div>
+      <div class="step">입 대신 주사기로 시동하는 방법과 걸리는 시간을 비교한다(I03).</div>
+    </div>
+    <div class="easy">
+      <div class="et">🥤 쉽게 이해하기 — 빨대로 음료 마시기</div>
+      빨대로 음료를 끌어올릴 때 아무리 세게 빨아도 <b>약 10 m 보다 높이 올릴 수는 없어요</b>. 공기의 무게(대기압)가 받칠 수 있는 높이까지만 가능하기 때문이에요. 사이펀의 오르막도 마찬가지예요 — 정점이 너무 높으면 물기둥 맨 위가 비어 버려(기포) 물이 끊어져요. 따뜻한 음료일수록 더 쉽게 끊어지기도 하고요.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“정점은 얼마든지 높여도 되고, 입으로 계속 빨아야 한다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>정점 높이는 <strong>이론적으로 약 10 m</strong> (실제는 7~8 m) 이하이고, 입(펌프)은 <strong>시동</strong>에만 필요합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 정점 압력 시뮬레이션 — 정점 높이 · 높이차 · 수온</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">정점 높이 H꜀</span><span class="vl" id="t3-HcV">—</span></div>
+          <input type="range" id="t3-Hc" min="0" max="10" step="0.5" value="4" aria-label="정점 높이 H꜀">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">높이차 h</span><span class="vl" id="t3-hV">—</span></div>
+          <input type="range" id="t3-h" min="10" max="100" step="5" value="50" aria-label="높이차 h">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">수온 T</span><span class="vl" id="t3-TV">—</span></div>
+          <input type="range" id="t3-T" min="5" max="80" step="5" value="20" aria-label="수온 T">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">정점 압력 p꜀</span><span class="v" id="t3-oP">—</span></div>
+          <div class="cell g"><span class="k">증기압 p_v</span><span class="v" id="t3-oV">—</span></div>
+          <div class="cell v2"><span class="k">이론 최대 정점 높이</span><span class="v" id="t3-oH">—</span></div>
+          <div class="cell r"><span class="k">여유(최대 − 지금)</span><span class="v" id="t3-oM">—</span></div>
+          <div class="cell "><span class="k">상태</span><span class="v" id="t3-oS">—</span></div>
+        </div>
+        <p class="tiny">모형 : $p_c=p_{atm}-\rho gH_c-\tfrac12\rho v^2$ (절대 압력, $p_{atm}=101.3$ kPa, 정점까지 마찰 무시), 증기압은 Magnus 식, 관 지름 12 mm. 그림의 정점 높이는 보기 좋게 줄여 그렸고, 용존 공기 · 응집력은 고려하지 않은 교육용 어림입니다.</p>
+      </div>
+      <div class="poe" data-q="수온이 20 °C 에서 60 °C 로 올라가면 이론적인 정점 최대 높이는 어떻게 될까?"
+           data-opts="높아진다||낮아진다||변하지 않는다||2 배가 된다"
+           data-ans="1"
+           data-exp="증기압이 2.3 kPa → 약 20 kPa 로 커져 $H_{max}=(p_{atm}-p_v)/\rho g$ 가 줄어듭니다(약 10.1 m → 약 8.3 m). 오른쪽 아래 「수온 대 최대 높이」 곡선에서 확인하세요."></div>
+      <div class="hintbox" data-hints="① 먼저 H꜀ = 4 m · h = 50 cm · T = 20 °C 에서 정점 압력(약 60 kPa)을 읽으세요.||② H꜀ 를 9 m 까지 올려 보세요. 정점 압력이 증기압에 가까워지면 상태가 어떻게 바뀌나요?||③ 수온을 60 °C 로 올리면 같은 H꜀ 에서 상태가 어떻게 달라지나요?||④ 유속이 빨라지면(높이차 ↑) 정점 압력은 어떻게 변하나요? 이유는?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t3" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t3-cv" data-pngname="siphon-crest">🖼 PNG</button></div>
+          <canvas id="t3-cv" role="img" aria-label="정점 압력이 표시된 사이펀과 기포" style="height:340px"></canvas>
+          <div class="cv-cap">관의 가장 높은 곳에 정점 압력 $p_c$ 가 표시됩니다. 증기압 아래이면 빨강으로 바뀌고 관 속에 기포가 생겨 흐름이 끊깁니다(그림의 높이는 줄여 그림).</div>
+        </div>
+        <div id="t3-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t3-cv2" role="img" aria-label="관을 따라 압력과 수온 대 최대 높이 그래프" style="height:340px"></canvas>
+          <div class="cv-cap">📊 위 : 관을 따라 압력 — 정점에서 가장 낮고, 빨강 점선(증기압) 아래로 내려가면 끊김. 아래 : 수온 대 이론 최대 높이 — 따뜻할수록 낮아집니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>정점 압력 $p_c=p_{atm}-\rho gH_c-\tfrac12\rho v^2$. 끊김 조건 $p_c<p_v$ → $H_c>H_{max}=\dfrac{p_{atm}-p_v}{\rho g}-\dfrac{v^2}{2g}$. 20 °C 에서 $H_{max}\approx\dfrac{101.3-2.3}{9.8}\approx10.1$ m (유속 0).</p><p>예 : $H_c=4$ m, $v=2$ m/s → $p_c=101.3-39.2-2.0=60.1$ kPa (증기압 2.3 kPa 보다 충분히 크다).</p><p class="lv-uni">교과서 밖 : 실제 물은 인장 강도를 어느 정도 가져 순수하고 기체가 없으면 증기압 아래에서도 한동안 끊기지 않을 수 있으며, 이 때문에 정점 한계와 진공 사이펀의 가능성이 논의됩니다. 캐비테이션 수 $\sigma=(p-p_v)/(\tfrac12\rho v^2)$ 가 설계 지표입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 정점 압력은 어떻게 나오나 — 수면에서 정점까지 베르누이와 증기압 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">위 수면과 정점에 베르누이를 써서 정점 압력과 최대 높이를 유도합니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 두 점 고르기</b> — 점 ①은 위 수면(속력 0, 압력 $p_{atm}$, 높이 0), 점 ②는 정점(속력 $v$, 압력 $p_c$, 높이 $H_c$).</div>
+      <div class="step"><b>② 베르누이 식</b> — $p_{atm}=p_c+\rho gH_c+\tfrac12\rho v^2$ → $p_c=p_{atm}-\rho gH_c-\tfrac12\rho v^2$ (마찰 무시).</div>
+      <div class="step"><b>③ 압력이 낮아지는 이유</b> — 정점은 위 수면보다 $H_c$ 만큼 높아 물기둥의 무게만큼 압력이 줄고, 흐르는 속도에 해당하는 만큼 더 줄어든다.</div>
+      <div class="step"><b>④ 끊김 조건</b> — 액체의 압력은 증기압 $p_v$ 보다 낮아질 수 없다. $p_c<p_v$ 이면 물이 기화해 기포가 생긴다 → $H_c<\dfrac{p_{atm}-p_v}{\rho g}-\dfrac{v^2}{2g}$.</div>
+      <div class="step"><b>⑤ 숫자 대보기</b> — 20 °C: $p_{atm}=101.3$ kPa, $p_v=2.3$ kPa → $H_{max}=99\times10^3/(1000\times9.8)\approx10.1$ m. 60 °C 에서 $p_v\approx19.9$ kPa → 약 8.3 m.</div>
+      <div class="step"><b>⑥ 실제 한계</b> — 용존 공기가 낮은 압력에서 기포로 나와 흐름을 막으므로 실제 한계는 이보다 낮다(대략 7 ~ 8 m).</div>
+      <div class="step"><b>⑦ 시동 · 정지</b> — 시동은 관 속 공기를 물로 바꾸는 단계(프라이밍). 출구가 수면보다 낮지 않거나 공기가 유입되면 멈춘다. 입으로 빨지 않고 주사기 · 손펌프를 쓴다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">단계</th><th>물리 법칙</th><th>핵심 식</th><th>결과</th></tr></thead><tbody><tr><td style="text-align:left">① 압력</td><td>베르누이</td><td>$p_c=p_{atm}-\rho gH_c-\tfrac12\rho v^2$</td><td>정점이 가장 낮다</td></tr><tr><td style="text-align:left">② 한계</td><td>증기압</td><td>$p_c\ge p_v$</td><td>기포 없는 조건</td></tr><tr><td style="text-align:left">③ 최대 높이</td><td>대기압 물기둥</td><td>$H_{max}=(p_{atm}-p_v)/\rho g$</td><td>약 10 m (20 °C)</td></tr><tr><td style="text-align:left">④ 온도</td><td>증기압 증가</td><td>$p_v(T)$</td><td>따뜻할수록 낮다</td></tr><tr><td style="text-align:left">⑤ 정지</td><td>공기 유입</td><td>—</td><td>흐름 중단</td></tr></tbody></table></div>
+    <p class="tiny">진공에서도 사이펀이 작동한다는 실험 보고가 있어 「대기압이 구동한다」는 설명은 조심해야 합니다. 구동은 중력(높이차)이고 대기압은 정점의 물기둥이 끊기지 않게 하는 한계 조건으로 이해하는 것이 안전합니다.</p>
+  </div>
+</section>

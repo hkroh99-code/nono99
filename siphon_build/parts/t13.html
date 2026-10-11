@@ -1,0 +1,105 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 13 — 프로젝트 공방 ⑥ 발명 6~10 (I06~I10 · 카드 5개 · 고르면 장치 도해 · 예산 · 방법 · 예측 결과 · 미니 모의실험 · 실패 대처 · 평가가 펼쳐짐)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab13" role="tabpanel" aria-labelledby="tabbtn13" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-exp">발명 ②</span><span class="badge b-high">고등</span><span class="badge b-poe">POE</span>🛠 프로젝트 공방 ⑥ 발명 6~10</div>
+    <div class="goal">🎯 이 공방에서 하는 것 — 마리오트 병 정유량 급수기 · 점적 관개 조절기 · 수위 상한 사이펀 · 사이펀 점도계 · 호스 수준기 5개 발명입니다(I06 ~ I10). 「압력 고정 · 조절 · 안전 여유 · 정밀 측정」을 다룹니다. 모두 물 · 상온 · 저압의 안전한 시제품이며 교육용 모형입니다. <b>안전 : 이 공방의 모든 활동은 투명 호스 · 상온(60 °C 이하)의 물 · 작은 통 · 5 V 이하 전자 부품만 씁니다. <u>입으로 빨지 않고</u>(주사기 · 손펌프 사용) 가열 · 고압 · 연료 · 화학약품 · 오염된 물은 쓰지 않으며, 바닥 물기는 바로 닦고 전기 부품은 물에서 멀리 둡니다.</b></div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 설계의 균형(정확도 · 안전 · 속도)</div>
+      좋은 설계는 하나를 얻으려면 다른 하나를 내줘야 하는 <b>균형(trade-off)</b>을 아는 일입니다. 점도계는 가는 관일수록 정밀하지만 느리고, 수위 상한 사이펀은 굵을수록 안전하지만 크며, 호스 수준기는 기포가 없을수록 정확합니다. 그래서 장치는 「교육용 모형」임을 밝히고 한계를 정해 둡니다.
+      <div class="bridge"><span class="st old">측정</span><span class="ar">→</span><span class="st">설계 계산</span><span class="ar">→</span><span class="st">균형(trade-off)</span><span class="ar">→</span><span class="st">시험</span><span class="ar">→</span><span class="st new">개선</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🧭 공방 안내 — 이렇게 진행합니다 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="발명 진행 흐름. 여섯 단계가 이어지고 되돌아가 고친다.">
+        {{FIG:wf_in}}
+      </svg>
+    </div>
+    <div class="figcap">그림 13-1. 발명 의 흐름 — 여섯 단계를 거치며 <b>되돌아가 고치는</b> 것이 핵심이다</div>
+    <div class="h4">🧰 이 공방의 도구와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 설계 목표</b>측정 · 제어하려는 양과 목표값.</div>
+      <div class="part"><b>② 균형 변수</b>관 지름 · 조임 · 높이차 같은 설계 변수.</div>
+      <div class="part"><b>③ 안전 한도</b>압력 · 전압 · 온도의 상한을 먼저 정한다.</div>
+      <div class="part"><b>④ 성능 지표</b>정확도 · 안전 여유 · 오차.</div>
+      <div class="part"><b>⑤ 시험 입력</b>한계 조건에서의 거동을 일부러 시험한다.</div>
+      <div class="part"><b>⑥ 보고</b>측정값과 이론값을 같은 그래프에.</div>
+    </div>
+    <div class="h4">🧪 진행 순서</div>
+    <div class="steps">
+      <div class="step"><b>측정할 양 정하기</b> — 유량 · 방울 속도 · 상승 높이 · 점성 · 높이 오차.</div>
+      <div class="step"><b>목표값</b> — 얼마가 되어야 성공인지.</div>
+      <div class="step"><b>설계 계산</b> — 식으로 예측한다.</div>
+      <div class="step"><b>시험</b> — 입력을 바꿔 출력을 잰다.</div>
+      <div class="step"><b>개선</b> — 목표와 비교해 고치고 한계를 정직하게 쓴다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🧭 쉽게 이해하기 — 수도꼭지의 정확한 한 방울</div>
+      수도꼭지를 아주 조금만 열면 한 방울씩 떨어져요. 그 속도를 늘 같게 하려면 압력(수위)을 일정하게 유지해야 해요. 마리오트 병은 공기관 하나로 압력을 고정하고, 점적 조절기는 조임으로 속도를 정합니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“한계 이상으로 써도 괜찮다 · 교육용 장치를 실제 안전 장비로 써도 된다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>장치는 <strong>한계와 안전 여유</strong>를 먼저 정하고, 교육용 모형은 실제 안전 장비를 대체할 수 없음을 표기합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🗂 프로젝트 5선 (발명 ②) — 카드를 누르면 아래에 자세한 안내가 펼쳐집니다</div>
+    <div class="tline" id="k13-pick" role="group" aria-label="프로젝트 고르기"></div>
+  </div>
+
+  <div id="k13-d1"></div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 미니 모의실험 — <span id="k13-simT">—</span></div>
+        <p class="muted" id="k13-simQ">—</p>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="k13-aN">—</span><span class="vl" id="k13-aV">—</span></div>
+          <input type="range" id="k13-a" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 1">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="k13-bN">—</span><span class="vl" id="k13-bV">—</span></div>
+          <input type="range" id="k13-b" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 2">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm pri" id="k13-go">🎲 새로 측정 (새 난수)</button>
+          <button type="button" class="btn sm" id="k13-def">↺ 기본값</button>
+        </div>
+        <div class="kv" id="k13-kv"></div>
+        <p class="tiny" id="k13-note">—</p>
+      </div>
+      <div class="poe" data-q="I06 마리오트 병에서 병 속 물이 줄어도 유량이 일정한 이유는?"
+           data-opts="공기관 끝의 압력이 대기압으로 고정되어 구동 압력이 일정하기 때문에||물이 가벼워지기 때문에||호스가 굵어지기 때문에||대기압이 변하기 때문에"
+           data-ans="0"
+           data-exp="공기관 끝에서 압력이 대기압으로 고정되므로 출구와의 압력 차는 공기관 끝 높이 $h$ 로 일정합니다. 물이 그 높이 아래로 내려갈 때까지 $Q=a\sqrt{2gh/K}$ 가 일정합니다."></div>
+      <div class="poe" data-q="I09 점도계에서 관 지름의 측정 오차가 3 % 이면 점성 $\mu\propto D^4$ 계산에 생기는 오차는 대략?"
+           data-opts="3 %||6 %||12 %||같다"
+           data-ans="2"
+           data-exp="$\mu\propto D^4$ 이므로 상대 오차는 약 4 배인 12 % 가 됩니다. 그래서 표준 액체(물)로 보정해 상수를 구하는 것이 정밀합니다."></div>
+      <div id="k13-misc"></div>
+      <div class="hintbox" data-hints="① I06 · I07 은 호스와 병만 있으면 시작할 수 있습니다.||② I08 은 유입이 최대 배출을 넘을 때 넘침이 생기는 한계를 반드시 다루세요.||③ I09 는 먹지 않는 시료로만, 관 지름 오차가 $D^4$ 로 커짐을 기억하세요.||④ I10 은 기포를 없애는 것이 정확도의 핵심입니다."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k13" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k13-cv" data-pngname="project-13-sim">🖼 PNG</button></div>
+          <canvas id="k13-cv" role="img" aria-label="프로젝트 미니 모의실험 애니메이션" style="height:300px"></canvas>
+          <div class="cv-cap" id="k13-cap1">—</div>
+        </div>
+        <div id="k13-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k13-cv2" role="img" aria-label="프로젝트 예상 결과 그래프" style="height:250px"></canvas>
+          <div class="cv-cap" id="k13-cap2">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="k13-d2"></div>
+</section>

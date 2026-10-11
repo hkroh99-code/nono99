@@ -1,0 +1,122 @@
+<!-- ═══ TAB 4 — 🌀 원리③ 마찰과 점성 — 층류 · 난류와 유량 ═══ -->
+<section class="panel" id="tab4" role="tabpanel" aria-labelledby="tabbtn4" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🌀 원리③ 마찰과 점성 — 층류 · 난류와 유량</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 관이 길고 가늘수록, 액체의 점성이 클수록 <b>마찰 손실</b>이 커져 유량이 줄어듭니다. 레이놀즈 수 $Re=\rho vD/\mu$ 가 2300 보다 작으면 <b>층류</b>(속도 분포가 포물선, $f=64/Re$)이고 4000 보다 크면 <b>난류</b>(분포가 납작, $f\approx0.316Re^{-1/4}$)입니다. 가는 관의 층류에서는 하겐–푸아죄유 법칙 $Q=\dfrac{\pi\rho gh}{128\mu L}D^4$ 이어서 지름의 <b>4 제곱</b>에 비례합니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 빨대와 시럽</div>
+      같은 빨대로 물을 마실 때와 되직한 시럽을 마실 때의 힘이 다르고, 가는 빨대일수록 더 힘들다는 경험이 있습니다. 이것이 점성 $\mu$ 와 관의 지름 · 길이가 흐름에 주는 저항입니다. 관 마찰 손실은 $\Delta p=f\dfrac LD\cdot\tfrac12\rho v^2$ (다르시–바이스바흐)로 쓰고, 그만큼 사이펀의 구동 압력 $\rho gh$ 가 줄어 속력이 감소합니다.
+      <div class="bridge"><span class="st old">점성 · 마찰</span><span class="ar">→</span><span class="st">레이놀즈 수 Re</span><span class="ar">→</span><span class="st">층류 D⁴ · 난류 D²·⁵</span><span class="ar">→</span><span class="st new">유량과 손실 K</span></div>
+    </div>
+    <div class="poe" data-q="같은 높이차의 가는 관(층류)에서 관 지름을 2 배로 하면 유량은 대략 몇 배가 될까? (하겐–푸아죄유)"
+         data-opts="2 배||4 배||8 배||16 배"
+         data-ans="3"
+         data-exp="층류 $Q\propto D^4$ 이므로 지름이 2 배면 유량은 $2^4=16$ 배입니다. 굵은 난류 관에서는 약 $D^{2.5}$ (5.7 배), 마찰이 없으면 $D^2$ (4 배)입니다. 오른쪽 위 그래프의 기울기에서 확인하세요."></div>
+    <div id="t4-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 마찰과 점성 — 층류 · 난류 · 길이와 지름 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="마찰과 점성 도해. 층류는 속도 분포가 포물선이고, 난류는 납작한 분포와 소용돌이가 있으며, 가늘고 긴 관은 유량이 작다.">
+        {{FIG:archi}}
+      </svg>
+    </div>
+    <div class="figcap">그림 4-1. 마찰과 점성 — ① 층류($Re<2300$) : 포물선 속도 분포, $f=64/Re$, $Q\propto D^4$ → ② 난류($Re>4000$) : 납작한 분포 · 소용돌이, $f\approx0.316Re^{-1/4}$ → ③ 가늘고 긴 관 · 점성이 큰 액체일수록 유량 ↓</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 점성 $\mu$</b>유체의 끈적임(Pa·s). 물 20 °C 약 1.0 mPa·s, 설탕물 40 % 약 6 mPa·s, 식용유 수십 mPa·s. 온도가 오르면 작아진다.</div>
+      <div class="part"><b>② 레이놀즈 수 $Re$</b>$Re=\rho vD/\mu$. 2300 미만 층류, 4000 이상 난류, 그 사이 전이.</div>
+      <div class="part"><b>③ 마찰 계수 $f$</b>층류 $64/Re$, 난류 $0.316Re^{-1/4}$(매끈한 관). 손실 $\Delta p=f\frac LD\tfrac12\rho v^2$.</div>
+      <div class="part"><b>④ 손실 계수 $K$</b>$K=1+K_m+fL/D$. 길고 가늘수록 $K$ 가 커져 $v$ 가 작아진다.</div>
+      <div class="part"><b>⑤ 하겐–푸아죄유</b>가는 관 층류 $Q=\dfrac{\pi\rho g h D^4}{128\mu L}$. 점성의 측정에도 쓰인다.</div>
+      <div class="part"><b>⑥ 쓰임</b>수도관 · 혈관 · 링거 · 관개 호스 설계, 점도계, 정수 필터.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 지름 · 길이 · 점성과 유량 (호스 · 눈금 통 · 설탕물)</div>
+    <div class="steps">
+      <div class="step">같은 높이차에서 지름이 다른 호스(4, 6, 10 mm)로 500 mL 를 받는 시간을 재어 $Q$ 대 $D$ 를 로그–로그 그래프로 그린다(R02).</div>
+      <div class="step">관 길이를 0.5, 1, 2 m 로 바꾸며 $Q$ 의 변화를 본다(R03).</div>
+      <div class="step">수온을 10 · 30 · 50 °C 로 바꿔 가는 관의 유량 변화를 본다(R07).</div>
+      <div class="step">설탕을 녹여 농도(0, 20, 40 %)에 따른 유량 변화를 측정한다(R10).</div>
+      <div class="step">종합실험 3(17번 탭)에서 가는 관 유량으로 물의 점성 $\mu$ 를 구한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🧃 쉽게 이해하기 — 주스와 시럽</div>
+      같은 높이에서 따를 때 물은 쏴아~ 나오고 꿀은 느릿느릿 나와요. 점성이 크면 흐름을 방해하는 마찰이 커서 그렇죠. 가는 빨대일수록 벽에 닿는 물이 많아 더 힘들고요. 그래서 관이 가늘고 길고 점성이 클수록 사이펀은 느려집니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“관이 길수록 많이 나오고, 시럽도 물과 같은 속도로 흐른다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>관이 길고 가늘수록, 점성이 클수록 <strong>마찰 손실이 커서 유량이 줄고</strong>, 층류에서는 유량이 $D^4$ 에 비례합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 마찰 시뮬레이션 — 지름 · 길이 · 높이차 · 액체</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">관 지름 D</span><span class="vl" id="t4-DV">—</span></div>
+          <input type="range" id="t4-D" min="2" max="20" step="1" value="10" aria-label="관 지름 D">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">관 길이 L</span><span class="vl" id="t4-LV">—</span></div>
+          <input type="range" id="t4-L" min="0.3" max="5" step="0.1" value="1" aria-label="관 길이 L">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">높이차 h</span><span class="vl" id="t4-hV">—</span></div>
+          <input type="range" id="t4-h" min="10" max="100" step="5" value="50" aria-label="높이차 h">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">액체 고르기(1~5)</span><span class="vl" id="t4-ldV">—</span></div>
+          <input type="range" id="t4-ld" min="1" max="5" step="1" value="1" aria-label="액체 고르기(1~5)">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">유량 Q</span><span class="v" id="t4-oQ">—</span></div>
+          <div class="cell g"><span class="k">레이놀즈 수 · 흐름</span><span class="v" id="t4-oR">—</span></div>
+          <div class="cell v2"><span class="k">마찰 계수 f</span><span class="v" id="t4-oF">—</span></div>
+          <div class="cell r"><span class="k">이상 유량 대비</span><span class="v" id="t4-oE">—</span></div>
+          <div class="cell "><span class="k">점성 μ</span><span class="v" id="t4-oM">—</span></div>
+        </div>
+        <p class="tiny">모형 : $gh=(1+K_m+fL/D)v^2/2$ ($K_m=1$), $Re=\rho vD/\mu$, 층류 $f=64/Re$, 난류 $f=0.316Re^{-1/4}$(매끈한 관, 2300~4000 은 보간). 액체 5종은 대략의 점성 · 밀도 값(물 20 °C 1.0 · 물 50 °C 0.55 · 설탕물 20 % 1.95 · 40 % 6.2 · 식용유 60 mPa·s)입니다.</p>
+      </div>
+      <div class="poe" data-q="같은 가는 관(층류)에서 점성이 4 배인 시럽을 쓰면 유량은? (높이차 같음)"
+           data-opts="4 배||같다||1/4 배||1/16 배"
+           data-ans="2"
+           data-exp="층류에서 $Q\propto1/\mu$ 이므로 점성이 4 배면 유량은 1/4 입니다. 오른쪽 위 그림 아래 액체를 바꿔 유량과 레이놀즈 수를 확인하세요."></div>
+      <div class="hintbox" data-hints="① 먼저 D = 10 mm · L = 1 m · h = 50 cm · 물 20 °C 에서 흐름이 층류인지 난류인지 확인하세요(Re 가 2300 위인가?).||② 지름을 2 mm 로 줄이면 흐름이 어떻게 바뀌나요? 유량은 몇 배로 줄었나요?||③ 액체를 설탕물 40 % 나 식용유로 바꿔 보세요. 유량과 이상 유량 대비는 어떻게 되나요?||④ 길이를 5 m 로 늘리면 유량은 몇 % 줄어드나요? 층류와 난류에서 차이가 있나요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t4" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t4-cv" data-pngname="siphon-friction">🖼 PNG</button></div>
+          <canvas id="t4-cv" role="img" aria-label="관 속 흐름의 속도 분포와 입자 운동" style="height:330px"></canvas>
+          <div class="cv-cap">관 속 물의 속도 분포: 층류(파랑)는 가운데가 가장 빠른 포물선, 난류(주황)는 납작한 분포. 오른쪽 화살표는 관 단면의 속도 분포입니다.</div>
+        </div>
+        <div id="t4-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t4-cv2" role="img" aria-label="관 지름 대 유량과 길이 대 유량 그래프" style="height:340px"></canvas>
+          <div class="cv-cap">📊 위 : 관 지름 대 유량 — 가는 관은 $D^4$, 굵은 관은 약 $D^{2.5}$ 로 증가. 아래 : 관 길이 대 유량 — 길수록 줄어든다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>레이놀즈 수 $Re=\dfrac{\rho vD}{\mu}$. 층류 $f=\dfrac{64}{Re}$, 난류(매끈한 관) $f=0.316Re^{-1/4}$. 압력 손실 $\Delta p=f\dfrac LD\cdot\tfrac12\rho v^2$. 가는 관 층류 유량(하겐–푸아죄유) $Q=\dfrac{\pi\rho g h}{128\mu L}D^4$.</p><p>예 : 물 20 °C, $D=2$ mm, $L=1$ m, $h=0.5$ m → $Q=\dfrac{3.14\times1000\times9.8\times0.5\times(0.002)^4}{128\times10^{-3}\times1}\approx1.9\times10^{-6}$ m³/s ≈ 1.9 mL/s (층류).</p><p class="lv-uni">교과서 밖 : 거친 관의 마찰 계수는 콜브룩 식 · 무디 선도, 비뉴턴 유체(케첩 · 혈액)는 점성이 흐름 속도에 따라 변합니다. 층류에서 평균 속도는 최대 속도의 1/2 입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 마찰과 점성은 어떻게 나오나 — 레이놀즈 수에서 하겐–푸아죄유까지 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">관 속 흐름의 두 얼굴(층류 · 난류)과 유량 법칙을 단계별로 정리합니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 점성</b> — 유체 층 사이의 마찰력이 속도 기울기에 비례: $\tau=\mu\,dv/dy$. 물 20 °C 약 1 mPa·s.</div>
+      <div class="step"><b>② 레이놀즈 수</b> — 관성 힘 대 점성 힘의 비 $Re=\dfrac{\rho vD}{\mu}$. 작으면 층류, 크면 난류.</div>
+      <div class="step"><b>③ 층류 속도 분포</b> — 관 벽에서 0, 가운데가 최대인 포물선. 평균 속도는 최대의 절반.</div>
+      <div class="step"><b>④ 하겐–푸아죄유</b> — 압력 차 $\Delta p=\rho gh$ 일 때 $Q=\dfrac{\pi D^4\Delta p}{128\mu L}$ → $D^4$, $1/L$, $1/\mu$ 에 비례.</div>
+      <div class="step"><b>⑤ 난류 마찰</b> — 난류에서는 $\Delta p=f\dfrac LD\tfrac12\rho v^2$, 매끈한 관에서 $f\approx0.316Re^{-1/4}$ → 유량은 약 $D^{2.5}$ 에 비례.</div>
+      <div class="step"><b>⑥ 손실 계수</b> — $K=1+K_m+fL/D$ 가 커질수록 $v$ 는 $1/\sqrt K$ 로 줄어든다.</div>
+      <div class="step"><b>⑦ 한계</b> — 매끈한 관 · 완전 발달 흐름 · 일정한 온도를 가정했습니다. 거친 관 · 곡관 · 입구 효과는 별도 보정이 필요합니다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">구분</th><th>층류($Re<2300$)</th><th>난류($Re>4000$)</th><th>비고</th></tr></thead><tbody><tr><td style="text-align:left">속도 분포</td><td>포물선</td><td>납작</td><td>관 단면</td></tr><tr><td style="text-align:left">마찰 계수 $f$</td><td>$64/Re$</td><td>$0.316Re^{-1/4}$</td><td>매끈한 관</td></tr><tr><td style="text-align:left">유량 대 지름</td><td>$D^4$</td><td>약 $D^{2.5}$</td><td>로그–로그 기울기</td></tr><tr><td style="text-align:left">유량 대 길이</td><td>$1/L$</td><td>약 $L^{-1/2}$ 이하</td><td>길수록 감소</td></tr><tr><td style="text-align:left">유량 대 점성</td><td>$1/\mu$</td><td>거의 무관</td><td>시럽은 느림</td></tr></tbody></table></div>
+    <p class="tiny">하겐–푸아죄유 법칙은 점성의 측정(점도계)에 쓰입니다. 종합실험 3(17번 탭)에서 직접 μ 를 구합니다.</p>
+  </div>
+</section>

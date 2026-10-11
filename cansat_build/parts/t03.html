@@ -1,0 +1,118 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 3 — 원리② 대기 : 기압 · 고도 · 온도 (교과서 기체의 압력 · 대기압)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab3" role="tabpanel" aria-labelledby="tabbtn3" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🌡 원리② 대기 — 기압으로 높이를 잰다</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 위로 올라갈수록 위에 있는 공기가 줄어 <b>기압이 낮아집니다</b>. 줄어드는 모양은 직선이 아니라 <b>지수 함수</b>(약 5.5 km 마다 절반)이고, 그래서 기압을 재면 <b>높이</b>를 알 수 있습니다. 다만 날씨에 따라 같은 높이의 기압이 달라지므로 <b>방출 직전의 지상 기압 $P_0$</b> 를 기준으로 삼아야 합니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 기체의 압력과 대기압</div>
+      기체의 압력은 분자들이 벽에 부딪히는 힘이고, 대기압은 <b>위에 쌓여 있는 공기 기둥의 무게</b>를 넓이로 나눈 값입니다(해수면 약 1013 hPa). 물속에서 깊이 내려갈수록 위에 있는 물이 많아 압력이 커지는 것의 반대로, 공기 중에서 올라갈수록 위에 있는 공기가 줄어 압력이 작아집니다. 그런데 공기는 눌릴수록 밀도가 커지는 기체여서, 아래쪽 공기가 더 촘촘하고 위쪽은 성깁니다 → 줄어드는 비율이 <b>일정한 비율</b>(지수 함수)이 됩니다.
+      <div class="bridge"><span class="st old">대기압 = 공기 기둥의 무게</span><span class="ar">→</span><span class="st">높이 ↑ → 공기 ↓ → 기압 ↓</span><span class="ar">→</span><span class="st">$P=P_0e^{-h/H}$</span><span class="ar">→</span><span class="st new">기압 → 고도 계산</span></div>
+    </div>
+    <div class="poe" data-q="고기압이 와서 지상 기압이 1030 hPa 인 날, 기준 기압을 따로 저장하지 않고(표준 1013.25 hPa 가정) 지상에 서 있는 캔위성의 기압 고도계를 읽으면?"
+         data-opts="정확히 0 m||약 +140 m||약 −140 m||약 −14 m"
+         data-ans="2"
+         data-exp="지상 기압이 표준보다 높으면 센서는 「표준 해수면보다 더 아래(압력이 큰 곳)」 에 있다고 계산합니다. 해수면 부근에서 1 hPa ≈ 8.3 m 이므로 (1030 − 1013.25) × 8.3 ≈ <b>−140 m</b> — 땅 위에서 높이가 음수로 나옵니다! 그래서 방출 직전의 지상 기압 $P_0$ 를 저장해 기준으로 삼아야 합니다. 오른쪽 시뮬레이션의 「$P_0$ 보정」 체크를 껐다 켜 보세요."></div>
+    <div id="t3-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 대기 — 공기 기둥 · 지수 감소 · 기압 고도계 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 290" role="img" aria-label="대기 도해. 공기 기둥은 아래가 촘촘하다. 기압은 높이에 따라 지수 함수로 줄어 5.5 킬로미터에서 절반이 된다. 기압 센서 값에 공식을 적용해 높이를 계산한다.">
+        <text x="390" y="28" fill="#9db0cc" font-size="12" text-anchor="middle">위에 있는 공기가 줄어든다 → 기압이 줄어든다 → 기압을 재서 높이를 거꾸로 계산한다</text>
+        {{FIG:atmo}}
+      </svg>
+    </div>
+    <div class="figcap">그림 3-1. ① 지표 근처 공기가 가장 촘촘하다 → ② 기압은 5.5 km 오를 때마다 절반(지수 감소) → ③ 센서의 기압 값과 지상 기준 기압 $P_0$ 로 높이를 계산한다. 기준 $P_0$ 가 틀리면 높이 전체가 한꺼번에 어긋난다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 대기압 $P$</b>위 공기 기둥의 무게 ÷ 넓이. 해수면 약 1013 hPa(= 101325 Pa). 높이 1 m 오를 때 약 12 Pa 줄어든다.</div>
+      <div class="part"><b>② 스케일 높이 $H$</b>$P=P_0e^{-h/H}$ 에서 기압이 $1/e$ 로 줄어드는 높이. $H=RT/(Mg)\approx8.4$ km. 절반이 되는 높이는 $H\ln2\approx5.8$ km(표준대기 5.5 km).</div>
+      <div class="part"><b>③ 기압 센서</b>BMP280 · BME280 같은 소형 MEMS 센서(수 천 원). 해상도는 약 0.01 hPa(≈ 10 cm)지만 <i>절대 정확도는 ±1 hPa</i> 안팎이라 방출 직전 보정이 필수.</div>
+      <div class="part"><b>④ 기준 기압 $P_0$</b>방출 직전 지상에서 센서가 읽은 기압을 저장한 값. 그날의 날씨를 상쇄해 「<i>지상 = 0 m</i>」 로 만든다.</div>
+      <div class="part"><b>⑤ 기온 감률과 온도 센서</b>높이 1 km 마다 약 6.5 ℃ 내려간다(대류권). 기온이 표준과 다르면 고도 계산이 어긋난다. 센서는 <i>반응 시간</i>이 있어 빠른 낙하에서 늦게 따라간다.</div>
+      <div class="part"><b>⑥ 고도 공식</b>$h=44330\left[1-(P/P_0)^{0.19}\right]$ (m). 표준 기온(15 ℃)을 가정한 식이므로 매우 더운 날 · 추운 날은 몇 % 오차가 생긴다.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 스마트폰 기압 앱으로 계단 오르기</div>
+    <div class="steps">
+      <div class="step">스마트폰의 <b>기압 센서 앱</b>(Phyphox · Physics Toolbox 등)을 켜고 1 층 현관에서 기압을 30 초 기록해 평균을 낸다(잡음 확인).</div>
+      <div class="step">같은 폰으로 2 층 · 3 층 · 4 층 · 5 층 복도에서 같은 방법으로 평균 기압을 구한다(층당 약 3 ~ 3.5 m 높이).</div>
+      <div class="step">층 번호 대신 <b>줄자 · 레이저 거리계</b>로 잰 실제 높이 $h$ 에 대해 기압 $P$ 그래프를 그린다 — 직선처럼 보이지만 실제로는 아주 약한 지수 곡선이다.</div>
+      <div class="step">기울기 $\Delta P/\Delta h$ 를 구해 이론값 $-\rho g\approx-12$ Pa/m 와 비교한다(건물 5 층 ≈ 15 m 에서 약 1.8 hPa 변화).</div>
+      <div class="step">같은 앱으로 날씨가 다른 날(맑음 · 비 오기 전 · 후) 1 층 기압을 비교해, <b>높이가 같아도 기압이 달라지는 것</b>(→ 기준 $P_0$ 의 필요성)을 확인한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🏊 쉽게 이해하기 — 수영장 깊이와 압력</div>
+      수영장에서 깊이 잠수할수록 귀가 눌리는 것은 위에 있는 물이 많아지기 때문입니다. 공기 속도 똑같습니다 — 우리는 「공기의 바다」 밑바닥에 살고 있고, 산 위로 올라가면 머리 위의 공기가 줄어 귀가 멍해집니다. 다만 물은 눌려도 밀도가 거의 그대로이지만 공기는 아래쪽이 <b>더 촘촘하게 눌려 있어서</b> 기압이 직선이 아니라 점점 완만하게 줄어듭니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“기압은 높이에 비례해 줄어서 약 10 km 에서 0 이 된다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>5.5 km 올라갈 때마다 <strong>절반</strong>이 됩니다(해수면 → 5.5 km: ½ → 11 km: 약 ¼). 계속 줄지만 0 이 되지는 않습니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 기압 고도계 시뮬레이션 — 내려오며 기압 · 기온을 잰다</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">방출 고도 H (조작)</span><span class="vl" id="t3-hV">—</span></div>
+          <input type="range" id="t3-h" min="500" max="4000" step="100" value="2000" aria-label="방출 고도">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">그날의 지상 기압 P_w (날씨)</span><span class="vl" id="t3-pV">—</span></div>
+          <input type="range" id="t3-p" min="990" max="1035" step="1" value="1013" aria-label="지상 기압">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">그날의 지상 기온 T_g</span><span class="vl" id="t3-tV">—</span></div>
+          <input type="range" id="t3-t" min="-10" max="35" step="1" value="15" aria-label="지상 기온">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">기압 센서 잡음 σ</span><span class="vl" id="t3-sV">—</span></div>
+          <input type="range" id="t3-s" min="0" max="1" step="0.05" value="0.3" aria-label="센서 잡음">
+        </div>
+        <div class="row">
+          <label class="chk"><input type="checkbox" id="t3-cal" checked> 방출 직전 지상 기압으로 P₀ 보정</label>
+          <button type="button" class="btn sm am" id="t3-new">🎲 새 잡음</button>
+          <button type="button" class="btn sm" id="t3-def">↺ 기본값</button>
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">지금 높이(참)</span><span class="v" id="t3-oH">—</span></div>
+          <div class="cell"><span class="k">측정 기압</span><span class="v" id="t3-oP">—</span></div>
+          <div class="cell g"><span class="k">기압 고도계 표시</span><span class="v" id="t3-oE">—</span></div>
+          <div class="cell r"><span class="k">고도 오차</span><span class="v" id="t3-oD">—</span></div>
+          <div class="cell v2"><span class="k">지금 기온</span><span class="v" id="t3-oT">—</span></div>
+          <div class="cell"><span class="k">1 hPa 당 높이</span><span class="v" id="t3-oR">—</span></div>
+        </div>
+        <p class="tiny">모형 : 지상 기온 $T_g$ 에서 6.5 ℃/km 로 식는 대기의 압력 $P=P_w(1-Lh/T_g)^{5.256}$ 에 정규 잡음(σ)을 더해 「측정값」 을 만들고, 표준 기온(15 ℃)을 가정한 고도 공식으로 높이를 계산합니다. 하강은 보기 쉽도록 30 초로 압축했습니다.</p>
+      </div>
+      <div class="poe" data-q="방출 직전 기준 기압을 올바르게 저장했는데도(보정 ON), 아주 더운 날(35 ℃)에 3 km 높이에서 기압 고도계는 실제보다?"
+           data-opts="실제와 같다||실제보다 약 200 m 낮게 표시||실제보다 약 200 m 높게 표시||실제보다 약 1 km 높게 표시"
+           data-ans="1"
+           data-exp="고도 공식은 표준 기온(15 ℃)의 공기를 가정합니다. 더운 날에는 공기가 부풀어 같은 기압 차를 만들려면 더 많이 올라가야 하므로 실제 높이가 계산값보다 <b>더 큽니다</b> — 즉 고도계는 실제보다 낮게(약 200 m) 표시합니다. 시뮬레이션에서 기온 슬라이더를 35 ℃ 로 올리고 고도 오차를 확인하세요. (기온 오차의 영향은 높이에 비례해 커집니다.)"></div>
+      <div class="hintbox" data-hints="① 먼저 [P₀ 보정] 을 켠 채로 방출 고도를 바꿔 보세요. 센서 잡음 때문에 점이 흔들리지만 계산한 높이가 참값과 비슷한가요?||② 지상 기압을 1030 으로 올리고 [P₀ 보정] 을 끄세요. 고도 오차가 지상에서도 사라지지 않는 까닭은?||③ 다시 보정을 켜고 지상 기온을 35 ℃ 로 바꿔 보세요. 오차가 높이에 따라 어떻게 커지나요?||④ 아래 그래프의 노란 곡선은 기압 – 높이입니다. 높이를 두 배로 하면 기압이 정확히 절반이 되나요? (지수 곡선의 모양을 읽어 보세요.)"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t3" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t3-cv" data-pngname="cansat-barometer">🖼 PNG</button></div>
+          <canvas id="t3-cv" role="img" aria-label="내려오는 캔위성과 기압계 다이얼 그리고 온도계" style="height:340px"></canvas>
+          <div class="cv-cap">왼쪽 : 낙하하는 캔위성과 높이 눈금. 가운데 : 기압계 다이얼(hPa). 오른쪽 : 온도계(℃). 아래 글자 : 참 높이와 기압 고도계 표시값.</div>
+        </div>
+        <div id="t3-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t3-cv2" role="img" aria-label="기압 대 높이 그래프와 고도 오차 그래프" style="height:330px"></canvas>
+          <div class="cv-cap">📊 위 : 높이에 따른 기압 — 곡선 = 참(표준 대기), 점 = 낙하하며 잰 측정값. 아래 : 높이마다의 고도 계산 오차(m) — 보정 · 기온 · 잡음의 영향이 한눈에.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>정역학 평형 $dP=-\rho g\,dh$ 와 이상기체 $\rho=\dfrac{PM}{RT}$ 에서 (기온을 일정하다고 보면) $P=P_0\,e^{-h/H}$, $H=\dfrac{RT}{Mg}\approx8.4$ km. 따라서 $h=H\ln\dfrac{P_0}{P}$.</p>
+        <p>예 : $P_0=1013$ hPa, $P=700$ hPa → $h=8434\ln(1013/700)\approx3.1$ km. (표준대기식으로는 $P=701$ hPa 일 때 3.0 km)</p>
+        <p class="lv-uni">교과서 밖 : 대류권에서는 기온이 $T=T_g-Lh$ ($L=6.5$ K/km)로 내려가므로 $P=P_0(1-Lh/T_g)^{gM/(RL)}$, 지수 $gM/(RL)=5.256$. 이를 거꾸로 푼 $h=\dfrac{T_g}{L}\left[1-(P/P_0)^{RL/(gM)}\right]$ 에서 $T_g$ 대신 표준값 288.15 K 를 쓰는 것이 위 「기압 고도 공식」 (44330 m 는 $T_0/L$)입니다. 실제 기온이 표준과 $\Delta T$ 다르면 높이 오차는 약 $h\,\Delta T/T_0$ 입니다(35 ℃ 에서 3 km 일 때 약 −200 m).</p>
+      </div>
+    </div>
+  </div>
+</section>

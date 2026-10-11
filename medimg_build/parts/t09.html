@@ -1,0 +1,105 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 9 — 프로젝트 공방 ② 실시 가능한 R&amp;E · 프로젝트 6~10 (R06~R10 · 카드 5개 · 고르면 장치 도해 · 예산 · 방법 · 예측 결과 · 미니 모의실험 · 실패 대처 · 평가가 펼쳐짐)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab9" role="tabpanel" aria-labelledby="tabbtn9" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-exp">R&amp;E · 프로젝트 ②</span><span class="badge b-high">고등</span><span class="badge b-poe">POE</span>🔬 프로젝트 공방 ② 실시 가능한 R&amp;E · 프로젝트 6~10</div>
+    <div class="goal">🎯 이 공방에서 하는 것 — 도플러 효과 · 초음파 B-모드 흉내 스캐너 · 세차운동(MRI 비유) · 프레임 평균(잡음 √N) · 영상 AI 평가 5개 R&amp;E 입니다(R06 ~ R10). 앞 공방보다 장비 · 코딩이 조금 더 필요하지만 학교 예산 안에서 가능합니다. 데이터가 <b>직선 · 로그 · 분포</b> 중 어떤 그래프가 되는지를 먼저 생각해 보세요. <b>안전 : 이 공방의 모든 활동은 방사선 · 강자기장 · 고출력 초음파를 쓰지 않는 안전한 유사 실험입니다.</b></div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 측정 그래프의 세 가지 모양</div>
+      R&amp;E 데이터는 대개 세 모양 중 하나입니다 — ① <b>직선</b>(두 양이 비례 : 세차 속도 ∝ 1/회전 속도, 잡음 ∝ 1/√N 은 √ 축에서), ② <b>로그 직선</b>(지수 · 거듭제곱 관계), ③ <b>분포</b>(같은 조건을 되풀이했을 때 흩어지는 모양 : AI 점수 분포). 어느 모양이 나올지 예측하면 어떤 그래프 · 어떤 통계를 쓸지 정해집니다.
+      <div class="bridge"><span class="st old">그래프 모양 예측</span><span class="ar">→</span><span class="st">측정 설계</span><span class="ar">→</span><span class="st">되풀이 · 분포</span><span class="ar">→</span><span class="st">분석 · 오차</span><span class="ar">→</span><span class="st new">결론</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🧭 공방 안내 — 이렇게 진행합니다 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="R&amp;E 진행 흐름. 여섯 단계가 이어지고 되돌아가 고친다.">
+        {{FIG:wf_re}}
+      </svg>
+    </div>
+    <div class="figcap">그림 9-1. R&amp;E 의 흐름 — 여섯 단계를 거치며 <b>되돌아가 고치는</b> 것이 핵심이다</div>
+    <div class="h4">🧰 이 공방의 도구와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 변인 표</b>조작 · 종속 · 통제를 한 장에. 통제가 새면 결론이 흐려진다.</div>
+      <div class="part"><b>② 장비 점검</b>센서 보정 · 전원 · 고정 상태를 매 실험 전에 기록한다.</div>
+      <div class="part"><b>③ 반복 횟수</b>분포를 보려면 10 회 이상. 횟수가 많을수록 평균의 오차 $\sigma/\sqrt{N}$ 가 줄어든다.</div>
+      <div class="part"><b>④ 원자료 보관</b>이상한 값도 지우지 말고 표시해 둔다(실패 원인이 나중에 보인다).</div>
+      <div class="part"><b>⑤ 통계</b>평균 · 표준편차 · 회귀 · 상관. 그래프에는 오차 막대를 단다.</div>
+      <div class="part"><b>⑥ 한계와 다음 질문</b>내 실험이 설명하지 못한 것 한 가지를 정직하게 쓴다.</div>
+    </div>
+    <div class="h4">🧪 진행 순서</div>
+    <div class="steps">
+      <div class="step"><b>변인 정하기</b> — 조작 변인 하나만 바꾸고 나머지는 모두 같게(통제 변인 표).</div>
+      <div class="step"><b>예측</b> — 모의실험으로 그래프 모양과 대략의 값을 먼저 예측한다.</div>
+      <div class="step"><b>예비 실험</b> — 장비가 안정적으로 값을 주는지 확인한다(전원 · 고정 · 소음).</div>
+      <div class="step"><b>본 실험</b> — 조건마다 충분한 횟수(통계에는 최소 10 ~ 30 회)를 되풀이한다.</div>
+      <div class="step"><b>분석 · 발표</b> — 평균 ± 표준편차, 회귀, 로그 그래프로 정리하고 한계를 쓴다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🎯 쉽게 이해하기 — 양궁 선수의 화살 자국</div>
+      양궁 선수가 같은 자리에서 화살을 여러 번 쏘면 과녁에 <b>흩어진 자국</b>이 남습니다. 자국이 모인 중심이 정확도, 흩어진 정도가 정밀도입니다. 영상 장비 · 센서 · AI 의 성능도 똑같아서 「한 번의 값」보다 「분포의 모양」을 보아야 합니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“한 번 잰 값이 그 장치의 성능이다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>여러 번 되풀이해 <strong>평균(중심)</strong>과 <strong>표준편차(흩어짐)</strong>를 함께 보고해야 장치의 성능을 말할 수 있습니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🗂 프로젝트 5선 (R&amp;E · 프로젝트 ②) — 카드를 누르면 아래에 자세한 안내가 펼쳐집니다</div>
+    <div class="tline" id="t9-pick" role="group" aria-label="프로젝트 고르기"></div>
+  </div>
+
+  <div id="t9-d1"></div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 미니 모의실험 — <span id="t9-simT">—</span></div>
+        <p class="muted" id="t9-simQ">—</p>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="t9-aN">—</span><span class="vl" id="t9-aV">—</span></div>
+          <input type="range" id="t9-a" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 1">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm" id="t9-bN">—</span><span class="vl" id="t9-bV">—</span></div>
+          <input type="range" id="t9-b" min="0" max="1" step="0.01" value="0.5" aria-label="모의실험 변인 2">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm pri" id="t9-go">🎲 새로 측정 (새 난수)</button>
+          <button type="button" class="btn sm" id="t9-def">↺ 기본값</button>
+        </div>
+        <div class="kv" id="t9-kv"></div>
+        <p class="tiny" id="t9-note">—</p>
+      </div>
+      <div class="poe" data-q="R09 에서 같은 장면을 찍은 프레임 16 장을 평균하면 잡음(표준편차)은 한 장일 때의 대략 몇 배가 될까?"
+           data-opts="16 배||¼||⅛||1/16"
+           data-ans="1"
+           data-exp="독립인 잡음은 평균하면 $\sigma/\sqrt N$ 으로 줄어듭니다. $N=16$ 이면 $1/\sqrt{16}=\tfrac14$. 그래서 신호 대 잡음비는 4 배 좋아지지만 16 배 노력(시간 · 선량)이 듭니다."></div>
+      <div class="poe" data-q="R06 에서 5 MHz 초음파를 쏘았을 때 혈구가 탐촉자 쪽으로 0.5 m/s 로(각도 0°) 다가오면 도플러 이동은 대략? (c = 1540 m/s)"
+           data-opts="약 16 Hz||약 160 Hz||약 3.2 kHz||약 32 kHz"
+           data-ans="2"
+           data-exp="$\Delta f=\dfrac{2f_0v\cos\theta}{c}=\dfrac{2\times5\times10^6\times0.5}{1540}\approx3.2$ kHz — 가청 주파수 범위라 도플러 초음파는 혈류를 「소리」로 들려줄 수 있습니다."></div>
+      <div id="t9-misc"></div>
+      <div class="hintbox" data-hints="① 먼저 카드 5개 중 내 장비로 할 수 있는 것을 고르세요(R06 은 스마트폰 앱, R07 은 서보 + 초음파 센서).||② 미니 모의실험으로 「그래프가 어떤 모양으로 나올지」를 먼저 스케치하세요.||③ 결과 표의 평균 ± 표준편차를 한 줄 결론으로 바꿔 보세요.||④ R09 의 √N 법칙은 17번 탭 [종합3] 에서 정량으로 이어집니다."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t9" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t9-cv" data-pngname="project-9-sim">🖼 PNG</button></div>
+          <canvas id="t9-cv" role="img" aria-label="프로젝트 미니 모의실험 애니메이션" style="height:300px"></canvas>
+          <div class="cv-cap" id="t9-cap1">—</div>
+        </div>
+        <div id="t9-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t9-cv2" role="img" aria-label="프로젝트 예상 결과 그래프" style="height:250px"></canvas>
+          <div class="cv-cap" id="t9-cap2">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="t9-d2"></div>
+</section>

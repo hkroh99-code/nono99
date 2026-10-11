@@ -1,0 +1,133 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TAB 1 — 도입 : 음료수 캔이 인공위성이 된다고? (선행조직자 · 임무 6단계 · 3D 낙하 시뮬레이션 · 타임라인)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<section class="panel" id="tab1" role="tabpanel" aria-labelledby="tabbtn1" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span>🎯 도입 — 음료수 캔이 인공위성이 된다고?</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — <b>캔위성(CanSat)</b>은 음료수 캔 크기의 상자 안에 <b>센서 · 컴퓨터 · 무전기 · 배터리</b>를 모두 넣은 「모의 위성」입니다. 풍선 · 드론 · 로켓으로 높이 올라가 방출되면 <b>낙하산으로 내려오며</b> 기압 · 온도 · 위치를 재고, 무선으로 지상국에 보내고, 때로는 스스로 목표 지점을 찾아갑니다. 이 한 번의 비행에 <b>힘과 운동 · 기체의 압력 · 전파 · 에너지</b>가 전부 들어 있습니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자(Advance Organizer) — 오수벨</div>
+      「힘과 운동」에서 물체가 떨어질 때 <b>중력 $mg$</b> 가 아래로 당기고, 공기 속에서는 속력이 커질수록 위로 작용하는 <b>공기 저항</b>도 커져서 어느 순간 두 힘이 같아지면 <b>일정한 속도(종단속도)</b>로 떨어진다는 것을 배웠습니다. 또 높은 곳일수록 <b>기압이 낮아지고</b>, 전파는 거리가 멀수록 약해진다는 것도 배웠습니다.
+      캔위성은 이 모든 것을 「내가 만든 물건」 하나에 모아서 시험하는 일입니다. 낙하산 크기를 바꾸면 종단속도가 어떻게 되는지, 높이에 따라 기압이 어떻게 변하는지, 거리에 따라 신호가 얼마나 약해지는지 — 이 학습실은 그 질문들을 하나씩 열어 봅니다.
+      <div class="bridge">
+        <span class="st old">중력 · 공기 저항 · 종단속도</span><span class="ar">→</span>
+        <span class="st">기압 · 높이 · 온도</span><span class="ar">→</span>
+        <span class="st">위치 · 유도 · 통신</span><span class="ar">→</span>
+        <span class="st new">내가 설계하는 캔위성 프로젝트</span>
+      </div>
+    </div>
+    <div class="poe" data-q="같은 캔위성이 300 m 높이에서 낙하산 없이 떨어질 때와 낙하산(지름 40 cm)을 펼칠 때, 땅에 닿는 속력은 대략 몇 배 차이가 날까?"
+         data-opts="거의 같다(2 배 이내)||약 3 배||약 7 배||약 100 배"
+         data-ans="2"
+         data-exp="낙하산이 없으면 종단속도가 약 40 m/s(시속 144 km), 지름 40 cm 낙하산을 펼치면 약 5.4 m/s 로 <b>약 7 배</b> 차이가 납니다. $v_t=\sqrt{2mg/\rho C_dA}$ 에서 공기와 부딪히는 「유효 면적」 $C_dA$ 가 약 56 배 커지기 때문입니다($\sqrt{56}\approx7.5$). 오른쪽 3D 시뮬레이션에서 낙하산 지름을 0 으로 해서 직접 확인해 보세요."></div>
+    <div id="t1-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 캔위성의 임무 — 한 번의 비행에 일어나는 여섯 가지 일 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="캔위성 임무 6단계. 방출, 낙하산 전개, 센서 측정, 무선 통신, 착륙 충격, 지상국 분석이 차례로 이어진다.">
+        <text x="390" y="44" fill="#9db0cc" font-size="12" text-anchor="middle">한 번의 비행 = 올라가서 → 떨어지며 → 재고 → 보내고 → 내려앉고 → 분석한다</text>
+        {{FIG:flow}}
+      </svg>
+    </div>
+    <div class="figcap">그림 1-1. 캔위성의 임무 6단계 — ① 방출(풍선 · 드론 · 로켓으로 상승 후 분리) → ② 낙하산 전개 → ③ 센서 측정(기압 · 온도 · 가속도 · 위치) → ④ 무선 통신(원격측정) → ⑤ 착륙 충격 → ⑥ 지상국 분석. 단계마다 물리와 공학이 다르다</div>
+    <div class="h4">🧰 이 단원의 여섯 가지 열쇠와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 방출과 낙하산</b>높은 곳에서 놓으면 중력으로 가속되다가 <i>공기 저항과 같아지는 속력</i>(종단속도)에서 일정해진다. 낙하산 면적이 이것을 정한다(2번 탭).</div>
+      <div class="part"><b>② 대기 · 기압고도계</b>기압은 높이에 따라 <i>지수 함수로</i> 줄어든다. 기압을 재면 높이를 알 수 있다(3번 탭).</div>
+      <div class="part"><b>③ GPS · 유도</b>GPS 로 위치를 알고, 낙하산 줄을 당겨 방향을 바꾸면 <i>목표로 돌아올 수 있다</i>. 단, 바람을 이겨야 한다(4번 탭).</div>
+      <div class="part"><b>④ 통신(원격측정)</b>센서 값을 무선으로 지상국에 보낸다. 거리가 2 배면 신호는 <i>¼</i> — 안테나 · 출력 · 환경으로 거리를 정한다(5번 탭).</div>
+      <div class="part"><b>⑤ 전력 · 충격</b>배터리가 임무 시간을 정하고, 착지 충격은 <i>멈추는 거리</i>로 줄인다(6번 탭).</div>
+      <div class="part"><b>⑥ 프로젝트 사이클</b>요구사항 → 설계 → 제작 → 시험 → 운용 → 분석. 실제 위성 개발과 같은 흐름을 작게 체험한다(8 ~ 14번 탭).</div>
+    </div>
+    <div class="h4">🗺 이 학습실의 길 — 탭 안내</div>
+    <div class="steps">
+      <div class="step"><b>탭 2 ~ 6</b> — 원리 : 낙하와 종단속도 → 대기(기압 · 고도 · 온도) → 위치와 유도(GPS · 파라포일) → 통신(링크) → 전력 · 충격.</div>
+      <div class="step"><b>탭 7</b> — 활용 현황 : 한국 · 미국 · 일본(과 유럽)에서 캔위성이 어떻게 쓰이고 어떤 대회가 있는지, 나는 어떤 길로 갈 수 있는지.</div>
+      <div class="step"><b>탭 8 ~ 14</b> — 프로젝트 공방 : 실시 가능한 <b>R&amp;E 10선</b> · <b>창의 프로젝트 10선</b> · <b>발명 10선</b>(각각 준비물 · 방법 5단계 · 예상 결과 · 실패 대처 · 평가 기준)과 연구 도구함.</div>
+      <div class="step"><b>탭 15 ~ 17</b> — 종합 모의실험 3개 : 낙하산의 항력계수(선형 회귀) · 기압으로 재는 스케일 높이(로그 그래프) · 복귀 정밀도(오차 분포).</div>
+      <div class="step"><b>탭 18 · 19</b> — 오개념 진단과 실험보고서(인쇄 · PDF 저장).</div>
+    </div>
+    <div class="easy">
+      <div class="et">🍱 쉽게 이해하기 — 도시락통 안의 작은 과학자</div>
+      도시락통 안에 온도계 · 기압계 · 컴퓨터 · 무전기 · 배터리를 모두 넣고, 높은 곳에서 낙하산에 매달아 떨어뜨린다고 상상해 보세요. 통은 <b>혼자서</b> 올바른 때에 낙하산을 펴고, 떨어지는 동안 값을 재고, 무전기로 전해 주고, 땅에 닿아도 망가지지 않아야 합니다. 그 하나하나가 실제 인공위성이 풀어야 하는 문제와 닮아 있습니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“캔위성은 지구 궤도를 도는 진짜 위성이다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>캔위성은 수백 m ~ 수 km 에서 <strong>떨어뜨리는 모의 위성</strong>입니다. 궤도 비행 대신, 위성 개발의 전 과정(임무 설계 · 시험 · 운용)을 작게 체험합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 3D 캔위성 — 방출에서 착륙까지 <span class="tiny">(질량 0.35 kg · 지름 66 mm 가정)</span></div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">방출 고도 h₀ (조작)</span><span class="vl" id="t1-hV">—</span></div>
+          <input type="range" id="t1-h" min="100" max="500" step="10" value="300" aria-label="방출 고도">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">낙하산 지름 D (0 = 펴지 않음)</span><span class="vl" id="t1-dV">—</span></div>
+          <input type="range" id="t1-d" min="0" max="0.6" step="0.05" value="0.4" aria-label="낙하산 지름">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">바람 (동쪽으로) w</span><span class="vl" id="t1-wV">—</span></div>
+          <input type="range" id="t1-w" min="0" max="8" step="0.5" value="3" aria-label="바람 속력">
+        </div>
+        <div class="row" role="group" aria-label="낙하산 크기 프리셋"><span class="tiny">프리셋 :</span>
+          <button type="button" class="btn sm" id="t1-p0">낙하산 없음</button>
+          <button type="button" class="btn sm" id="t1-p1">지름 20 cm</button>
+          <button type="button" class="btn sm" id="t1-p2">지름 40 cm</button>
+          <button type="button" class="btn sm" id="t1-p3">지름 60 cm</button>
+          <button type="button" class="btn sm" id="t1-reset3d">👁 시점 초기화</button>
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">종단속도 (지상 근처)</span><span class="v" id="t1-oV">—</span></div>
+          <div class="cell"><span class="k">낙하 시간</span><span class="v" id="t1-oT">—</span></div>
+          <div class="cell g"><span class="k">목표에서 벗어난 거리</span><span class="v" id="t1-oX">—</span></div>
+          <div class="cell v2"><span class="k">낙하산 펼칠 때 최대 가속도</span><span class="v" id="t1-oA">—</span></div>
+          <div class="cell r"><span class="k">착지 운동에너지</span><span class="v" id="t1-oE">—</span></div>
+        </div>
+        <p class="tiny">교육용 모형 : 캔(Cd 1.0, 지름 66 mm)과 반구형 낙하산(Cd 1.5)의 공기 저항을 합한 「유효 면적」, 고도에 따른 공기 밀도(표준대기), 바람과 함께 움직이는 풍선에서 방출(처음 수평 속도 = 바람). 낙하산은 방출 1 초 뒤 1.2 초 동안 펼쳐진다.</p>
+      </div>
+      <div class="poe" data-q="바람이 불면 낙하하는 캔위성은 목표 지점(바로 아래)에서 어느 쪽으로 얼마나 벗어날까?"
+           data-opts="바람 반대 방향으로 벗어난다||바람과 같은 방향으로, 대략 (바람 속력 × 낙하 시간) 만큼||벗어나지 않는다||바람 방향의 수직 방향으로"
+           data-ans="1"
+           data-exp="캔위성은 바람이 부는 공기 속에서 내려오므로 공기와 함께 <b>바람 방향으로 떠내려갑니다</b>. 벗어난 거리 ≈ 풍속 × 낙하 시간. 예 : 3 m/s × 54 s ≈ 160 m. 낙하산이 클수록 낙하 시간이 길어 더 멀리 떠내려갑니다 — 그래서 4번 탭의 「유도」 가 필요합니다."></div>
+      <div class="hintbox" data-hints="① 먼저 [낙하산 없음] 을 눌러 보세요. 몇 초 만에 땅에 닿고 착지 에너지는 얼마나 클까요?||② [지름 40 cm] 로 바꾸고 아래 그래프에서 속력이 일정해지는 부분(종단속도)을 찾아보세요.||③ 바람을 8 m/s 로 올려 보세요. 목표에서 벗어난 거리가 풍속 × 낙하 시간에 가까운가요?||④ 낙하산 지름을 두 배로 하면 종단속도는 정확히 몇 배가 될까요? 계산식 $v_t\propto1/D$ 와 비교해 보세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t1" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t1-cv" data-pngname="cansat-descent-3d">🖼 PNG</button></div>
+          <canvas id="t1-cv" role="img" aria-label="캔위성이 방출되어 낙하산으로 바람에 떠내려가며 내려오는 3차원 시뮬레이션" style="height:420px"></canvas>
+          <div class="dragtip">🖱 드래그 = 시점 회전 · 휠 = 확대/축소 · 더블클릭 = 처음 시점</div>
+          <div class="cv-cap">빨간 X = 목표(방출 지점 바로 아래). 점선 = 지나온 경로, 노란 점 = 캔위성(크기는 보이도록 키움). 낙하산은 방출 1 초 뒤 펼쳐집니다. 바람이 있으면 목표에서 점점 멀어집니다.</div>
+        </div>
+        <div id="t1-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t1-cv2" role="img" aria-label="수직 낙하 속도와 고도의 시간 그래프" style="height:230px"></canvas>
+          <div class="cv-cap">📊 시간에 따른 수직 낙하 속도 v(t)(파랑)와 고도(노랑, 상대 눈금). 낙하산이 펼쳐지기 전까지는 빨라지다가 펼친 직후 크게 줄고, 속도가 일정해지는 수평 구간이 <b>종단속도</b>입니다(분홍 점선 = 이론값 $v_t$).</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>낙하 중 알짜힘 : $ma=mg-\tfrac12\rho C_dAv^2$. 가속도가 0 이 되는 속력이 종단속도 $v_t=\sqrt{\dfrac{2mg}{\rho C_dA}}$.</p>
+        <p>예 : $m=0.35$ kg, $C_dA\approx0.192\ \text{m}^2$ (지름 40 cm), $\rho=1.225$ → $v_t=\sqrt{\dfrac{2\times0.35\times9.8}{1.225\times0.192}}\approx5.4$ m/s. 높이 300 m 에서 내려오는 시간 ≈ 300 ÷ 5.4 ≈ 56 s.</p>
+        <p class="lv-uni">교과서 밖 : 위 시뮬레이션은 수직 · 수평 운동을 <b>공기에 대한 상대속도</b> $\vec u=\vec v-\vec w$ 의 제곱 항력 $\vec F=-\tfrac12\rho C_dA|\vec u|\vec u$ 로 함께 적분합니다. 고도가 올라가면 $\rho$ 가 작아져 종단속도가 커집니다($v_t\propto\rho^{-1/2}$): 4 km 에서는 $\rho\approx0.82$ 이므로 해수면보다 약 22 % 빠릅니다. 낙하산이 펼쳐지는 순간의 충격(개방 충격)은 면적이 갑자기 커지는 데서 생기며, 시뮬레이션의 「최대 가속도」 가 그 크기입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🧠 이 학습실은 이렇게 설계되었습니다 <span class="badge b-poe">학습모형</span></div>
+    <p class="muted">화면 곳곳의 장치가 각각 어떤 학습 원리에서 나온 것인지 알아 두면 훨씬 효과적으로 쓸 수 있습니다.</p>
+    <div id="t1-models"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🕰 캔위성의 역사 <span class="tiny">(카드를 누르면 해당 탭으로 이동)</span></div>
+    <div class="tline" id="t1-timeline"></div>
+  </div>
+</section>

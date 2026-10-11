@@ -1,0 +1,118 @@
+<!-- ═══ TAB 2 — 📏 원리① 높이차와 유속 — $v=\sqrt{2gh}$ ═══ -->
+<section class="panel" id="tab2" role="tabpanel" aria-labelledby="tabbtn2" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>📏 원리① 높이차와 유속 — $v=\sqrt{2gh}$</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 사이펀의 흐름 속력은 <b>위 수면에서 출구까지의 높이차 $h$</b> 로 정해집니다. 에너지 보존(위치 에너지 → 운동 에너지)으로 $v=\sqrt{2gh}$ 이고, 정점이 얼마나 높든(이상적으로는) 속력에 영향이 없습니다. 실제로는 입구 · 곡관 · 관 마찰의 손실 계수 $K$ 때문에 $v=\sqrt{2gh/K}$ 로 더 작습니다. 유량 $Q=Av$ 는 관 단면적에 비례합니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 토리첼리 정리</div>
+      물통 옆 구멍에서 나오는 물의 속력이 $\sqrt{2gh}$ 라는 토리첼리 정리를 배웠습니다. 사이펀 출구도 「수면에서 출구까지 낙하하는 물」이므로 같은 속력이 됩니다. 베르누이 식을 위 수면(속력 0, 대기압)과 출구(속력 $v$, 대기압)에 쓰면 $\rho gh=\tfrac12\rho v^2$. 정점은 지나가는 곳일 뿐이어서 속력에 영향이 없습니다(관이 가득 찬 경우).
+      <div class="bridge"><span class="st old">토리첼리 정리</span><span class="ar">→</span><span class="st">베르누이(수면 ↔ 출구)</span><span class="ar">→</span><span class="st">v = √(2gh)</span><span class="ar">→</span><span class="st new">손실 K · 유량 Q</span></div>
+    </div>
+    <div class="poe" data-q="위 수면과 출구의 높이차가 2 배가 되면 이상 유속은 몇 배가 될까?"
+         data-opts="√2 ≈ 1.4 배||2 배||4 배||같다"
+         data-ans="0"
+         data-exp="$v=\sqrt{2gh}\propto\sqrt h$ 이므로 높이차가 2 배면 유속은 $\sqrt2\approx1.41$ 배입니다. 오른쪽 위 그래프의 $\sqrt h$ 곡선에서 확인하세요."></div>
+    <div id="t2-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 높이차와 유속 — 에너지 · 곡선 · 손실 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="높이차와 유속 도해. 위 수면의 물이 내려오며 위치 에너지가 운동 에너지로 바뀌고, 속력은 높이차의 제곱근에 비례하며, 마찰 손실이 있으면 실제 속력이 더 작다.">
+        {{FIG:hydro}}
+      </svg>
+    </div>
+    <div class="figcap">그림 2-1. 높이차와 유속 — ① $mgh=\tfrac12mv^2$ : 위치 에너지가 운동 에너지로 → ② $v=\sqrt{2gh}$ : 높이차의 제곱근에 비례 → ③ 실제는 $v=\sqrt{2gh/K}$ : 입구 · 곡관 · 관 마찰이 있어 더 느리다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 높이차 $h$</b>위 통 수면에서 출구(자유 출구) 또는 아래 통 수면까지의 높이. 정점 높이가 아님.</div>
+      <div class="part"><b>② 이상 유속</b>$v=\sqrt{2gh}$ — 마찰이 없을 때 수면과 출구에 베르누이 식을 쓴 결과.</div>
+      <div class="part"><b>③ 손실 계수 $K$</b>$K=1+K_m+fL/D$ : 1 은 출구 운동 에너지, $K_m$ 은 입구 · 곡관 등, $fL/D$ 는 관 마찰.</div>
+      <div class="part"><b>④ 유량 $Q$</b>$Q=Av=\dfrac{\pi D^2}{4}v$. 지름이 2 배면 이상적으로 4 배.</div>
+      <div class="part"><b>⑤ 정점의 역할</b>정점은 속력을 정하지 않는다. 다만 압력이 증기압 아래로 내려가면 흐름이 끊긴다(3번 탭).</div>
+      <div class="part"><b>⑥ 쓰임</b>어항 물갈이 · 관개 · 배수 — 높이차만 확보하면 펌프 없이 물을 옮긴다.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 높이차와 유량 재기 (호스 · 눈금 통 · 스톱워치)</div>
+    <div class="steps">
+      <div class="step">투명 호스(지름 약 10 mm)로 사이펀을 만들고 위 통 수면과 출구의 높이차 $h$ 를 10, 20, 30, … cm 로 바꾼다.</div>
+      <div class="step">각 $h$ 에서 눈금 통에 500 mL 를 받는 시간 $t$ 를 3 회씩 재어 유량 $Q=V/t$ 를 구한다.</div>
+      <div class="step">$Q$ 대 $\sqrt h$ 그래프가 원점을 지나는 직선인지 확인한다(R01).</div>
+      <div class="step">관 지름을 바꿔($D=6,10,16$ mm) 같은 $h$ 에서 $Q$ 를 비교한다(R02).</div>
+      <div class="step">종합실험 1(15번 탭)에서 $v^2$ 대 $h$ 의 기울기로 총 손실 계수 $K$ 를 구한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🛝 쉽게 이해하기 — 미끄럼틀의 높이</div>
+      미끄럼틀은 <b>높은 곳에서 출발할수록 바닥에서 빨라요</b>. 중간에 작은 언덕(정점)이 있어도 처음 높이만 충분하면 도착 속도는 처음 높이가 정합니다. 사이펀도 위 수면이 출구보다 높은 만큼 빨라져요. 다만 미끄럼틀 표면이 거칠면 느려지듯, 관이 가늘고 길면 마찰 때문에 느려집니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“정점이 높을수록 물이 힘차게 쏟아진다 · 관이 길수록 더 많이 나온다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>속력은 <strong>위 수면과 출구의 높이차</strong>가 정하고, 정점 높이는 속력을 정하지 않습니다. 관이 길고 가늘면 마찰 손실로 느려집니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 유속 시뮬레이션 — 높이차 · 손실 · 관 지름</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">높이차 h</span><span class="vl" id="t2-hV">—</span></div>
+          <input type="range" id="t2-h" min="5" max="100" step="5" value="50" aria-label="높이차 h">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">기타 손실 K_m (곡관 · 입구)</span><span class="vl" id="t2-KV">—</span></div>
+          <input type="range" id="t2-K" min="0" max="10" step="0.5" value="1" aria-label="기타 손실 K_m (곡관 · 입구)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">관 지름 D</span><span class="vl" id="t2-DV">—</span></div>
+          <input type="range" id="t2-D" min="4" max="30" step="1" value="10" aria-label="관 지름 D">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">이상 유속 √(2gh)</span><span class="v" id="t2-oI">—</span></div>
+          <div class="cell g"><span class="k">실제 유속 v</span><span class="v" id="t2-oV">—</span></div>
+          <div class="cell v2"><span class="k">유량 Q</span><span class="v" id="t2-oQ">—</span></div>
+          <div class="cell r"><span class="k">레이놀즈 수 · 흐름</span><span class="v" id="t2-oR">—</span></div>
+          <div class="cell "><span class="k">1 L 받는 시간</span><span class="v" id="t2-oT">—</span></div>
+        </div>
+        <p class="tiny">모형 : $gh=(1+K_m+fL/D)v^2/2$ (관 길이 $L=1$ m, 물 20 °C, 마찰 계수 $f$ 는 레이놀즈 수에서: 층류 $64/Re$, 난류 $0.316Re^{-1/4}$). 정점은 속력에 영향이 없다고 가정한 교육용 어림입니다.</p>
+      </div>
+      <div class="poe" data-q="관이 길고 가늘어 손실 계수가 $K=1$ 에서 $K=4$ 로 커지면 같은 높이차에서 유속은?"
+           data-opts="1/2 로 줄어든다||1/4 로 줄어든다||같다||2 배가 된다"
+           data-ans="0"
+           data-exp="$v=\sqrt{2gh/K}\propto1/\sqrt K$ 이므로 $K$ 가 4 배면 유속은 $1/\sqrt4=1/2$ 입니다. 오른쪽 그래프에서 손실 계수 슬라이더를 바꿔 확인하세요."></div>
+      <div class="hintbox" data-hints="① 먼저 h = 50 cm · K_m = 1 · D = 10 mm 로 두고 이상 유속(약 3.1 m/s)과 실제 유속을 비교하세요.||② 높이차를 4 배(25 → 100 cm)로 바꾸면 이상 유속은 몇 배가 되나요?||③ 관 지름을 2 배로 하면 유량은 몇 배가 되나요? 유속은 변하나요?||④ 실제 유속이 이상 유속보다 작은 까닭은 무엇이며, 어떤 값을 바꾸면 차이가 줄어드나요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t2" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t2-cv" data-pngname="siphon-speed">🖼 PNG</button></div>
+          <canvas id="t2-cv" role="img" aria-label="위 통 · 정점 · 출구가 있는 사이펀 장면" style="height:340px"></canvas>
+          <div class="cv-cap">위 통(왼쪽)의 물이 관을 타고 정점을 넘어 출구로 흐릅니다. 보라색 h 는 위 수면에서 출구까지의 높이차이고 점들의 속도는 유속에 비례합니다.</div>
+        </div>
+        <div id="t2-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t2-cv2" role="img" aria-label="높이차 대 유속과 지름 대 유량 그래프" style="height:340px"></canvas>
+          <div class="cv-cap">📊 위 : 높이차 대 유속 — $\sqrt h$ 곡선(이상은 흰 점선). 아래 : 관 지름 대 유량 — 거의 $D^2$ 에 비례(마찰이 커지면 덜 늘어남).</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>에너지 보존: $mgh=\tfrac12mv^2$ → $v=\sqrt{2gh}$. 손실 포함: $gh=\dfrac{v^2}{2}\left(1+K_m+f\dfrac LD\right)$. 유량 $Q=\dfrac{\pi D^2}{4}v$.</p><p>예 : $h=0.5$ m → $v_{이상}=3.13$ m/s. $D=10$ mm, $L=1$ m, $K_m=1$ 이면 $Re\approx1.7\times10^4$ (난류) · $f\approx0.028$ · $K=1+1+2.8=4.8$ → $v=\sqrt{2\times9.8\times0.5/4.8}=1.4$ m/s.</p><p class="lv-uni">교과서 밖 : 정점을 포함해 베르누이를 쓰면 정점에서 $p_c=p_{atm}-\rho g H_c-\tfrac12\rho v^2-\Delta p_{loss}$ 이고, 손실 항은 위 수면에서 정점까지 관 마찰에 해당합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 사이펀의 속력은 어떻게 나오나 — 베르누이에서 $v=\sqrt{2gh/K}$ 까지 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">위 수면과 출구에 베르누이 방정식을 써서 속력을 유도하고, 손실을 넣어 봅니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 두 점 고르기</b> — 점 ①은 위 통의 수면(속력 ≈ 0, 압력 $p_{atm}$), 점 ②는 출구(속력 $v$, 압력 $p_{atm}$, 높이 $-h$). 관은 가득 차 있고 흐름은 정상이라고 둡니다.</div>
+      <div class="step"><b>② 베르누이 식</b> — $p_{atm}+\rho g\cdot0+0=p_{atm}+\rho g(-h)+\tfrac12\rho v^2$ → $\tfrac12\rho v^2=\rho gh$.</div>
+      <div class="step"><b>③ 이상 속력</b> — $v=\sqrt{2gh}$ — 토리첼리 정리와 같은 꼴. 정점의 높이는 식에 나타나지 않는다.</div>
+      <div class="step"><b>④ 연속 방정식</b> — 관의 지름이 일정하면 관 속 어디서나 속력이 같다($A_1v_1=A_2v_2$). 그래서 정점의 속력도 $v$ 이다.</div>
+      <div class="step"><b>⑤ 손실 항 추가</b> — 마찰 · 입구 · 곡관에서 압력이 $\Delta p_{loss}=K_L\cdot\tfrac12\rho v^2$ 만큼 줄어 $\rho gh=\tfrac12\rho v^2(1+K_m+fL/D)$. 즉 $v=\sqrt{2gh/K}$.</div>
+      <div class="step"><b>⑥ 유량</b> — $Q=Av=\dfrac{\pi D^2}{4}v$. 같은 $K$ 에서 지름이 2 배면 이상적으로 유량이 4 배.</div>
+      <div class="step"><b>⑦ 한계</b> — 관이 가득 차고 정점에서 끊기지 않는다는 가정입니다. 정점 압력이 증기압 아래로 내려가면 이 식이 깨집니다(3번 탭).</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">단계</th><th>물리 법칙</th><th>핵심 식</th><th>결과</th></tr></thead><tbody><tr><td style="text-align:left">① 두 점</td><td>베르누이</td><td>$p+\rho gz+\tfrac12\rho v^2$ 일정</td><td>수면 ↔ 출구</td></tr><tr><td style="text-align:left">② 정리</td><td>에너지 보존</td><td>$\rho gh=\tfrac12\rho v^2$</td><td>$v=\sqrt{2gh}$</td></tr><tr><td style="text-align:left">③ 연속</td><td>질량 보존</td><td>$Av=$ 일정</td><td>관 속 같은 속력</td></tr><tr><td style="text-align:left">④ 손실</td><td>마찰 · 곡관</td><td>$K=1+K_m+fL/D$</td><td>$v=\sqrt{2gh/K}$</td></tr><tr><td style="text-align:left">⑤ 유량</td><td>연속 방정식</td><td>$Q=Av$</td><td>D² 에 비례</td></tr></tbody></table></div>
+    <p class="tiny">높이차 $h$ 는 「위 수면에서 출구까지」입니다. 정점의 높이와 혼동하지 않도록 그림에서 보라색 치수선을 확인하세요.</p>
+  </div>
+</section>

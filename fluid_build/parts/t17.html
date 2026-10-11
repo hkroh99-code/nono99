@@ -1,0 +1,68 @@
+<section class="panel" id="tab17" role="tabpanel" aria-labelledby="tabbtn17" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-high">고등/수능</span><span class="badge b-exp">실험</span><span class="badge b-poe">POE</span>📊 [종합3] 압력 대 깊이 — 정수압 p = ρgh</div>
+    <div class="goal">🎯 이 실험에서 하는 것 — 물 속 깊이 $h$ 를 바꾸며 압력센서(또는 U자관)로 <b>게이지 압력 $p$ (Pa)</b> 를 잽니다. $p$ 대 $h$ 는 <b>원점을 지나는 직선</b>이고 <b>기울기 = $\rho g$</b> 입니다. 기울기에서 숨은 액체의 밀도를 구합니다. 결과는 <b>보고서의 실험 D</b>가 됩니다. (물 · 낮은 압력만 쓰는 안전한 실험)</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 깊이가 두 배면 압력 증가도 두 배</div>
+      같은 높이의 물기둥이 위에서 누르는 무게가 압력입니다. 게이지 압력 $p=\rho g h$ 는 깊이에 비례하고 용기 모양과 무관합니다(정수압의 역설). 1 m 깊이마다 약 9.8 kPa 이 늘어, 10 m 에서 약 1 기압($\approx$ 98 kPa)이 더해집니다.
+      <div class="bridge"><span class="st">$p=\rho g h$</span><span class="ar">→</span><span class="st">$p$ 대 $h$ 직선</span><span class="ar">→</span><span class="st">기울기 = $\rho g$</span><span class="ar">→</span><span class="st new">$\rho=\text{기울기}/g$</span></div>
+    </div>
+    <div class="poe" data-q="수심 20 cm 에서 게이지 압력은 약 얼마일까? (물 1000 kg/m³, g=9.8)"
+         data-opts="약 20 Pa||약 200 Pa||약 2 kPa||약 20 kPa"
+         data-ans="2"
+         data-exp="$p=\rho g h=1000\times9.8\times0.20=1960$ Pa ≈ <b>2 kPa</b>. 수심 20 cm 의 압력은 대기압(101 kPa)의 2 % 정도로 작아 정밀한 센서나 U자관이 필요합니다."></div>
+    <div id="k17-misc"></div>
+  </div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 가상 실험실 — 조건을 정하고 [측정 기록]</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">깊이 h (cm)</span><span class="vl" id="k17-hV">—</span></div>
+          <input type="range" id="k17-h" min="2" max="30" step="1" value="10" aria-label="깊이 h (cm)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">센서 잡음 σ (Pa)</span><span class="vl" id="k17-SV">—</span></div>
+          <input type="range" id="k17-S" min="0" max="60" step="5" value="20" aria-label="센서 잡음 σ (Pa)">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm" id="k17-new">🎲 새 조건(숨은 값 다시 뽑기)</button>
+          <button type="button" class="btn sm pri" id="k17-rec">📏 측정 기록</button>
+          <button type="button" class="btn sm" id="k17-rec10">📏×5 연속 기록</button>
+          <button type="button" class="btn sm rd" id="k17-clr">🧹 측정 초기화</button>
+        </div>
+        <div class="kv"><div class="cell a"><span class="k">이론 p = ρgh</span><span class="v" id="k17-oP">—</span></div><div class="cell g"><span class="k">측정 p</span><span class="v" id="k17-oM">—</span></div><div class="cell v2"><span class="k">추정 ρ</span><span class="v" id="k17-oF">—</span></div><div class="cell r"><span class="k">물과의 차이</span><span class="v" id="k17-oE">—</span></div><div class="cell "><span class="k">기록 개수</span><span class="v" id="k17-oN">—</span></div></div>
+        <p class="tiny">모형 : $p=\rho g h+\varepsilon$ (σ Pa). 숨은 밀도 $\rho$ 는 [새 조건]마다 990 ~ 1200 kg/m³ 에서 뽑힙니다. $g=9.80$ m/s². 센서 영점 · 온도 영향은 무시한 교육용 모형입니다.</p>
+      </div>
+      <div class="card">
+        <div class="h4">📋 측정 기록표 <span class="tiny" id="k17-cnt">0개</span></div>
+        <div class="tblscroll"><table id="k17-tbl"><thead></thead><tbody></tbody></table></div>
+        <p class="tiny">기록한 값은 <b>실험보고서(19번 탭)</b>의 표 · 그래프 · 결과로 자동으로 이어집니다. 5개 이상 모으세요.</p>
+      </div>
+      <div class="hintbox" data-hints="① 깊이를 2 ~ 30 cm 로 넓게 바꾸며 [측정 기록] 하세요.||② 기울기(Pa/cm)를 읽고 $\rho=\text{기울기}\times100/9.8$ 로 밀도를 직접 계산해 보세요.||③ 센서 잡음 σ 가 크면 추정 밀도가 얼마나 흔들리나요?||④ 같은 깊이에서 용기가 넓거나 좁아도 압력이 같을까요? 이유는?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k17" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k17-cv" data-pngname="fluid-synth-17">🖼 PNG</button></div>
+          <canvas id="k17-cv" role="img" aria-label="가상 실험 장면" style="height:300px"></canvas>
+          <div class="cv-cap">압력센서가 물 속으로 내려갑니다(10 초 반복). 깊이에 따라 막대(압력)가 길어집니다.</div>
+        </div>
+        <div id="k17-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k17-cv2" role="img" aria-label="측정 결과 그래프" style="height:320px"></canvas>
+          <div class="cv-cap">📊 가로 깊이 $h$ · 세로 게이지 압력 $p$. 빨강 = 내 회귀직선, 흰 점선 = 숨은 참 직선. 기울기 = $\rho g$.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$p=\rho g h$ → 기울기 $s=\rho g$ (Pa/cm 로 쓰면 $\rho=100\,s/g$). 예 : $s=98$ Pa/cm → $\rho=1000$ kg/m³. 절대 압력은 $p_0+\rho g h$ ($p_0\approx101.3$ kPa).</p><p class="lv-uni">교과서 밖 : 깊은 바다에서는 물이 조금 압축되어 밀도가 깊이에 따라 늘고, 온도 · 염분 구배도 있습니다(해양학의 상태방정식). 수 km 깊이에서는 $p$ 가 수십 MPa 이 되어 선형 근사의 보정이 필요합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h4">🧪 이 실험을 진짜로 하려면</div>
+    <div class="steps"><div class="step"><b>준비</b> : 투명 원통(페트병 윗부분 자름), 물, 자, 저압 압력센서 + 아두이노 또는 U자관 마노미터(R03 · R09 · I02 참고).</div><div class="step"><b>측정</b> : 탐침(센서 구멍 또는 U자관 입구)을 깊이 2, 5, 10, 15, 20, 25 cm 에 두고 압력을 3 회 읽어 평균한다.</div><div class="step"><b>그래프</b> : p 대 h 직선의 기울기를 구하고 ρ g 와 비교한다(14번 탭 코드).</div><div class="step"><b>확장</b> : 소금물에서 반복해 기울기가 커지는지, 용기 모양이 달라도 같은지 확인한다.</div><div class="step"><b>결론</b> : 오차 원인(영점 · 기포 · 표면 위치 읽기)과 실제 수심 · 잠수의 압력 연결을 서술한다.</div></div>
+    
+  </div>
+</section>

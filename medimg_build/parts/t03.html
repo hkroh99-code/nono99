@@ -1,0 +1,116 @@
+<!-- ═══ TAB 3 — 🌀 원리② CT — 여러 방향의 투영으로 단면을 되살린다 ═══ -->
+<section class="panel" id="tab3" role="tabpanel" aria-labelledby="tabbtn3" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🌀 원리② CT — 여러 방향의 투영으로 단면을 되살린다</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — CT 는 X선 선원과 검출기가 몸 둘레를 돌며 <b>여러 각도의 투영(사이노그램)</b>을 얻고, 컴퓨터가 이를 <b>필터 역투영(FBP)</b> 으로 합쳐 <b>단면 영상</b>을 만듭니다. 각 화소의 값은 물을 0 으로 한 <b>하운스필드 단위(HU)</b>로 표시합니다. 투영 수가 적거나 선량이 낮으면 줄무늬 · 잡음이 생깁니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 한 장의 그림자로는 알 수 없는 것</div>
+      X선 한 장은 앞뒤가 겹친 그림자라서 「어느 깊이에 무엇이 있는지」 알 수 없습니다. 여러 방향에서 그림자를 찍으면 겹친 정보가 서로 다른 방식으로 나타납니다. 한 지점의 점은 각도마다 <b>사인 곡선</b>(사이노그램)을 그리고, 이 곡선들을 거꾸로 합치면 점의 위치가 복원됩니다. 그냥 합치면 흐려지므로(별 모양 번짐) <b>고주파를 강조하는 램프 필터</b>를 먼저 적용합니다.
+      <div class="bridge"><span class="st old">한 방향 그림자</span><span class="ar">→</span><span class="st">여러 각도 투영</span><span class="ar">→</span><span class="st">사이노그램</span><span class="ar">→</span><span class="st">필터 역투영</span><span class="ar">→</span><span class="st new">단면 영상(HU)</span></div>
+    </div>
+    <div class="poe" data-q="CT 영상에서 선명하게 단면을 얻으려면 투영(촬영 각도) 수는 대략 어느 정도가 필요할까? (영상 한 변이 64 화소일 때)"
+         data-opts="약 4 장||약 10 장||약 60 ~ 100 장||1 장이면 충분"
+         data-ans="2"
+         data-exp="영상 한 변의 화소 수 정도(약 $\tfrac{\pi}{2}N\approx100$)의 각도가 있어야 줄무늬(별 모양 번짐) 없이 복원됩니다. 각도가 적으면 투영 사이가 비어 <b>줄무늬 아티팩트</b>가 생깁니다. 오른쪽에서 투영 수를 4 → 120 으로 바꾸어 보세요."></div>
+    <div id="t3-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 CT — 투영 · 사이노그램 · 역투영 · 필터 역투영 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 272" role="img" aria-label="CT 재구성 도해. 선원과 검출기가 몸 둘레를 돌며 투영을 얻고, 점은 사이노그램에서 사인 곡선이 되고, 단순 역투영은 번지며, 필터 역투영은 선명한 단면을 만든다.">
+        {{FIG:ct}}
+      </svg>
+    </div>
+    <div class="figcap">그림 3-1. CT 의 순서 — ① 선원 · 검출기가 몸 둘레를 돌며 각 각도의 투영 획득 → ② 투영을 각도 순서로 쌓은 사이노그램(점 하나 = 사인 곡선 하나) → ③ 그냥 역투영하면 점이 별 모양으로 번진다 → ④ 램프 필터를 적용한 필터 역투영이 선명한 단면을 만든다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 투영 $p(\theta,s)$</b>각도 $\theta$, 위치 $s$ 에서의 선적분 $-\ln(I/I_0)=\int\mu\,dl$. 검출 신호에 로그를 취해 얻는다.</div>
+      <div class="part"><b>② 사이노그램</b>투영을 각도(세로)와 위치(가로)로 쌓은 그림. 한 점이 사인 곡선이 되는 데서 이름이 나왔다.</div>
+      <div class="part"><b>③ 역투영</b>각 투영을 그 각도 방향으로 되돌려 번지게 놓고 합한다. 그대로 쓰면 $1/r$ 로 번진 영상.</div>
+      <div class="part"><b>④ 램프 필터</b>주파수에 비례해 증폭하는 필터(고주파 강조). 번짐을 상쇄해 윤곽을 살린다. 잡음도 같이 커지므로 부드러운 필터와 절충.</div>
+      <div class="part"><b>⑤ 하운스필드 $\mathrm{HU}$</b>$1000(\mu-\mu_w)/\mu_w$. 물 0 · 공기 −1000 · 뇌 30 ~ 40 · 뼈 +1000 이상. 창 폭 · 창 수준으로 보고 싶은 범위를 고른다.</div>
+      <div class="part"><b>⑥ 선량 · 잡음</b>도달 광자 수 $N$ 이 적으면 잡음 $\sigma\propto1/\sqrt N$. 선량을 4 배로 해야 잡음이 ½. 선량과 화질의 거래.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 빛으로 하는 「광학 CT」(안전, R03) 와 시뮬레이션 비교</div>
+    <div class="steps">
+      <div class="step">투명한 용기에 물 + 우유 몇 방울을 넣고 속에 불투명한 물체(작은 병마개)를 둔다. 한쪽에 LED, 반대쪽에 스마트폰 카메라를 놓는다.</div>
+      <div class="step">회전판 위에서 물체를 10° 씩 돌리며 36 장(0 ~ 180° 에 18 장)의 사진을 찍는다. 밝기에 −ln 을 취해 투영을 만든다.</div>
+      <div class="step">같은 행(한 줄)의 투영을 쌓아 사이노그램을 만들고 점이 사인 곡선을 그리는지 확인한다.</div>
+      <div class="step">파이썬으로 역투영 · 필터 역투영(14번 탭 코드)을 해 단면을 복원하고, 각도 수를 줄이면 줄무늬가 어떻게 생기는지 본다.</div>
+      <div class="step">잡음(어두운 사진) 수준을 바꾸어 CNR(대조 대 잡음비)이 각도 수와 노출에 어떻게 의존하는지 비교한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🍞 쉽게 이해하기 — 식빵 속 건포도 찾기</div>
+      식빵 속에 건포도가 몇 개 들었는지 빵을 자르지 않고 알고 싶다고 해 보세요. 빵을 여러 방향에서 손전등으로 비춰 <b>그림자의 어두운 정도</b>를 기록하면, 건포도가 있는 방향일수록 더 어두울 것입니다. 그 기록을 모두 모아 컴퓨터가 「어디에 건포도가 있어야 이런 그림자가 나오는가」를 계산하는 것이 CT 입니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“CT 는 여러 장의 X선 사진을 단순히 겹친 것이다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>그냥 겹치면 <strong>번진 별 모양</strong>이 됩니다. <strong>필터링한 뒤 역투영</strong>(또는 반복 재구성)하는 수학적 재구성이 선명한 단면을 만듭니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 CT 재구성 시뮬레이션 — 투영 수 · 선량 · 필터</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">투영(촬영 각도) 수 N_θ</span><span class="vl" id="t3-nV">—</span></div>
+          <input type="range" id="t3-n" min="4" max="120" step="2" value="90" aria-label="투영(촬영 각도) 수 N_θ">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">선량 (상대 mAs)</span><span class="vl" id="t3-dV">—</span></div>
+          <input type="range" id="t3-d" min="10" max="400" step="10" value="200" aria-label="선량 (상대 mAs)">
+        </div>
+        <div class="row"><label class="chk"><input type="checkbox" id="t3-f" checked> 램프 필터 사용</label><label class="chk"><input type="checkbox" id="t3-w" checked> 뇌 창(WL 35 · WW 100)</label><button type="button" class="btn sm" id="t3-p0">투영 6 장</button><button type="button" class="btn sm" id="t3-p1">투영 24 장</button><button type="button" class="btn sm" id="t3-p2">투영 90 장</button></div>
+        <div class="kv">
+          <div class="cell a"><span class="k">영상 오차 RMSE (뇌 안)</span><span class="v" id="t3-oR">—</span></div>
+          <div class="cell g"><span class="k">백색질 평균 ± 잡음</span><span class="v" id="t3-oW">—</span></div>
+          <div class="cell v2"><span class="k">병변 대비 잡음비 CNR</span><span class="v" id="t3-oL">—</span></div>
+          <div class="cell r"><span class="k">선량(상대) · 잡음 σ</span><span class="v" id="t3-oT">—</span></div>
+          <div class="cell "><span class="k">필요 투영 수(어림 π N/2)</span><span class="v" id="t3-oN">—</span></div>
+        </div>
+        <p class="tiny">모형 : 64×64 화소 머리 팬텀(화소 3 mm)의 평행빔 투영 → 포아송 잡음($N_0=500\times$mAs) → 램프(쉐프–로건) 필터 → 화소 구동 역투영. 병변(+65 HU 출혈)은 백색질(30 HU)과 35 HU 차이입니다. 교육용이며 실제 장비는 부채꼴 빔 · 나선 스캔 · 반복 재구성을 씁니다.</p>
+      </div>
+      <div class="poe" data-q="같은 투영 수에서 선량(mAs)을 4 배로 늘리면 영상의 잡음 σ 는?"
+           data-opts="4 배||2 배||½ 로 줄어든다||¼ 로 줄어든다"
+           data-ans="2"
+           data-exp="광자 수 $N\propto$ 선량이고 잡음은 $\sigma\propto1/\sqrt N$ 이므로 선량 4 배면 잡음은 <b>½</b>. 잡음을 절반으로 줄이려면 선량을 4 배로 해야 하므로 선량과 화질 사이에는 큰 비용 거래가 있습니다(6번 탭)."></div>
+      <div class="hintbox" data-hints="① 먼저 투영 수 6 장으로 보세요. 별 모양 줄무늬가 보이나요? 필터를 끄면 어떻게 달라지나요?||② 투영 수를 늘리며 줄무늬가 사라지는 때(약 90 ~ 100 장)를 찾아보세요. 이론 $\pi N/2$ 와 비교해 보세요.||③ 선량을 최소로 내리고 병변(밝은 점)이 보이는지 확인하세요. 뇌 창과 넓은 창에서 보이는 정도는 다른가요?||④ 아래 사이노그램에서 두개골(밝은 바깥 곡선)과 병변(작은 곡선)이 각각 어떤 모양인지 찾아보세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t3" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t3-cv" data-pngname="ct-reconstruction">🖼 PNG</button></div>
+          <canvas id="t3-cv" role="img" aria-label="머리 팬텀의 원본 영상과 투영을 하나씩 더하며 재구성되는 CT 영상" style="height:330px"></canvas>
+          <div class="cv-cap">왼쪽 : 원본 팬텀(참값). 오른쪽 : 재구성 영상 — 시간이 흐르면 각도가 하나씩 더해지며 영상이 선명해집니다(투영 수만큼 10 초에 압축). 병변(밝은 점)과 석회화(아주 밝은 점)를 찾아보세요.</div>
+        </div>
+        <div id="t3-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t3-cv2" role="img" aria-label="사이노그램과 중심선 HU 프로파일" style="height:300px"></canvas>
+          <div class="cv-cap">📊 왼쪽 : 사이노그램(가로 = 검출기 위치, 세로 = 각도) · 오른쪽 : 영상 가운데 가로줄의 HU 프로파일 — 파랑 = 재구성, 흰 점선 = 참값. 두개골 부분(+1000 HU)이 그래프 위로 나가 있습니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>투영 : $p(\theta,s)=\int\mu(x,y)\,dl=-\ln\dfrac{I}{I_0}$. 필터 역투영 : $\mu(x,y)=\int_0^{\pi}\big[p(\theta,\cdot)*h\big](x\cos\theta+y\sin\theta)\,d\theta$, 램프 필터 $H(\omega)=|\omega|$.</p><p>하운스필드 : $\mathrm{HU}=1000\,\dfrac{\mu-\mu_{\text{물}}}{\mu_{\text{물}}}$. 필요한 투영 수 $\approx\dfrac{\pi}{2}N$ (한 변 $N$ 화소). 잡음 $\sigma\propto 1/\sqrt{\text{선량}}$.</p><p class="lv-uni">교과서 밖 : 푸리에 단면 정리 — 각 투영의 1 차원 푸리에 변환은 영상의 2 차원 푸리에 변환의 한 방사 선분이다. 방사 샘플은 중심에 몰려 있어($1/|\omega|$ 밀도) 램프 필터로 보정한다. 선량이 낮을 때는 통계적 반복 재구성(MBIR)과 딥러닝 잡음 제거가 쓰인다(I10).</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 CT 는 어떻게 작동하나 — 스캔 → 사이노그램 → 재구성 → HU <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">CT 는 X선 영상 장치를 「돌려가며 찍고 컴퓨터로 합치는」 장치입니다. 한 번의 스캔이 만들어지는 과정을 따라가 봅니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 장치 구성</b> — 도넛 모양의 <b>갠트리</b> 안에 X선관과 맞은편 <b>검출기 열</b>(수백 ~ 수천 채널, 여러 줄의 다열 검출기)이 마주 보고 <b>슬립링</b>으로 연속 회전합니다(1 회전 약 0.25 ~ 0.5 s). 환자 <b>테이블</b>이 천천히 움직이면 몸 둘레를 나선(helical)으로 훑습니다.</div>
+      <div class="step"><b>② 투영 얻기</b> — 한 각도에서 부채꼴 X선이 몸을 지나면 검출기가 도달 세기 $I$ 를 잽니다. 공기 중 기준 세기 $I_0$ 로 $p=-\ln(I/I_0)=\int\mu\,dl$ (선적분)을 계산합니다. 각 각도(약 1000 ~ 2000 방향)마다 한 줄의 투영이 생깁니다.</div>
+      <div class="step"><b>③ 사이노그램</b> — 투영을 각도 순서로 쌓은 그림이 <b>사이노그램</b>입니다. 몸 안의 한 점은 각도에 따라 $s=r\cos(\theta-\phi)$ — <b>사인 곡선</b>을 그립니다(탭의 시뮬레이션에서 확인). 사이노그램이 곧 CT 의 「원자료」(Radon 변환)입니다.</div>
+      <div class="step"><b>④ 재구성(필터 역투영)</b> — 원자료에서 영상을 거꾸로 구하는 것이 <b>재구성</b>입니다. 단순 역투영은 점이 $1/r$ 로 번지므로, 푸리에 단면 정리에 따라 각 투영에 <b>램프 필터</b> $|\omega|$ 를 적용한 뒤 역투영합니다(<b>FBP</b>). 필터의 모양(커널)을 바꾸면 선명함(뼈)과 부드러움(연조직 · 잡음 감소)이 달라집니다. 요즘은 선량이 낮을 때 잡음 모형을 쓰는 <b>반복 재구성</b>과 딥러닝도 쓰입니다.</div>
+      <div class="step"><b>⑤ 하운스필드 단위</b> — 재구성된 $\mu$ 를 $\mathrm{HU}=1000(\mu-\mu_w)/\mu_w$ 로 바꿉니다. 물 0 · 공기 −1000 · 지방 약 −100 · 뇌 30 ~ 40 · 급성 출혈 약 60 이상 · 뼈 수백 ~ 1000 이상. 화면은 8 비트(256 단계)이므로 <b>창 수준 WL · 창 폭 WW</b> 로 보고 싶은 범위만 늘려 봅니다(뇌 창 WL 35 · WW 100).</div>
+      <div class="step"><b>⑥ 화질과 아티팩트</b> — 줄무늬(금속 · 투영 부족) · <b>빔경화</b>(다색 X선이 두꺼운 곳에서 평균 에너지가 올라 가운데가 어두운 컵 모양) · <b>부분용적효과</b>(절편이 두꺼우면 작은 병변이 평균되어 흐려짐) · 움직임 번짐이 대표적입니다. 해상도는 절편 두께 · 화소 크기 · 필터, 잡음은 mAs · 절편 두께로 정해집니다.</div>
+      <div class="step"><b>⑦ 선량 관리</b> — CT 선량은 mAs · kVp · 나선 간격(pitch) · 스캔 길이에 좌우되고 흉부 X선보다 수십 ~ 수백 배 큽니다. 그래서 환자 크기에 맞춘 <b>자동 관전류 조절(AEC, I01)</b>, 저선량 프로토콜, 반복 재구성, <b>정당화</b>가 중요합니다.</div>
+      <div class="step"><b>⑧ 쓰임과 한계</b> — 뇌출혈 · 외상 · 폐 · 복부 응급처럼 <b>빠르고 정밀한 단면</b>이 필요한 곳에 강하고 뼈 · 폐 · 혈관(조영제) 영상이 뛰어납니다. 한계는 방사선, 연부조직 대조가 MRI 보다 낮음, 임신 중 제한입니다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">구성 요소</th><th>역할</th><th>화질 · 안전에 미치는 영향</th></tr></thead><tbody><tr><td style="text-align:left">X선관 + 필터</td><td>다색 X선 발생 · 저에너지 제거</td><td>선량 · 빔경화</td></tr><tr><td style="text-align:left">검출기 열</td><td>투영 세기 측정</td><td>해상도 · 속도(다열)</td></tr><tr><td style="text-align:left">재구성 컴퓨터</td><td>FBP · 반복 재구성</td><td>선명도 · 잡음 · 아티팩트</td></tr><tr><td style="text-align:left">테이블 · pitch</td><td>나선 스캔</td><td>검사 시간 · 선량</td></tr></tbody></table></div>
+    <p class="tiny">※ 이 탭의 시뮬레이션은 평행빔 · 64×64 화소의 단순화된 모형입니다. 실제 장비는 부채꼴(콘) 빔 · 나선 보간 · 산란 보정을 사용합니다.</p>
+  </div>
+</section>

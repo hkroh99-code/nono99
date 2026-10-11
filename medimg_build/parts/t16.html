@@ -1,0 +1,68 @@
+<section class="panel" id="tab16" role="tabpanel" aria-labelledby="tabbtn16" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-high">고등/수능</span><span class="badge b-exp">실험</span><span class="badge b-poe">POE</span>📊 [종합2] 초음파로 재는 깊이 — 음속과 왕복 시간</div>
+    <div class="goal">🎯 이 실험에서 하는 것 — 반사체의 깊이 $d$ 를 바꾸어 초음파 펄스의 <b>왕복 시간 $t$</b> 를 재고, $t$ 대 $d$ 그래프의 <b>원점을 지나는 직선 기울기 $2/c$</b> 로 조직의 <b>음속 $c$</b> 를 구합니다. 초음파 영상이 깊이를 정하는 원리($d=ct/2$)를 직접 확인합니다. 결과는 <b>보고서의 실험 C</b>가 됩니다. (안전한 가상 · 공기 중 초음파 센서 실험)</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 시간이 거리</div>
+      초음파 영상 장치는 소리를 보내고 <b>되돌아오는 데 걸린 시간</b>만 알 수 있습니다. 소리가 갔다 오는 경로 $2d$ 를 음속 $c$ 로 나눈 것이 시간이므로 $t=2d/c$ — 직선입니다. 음속을 잘못 가정하면 깊이가 틀려 보입니다(1540 m/s 가정).
+      <div class="bridge"><span class="st">$t=2d/c$</span><span class="ar">→</span><span class="st">$t$ 대 $d$ 직선</span><span class="ar">→</span><span class="st">기울기 $=2/c$</span><span class="ar">→</span><span class="st new">$c=2/\text{기울기}$</span></div>
+    </div>
+    <div class="poe" data-q="음속이 1540 m/s 인 조직에서 깊이 7.7 cm 의 반사체까지 왕복 시간은 대략?"
+         data-opts="약 10 μs||약 50 μs||약 100 μs||약 1 ms"
+         data-ans="2"
+         data-exp="$t=2d/c=2\times0.077/1540=1.0\times10^{-4}$ s = <b>100 μs</b>. 초음파 장치는 이 정도의 시간 간격을 측정해 영상 깊이로 바꿉니다."></div>
+    <div id="k16-misc"></div>
+  </div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 가상 실험실 — 조건을 정하고 [측정 기록]</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">반사체 깊이 d</span><span class="vl" id="k16-dV">—</span></div>
+          <input type="range" id="k16-d" min="2" max="20" step="1" value="8" aria-label="반사체 깊이 d">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">타이머 잡음 σ</span><span class="vl" id="k16-SV">—</span></div>
+          <input type="range" id="k16-S" min="0" max="2" step="0.1" value="0.5" aria-label="타이머 잡음 σ">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm" id="k16-new">🎲 새 조건(숨은 값 다시 뽑기)</button>
+          <button type="button" class="btn sm pri" id="k16-rec">📏 측정 기록</button>
+          <button type="button" class="btn sm" id="k16-rec10">📏×5 연속 기록</button>
+          <button type="button" class="btn sm rd" id="k16-clr">🧹 측정 초기화</button>
+        </div>
+        <div class="kv"><div class="cell a"><span class="k">이론 왕복 시간</span><span class="v" id="k16-oT">—</span></div><div class="cell g"><span class="k">측정 t</span><span class="v" id="k16-oM">—</span></div><div class="cell v2"><span class="k">추정 음속 c</span><span class="v" id="k16-oF">—</span></div><div class="cell r"><span class="k">1540 가정 시 깊이 오차</span><span class="v" id="k16-oE">—</span></div><div class="cell "><span class="k">기록 개수</span><span class="v" id="k16-oN">—</span></div></div>
+        <p class="tiny">모형 : $t=2d/c$ (μs = 2×10⁴ d(cm)/c). 숨은 참 음속 $c$ 는 [새 조건]마다 1450(지방 같은) ~ 1600 m/s(근육 같은) 중에서 뽑힙니다. 타이머 잡음 σ(μs) 가 점을 흩뜨립니다. 감쇠 · 굴절 무시한 교육용 모형.</p>
+      </div>
+      <div class="card">
+        <div class="h4">📋 측정 기록표 <span class="tiny" id="k16-cnt">0개</span></div>
+        <div class="tblscroll"><table id="k16-tbl"><thead></thead><tbody></tbody></table></div>
+        <p class="tiny">기록한 값은 <b>실험보고서(19번 탭)</b>의 표 · 그래프 · 결과로 자동으로 이어집니다. 5개 이상 모으세요.</p>
+      </div>
+      <div class="hintbox" data-hints="① 깊이를 2 ~ 20 cm 로 넓게 바꾸며 [측정 기록] 하세요.||② 기울기에서 $c=2\times10^4/$기울기(μs/cm) 를 직접 계산해 오른쪽 결과와 맞춰 보세요.||③ 숨은 음속이 1450 인 조직에 1540 을 가정하면 깊이가 몇 % 틀려 보이나요?||④ 타이머 잡음을 크게 하면 추정 음속이 얼마나 흔들리나요? 깊이를 넓게 퍼뜨리면 도움이 되나요?"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k16" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k16-cv" data-pngname="medimg-synth-16">🖼 PNG</button></div>
+          <canvas id="k16-cv" role="img" aria-label="가상 실험 장면" style="height:300px"></canvas>
+          <div class="cv-cap">탐촉자(왼쪽)가 펄스를 보내고 반사체(오른쪽)에서 되돌아오는 에코가 도착하는 순간 타이머가 멈춥니다(10 초 반복).</div>
+        </div>
+        <div id="k16-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k16-cv2" role="img" aria-label="측정 결과 그래프" style="height:320px"></canvas>
+          <div class="cv-cap">📊 가로 깊이 $d$ · 세로 왕복 시간 $t$. 빨강 = 내 회귀직선, 흰 점선 = 숨은 참 직선. 기울기 $=2/c$.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$t=\dfrac{2d}{c}$ → 기울기 $s=\dfrac{2}{c}$ (단위 μs/cm 이면 $c=\dfrac{2\times10^4}{s}$ m/s). 예 : $s=13.0$ → $c=1538$ m/s. 1540 m/s 가정 시 깊이 오차 $\dfrac{c_{가정}-c}{c}$.</p><p class="lv-uni">교과서 밖 : 간(약 1550) · 지방(약 1450) · 근육(약 1580) m/s 로 음속이 조직마다 달라 영상에서 지방이 많은 부위의 깊이가 약간 어긋납니다(굴절 · 속도 인공물). 실제 장비는 평균 1540 m/s 로 영상을 구성합니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h4">🧪 이 실험을 진짜로 하려면</div>
+    <div class="steps"><div class="step"><b>준비</b> : HC-SR04 초음파 센서 + Arduino(또는 마이크로비트), 평평한 벽 · 판, 줄자(R04 참고).</div><div class="step"><b>측정</b> : 거리 0.2 ~ 2 m 에서 왕복 시간(μs)을 5 회씩 평균하여 기록한다.</div><div class="step"><b>그래프</b> : 왕복 시간 대 거리를 그려 기울기를 구하고 $c=2/\text{기울기}$ 로 공기 중 음속(약 343 m/s)과 비교한다.</div><div class="step"><b>확장</b> : 온도(드라이기 · 얼음)를 바꾸어 $c=331.3+0.606T$ 를 확인하고, 물 속(수조)에서 같은 방식으로 측정한다.</div><div class="step"><b>결론</b> : 기울기의 불확실성과 오차 원인(센서 지연 · 반사체 각도)을 서술하고, 인체 초음파의 1540 m/s 가정과 연결한다.</div></div>
+    
+  </div>
+</section>

@@ -1,0 +1,134 @@
+<!-- ═══ TAB 7 — 🌏 활용 현황 — 한국 · 미국 · 일본에서 사이펀은 어떻게 쓰이나? ═══ -->
+<section class="panel" id="tab7" role="tabpanel" aria-labelledby="tabbtn7" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>🌏 활용 현황 — 한국 · 미국 · 일본에서 사이펀은 어떻게 쓰이나?</div>
+    <div class="goal">🎯 이 탭에서 배우는 것 — 사이펀과 그 응용(역사이펀 포함)은 <b>가정 위생 설비 · 농업 관개 · 수자원 시설 · 하수와 도시 배수 · 교육과 전시</b> 곳곳에 쓰입니다. 어디에 쓰이든 높이차 $h$, 지름 $D$, 길이 $L$ 이 유량 $Q$ 를 정하고, 규모가 클수록 유량은 지름과 높이차에 따라 급격히 커집니다. 한국은 논 관개와 위생 설비, 미국은 댐과 하수 시설, 일본은 농업용수 역사이펀과 위생도기가 대표적입니다. 아래 표는 <b>학습용 일반 요약</b>이며 구체 수치 · 시설은 공식 최신 자료로 확인해야 합니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 1~6번 탭 정리와 규모 읽기</div>
+      지금까지 배운 것 : ① $v=\sqrt{2gh/K}$ ② 정점 압력과 시동 ③ 마찰과 점성($Re$, $Q\propto D^4$) ④ 배수 시간 ⑤ 응용. 규모가 다른 장치는 지름 $D$ 가 가장 크게 효과를 냅니다: 이상적으로 $Q\propto D^2$, 층류에서는 $D^4$. 같은 높이차라도 지름이 10 배면 유량은 약 100 배입니다. 숫자를 볼 때는 시설의 용도 · 규모 · 시험 조건을 확인합니다.
+      <div class="bridge"><span class="st old">v · Q · K</span><span class="ar">→</span><span class="st">정점 · 시동 · 마찰</span><span class="ar">→</span><span class="st">규모와 유량</span><span class="ar">→</span><span class="st new">나의 진로</span></div>
+    </div>
+    <div class="poe" data-q="같은 높이차에서 사이펀 관의 지름을 10 배로 키우면(마찰 무시) 유량은 대략 몇 배가 될까?"
+         data-opts="10 배||100 배||1000 배||같다"
+         data-ans="1"
+         data-exp="$Q=Av\propto D^2$ 이므로 지름이 10 배면 단면적과 유량은 약 100 배입니다(속력은 같다고 볼 때). 실제로는 마찰 때문에 덜 늘 수 있으니 오른쪽 그래프로 확인하세요."></div>
+    <div id="t7-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 세 나라의 활용 — 위생 · 관개 · 수자원 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 272" role="img" aria-label="한국, 미국, 일본의 활용 현황 카드. 위생 설비와 농업 관개, 수자원 시설 사례.">
+        {{FIG:eco}}
+      </svg>
+    </div>
+    <div class="figcap">그림 7-1. 한국 · 미국 · 일본 — 논 관개 · 사이펀식 변기 · 수로 사이펀 / 사이펀 여수로 · 하수 사이펀 / 농업용수 역사이펀(伏越) · 위생도기</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 가정 위생 설비</b>사이펀식 변기, 세면대 · 싱크대의 트랩. 순간적으로 물을 모아 사이펀 작용으로 배출한다.</div>
+      <div class="part"><b>② 농업 관개</b>수로에서 논 · 밭으로 사이펀 튜브로 물을 댄다. 이랑 관개에서 널리 쓰인다.</div>
+      <div class="part"><b>③ 수자원 시설</b>일부 댐 · 저수지의 사이펀 여수로(수위가 올라가면 자동으로 방류).</div>
+      <div class="part"><b>④ 하수 · 도시 배수</b>역사이펀(inverted siphon) — 하천 · 도로 · 지하철 아래를 관이 내려갔다 올라가 통과한다(압력 흐름).</div>
+      <div class="part"><b>⑤ 교육 · 전시</b>과학관 · 교과서 실험의 사이펀, 피타고라스 컵, 간헐 샘 모형.</div>
+      <div class="part"><b>⑥ 진로</b>토목 · 수리학 · 환경 · 농업공학 · 위생설비 · 기계 · 교육.</div>
+    </div>
+    <div class="h4">🧪 활동 — 현황 자료를 비판적으로 읽기 (공식 최신 자료로 확인)</div>
+    <div class="steps">
+      <div class="step">관심 분야(위생 · 관개 · 수자원 · 하수 중 하나)를 고르고 한국 · 미국 · 일본의 대표 시설 · 규격 · 기관을 표로 정리한다(공식 홈페이지 · 학회 자료).</div>
+      <div class="step">수치(유량 · 높이차 · 지름)는 <b>설계 값인지 실측인지</b>와 시험 조건을 같이 적는다.</div>
+      <div class="step">오른쪽 시뮬레이션에서 항목별 유량 $Q$ 와 높이차 · 지름 배율에 따른 변화를 계산해 말로 설명한다.</div>
+      <div class="step">한 장치(예 : 사이펀 여수로)를 골라 높이차 · 정점 · 마찰 중 어떤 원리가 어디에 쓰였는지 그림으로 설명한다.</div>
+      <div class="step">R&E · 창의 · 발명 프로젝트 주제와 연결한다(8~14번 탭).</div>
+    </div>
+    <div class="easy">
+      <div class="et">🗺 쉽게 이해하기 — 같은 원리, 다른 규모</div>
+      실험실의 가는 관과 큰 여수로는 크기가 천 배 넘게 달라도 같은 식 $v=\sqrt{2gh/K}$ 를 써요. 달라지는 것은 지름과 높이차(그리고 마찰)뿐이에요. 어느 나라든 기후 · 지형 · 산업에 따라 필요한 곳이 달라서 쓰이는 방식이 다릅니다. 숫자를 볼 때는 「어떤 시설인지 · 어떤 조건인지 · 몇 년도 자료인지」를 꼭 확인해요.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“규모가 크면 원리가 달라지고, 사이펀은 어느 나라나 똑같이 쓴다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>규모가 달라도 <strong>같은 식</strong>을 쓰며 유량은 <strong>지름과 높이차</strong>가 크게 좌우합니다. 쓰임새는 지형 · 산업에 따라 다릅니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 유량 시뮬레이션 — 장치 · 높이차 배율</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">장치 고르기(1~8)</span><span class="vl" id="t7-kV">—</span></div>
+          <input type="range" id="t7-k" min="1" max="8" step="1" value="2" aria-label="장치 고르기(1~8)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">높이차 배율</span><span class="vl" id="t7-nV">—</span></div>
+          <input type="range" id="t7-n" min="1" max="10" step="1" value="1" aria-label="높이차 배율">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">관 지름 D</span><span class="v" id="t7-oD">—</span></div>
+          <div class="cell g"><span class="k">높이차 h</span><span class="v" id="t7-oH">—</span></div>
+          <div class="cell v2"><span class="k">유량 Q</span><span class="v" id="t7-oQ">—</span></div>
+          <div class="cell r"><span class="k">유속 v · 흐름</span><span class="v" id="t7-oV">—</span></div>
+          <div class="cell "><span class="k">참고</span><span class="v" id="t7-oN">—</span></div>
+        </div>
+        <p class="tiny">모형 : 항목별 대표 규모(예시 값) — 실험실 4 mm · 0.2 m · 어항 12 mm · 0.5 m · 정원 호스 16 mm · 0.8 m · 논 관개 40 mm · 0.1 m · 변기 배수관 50 mm · 0.3 m · 농업 수로 사이펀 0.8 m · 0.5 m · 소규모 여수로 0.6 m · 3 m · 하수 사이펀 0.3 m · 1 m. 입구 등 손실 $K_m=1.5$, 물 20 °C. 교육용 어림입니다.</p>
+      </div>
+      <div class="poe" data-q="큰 사이펀 여수로가 실험실 사이펀보다 훨씬 많은 물을 흘릴 수 있는 가장 큰 이유는?"
+           data-opts="지름이 크고 높이차가 커서||물이 더 무거워서||대기압이 다르기 때문에||관이 더 길어서"
+           data-ans="0"
+           data-exp="$Q=Av\propto D^2\sqrt{h}$ 이므로 지름 · 높이차가 클수록 유량이 크게 늘어납니다. 관이 길수록 오히려 마찰로 줄어듭니다. 오른쪽에서 장치 7 과 1 을 비교하세요."></div>
+      <div class="hintbox" data-hints="① 항목 1(실험실)과 항목 7(여수로)의 유량을 비교해 보세요. 몇 배 차이인가요?||② 항목 4(논 관개 튜브)의 높이차 배율을 키우면 유량이 어떻게 변하나요? √ 모양인가요?||③ 항목 6(농업 수로 사이펀)이 항목 5(변기)보다 유량이 큰 이유는?||④ 같은 항목에서 지름 배율 그래프를 보고 지름을 2 배로 했을 때 유량이 몇 배가 되는지 읽어 보세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t7" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t7-cv" data-pngname="siphon-use">🖼 PNG</button></div>
+          <canvas id="t7-cv" role="img" aria-label="항목별 유량 막대 그래프" style="height:400px"></canvas>
+          <div class="cv-cap">여덟 장치의 유량 Q (로그 눈금 막대). 선택한 항목이 노란색으로 강조됩니다.</div>
+        </div>
+        <div id="t7-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t7-cv2" role="img" aria-label="높이차 배율 대 유량과 지름 배율 대 유량 그래프" style="height:340px"></canvas>
+          <div class="cv-cap">📊 위 : 높이차 배율 대 유량 — $\sqrt h$ 에 비례(곡선). 아래 : 지름 배율 대 유량 — 약 $D^2$~$D^4$ 로 급증.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>유량 $Q=Av=\dfrac{\pi D^2}{4}\sqrt{\dfrac{2gh}{K}}$, $K=1+K_m+\dfrac{fL}{D}$.</p><p>예 : 소규모 여수로 $D=0.6$ m, $h=3$ m → 이상 $v=7.7$ m/s → $Q\approx2.2$ m³/s (마찰 · 손실로 이보다 작다).</p><p class="lv-uni">교과서 밖 : 역사이펀(inverted siphon)은 정점 위로 넘기는 사이펀과 달리 관이 내려갔다 올라가며 항상 압력이 대기압 이상이라 정점 한계가 없지만, 관 속에 침전물이 쌓이지 않게 최소 유속을 유지해야 합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🏭 ① 분야별 비교표 — 한국 · 미국 · 일본 <span class="badge b-high">일반 요약</span></div>
+    <p class="muted">공개 자료를 바탕으로 정리한 <b>일반적인 용도</b>입니다(전체 현황이 아니며 구체 시설 · 수치는 포함하지 않았습니다). 연도 · 기준 · 규격은 해마다 바뀌므로 <b>공식 최신 자료로 직접 확인</b>하세요.</p>
+    <div class="tblscroll"><table class="tbl" style="min-width:640px"><thead><tr><th style="text-align:left">분야</th><th>한국</th><th>미국</th><th>일본</th></tr></thead><tbody>
+      <tr><td style="text-align:left"><b>가정 위생 설비</b></td><td>사이펀(사이펀 제트) 방식 변기가 가정 화장실의 한 방식으로 쓰이며 절수 설비 기준(수도법령)을 확인</td><td>사이펀 방식 변기 널리 사용, 환경청(EPA) 워터센스 같은 절수 인증 제도</td><td>위생도기 업체들이 사이펀 방식 · 절수형 변기 개발(제품별 세척 수량 확인)</td></tr>
+      <tr><td style="text-align:left"><b>농업 관개</b></td><td>논 · 밭 물 대기에 사이펀 튜브, 수로 시설(한국농어촌공사 등)</td><td>이랑 관개에서 사이펀 튜브를 쓰는 농장이 많음</td><td>농업용수로가 도로 · 하천 아래를 지나는 역사이펀(伏越し)을 수로에 사용</td></tr>
+      <tr><td style="text-align:left"><b>수자원 · 댐</b></td><td>배수 · 방류 설비의 사이펀 활용 사례(시설별 확인)</td><td>일부 댐의 사이펀 여수로(미국 개척국 등 설계 자료)</td><td>취수 · 방류 설비의 사이펀 연구와 적용 사례</td></tr>
+      <tr><td style="text-align:left"><b>하수 · 도시 배수</b></td><td>하수관로 설계 기준의 역사이펀(하천 · 도로 횡단)</td><td>하수 설계 지침에 역사이펀 포함(침전 방지 최소 유속)</td><td>하수도 설계 지침의 역사이펀(伏越し) 사례</td></tr>
+      <tr><td style="text-align:left"><b>교육 · 전시</b></td><td>교과서 실험, 국립과천과학관 같은 과학관 전시</td><td>과학관 · 대학 수리학 실험실의 사이펀 실험</td><td>과학관 · 학교 실험의 사이펀과 피타고라스 컵</td></tr>
+    </tbody></table></div>
+    <p class="tiny">※ 이 표는 학습용 요약입니다. 구체 시설 · 규격 · 수치는 해마다 바뀌므로 공식 최신 자료를 직접 확인하세요. 「역사이펀」은 정점 위로 넘기는 사이펀과 구조가 다른 별개의 장치입니다.</p>
+  </div>
+
+  <div class="card">
+    <div class="h3">📊 ② 숫자를 비판적으로 읽기 <span class="badge b-poe">POE</span></div>
+    <div class="steps">
+      <div class="step"><b>설계 값 대 실측</b> — 시설의 방류 용량은 설계 값이고 실제 유량은 수위 · 마찰 · 막힘에 따라 달라진다. 같은 종류끼리 비교하자.</div>
+      <div class="step"><b>유량만 보면 안 된다</b> — 높이차 · 지름 · 길이(손실 계수 K)를 같이 본다. 같은 지름도 길이가 길면 유량이 크게 줄 수 있다.</div>
+      <div class="step"><b>이름의 함정</b> — 「사이펀」과 「역사이펀」은 구조가 다르다. 정점을 넘는 장치인지, 아래로 지나는 압력 관인지 확인한다.</div>
+      <div class="step"><b>식의 한계</b> — 이 학습실은 비압축성 · 상온 · 매끈한 관의 이상 모형이다. 실제는 용존 기체 · 침전물 · 온도 변화가 있다.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h3">🎓 ③ 진로 탐색 — 사이펀과 이어지는 길</div>
+    <div class="steps">
+      <div class="step"><b>토목 · 수자원 공학</b> — 댐 · 수로 · 방류 설비 설계.</div>
+      <div class="step"><b>환경 · 상하수도</b> — 하수 · 정수 설비, 수질 관리.</div>
+      <div class="step"><b>농업공학</b> — 관개 · 배수 설계, 절수 농업.</div>
+      <div class="step"><b>기계 · 설비</b> — 위생도기 · 배관 · 펌프리스 이송 설계.</div>
+      <div class="step"><b>화학 · 의료 공학</b> — 유체 이송, 링거 · 점도 측정.</div>
+      <div class="step"><b>과학 교육 · 전시</b> — 실험 도구 개발, 과학관 전시 기획.</div>
+    </div>
+  </div>
+</section>

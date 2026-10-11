@@ -1,0 +1,122 @@
+<!-- ═══ TAB 2 — 📐 원리① 각운동학 — 회전을 말하는 법 ($\theta$ · $\omega$ · $\alpha$) ═══ -->
+<section class="panel" id="tab2" role="tabpanel" aria-labelledby="tabbtn2" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>📐 원리① 각운동학 — 회전을 말하는 법 ($\theta$ · $\omega$ · $\alpha$)</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — 회전은 <b>각도 $\theta$ (rad)</b>, <b>각속도 $\omega=\Delta\theta/\Delta t$ (rad/s)</b>, <b>각가속도 $\alpha=\Delta\omega/\Delta t$ (rad/s²)</b> 로 기술합니다. 일정한 $\alpha$ 이면 직선 운동과 똑같은 식이 나옵니다: $\omega=\omega_0+\alpha t$, $\theta=\theta_0+\omega_0t+\tfrac12\alpha t^2$. 회전축에서 거리 $r$ 인 점은 $v=r\omega$, 접선 가속도 $a_t=r\alpha$, 구심 가속도 $a_c=r\omega^2$ 로 움직입니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 등가속도 운동과 원운동</div>
+      직선의 등가속도 식 $v=v_0+at$, $x=v_0t+\tfrac12at^2$ 에서 $x\to\theta$, $v\to\omega$, $a\to\alpha$ 로 <b>이름만 바꾸면</b> 회전의 식이 됩니다. 각도는 호의 길이 $s$ 와 반지름 $r$ 의 비 $\theta=s/r$ (라디안)이라 $s=r\theta$, $v=r\omega$, $a_t=r\alpha$ 가 바로 나옵니다. 원운동에서 속력이 일정해도 방향이 바뀌므로 중심을 향한 가속도 $a_c=v^2/r=r\omega^2$ 가 필요합니다.
+      <div class="bridge"><span class="st old">등가속도 운동</span><span class="ar">→</span><span class="st">x→θ, v→ω, a→α</span><span class="ar">→</span><span class="st">v=rω, a_t=rα</span><span class="ar">→</span><span class="st new">a_c=rω²</span></div>
+    </div>
+    <div class="poe" data-q="1 분에 60 회전(60 rpm)하는 바퀴의 각속도는 대략 몇 rad/s 인가? (1 회전 = $2\pi$ rad)"
+         data-opts="약 1 rad/s||약 6.3 rad/s||약 60 rad/s||약 377 rad/s"
+         data-ans="1"
+         data-exp="60 rpm = 1 회전/s = $2\pi\approx6.28$ rad/s. rpm 을 rad/s 로 바꿀 때는 $\omega=2\pi\,(\text{rpm})/60$ 입니다. 오른쪽 시뮬레이션의 ω 를 6.28 로 맞춰 1 초에 한 바퀴 도는지 확인해 보세요."></div>
+    <div id="t2-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 각운동학 — 라디안 · 선속도 · 가속도 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 262" role="img" aria-label="각운동학 도해 세 장면. 각도는 호의 길이를 반지름으로 나눈 값이고, 선속도는 반지름과 각속도의 곱이며, 원운동에는 구심 가속도와 접선 가속도가 있다.">
+        {{FIG:hydro}}
+      </svg>
+    </div>
+    <div class="figcap">그림 2-1. 각운동학 — ① 각도 $\theta=s/r$ (라디안) → ② 선속도 $v=r\omega$ (바깥일수록 빠르다) → ③ 원운동의 가속도 : 구심 $a_c=r\omega^2$, 접선 $a_t=r\alpha$</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 라디안</b>$\theta=s/r$. 한 바퀴 = $2\pi$ rad = 360°. 1 rad ≈ 57.3°.</div>
+      <div class="part"><b>② 각속도 $\omega$</b>단위 시간당 도는 각. rpm → rad/s : $\omega=2\pi\,\text{rpm}/60$.</div>
+      <div class="part"><b>③ 각가속도 $\alpha$</b>각속도의 변화율. 부호는 회전 방향이 기준(시계 반대가 +).</div>
+      <div class="part"><b>④ 선속도 $v=r\omega$</b>같은 각속도에서도 반지름이 클수록 선속도가 크다(회전 놀이기구 바깥쪽).</div>
+      <div class="part"><b>⑤ 구심 가속도 $a_c=r\omega^2$</b>방향이 바뀌는 가속도. 중심을 향한다. 속력이 2 배면 4 배.</div>
+      <div class="part"><b>⑥ 접선 가속도 $a_t=r\alpha$</b>속력이 변하는 가속도. 접선 방향. $\alpha=0$ 이면 등속 원운동.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 영상으로 각속도 재기 (저속 회전)</div>
+    <div class="steps">
+      <div class="step">선풍기가 아니라 손으로 돌리는 턴테이블(또는 LP 플레이어 · 회전 의자)에 표시를 붙이고 스마트폰으로 정면에서 촬영한다.</div>
+      <div class="step">프레임 수로 한 바퀴 도는 시간 $T$ 를 재서 $\omega=2\pi/T$ 를 구한다.</div>
+      <div class="step">바깥 점(반지름 20 cm)과 안쪽 점(5 cm)의 선속도를 영상에서 비교해 $v=r\omega$ 를 확인한다.</div>
+      <div class="step">회전이 빨라지는 구간의 $\omega$ 를 시간에 따라 그려 기울기 $\alpha$ 를 구한다.</div>
+      <div class="step">구심 가속도 $r\omega^2$ 를 계산하고 중력 가속도와 비교해 본다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🎠 쉽게 이해하기 — 회전목마의 바깥 말과 안쪽 말</div>
+      회전목마는 모두 같은 시간에 한 바퀴를 돌아요(같은 $\omega$). 그런데 바깥쪽 말은 더 큰 원을 돌아야 하니 <b>더 빨리 달려야</b> 하죠($v=r\omega$). 방향이 계속 바뀌니까 중심을 향해 끌어당기는 힘이 필요하고, 빨리 돌수록 더 센 힘이 필요합니다($a_c=r\omega^2$).
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“원운동은 속력이 일정하면 가속도가 0 이다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>속력이 일정해도 방향이 바뀌므로 <strong>중심을 향한 가속도($a_c=r\omega^2$)</strong>가 있습니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 각운동학 시뮬레이션 — 초기 각속도 · 각가속도 · 반지름 · 관찰 시각</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">처음 각속도 ω₀</span><span class="vl" id="t2-w0V">—</span></div>
+          <input type="range" id="t2-w0" min="0" max="20" step="0.5" value="2" aria-label="처음 각속도 ω₀">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">각가속도 α</span><span class="vl" id="t2-alV">—</span></div>
+          <input type="range" id="t2-al" min="-5" max="5" step="0.5" value="1.5" aria-label="각가속도 α">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">반지름 r</span><span class="vl" id="t2-rV">—</span></div>
+          <input type="range" id="t2-r" min="5" max="60" step="1" value="30" aria-label="반지름 r">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">관찰 시각 t</span><span class="vl" id="t2-ttV">—</span></div>
+          <input type="range" id="t2-tt" min="0.5" max="10" step="0.5" value="4" aria-label="관찰 시각 t">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">시각 t 의 각속도 ω</span><span class="v" id="t2-oW">—</span></div>
+          <div class="cell g"><span class="k">돈 각도 θ</span><span class="v" id="t2-oT">—</span></div>
+          <div class="cell v2"><span class="k">선속도 v=rω</span><span class="v" id="t2-oV">—</span></div>
+          <div class="cell r"><span class="k">접선 가속도 rα</span><span class="v" id="t2-oA">—</span></div>
+          <div class="cell "><span class="k">구심 가속도 rω²</span><span class="v" id="t2-oC">—</span></div>
+        </div>
+        <p class="tiny">모형 : 등각가속도 회전 $\omega=\omega_0+\alpha t$, $\theta=\omega_0t+\tfrac12\alpha t^2$ · 선속도 $v=r\omega$ · 가속도 $a_t=r\alpha$, $a_c=r\omega^2$. 그림은 시간 $2t$ 를 반복해 보여 주며 초록 화살표는 속도, 빨강은 구심 가속도입니다. 교육용 모형입니다.</p>
+      </div>
+      <div class="poe" data-q="반지름 0.3 m 인 점이 $\omega=8$ rad/s 로 돌고 있다. 구심 가속도는 대략? (중력 가속도 9.8 m/s² 와 비교)"
+           data-opts="약 2.4 m/s²||약 19 m/s²(약 2 g)||약 64 m/s²||약 0.04 m/s²"
+           data-ans="1"
+           data-exp="$a_c=r\omega^2=0.3\times64=19.2$ m/s² ≈ 2 g. 같은 각속도에서 반지름이 2 배면 구심 가속도도 2 배, 각속도가 2 배면 4 배입니다. 오른쪽 시뮬레이션에서 반지름과 각속도를 바꿔 확인하세요."></div>
+      <div class="hintbox" data-hints="① 먼저 ω₀ = 2 · α = 1.5 · t = 4 로 두고 ω 와 θ 가 식과 맞는지 계산해 보세요.||② α 를 음수(−2)로 바꿔 보세요. 각속도는 어떻게 변하나요? 어느 시각에 멈추나요?||③ 반지름을 2 배로 하면 v 와 a_c 는 각각 몇 배가 되나요?||④ 아래 그래프에서 θ(t) 의 기울기와 ω(t) 의 기울기가 각각 무엇을 뜻하는지 말해 보세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t2" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t2-cv" data-pngname="kinematics">🖼 PNG</button></div>
+          <canvas id="t2-cv" role="img" aria-label="회전하는 점과 속도 · 구심 가속도 화살표" style="height:340px"></canvas>
+          <div class="cv-cap">회전하는 점(노랑)과 속도(초록) · 구심 가속도(빨강). 시간이 지나며 각속도가 변하고 돈 횟수 막대가 차오릅니다.</div>
+        </div>
+        <div id="t2-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t2-cv2" role="img" aria-label="각속도 대 시간과 각도 대 시간 그래프" style="height:340px"></canvas>
+          <div class="cv-cap">📊 위 : $\omega(t)$ — 직선(기울기 $\alpha$). 아래 : $\theta(t)$ — 포물선(기울기가 $\omega$). 노란 점이 관찰 시각입니다.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$\omega=\omega_0+\alpha t$, $\theta=\omega_0t+\tfrac12\alpha t^2$, $\omega^2=\omega_0^2+2\alpha\theta$. $v=r\omega$, $a_t=r\alpha$, $a_c=r\omega^2=v^2/r$. $T=2\pi/\omega$, $f=1/T$.</p><p>예 : $\omega_0=2$ rad/s, $\alpha=1.5$ rad/s², $t=4$ s → $\omega=8$ rad/s, $\theta=20$ rad(약 3.2 회전). $r=0.3$ m → $v=2.4$ m/s, $a_c=19.2$ m/s².</p><p class="lv-uni">교과서 밖 : 벡터로는 $\mathbf v=\boldsymbol\omega\times\mathbf r$, $\mathbf a=\boldsymbol\alpha\times\mathbf r+\boldsymbol\omega\times(\boldsymbol\omega\times\mathbf r)$. 일정한 각속도 벡터가 시간에 따라 방향이 변하는 경우(세차)는 5번 탭에서 다룹니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 각운동학은 어떻게 나오나 — 라디안에서 $v=r\omega$ 와 구심 가속도까지 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">직선 운동의 식이 회전에서 어떻게 대응되는지 단계별로 따라가 봅니다.</p>
+    <div class="steps">
+      <div class="step"><b>① 각도 재기</b> — 원에서 호의 길이 $s$ 와 반지름 $r$ 의 비를 각도 $\theta=s/r$ (라디안)로 정의합니다. 한 바퀴는 $s=2\pi r$ 이므로 $2\pi$ rad = 360°.</div>
+      <div class="step"><b>② 각속도</b> — 단위 시간당 각도의 변화 $\omega=\Delta\theta/\Delta t$. 주기 $T$ 인 등속 원운동은 $\omega=2\pi/T$, rpm 이면 $\omega=2\pi\,\text{rpm}/60$.</div>
+      <div class="step"><b>③ 선속도와의 관계</b> — 호의 길이 $s=r\theta$ 를 시간으로 나누면 $v=r\omega$. 같은 $\omega$ 에서 반지름이 클수록 빠릅니다.</div>
+      <div class="step"><b>④ 구심 가속도</b> — 속력이 일정해도 방향이 바뀌므로 속도 변화 $\Delta v=v\Delta\theta$ → $a_c=v\omega=r\omega^2=v^2/r$, 방향은 중심.</div>
+      <div class="step"><b>⑤ 접선 가속도</b> — 속력이 변하면 접선 방향 가속도 $a_t=dv/dt=r\alpha$ 가 더해집니다. 전체 가속도는 두 성분의 벡터 합 $\sqrt{a_c^2+a_t^2}$.</div>
+      <div class="step"><b>⑥ 등각가속도 식</b> — $\alpha$ 가 일정하면 직선의 등가속도 식과 같은 형태: $\omega=\omega_0+\alpha t$, $\theta=\omega_0t+\tfrac12\alpha t^2$, $\omega^2=\omega_0^2+2\alpha\theta$.</div>
+      <div class="step"><b>⑦ 한계</b> — 강체(모든 점이 같은 $\omega$)를 가정했습니다. 줄이 늘어나거나 물체가 미끄러지는 경우는 별도로 다룹니다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">직선 운동</th><th>회전 운동</th><th>관계</th><th>단위</th></tr></thead><tbody><tr><td style="text-align:left">변위 $x$</td><td>각도 $\theta$</td><td>$s=r\theta$</td><td>m ↔ rad</td></tr><tr><td style="text-align:left">속도 $v$</td><td>각속도 $\omega$</td><td>$v=r\omega$</td><td>m/s ↔ rad/s</td></tr><tr><td style="text-align:left">가속도 $a$</td><td>각가속도 $\alpha$</td><td>$a_t=r\alpha$</td><td>m/s² ↔ rad/s²</td></tr><tr><td style="text-align:left">(방향 변화)</td><td>구심 가속도</td><td>$a_c=r\omega^2$</td><td>m/s²</td></tr></tbody></table></div>
+    <p class="tiny">각도는 반드시 라디안으로 계산합니다. 도(°)를 그대로 식에 넣으면 틀립니다.</p>
+  </div>
+</section>

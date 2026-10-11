@@ -1,0 +1,119 @@
+<!-- ═══ TAB 2 — ☢️ 원리① X선 — 감약과 그림자: 몸을 통과한 세기의 차이 ═══ -->
+<section class="panel" id="tab2" role="tabpanel" aria-labelledby="tabbtn2" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-mid">중등/흥미</span><span class="badge b-high">고등/수능</span><span class="badge b-poe">POE</span>☢️ 원리① X선 — 감약과 그림자: 몸을 통과한 세기의 차이</div>
+    <div class="goal">🎯 이 단원에서 배우는 것 — X선은 몸을 <b>통과하면서 조직마다 다른 비율로 흡수</b>됩니다. 두께 $x$ 를 지난 뒤의 세기는 $I=I_0e^{-\mu x}$ (<b>램버트–비어 법칙</b>)이며, 흡수가 많은 뼈 뒤에는 X선이 적게 도달해 「그림자」가 생깁니다. 이것이 X선 사진의 전부입니다. X선 에너지가 높을수록 잘 투과하지만 조직 사이의 <b>대조</b>는 줄어듭니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 지수 함수와 빛의 흡수(교과서 파동 · 전자기파)</div>
+      X선은 가시광선과 같은 <b>전자기파</b>인데 에너지(파장)가 훨씬 큽니다. 빛이 짙은 유리를 지날 때마다 일정한 <b>비율</b>로 어두워지듯 두께가 1 칸 늘 때마다 세기가 같은 비율로 줄어 <b>지수 함수</b>가 됩니다($I=I_0e^{-\mu x}$). 같은 비율로 줄어드는 두께 — 절반이 되는 두께 — 가 <b>반가층 HVL</b> $=\ln2/\mu$ 입니다.
+      <div class="bridge"><span class="st old">전자기파 · 흡수</span><span class="ar">→</span><span class="st">$I=I_0e^{-\mu x}$</span><span class="ar">→</span><span class="st">조직마다 다른 $\mu$</span><span class="ar">→</span><span class="st new">그림자 = X선 사진</span></div>
+    </div>
+    <div class="poe" data-q="연조직 12 cm 와 그 안의 뼈 1.5 cm 를 60 keV X선이 통과할 때, 뼈 뒤의 도달 세기는 뼈가 없는 곳의 약 몇 %일까? (μ연조직 ≈ 0.2 cm⁻¹, μ뼈 ≈ 0.57 cm⁻¹ 로 어림)"
+         data-opts="약 90 %||약 55 %||약 30 %||약 5 %"
+         data-ans="1"
+         data-exp="뼈 두께만큼 추가로 지나므로 비율은 $e^{-(0.57-0.2)\times1.5}=e^{-0.56}\approx0.57$ — <b>약 55 ~ 57 %</b> 입니다. 뼈 속에서도 연조직의 일부를 대신 지나지 않으므로 「뼈로 바뀐 두께」만큼의 차이만 그림자가 됩니다. 시뮬레이션에서 뼈 두께를 바꾸며 투과율을 읽어 보세요."></div>
+    <div id="t2-misc"></div>
+  </div>
+
+  <div class="card">
+    <div class="h3">📖 한눈에 보는 X선 영상 — 투영 · 지수 감약 · 에너지 의존 <span class="badge b-mid">중등부터</span></div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 780 272" role="img" aria-label="X선 영상의 원리 도해 세 장면. 선원에서 나온 X선이 몸과 뼈를 지나 검출기에 닿고, 두께에 따라 세기가 지수적으로 줄며, 에너지가 높을수록 투과가 늘어난다.">
+        {{FIG:xray}}
+      </svg>
+    </div>
+    <div class="figcap">그림 2-1. X선 영상의 원리 — ① X선 선원 → 몸 → 검출기: 뼈 뒤는 도달 세기가 적어 그림자가 된다 → ② 두께가 늘수록 세기는 지수 함수로 줄어든다(HVL 마다 절반) → ③ 에너지(kVp)가 높으면 투과가 늘지만 뼈와 살의 차이(대조)는 줄어든다</div>
+    <div class="h4">🧰 이 단원의 도구 6가지와 역할</div>
+    <div class="parts">
+      <div class="part"><b>① 선원 · 관전압</b>X선관에서 전자를 가속해 표적에 부딪혀 X선을 만든다. 관전압(kVp)이 X선의 최대 에너지를 정한다(진단용 약 40 ~ 150 kVp).</div>
+      <div class="part"><b>② 선감약계수 $\mu$</b>단위 두께당 줄어드는 비율(cm⁻¹). 물질의 <i>원자번호 · 밀도 · 에너지</i>에 달려 있다. 뼈 ≫ 연조직 ≫ 공기.</div>
+      <div class="part"><b>③ 지수 감약 $I=I_0e^{-\mu x}$</b>같은 두께마다 같은 비율로 줄어든다. 두께가 2 배면 투과율은 <i>제곱</i>(0.5 → 0.25).</div>
+      <div class="part"><b>④ 반가층 HVL</b>세기가 절반이 되는 두께 $\ln2/\mu$. 연조직(물)은 60 keV 에서 약 3.4 cm, 뼈는 약 1.2 cm.</div>
+      <div class="part"><b>⑤ 대조도 · 에너지</b>조직 사이의 신호 차이. 낮은 에너지에서는 광전효과(원자번호 의존) 때문에 뼈와 살의 차이가 커지지만 선량도 커진다.</div>
+      <div class="part"><b>⑥ 검출기</b>필름 · 디지털 검출기가 도달한 X선을 신호로 바꾼다. 도달 광자 수가 적을수록 <i>양자 잡음</i>(포아송)이 커진다.</div>
+    </div>
+    <div class="h4">🧪 교실 실험 — 안전한 「빛 감약」으로 램버트–비어 법칙 확인 (실제 X선 장비는 쓰지 않는다)</div>
+    <div class="steps">
+      <div class="step">투명 필름(OHP)이나 셀로판을 <b>1 장 · 2 장 · 3 장 … 6 장</b> 겹쳐 LED 손전등 앞에 대고, 스마트폰 조도계 앱으로 반대편 밝기(lux)를 잰다(어두운 방, 같은 거리).</div>
+      <div class="step">필름이 없을 때의 밝기 $E_0$ 도 잰다. 장수별 $E/E_0$ 를 계산한다.</div>
+      <div class="step">$\ln(E_0/E)$ 를 장수에 대해 그린다 — <b>원점을 지나는 직선</b>이면 지수 감약이다. 기울기가 한 장당 $\mu$ 이다(R01 · 15번 탭).</div>
+      <div class="step">절반이 되는 장수(반가층)를 그래프에서 읽고 $\ln2/\mu$ 와 비교한다.</div>
+      <div class="step">뼈 그림 · 근육 그림을 다른 두께로 겹친 「X선 사진 그리기」(C01)에서 에너지(밝기 조절)를 바꾸며 대조도 변화를 관찰한다.</div>
+    </div>
+    <div class="easy">
+      <div class="et">🍂 쉽게 이해하기 — 낙엽 더미를 지나는 빛</div>
+      낙엽을 한 장씩 쌓은 더미에 손전등을 비춘다고 생각해 보세요. 한 장을 지날 때마다 일정한 <b>비율</b>(예 : 80 %)만 지나가서, 두 장이면 64 %, 세 장이면 51 % … 처럼 줄어듭니다. 두꺼운 더미 뒤에는 거의 빛이 오지 않아요. X선도 몸의 조직을 지날 때 같은 방식으로 줄어듭니다. 뼈는 낙엽보다 훨씬 <b>짙은 잎</b>이어서 한 칸 지날 때 더 많이 줄어듭니다.
+      <div class="compare">
+        <div class="cmp no"><b>❌ 이렇게 생각하기 쉬워요</b>“X선 사진은 몸의 겉을 찍은 사진이다.”</div>
+        <div class="cmp ok"><b>✅ 실제로는</b>X선은 몸을 <strong>통과</strong>하며 조직마다 다르게 흡수됩니다. 검출기에 도달한 양의 차이를 나타낸 <strong>겹친 그림자</strong> 영상입니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 X선 감약 시뮬레이션 — 에너지 · 연조직 두께 · 뼈 두께</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">X선 에너지 E (유효)</span><span class="vl" id="t2-eV">—</span></div>
+          <input type="range" id="t2-e" min="30" max="120" step="5" value="60" aria-label="X선 에너지 E (유효)">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">연조직 두께 x_s</span><span class="vl" id="t2-xsV">—</span></div>
+          <input type="range" id="t2-xs" min="4" max="24" step="1" value="12" aria-label="연조직 두께 x_s">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">뼈 두께 x_b</span><span class="vl" id="t2-xbV">—</span></div>
+          <input type="range" id="t2-xb" min="0" max="4" step="0.25" value="1.5" aria-label="뼈 두께 x_b">
+        </div>
+        <div class="kv">
+          <div class="cell a"><span class="k">연조직만 통과 비율</span><span class="v" id="t2-oS">—</span></div>
+          <div class="cell g"><span class="k">뼈 포함 통과 비율</span><span class="v" id="t2-oB">—</span></div>
+          <div class="cell v2"><span class="k">대조도 C=(I_s−I_b)/I_s</span><span class="v" id="t2-oC">—</span></div>
+          <div class="cell r"><span class="k">연조직 반가층 HVL</span><span class="v" id="t2-oH">—</span></div>
+          <div class="cell "><span class="k">같은 신호에 필요한 상대 입사량</span><span class="v" id="t2-oD">—</span></div>
+        </div>
+        <p class="tiny">모형 : $\mu(E)=\mu_{60}[p_e(60/E)^3+(1-p_e)(60/E)^{0.3}]$ (광전효과 + 콤프턴 어림, 연조직은 물 · 뼈는 피질골). 단색 X선 · 평행 빔 · 산란 무시. 교육용 어림이며 실제 X선은 연속 스펙트럼입니다(빔경화는 I03).</p>
+      </div>
+      <div class="poe" data-q="같은 몸에서 X선 에너지를 60 keV 에서 100 keV 로 올리면 뼈와 살의 「대조도」는?"
+           data-opts="커진다||작아진다||변화 없다||뼈가 보이지 않게 된다"
+           data-ans="1"
+           data-exp="에너지가 높아지면 광전효과의 몫이 줄어 <b>뼈와 연조직의 감약 차이가 줄어듭니다</b>. 같은 두께에서 투과율은 높아지지만(선량 효율 ↑) 뼈와 살의 구별은 흐려집니다. 그래서 검사 목적에 따라 kVp 를 고릅니다(뼈는 낮게, 흉부 폐는 높게)."></div>
+      <div class="hintbox" data-hints="① 먼저 에너지를 60 keV 로 두고 뼈 두께를 0 에서 4 cm 까지 늘리며 「뼈 포함 통과 비율」이 어떻게 줄어드는지 보세요.||② 연조직 두께를 2 배(12 → 24 cm)로 늘리면 통과 비율이 2 배 줄까요, 제곱으로 줄까요?||③ 에너지를 30 keV 로 낮추면 대조도는 어떻게 변하고, 같은 신호를 얻기 위한 입사량은 어떻게 되나요?||④ 아래 그래프에서 μ(E) 곡선과 대조도 곡선의 모양 사이에 어떤 관계가 있는지 말해 보세요."></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="t2" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="t2-cv" data-pngname="xray-attenuation">🖼 PNG</button></div>
+          <canvas id="t2-cv" role="img" aria-label="X선이 연조직과 뼈를 통과하는 광자 시뮬레이션과 검출기 신호" style="height:350px"></canvas>
+          <div class="cv-cap">왼쪽 : 광자(노란 점)가 연조직과 뼈 막대를 통과합니다. 흡수된 광자는 사라집니다(아래로 갈수록 줄어듦). 오른쪽 : 검출기 도달 신호 막대 — 연조직 뒤(초록)와 뼈 뒤(빨강)의 높이 차이가 대조입니다.</div>
+        </div>
+        <div id="t2-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="t2-cv2" role="img" aria-label="감약계수와 대조도의 에너지 의존 그래프" style="height:330px"></canvas>
+          <div class="cv-cap">📊 위 : 선감약계수 $\mu(E)$ (세로 로그) — 뼈가 연조직보다 크고 낮은 에너지에서 급격히 커진다. 아래 : 대조도 $C(E)$ — 에너지가 낮을수록 크다(현재 두께 기준). 초록 선 = 지금 에너지.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$I=I_0e^{-\mu x}$, 반가층 $\mathrm{HVL}=\dfrac{\ln2}{\mu}$. 여러 층이면 $I=I_0\exp\!\big(-\sum\mu_ix_i\big)$. 대조도 $C=\dfrac{I_s-I_b}{I_s}=1-e^{-(\mu_b-\mu_s)x_b}$ — 뼈 두께가 클수록 · 두 $\mu$ 의 차이가 클수록 커진다.</p><p>예 : 60 keV, 연조직 12 cm($\mu=0.2$) → $T_s=e^{-2.4}=0.091$ (9 %). 이 중 1.5 cm 가 뼈($\mu_b=0.57$)로 바뀐 경로는 $T_b=e^{-0.2\cdot10.5-0.57\cdot1.5}=0.052$ → $T_b/T_s=0.57$, 대조도 $C=1-0.57=0.43$ (이 시뮬레이션은 뼈를 연조직 두께의 일부와 「바꾼」 것으로 계산).</p><p class="lv-uni">교과서 밖 : 광자 에너지 구간에서 광전효과 $\mu_{pe}\propto\rho Z^3E^{-3}$ 와 콤프턴 산란 $\mu_C\propto\rho_e$(거의 에너지 무관)가 합쳐져 $\mu(E)$ 가 정해집니다. 실제 X선관은 연속 스펙트럼이라 얇은 부분에서 낮은 에너지가 먼저 걸러지는 <b>빔경화</b>가 일어납니다. 검출 광자 수 $N$ 의 잡음은 $\sigma_N=\sqrt N$ (포아송).</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h3">🔎 X선 영상 장치는 어떻게 작동하나 — 발생 → 상호작용 → 검출 → 영상 <span class="badge b-high">원리 자세히</span></div>
+    <p class="muted">진단용 X선 장치(일반촬영)의 전체 흐름을 순서대로 따라가 봅니다. 값은 널리 쓰이는 대표 어림값입니다.</p>
+    <div class="steps">
+      <div class="step"><b>① X선 발생(X선관)</b> — 진공관 안의 음극 필라멘트를 가열하면 열전자가 나옵니다. 양극과 음극 사이에 수십 ~ 150 kV 의 <b>관전압</b>을 걸어 전자를 가속해 <b>텅스텐 표적</b>에 부딪힙니다. 전자가 급히 감속하며 내는 <b>제동복사</b>(연속 스펙트럼)와 원자의 안쪽 전자가 튀어나가며 내는 <b>특성 X선</b>이 X선입니다. 에너지의 약 99 % 는 열이 되어 양극이 회전하며 식힙니다.</div>
+      <div class="step"><b>② 세기와 에너지 조절</b> — <b>관전류(mA) × 시간(s) = mAs</b> 는 전자(광자)의 <i>개수</i>를, <b>kVp</b> 는 광자의 <i>최대 에너지</i>를 정합니다. 알루미늄 <b>필터</b>는 몸에 흡수만 되고 영상에는 기여하지 않는 낮은 에너지를 걸러 피부 선량을 줄입니다(I03). <b>콜리메이터</b>는 필요한 부분만 비춥니다.</div>
+      <div class="step"><b>③ 몸 속 상호작용</b> — X선 광자는 세 가지 일을 합니다. <b>광전효과</b>(광자가 사라지고 전자를 떼어냄 — 원자번호 $Z^3$ · 낮은 에너지에 강함, 뼈-살 대조의 근원) · <b>콤프턴 산란</b>(광자가 방향을 바꾸고 일부 에너지를 잃음 — 영상을 뿌옇게 함) · <b>투과</b>(그대로 통과). 흡수 · 산란된 만큼 검출기에 닿는 세기가 줄어 $I=I_0e^{-\mu x}$ 가 됩니다.</div>
+      <div class="step"><b>④ 산란선 제거</b> — 산란된 광자는 엉뚱한 곳에 도달해 대조를 떨어뜨립니다. 환자와 검출기 사이의 <b>격자(그리드)</b>는 납 띠를 비스듬히 세워 똑바로 오는 광자만 통과시킵니다.</div>
+      <div class="step"><b>⑤ 검출</b> — 옛날에는 필름 · 증감지, 요즘은 <b>디지털 검출기</b>입니다 — 간접 변환 방식은 신틸레이터(CsI)가 X선을 빛으로 바꾸고 포토다이오드 · TFT 배열이 전기 신호로 읽고, 직접 변환 방식은 비정질 셀레늄이 X선을 곧바로 전하로 바꿉니다. 화소 크기는 대략 0.1 ~ 0.2 mm.</div>
+      <div class="step"><b>⑥ 영상 만들기</b> — 화소마다 도달 신호의 <b>로그</b>를 취해 $\ln(I_0/I)=\sum\mu_ix_i$ (조직을 지난 길이의 합)로 바꾸고 명암을 입힙니다. 많이 흡수된 곳(뼈)이 밝도록 뒤집어 표시하는 것이 관례입니다. 앞 · 뒤 조직이 모두 겹쳐 한 장에 나타납니다.</div>
+      <div class="step"><b>⑦ 화질을 정하는 것</b> — <b>대조도</b>(kVp · 조직 차이), <b>공간 해상도</b>(초점 크기 · 확대 · 화소 크기), <b>잡음</b>(도달 광자 수의 포아송 잡음 $\sqrt N$ → mAs). 셋은 서로 거래 관계입니다. 피폭 선량은 mAs · kVp 와 필터가 좌우합니다.</div>
+      <div class="step"><b>⑧ 쓰임과 한계</b> — 뼈 · 폐 · 복부 선별, 치과 · 유방(맘모그래피) · 투시(연속 X선)처럼 빠르고 값싼 검사에 널리 쓰입니다. 한계는 <b>겹침</b>(깊이를 모름)과 <b>연조직 대조가 낮음</b>, 그리고 이온화 방사선입니다. → CT 가 이를 보완합니다.</div>
+    </div>
+    <div class="tblwrap" style="max-height:none"><table class="tbl" style="min-width:560px"><thead><tr><th style="text-align:left">단계</th><th>물리 법칙</th><th>조절 변수</th><th>영상에 미치는 영향</th></tr></thead><tbody><tr><td style="text-align:left">발생</td><td>제동복사 · 특성 X선</td><td>kVp · mAs</td><td>에너지 · 광자 수</td></tr><tr><td style="text-align:left">투과</td><td>$I=I_0e^{-\mu x}$</td><td>조직 두께 · 에너지</td><td>그림자의 명암</td></tr><tr><td style="text-align:left">산란</td><td>콤프턴 산란</td><td>그리드 · 빔 크기</td><td>대조도 저하</td></tr><tr><td style="text-align:left">검출</td><td>광전 변환</td><td>화소 크기 · 효율</td><td>해상도 · 잡음</td></tr></tbody></table></div>
+    <p class="tiny">※ 임상 프로토콜(kVp · mAs)은 부위 · 체격 · 장비에 따라 다르며, 이 자료의 값은 개념 이해를 위한 어림입니다.</p>
+  </div>
+</section>

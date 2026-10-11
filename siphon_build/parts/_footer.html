@@ -1,0 +1,23 @@
+</main>
+
+<!-- ★10 수업용 전체화면(프로젝터) 모드 — 엔진(FSX)은 이미 완성돼 있다. 건드릴 것은 없다.
+     각 탭 .cv-tools 에 data-fsx 버튼을 달고, 구역 B 의 FSX.MAP 항목만 채우면 열린다. -->
+<div id="fsx" class="fsx" hidden role="dialog" aria-modal="true" aria-label="전체화면 시뮬레이션">
+  <div class="fsx-bar">
+    <span class="ttl" id="fsx-title">—</span>
+    <span class="sp"></span>
+    <span class="kv-scale">화면 배율 <b id="fsx-kv">140%</b></span>
+    <button type="button" class="btn sm" id="fsx-minus" title="작게 (−)" aria-label="화면 배율 작게">A−</button>
+    <button type="button" class="btn sm" id="fsx-plus"  title="크게 (+)" aria-label="화면 배율 크게">A＋</button>
+    <button type="button" class="btn sm" id="fsx-side-t" title="조작판 접기/펴기" aria-pressed="true">▤ 조작판</button>
+    <button type="button" class="btn sm rd" id="fsx-close" title="닫기 (Esc)">✕ 닫기</button>
+  </div>
+  <div class="fsx-main">
+    <div class="fsx-stage" id="fsx-stage"></div>
+    <aside class="fsx-side" id="fsx-side"></aside>
+  </div>
+</div>
+<div class="foot">
+  © 과학교육용 인터랙티브 시뮬레이션 · 오수벨 선행조직자 · POE 학습모형 · 피아제 수준별 차별화 · 브루너 발견학습 · 비고츠키 비계(Hint)<br>
+  외부 차트 라이브러리 없이 HTML5 Canvas 2D API 만으로 모든 그래프를 구현했습니다.
+</div>

@@ -1,0 +1,68 @@
+<section class="panel" id="tab15" role="tabpanel" aria-labelledby="tabbtn15" tabindex="0">
+  <div class="card">
+    <div class="h3"><span class="badge b-high">고등/수능</span><span class="badge b-exp">실험</span><span class="badge b-poe">POE</span>📊 [종합1] 높이차 대 v² — 사이펀의 총 손실 계수 K</div>
+    <div class="goal">🎯 이 실험에서 하는 것 — 투명 호스 사이펀의 높이차 $h$ 를 바꾸며 출구 유속 $v$(= 유량 ÷ 단면적)를 재서 $v^2$ 대 $h$ 그래프를 그립니다. 이 그래프는 <b>원점을 지나는 직선</b>이고 <b>기울기 = $2g/K$</b> 입니다. 기울기에서 <b>숨은 총 손실 계수 $K$</b> 를 알아내 보세요. 측정값은 보고서(19번 탭)로 이어집니다.</div>
+    <div class="organizer">
+      <div class="ot">🧭 선행조직자 — 높이차가 만드는 속력의 제곱</div>
+      베르누이(에너지 보존)에 손실을 넣으면 $gh=\tfrac12Kv^2$ 이므로 $v^2=\dfrac{2g}{K}h$ 입니다. $v^2$ 를 세로로, $h$ 를 가로로 그리면 <b>원점을 지나는 직선</b>이고 기울기 하나가 $2g/K$ — 곧 관이 얼마나 많은 에너지를 잃는지를 알려 줍니다. 직선 맞춤은 점 여러 개의 평균이므로 한 번 잰 값보다 정확합니다.
+      <div class="bridge"><span class="st">$gh=\tfrac12Kv^2$</span><span class="ar">→</span><span class="st">$v^2$ 대 $h$ 직선</span><span class="ar">→</span><span class="st">기울기 = $2g/K$</span><span class="ar">→</span><span class="st new">$K=2g/$기울기</span></div>
+    </div>
+    <div class="poe" data-q="높이차를 4 배로 하면 유속의 제곱 $v^2$ 은 몇 배가 될까? (K 일정)"
+         data-opts="2 배||4 배||8 배||같다"
+         data-ans="1"
+         data-exp="$v^2=\dfrac{2g}{K}h$ 이므로 높이차에 비례해 <b>4 배</b>가 됩니다(유속 $v$ 는 2 배). 그래서 $v^2$ 대 $h$ 가 원점을 지나는 직선입니다. 오른쪽 그래프로 확인하세요."></div>
+    <div id="k15-misc"></div>
+  </div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="h3">🎛 가상 실험실 — 조건을 정하고 [측정 기록]</div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">높이차 h</span><span class="vl" id="k15-hV">—</span></div>
+          <input type="range" id="k15-h" min="10" max="100" step="5" value="50" aria-label="높이차 h">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-top"><span class="nm">$v^2$ 측정 잡음 σ</span><span class="vl" id="k15-SV">—</span></div>
+          <input type="range" id="k15-S" min="0" max="0.4" step="0.02" value="0.08" aria-label="$v^2$ 측정 잡음 σ">
+        </div>
+        <div class="row">
+          <button type="button" class="btn sm" id="k15-new">🎲 새 조건(숨은 값 다시 뽑기)</button>
+          <button type="button" class="btn sm pri" id="k15-rec">📏 측정 기록</button>
+          <button type="button" class="btn sm" id="k15-rec10">📏×5 연속 기록</button>
+          <button type="button" class="btn sm rd" id="k15-clr">🧹 측정 초기화</button>
+        </div>
+        <div class="kv"><div class="cell a"><span class="k">이론 v² (숨은 K)</span><span class="v" id="k15-oT">—</span></div><div class="cell g"><span class="k">측정 v²</span><span class="v" id="k15-oM">—</span></div><div class="cell v2"><span class="k">추정 기울기 2g/K</span><span class="v" id="k15-oF">—</span></div><div class="cell r"><span class="k">추정 총 손실 계수 K</span><span class="v" id="k15-oE">—</span></div><div class="cell "><span class="k">기록 개수</span><span class="v" id="k15-oN">—</span></div></div>
+        <p class="tiny">모형 : $v^2=\dfrac{2g}{K}h+\varepsilon$ (측정 잡음 σ (m/s)²). 숨은 손실 계수 $K$ 는 [새 조건]마다 2.5 ~ 7 에서 뽑힙니다(호스 길이 · 곡관 · 입구 모양). 층류/난류 전이 · 수위 변화는 무시한 교육용 단순화 모형입니다.</p>
+      </div>
+      <div class="card">
+        <div class="h4">📋 측정 기록표 <span class="tiny" id="k15-cnt">0개</span></div>
+        <div class="tblscroll"><table id="k15-tbl"><thead></thead><tbody></tbody></table></div>
+        <p class="tiny">기록한 값은 <b>실험보고서(19번 탭)</b>의 표 · 그래프 · 결과로 자동으로 이어집니다. 5개 이상 모으세요.</p>
+      </div>
+      <div class="hintbox" data-hints="① 높이차를 10 ~ 100 cm 로 넓게 바꾸며 [측정 기록] 하세요(가로축은 $h$ 입니다).||② 잡음 σ 를 크게 하면 낮은 높이차의 점이 얼마나 흩어지나요? 왜 그럴까요?||③ 기울기에서 $K$ 를 직접 구해 오른쪽 결과와 맞춰 보세요.||④ 호스를 2 배 길게 하면 기울기는 커질까요 작아질까요? (R03 참고)"></div>
+    </div>
+    <div>
+      <div class="card tight">
+        <div class="cv-wrap">
+          <div class="cv-tools"><button type="button" class="btn sm fsb" data-fsx="k15" title="전체화면으로 보기 (수업용)">⛶ 전체화면</button><button type="button" class="btn sm" data-png="k15-cv" data-pngname="rotation-synth-15">🖼 PNG</button></div>
+          <canvas id="k15-cv" role="img" aria-label="가상 실험 장면" style="height:300px"></canvas>
+          <div class="cv-cap">위 통의 물이 호스를 타고 정점을 넘어 출구로 흐릅니다(10 초 반복).</div>
+        </div>
+        <div id="k15-time"></div>
+        <div class="cv-wrap" style="margin-top:9px">
+          <canvas id="k15-cv2" role="img" aria-label="측정 결과 그래프" style="height:320px"></canvas>
+          <div class="cv-cap">📊 가로 높이차 $h$ (m) · 세로 유속의 제곱 $v^2$ (m²/s²). 빨강 = 내 회귀직선, 흰 점선 = 숨은 참 직선. 기울기 = $2g/K$.</div>
+        </div>
+      </div>
+      <div class="card lv-high">
+        <div class="h4">📐 식으로 정리하기 <span class="badge b-high">고등</span></div>
+        <p>$gh=\tfrac12Kv^2$ → $v^2=\dfrac{2g}{K}h$ → 기울기 $s=2g/K$, $K=2g/s$. 예 : $s=3.9$ → $K=5.0$. 오차 : $\delta s\approx\sigma/\sqrt{\sum h_i^2}$ — 높이차가 큰 점이 기울기를 정확하게 정합니다.</p><p class="lv-uni">교과서 밖 : 실제로는 $K$ 가 레이놀즈 수에 따라 조금씩 변해 직선에서 벗어납니다($f=0.316Re^{-1/4}$). 이상 유체($K=1$)면 기울기는 $2g=19.6$ 입니다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="h4">🧪 이 실험을 진짜로 하려면</div>
+    <div class="steps"><div class="step"><b>준비</b> : 투명 호스(지름 10 mm · 1 m), 큰 위 통, 눈금 통, 스톱워치, 줄자(R01 참고).</div><div class="step"><b>측정</b> : 높이차 6 가지에서 500 mL 를 받는 시간을 3 회씩 재어 $v=Q/A$ 를 구한다.</div><div class="step"><b>그래프</b> : $v^2$ 대 $h$ 를 그려 원점을 지나는 직선으로 맞춘다(기울기 $2g/K$).</div><div class="step"><b>분석</b> : $K=2g/s$ 를 구하고 $K=1+K_m+fL/D$ 의 이론값과 비교한다. 불확도도 쓴다.</div><div class="step"><b>안전</b> : 입으로 빨지 않고 주사기로 시동, 바닥 물기 닦기.</div></div>
+    
+  </div>
+</section>
