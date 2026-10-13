@@ -29,19 +29,39 @@
 - 요약은 추출된 텍스트에 있는 내용만 옮겼습니다. 원문이 깨진 곳은 "(원문 불명확)"으로 표시했습니다. 원문의 물리 설명이 부정확한 곳은 요약 안에 주석을 달았습니다.
 - 각 자료의 저작권은 원 저작자에게 있습니다. 수업 준비를 위한 개인 참고 자료로 사용하세요.
 
-## つくばScience Edge (츠쿠바 사이언스 엣지) 요지집
+## つくばScience Edge (츠쿠바 사이언스 엣지)
 
-츠쿠바 사이언스 엣지는 중·고등학생의 국제 과학 아이디어 콘테스트로, 매년 3월 츠쿠바 국제회의장에서 열립니다. 요지집에는 참가 팀 연구의 요약(abstract)이 실려 있습니다.
-공식 [Report·要旨集 페이지](https://www.jtbbwt.com/files/user/ScienceEdge/report.html)에 연도별 링크가 있습니다.
+츠쿠바 사이언스 엣지는 중·고등학생의 국제 과학 아이디어 콘테스트로, 2010년부터 매년 3월 츠쿠바 국제회의장에서 열립니다.
+원본 PDF는 Drive 「전국과학교사협회(k-sta.org) › 츠쿠바사이언스엣지」 폴더에 있고, 공식 사이트는 [Report·要旨集 페이지](https://www.jtbbwt.com/files/user/ScienceEdge/report.html)입니다.
+요약은 `summaries/tsukuba-science-edge/`에 있습니다. 각 요약에는 수상작 또는 발표 목록과, 물리 분야 연구 주제를 고교 탐구·R&E에 활용하는 아이디어를 넣었습니다.
 
-| 연도 | 요지집 (일본어) | 비고 |
+### 대회 보고서 (repo)
+
+| 연도 | 요약 | 비고 |
 |---|---|---|
-| 2020 | [abst2020_jpn.pdf](https://www.jtbbwt.com/files/user/ScienceEdge/files/report/abst2020_jpn.pdf) | 검색으로 URL 확인 |
-| 2022 | [abst2022_jpn.pdf](https://www.jtbbwt.com/files/user/ScienceEdge/files/report/abst2022_jpn.pdf) | 검색으로 URL 확인 |
-| 2023 | [abst2023_jpn.pdf](https://www.jtbbwt.com/files/user/ScienceEdge/files/report/abst2023_jpn.pdf) | 검색으로 URL 확인 |
-| 2019, 2021, 2024~2026 | `abst<연도>_jpn.pdf` | 같은 파일명 규칙으로 추정한 URL로, 아직 확인하지 못함 |
+| 2010 | [repo2010](summaries/tsukuba-science-edge/repo2010.md) | PDF 글꼴이 깨져 내용을 읽지 못함(OCR 필요) |
+| 2012 | [repo2012_all](summaries/tsukuba-science-edge/repo2012_all.md) | 1~5쪽 없음 |
+| 2013 | [report_2013](summaries/tsukuba-science-edge/report_2013.md) | |
+| 2014 | [repo2014_jpn](summaries/tsukuba-science-edge/repo2014_jpn.md) | 영문판(repo2014_en)도 Drive에 있음 |
+| 2015~2019 | [2015](summaries/tsukuba-science-edge/repo2015_jpn.md) · [2016](summaries/tsukuba-science-edge/repo2016_jpn.md) · [2017](summaries/tsukuba-science-edge/repo2017_jpn.md) · [2018](summaries/tsukuba-science-edge/repo2018_jpn.md) · [2019](summaries/tsukuba-science-edge/repo2019_jpn.md) | 수상 목록과 심사평 포함 |
+| 2021, 2022 | [2021](summaries/tsukuba-science-edge/repo2021_jpn.md) · [2022](summaries/tsukuba-science-edge/repo2022_jpn.md) | 2021은 구두발표 수상만 있음 |
+| 2023, 2024 | [2023](summaries/tsukuba-science-edge/repo2023_jpn.md) · [2024](summaries/tsukuba-science-edge/repo2024_jpn.md) | 대부분 이미지 쪽이라 참가 목록만 있음 |
+| 2025, 2026 | [2025](summaries/tsukuba-science-edge/repo2025_jpn.md) · [2026](summaries/tsukuba-science-edge/repo2026_jpn.md) | 수상 목록 포함 |
 
-`sources.tsv`에 모두 넣어 두었습니다. `www.jtbbwt.com`이 허용되면 `bash scripts/download.sh`로 `pdf/tsukuba-science-edge/`에 받아집니다.
+### 요지집 (abst)
+
+| 연도 | 요약 | 발표 수 | 본문 요지까지 읽힌 범위 |
+|---|---|---|---|
+| 2019 | [abst2019](summaries/tsukuba-science-edge/abst2019_jpn.md) | 311 | 구두발표 8편, 영어 포스터 1~47번 (일본어 목차는 해독 불가) |
+| 2020 | [abst2020](summaries/tsukuba-science-edge/abst2020_jpn.md) | 358 | 구두발표 20편, 영어 포스터 1~10번 |
+| 2022 | [abst2022](summaries/tsukuba-science-edge/abst2022_jpn.md) | 147 | 57편 |
+| 2023 | [abst2023](summaries/tsukuba-science-edge/abst2023_jpn.md) | 241 | 34편 (물리 분야는 목차만 있음) |
+| 2026 | [abst2026](summaries/tsukuba-science-edge/abst2026_jpn.md) | 477 | 1~10번 (3~7부는 텍스트 추출 실패) |
+| 2024, 2025 | 없음 | – | 파일이 60~80MB라 Drive가 텍스트를 돌려주지 않음 |
+
+- Drive의 텍스트 변환은 PDF 앞쪽 약 80쪽까지만 돌려주고, 60MB가 넘는 파일은 아예 비어 있습니다. 나머지를 읽으려면 PDF를 10MB 이하로 나눠 올려야 합니다.
+- 2019~2023 요지집은 일본어 글꼴이 깨진 상태로 추출되어 글리프 순서를 역산해 복원했습니다. 복원본은 `text/tsukuba-science-edge/*.decoded.md`에 있으며 오류가 있을 수 있습니다.
+- 2017·2021·2022·2023·2024 보고서 텍스트는 도구 출력을 옮겨 적은 것이라 원문과 조금 다를 수 있습니다.
 
 ## 참고 링크
 
