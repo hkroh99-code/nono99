@@ -3,6 +3,7 @@
 사용법: python3 수시진학자료/tools/render_pdf.py  (저장소 루트에서 실행)
 필요: pip install playwright pypdf, 한글 글꼴(Pretendard 또는 Noto Sans KR)
 """
+import os
 import pathlib
 import sys
 
@@ -16,7 +17,9 @@ TARGETS = sorted(ROOT.glob("[0-9][0-9]_*/*_수시안내.html"))
 def main() -> int:
     ok = True
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        # 미리 설치된 Chromium이 있으면 사용 (CHROMIUM_PATH로 지정 가능)
+        exe = os.environ.get("CHROMIUM_PATH")
+        browser = p.chromium.launch(executable_path=exe) if exe else p.chromium.launch()
         page = browser.new_page()
         for html in TARGETS:
             pdf = html.with_suffix(".pdf")
