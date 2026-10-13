@@ -29,6 +29,20 @@
 - 요약은 추출된 텍스트에 있는 내용만 옮겼습니다. 원문이 깨진 곳은 "(원문 불명확)"으로 표시했습니다. 원문의 물리 설명이 부정확한 곳은 요약 안에 주석을 달았습니다.
 - 각 자료의 저작권은 원 저작자에게 있습니다. 수업 준비를 위한 개인 참고 자료로 사용하세요.
 
+## つくばScience Edge (츠쿠바 사이언스 엣지) 요지집
+
+츠쿠바 사이언스 엣지는 중·고등학생의 국제 과학 아이디어 콘테스트로, 매년 3월 츠쿠바 국제회의장에서 열립니다. 요지집에는 참가 팀 연구의 요약(abstract)이 실려 있습니다.
+공식 [Report·要旨集 페이지](https://www.jtbbwt.com/files/user/ScienceEdge/report.html)에 연도별 링크가 있습니다.
+
+| 연도 | 요지집 (일본어) | 비고 |
+|---|---|---|
+| 2020 | [abst2020_jpn.pdf](https://www.jtbbwt.com/files/user/ScienceEdge/files/report/abst2020_jpn.pdf) | 검색으로 URL 확인 |
+| 2022 | [abst2022_jpn.pdf](https://www.jtbbwt.com/files/user/ScienceEdge/files/report/abst2022_jpn.pdf) | 검색으로 URL 확인 |
+| 2023 | [abst2023_jpn.pdf](https://www.jtbbwt.com/files/user/ScienceEdge/files/report/abst2023_jpn.pdf) | 검색으로 URL 확인 |
+| 2019, 2021, 2024~2026 | `abst<연도>_jpn.pdf` | 같은 파일명 규칙으로 추정한 URL로, 아직 확인하지 못함 |
+
+`sources.tsv`에 모두 넣어 두었습니다. `www.jtbbwt.com`이 허용되면 `bash scripts/download.sh`로 `pdf/tsukuba-science-edge/`에 받아집니다.
+
 ## 참고 링크
 
 - 청소년을 위한 과학제전 도쿄대회 보고서 (도쿄가쿠게이대학): [2010](https://www2.u-gakugei.ac.jp/~ysf_tk/ysf_file/2010.pdf) · [2011](https://www2.u-gakugei.ac.jp/~ysf_tk/ysf_file/2011.pdf) · [2014](https://www2.u-gakugei.ac.jp/~ysf_tk/ysf_file/2014.pdf) · [2019](https://www2.u-gakugei.ac.jp/~ysf_tk/ysf_file/2019report.pdf) · [2020](https://www2.u-gakugei.ac.jp/~ysf_tk/ysf_file/2020YSF_TK_Rep.pdf)
