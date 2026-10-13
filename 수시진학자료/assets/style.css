@@ -1,0 +1,85 @@
+/* 수시 진학자료 공통 스타일 — A4 1페이지, 2단 */
+@page { size: A4; margin: 9mm 10mm 8mm; }
+:root {
+  --ink: #1d2433;
+  --muted: #5b6475;
+  --line: #d5dae3;
+  --soft: #f3f5f9;
+  --accent: #1f4e99;
+  --accent-soft: #e6eefb;
+  --warn: #b5470b;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fff; }
+body {
+  font-family: "Pretendard", "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  color: var(--ink);
+  font-size: 8.3pt;
+  line-height: 1.42;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.page { width: 190mm; margin: 0 auto; }
+@media screen {
+  body { background: #e9ecf1; padding: 16px 0; }
+  .page { background: #fff; padding: 9mm 10mm; width: 210mm; min-height: 297mm;
+          box-shadow: 0 2px 12px rgba(0,0,0,.12); }
+}
+
+/* 헤더 */
+header.top {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  border-bottom: 2.5px solid var(--accent); padding-bottom: 2.2mm; margin-bottom: 2.6mm;
+}
+header.top .kicker { font-size: 7.6pt; color: var(--accent); font-weight: 700; letter-spacing: .04em; }
+header.top h1 { margin: .6mm 0 0; font-size: 19pt; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+header.top h1 small { font-size: 10pt; font-weight: 600; color: var(--muted); margin-left: 2mm; }
+header.top .meta { text-align: right; font-size: 7.2pt; color: var(--muted); line-height: 1.5; }
+header.top .meta b { color: var(--ink); }
+
+/* 핵심 수치 띠 */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2mm; margin-bottom: 2.8mm; }
+.stat { background: var(--accent-soft); border-radius: 1.6mm; padding: 1.6mm 2.2mm; }
+.stat .n { font-size: 13pt; font-weight: 800; color: var(--accent); line-height: 1.15; }
+.stat .l { font-size: 7pt; color: var(--muted); }
+
+/* 2단 */
+.cols { column-count: 2; column-gap: 6mm; column-rule: 1px solid var(--line); }
+section { break-inside: avoid; margin: 0 0 2.6mm; }
+section.flow { break-inside: auto; }
+h2 {
+  font-size: 9.6pt; font-weight: 800; margin: 0 0 1.2mm; padding: .5mm 0 .5mm 2mm;
+  border-left: 3px solid var(--accent); color: var(--accent); break-after: avoid;
+}
+h3 { font-size: 8.4pt; margin: 1.6mm 0 .6mm; font-weight: 700; }
+p { margin: 0 0 1mm; }
+ul { margin: 0 0 1mm; padding-left: 3.6mm; }
+li { margin: 0 0 .3mm; }
+.muted { color: var(--muted); }
+.warn { color: var(--warn); font-weight: 600; }
+.quote {
+  background: var(--soft); border-radius: 1.4mm; padding: 1.4mm 2.2mm; margin-bottom: 1.2mm;
+}
+.quote b { color: var(--accent); }
+
+/* 표 */
+table { width: 100%; border-collapse: collapse; font-size: 7.5pt; margin-bottom: 1.2mm; break-inside: avoid; }
+th, td { border-bottom: 1px solid var(--line); padding: .8mm 1.1mm; vertical-align: top; text-align: left; }
+thead th { background: var(--soft); font-weight: 700; border-bottom: 1.3px solid #aab3c2; }
+td.num, th.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.c, th.c { text-align: center; white-space: nowrap; }
+tr.total td { font-weight: 700; border-top: 1.3px solid #aab3c2; }
+.tag { display: inline-block; font-size: 6.6pt; padding: 0 1.2mm; border-radius: 1mm;
+       background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+
+/* 일정 */
+.timeline td:first-child { white-space: nowrap; font-weight: 600; width: 34%; }
+
+/* 체크 박스 */
+.box { border: 1.2px solid var(--accent); border-radius: 1.6mm; padding: 1.4mm 2.2mm; }
+.box h2 { border: 0; padding-left: 0; }
+
+footer.bottom {
+  margin-top: 2mm; padding-top: 1.4mm; border-top: 1px solid var(--line);
+  font-size: 6.6pt; color: var(--muted); line-height: 1.4;
+}
