@@ -1,4 +1,4 @@
-# 과학축전·시연실험 자료 수집 (한국·일본)
+# 과학축전·시연실험 자료 수집 (한국·일본·중국·미국·공개 서적)
 
 과학축전과 물리 시연실험 자료(PDF·PPT·HWP)를 모아 나라·행사별 폴더에 정리하는 도구입니다.
 **찾기는 MCP와 Claude Code가, 받기는 Python 스크립트가** 맡는 2단계 방식입니다.
@@ -13,6 +13,7 @@
 | `data/sites.csv` | 대상 사이트 목록과 사이트별 수집 방법(`crawl` / `cinii` / `playwright` / `seed`) |
 | `data/seed_links.csv` | 사전 조사로 찾아 둔 대학 리포지토리 PDF 7건 |
 | `data/links_found.csv` | Firecrawl로 찾아 둔 한·일 자료 141건 |
+| `data/links_cn_us.csv` | Firecrawl로 찾아 둔 중국·대만·미국(+영국·호주) 자료 44건 |
 | `data/keywords.txt` | 물리 분야만 거를 때 쓰는 한·일·영 키워드 |
 | `.mcp.json` | Firecrawl·Playwright MCP 설정 (이 폴더에서 Claude Code를 켜면 자동으로 읽힘) |
 
@@ -72,6 +73,40 @@ python collect.py --physics download --links links.csv data/seed_links.csv
 - `index.csv` — 파일별 출처 페이지, 원본 주소, 저장 경로, 상태(ok·duplicate·robots·error)
 
 같은 명령을 다시 실행하면 이미 받은 파일은 건너뛰므로, 중간에 끊겨도 이어서 받을 수 있습니다.
+
+## 중국·미국 자료와 공개 서적
+
+### 중국·미국 (찾아 둔 44건)
+
+| 나라 | 묶음 | 건수 |
+|---|---|---|
+| 미국 | Lecture Demonstrations (Sokoloff·Thornton ILD 전체 책, IIT 역학 시연 등) | 8 |
+| 미국 | 교사용 안내서 (AP Physics 실험 매뉴얼, Modeling Instruction 등) | 7 |
+| 미국 | Exploratorium·과학축전 활동 자료 | 8 |
+| 영국·호주 | IOP 물리 활동 팩 등 | 3 |
+| 중국 | 全国科普日 우수 사례집, 대학 물리 시연실험 자료 등 | 12 |
+| 대만 | 生活物理演示(실험 약 100개), 展演實驗 45개 등 | 6 |
+
+```bash
+python collect.py download --links data/links_cn_us.csv
+```
+
+중국 쪽은 공개 PDF 대부분이 행정 문서나 강의계획서라, 시연 실험 자료가 일본만큼 많지 않았습니다.
+번체자로 된 대만 자료가 실험 내용은 더 풍부합니다.
+
+### 공개 서적 (archive.org, Project Gutenberg)
+
+저작권이 끝난 옛 물리 실험서·시연서를 검색해 링크를 모읍니다. 기본값은 **1931년 이전 출판**(미국 기준 퍼블릭 도메인)입니다.
+
+```bash
+python collect.py books                               # 기본 검색어로 archive.org + Gutenberg
+python collect.py books --query 'title:(electricity AND experiments)' --limit 30
+python collect.py download --links links_books.csv    # 내려받기 (archive.org는 PDF, Gutenberg는 EPUB)
+```
+
+- archive.org 검색어는 `title:(...)`, `subject:(...)` 같은 검색 문법을 쓸 수 있습니다. 잡지·학회지는 자동으로 뺍니다.
+- 최근 교재나 저작권이 살아 있는 책은 일부러 수집하지 않습니다. 인터넷에 올라온 최신 교재 PDF는 대부분 무단 게시물입니다.
+- 스캔본 책은 수십~수백 MB인 경우가 있으니 `--limit`으로 양을 조절하세요.
 
 ## MCP가 맡는 일
 

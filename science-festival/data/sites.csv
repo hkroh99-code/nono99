@@ -8,3 +8,10 @@ JP,演示実験,나고야대학 고등교육연구센터,https://www.cshe.nagoya
 KR,국립중앙과학관,공공데이터포털,https://www.data.go.kr/,playwright,"제공기관=국립중앙과학관/국립과천과학관, 형식=PDF로 검색 후 다운로드 버튼"
 KR,사이언스올,사이언스올(한국과학창의재단),https://www.scienceall.com/,crawl,업로드 폴더의 PDF 자료집
 KR,대한민국과학축제,대한민국 과학축제,https://www.sciencefestival.kr/,crawl,부스 목록(아이디어 키워드용). 주소는 연도별로 바뀔 수 있어 확인 필요
+CN,科普活动,中国科协 科普 자료,https://www.cast.org.cn/,crawl,"全国科普日·科技活动周. 해외에서 느리거나 막힐 수 있음"
+CN,科普活动,中国数字科技馆,https://www.cdstm.cn/,playwright,"자바스크립트 사이트. 주소 확인 필요"
+US,Lecture_Demonstrations,PIRA 시연 목록,https://www.pira.org/,crawl,"Physics Instructional Resource Association 시연 분류표. 주소 확인 필요"
+US,Exploratorium,Exploratorium Science Snacks,https://www.exploratorium.edu/snacks,playwright,"실험 레시피 수백 개, 낱장 PDF 제공. CC BY-NC-SA"
+US,Teacher_Guides,PhysPort,https://www.physport.org/,crawl,물리교육연구 기반 수업자료
+BOOK,archive.org,Internet Archive,https://archive.org/,books,"python collect.py books 로 수집 (1931년 이전 퍼블릭 도메인)"
+BOOK,gutenberg,Project Gutenberg,https://www.gutenberg.org/,books,"python collect.py books 로 수집 (EPUB)"

@@ -36,7 +36,7 @@ try:
     truststore.inject_into_ssl()
 except ImportError:
     truststore = None
-FILE_EXTS = (".pdf", ".ppt", ".pptx", ".hwp", ".hwpx", ".doc", ".docx")
+FILE_EXTS = (".pdf", ".ppt", ".pptx", ".hwp", ".hwpx", ".doc", ".docx", ".epub")
 LINK_FIELDS = ["country", "event", "year", "title", "page_url", "file_url"]
 INDEX_FIELDS = LINK_FIELDS + ["path", "bytes", "sha256", "status"]
 
@@ -293,6 +293,70 @@ def cmd_cinii(args):
     append_links(args.out, [r for r in rows if keep(r, keywords)])
 
 
+# ---------------------------------------------------------------- books
+
+def archive_books(fetcher, query, before, limit):
+    """archive.org에서 저작권이 끝난(출판연도 < before) 책의 PDF 링크를 찾는다."""
+    q = (f"({query}) AND mediatype:texts AND year:[1500 TO {before - 1}]"
+         " AND -collection:inlibrary AND -collection:printdisabled"
+         " AND -title:(magazine OR journal OR proceedings OR transactions)")
+    params = [("q", q), ("rows", str(limit)), ("page", "1"), ("output", "json")]
+    params += [("fl[]", f) for f in ("identifier", "title", "year", "creator")]
+    body, _, _ = fetcher.get("https://archive.org/advancedsearch.php?" + urllib.parse.urlencode(params))
+    rows = []
+    for doc in json.loads(body)["response"]["docs"]:
+        ident = doc["identifier"]
+        try:
+            meta = json.loads(fetcher.get(f"https://archive.org/metadata/{ident}")[0])
+        except Exception as e:
+            print(f"  ! {ident}: {e}", file=sys.stderr)
+            continue
+        pdfs = [f["name"] for f in meta.get("files", []) if f["name"].lower().endswith(".pdf")]
+        if not pdfs:
+            continue
+        creator = doc.get("creator", "")
+        creator = ", ".join(creator) if isinstance(creator, list) else creator
+        title = f"{doc.get('title', ident)} ({creator})" if creator else doc.get("title", ident)
+        rows.append({"country": "BOOK", "event": "archive.org", "year": str(doc.get("year", "")),
+                     "title": title, "page_url": f"https://archive.org/details/{ident}",
+                     "file_url": f"https://archive.org/download/{ident}/{urllib.parse.quote(pdfs[0])}"})
+        print(f"  [archive] {doc.get('year', '')} {title[:70]}")
+    return rows
+
+
+def gutenberg_books(fetcher, query, limit):
+    """Project Gutenberg(미국 퍼블릭 도메인)에서 EPUB 링크를 찾는다. PDF는 제공하지 않는다."""
+    url = "https://gutendex.com/books/?" + urllib.parse.urlencode({"search": query, "copyright": "false"})
+    rows = []
+    while url and len(rows) < limit:
+        data = json.loads(fetcher.get(url)[0])
+        for b in data["results"]:
+            epub = next((u for k, u in b["formats"].items() if k.startswith("application/epub")), None)
+            if not epub:
+                continue
+            authors = ", ".join(a["name"] for a in b.get("authors", []))
+            rows.append({"country": "BOOK", "event": "gutenberg", "year": "",
+                         "title": f"{b['title']} ({authors})" if authors else b["title"],
+                         "page_url": f"https://www.gutenberg.org/ebooks/{b['id']}", "file_url": epub})
+            print(f"  [gutenberg] {b['title'][:70]}")
+        url = data.get("next")
+    return rows[:limit]
+
+
+def cmd_books(args):
+    fetcher = Fetcher(args.delay)
+    rows = []
+    if "archive" in args.source:
+        for q in args.query:
+            print(f"[books] archive.org: {q}")
+            rows += archive_books(fetcher, q, args.before, args.limit)
+    if "gutenberg" in args.source:
+        for q in args.gutenberg_query:
+            print(f"[books] gutenberg: {q}")
+            rows += gutenberg_books(fetcher, q, args.limit)
+    append_links(args.out, rows)
+
+
 # ---------------------------------------------------------------- download
 
 def safe_name(s, limit=80):
@@ -301,7 +365,7 @@ def safe_name(s, limit=80):
 
 
 MAGIC = [(b"%PDF", ".pdf"), (b"PK\x03\x04", ".zip"), (b"\xd0\xcf\x11\xe0", ".ole")]
-CTYPE_EXT = {"pdf": ".pdf", "presentationml": ".pptx", "powerpoint": ".ppt",
+CTYPE_EXT = {"pdf": ".pdf", "epub": ".epub", "presentationml": ".pptx", "powerpoint": ".ppt",
              "wordprocessingml": ".docx", "msword": ".doc", "hwp": ".hwp"}
 
 
@@ -418,6 +482,21 @@ def main(argv=None):
     n.add_argument("--appid")
     n.add_argument("--out", default="links.csv")
     n.set_defaults(func=cmd_cinii)
+
+    b = sub.add_parser("books", help="저작권이 끝난 공개 서적(archive.org, Project Gutenberg) 검색")
+    b.add_argument("--query", nargs="+", default=[
+        'title:("physics" AND (experiment* OR demonstration*))',
+        'title:("experimental science" OR "physical experiments" OR "lecture experiments")',
+    ], help="archive.org 검색어 (검색 문법 사용 가능). 여러 개 가능")
+    b.add_argument("--gutenberg-query", nargs="+", default=[
+        "physics experiments", "experimental physics", "physical science experiments"],
+        help="Project Gutenberg 검색어 (일반 단어)")
+    b.add_argument("--source", nargs="+", default=["archive", "gutenberg"], choices=["archive", "gutenberg"])
+    b.add_argument("--before", type=int, default=1931,
+                   help="이 해 이전에 나온 책만 (미국 기준 퍼블릭 도메인, 기본 1931)")
+    b.add_argument("--limit", type=int, default=50, help="검색어·출처별 최대 권수")
+    b.add_argument("--out", default="links_books.csv")
+    b.set_defaults(func=cmd_books)
 
     d = sub.add_parser("download", help="links.csv의 파일 내려받기")
     d.add_argument("--links", nargs="+", default=["links.csv"])
