@@ -1,0 +1,10 @@
+country,event,name,url,method,notes
+JP,科学の祭典,青少年のための科学の祭典 本部,https://www.kagakunosaiten.jp/,crawl,전국대회 출전 목록·지역대회 링크
+JP,科学の祭典,CiNii Research 검색,https://cir.nii.ac.jp/,cinii,"appid 필요 (CINII_APPID). 「科学の祭典」「演示実験」 검색"
+JP,科学の祭典,미에대학 리포지토리,https://mie-u.repo.nii.ac.jp/,seed,"seed_links.csv에 포함, 추가분은 cinii로. 진공·대기압 시연 출전 보고"
+JP,科学の祭典,시즈오카대학 리포지토리,https://shizuoka.repo.nii.ac.jp/,seed,"seed_links.csv에 포함, 추가분은 cinii로. 출전 보고"
+JP,科学の祭典,가고시마대학 리포지토리,https://ir.kagoshima-u.ac.jp/,seed,"seed_links.csv에 포함, 추가분은 cinii로. 과학의 제전 의의 분석"
+JP,演示実験,나고야대학 고등교육연구센터,https://www.cshe.nagoya-u.ac.jp/,crawl,강의 시연실험 가이드. 주소 확인 필요
+KR,국립중앙과학관,공공데이터포털,https://www.data.go.kr/,playwright,"제공기관=국립중앙과학관/국립과천과학관, 형식=PDF로 검색 후 다운로드 버튼"
+KR,사이언스올,사이언스올(한국과학창의재단),https://www.scienceall.com/,crawl,업로드 폴더의 PDF 자료집
+KR,대한민국과학축제,대한민국 과학축제,https://www.sciencefestival.kr/,crawl,부스 목록(아이디어 키워드용). 주소는 연도별로 바뀔 수 있어 확인 필요
