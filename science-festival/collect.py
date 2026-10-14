@@ -280,6 +280,25 @@ def safe_name(s, limit=80):
     return s[:limit] or "untitled"
 
 
+MAGIC = [(b"%PDF", ".pdf"), (b"PK\x03\x04", ".zip"), (b"\xd0\xcf\x11\xe0", ".ole")]
+CTYPE_EXT = {"pdf": ".pdf", "presentationml": ".pptx", "powerpoint": ".ppt",
+             "wordprocessingml": ".docx", "msword": ".doc", "hwp": ".hwp"}
+
+
+def file_name(url, title, ctype, data):
+    """원래 이름 + 제목으로 파일명을 만든다. downBbsNttFile.do처럼 확장자가 없는 주소도 처리."""
+    base = urllib.parse.unquote(os.path.basename(urllib.parse.urlsplit(url).path))
+    stem, ext = os.path.splitext(base)
+    if ext.lower() not in FILE_EXTS:
+        stem, ext = "", next((e for k, e in CTYPE_EXT.items() if k in ctype.lower()), "")
+        if not ext:
+            ext = next((e for m, e in MAGIC if data.startswith(m)), ".bin")
+            if ext in (".zip", ".ole"):  # 오피스 문서/HWP는 내용만으로 구분이 어려움
+                ext = ".hwp" if b"HWP Document" in data[:4096] else ".docx" if ext == ".zip" else ".doc"
+    parts = [p for p in (safe_name(stem, 30) if stem else "", safe_name(title, 60) if title else "") if p]
+    return "_".join(parts or ["file"]) + ext.lower()
+
+
 def cmd_download(args):
     fetcher = Fetcher(args.delay)
     keywords = load_keywords(args.keywords) if args.physics else []
@@ -297,12 +316,11 @@ def cmd_download(args):
             continue
         if url in index and index[url]["status"] in ("ok", "duplicate") and os.path.exists(index[url]["path"]):
             continue
-        fname = safe_name(urllib.parse.unquote(os.path.basename(urllib.parse.urlsplit(url).path)))
         folder = os.path.join(args.dest, safe_name(r["country"]), safe_name(r["event"] or "기타"))
-        dest = os.path.join(folder, fname)
         entry = {k: r.get(k, "") for k in LINK_FIELDS}
         try:
-            data, _, _ = fetcher.get(url)
+            data, ctype, _ = fetcher.get(url)
+            dest = os.path.join(folder, file_name(url, r.get("title", ""), ctype, data))
             digest = hashlib.sha256(data).hexdigest()
             if digest in hashes:
                 entry.update(path=hashes[digest], bytes=len(data), sha256=digest, status="duplicate")
@@ -315,7 +333,7 @@ def cmd_download(args):
                     f.write(data)
                 hashes[digest] = dest
                 entry.update(path=dest, bytes=len(data), sha256=digest, status="ok")
-            print(f"[{entry['status']}] {dest}")
+            print(f"[{entry['status']}] {entry['path']}")
         except PermissionError as e:
             entry.update(path="", bytes=0, sha256="", status="robots")
             print(f"[robots] {e}", file=sys.stderr)

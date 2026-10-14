@@ -11,7 +11,8 @@
 |---|---|
 | `collect.py` | 수집기 본체. 표준 라이브러리만 써서 설치할 것이 없습니다 (Python 3.9 이상) |
 | `data/sites.csv` | 대상 사이트 목록과 사이트별 수집 방법(`crawl` / `cinii` / `playwright` / `seed`) |
-| `data/seed_links.csv` | 사전 조사로 찾아 둔 PDF 7건. 바로 내려받을 수 있습니다 |
+| `data/seed_links.csv` | 사전 조사로 찾아 둔 대학 리포지토리 PDF 7건 |
+| `data/links_found.csv` | Firecrawl로 찾아 둔 한·일 자료 141건 |
 | `data/keywords.txt` | 물리 분야만 거를 때 쓰는 한·일·영 키워드 |
 | `.mcp.json` | Firecrawl·Playwright MCP 설정 (이 폴더에서 Claude Code를 켜면 자동으로 읽힘) |
 
@@ -25,13 +26,27 @@
 3. (선택) CiNii Research API 키(appid) 발급 후 `export CINII_APPID=...`
    일본 대학 출전 보고서를 대량으로 찾는 데 가장 효과적입니다. 비상업 교육 목적 등록은 무료입니다.
 
-## 바로 해 볼 수 있는 것 (1분)
+## 찾아 둔 자료 한 번에 받기
+
+`data/links_found.csv`에 Firecrawl 검색으로 찾아 둔 파일 141건이 정리되어 있습니다.
+
+| 나라 | 묶음 | 건수 |
+|---|---|---|
+| 일본 | 科学の祭典 全国大会 実験解説集 (2026년 62개 실험 낱장 + 합본, 2022 합본 등) | 72 |
+| 일본 | 科学の祭典 지역대회 보고서 | 25 |
+| 일본 | 출전 보고 (대학·연구소·물리교육학회) | 12 |
+| 일본 | 演示実験 (초전도 시연 등) | 4 |
+| 한국 | 국립중앙과학관 물리 실험 장치·탐구 자료 | 13 |
+| 한국 | 사이언스올 물리 수업 자료 | 11 |
+| 한국 | 과학축전 자료집·운영 계획 | 4 |
 
 ```bash
 cd science-festival
-python collect.py download --links data/seed_links.csv
+python collect.py download --links data/links_found.csv data/seed_links.csv
 ```
-→ `downloads/JP/科学の祭典/`에 PDF 7건이 저장되고, `index.csv`에 출처가 기록됩니다.
+→ 요청 간격 1.5초라 약 5분 걸립니다. 파일은 `downloads/나라/묶음/` 아래에 `원래이름_제목.pdf` 형태로 저장됩니다.
+
+`2018~2025 全国大会 実験解説集 (주소 추정)` 7건은 2022·2026년 주소 규칙으로 만든 것이라 없으면 `index.csv`에 404로 남습니다.
 
 ## 전체 수집 순서
 
