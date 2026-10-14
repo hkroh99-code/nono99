@@ -12,18 +12,30 @@
 import argparse
 import csv
 import hashlib
+import http.cookiejar
 import json
 import os
 import re
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import urllib.robotparser
-from collections import deque
+from collections import Counter, deque
 from html.parser import HTMLParser
 
 USER_AGENT = "ScienceFestivalCollector/1.0 (educational use)"
+# 일부 공공기관 사이트는 브라우저가 아닌 요청에 오류 페이지를 돌려주므로 브라우저 호환 헤더를 쓴다.
+BROWSER_UA = f"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) {USER_AGENT}"
+
+try:
+    # 한국 공공기관(.go.kr) 서버 중에는 중간 인증서를 보내지 않는 곳이 있어 Python 기본 검증이 실패한다.
+    # truststore가 설치돼 있으면 운영체제(Windows/macOS)의 인증서 저장소로 검증해 이 문제를 피한다.
+    import truststore
+    truststore.inject_into_ssl()
+except ImportError:
+    truststore = None
 FILE_EXTS = (".pdf", ".ppt", ".pptx", ".hwp", ".hwpx", ".doc", ".docx")
 LINK_FIELDS = ["country", "event", "year", "title", "page_url", "file_url"]
 INDEX_FIELDS = LINK_FIELDS + ["path", "bytes", "sha256", "status"]
@@ -49,6 +61,8 @@ class Fetcher:
         self.timeout = timeout
         self._robots = {}
         self._last = 0.0
+        self._opener = urllib.request.build_opener(
+            urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
 
     def allowed(self, url):
         parts = urllib.parse.urlsplit(url)
@@ -72,9 +86,15 @@ class Fetcher:
         wait = self.delay - (time.time() - self._last)
         if wait > 0:
             time.sleep(wait)
-        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        parts = urllib.parse.urlsplit(url)
+        req = urllib.request.Request(url, headers={
+            "User-Agent": BROWSER_UA,
+            "Accept": "text/html,application/pdf,application/octet-stream,*/*;q=0.8",
+            "Accept-Language": "ko,ja;q=0.9,en;q=0.8",
+            "Referer": f"{parts.scheme}://{parts.netloc}/",
+        })
         try:
-            with urllib.request.urlopen(req, timeout=self.timeout) as r:
+            with self._opener.open(req, timeout=self.timeout) as r:
                 return r.read(), r.headers.get("Content-Type", ""), r.geturl()
         finally:
             self._last = time.time()
@@ -320,6 +340,8 @@ def cmd_download(args):
         entry = {k: r.get(k, "") for k in LINK_FIELDS}
         try:
             data, ctype, _ = fetcher.get(url)
+            if "html" in ctype.lower() or data[:200].lstrip().lower().startswith((b"<!doctype html", b"<html")):
+                raise ValueError("파일 대신 웹페이지(HTML)가 왔습니다 - 로그인·세션이 필요하거나 주소가 바뀐 경우")
             dest = os.path.join(folder, file_name(url, r.get("title", ""), ctype, data))
             digest = hashlib.sha256(data).hexdigest()
             if digest in hashes:
@@ -338,7 +360,7 @@ def cmd_download(args):
             entry.update(path="", bytes=0, sha256="", status="robots")
             print(f"[robots] {e}", file=sys.stderr)
         except Exception as e:
-            entry.update(path="", bytes=0, sha256="", status=f"error: {e}")
+            entry.update(path="", bytes=0, sha256="", status=f"error: {error_reason(e)}")
             print(f"[error] {url}: {e}", file=sys.stderr)
         index[url] = entry
 
@@ -348,6 +370,26 @@ def cmd_download(args):
         w.writerows(index.values())
     ok = sum(1 for e in index.values() if e["status"] == "ok")
     print(f"[index] 저장 {ok}건 / 전체 {len(index)}건 → {args.index}")
+    failed = Counter((urllib.parse.urlsplit(u).netloc, e["status"])
+                     for u, e in index.items() if e["status"] not in ("ok", "duplicate"))
+    if failed:
+        print("\n[실패 요약] 사이트별 원인")
+        for (host, status), n in failed.most_common():
+            print(f"  {n:3d}건  {host}  {status}")
+        if any("인증서" in st for _, st in failed) and truststore is None:
+            print("\n  → 인증서 오류는 'pip install truststore' 후 다시 실행하면 대부분 해결됩니다.")
+
+
+def error_reason(e):
+    """흔한 오류를 사람이 읽기 쉬운 이유로 바꾼다."""
+    text = str(e)
+    if "CERTIFICATE_VERIFY_FAILED" in text:
+        return "인증서 검증 실패 (pip install truststore 로 해결)"
+    if isinstance(e, urllib.error.HTTPError):
+        return f"HTTP {e.code}"
+    if "timed out" in text:
+        return "시간 초과"
+    return text[:120]
 
 
 # ---------------------------------------------------------------- main
