@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="종이 정이십면체 주사위로 뮤온 100개의 붕괴를 흉내 내고, 반로그 그래프로 반감기를 읽어 시간 지연까지 계산하는 출력용 키트.">
+<title>키트 K06 붕괴 주사위</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/kit.css">
+<style>
+
+/* 이 키트 전용 보조 스타일 (kit.css 위에 얹음) */
+.sheet .k-note { font-size: 9pt; line-height: 1.45; }
+.sheet .k-small { font-size: 8pt; color: var(--paper-ink-2); }
+.sheet .k-row { display: flex; gap: 4mm; align-items: flex-start; }
+.sheet .k-col { display: flex; flex-direction: column; gap: 2.5mm; min-width: 0; }
+.sheet .k-tight th, .sheet .k-tight td { padding: .5mm 1.2mm; height: 6mm; vertical-align: middle; }
+.sheet .k-tight td.c, .sheet .k-tight th.c { text-align: center; }
+.sheet table.k-tbl { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.sheet .k-formula { font-family: var(--font-mono); font-size: 9.5pt; background: #f1f2f6; border-radius: 1mm; padding: 1.4mm 3mm; }
+.sheet .k-box { border: .8pt solid var(--paper-ink); border-radius: 1.5mm; padding: 2mm 3mm; display: flex; flex-direction: column; gap: 1.2mm; }
+.sheet .k-box h3 { font-size: 10.5pt; }
+.sheet .k-q { font-size: 9.5pt; display: flex; flex-direction: column; gap: 1mm; }
+.sheet .k-q b { font-weight: 700; }
+.sheet .k-ans { border-bottom: .6pt solid var(--paper-ink); display: inline-block; min-width: 22mm; height: 5mm; vertical-align: bottom; }
+.sheet .k-wl { background-image: repeating-linear-gradient(transparent, transparent 6.6mm, var(--paper-line) 6.6mm, var(--paper-line) 6.8mm); }
+.sheet ol.k-ol { margin: 0; padding-left: 5mm; font-size: 9pt; line-height: 1.45; }
+.sheet ol.k-ol li + li { margin-top: .4mm; }
+.sheet .mono { font-family: var(--font-mono); }
+.sheet svg { display: block; }
+.k-fig { margin-inline: auto; }
+.sheet .k-tbl th { white-space: normal; line-height: 1.25; }
+.sheet tr:last-child td { border-bottom: 1px solid var(--paper-line); } /* site.css의 마지막 줄 테두리 제거를 되돌림 */
+.kit-intro .box ul { margin: 0; }
+.kit-intro .box { align-content: start; }
+
+.sheet .k06-sub { font-family: var(--font-body); font-size: 9pt; font-weight: 600; margin-left: 3mm; letter-spacing: 0; }
+.sheet.k06-land { padding: 9mm 12mm 8mm; gap: 3mm; }
+.sheet .k06-steps > p { flex: 1; }
+.sheet .k06-netwrap { display: block; } /* 가로 시트에서 SVG를 flex의 직접 자식으로 두면 Chromium이 가로 쪽 지정을 무시하므로 감싼다 */
+.sheet table.k06-tally { width: 47mm; }
+.sheet table.k06-tally td, .sheet table.k06-tally th { height: 6.1mm; padding: 0 1mm; font-size: 8.5pt; }
+.sheet table.k06-pool td, .sheet table.k06-pool th { height: 7mm; padding: 0 1mm; font-size: 9pt; }
+
+</style>
+</head>
+<body data-page="make" data-root="../">
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--up">출력·만들기 키트</span>
+      <span class="badge badge--adv">연계: 주제 6</span>
+      <span class="badge badge--time">약 70분</span>
+    </div>
+    <p class="eyebrow">키트 K06</p>
+    <h1>정이십면체 붕괴 주사위와 반감기 기록판</h1>
+    <p class="lead">종이로 정이십면체 주사위를 접고, '1'이 나오면 붕괴하는 뮤온 100개를 라운드마다 줄여 나갑니다. 반로그 그래프에서 직선이 되는 지수 붕괴와 반감기 13.5라운드를 실제 뮤온의 반감기 1.52 μs와 연결하고, 빠르게 나는 뮤온의 시간 지연까지 계산합니다.</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="pdf/k06.pdf">인쇄용 PDF</a>
+      <a class="btn" href="../students/t06.html">연계 활동지</a>
+    </div>
+  </header>
+
+  <section class="kit-intro">
+    <dl class="kit-meta">
+      <div><dt>대상·인원</dt><dd>고2~3(심화) · 4명 모둠, 반 전체 5모둠</dd></div>
+      <div><dt>준비물</dt><dd>A4(1쪽은 1인 1장, 나머지는 모둠당 1장씩), 가위, 목공풀 또는 양면테이프, 자, 다 쓴 볼펜, 연필, 계산기. 선택: 두꺼운 종이, 토큰(바둑돌·동전), 시판 주사위</dd></div>
+      <div><dt>시간</dt><dd>만들기 20분 · 붕괴 실험 25분 · 그래프·분석 25분 (2차시 권장)</dd></div>
+      <div><dt>인쇄</dt><dd>A4 · 실제 크기(100%) · <b>1쪽만 가로 방향</b> · 흑백 가능</dd></div>
+    </dl>
+    <p class="print-tip">인쇄할 때는 배율을 <b>실제 크기(100%)</b>로, 여백은 <b>없음</b>으로 고르세요. 1쪽(정이십면체 전개도)은 가로 방향입니다. 브라우저가 방향을 자동으로 바꾸지 않으면 1쪽만 따로 가로로 인쇄하거나 [인쇄용 PDF]를 쓰세요. 인쇄 뒤 삼각형 한 변이 45 mm인지 자로 확인하세요.</p>
+    <div class="legend-lines"><span><i class="l-cut"></i>자르는 선</span><span><i class="l-fold"></i>접는 선</span><span><i class="l-glue"></i>풀칠하는 곳</span></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>쪽</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>1 (가로)</td><td>정이십면체 주사위(d20) 전개도: 한 변 45 mm, 1~20, 마주 보는 면의 합 21, 풀칠 날개 11개</td></tr>
+        <tr><td>2</td><td>정육면체 주사위(d6) 전개도 2개, 조립 요령, 공정성 검사표</td></tr>
+        <tr><td>3</td><td>뮤온 100개 기록판(10 × 10칸)과 라운드 기록표(0~20라운드)</td></tr>
+        <tr><td>4</td><td>반로그 그래프 용지(1~100, 2단)와 보통 그래프 용지</td></tr>
+        <tr><td>5</td><td>반 전체 합산표(5모둠)</td></tr>
+        <tr><td>6</td><td>분석지: 붕괴 확률, 반감기, 뮤온 시간 단위, 시간 지연</td></tr>
+      </tbody>
+    </table></div>
+    <h2 style="font-size:var(--step-2)">만드는 법과 활동 순서</h2>
+    <ol class="steps">
+      <li><span>1쪽을 가로로 인쇄해 굵은 점선을 따라 오린다. 빗금 친 풀칠 날개는 남겨 둔다.</span></li>
+      <li><span>접는 선(가는 점선)을 자와 다 쓴 볼펜으로 눌러 긋고, 숫자가 바깥으로 오도록 모두 같은 방향으로 접는다.</span></li>
+      <li><span>가운데 띠(삼각형 10개)를 고리로 말아 오른쪽 끝 날개를 왼쪽 끝 면 뒤에 붙인다. 위쪽 다섯 삼각형의 날개를 차례로 붙여 꼭짓점을 만들고, 아래쪽 다섯 삼각형을 마지막에 닫는다.</span></li>
+      <li><span>마주 보는 두 면의 합이 21인지(1과 20, 6과 15 …) 확인한다. 2쪽의 정육면체(d6)도 같은 방법으로 만든다(1과 6, 2와 5, 3과 4가 마주 봄).</span></li>
+      <li><span>3쪽 기록판: 모둠원 4명이 ①~④ 구역을 25칸씩 맡는다. 라운드마다 살아 있는 내 칸에 대해 주사위를 한 번씩 굴려 '1'이면 붕괴, 그 칸에 라운드 번호를 쓴다.</span></li>
+      <li><span>라운드가 끝날 때마다 이번에 붕괴한 수와 남은 N을 기록표에 적는다. d20은 20라운드까지, d6은 10~12라운드까지 한다.</span></li>
+      <li><span>4쪽 두 그래프에 (n, N)을 찍는다. 보통 그래프에서는 곡선, 반로그 그래프에서는 직선이 되는지 비교하고, N = 50이 되는 라운드(반감기)를 읽는다.</span></li>
+      <li><span>5쪽에 다섯 모둠의 결과를 모아 합계와 이론값을 비교하고, 6쪽 분석지에서 1라운드를 뮤온의 시간(μs)으로 바꾸어 시간 지연 문제를 푼다.</span></li>
+    </ol>
+    <div class="grid-2">
+      <div class="box box--tip">
+        <h3>두 가지 굴리기 방법</h3>
+        <ul>
+          <li><b>한 칸씩</b>: 칸마다 한 번씩 굴린다. 확률의 뜻이 가장 분명하다. 한 사람이 25칸을 맡으면 20라운드에 약 320번, 15분 안팎이 걸린다.</li>
+          <li><b>모둠 동시 굴리기</b>: 주사위 여러 개(모둠원의 d20, 시판 주사위)를 한꺼번에 굴리고 번호가 작은 칸부터 하나씩 대응시킨다. 주사위가 많을수록 빠르다.</li>
+          <li>시간이 부족하면 N₀ = 50(①② 구역만)으로 하고, 반 전체 합산으로 통계를 보충한다.</li>
+        </ul>
+      </div>
+      <div class="box box--think">
+        <h3>무엇을 보는가</h3>
+        <ul>
+          <li>칸 하나(뮤온 하나)가 언제 붕괴할지는 알 수 없지만, 많이 모으면 남은 수가 매 라운드 같은 <b>비율</b>로 줄어든다.</li>
+          <li>d20 뮤온의 반감기는 약 13.5라운드. 1라운드를 0.113 μs로 정하면 실제 뮤온의 반감기 1.52 μs와 같아진다.</li>
+          <li>빠르게 움직이는 뮤온은 실험실에서 볼 때 시계가 γ배 느리게 간다. 주사위로 말하면 '1'이 훨씬 덜 나오는 주사위가 된다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="sheets">
+    <article class="sheet sheet--landscape k06-land">
+      <header class="sheet-head"><h2>정이십면체 붕괴 주사위 (d20) 전개도 <small class="k06-sub">한 변 45 mm · 마주 보는 두 면의 합 = 21</small></h2><span class="kit-no">CERN 탐구 교실 · 키트 K06 · 1/6</span></header>
+      <div class="k-row" style="justify-content:space-between; align-items:center"><div class="name-line">학번 <span></span> 이름 <span></span></div><div class="legend-lines"><span><i class="l-cut"></i>자르는 선</span><span><i class="l-fold"></i>접는 선(모두 안쪽으로, 숫자가 바깥)</span><span><i class="l-glue"></i>풀칠 날개</span></div></div>
+      <div class="k06-netwrap"><svg class="k-fig" width="256.06mm" height="121.91mm" viewBox="0 0 256.06 121.91" role="img" aria-label="정이십면체 주사위 전개도: 한 변 45 mm 정삼각형 20개, 1부터 20까지 번호, 마주 보는 면의 합은 21, 풀칠 날개 11개">
+        <defs><pattern id="k06-hatch" patternUnits="userSpaceOnUse" width="2" height="2" patternTransform="rotate(45)"><rect width="2" height="2" fill="#fff"/><line x1="0" y1="0" x2="0" y2="2" stroke="#8d95a8" stroke-width=".6"/></pattern></defs>
+        <g fill="url(#k06-hatch)" stroke="none"><polygon points="70.5,2.5 60.94,5.06 45.44,31.91 48,41.47"/><polygon points="93,119.41 83.44,116.85 67.94,90 70.5,80.44"/><polygon points="115.5,2.5 105.94,5.06 90.44,31.91 93,41.47"/><polygon points="138,119.41 128.44,116.85 112.94,90 115.5,80.44"/><polygon points="160.5,2.5 150.94,5.06 135.44,31.91 138,41.47"/><polygon points="183,119.41 173.44,116.85 157.94,90 160.5,80.44"/><polygon points="205.5,2.5 195.94,5.06 180.44,31.91 183,41.47"/><polygon points="228,41.47 230.56,31.91 215.06,5.06 205.5,2.5"/><polygon points="250.5,80.44 253.06,70.88 237.56,44.03 228,41.47"/><polygon points="250.5,80.44 253.06,90 237.56,116.85 228,119.41"/><polygon points="228,119.41 218.44,116.85 202.94,90 205.5,80.44"/></g>
+        <path d="M3,41.47L48,41.47M48,41.47L25.5,80.44M25.5,80.44L70.5,80.44M70.5,80.44L48,41.47M48,41.47L93,41.47M93,41.47L70.5,80.44M70.5,80.44L115.5,80.44M115.5,80.44L93,41.47M93,41.47L138,41.47M138,41.47L115.5,80.44M115.5,80.44L160.5,80.44M160.5,80.44L138,41.47M138,41.47L183,41.47M183,41.47L160.5,80.44M160.5,80.44L205.5,80.44M205.5,80.44L183,41.47M183,41.47L228,41.47M228,41.47L205.5,80.44M205.5,80.44L250.5,80.44M70.5,2.5L48,41.47M93,119.41L70.5,80.44M115.5,2.5L93,41.47M138,119.41L115.5,80.44M160.5,2.5L138,41.47M183,119.41L160.5,80.44M205.5,2.5L183,41.47M228,41.47L205.5,2.5M250.5,80.44L228,41.47M250.5,80.44L228,119.41M228,119.41L205.5,80.44" fill="none" stroke="#6a3fb5" stroke-width=".35" stroke-dasharray="1.6 1.1"/>
+        <path d="M25.5,2.5L3,41.47M48,41.47L25.5,2.5M25.5,80.44L3,41.47M70.5,80.44L48,119.41M48,119.41L25.5,80.44M70.5,2.5L60.94,5.06L45.44,31.91L48,41.47M93,41.47L70.5,2.5M115.5,80.44L93,119.41M93,119.41L83.44,116.85L67.94,90L70.5,80.44M115.5,2.5L105.94,5.06L90.44,31.91L93,41.47M138,41.47L115.5,2.5M160.5,80.44L138,119.41M138,119.41L128.44,116.85L112.94,90L115.5,80.44M160.5,2.5L150.94,5.06L135.44,31.91L138,41.47M183,41.47L160.5,2.5M205.5,80.44L183,119.41M183,119.41L173.44,116.85L157.94,90L160.5,80.44M205.5,2.5L195.94,5.06L180.44,31.91L183,41.47M228,41.47L230.56,31.91L215.06,5.06L205.5,2.5M250.5,80.44L253.06,70.88L237.56,44.03L228,41.47M250.5,80.44L253.06,90L237.56,116.85L228,119.41M228,119.41L218.44,116.85L202.94,90L205.5,80.44" fill="none" stroke="#111522" stroke-width=".55" stroke-dasharray="3 1.4"/>
+        <g font-family="IBM Plex Sans KR, sans-serif" fill="#111522"><text x="25.5" y="32.38" text-anchor="middle" font-size="11" font-weight="700">1</text><text x="25.5" y="38.08" text-anchor="middle" font-size="3.4" font-weight="700">붕괴</text><text x="25.5" y="58.36" text-anchor="middle" font-size="11" font-weight="700">19</text><text x="48" y="71.35" text-anchor="middle" font-size="11" font-weight="700">18</text><text x="48" y="97.33" text-anchor="middle" font-size="11" font-weight="700">8</text><text x="70.5" y="32.38" text-anchor="middle" font-size="11" font-weight="700">17</text><text x="70.5" y="58.36" text-anchor="middle" font-size="11" font-weight="700">6</text><line x1="67.9" y1="59.86" x2="73.1" y2="59.86" stroke="#111522" stroke-width=".7"/><text x="93" y="71.35" text-anchor="middle" font-size="11" font-weight="700">7</text><text x="93" y="97.33" text-anchor="middle" font-size="11" font-weight="700">12</text><text x="115.5" y="32.38" text-anchor="middle" font-size="11" font-weight="700">5</text><text x="115.5" y="58.36" text-anchor="middle" font-size="11" font-weight="700">10</text><text x="138" y="71.35" text-anchor="middle" font-size="11" font-weight="700">2</text><text x="138" y="97.33" text-anchor="middle" font-size="11" font-weight="700">20</text><text x="160.5" y="32.38" text-anchor="middle" font-size="11" font-weight="700">13</text><text x="160.5" y="58.36" text-anchor="middle" font-size="11" font-weight="700">3</text><text x="183" y="71.35" text-anchor="middle" font-size="11" font-weight="700">15</text><text x="183" y="97.33" text-anchor="middle" font-size="11" font-weight="700">4</text><text x="205.5" y="32.38" text-anchor="middle" font-size="11" font-weight="700">9</text><line x1="202.9" y1="33.88" x2="208.1" y2="33.88" stroke="#111522" stroke-width=".7"/><text x="205.5" y="58.36" text-anchor="middle" font-size="11" font-weight="700">14</text><text x="228" y="71.35" text-anchor="middle" font-size="11" font-weight="700">11</text><text x="228" y="97.33" text-anchor="middle" font-size="11" font-weight="700">16</text></g>
+      </svg></div>
+      <div class="k-row k06-steps">
+        <p class="k-note"><b>1</b> 굵은 점선을 따라 오린다. 빗금 친 날개는 떼지 않는다. 두꺼운 종이(120~180 g/m²)면 더 단단하다.</p>
+        <p class="k-note"><b>2</b> 접는 선을 자와 다 쓴 볼펜으로 눌러 그은 뒤, 모두 숫자가 바깥으로 오게 접는다.</p>
+        <p class="k-note"><b>3</b> 가운데 띠를 고리로 말아 오른쪽 끝 날개를 띠 왼쪽 끝 면(19) 뒤에 붙인다. 위쪽 다섯 삼각형을 모아 꼭짓점을 만든다.</p>
+        <p class="k-note"><b>4</b> 아래쪽 다섯 삼각형을 하나씩 닫는다. 마지막 면은 연필 끝으로 안쪽에서 받치며 붙인다. 1의 맞은편이 20인지 확인!</p>
+      </div>
+      <footer class="sheet-foot"><span>키트 K06 정이십면체 붕괴 주사위와 반감기 기록판 · 가로 방향으로 인쇄</span><span>'1'이 나오면 붕괴: 붕괴 확률 λ = 1/20</span></footer>
+    </article>
+    <article class="sheet">
+      <header class="sheet-head"><h2>정육면체 붕괴 주사위 (d6) 전개도와 조립 요령</h2><span class="kit-no">CERN 탐구 교실 · 키트 K06 · 2/6</span></header>
+      <div class="name-line">학번 <span></span> 이름 <span></span></div>
+      <div class="k-row" style="justify-content:space-around">
+        <div class="k-col" style="align-items:center"><svg class="k-fig" width="86mm" height="120mm" viewBox="0 0 86 120" role="img" aria-label="정육면체 주사위 전개도 1: 한 변 28 mm, 마주 보는 면의 눈 합 7, 풀칠 날개 7개">
+        <defs><pattern id="k06-hatch-c1" patternUnits="userSpaceOnUse" width="2" height="2" patternTransform="rotate(45)"><rect width="2" height="2" fill="#fff"/><line x1="0" y1="0" x2="0" y2="2" stroke="#8d95a8" stroke-width=".6"/></pattern></defs>
+        <g fill="url(#k06-hatch-c1)"><polygon points="29,1 23,7 23,23 29,29"/><polygon points="57,1 63,7 63,23 57,29"/><polygon points="29,57 23,63 23,79 29,85"/><polygon points="57,57 63,63 63,79 57,85"/><polygon points="29,85 23,91 23,107 29,113"/><polygon points="57,85 63,91 63,107 57,113"/><polygon points="29,113 35,119 51,119 57,113"/></g>
+        <path d="M29,1L29,29M57,1L57,29M29,29L57,29M29,29L29,57M57,29L57,57M29,57L57,57M29,57L29,85M57,57L57,85M29,85L57,85M29,85L29,113M57,85L57,113M29,113L57,113" fill="none" stroke="#6a3fb5" stroke-width=".35" stroke-dasharray="1.6 1.1"/>
+        <path d="M29,1L23,7L23,23L29,29M57,1L63,7L63,23L57,29M29,1L57,1M29,57L23,63L23,79L29,85M57,57L63,63L63,79L57,85M29,85L23,91L23,107L29,113M57,85L63,91L63,107L57,113M29,113L35,119L51,119L57,113M1,29L1,57M1,29L29,29M1,57L29,57M85,29L85,57M57,29L85,29M57,57L85,57" fill="none" stroke="#111522" stroke-width=".55" stroke-dasharray="3 1.4"/>
+        <g fill="#111522"><circle cx="43" cy="43" r="3.6"/><text x="43" y="52.5" text-anchor="middle" font-size="3.4" font-weight="700" font-family="IBM Plex Sans KR, sans-serif">붕괴</text><circle cx="35.5" cy="91.5" r="2.3"/><circle cx="50.5" cy="91.5" r="2.3"/><circle cx="35.5" cy="99" r="2.3"/><circle cx="50.5" cy="99" r="2.3"/><circle cx="35.5" cy="106.5" r="2.3"/><circle cx="50.5" cy="106.5" r="2.3"/><circle cx="35.5" cy="7.5" r="2.3"/><circle cx="50.5" cy="22.5" r="2.3"/><circle cx="35.5" cy="63.5" r="2.3"/><circle cx="50.5" cy="63.5" r="2.3"/><circle cx="43" cy="71" r="2.3"/><circle cx="35.5" cy="78.5" r="2.3"/><circle cx="50.5" cy="78.5" r="2.3"/><circle cx="7.5" cy="35.5" r="2.3"/><circle cx="15" cy="43" r="2.3"/><circle cx="22.5" cy="50.5" r="2.3"/><circle cx="63.5" cy="35.5" r="2.3"/><circle cx="78.5" cy="35.5" r="2.3"/><circle cx="63.5" cy="50.5" r="2.3"/><circle cx="78.5" cy="50.5" r="2.3"/></g>
+      </svg><span class="k-small">d6 ① 한 변 28 mm</span></div>
+        <div class="k-col" style="align-items:center"><svg class="k-fig" width="86mm" height="120mm" viewBox="0 0 86 120" role="img" aria-label="정육면체 주사위 전개도 2: 한 변 28 mm, 마주 보는 면의 눈 합 7, 풀칠 날개 7개">
+        <defs><pattern id="k06-hatch-c2" patternUnits="userSpaceOnUse" width="2" height="2" patternTransform="rotate(45)"><rect width="2" height="2" fill="#fff"/><line x1="0" y1="0" x2="0" y2="2" stroke="#8d95a8" stroke-width=".6"/></pattern></defs>
+        <g fill="url(#k06-hatch-c2)"><polygon points="29,1 23,7 23,23 29,29"/><polygon points="57,1 63,7 63,23 57,29"/><polygon points="29,57 23,63 23,79 29,85"/><polygon points="57,57 63,63 63,79 57,85"/><polygon points="29,85 23,91 23,107 29,113"/><polygon points="57,85 63,91 63,107 57,113"/><polygon points="29,113 35,119 51,119 57,113"/></g>
+        <path d="M29,1L29,29M57,1L57,29M29,29L57,29M29,29L29,57M57,29L57,57M29,57L57,57M29,57L29,85M57,57L57,85M29,85L57,85M29,85L29,113M57,85L57,113M29,113L57,113" fill="none" stroke="#6a3fb5" stroke-width=".35" stroke-dasharray="1.6 1.1"/>
+        <path d="M29,1L23,7L23,23L29,29M57,1L63,7L63,23L57,29M29,1L57,1M29,57L23,63L23,79L29,85M57,57L63,63L63,79L57,85M29,85L23,91L23,107L29,113M57,85L63,91L63,107L57,113M29,113L35,119L51,119L57,113M1,29L1,57M1,29L29,29M1,57L29,57M85,29L85,57M57,29L85,29M57,57L85,57" fill="none" stroke="#111522" stroke-width=".55" stroke-dasharray="3 1.4"/>
+        <g fill="#111522"><circle cx="43" cy="43" r="3.6"/><text x="43" y="52.5" text-anchor="middle" font-size="3.4" font-weight="700" font-family="IBM Plex Sans KR, sans-serif">붕괴</text><circle cx="35.5" cy="91.5" r="2.3"/><circle cx="50.5" cy="91.5" r="2.3"/><circle cx="35.5" cy="99" r="2.3"/><circle cx="50.5" cy="99" r="2.3"/><circle cx="35.5" cy="106.5" r="2.3"/><circle cx="50.5" cy="106.5" r="2.3"/><circle cx="35.5" cy="7.5" r="2.3"/><circle cx="50.5" cy="22.5" r="2.3"/><circle cx="35.5" cy="63.5" r="2.3"/><circle cx="50.5" cy="63.5" r="2.3"/><circle cx="43" cy="71" r="2.3"/><circle cx="35.5" cy="78.5" r="2.3"/><circle cx="50.5" cy="78.5" r="2.3"/><circle cx="7.5" cy="35.5" r="2.3"/><circle cx="15" cy="43" r="2.3"/><circle cx="22.5" cy="50.5" r="2.3"/><circle cx="63.5" cy="35.5" r="2.3"/><circle cx="78.5" cy="35.5" r="2.3"/><circle cx="63.5" cy="50.5" r="2.3"/><circle cx="78.5" cy="50.5" r="2.3"/></g>
+      </svg><span class="k-small">d6 ② 한 변 28 mm</span></div>
+      </div>
+      <div class="k-row">
+        <div class="k-box" style="flex:1">
+          <h3>잘 만드는 요령</h3>
+          <ol class="k-ol">
+            <li>자르기 전에 접는 선을 먼저 눌러 긋는다(스코어링). 그러면 모서리가 반듯하다.</li>
+            <li>딱풀보다 목공풀을 조금, 또는 얇은 양면테이프가 좋다. 날개는 면의 안쪽에 붙인다.</li>
+            <li>d6: 1이 바닥, 2·3·4·5가 벽, 6이 뚜껑이 되도록 접고, 뚜껑을 마지막에 닫는다.</li>
+            <li>다 만든 뒤 책상 위에서 굴려 보고, 찌그러진 면은 손으로 살짝 펴 준다.</li>
+          </ol>
+        </div>
+        <div class="k-box" style="flex:1">
+          <h3>d20과 d6, 무엇이 다를까?</h3>
+          <p class="k-note">d20은 한 번 굴릴 때 붕괴 확률이 <b>1/20</b>, d6은 <b>1/6</b>이다. d6 뮤온은 빨리 사라져 10라운드면 거의 끝나므로 짧은 수업에 맞고, d20은 천천히 줄어 지수 붕괴 곡선을 더 길게 볼 수 있다. 종이 주사위가 없으면 시판 주사위나 스마트폰 난수(1~20)를 써도 된다.</p>
+        </div>
+      </div>
+      <div class="k-box">
+        <h3>공정성 검사: 내가 만든 d20을 40번 굴려 나온 수에 正 표시</h3>
+        <table class="k-tbl k-tight"><tr><th class="c">1</th><th class="c">2</th><th class="c">3</th><th class="c">4</th><th class="c">5</th><th class="c">6</th><th class="c">7</th><th class="c">8</th><th class="c">9</th><th class="c">10</th></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th class="c">11</th><th class="c">12</th><th class="c">13</th><th class="c">14</th><th class="c">15</th><th class="c">16</th><th class="c">17</th><th class="c">18</th><th class="c">19</th><th class="c">20</th></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
+        <p class="k-small">공정한 주사위라면 수마다 평균 2번쯤 나온다. 0~5번 정도의 흩어짐은 우연으로도 흔하다. 한 수가 8번 넘게 나오면 주사위 모양을 다시 살펴보자.</p>
+      </div>
+      <footer class="sheet-foot"><span>키트 K06 정이십면체 붕괴 주사위와 반감기 기록판 · d6 전개도</span><span>✂ 굵은 점선을 오리고, 가는 점선을 접으세요</span></footer>
+    </article>
+    <article class="sheet">
+      <header class="sheet-head"><h2>뮤온 100개 기록판</h2><span class="kit-no">CERN 탐구 교실 · 키트 K06 · 3/6</span></header>
+      <div class="name-line">학번 <span></span> 이름 <span></span> 모둠 <span style="min-width:14mm"></span></div>
+      <p class="k-note">칸 하나가 뮤온 하나입니다. 모둠원 4명이 ①~④ 구역(25칸씩)을 나눠 맡습니다. 한 라운드마다 <b>아직 살아 있는 내 칸</b>에 대해 주사위를 한 번씩 굴려 <b>'1'이 나오면 붕괴</b>: 그 칸에 라운드 번호를 쓰고 동그라미(토큰을 썼다면 치움). 4명이 모두 끝나면 다음 라운드로. 사용한 주사위: <b>d20 · d6</b> &nbsp; 처음 수 N₀: <b>100 · 50(①②만)</b></p>
+      <div class="k-row" style="justify-content:space-between">
+        <svg class="k-fig" width="140mm" height="140mm" viewBox="0 0 140 140" role="img" aria-label="뮤온 100개 기록판: 번호 1~100이 적힌 10×10 칸, 네 구역 ①~④">
+        <text x="38.5" y="46.5" text-anchor="middle" font-size="18" font-weight="700" style="fill:#e8eaef">①</text><text x="105.5" y="46.5" text-anchor="middle" font-size="18" font-weight="700" style="fill:#e8eaef">②</text><text x="38.5" y="113.5" text-anchor="middle" font-size="18" font-weight="700" style="fill:#e8eaef">③</text><text x="105.5" y="113.5" text-anchor="middle" font-size="18" font-weight="700" style="fill:#e8eaef">④</text><g stroke="#111522"><line x1="5" y1="5" x2="5" y2="139" stroke-width="0.55"/><line x1="5" y1="5" x2="139" y2="5" stroke-width="0.55"/><line x1="18.4" y1="5" x2="18.4" y2="139" stroke-width="0.2"/><line x1="5" y1="18.4" x2="139" y2="18.4" stroke-width="0.2"/><line x1="31.8" y1="5" x2="31.8" y2="139" stroke-width="0.2"/><line x1="5" y1="31.8" x2="139" y2="31.8" stroke-width="0.2"/><line x1="45.2" y1="5" x2="45.2" y2="139" stroke-width="0.2"/><line x1="5" y1="45.2" x2="139" y2="45.2" stroke-width="0.2"/><line x1="58.6" y1="5" x2="58.6" y2="139" stroke-width="0.2"/><line x1="5" y1="58.6" x2="139" y2="58.6" stroke-width="0.2"/><line x1="72" y1="5" x2="72" y2="139" stroke-width="0.55"/><line x1="5" y1="72" x2="139" y2="72" stroke-width="0.55"/><line x1="85.4" y1="5" x2="85.4" y2="139" stroke-width="0.2"/><line x1="5" y1="85.4" x2="139" y2="85.4" stroke-width="0.2"/><line x1="98.8" y1="5" x2="98.8" y2="139" stroke-width="0.2"/><line x1="5" y1="98.8" x2="139" y2="98.8" stroke-width="0.2"/><line x1="112.2" y1="5" x2="112.2" y2="139" stroke-width="0.2"/><line x1="5" y1="112.2" x2="139" y2="112.2" stroke-width="0.2"/><line x1="125.6" y1="5" x2="125.6" y2="139" stroke-width="0.2"/><line x1="5" y1="125.6" x2="139" y2="125.6" stroke-width="0.2"/><line x1="139" y1="5" x2="139" y2="139" stroke-width="0.55"/><line x1="5" y1="139" x2="139" y2="139" stroke-width="0.55"/></g><g font-family="IBM Plex Mono, ui-monospace, monospace"><text x="6" y="8" font-size="2.5" style="fill:#4a5064">1</text><text x="19.4" y="8" font-size="2.5" style="fill:#4a5064">2</text><text x="32.8" y="8" font-size="2.5" style="fill:#4a5064">3</text><text x="46.2" y="8" font-size="2.5" style="fill:#4a5064">4</text><text x="59.6" y="8" font-size="2.5" style="fill:#4a5064">5</text><text x="73" y="8" font-size="2.5" style="fill:#4a5064">6</text><text x="86.4" y="8" font-size="2.5" style="fill:#4a5064">7</text><text x="99.8" y="8" font-size="2.5" style="fill:#4a5064">8</text><text x="113.2" y="8" font-size="2.5" style="fill:#4a5064">9</text><text x="126.6" y="8" font-size="2.5" style="fill:#4a5064">10</text><text x="6" y="21.4" font-size="2.5" style="fill:#4a5064">11</text><text x="19.4" y="21.4" font-size="2.5" style="fill:#4a5064">12</text><text x="32.8" y="21.4" font-size="2.5" style="fill:#4a5064">13</text><text x="46.2" y="21.4" font-size="2.5" style="fill:#4a5064">14</text><text x="59.6" y="21.4" font-size="2.5" style="fill:#4a5064">15</text><text x="73" y="21.4" font-size="2.5" style="fill:#4a5064">16</text><text x="86.4" y="21.4" font-size="2.5" style="fill:#4a5064">17</text><text x="99.8" y="21.4" font-size="2.5" style="fill:#4a5064">18</text><text x="113.2" y="21.4" font-size="2.5" style="fill:#4a5064">19</text><text x="126.6" y="21.4" font-size="2.5" style="fill:#4a5064">20</text><text x="6" y="34.8" font-size="2.5" style="fill:#4a5064">21</text><text x="19.4" y="34.8" font-size="2.5" style="fill:#4a5064">22</text><text x="32.8" y="34.8" font-size="2.5" style="fill:#4a5064">23</text><text x="46.2" y="34.8" font-size="2.5" style="fill:#4a5064">24</text><text x="59.6" y="34.8" font-size="2.5" style="fill:#4a5064">25</text><text x="73" y="34.8" font-size="2.5" style="fill:#4a5064">26</text><text x="86.4" y="34.8" font-size="2.5" style="fill:#4a5064">27</text><text x="99.8" y="34.8" font-size="2.5" style="fill:#4a5064">28</text><text x="113.2" y="34.8" font-size="2.5" style="fill:#4a5064">29</text><text x="126.6" y="34.8" font-size="2.5" style="fill:#4a5064">30</text><text x="6" y="48.2" font-size="2.5" style="fill:#4a5064">31</text><text x="19.4" y="48.2" font-size="2.5" style="fill:#4a5064">32</text><text x="32.8" y="48.2" font-size="2.5" style="fill:#4a5064">33</text><text x="46.2" y="48.2" font-size="2.5" style="fill:#4a5064">34</text><text x="59.6" y="48.2" font-size="2.5" style="fill:#4a5064">35</text><text x="73" y="48.2" font-size="2.5" style="fill:#4a5064">36</text><text x="86.4" y="48.2" font-size="2.5" style="fill:#4a5064">37</text><text x="99.8" y="48.2" font-size="2.5" style="fill:#4a5064">38</text><text x="113.2" y="48.2" font-size="2.5" style="fill:#4a5064">39</text><text x="126.6" y="48.2" font-size="2.5" style="fill:#4a5064">40</text><text x="6" y="61.6" font-size="2.5" style="fill:#4a5064">41</text><text x="19.4" y="61.6" font-size="2.5" style="fill:#4a5064">42</text><text x="32.8" y="61.6" font-size="2.5" style="fill:#4a5064">43</text><text x="46.2" y="61.6" font-size="2.5" style="fill:#4a5064">44</text><text x="59.6" y="61.6" font-size="2.5" style="fill:#4a5064">45</text><text x="73" y="61.6" font-size="2.5" style="fill:#4a5064">46</text><text x="86.4" y="61.6" font-size="2.5" style="fill:#4a5064">47</text><text x="99.8" y="61.6" font-size="2.5" style="fill:#4a5064">48</text><text x="113.2" y="61.6" font-size="2.5" style="fill:#4a5064">49</text><text x="126.6" y="61.6" font-size="2.5" style="fill:#4a5064">50</text><text x="6" y="75" font-size="2.5" style="fill:#4a5064">51</text><text x="19.4" y="75" font-size="2.5" style="fill:#4a5064">52</text><text x="32.8" y="75" font-size="2.5" style="fill:#4a5064">53</text><text x="46.2" y="75" font-size="2.5" style="fill:#4a5064">54</text><text x="59.6" y="75" font-size="2.5" style="fill:#4a5064">55</text><text x="73" y="75" font-size="2.5" style="fill:#4a5064">56</text><text x="86.4" y="75" font-size="2.5" style="fill:#4a5064">57</text><text x="99.8" y="75" font-size="2.5" style="fill:#4a5064">58</text><text x="113.2" y="75" font-size="2.5" style="fill:#4a5064">59</text><text x="126.6" y="75" font-size="2.5" style="fill:#4a5064">60</text><text x="6" y="88.4" font-size="2.5" style="fill:#4a5064">61</text><text x="19.4" y="88.4" font-size="2.5" style="fill:#4a5064">62</text><text x="32.8" y="88.4" font-size="2.5" style="fill:#4a5064">63</text><text x="46.2" y="88.4" font-size="2.5" style="fill:#4a5064">64</text><text x="59.6" y="88.4" font-size="2.5" style="fill:#4a5064">65</text><text x="73" y="88.4" font-size="2.5" style="fill:#4a5064">66</text><text x="86.4" y="88.4" font-size="2.5" style="fill:#4a5064">67</text><text x="99.8" y="88.4" font-size="2.5" style="fill:#4a5064">68</text><text x="113.2" y="88.4" font-size="2.5" style="fill:#4a5064">69</text><text x="126.6" y="88.4" font-size="2.5" style="fill:#4a5064">70</text><text x="6" y="101.8" font-size="2.5" style="fill:#4a5064">71</text><text x="19.4" y="101.8" font-size="2.5" style="fill:#4a5064">72</text><text x="32.8" y="101.8" font-size="2.5" style="fill:#4a5064">73</text><text x="46.2" y="101.8" font-size="2.5" style="fill:#4a5064">74</text><text x="59.6" y="101.8" font-size="2.5" style="fill:#4a5064">75</text><text x="73" y="101.8" font-size="2.5" style="fill:#4a5064">76</text><text x="86.4" y="101.8" font-size="2.5" style="fill:#4a5064">77</text><text x="99.8" y="101.8" font-size="2.5" style="fill:#4a5064">78</text><text x="113.2" y="101.8" font-size="2.5" style="fill:#4a5064">79</text><text x="126.6" y="101.8" font-size="2.5" style="fill:#4a5064">80</text><text x="6" y="115.2" font-size="2.5" style="fill:#4a5064">81</text><text x="19.4" y="115.2" font-size="2.5" style="fill:#4a5064">82</text><text x="32.8" y="115.2" font-size="2.5" style="fill:#4a5064">83</text><text x="46.2" y="115.2" font-size="2.5" style="fill:#4a5064">84</text><text x="59.6" y="115.2" font-size="2.5" style="fill:#4a5064">85</text><text x="73" y="115.2" font-size="2.5" style="fill:#4a5064">86</text><text x="86.4" y="115.2" font-size="2.5" style="fill:#4a5064">87</text><text x="99.8" y="115.2" font-size="2.5" style="fill:#4a5064">88</text><text x="113.2" y="115.2" font-size="2.5" style="fill:#4a5064">89</text><text x="126.6" y="115.2" font-size="2.5" style="fill:#4a5064">90</text><text x="6" y="128.6" font-size="2.5" style="fill:#4a5064">91</text><text x="19.4" y="128.6" font-size="2.5" style="fill:#4a5064">92</text><text x="32.8" y="128.6" font-size="2.5" style="fill:#4a5064">93</text><text x="46.2" y="128.6" font-size="2.5" style="fill:#4a5064">94</text><text x="59.6" y="128.6" font-size="2.5" style="fill:#4a5064">95</text><text x="73" y="128.6" font-size="2.5" style="fill:#4a5064">96</text><text x="86.4" y="128.6" font-size="2.5" style="fill:#4a5064">97</text><text x="99.8" y="128.6" font-size="2.5" style="fill:#4a5064">98</text><text x="113.2" y="128.6" font-size="2.5" style="fill:#4a5064">99</text><text x="126.6" y="128.6" font-size="2.5" style="fill:#4a5064">100</text></g>
+      </svg>
+        <table class="k-tbl k-tight k06-tally"><thead><tr><th class="c">라운드 n</th><th class="c">붕괴 수</th><th class="c">남은 N</th></tr></thead><tbody><tr><td class="c">0</td><td class="c">—</td><td class="c"><b>N₀ =</b></td></tr><tr><td class="c">1</td><td></td><td></td></tr><tr><td class="c">2</td><td></td><td></td></tr><tr><td class="c">3</td><td></td><td></td></tr><tr><td class="c">4</td><td></td><td></td></tr><tr><td class="c">5</td><td></td><td></td></tr><tr><td class="c">6</td><td></td><td></td></tr><tr><td class="c">7</td><td></td><td></td></tr><tr><td class="c">8</td><td></td><td></td></tr><tr><td class="c">9</td><td></td><td></td></tr><tr><td class="c">10</td><td></td><td></td></tr><tr><td class="c">11</td><td></td><td></td></tr><tr><td class="c">12</td><td></td><td></td></tr><tr><td class="c">13</td><td></td><td></td></tr><tr><td class="c">14</td><td></td><td></td></tr><tr><td class="c">15</td><td></td><td></td></tr><tr><td class="c">16</td><td></td><td></td></tr><tr><td class="c">17</td><td></td><td></td></tr><tr><td class="c">18</td><td></td><td></td></tr><tr><td class="c">19</td><td></td><td></td></tr><tr><td class="c">20</td><td></td><td></td></tr></tbody></table>
+      </div>
+      <div class="k-row">
+        <div class="k-box" style="flex:1.2">
+          <h3>빠르게 하는 요령</h3>
+          <ol class="k-ol">
+            <li>칸 번호 순서대로 굴린다. 붕괴한 칸은 건너뛴다.</li>
+            <li>주사위가 여러 개면 한꺼번에 굴리고 번호가 작은 칸부터 하나씩 대응시킨다(모둠 동시 굴리기).</li>
+            <li>남은 N = 지난 라운드의 N − 이번에 붕괴한 수. 칸에 적힌 동그라미 수와 맞는지 확인한다.</li>
+          </ol>
+        </div>
+        <div class="k-box" style="flex:1">
+          <h3>라운드 끝마다 확인</h3>
+          <p class="k-note">d20이면 한 라운드에 남은 뮤온의 약 <b>5%</b>(20개 중 1개)가 붕괴한다. 처음엔 많이, 나중엔 조금씩 줄어드는가? 같은 '비율'로 줄어드는 것이 지수 붕괴다.</p>
+        </div>
+      </div>
+      <footer class="sheet-foot"><span>키트 K06 정이십면체 붕괴 주사위와 반감기 기록판 · 기록판</span><span>칸 = 뮤온 하나, 1 라운드 = 같은 시간 간격 하나</span></footer>
+    </article>
+    <article class="sheet">
+      <header class="sheet-head"><h2>반로그 그래프와 보통 그래프</h2><span class="kit-no">CERN 탐구 교실 · 키트 K06 · 4/6</span></header>
+      <div class="name-line">학번 <span></span> 이름 <span></span> 모둠 <span style="min-width:14mm"></span></div>
+      <p class="k-note">기록판의 (n, N)을 두 그래프에 모두 찍습니다. 반 전체 결과는 합계 ÷ 5(모둠 평균)를 다른 기호(×)로 찍습니다. <b>반로그 그래프에서 점들이 직선에 가까우면 지수 붕괴</b>입니다. N = 50 점선과 만나는 라운드가 반감기 n½입니다.</p>
+      <svg class="k-fig" width="182mm" height="114mm" viewBox="0 0 182 114" role="img" aria-label="반로그 그래프 용지: 가로 라운드 0~20, 세로 로그 눈금 1~100(2단)">
+        <text x="16" y="5.5" font-size="3.8" font-weight="700">① 반로그 그래프 (세로: 로그 눈금, 1 → 10 → 100이 같은 간격)</text>
+        <g stroke="#c3c8d4" stroke-width=".15"><line x1="16" y1="87.15" x2="176" y2="87.15"/><line x1="16" y1="79.05" x2="176" y2="79.05"/><line x1="16" y1="73.31" x2="176" y2="73.31"/><line x1="16" y1="68.85" x2="176" y2="68.85"/><line x1="16" y1="65.21" x2="176" y2="65.21"/><line x1="16" y1="62.13" x2="176" y2="62.13"/><line x1="16" y1="59.46" x2="176" y2="59.46"/><line x1="16" y1="57.1" x2="176" y2="57.1"/><line x1="16" y1="41.15" x2="176" y2="41.15"/><line x1="16" y1="33.05" x2="176" y2="33.05"/><line x1="16" y1="27.31" x2="176" y2="27.31"/><line x1="16" y1="22.85" x2="176" y2="22.85"/><line x1="16" y1="19.21" x2="176" y2="19.21"/><line x1="16" y1="16.13" x2="176" y2="16.13"/><line x1="16" y1="13.46" x2="176" y2="13.46"/><line x1="16" y1="11.1" x2="176" y2="11.1"/><line x1="24" y1="9" x2="24" y2="101"/><line x1="32" y1="9" x2="32" y2="101"/><line x1="40" y1="9" x2="40" y2="101"/><line x1="48" y1="9" x2="48" y2="101"/><line x1="64" y1="9" x2="64" y2="101"/><line x1="72" y1="9" x2="72" y2="101"/><line x1="80" y1="9" x2="80" y2="101"/><line x1="88" y1="9" x2="88" y2="101"/><line x1="104" y1="9" x2="104" y2="101"/><line x1="112" y1="9" x2="112" y2="101"/><line x1="120" y1="9" x2="120" y2="101"/><line x1="128" y1="9" x2="128" y2="101"/><line x1="144" y1="9" x2="144" y2="101"/><line x1="152" y1="9" x2="152" y2="101"/><line x1="160" y1="9" x2="160" y2="101"/><line x1="168" y1="9" x2="168" y2="101"/></g>
+        <g stroke="#3a4052" stroke-width=".35"><line x1="16" y1="101" x2="176" y2="101"/><line x1="16" y1="55" x2="176" y2="55"/><line x1="16" y1="9" x2="176" y2="9"/><line x1="16" y1="9" x2="16" y2="101"/><line x1="56" y1="9" x2="56" y2="101"/><line x1="96" y1="9" x2="96" y2="101"/><line x1="136" y1="9" x2="136" y2="101"/><line x1="176" y1="9" x2="176" y2="101"/></g>
+        <line x1="16" y1="22.85" x2="176" y2="22.85" stroke="#111522" stroke-width=".35" stroke-dasharray="2 1.2"/>
+        <text x="175" y="21.85" text-anchor="end" font-size="2.6" font-weight="700">N₀ = 100이면 반 = 50</text>
+        <g font-size="2.5" font-family="IBM Plex Mono, ui-monospace, monospace"><text x="14.5" y="102" text-anchor="end">1</text><text x="14.5" y="88.15" text-anchor="end">2</text><text x="14.5" y="80.05" text-anchor="end">3</text><text x="14.5" y="69.85" text-anchor="end">5</text><text x="14.5" y="56" text-anchor="end">10</text><text x="14.5" y="42.15" text-anchor="end">20</text><text x="14.5" y="34.05" text-anchor="end">30</text><text x="14.5" y="23.85" text-anchor="end">50</text><text x="14.5" y="10" text-anchor="end">100</text><text x="14.5" y="74.11" text-anchor="end" font-size="1.9" style="fill:#7d8497">4</text><text x="14.5" y="28.11" text-anchor="end" font-size="1.9" style="fill:#7d8497">40</text><text x="14.5" y="66.01" text-anchor="end" font-size="1.9" style="fill:#7d8497">6</text><text x="14.5" y="20.01" text-anchor="end" font-size="1.9" style="fill:#7d8497">60</text><text x="14.5" y="60.26" text-anchor="end" font-size="1.9" style="fill:#7d8497">8</text><text x="14.5" y="14.26" text-anchor="end" font-size="1.9" style="fill:#7d8497">80</text><text x="16" y="105" text-anchor="middle">0</text><text x="24" y="105" text-anchor="middle">1</text><text x="32" y="105" text-anchor="middle">2</text><text x="40" y="105" text-anchor="middle">3</text><text x="48" y="105" text-anchor="middle">4</text><text x="56" y="105" text-anchor="middle">5</text><text x="64" y="105" text-anchor="middle">6</text><text x="72" y="105" text-anchor="middle">7</text><text x="80" y="105" text-anchor="middle">8</text><text x="88" y="105" text-anchor="middle">9</text><text x="96" y="105" text-anchor="middle">10</text><text x="104" y="105" text-anchor="middle">11</text><text x="112" y="105" text-anchor="middle">12</text><text x="120" y="105" text-anchor="middle">13</text><text x="128" y="105" text-anchor="middle">14</text><text x="136" y="105" text-anchor="middle">15</text><text x="144" y="105" text-anchor="middle">16</text><text x="152" y="105" text-anchor="middle">17</text><text x="160" y="105" text-anchor="middle">18</text><text x="168" y="105" text-anchor="middle">19</text><text x="176" y="105" text-anchor="middle">20</text></g>
+        <text x="96" y="111.5" text-anchor="middle" font-size="3">라운드 n</text>
+        <text transform="translate(4 55) rotate(-90)" text-anchor="middle" font-size="3">남은 뮤온 수 N</text>
+      </svg>
+      <svg class="k-fig" width="182mm" height="92mm" viewBox="0 0 182 92" role="img" aria-label="보통 그래프 용지: 가로 라운드 0~20, 세로 0~100">
+        <text x="16" y="5.5" font-size="3.8" font-weight="700">② 보통(선형) 그래프 — 비교용</text>
+        <g stroke="#c3c8d4" stroke-width=".15"><line x1="16" y1="75.5" x2="176" y2="75.5"/><line x1="16" y1="68.5" x2="176" y2="68.5"/><line x1="16" y1="61.5" x2="176" y2="61.5"/><line x1="16" y1="54.5" x2="176" y2="54.5"/><line x1="16" y1="47.5" x2="176" y2="47.5"/><line x1="16" y1="40.5" x2="176" y2="40.5"/><line x1="16" y1="33.5" x2="176" y2="33.5"/><line x1="16" y1="26.5" x2="176" y2="26.5"/><line x1="16" y1="19.5" x2="176" y2="19.5"/><line x1="16" y1="12.5" x2="176" y2="12.5"/><line x1="24" y1="9" x2="24" y2="79"/><line x1="32" y1="9" x2="32" y2="79"/><line x1="40" y1="9" x2="40" y2="79"/><line x1="48" y1="9" x2="48" y2="79"/><line x1="64" y1="9" x2="64" y2="79"/><line x1="72" y1="9" x2="72" y2="79"/><line x1="80" y1="9" x2="80" y2="79"/><line x1="88" y1="9" x2="88" y2="79"/><line x1="104" y1="9" x2="104" y2="79"/><line x1="112" y1="9" x2="112" y2="79"/><line x1="120" y1="9" x2="120" y2="79"/><line x1="128" y1="9" x2="128" y2="79"/><line x1="144" y1="9" x2="144" y2="79"/><line x1="152" y1="9" x2="152" y2="79"/><line x1="160" y1="9" x2="160" y2="79"/><line x1="168" y1="9" x2="168" y2="79"/></g>
+        <g stroke="#3a4052" stroke-width=".35"><line x1="16" y1="79" x2="176" y2="79"/><line x1="16" y1="72" x2="176" y2="72"/><line x1="16" y1="65" x2="176" y2="65"/><line x1="16" y1="58" x2="176" y2="58"/><line x1="16" y1="51" x2="176" y2="51"/><line x1="16" y1="44" x2="176" y2="44"/><line x1="16" y1="37" x2="176" y2="37"/><line x1="16" y1="30" x2="176" y2="30"/><line x1="16" y1="23" x2="176" y2="23"/><line x1="16" y1="16" x2="176" y2="16"/><line x1="16" y1="9" x2="176" y2="9"/><line x1="16" y1="9" x2="16" y2="79"/><line x1="56" y1="9" x2="56" y2="79"/><line x1="96" y1="9" x2="96" y2="79"/><line x1="136" y1="9" x2="136" y2="79"/><line x1="176" y1="9" x2="176" y2="79"/></g>
+        <g font-size="2.5" font-family="IBM Plex Mono, ui-monospace, monospace"><text x="14.5" y="80" text-anchor="end">0</text><text x="14.5" y="73" text-anchor="end">10</text><text x="14.5" y="66" text-anchor="end">20</text><text x="14.5" y="59" text-anchor="end">30</text><text x="14.5" y="52" text-anchor="end">40</text><text x="14.5" y="45" text-anchor="end">50</text><text x="14.5" y="38" text-anchor="end">60</text><text x="14.5" y="31" text-anchor="end">70</text><text x="14.5" y="24" text-anchor="end">80</text><text x="14.5" y="17" text-anchor="end">90</text><text x="14.5" y="10" text-anchor="end">100</text><text x="16" y="83" text-anchor="middle">0</text><text x="24" y="83" text-anchor="middle">1</text><text x="32" y="83" text-anchor="middle">2</text><text x="40" y="83" text-anchor="middle">3</text><text x="48" y="83" text-anchor="middle">4</text><text x="56" y="83" text-anchor="middle">5</text><text x="64" y="83" text-anchor="middle">6</text><text x="72" y="83" text-anchor="middle">7</text><text x="80" y="83" text-anchor="middle">8</text><text x="88" y="83" text-anchor="middle">9</text><text x="96" y="83" text-anchor="middle">10</text><text x="104" y="83" text-anchor="middle">11</text><text x="112" y="83" text-anchor="middle">12</text><text x="120" y="83" text-anchor="middle">13</text><text x="128" y="83" text-anchor="middle">14</text><text x="136" y="83" text-anchor="middle">15</text><text x="144" y="83" text-anchor="middle">16</text><text x="152" y="83" text-anchor="middle">17</text><text x="160" y="83" text-anchor="middle">18</text><text x="168" y="83" text-anchor="middle">19</text><text x="176" y="83" text-anchor="middle">20</text></g>
+        <text x="96" y="89.5" text-anchor="middle" font-size="3">라운드 n</text>
+        <text transform="translate(4 44) rotate(-90)" text-anchor="middle" font-size="3">남은 뮤온 수 N</text>
+      </svg>
+      <p class="k-note">내 모둠의 반감기 n½ ≈ <span class="k-ans"></span> 라운드 &nbsp; 반 전체 평균의 반감기 ≈ <span class="k-ans"></span> 라운드 &nbsp; 반로그 그래프의 점들에 가장 잘 맞는 직선을 자로 그어 보자.</p>
+      <footer class="sheet-foot"><span>키트 K06 정이십면체 붕괴 주사위와 반감기 기록판 · 그래프 용지</span><span>반로그: 세로 1단(×10) = 46 mm, 가로 1라운드 = 8 mm</span></footer>
+    </article>
+    <article class="sheet">
+      <header class="sheet-head"><h2>반 전체 합산표 (5모둠)</h2><span class="kit-no">CERN 탐구 교실 · 키트 K06 · 5/6</span></header>
+      <div class="name-line">학번 <span></span> 이름 <span></span></div>
+      <p class="k-note">각 모둠의 '남은 N'을 옮겨 적고 더합니다. 이론값 = (N₀ 합계) × (1 − λ)ⁿ. d20이면 0.95ⁿ, d6이면 (5/6)ⁿ을 곱합니다. 모든 모둠이 같은 주사위를 써야 합칠 수 있습니다.</p>
+      <table class="k-tbl k-tight k06-pool">
+        <colgroup><col style="width:9%"><col><col><col><col><col><col style="width:11%"><col style="width:10%"><col style="width:13%"><col style="width:10%"></colgroup>
+        <thead><tr><th class="c">라운드 n</th><th class="c">1모둠</th><th class="c">2모둠</th><th class="c">3모둠</th><th class="c">4모둠</th><th class="c">5모둠</th><th class="c">합계</th><th class="c">0.95ⁿ</th><th class="c">이론값</th><th class="c">(5/6)ⁿ</th></tr></thead>
+        <tbody><tr><td class="c">0</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">1.000</td><td></td><td class="c mono">1.000</td></tr><tr><td class="c">1</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.950</td><td></td><td class="c mono">0.833</td></tr><tr><td class="c">2</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.902</td><td></td><td class="c mono">0.694</td></tr><tr><td class="c">3</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.857</td><td></td><td class="c mono">0.579</td></tr><tr><td class="c">4</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.815</td><td></td><td class="c mono">0.482</td></tr><tr><td class="c">5</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.774</td><td></td><td class="c mono">0.402</td></tr><tr><td class="c">6</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.735</td><td></td><td class="c mono">0.335</td></tr><tr><td class="c">7</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.698</td><td></td><td class="c mono">0.279</td></tr><tr><td class="c">8</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.663</td><td></td><td class="c mono">0.233</td></tr><tr><td class="c">9</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.630</td><td></td><td class="c mono">0.194</td></tr><tr><td class="c">10</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.599</td><td></td><td class="c mono">0.162</td></tr><tr><td class="c">11</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.569</td><td></td><td class="c mono">0.135</td></tr><tr><td class="c">12</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.540</td><td></td><td class="c mono">0.112</td></tr><tr><td class="c">13</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.513</td><td></td><td class="c mono">0.093</td></tr><tr><td class="c">14</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.488</td><td></td><td class="c mono">0.078</td></tr><tr><td class="c">15</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.463</td><td></td><td class="c mono">0.065</td></tr><tr><td class="c">16</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.440</td><td></td><td class="c mono">0.054</td></tr><tr><td class="c">17</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.418</td><td></td><td class="c mono">0.045</td></tr><tr><td class="c">18</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.397</td><td></td><td class="c mono">0.038</td></tr><tr><td class="c">19</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.377</td><td></td><td class="c mono">0.031</td></tr><tr><td class="c">20</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="c mono">0.358</td><td></td><td class="c mono">0.026</td></tr></tbody>
+      </table>
+      <div class="k-row">
+        <div class="k-box" style="flex:1">
+          <h3>모둠별 반감기 (그래프에서 읽기)</h3>
+          <table class="k-tbl k-tight"><thead><tr><th class="c">1</th><th class="c">2</th><th class="c">3</th><th class="c">4</th><th class="c">5</th><th class="c">반 전체</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+        </div>
+        <div class="k-box" style="flex:1">
+          <h3>생각해 보기</h3>
+          <p class="k-note">모둠마다 반감기가 조금씩 다른 까닭은? 반 전체를 합친 결과가 이론값에 더 가까운가? (요동의 크기는 대략 √N)</p>
+        </div>
+      </div>
+      <footer class="sheet-foot"><span>키트 K06 정이십면체 붕괴 주사위와 반감기 기록판 · 합산표</span><span>합계 ÷ 5를 그래프 용지에 × 로 찍기</span></footer>
+    </article>
+    <article class="sheet">
+      <header class="sheet-head"><h2>분석지: 주사위 반감기에서 뮤온의 시간 지연까지</h2><span class="kit-no">CERN 탐구 교실 · 키트 K06 · 6/6</span></header>
+      <div class="name-line">학번 <span></span> 이름 <span></span></div>
+      <div class="k-q"><span><b>1. 붕괴 확률과 기대값</b> 한 라운드에 붕괴할 확률 λ는 d20에서 1/20 = 0.05, d6에서 1/6이다. 한 라운드마다 (1 − λ)배씩 남으므로 n라운드 뒤 기대값은 다음과 같다.</span></div>
+      <p class="k-formula">N = N₀ (1 − λ)ⁿ &nbsp;&nbsp; (d20: N = 100 × 0.95ⁿ, &nbsp; d6: N = 100 × (5/6)ⁿ)</p>
+      <table class="k-tbl k-tight"><thead><tr><th class="c">n</th><th class="c">5</th><th class="c">10</th><th class="c">15</th><th class="c">20</th></tr></thead>
+      <tbody><tr><td class="c">d20 기대 N</td><td></td><td></td><td></td><td></td></tr><tr><td class="c">d6 기대 N</td><td></td><td></td><td></td><td></td></tr><tr><td class="c">우리 모둠 N</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+      <div class="k-q"><span><b>2. 반감기</b> N = N₀/2가 되는 라운드 n½은 (1 − λ)<sup>n½</sup> = 1/2에서 구한다. 양변에 자연로그를 취하면</span></div>
+      <p class="k-formula">n½ = ln 2 ÷ [ −ln(1 − λ) ] &nbsp;&nbsp; (λ가 작으면 n½ ≈ 0.693 ÷ λ)</p>
+      <div class="k-q"><span>d20: n½ = 0.693 ÷ <span class="k-ans" style="min-width:16mm"></span> ≈ <span class="k-ans" style="min-width:16mm"></span> 라운드 &nbsp; d6: n½ ≈ <span class="k-ans" style="min-width:16mm"></span> 라운드 &nbsp; 그래프에서 읽은 값: <span class="k-ans" style="min-width:16mm"></span></span></div>
+      <div class="k-q"><span><b>3.</b> 반로그 그래프에서 점들이 직선이 되는 까닭을 log N = log N₀ + n · log(1 − λ)를 써서 설명하시오.</span><div class="k-wl" style="height:20mm"></div></div>
+      <div class="k-box">
+        <h3>4. 주사위 시계를 뮤온 시계로 바꾸기</h3>
+        <p class="k-note">정지한 뮤온의 평균 수명은 τ = 2.197 μs, 반감기는 τ · ln 2 ≈ <b>1.52 μs</b>이다. d20의 반감기(약 13.5라운드)를 뮤온의 반감기에 맞추면 <b>1라운드 = 1.52 μs ÷ 13.5</b>이다.</p>
+        <p class="k-note">1라운드 = <span class="k-ans"></span> μs &nbsp;&nbsp; 평균 수명 2.197 μs = <span class="k-ans"></span> 라운드 &nbsp;&nbsp; d6를 쓴다면 1라운드 = <span class="k-ans"></span> μs</p>
+      </div>
+      <div class="k-box">
+        <h3>5. 시간 지연: 빠르게 나는 뮤온 (γ = 10)</h3>
+        <p class="k-note">지면(실험실)에서 보면 움직이는 뮤온의 시계는 γ배 느리게 간다. 그래서 실험실에서 잰 반감기는 γ × 1.52 μs이다.</p>
+        <p class="k-note">(가) γ = 10일 때 실험실 반감기 = <span class="k-ans"></span> μs = <span class="k-ans"></span> 라운드(4번의 1라운드 길이로)</p>
+        <p class="k-note">(나) 실험실 시계로 이 뮤온을 흉내 내려면 한 라운드의 붕괴 확률이 약 1/<span class="k-ans" style="min-width:14mm"></span>인 주사위가 필요하다. (힌트: 'd20에서 1, 이어서 10면체에서도 1'이면 1/200)</p>
+        <p class="k-note">(다) 15 km 높이에서 v = 0.995c로 내려오는 데 걸리는 시간 ≈ <span class="k-ans"></span> μs = <span class="k-ans"></span> 라운드. 시간 지연이 없다면 반감기 <span class="k-ans" style="min-width:12mm"></span>번 → 남는 비율 (1/2)^<span class="k-ans" style="min-width:10mm"></span>. γ = 10이면 반감기 <span class="k-ans" style="min-width:12mm"></span>번 → 약 <span class="k-ans" style="min-width:12mm"></span>%가 지면에 도달.</p>
+      </div>
+      <div class="k-box">
+        <h3>6. CERN으로: 검출기 속 뮤온은 왜 거의 붕괴하지 않을까?</h3>
+        <p class="k-note">CMS 검출기(지름 15 m)를 지나는 운동량 p = 10 GeV/c인 뮤온을 생각하자. 뮤온의 질량은 0.1057 GeV/c²이고, γβ = p ÷ (mc)이다. 평균 비행 거리는 γβ × cτ (cτ = 3.00 × 10⁸ m/s × 2.197 μs ≈ 659 m)이다.</p>
+        <p class="k-note">γβ ≈ <span class="k-ans"></span> &nbsp;&nbsp; 평균 비행 거리 ≈ <span class="k-ans"></span> km &nbsp;&nbsp; → 검출기 안에서 붕괴하는 비율은 클까, 작을까? <span class="k-ans" style="min-width:16mm"></span></p>
+      </div>
+      <footer class="sheet-foot"><span>키트 K06 정이십면체 붕괴 주사위와 반감기 기록판 · 분석지</span><span>연계: 주제 6 특수 상대성이론과 우주선 뮤온</span></footer>
+    </article>
+  </div>
+
+  <section class="kit-teacher section">
+    <div class="section__head"><span class="section__tag">교사용</span><h2>운영 안내와 정답</h2></div>
+    <details><summary>수업 운영 (2차시 흐름, 모둠 구성, 준비 요령)</summary>
+      <div class="table-wrap"><table class="flow">
+        <thead><tr><th>차시</th><th>활동</th></tr></thead>
+        <tbody>
+          <tr><td>1차시 (50분)</td><td>주사위 만들기 20분(1인 1개 d20, 모둠에 d6 1~2개) → 규칙 안내 5분 → 붕괴 실험 25분(기록판·기록표)</td></tr>
+          <tr><td>2차시 (50분)</td><td>그래프 15분(보통·반로그) → 반 전체 합산 10분 → 분석지 20분(반감기, μs 환산, 시간 지연) → 정리 5분(주제 6 활동지·3D 모의실험으로 연결)</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li>시간을 줄이려면 주사위 만들기를 전 시간 과제로 내거나, 1쪽을 두꺼운 종이에 미리 인쇄해 둔다. 만들기에 한 사람당 15~20분이 걸린다.</li>
+        <li>모둠 4명이 ①~④ 구역을 나누면 각자 자기 주사위로 동시에 진행할 수 있다. 한 사람이 25칸 × 20라운드를 하면 약 320번 굴린다(라운드당 평균 16번).</li>
+        <li>종이 d20은 완벽하게 공정하지 않을 수 있다. 2쪽 공정성 검사로 '공정함'이 무엇인지 이야기하고, 시판 주사위와 섞어 써도 된다. 결과가 이론과 조금 다른 것은 오히려 좋은 토론 거리다.</li>
+        <li>반 전체를 합칠 때는 모든 모둠이 같은 주사위(d20 또는 d6)와 같은 N₀를 써야 한다. N₀가 다르면 이론값 = (N₀ 합계) × 0.95ⁿ으로 계산하게 한다.</li>
+        <li>반로그 용지는 1~100이므로, 반 전체 결과(최대 500)는 합계 ÷ 5로 찍는다. 같은 비율로 줄었는지 보는 데는 문제가 없다(로그 그래프에서는 곱하기가 평행 이동).</li>
+        <li>주의: 1라운드 = 0.113 μs는 반감기끼리(1.52 μs ÷ 13.5라운드) 맞춘 값이고, 평균 수명끼리(2.197 μs ÷ 19.5라운드) 맞춰도 같은 값이 나온다. 평균 수명 2.197 μs를 반감기 13.5라운드로 나누어 0.163 μs로 계산하는 실수가 흔하니 확인해 준다.</li>
+      </ul>
+    </details>
+    <details><summary>정답과 해설: 기대값과 분석지</summary>
+      <p>기대값 N = N₀(1 − λ)ⁿ. '요동'은 이항분포의 표준편차 √(N₀ p(1 − p)), p = (1 − λ)ⁿ이다. 학생 결과가 기대값 ± 요동의 2배 안에 들면 정상 범위다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th class="num">n</th><th class="num">d20, N₀=100</th><th class="num">요동 ±</th><th class="num">d20, N₀=500 (반 전체)</th><th class="num">요동 ±</th><th class="num">d6, N₀=100</th></tr></thead>
+        <tbody><tr><td class="num">0</td><td class="num">100.0</td><td class="num">0.0</td><td class="num">500.0</td><td class="num">0.0</td><td class="num">100.0</td></tr><tr><td class="num">1</td><td class="num">95.0</td><td class="num">2.2</td><td class="num">475.0</td><td class="num">4.9</td><td class="num">83.3</td></tr><tr><td class="num">2</td><td class="num">90.3</td><td class="num">3.0</td><td class="num">451.3</td><td class="num">6.6</td><td class="num">69.4</td></tr><tr><td class="num">3</td><td class="num">85.7</td><td class="num">3.5</td><td class="num">428.7</td><td class="num">7.8</td><td class="num">57.9</td></tr><tr><td class="num">4</td><td class="num">81.5</td><td class="num">3.9</td><td class="num">407.3</td><td class="num">8.7</td><td class="num">48.2</td></tr><tr><td class="num">5</td><td class="num">77.4</td><td class="num">4.2</td><td class="num">386.9</td><td class="num">9.4</td><td class="num">40.2</td></tr><tr><td class="num">6</td><td class="num">73.5</td><td class="num">4.4</td><td class="num">367.5</td><td class="num">9.9</td><td class="num">33.5</td></tr><tr><td class="num">7</td><td class="num">69.8</td><td class="num">4.6</td><td class="num">349.2</td><td class="num">10.3</td><td class="num">27.9</td></tr><tr><td class="num">8</td><td class="num">66.3</td><td class="num">4.7</td><td class="num">331.7</td><td class="num">10.6</td><td class="num">23.3</td></tr><tr><td class="num">9</td><td class="num">63.0</td><td class="num">4.8</td><td class="num">315.1</td><td class="num">10.8</td><td class="num">19.4</td></tr><tr><td class="num">10</td><td class="num">59.9</td><td class="num">4.9</td><td class="num">299.4</td><td class="num">11.0</td><td class="num">16.2</td></tr><tr><td class="num">11</td><td class="num">56.9</td><td class="num">5.0</td><td class="num">284.4</td><td class="num">11.1</td><td class="num">13.5</td></tr><tr><td class="num">12</td><td class="num">54.0</td><td class="num">5.0</td><td class="num">270.2</td><td class="num">11.1</td><td class="num">11.2</td></tr><tr><td class="num">13</td><td class="num">51.3</td><td class="num">5.0</td><td class="num">256.7</td><td class="num">11.2</td><td class="num">9.3</td></tr><tr><td class="num">14</td><td class="num">48.8</td><td class="num">5.0</td><td class="num">243.8</td><td class="num">11.2</td><td class="num">7.8</td></tr><tr><td class="num">15</td><td class="num">46.3</td><td class="num">5.0</td><td class="num">231.6</td><td class="num">11.2</td><td class="num">6.5</td></tr><tr><td class="num">16</td><td class="num">44.0</td><td class="num">5.0</td><td class="num">220.1</td><td class="num">11.1</td><td class="num">5.4</td></tr><tr><td class="num">17</td><td class="num">41.8</td><td class="num">4.9</td><td class="num">209.1</td><td class="num">11.0</td><td class="num">4.5</td></tr><tr><td class="num">18</td><td class="num">39.7</td><td class="num">4.9</td><td class="num">198.6</td><td class="num">10.9</td><td class="num">3.8</td></tr><tr><td class="num">19</td><td class="num">37.7</td><td class="num">4.8</td><td class="num">188.7</td><td class="num">10.8</td><td class="num">3.1</td></tr><tr><td class="num">20</td><td class="num">35.8</td><td class="num">4.8</td><td class="num">179.2</td><td class="num">10.7</td><td class="num">2.6</td></tr></tbody>
+      </table></div>
+      <ul>
+        <li><b>1</b>: d20 기대 N(n = 5, 10, 15, 20) = 77.4, 59.9, 46.3, 35.8. d6 = 40.2, 16.2, 6.5, 2.6.</li>
+        <li><b>2</b>: d20 n½ = 0.693 ÷ 0.0513 = <b>13.51라운드</b>(근사식 0.693 ÷ 0.05 = 13.9). d6 n½ = 0.693 ÷ 0.182 = <b>3.80라운드</b>(근사식 4.2는 λ가 커서 덜 정확). 그래프에서 읽은 값은 N₀ = 100인 모둠이면 대개 11~16라운드 사이로 흩어진다.</li>
+        <li><b>3</b>: 양변에 로그를 취하면 log N은 n에 대한 일차식이고, 기울기 log(1 − λ)가 일정하다(d20: log 0.95 = −0.0223, 즉 1라운드마다 세로로 46 mm × 0.0223 ≈ 1.0 mm씩 내려감). 매 라운드 같은 비율로 줄기 때문이다.</li>
+        <li><b>4</b>: 1라운드 = 1.523 μs ÷ 13.51 = <b>0.113 μs</b>. 평균 수명 2.197 μs = 2.197 ÷ 0.113 ≈ <b>19.5라운드</b>(= 1 ÷ [−ln 0.95]; 근사로 1/λ = 20라운드). d6이면 1라운드 = 1.523 ÷ 3.80 ≈ 0.40 μs.</li>
+        <li><b>5(가)</b>: 실험실 반감기 = 10 × 1.52 = <b>15.2 μs</b> = 15.2 ÷ 0.113 ≈ <b>135라운드</b>(그냥 13.5 × 10으로 생각해도 된다). 뮤온 자신의 시계로는 여전히 13.5라운드다.</li>
+        <li><b>5(나)</b>: (1 − λ′)<sup>135</sup> = 1/2 → λ′ = 0.0051 ≈ <b>1/195</b>. 'd20에서 1, 이어서 10면체에서도 1'(1/200)이 거의 같다. 곧 시간 지연은 '실험실에서 본 붕괴 확률이 γ배 작아지는 것'이다.</li>
+        <li><b>5(다)</b>: 비행 시간 = 15 000 m ÷ (0.995 × 3.00 × 10⁸ m/s) ≈ <b>50.3 μs</b> ≈ 446라운드. 시간 지연이 없으면 반감기 33.0번 → (1/2)<sup>33</sup> ≈ 1.1 × 10⁻¹⁰ (사실상 0). γ = 10(β = 0.995이면 γ ≈ 10.0)이면 반감기 3.3번 → 약 <b>10%</b> 도달. 주제 6 활동지의 "비행 시간 ÷ 수명 ≈ 2.3, e<sup>−2.3</sup> ≈ 10%"와 같은 결과다.</li>
+        <li><b>6</b>: γβ = 10 ÷ 0.1057 ≈ <b>94.6</b>, 평균 비행 거리 ≈ 94.6 × 659 m ≈ <b>62 km</b>. 15 m를 지나는 동안 붕괴할 확률은 약 15 m ÷ 62 km ≈ 0.02%뿐이므로, 뮤온은 거의 모두 검출기 가장 바깥의 뮤온 검출기까지 살아서 도달한다. 그래서 '맨 바깥층까지 뚫고 나오는 하전 입자 = 뮤온'으로 식별할 수 있다(주제 5).</li>
+        <li><b>합산표 생각해 보기</b>: 붕괴는 확률적이므로 같은 주사위라도 모둠마다 결과가 다르다. 요동은 대략 √N이라 N이 5배가 되면 상대 요동은 1/√5 ≈ 0.45배로 줄어, 반 전체 결과가 이론값에 더 가깝다(위 표의 요동 열 비교).</li>
+      </ul>
+      <p>주사위 번호 배치(전개도 1쪽, 왼쪽부터): 위 다섯 면 1·17·5·13·9, 가운데 띠의 아래로 향한 면 19·6·10·3·14, 위로 향한 면 18·7·2·15·11, 아래 다섯 면 8·12·20·4·16. 마주 보는 면은 모두 합이 21이 되도록 3차원 좌표로 검산했다.</p>
+    </details>
+  </section>
+
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>
