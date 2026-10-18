@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>키트 K04 종이 CMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/kit.css">
+<style>
+/* K04 전용 배치 (공통 kit.css 위에 덧붙임) */
+.kx-row { display: flex; gap: 5mm; align-items: flex-start; }
+.kx-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2.2mm; font-size: 8.4pt; line-height: 1.35; }
+.kx-panel h3 { font-size: 9.6pt; }
+.sheet table.kx-t { border-collapse: collapse; width: 100%; font-size: 8pt; line-height: 1.25; }
+.sheet table.kx-t th, .sheet table.kx-t td { padding: .7mm 1.3mm; }
+.kx-sw { display: inline-block; width: 10mm; height: 4.2mm; border: .6pt solid #111522; vertical-align: middle; }
+.kx-leg { display: grid; grid-template-columns: 1fr 1fr; gap: 1mm 3mm; }
+.kx-leg > div { display: flex; gap: 1.6mm; align-items: center; }
+.kx-note { font-size: 7.8pt; color: #4a5064; }
+.kx-q { font-size: 9.2pt; line-height: 1.42; display: flex; flex-direction: column; gap: 1.6mm; }
+.kx-q h3 { font-size: 10pt; }
+.kx-minis { display: grid; grid-template-columns: repeat(6, 29mm); justify-content: space-between; row-gap: 1mm; }
+.kx-minis .ans { border: .6pt solid #111522; border-radius: 1mm; height: 8mm; font-size: 7.4pt; padding: .4mm 1mm; color: #4a5064; }
+.kx-fill { display: inline-block; border-bottom: .6pt solid #111522; min-width: 16mm; }
+.kx-two { display: flex; gap: 4mm; align-items: flex-start; }
+.kx-two > div { flex: 1; min-width: 0; }
+.kx-steps { margin: 0; padding-left: 5mm; font-size: 8.6pt; line-height: 1.4; }
+.sheet .write-lines.kx-wl { min-height: 15.2mm; }
+.kx-center { display: flex; justify-content: center; }
+.sheet table.kx-rec { border-collapse: collapse; width: 100%; font-size: 8.6pt; text-align: center; }
+.sheet table.kx-rec td { height: 6.4mm; padding: 0 1mm; }
+.sheet table.kx-t tr:last-child td, .sheet table.kx-rec tr:last-child td { border-bottom: 1px solid var(--paper-line); }
+.kit-teacher .answer-table td, .kit-teacher .answer-table th { text-align: center; }
+</style>
+</head>
+<body data-page="make" data-root="../">
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--up">출력·만들기 키트</span>
+      <span class="badge badge--basic">연계: 주제 5</span>
+      <span class="badge badge--time">약 70분</span>
+    </div>
+    <p class="eyebrow">키트 K04</p>
+    <h1>종이 CMS: 1:100 단면 포스터와 입자 식별 회전판</h1>
+    <p class="lead">실제 반지름 비율로 그린 CMS 단면을 색칠하며 검출기 층의 크기를 느끼고, 할핀으로 돌리는 회전판(볼벨)으로 입자마다 어느 층에 신호가 남는지 확인합니다. 마지막에는 신호만 보고 입자를 알아내고, 누락 운동량과 p<sub>T</sub> = 0.3·B·r을 직접 계산합니다.</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="pdf/k04.pdf">인쇄용 PDF</a>
+      <a class="btn" href="../students/t05.html">연계 활동지</a>
+    </div>
+  </header>
+
+  <section class="kit-intro">
+    <dl class="kit-meta">
+      <div><dt>대상·인원</dt><dd>고1~3 · 개인(회전판) / 2인 1조(포스터)</dd></div>
+      <div><dt>준비물</dt><dd>A4 4장(2·3쪽은 120~180 g 두꺼운 종이 권장), 황동 할핀 1개, 가위, 커터칼과 고무판, 송곳, 풀, 색연필(7색 이상), 자, 컴퍼스, 계산기</dd></div>
+      <div><dt>시간</dt><dd>포스터 20분 · 회전판 만들기 20분 · 활동지 30분</dd></div>
+      <div><dt>인쇄</dt><dd>A4 · 실제 크기(100%) · 1쪽 가로, 2~4쪽 세로 · 흑백 가능(컬러 권장)</dd></div>
+    </dl>
+    <p class="print-tip">인쇄할 때는 배율을 <b>실제 크기(100%)</b>로, 여백은 <b>없음</b>으로 고르세요. 1쪽은 가로 방향입니다. 브라우저 인쇄가 어렵다면 [인쇄용 PDF]를 쓰세요. 아래 회색 바탕 위의 흰 종이가 인쇄되는 부분입니다. 축척이 맞는지 1쪽 축척 막대(5 m = 5 cm)를 자로 꼭 확인하세요.</p>
+    <div class="legend-lines"><span><i class="l-cut"></i>자르는 선</span><span><i class="l-fold"></i>접는 선</span><span><i class="l-glue"></i>풀칠하는 곳</span></div>
+    <h2 style="font-size:var(--step-2)">만드는 법과 활동 순서</h2>
+    <ol class="steps">
+      <li><span><b>포스터(1쪽):</b> 축척 막대를 자로 재어 1:100이 맞는지 확인합니다. 층 색칠 열쇠의 색 칸을 먼저 칠하고, 단면의 같은 층을 같은 색으로 칠합니다. 트래커(반지름 1.2 m)가 전체(7.5 m)에 비해 얼마나 작은지 눈여겨봅니다.</span></li>
+      <li><span><b>입자 경로:</b> 범례를 보며 여섯 입자의 경로를 같은 색으로 덧그립니다. 경로가 어느 층에서 끝나는지, 하전 입자가 어느 쪽으로 휘는지 말로 설명해 봅니다.</span></li>
+      <li><span><b>회전판 오리기(2·3쪽):</b> 바닥 원판(지름 180 mm)과 윗 원판(지름 160 mm)을 굵은 점선을 따라 오립니다. 윗 원판의 빗금 친 창 5개(층 신호 4개 + 힌트 1개)는 고무판 위에서 커터칼로 오려 냅니다.</span></li>
+      <li><span><b>조립:</b> 두 원판의 가운데 + 표시에 송곳으로 구멍을 뚫고, 윗 원판을 위에 겹쳐 할핀을 꽂은 뒤 뒤에서 다리를 벌립니다.</span></li>
+      <li><span><b>신호 지문 찾기:</b> ▲를 입자 이름(60° 간격 6곳)에 차례로 맞추고, 창에 나타난 신호(<svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="큰 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="currentColor" stroke="currentColor" stroke-width="0.5"/></svg> 큰 신호, <svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="약한 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/><path d="M0 -2.3 A2.3 2.3 0 0 0 0 2.3 Z" fill="currentColor"/></svg> 약한 신호, <svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg> 없음)와 힌트를 3쪽 표에 기록합니다.</span></li>
+      <li><span><b>활동지(4쪽):</b> 수수께끼 사건 6개를 판별하고, 누락 횡운동량을 벡터로 그리고, 1:100 그림에서 뮤온 궤적의 반지름을 재어 p<sub>T</sub>를 구합니다.</span></li>
+    </ol>
+  </section>
+
+  <div class="sheets">
+<article class="sheet sheet--landscape">
+<header class="sheet-head"><h2>① CMS 1:100 단면 포스터 — 층 색칠하기</h2><span class="kit-no">CERN 탐구 교실 · 키트 K04 · 1/4</span></header>
+<div class="kx-row">
+<svg width="160mm" height="160mm" viewBox="0 0 160 160" role="img" aria-label="빔 방향에서 본 CMS 검출기 1:100 단면과 여섯 입자의 경로" style="flex:none">
+<defs><marker id="k4ar" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#6b7080"/></marker></defs>
+<path fill-rule="evenodd" d="M127.5 67.27 L114.77 45.23 L92.73 32.5 L67.27 32.5 L45.23 45.23 L32.5 67.27 L32.5 92.73 L45.23 114.77 L67.27 127.5 L92.73 127.5 L114.77 114.77 L127.5 92.73 Z M124.5 68.08 L112.58 47.42 L91.92 35.5 L68.08 35.5 L47.42 47.42 L35.5 68.08 L35.5 91.92 L47.42 112.58 L68.08 124.5 L91.92 124.5 L112.58 112.58 L124.5 91.92 Z" fill="#fff" stroke="#111522" stroke-width="0.3"/>
+<path fill-rule="evenodd" d="M139.3 64.11 L123.41 36.59 L95.89 20.7 L64.11 20.7 L36.59 36.59 L20.7 64.11 L20.7 95.89 L36.59 123.41 L64.11 139.3 L95.89 139.3 L123.41 123.41 L139.3 95.89 Z M133 65.8 L118.8 41.2 L94.2 27 L65.8 27 L41.2 41.2 L27 65.8 L27 94.2 L41.2 118.8 L65.8 133 L94.2 133 L118.8 118.8 L133 94.2 Z" fill="#fff" stroke="#111522" stroke-width="0.3"/>
+<path fill-rule="evenodd" d="M150 61.24 L131.24 28.76 L98.76 10 L61.24 10 L28.76 28.76 L10 61.24 L10 98.76 L28.76 131.24 L61.24 150 L98.76 150 L131.24 131.24 L150 98.76 Z M144.8 62.64 L127.44 32.56 L97.36 15.2 L62.64 15.2 L32.56 32.56 L15.2 62.64 L15.2 97.36 L32.56 127.44 L62.64 144.8 L97.36 144.8 L127.44 127.44 L144.8 97.36 Z" fill="#fff" stroke="#111522" stroke-width="0.3"/>
+<polygon points="119.5,70.12 124,70.12 124,89.88 119.5,89.88" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="109.27,51.69 113.16,49.44 123.05,66.56 119.15,68.81" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="91.19,40.85 93.44,36.95 110.56,46.84 108.31,50.73" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="70.12,40.5 70.12,36 89.88,36 89.88,40.5" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="51.69,50.73 49.44,46.84 66.56,36.95 68.81,40.85" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="40.85,68.81 36.95,66.56 46.84,49.44 50.73,51.69" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="40.5,89.88 36,89.88 36,70.12 40.5,70.12" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="50.73,108.31 46.84,110.56 36.95,93.44 40.85,91.19" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="68.81,119.15 66.56,123.05 49.44,113.16 51.69,109.27" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="89.88,119.5 89.88,124 70.12,124 70.12,119.5" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="108.31,109.27 110.56,113.16 93.44,123.05 91.19,119.15" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="119.15,91.19 123.05,93.44 113.16,110.56 109.27,108.31" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="128,67.84 132.5,67.84 132.5,92.16 128,92.16" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="115.49,45.47 119.39,43.22 131.55,64.28 127.65,66.53" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="93.47,32.35 95.72,28.45 116.78,40.61 114.53,44.51" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="67.84,32 67.84,27.5 92.16,27.5 92.16,32" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="45.47,44.51 43.22,40.61 64.28,28.45 66.53,32.35" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="32.35,66.53 28.45,64.28 40.61,43.22 44.51,45.47" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="32,92.16 27.5,92.16 27.5,67.84 32,67.84" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="44.51,114.53 40.61,116.78 28.45,95.72 32.35,93.47" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="66.53,127.65 64.28,131.55 43.22,119.39 45.47,115.49" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="92.16,128 92.16,132.5 67.84,132.5 67.84,128" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="114.53,115.49 116.78,119.39 95.72,131.55 93.47,127.65" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="127.65,93.47 131.55,95.72 119.39,116.78 115.49,114.53" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="139.8,64.68 144.3,64.68 144.3,95.32 139.8,95.32" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="124.13,36.83 128.02,34.58 143.35,61.12 139.45,63.37" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="96.63,20.55 98.88,16.65 125.42,31.98 123.17,35.87" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="64.68,20.2 64.68,15.7 95.32,15.7 95.32,20.2" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="36.83,35.87 34.58,31.98 61.12,16.65 63.37,20.55" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="20.55,63.37 16.65,61.12 31.98,34.58 35.87,36.83" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="20.2,95.32 15.7,95.32 15.7,64.68 20.2,64.68" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="35.87,123.17 31.98,125.42 16.65,98.88 20.55,96.63" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="63.37,139.45 61.12,143.35 34.58,128.02 36.83,124.13" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="95.32,139.8 95.32,144.3 64.68,144.3 64.68,139.8" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="123.17,124.13 125.42,128.02 98.88,143.35 96.63,139.45" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="139.45,96.63 143.35,98.88 128.02,125.42 124.13,123.17" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="150.2,61.89 154.5,61.89 154.5,98.11 150.2,98.11" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="131.74,29.22 135.46,27.07 153.57,58.43 149.85,60.58" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="99.42,10.15 101.57,6.43 132.93,24.54 130.78,28.26" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="61.89,9.8 61.89,5.5 98.11,5.5 98.11,9.8" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="29.22,28.26 27.07,24.54 58.43,6.43 60.58,10.15" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="10.15,60.58 6.43,58.43 24.54,27.07 28.26,29.22" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="9.8,98.11 5.5,98.11 5.5,61.89 9.8,61.89" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="28.26,130.78 24.54,132.93 6.43,101.57 10.15,99.42" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="60.58,149.85 58.43,153.57 27.07,135.46 29.22,131.74" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="98.11,150.2 98.11,154.5 61.89,154.5 61.89,150.2" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="130.78,131.74 132.93,135.46 101.57,153.57 99.42,149.85" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<polygon points="149.85,99.42 153.57,101.57 135.46,132.93 131.74,130.78" fill="#fff" stroke="#111522" stroke-width="0.22"/>
+<path fill-rule="evenodd" d="M118 80 A38 38 0 1 0 42 80 A38 38 0 1 0 118 80 Z M109.5 80 A29.5 29.5 0 1 0 50.5 80 A29.5 29.5 0 1 0 109.5 80 Z" fill="#fff" stroke="#111522" stroke-width="0.3"/>
+<path fill-rule="evenodd" d="M109.5 80 A29.5 29.5 0 1 0 50.5 80 A29.5 29.5 0 1 0 109.5 80 Z M98 80 A18 18 0 1 0 62 80 A18 18 0 1 0 98 80 Z" fill="#fff" stroke="#111522" stroke-width="0.3"/>
+<path fill-rule="evenodd" d="M98 80 A18 18 0 1 0 62 80 A18 18 0 1 0 98 80 Z M92.9 80 A12.9 12.9 0 1 0 67.1 80 A12.9 12.9 0 1 0 92.9 80 Z" fill="#fff" stroke="#111522" stroke-width="0.3"/>
+<line x1="98" y1="80" x2="109.5" y2="80" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="97.73" y1="76.87" x2="109.05" y2="74.88" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="96.91" y1="73.84" x2="107.72" y2="69.91" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="95.59" y1="71" x2="105.55" y2="65.25" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="93.79" y1="68.43" x2="102.6" y2="61.04" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="91.57" y1="66.21" x2="98.96" y2="57.4" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="89" y1="64.41" x2="94.75" y2="54.45" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="86.16" y1="63.09" x2="90.09" y2="52.28" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="83.13" y1="62.27" x2="85.12" y2="50.95" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="80" y1="62" x2="80" y2="50.5" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="76.87" y1="62.27" x2="74.88" y2="50.95" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="73.84" y1="63.09" x2="69.91" y2="52.28" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="71" y1="64.41" x2="65.25" y2="54.45" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="68.43" y1="66.21" x2="61.04" y2="57.4" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="66.21" y1="68.43" x2="57.4" y2="61.04" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="64.41" y1="71" x2="54.45" y2="65.25" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="63.09" y1="73.84" x2="52.28" y2="69.91" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="62.27" y1="76.87" x2="50.95" y2="74.88" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="62" y1="80" x2="50.5" y2="80" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="62.27" y1="83.13" x2="50.95" y2="85.12" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="63.09" y1="86.16" x2="52.28" y2="90.09" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="64.41" y1="89" x2="54.45" y2="94.75" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="66.21" y1="91.57" x2="57.4" y2="98.96" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="68.43" y1="93.79" x2="61.04" y2="102.6" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="71" y1="95.59" x2="65.25" y2="105.55" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="73.84" y1="96.91" x2="69.91" y2="107.72" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="76.87" y1="97.73" x2="74.88" y2="109.05" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="80" y1="98" x2="80" y2="109.5" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="83.13" y1="97.73" x2="85.12" y2="109.05" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="86.16" y1="96.91" x2="90.09" y2="107.72" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="89" y1="95.59" x2="94.75" y2="105.55" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="91.57" y1="93.79" x2="98.96" y2="102.6" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="93.79" y1="91.57" x2="102.6" y2="98.96" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="95.59" y1="89" x2="105.55" y2="94.75" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="96.91" y1="86.16" x2="107.72" y2="90.09" stroke="#9aa0ad" stroke-width="0.12"/>
+<line x1="97.73" y1="83.13" x2="109.05" y2="85.12" stroke="#9aa0ad" stroke-width="0.12"/>
+<circle cx="80" cy="80" r="12" fill="#fff" stroke="#111522" stroke-width="0.3"/>
+<circle cx="80" cy="80" r="0.29" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="0.68" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="1.09" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="1.6" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="2.55" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="3.39" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="4.19" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="4.98" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="5.55" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="6.48" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="7.3" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="8.2" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="9.2" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="10.4" fill="none" stroke="#8a909c" stroke-width="0.1"/>
+<circle cx="80" cy="80" r="0.3" fill="#111522"/>
+<path d="M80 80 L80.03 79.96 L80.15 79.8 L80.27 79.64 L80.39 79.48 L80.51 79.32 L80.63 79.16 L80.74 79 L80.86 78.83 L80.97 78.67 L81.09 78.5 L81.2 78.34 L81.31 78.17 L81.41 78 L81.52 77.83 L81.63 77.66 L81.73 77.49 L81.84 77.32 L81.94 77.15 L82.04 76.98 L82.14 76.8 L82.24 76.63 L82.33 76.45 L82.43 76.28 L82.52 76.1 L82.61 75.92 L82.71 75.74 L82.8 75.57 L82.88 75.39 L82.97 75.21 L83.06 75.03 L83.14 74.85 L83.22 74.66 L83.31 74.48 L83.39 74.3 L83.47 74.11 L83.54 73.93 L83.62 73.74 L83.69 73.56 L83.77 73.37 L83.84 73.19 L83.91 73 L83.98 72.81 L84.05 72.62 L84.11 72.43 L84.18 72.25 L84.24 72.06 L84.3 71.87 L84.36 71.67 L84.42 71.48 L84.48 71.29 L84.54 71.1 L84.59 70.91 L84.64 70.71 L84.7 70.52 L84.75 70.33 L84.79 70.13 L84.84 69.94 L84.89 69.75 L84.93 69.55 L84.97 69.35 L85.02 69.16 L85.06 68.96 L85.09 68.77 L85.13 68.57 L85.17 68.37 L85.2 68.18 L85.23 67.98 L85.25 67.88" fill="none" stroke="#1f56c9" stroke-width="0.5"  stroke-linecap="round"/>
+<polygon points="83.66,67.53 85.21,63.95 88.14,65.22 86.59,68.8" fill="#1f56c9" fill-opacity="0.85" stroke="#111522" stroke-width="0.15"/>
+<text x="86.81" y="61.97" font-size="4" font-weight="700" text-anchor="middle" style="fill:#1f56c9;paint-order:stroke;stroke:#fff;stroke-width:1.1px">e⁻</text>
+<path d="M80 80 L79.96 79.97 L79.81 79.84 L79.66 79.71 L79.5 79.58 L79.35 79.45 L79.2 79.33 L79.04 79.2 L78.89 79.07 L78.74 78.94 L78.58 78.81 L78.43 78.68 L78.28 78.55 L78.12 78.43 L77.97 78.3 L77.82 78.17 L77.66 78.04 L77.51 77.91 L77.36 77.78 L77.2 77.65 L77.05 77.53 L76.9 77.4 L76.74 77.27 L76.59 77.14 L76.44 77.01 L76.28 76.88 L76.13 76.75 L75.98 76.63 L75.83 76.5 L75.67 76.37 L75.52 76.24 L75.37 76.11 L75.21 75.98 L75.06 75.85 L74.91 75.73 L74.75 75.6 L74.6 75.47 L74.45 75.34 L74.29 75.21 L74.14 75.08 L73.99 74.95 L73.83 74.83 L73.68 74.7 L73.53 74.57 L73.37 74.44 L73.22 74.31 L73.07 74.18 L72.91 74.05 L72.76 73.93 L72.61 73.8 L72.45 73.67 L72.3 73.54 L72.15 73.41 L71.99 73.28 L71.84 73.15 L71.69 73.03 L71.54 72.9 L71.38 72.77 L71.23 72.64 L71.08 72.51 L70.92 72.38 L70.77 72.25 L70.62 72.13 L70.46 72 L70.31 71.87 L70.16 71.74 L70 71.61 L69.89 71.52" fill="none" stroke="#b58900" stroke-width="0.5" stroke-dasharray="0.6 0.9" stroke-linecap="round"/>
+<polygon points="69.15,72.86 66.47,70.61 68.4,68.31 71.08,70.56" fill="#b58900" fill-opacity="0.85" stroke="#111522" stroke-width="0.15"/>
+<text x="64.15" y="68.46" font-size="4" font-weight="700" text-anchor="middle" style="fill:#b58900;paint-order:stroke;stroke:#fff;stroke-width:1.1px">γ</text>
+<path d="M80 80 L79.95 80.02 L79.77 80.11 L79.59 80.19 L79.41 80.28 L79.23 80.37 L79.05 80.45 L78.87 80.54 L78.69 80.63 L78.52 80.72 L78.34 80.81 L78.16 80.9 L77.98 81 L77.8 81.09 L77.63 81.18 L77.45 81.28 L77.28 81.37 L77.1 81.46 L76.92 81.56 L76.75 81.66 L76.57 81.75 L76.4 81.85 L76.23 81.95 L76.05 82.05 L75.88 82.15 L75.71 82.25 L75.53 82.35 L75.36 82.45 L75.19 82.56 L75.02 82.66 L74.85 82.76 L74.68 82.87 L74.51 82.97 L74.34 83.08 L74.17 83.19 L74 83.29 L73.83 83.4 L73.66 83.51 L73.49 83.62 L73.33 83.73 L73.16 83.84 L72.99 83.95 L72.83 84.06 L72.66 84.17 L72.5 84.29 L72.33 84.4 L72.17 84.51 L72 84.63 L71.84 84.74 L71.68 84.86 L71.52 84.98 L71.35 85.09 L71.19 85.21 L71.03 85.33 L70.87 85.45 L70.71 85.57 L70.55 85.69 L70.39 85.81 L70.23 85.93 L70.07 86.05 L69.92 86.17 L69.76 86.3 L69.6 86.42 L69.44 86.55 L69.29 86.67 L69.13 86.8 L68.98 86.92 L68.82 87.05 L68.67 87.18 L68.51 87.3 L68.36 87.43 L68.21 87.56 L68.06 87.69 L67.9 87.82 L67.75 87.95 L67.6 88.08 L67.45 88.22 L67.3 88.35 L67.15 88.48 L67 88.62 L66.86 88.75 L66.71 88.89 L66.56 89.02 L66.41 89.16 L66.27 89.29 L66.12 89.43 L65.98 89.57 L65.83 89.71 L65.69 89.84 L65.55 89.98 L65.4 90.12 L65.26 90.26 L65.12 90.41 L64.98 90.55 L64.84 90.69 L64.7 90.83 L64.56 90.97 L64.42 91.12 L64.28 91.26 L64.14 91.41 L64 91.55 L63.86 91.7 L63.73 91.84 L63.59 91.99 L63.46 92.14 L63.32 92.29 L63.19 92.43 L63.05 92.58 L62.92 92.73 L62.79 92.88 L62.66 93.03 L62.53 93.18 L62.39 93.33 L62.26 93.49 L62.13 93.64 L62.01 93.79 L61.88 93.94 L61.75 94.1 L61.62 94.25 L61.49 94.41 L61.37 94.56 L61.24 94.72 L61.12 94.87 L60.99 95.03 L60.87 95.19 L60.75 95.34 L60.62 95.5 L60.5 95.66 L60.38 95.82 L60.26 95.98 L60.14 96.14 L60.02 96.3 L59.9 96.46 L59.78 96.62 L59.66 96.78 L59.55 96.94 L59.43 97.11 L59.32 97.27 L59.2 97.43 L59.09 97.6 L58.97 97.76 L58.86 97.93 L58.75 98.09 L58.63 98.26 L58.52 98.42 L58.41 98.59 L58.3 98.76 L58.19 98.92 L58.08 99.09 L57.97 99.26 L57.87 99.43 L57.76 99.6 L57.65 99.77 L57.55 99.94 L57.44 100.11 L57.34 100.28 L57.23 100.45 L57.12 100.62 L57.02 100.79 L56.91 100.96 L56.81 101.13 L56.7 101.3 L56.6 101.47 L56.49 101.64 L56.39 101.81 L56.28 101.97 L56.17 102.14 L56.07 102.31 L55.96 102.48 L55.86 102.65 L55.75 102.82 L55.65 102.99 L55.54 103.16 L55.44 103.33 L55.33 103.5 L55.22 103.67 L55.12 103.84 L55.01 104.01 L54.91 104.18 L54.8 104.35 L54.7 104.52 L54.59 104.69 L54.49 104.86 L54.38 105.03 L54.27 105.2 L54.17 105.37 L54.06 105.54 L53.96 105.71 L53.85 105.88 L53.75 106.05 L53.64 106.22 L53.54 106.39 L53.43 106.56 L53.32 106.73 L53.22 106.9 L53.11 107.07 L53.01 107.24 L52.9 107.41 L52.8 107.58 L52.69 107.75 L52.59 107.92 L52.48 108.09 L52.37 108.26 L52.27 108.43 L52.16 108.6 L52.06 108.77 L51.95 108.94 L51.85 109.11 L51.74 109.28 L51.64 109.45 L51.53 109.62 L51.42 109.79 L51.32 109.96 L51.21 110.13 L51.11 110.3 L51 110.47 L50.9 110.64 L50.79 110.81 L50.69 110.98 L50.58 111.15 L50.47 111.32 L50.37 111.49 L50.26 111.66 L50.16 111.83 L50.05 112 L49.95 112.17 L49.84 112.34 L49.74 112.51 L49.63 112.68 L49.52 112.85 L49.42 113.02 L49.31 113.19 L49.21 113.36 L49.1 113.52 L48.99 113.69 L48.88 113.86 L48.77 114.03 L48.67 114.2 L48.56 114.37 L48.45 114.53 L48.34 114.7 L48.23 114.87 L48.12 115.04 L48.01 115.2 L47.9 115.37 L47.79 115.54 L47.68 115.7 L47.57 115.87 L47.46 116.04 L47.35 116.2 L47.24 116.37 L47.13 116.54 L47.02 116.7 L46.91 116.87 L46.8 117.04 L46.69 117.21 L46.58 117.37 L46.47 117.54 L46.36 117.71 L46.25 117.87 L46.14 118.04 L46.03 118.21 L45.92 118.37 L45.81 118.54 L45.7 118.71 L45.59 118.87 L45.48 119.04 L45.37 119.21 L45.26 119.38 L45.15 119.54 L45.04 119.71 L44.93 119.88 L44.82 120.04 L44.7 120.21 L44.59 120.38 L44.48 120.54 L44.37 120.71 L44.26 120.87 L44.15 121.04 L44.03 121.2 L43.92 121.37 L43.81 121.53 L43.69 121.7 L43.58 121.86 L43.47 122.03 L43.35 122.19 L43.24 122.36 L43.12 122.52 L43.01 122.68 L42.89 122.85 L42.78 123.01 L42.66 123.17 L42.54 123.33 L42.43 123.5 L42.31 123.66 L42.19 123.82 L42.07 123.98 L41.96 124.14 L41.84 124.31 L41.72 124.47 L41.6 124.63 L41.48 124.79 L41.36 124.95 L41.24 125.11 L41.12 125.27 L41 125.43 L40.88 125.59 L40.76 125.75 L40.64 125.91 L40.53 126.07 L40.41 126.23 L40.29 126.39 L40.17 126.55 L40.05 126.71 L39.93 126.87 L39.81 127.03 L39.69 127.19 L39.57 127.35 L39.45 127.51 L39.33 127.67 L39.21 127.84 L39.09 128 L38.97 128.16 L38.85 128.32 L38.73 128.48 L38.61 128.64 L38.49 128.8 L38.37 128.96 L38.25 129.12 L38.13 129.28 L38.02 129.44 L37.9 129.6 L37.78 129.76 L37.66 129.92 L37.53 130.08 L37.41 130.24 L37.29 130.4 L37.17 130.56 L37.05 130.71 L36.93 130.87 L36.8 131.03 L36.68 131.19 L36.56 131.35 L36.44 131.5 L36.31 131.66 L36.19 131.82 L36.06 131.98 L35.94 132.13 L35.82 132.29 L35.69 132.44 L35.57 132.6 L35.44 132.76 L35.31 132.91 L35.19 133.07 L35.06 133.22 L34.94 133.38 L34.81 133.53 L34.68 133.69 L34.55 133.84 L34.43 134 L34.3 134.15 L34.17 134.3 L34.05 134.46 L33.92 134.61 L33.79 134.77 L33.67 134.92 L33.54 135.08 L33.41 135.23 L33.29 135.39 L33.16 135.54 L33.03 135.7 L32.91 135.85 L32.78 136.01 L32.65 136.16 L32.52 136.31 L32.4 136.47 L32.27 136.62 L32.14 136.78 L32.02 136.93 L31.99 136.97" fill="none" stroke="#c42a72" stroke-width="0.6"  stroke-linecap="round"/>
+<polygon points="53.24,109.89 50.96,112.28 49.08,110.48 51.36,108.1" fill="#c42a72" stroke="#111522" stroke-width="0.12"/>
+<polygon points="48.59,117.11 46.39,119.57 44.46,117.84 46.65,115.38" fill="#c42a72" stroke="#111522" stroke-width="0.12"/>
+<polygon points="41.76,126.77 39.62,129.28 37.64,127.59 39.78,125.08" fill="#c42a72" stroke="#111522" stroke-width="0.12"/>
+<polygon points="35.35,134.96 33.35,137.33 31.36,135.65 33.36,133.28" fill="#c42a72" stroke="#111522" stroke-width="0.12"/>
+<text x="44.42" y="136.89" font-size="4" font-weight="700" text-anchor="middle" style="fill:#c42a72;paint-order:stroke;stroke:#fff;stroke-width:1.1px">μ⁻</text>
+<path d="M80 80 L80.04 80.03 L80.2 80.16 L80.35 80.28 L80.51 80.41 L80.66 80.53 L80.81 80.66 L80.97 80.79 L81.12 80.92 L81.27 81.06 L81.42 81.19 L81.56 81.33 L81.71 81.46 L81.86 81.6 L82 81.74 L82.14 81.87 L82.29 82.01 L82.43 82.16 L82.57 82.3 L82.71 82.44 L82.85 82.59 L82.98 82.73 L83.12 82.88 L83.26 83.03 L83.39 83.17 L83.52 83.32 L83.65 83.47 L83.78 83.63 L83.91 83.78 L84.04 83.93 L84.17 84.09 L84.3 84.24 L84.42 84.4 L84.54 84.56 L84.67 84.71 L84.79 84.87 L84.91 85.03 L85.03 85.19 L85.14 85.36 L85.26 85.52 L85.37 85.68 L85.49 85.85 L85.6 86.01 L85.71 86.18 L85.82 86.35 L85.93 86.51 L86.04 86.68 L86.14 86.85 L86.25 87.02 L86.35 87.19 L86.45 87.37 L86.55 87.54 L86.65 87.71 L86.75 87.89 L86.85 88.06 L86.94 88.24 L87.04 88.41 L87.13 88.59 L87.22 88.77 L87.31 88.95 L87.4 89.13 L87.49 89.31 L87.58 89.49 L87.66 89.67 L87.74 89.85 L87.83 90.03 L87.91 90.21 L87.99 90.4 L88.06 90.58 L88.14 90.77 L88.21 90.95 L88.29 91.14 L88.36 91.33 L88.43 91.51 L88.5 91.7 L88.57 91.89 L88.63 92.08 L88.7 92.27 L88.76 92.46 L88.82 92.65 L88.89 92.84 L88.94 93.03 L89 93.22 L89.06 93.41 L89.11 93.6 L89.17 93.8 L89.22 93.99 L89.27 94.18 L89.32 94.38 L89.37 94.57 L89.41 94.77 L89.46 94.96 L89.5 95.16 L89.54 95.35 L89.58 95.55 L89.62 95.74 L89.64 95.84" fill="none" stroke="#d9690f" stroke-width="0.5"  stroke-linecap="round"/>
+<polygon points="87.8,90.71 88.53,91.9 86.65,93.04 85.92,91.85" fill="#d9690f" fill-opacity="0.7" stroke="#111522" stroke-width="0.15"/>
+<polygon points="91.63,94.69 95.69,101.36 91.76,103.75 87.7,97.09" fill="#d9690f" fill-opacity="0.85" stroke="#111522" stroke-width="0.15"/>
+<text x="93.57" y="108.73" font-size="4" font-weight="700" text-anchor="middle" style="fill:#d9690f;paint-order:stroke;stroke:#fff;stroke-width:1.1px">π⁺</text>
+<path d="M80 80 L79.98 80.05 L79.92 80.24 L79.86 80.43 L79.8 80.62 L79.74 80.81 L79.68 81 L79.61 81.19 L79.55 81.38 L79.49 81.57 L79.43 81.76 L79.37 81.95 L79.3 82.14 L79.24 82.33 L79.18 82.52 L79.12 82.71 L79.06 82.9 L79 83.09 L78.93 83.28 L78.87 83.47 L78.81 83.66 L78.75 83.85 L78.69 84.04 L78.62 84.23 L78.56 84.42 L78.5 84.61 L78.44 84.8 L78.38 84.99 L78.32 85.18 L78.25 85.37 L78.19 85.56 L78.13 85.75 L78.07 85.94 L78.01 86.13 L77.95 86.32 L77.88 86.51 L77.82 86.7 L77.76 86.9 L77.7 87.09 L77.64 87.28 L77.57 87.47 L77.51 87.66 L77.45 87.85 L77.39 88.04 L77.33 88.23 L77.27 88.42 L77.2 88.61 L77.14 88.8 L77.08 88.99 L77.02 89.18 L76.96 89.37 L76.89 89.56 L76.83 89.75 L76.77 89.94 L76.71 90.13 L76.65 90.32 L76.59 90.51 L76.52 90.7 L76.46 90.89 L76.4 91.08 L76.34 91.27 L76.28 91.46 L76.21 91.65 L76.15 91.84 L76.09 92.03 L76.03 92.22 L75.97 92.41 L75.91 92.6 L75.84 92.79 L75.78 92.98 L75.72 93.17 L75.66 93.36 L75.6 93.55 L75.53 93.74 L75.47 93.93 L75.41 94.12 L75.35 94.31 L75.29 94.5 L75.23 94.69 L75.16 94.88 L75.1 95.07 L75.04 95.26 L74.98 95.45 L74.92 95.64 L74.85 95.84 L74.79 96.03 L74.73 96.22 L74.67 96.41 L74.61 96.6 L74.55 96.79 L74.48 96.98 L74.42 97.17 L74.36 97.36 L74.3 97.55 L74.24 97.74 L74.18 97.93 L74.13 98.07" fill="none" stroke="#d9690f" stroke-width="0.45" stroke-dasharray="2 1.2" stroke-linecap="round"/>
+<polygon points="76.5,98.21 74.28,105.06 69.9,103.64 72.13,96.79" fill="#d9690f" fill-opacity="0.85" stroke="#111522" stroke-width="0.15"/>
+<text x="67.11" y="107.72" font-size="4" font-weight="700" text-anchor="middle" style="fill:#d9690f;paint-order:stroke;stroke:#fff;stroke-width:1.1px">n</text>
+<line x1="80" y1="80" x2="155.2" y2="61.25" stroke="#6b7080" stroke-width="0.5" stroke-dasharray="3 1 0.8 1" marker-end="url(#k4ar)"/>
+<text x="146.19" y="58.51" font-size="4" font-weight="700" text-anchor="middle" style="fill:#6b7080;paint-order:stroke;stroke:#fff;stroke-width:1.1px">ν</text>
+<circle cx="78.43" cy="73.18" r="2.3" fill="#fff" stroke="#111522" stroke-width="0.3"/><text x="78.43" y="74.33" font-size="3.1" font-weight="700" text-anchor="middle">②</text>
+<circle cx="76.51" cy="64.9" r="2.3" fill="#fff" stroke="#111522" stroke-width="0.3"/><text x="76.51" y="66.05" font-size="3.1" font-weight="700" text-anchor="middle">③</text>
+<circle cx="74.6" cy="56.62" r="2.3" fill="#fff" stroke="#111522" stroke-width="0.3"/><text x="74.6" y="57.77" font-size="3.1" font-weight="700" text-anchor="middle">④</text>
+<circle cx="72.4" cy="47.07" r="2.3" fill="#fff" stroke="#111522" stroke-width="0.3"/><text x="72.4" y="48.22" font-size="3.1" font-weight="700" text-anchor="middle">⑤</text>
+<circle cx="67.36" cy="25.24" r="2.3" fill="#fff" stroke="#111522" stroke-width="0.3"/><text x="67.36" y="26.39" font-size="3.1" font-weight="700" text-anchor="middle">⑥</text>
+<circle cx="66.03" cy="19.49" r="2.3" fill="#fff" stroke="#111522" stroke-width="0.3"/><text x="66.03" y="20.64" font-size="3.1" font-weight="700" text-anchor="middle">⑦</text>
+<line x1="80" y1="80" x2="70.71" y2="78.02" stroke="#111522" stroke-width="0.2"/>
+<circle cx="68.51" cy="77.62" r="2.3" fill="#fff" stroke="#111522" stroke-width="0.3"/><text x="68.51" y="78.77" font-size="3.1" font-weight="700" text-anchor="middle">①</text>
+<g transform="translate(3.6 151.4)"><circle r="1.6" fill="#fff" stroke="#111522" stroke-width="0.3"/><circle r="0.45" fill="#111522"/><text x="2.8" y="1" font-size="2.7">솔레노이드 안 B = 3.8 T</text></g>
+<g transform="translate(3.6 156.6)"><circle r="1.6" fill="#fff" stroke="#111522" stroke-width="0.3"/><path d="M-1 -1 L1 1 M1 -1 L-1 1" stroke="#111522" stroke-width="0.3"/><text x="2.8" y="1" font-size="2.7">철 요크 안 약 2 T</text></g>
+<text x="2" y="5" font-size="3.6" font-weight="700">빔 방향에서 본 단면 · 축척 1:100</text>
+<text x="2" y="9.4" font-size="2.7">충돌점(빔관) = 가운데 점 · 1 m → 1 cm</text>
+</svg>
+<div class="kx-panel">
+<div class="name-line">학번 <span></span> 이름 <span></span></div>
+<h3>층 색칠 열쇠 — 색 칸에 고른 색을 칠하고, 그림의 같은 층도 그 색으로</h3>
+<table class="kx-t">
+<tr><th>번호</th><th>층</th><th>실제 반지름(m)</th><th>1:100 (mm)</th><th>색</th></tr>
+<tr><td style="text-align:center">①</td><td>빔관</td><td>약 0.03</td><td>약 0.3</td><td><span class="kx-sw"></span></td></tr>
+<tr><td style="text-align:center">②</td><td>실리콘 트래커</td><td>0.03 ~ 1.2</td><td>0.3 ~ 12</td><td><span class="kx-sw"></span></td></tr>
+<tr><td style="text-align:center">③</td><td>전자기 칼로리미터(ECAL)</td><td>1.29 ~ 1.8</td><td>12.9 ~ 18</td><td><span class="kx-sw"></span></td></tr>
+<tr><td style="text-align:center">④</td><td>강입자 칼로리미터(HCAL)</td><td>1.8 ~ 2.95</td><td>18 ~ 29.5</td><td><span class="kx-sw"></span></td></tr>
+<tr><td style="text-align:center">⑤</td><td>초전도 솔레노이드</td><td>2.95 ~ 3.8</td><td>29.5 ~ 38</td><td><span class="kx-sw"></span></td></tr>
+<tr><td style="text-align:center">⑥</td><td>철 귀환 요크 (3겹)</td><td>4.0 ~ 7.5 사이</td><td>40 ~ 75 사이</td><td><span class="kx-sw"></span></td></tr>
+<tr><td style="text-align:center">⑦</td><td>뮤온 챔버 (4층)</td><td>4.0 ~ 7.5 사이</td><td>40 ~ 75 사이</td><td><span class="kx-sw"></span></td></tr>
+</table>
+<h3>입자 경로 범례 — 경로를 같은 색으로 덧그리기</h3>
+<div class="kx-leg">
+<div><svg width="16mm" height="4.4mm" viewBox="0 0 16 4.4" aria-hidden="true" style="vertical-align:middle;flex:none"><line x1="0" y1="2.2" x2="13" y2="2.2" stroke="#1f56c9" stroke-width="0.6"/><rect x="13" y="0.6" width="3" height="3.2" fill="#1f56c9"/></svg><span><b>e⁻ 전자</b>: 휜 트랙 + ECAL</span></div>
+<div><svg width="16mm" height="4.4mm" viewBox="0 0 16 4.4" aria-hidden="true" style="vertical-align:middle;flex:none"><line x1="0" y1="2.2" x2="13" y2="2.2" stroke="#b58900" stroke-width="0.6" stroke-dasharray="0.6 0.9"/><rect x="13" y="0.6" width="3" height="3.2" fill="#b58900"/></svg><span><b>γ 광자</b>: 트랙 없음 + ECAL</span></div>
+<div><svg width="16mm" height="4.4mm" viewBox="0 0 16 4.4" aria-hidden="true" style="vertical-align:middle;flex:none"><line x1="0" y1="2.2" x2="16" y2="2.2" stroke="#c42a72" stroke-width="0.7"/><rect x="9" y="0.8" width="1.5" height="2.8" fill="#c42a72"/><rect x="13" y="0.8" width="1.5" height="2.8" fill="#c42a72"/></svg><span><b>μ⁻ 뮤온</b>: 모든 층 통과</span></div>
+<div><svg width="16mm" height="4.4mm" viewBox="0 0 16 4.4" aria-hidden="true" style="vertical-align:middle;flex:none"><line x1="0" y1="2.2" x2="11" y2="2.2" stroke="#d9690f" stroke-width="0.6"/><rect x="11" y="0.2" width="5" height="4" fill="#d9690f"/></svg><span><b>π⁺ 하전 강입자</b>: 트랙 + HCAL</span></div>
+<div><svg width="16mm" height="4.4mm" viewBox="0 0 16 4.4" aria-hidden="true" style="vertical-align:middle;flex:none"><line x1="0" y1="2.2" x2="11" y2="2.2" stroke="#d9690f" stroke-width="0.5" stroke-dasharray="2 1.2"/><rect x="11" y="0.2" width="5" height="4" fill="#d9690f"/></svg><span><b>n 중성 강입자</b>: HCAL만</span></div>
+<div><svg width="16mm" height="4.4mm" viewBox="0 0 16 4.4" aria-hidden="true" style="vertical-align:middle;flex:none"><line x1="0" y1="2.2" x2="16" y2="2.2" stroke="#6b7080" stroke-width="0.5" stroke-dasharray="3 1 0.8 1"/></svg><span><b>ν 중성미자</b>: 신호 없음</span></div>
+</div>
+<p class="kx-note">점선 구간 = 실제로는 흔적이 남지 않는 길(중성 입자). 네모 = 에너지를 남긴 곳(칼로리미터 칸, 뮤온 챔버 신호).</p>
+<div><b style="font-size:8.6pt">축척 막대</b> <span class="kx-note">— 인쇄 후 0~5 m가 정확히 5 cm인지 자로 확인</span><br><svg width="62mm" height="11mm" viewBox="0 0 62 11" role="img" aria-label="축척 막대 0~5 m (5 cm)"><rect x="4" y="2" width="10" height="2.4" fill="#111522" stroke="#111522" stroke-width="0.25"/><rect x="14" y="2" width="10" height="2.4" fill="#fff" stroke="#111522" stroke-width="0.25"/><rect x="24" y="2" width="10" height="2.4" fill="#111522" stroke="#111522" stroke-width="0.25"/><rect x="34" y="2" width="10" height="2.4" fill="#fff" stroke="#111522" stroke-width="0.25"/><rect x="44" y="2" width="10" height="2.4" fill="#111522" stroke="#111522" stroke-width="0.25"/><text x="4" y="8.4" font-size="2.8" text-anchor="middle">0</text><text x="14" y="8.4" font-size="2.8" text-anchor="middle">1</text><text x="24" y="8.4" font-size="2.8" text-anchor="middle">2</text><text x="34" y="8.4" font-size="2.8" text-anchor="middle">3</text><text x="44" y="8.4" font-size="2.8" text-anchor="middle">4</text><text x="54" y="8.4" font-size="2.8" text-anchor="middle">5</text><text x="57" y="8.4" font-size="2.8">m</text></svg></div>
+<p class="kx-note">반지름은 근삿값입니다. 실제 철 요크는 12각형 바퀴 5개를 빔 방향으로 이어 붙인 것이고, 뮤온 챔버는 철판 사이 틈에 들어 있습니다. 솔레노이드 안 자기장은 3.8 T(⊙: 종이에서 나오는 방향), 철 요크 안은 약 2 T로 방향이 반대입니다. 그래서 뮤온은 바깥에서 반대로 휩니다.</p>
+</div>
+</div>
+<footer class="sheet-foot"><span>키트 K04 종이 CMS: 1:100 단면 포스터와 입자 식별 회전판</span><span>색연필로 층과 경로를 칠하세요</span></footer>
+</article>
+<article class="sheet">
+<header class="sheet-head"><h2>② 입자 식별 회전판 — 바닥 원판</h2><span class="kit-no">CERN 탐구 교실 · 키트 K04 · 2/4</span></header>
+<div class="name-line">학번 <span></span> 이름 <span></span></div>
+<div class="kx-center"><svg width="184mm" height="184mm" viewBox="0 0 184 184" role="img" aria-label="입자 식별 회전판 바닥 원판, 지름 180 mm">
+<circle cx="92" cy="92" r="90" fill="#fff"/>
+<path d="M136.8 14.4 A89.6 89.6 0 0 0 47.2 14.4 L51.85 22.46 A80.3 80.3 0 0 1 132.15 22.46 Z" fill="#eceef3" stroke="#9aa0ad" stroke-width="0.2"/>
+<path d="M181.6 92 A89.6 89.6 0 0 0 136.8 14.4 L132.15 22.46 A80.3 80.3 0 0 1 172.3 92 Z" fill="#fff" stroke="#9aa0ad" stroke-width="0.2"/>
+<path d="M136.8 169.6 A89.6 89.6 0 0 0 181.6 92 L172.3 92 A80.3 80.3 0 0 1 132.15 161.54 Z" fill="#eceef3" stroke="#9aa0ad" stroke-width="0.2"/>
+<path d="M47.2 169.6 A89.6 89.6 0 0 0 136.8 169.6 L132.15 161.54 A80.3 80.3 0 0 1 51.85 161.54 Z" fill="#fff" stroke="#9aa0ad" stroke-width="0.2"/>
+<path d="M2.4 92 A89.6 89.6 0 0 0 47.2 169.6 L51.85 161.54 A80.3 80.3 0 0 1 11.7 92 Z" fill="#eceef3" stroke="#9aa0ad" stroke-width="0.2"/>
+<path d="M47.2 14.4 A89.6 89.6 0 0 0 2.4 92 L11.7 92 A80.3 80.3 0 0 1 51.85 22.46 Z" fill="#fff" stroke="#9aa0ad" stroke-width="0.2"/>
+<circle cx="92" cy="92" r="80" fill="none" stroke="#9aa0ad" stroke-width="0.25" stroke-dasharray="0.8 0.8"/>
+<g transform="rotate(0 92 92)">
+<path d="M92 11.7 L90.6 9.8 L93.4 9.8 Z" fill="#111522"/>
+<text x="92" y="8.6" text-anchor="middle" font-size="3.9" font-weight="700">e⁻ <tspan font-size="3.2" font-weight="600">전자</tspan></text>
+<circle cx="92" cy="78" r="2.7" fill="#111522" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="65" r="2.7" fill="#111522" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="53" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="36.5" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<text x="92" y="23.8" text-anchor="middle" font-size="2.55" font-weight="600">전하 −1 · 트랙이 휜다</text>
+<text x="92" y="27.4" text-anchor="middle" font-size="2.55">ECAL에서 모두 멈춤</text>
+</g>
+<g transform="rotate(60 92 92)">
+<path d="M92 11.7 L90.6 9.8 L93.4 9.8 Z" fill="#111522"/>
+<text x="92" y="8.6" text-anchor="middle" font-size="3.9" font-weight="700">γ <tspan font-size="3.2" font-weight="600">광자</tspan></text>
+<circle cx="92" cy="78" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="65" r="2.7" fill="#111522" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="53" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="36.5" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<text x="92" y="23.8" text-anchor="middle" font-size="2.55" font-weight="600">전하 0 · 트랙 없음</text>
+<text x="92" y="27.4" text-anchor="middle" font-size="2.55">ECAL에서 모두 멈춤</text>
+</g>
+<g transform="rotate(120 92 92)">
+<path d="M92 11.7 L90.6 9.8 L93.4 9.8 Z" fill="#111522"/>
+<text x="92" y="8.6" text-anchor="middle" font-size="3.9" font-weight="700">μ⁻ <tspan font-size="3.2" font-weight="600">뮤온</tspan></text>
+<circle cx="92" cy="78" r="2.7" fill="#111522" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="65" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/><path d="M92 62.3 A2.7 2.7 0 0 0 92 67.7 Z" fill="#111522"/>
+<circle cx="92" cy="53" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/><path d="M92 50.3 A2.7 2.7 0 0 0 92 55.7 Z" fill="#111522"/>
+<circle cx="92" cy="36.5" r="2.7" fill="#111522" stroke="#111522" stroke-width="0.46"/>
+<text x="92" y="23.8" text-anchor="middle" font-size="2.55" font-weight="600">전하 −1 · 트랙이 휜다</text>
+<text x="92" y="27.4" text-anchor="middle" font-size="2.55">모든 층을 뚫고 나감</text>
+</g>
+<g transform="rotate(180 92 92)">
+<path d="M92 11.7 L90.6 9.8 L93.4 9.8 Z" fill="#111522"/>
+<text x="92" y="8.6" text-anchor="middle" font-size="3.9" font-weight="700">π⁺·p <tspan font-size="3.2" font-weight="600">하전 강입자</tspan></text>
+<circle cx="92" cy="78" r="2.7" fill="#111522" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="65" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/><path d="M92 62.3 A2.7 2.7 0 0 0 92 67.7 Z" fill="#111522"/>
+<circle cx="92" cy="53" r="2.7" fill="#111522" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="36.5" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<text x="92" y="23.8" text-anchor="middle" font-size="2.55" font-weight="600">전하 +1 · 반대로 휜다</text>
+<text x="92" y="27.4" text-anchor="middle" font-size="2.55">HCAL에서 대부분 멈춤</text>
+</g>
+<g transform="rotate(240 92 92)">
+<path d="M92 11.7 L90.6 9.8 L93.4 9.8 Z" fill="#111522"/>
+<text x="92" y="8.6" text-anchor="middle" font-size="3.9" font-weight="700">n <tspan font-size="3.2" font-weight="600">중성 강입자</tspan></text>
+<circle cx="92" cy="78" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="65" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="53" r="2.7" fill="#111522" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="36.5" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<text x="92" y="23.8" text-anchor="middle" font-size="2.55" font-weight="600">전하 0 · 트랙 없음</text>
+<text x="92" y="27.4" text-anchor="middle" font-size="2.55">HCAL에서 대부분 멈춤</text>
+</g>
+<g transform="rotate(300 92 92)">
+<path d="M92 11.7 L90.6 9.8 L93.4 9.8 Z" fill="#111522"/>
+<text x="92" y="8.6" text-anchor="middle" font-size="3.9" font-weight="700">ν <tspan font-size="3.2" font-weight="600">중성미자</tspan></text>
+<circle cx="92" cy="78" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="65" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="53" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<circle cx="92" cy="36.5" r="2.7" fill="#fff" stroke="#111522" stroke-width="0.46"/>
+<text x="92" y="23.8" text-anchor="middle" font-size="2.55" font-weight="600">전하 0 · 아무 신호 없음</text>
+<text x="92" y="27.4" text-anchor="middle" font-size="2.55">누락 운동량으로 추론</text>
+</g>
+<circle cx="92" cy="92" r="1.5" fill="#fff" stroke="#111522" stroke-width="0.3"/><path d="M88 92 H96 M92 88 V96" stroke="#111522" stroke-width="0.2"/>
+<text x="96.2" y="93" font-size="2.5">할핀 구멍</text>
+<circle cx="92" cy="92" r="90" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
+</svg></div>
+<div class="kx-two">
+<div><ol class="kx-steps">
+<li>두꺼운 종이(120~180 g)에 인쇄하고, 바깥 굵은 점선(지름 180 mm)을 따라 오립니다.</li>
+<li>가운데 + 표시에 송곳으로 할핀 구멍을 뚫습니다.</li>
+<li>윗 원판(3쪽)을 겹치고 할핀으로 고정합니다. 안쪽 기호와 글자는 윗 원판의 창으로만 보입니다.</li>
+</ol></div>
+<div class="kx-note" style="font-size:8.2pt">바깥 띠의 입자 6종은 60°씩 떨어져 있습니다. 각 이름 바로 안쪽(같은 방향)에 그 입자의 신호가 적혀 있어서, 윗 원판의 ▲를 이름에 맞추면 창 5개가 그 입자의 신호 위에 정확히 놓입니다.<br><b>조립 확인</b>: ▲를 'e⁻ 전자'에 맞췄을 때 맨 바깥 창에 '전하 −1 · 트랙이 휜다'가 똑바로 보이면 성공입니다.</div>
+</div>
+<footer class="sheet-foot"><span>키트 K04 종이 CMS: 1:100 단면 포스터와 입자 식별 회전판</span><span>✂ 굵은 점선 = 자르는 선</span></footer>
+</article>
+<article class="sheet">
+<header class="sheet-head"><h2>③ 입자 식별 회전판 — 윗 원판</h2><span class="kit-no">CERN 탐구 교실 · 키트 K04 · 3/4</span></header>
+<div class="name-line">학번 <span></span> 이름 <span></span></div>
+<div class="kx-center"><svg width="164mm" height="164mm" viewBox="0 0 164 164" role="img" aria-label="입자 식별 회전판 윗 원판, 지름 160 mm, 창 5개">
+<defs><pattern id="k4hatch" width="2" height="2" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2" height="2" fill="#fff"/><line x1="0" y1="0" x2="0" y2="2" stroke="#9aa0ad" stroke-width="0.5"/></pattern></defs>
+<circle cx="82" cy="82" r="80" fill="#fff"/>
+<path fill-rule="evenodd" d="M144 82 A62 62 0 1 0 20 82 A62 62 0 1 0 144 82 Z M131 82 A49 49 0 1 0 33 82 A49 49 0 1 0 131 82 Z" fill="#f1f2f5" stroke="#111522" stroke-width="0.25"/>
+<path fill-rule="evenodd" d="M135.6 82 A53.6 53.6 0 1 0 28.4 82 A53.6 53.6 0 1 0 135.6 82 Z M134.2 82 A52.2 52.2 0 1 0 29.8 82 A52.2 52.2 0 1 0 134.2 82 Z" fill="#c3c7d0"/>
+<path fill-rule="evenodd" d="M140.8 82 A58.8 58.8 0 1 0 23.2 82 A58.8 58.8 0 1 0 140.8 82 Z M139.2 82 A57.2 57.2 0 1 0 24.8 82 A57.2 57.2 0 1 0 139.2 82 Z" fill="#c3c7d0"/>
+<path fill-rule="evenodd" d="M131 82 A49 49 0 1 0 33 82 A49 49 0 1 0 131 82 Z M127 82 A45 45 0 1 0 37 82 A45 45 0 1 0 127 82 Z" fill="#8f95a3" stroke="#111522" stroke-width="0.25"/>
+<path fill-rule="evenodd" d="M127 82 A45 45 0 1 0 37 82 A45 45 0 1 0 127 82 Z M115 82 A33 33 0 1 0 49 82 A33 33 0 1 0 115 82 Z" fill="#dfe2e9" stroke="#111522" stroke-width="0.25"/>
+<path fill-rule="evenodd" d="M115 82 A33 33 0 1 0 49 82 A33 33 0 1 0 115 82 Z M103 82 A21 21 0 1 0 61 82 A21 21 0 1 0 103 82 Z" fill="#eceef3" stroke="#111522" stroke-width="0.25"/>
+<circle cx="82" cy="82" r="21" fill="#fafafb" stroke="#111522" stroke-width="0.25"/>
+<circle cx="82" cy="82" r="9" fill="none" stroke="#a7acb8" stroke-width="0.12"/>
+<circle cx="82" cy="82" r="12.5" fill="none" stroke="#a7acb8" stroke-width="0.12"/>
+<circle cx="82" cy="82" r="16" fill="none" stroke="#a7acb8" stroke-width="0.12"/>
+<circle cx="82" cy="82" r="19" fill="none" stroke="#a7acb8" stroke-width="0.12"/>
+<text x="88.05" y="69.1" font-size="2.5" font-weight="700">트래커</text>
+<text x="88.05" y="56.1" font-size="2.9" font-weight="700">ECAL</text>
+<text x="88.05" y="44.1" font-size="2.9" font-weight="700">HCAL</text>
+<text x="88.05" y="27.6" font-size="2.9" font-weight="700">뮤온 챔버</text>
+<path id="k4solp" d="M38.49 66.16 A46.3 46.3 0 0 1 76.36 36.05" fill="none"/>
+<text font-size="2.3" font-weight="600" style="fill:#fff"><textPath href="#k4solp" startOffset="100%" text-anchor="end">초전도 솔레노이드</textPath></text>
+<rect x="77.25" y="63.7" width="9.5" height="8.6" fill="url(#k4hatch)" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
+<rect x="77.25" y="50.7" width="9.5" height="8.6" fill="url(#k4hatch)" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
+<rect x="77.25" y="38.7" width="9.5" height="8.6" fill="url(#k4hatch)" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
+<rect x="77.25" y="22.2" width="9.5" height="8.6" fill="url(#k4hatch)" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
+<rect x="60" y="10" width="44" height="9" fill="url(#k4hatch)" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
+<text x="82" y="68.8" font-size="2.2" text-anchor="middle" style="fill:#6d7489">오려 냄</text>
+<text x="82" y="55.8" font-size="2.2" text-anchor="middle" style="fill:#6d7489">오려 냄</text>
+<text x="82" y="43.8" font-size="2.2" text-anchor="middle" style="fill:#6d7489">오려 냄</text>
+<text x="82" y="27.3" font-size="2.2" text-anchor="middle" style="fill:#6d7489">오려 냄</text>
+<text x="82" y="15.3" font-size="2.2" text-anchor="middle" style="fill:#6d7489">오려 냄</text>
+<path d="M82 2.4 L78.8 7.8 L85.2 7.8 Z" fill="#111522"/>
+<circle cx="49" cy="147.7" r="1.6" fill="#111522" stroke="#111522" stroke-width="0.27"/><text x="51.4" y="148.6" font-size="2.6">큰 신호</text>
+<circle cx="73" cy="147.7" r="1.6" fill="#fff" stroke="#111522" stroke-width="0.27"/><path d="M73 146.1 A1.6 1.6 0 0 0 73 149.3 Z" fill="#111522"/><text x="75.4" y="148.6" font-size="2.6">약한 신호</text>
+<circle cx="98" cy="147.7" r="1.6" fill="#fff" stroke="#111522" stroke-width="0.27"/><text x="100.4" y="148.6" font-size="2.6">신호 없음</text>
+<text x="82" y="155.2" text-anchor="middle" font-size="3.7" font-weight="700">CMS 입자 식별 회전판</text>
+<text x="82" y="159.2" text-anchor="middle" font-size="2.3">▲를 입자 이름에 맞추세요</text>
+<circle cx="82" cy="82" r="1.5" fill="#fff" stroke="#111522" stroke-width="0.3"/><path d="M78 82 H86 M82 78 V86" stroke="#111522" stroke-width="0.2"/>
+<circle cx="82" cy="82" r="80" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
+</svg></div>
+<div class="kx-two">
+<div style="flex:0 0 72mm"><svg width="70mm" height="42mm" viewBox="0 0 70 42" role="img" aria-label="회전판 조립: 윗 원판, 바닥 원판, 할핀 순서로 겹치기">
+  <rect x="11" y="9" width="48" height="1.6" fill="#dfe2e9" stroke="#111522" stroke-width="0.25"/>
+  <rect x="6" y="20" width="58" height="1.6" fill="#fff" stroke="#111522" stroke-width="0.25"/>
+  <path d="M33 3 h4 v2 h-1 v28 l3 5 M35 5 v28 l-3 5" fill="none" stroke="#111522" stroke-width="0.45"/>
+  <ellipse cx="35" cy="3.6" rx="3.6" ry="1.4" fill="#c9a227" stroke="#111522" stroke-width="0.3"/>
+  <text x="61" y="11" font-size="2.7">윗 원판</text><text x="66" y="25.5" font-size="2.7" text-anchor="end">바닥 원판</text>
+  <text x="41" y="4.6" font-size="2.7">할핀 머리</text><text x="41" y="37.5" font-size="2.7">뒤에서 다리를 벌림</text>
+  <path d="M11 14 q4 3 8 0" fill="none" stroke="#111522" stroke-width="0.3"/><text x="2" y="16.5" font-size="2.6">돌림</text>
+</svg>
+<p class="kx-note" style="margin-top:1mm">빗금 친 창 5개는 커터칼로 오려 냅니다(고무판 위에서). 할핀은 윗 원판 → 바닥 원판 순서로 꽂고 뒤에서 다리를 벌립니다. 너무 세게 누르지 않아야 잘 돌아갑니다.</p></div>
+<div>
+<h3 style="font-size:9.6pt;margin-bottom:1mm">회전판으로 찾은 신호 지문 (<svg width="3.2mm" height="3.2mm" viewBox="-3 -3 6 6" role="img" aria-label="큰 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="#111522" stroke="#111522" stroke-width="0.5"/></svg> <svg width="3.2mm" height="3.2mm" viewBox="-3 -3 6 6" role="img" aria-label="약한 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="#fff" stroke="#111522" stroke-width="0.5"/><path d="M0 -2.3 A2.3 2.3 0 0 0 0 2.3 Z" fill="#111522"/></svg> <svg width="3.2mm" height="3.2mm" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="#fff" stroke="#111522" stroke-width="0.5"/></svg>로 기록)</h3>
+<table class="kx-rec">
+<tr><th>입자</th><th>트래커</th><th>ECAL</th><th>HCAL</th><th>뮤온 챔버</th></tr>
+<tr><td style="text-align:left">e⁻ 전자</td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">γ 광자</td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">μ⁻ 뮤온</td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">π⁺·p 하전 강입자</td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">n 중성 강입자</td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">ν 중성미자</td><td></td><td></td><td></td><td></td></tr>
+</table>
+</div>
+</div>
+<footer class="sheet-foot"><span>키트 K04 종이 CMS: 1:100 단면 포스터와 입자 식별 회전판</span><span>✂ 굵은 점선 = 자르는 선 · 빗금 = 오려 내는 창</span></footer>
+</article>
+<article class="sheet">
+<header class="sheet-head"><h2>④ 활동지 — 신호로 입자 알아내기</h2><span class="kit-no">CERN 탐구 교실 · 키트 K04 · 4/4</span></header>
+<div class="name-line">학번 <span></span> 이름 <span></span></div>
+<div class="kx-q">
+<h3>1. 수수께끼 사건 6개 — 무슨 입자일까?</h3>
+<p>모든 그림은 빔 방향에서 본 모습이고, 자기장은 종이에서 나오는 방향(⊙)입니다. 안쪽부터 트래커(흰색) → ECAL → HCAL → 솔레노이드(진한 회색) → 뮤온 챔버입니다. 검은 네모는 에너지를 남긴 곳입니다. 입자 이름과 전하 부호를 쓰세요.</p>
+<div class="kx-minis">
+<div><svg width="29mm" height="29mm" viewBox="0 0 29 29" role="img" aria-label="수수께끼 사건 A"><path fill-rule="evenodd" d="M28.8 14.5 A14.3 14.3 0 1 0 0.2 14.5 A14.3 14.3 0 1 0 28.8 14.5 Z M26.2 14.5 A11.7 11.7 0 1 0 2.8 14.5 A11.7 11.7 0 1 0 26.2 14.5 Z" fill="#fff" stroke="#111522" stroke-width="0.2"/><path fill-rule="evenodd" d="M27.3 14.5 A12.8 12.8 0 1 0 1.7 14.5 A12.8 12.8 0 1 0 27.3 14.5 Z M26.8 14.5 A12.3 12.3 0 1 0 2.2 14.5 A12.3 12.3 0 1 0 26.8 14.5 Z" fill="#c3c7d0"/><path fill-rule="evenodd" d="M28.3 14.5 A13.8 13.8 0 1 0 0.7 14.5 A13.8 13.8 0 1 0 28.3 14.5 Z M27.8 14.5 A13.3 13.3 0 1 0 1.2 14.5 A13.3 13.3 0 1 0 27.8 14.5 Z" fill="#c3c7d0"/><path fill-rule="evenodd" d="M26.2 14.5 A11.7 11.7 0 1 0 2.8 14.5 A11.7 11.7 0 1 0 26.2 14.5 Z M25.5 14.5 A11 11 0 1 0 3.5 14.5 A11 11 0 1 0 25.5 14.5 Z" fill="#8f95a3"/><path fill-rule="evenodd" d="M25.5 14.5 A11 11 0 1 0 3.5 14.5 A11 11 0 1 0 25.5 14.5 Z M22.5 14.5 A8 8 0 1 0 6.5 14.5 A8 8 0 1 0 22.5 14.5 Z" fill="#e3e6ec" stroke="#111522" stroke-width="0.15"/><path fill-rule="evenodd" d="M22.5 14.5 A8 8 0 1 0 6.5 14.5 A8 8 0 1 0 22.5 14.5 Z M19.5 14.5 A5 5 0 1 0 9.5 14.5 A5 5 0 1 0 19.5 14.5 Z" fill="#f0f1f5" stroke="#111522" stroke-width="0.15"/><circle cx="14.5" cy="14.5" r="5" fill="#fff" stroke="#111522" stroke-width="0.15"/><circle cx="14.5" cy="14.5" r="0.35" fill="#111522"/><path d="M14.5 14.5 L14.48 14.46 L14.4 14.32 L14.33 14.2 L14.25 14.07 L14.17 13.94 L14.09 13.81 L14 13.69 L13.92 13.57 L13.83 13.45 L13.73 13.33 L13.64 13.21 L13.54 13.1 L13.45 12.98 L13.35 12.87 L13.24 12.76 L13.14 12.66 L13.03 12.55 L12.92 12.45 L12.81 12.34 L12.7 12.24 L12.59 12.15 L12.47 12.05 L12.35 11.96 L12.24 11.87 L12.11 11.78 L11.99 11.69 L11.87 11.61 L11.74 11.53 L11.61 11.45 L11.49 11.37 L11.36 11.3 L11.22 11.22 L11.09 11.16 L10.96 11.09 L10.82 11.02 L10.78 11" fill="none" stroke="#111522" stroke-width="0.4" stroke-linecap="round"/><polygon points="9.89,11.82 7.99,10.04 9.64,8.29 11.53,10.07" fill="#111522"/><text x="1" y="3.6" font-size="3.6" font-weight="700">A</text></svg><div class="ans">입자·전하</div></div>
+<div><svg width="29mm" height="29mm" viewBox="0 0 29 29" role="img" aria-label="수수께끼 사건 B"><path fill-rule="evenodd" d="M28.8 14.5 A14.3 14.3 0 1 0 0.2 14.5 A14.3 14.3 0 1 0 28.8 14.5 Z M26.2 14.5 A11.7 11.7 0 1 0 2.8 14.5 A11.7 11.7 0 1 0 26.2 14.5 Z" fill="#fff" stroke="#111522" stroke-width="0.2"/><path fill-rule="evenodd" d="M27.3 14.5 A12.8 12.8 0 1 0 1.7 14.5 A12.8 12.8 0 1 0 27.3 14.5 Z M26.8 14.5 A12.3 12.3 0 1 0 2.2 14.5 A12.3 12.3 0 1 0 26.8 14.5 Z" fill="#c3c7d0"/><path fill-rule="evenodd" d="M28.3 14.5 A13.8 13.8 0 1 0 0.7 14.5 A13.8 13.8 0 1 0 28.3 14.5 Z M27.8 14.5 A13.3 13.3 0 1 0 1.2 14.5 A13.3 13.3 0 1 0 27.8 14.5 Z" fill="#c3c7d0"/><path fill-rule="evenodd" d="M26.2 14.5 A11.7 11.7 0 1 0 2.8 14.5 A11.7 11.7 0 1 0 26.2 14.5 Z M25.5 14.5 A11 11 0 1 0 3.5 14.5 A11 11 0 1 0 25.5 14.5 Z" fill="#8f95a3"/><path fill-rule="evenodd" d="M25.5 14.5 A11 11 0 1 0 3.5 14.5 A11 11 0 1 0 25.5 14.5 Z M22.5 14.5 A8 8 0 1 0 6.5 14.5 A8 8 0 1 0 22.5 14.5 Z" fill="#e3e6ec" stroke="#111522" stroke-width="0.15"/><path fill-rule="evenodd" d="M22.5 14.5 A8 8 0 1 0 6.5 14.5 A8 8 0 1 0 22.5 14.5 Z M19.5 14.5 A5 5 0 1 0 9.5 14.5 A5 5 0 1 0 19.5 14.5 Z" fill="#f0f1f5" stroke="#111522" stroke-width="0.15"/><circle cx="14.5" cy="14.5" r="5" fill="#fff" stroke="#111522" stroke-width="0.15"/><circle cx="14.5" cy="14.5" r="0.35" fill="#111522"/><polygon points="20.99,9.24 23.28,8.02 24.79,10.84 22.49,12.06" fill="#111522"/><text x="1" y="3.6" font-size="3.6" font-weight="700">B</text></svg><div class="ans">입자·전하</div></div>
+<div><svg width="29mm" height="29mm" viewBox="0 0 29 29" role="img" aria-label="수수께끼 사건 C"><path fill-rule="evenodd" d="M28.8 14.5 A14.3 14.3 0 1 0 0.2 14.5 A14.3 14.3 0 1 0 28.8 14.5 Z M26.2 14.5 A11.7 11.7 0 1 0 2.8 14.5 A11.7 11.7 0 1 0 26.2 14.5 Z" fill="#fff" stroke="#111522" stroke-width="0.2"/><path fill-rule="evenodd" d="M27.3 14.5 A12.8 12.8 0 1 0 1.7 14.5 A12.8 12.8 0 1 0 27.3 14.5 Z M26.8 14.5 A12.3 12.3 0 1 0 2.2 14.5 A12.3 12.3 0 1 0 26.8 14.5 Z" fill="#c3c7d0"/><path fill-rule="evenodd" d="M28.3 14.5 A13.8 13.8 0 1 0 0.7 14.5 A13.8 13.8 0 1 0 28.3 14.5 Z M27.8 14.5 A13.3 13.3 0 1 0 1.2 14.5 A13.3 13.3 0 1 0 27.8 14.5 Z" fill="#c3c7d0"/><path fill-rule="evenodd" d="M26.2 14.5 A11.7 11.7 0 1 0 2.8 14.5 A11.7 11.7 0 1 0 26.2 14.5 Z M25.5 14.5 A11 11 0 1 0 3.5 14.5 A11 11 0 1 0 25.5 14.5 Z" fill="#8f95a3"/><path fill-rule="evenodd" d="M25.5 14.5 A11 11 0 1 0 3.5 14.5 A11 11 0 1 0 25.5 14.5 Z M22.5 14.5 A8 8 0 1 0 6.5 14.5 A8 8 0 1 0 22.5 14.5 Z" fill="#e3e6ec" stroke="#111522" stroke-width="0.15"/><path fill-rule="evenodd" d="M22.5 14.5 A8 8 0 1 0 6.5 14.5 A8 8 0 1 0 22.5 14.5 Z M19.5 14.5 A5 5 0 1 0 9.5 14.5 A5 5 0 1 0 19.5 14.5 Z" fill="#f0f1f5" stroke="#111522" stroke-width="0.15"/><circle cx="14.5" cy="14.5" r="5" fill="#fff" stroke="#111522" stroke-width="0.15"/><circle cx="14.5" cy="14.5" r="0.35" fill="#111522"/><path d="M14.5 14.5 L14.45 14.52 L14.32 14.58 L14.18 14.64 L14.04 14.7 L13.9 14.76 L13.77 14.82 L13.63 14.87 L13.49 14.93 L13.35 14.98 L13.2 15.03 L13.06 15.08 L12.92 15.13 L12.78 15.17 L12.64 15.22 L12.49 15.26 L12.35 15.31 L12.2 15.35 L12.06 15.39 L11.91 15.42 L11.77 15.46 L11.62 15.5 L11.48 15.53 L11.33 15.56 L11.18 15.59 L11.04 15.62 L10.89 15.65 L10.74 15.68 L10.59 15.7 L10.44 15.72 L10.3 15.75 L10.15 15.77 L10 15.78 L9.85 15.8 L9.7 15.82 L9.55 15.83 L9.4 15.85 L9.25 15.86 L9.1 15.87 L8.95 15.88 L8.8 15.88 L8.65 15.89 L8.5 15.89 L8.35 15.89 L8.2 15.89 L8.05 15.89 L7.9 15.89 L7.75 15.89 L7.6 15.88 L7.45 15.88 L7.3 15.87 L7.15 15.86 L7 15.85 L6.86 15.84 L6.71 15.82 L6.56 15.81 L6.41 15.79 L6.26 15.77 L6.11 15.75 L5.96 15.73 L5.81 15.71 L5.67 15.68 L5.52 15.66 L5.37 15.63 L5.22 15.6 L5.08 15.57 L4.93 15.54 L4.78 15.5 L4.64 15.47 L4.49 15.43 L4.35 15.4 L4.2 15.36 L4.06 15.32 L3.91 15.27 L3.77 15.23 L3.63 15.19 L3.48 15.14 L3.34 15.09 L3.2 15.04 L3.06 14.99 L2.92 14.94 L2.78 14.89 L2.64 14.83 L2.5 14.78 L2.36 14.72 L2.22 14.66 L2.09 14.6 L1.95 14.54 L1.81 14.47 L1.68 14.41 L1.54 14.34 L1.41 14.28 L1.27 14.21 L1.14 14.14 L1.01 14.07 L0.88 14 L0.75 13.92 L0.62 13.85 L0.49 13.77 L0.36 13.69 L0.32 13.67" fill="none" stroke="#111522" stroke-width="0.4" stroke-linecap="round"/><polygon points="8.87,14.77 8.08,14.72 8.15,13.53 8.94,13.57" fill="#111522"/><polygon points="5.48,14.57 4.68,14.52 4.75,13.33 5.55,13.37" fill="#111522"/><polygon points="2.73,14.56 2.23,14.53 2.32,13.03 2.81,13.06" fill="#111522"/><polygon points="1.63,14.5 1.23,14.47 1.32,12.97 1.72,13" fill="#111522"/><polygon points="0.63,14.44 0.23,14.41 0.32,12.92 0.72,12.94" fill="#111522"/><text x="1" y="3.6" font-size="3.6" font-weight="700">C</text></svg><div class="ans">입자·전하</div></div>
+<div><svg width="29mm" height="29mm" viewBox="0 0 29 29" role="img" aria-label="수수께끼 사건 D"><path fill-rule="evenodd" d="M28.8 14.5 A14.3 14.3 0 1 0 0.2 14.5 A14.3 14.3 0 1 0 28.8 14.5 Z M26.2 14.5 A11.7 11.7 0 1 0 2.8 14.5 A11.7 11.7 0 1 0 26.2 14.5 Z" fill="#fff" stroke="#111522" stroke-width="0.2"/><path fill-rule="evenodd" d="M27.3 14.5 A12.8 12.8 0 1 0 1.7 14.5 A12.8 12.8 0 1 0 27.3 14.5 Z M26.8 14.5 A12.3 12.3 0 1 0 2.2 14.5 A12.3 12.3 0 1 0 26.8 14.5 Z" fill="#c3c7d0"/><path fill-rule="evenodd" d="M28.3 14.5 A13.8 13.8 0 1 0 0.7 14.5 A13.8 13.8 0 1 0 28.3 14.5 Z M27.8 14.5 A13.3 13.3 0 1 0 1.2 14.5 A13.3 13.3 0 1 0 27.8 14.5 Z" fill="#c3c7d0"/><path fill-rule="evenodd" d="M26.2 14.5 A11.7 11.7 0 1 0 2.8 14.5 A11.7 11.7 0 1 0 26.2 14.5 Z M25.5 14.5 A11 11 0 1 0 3.5 14.5 A11 11 0 1 0 25.5 14.5 Z" fill="#8f95a3"/><path fill-rule="evenodd" d="M25.5 14.5 A11 11 0 1 0 3.5 14.5 A11 11 0 1 0 25.5 14.5 Z M22.5 14.5 A8 8 0 1 0 6.5 14.5 A8 8 0 1 0 22.5 14.5 Z" fill="#e3e6ec" stroke="#111522" stroke-width="0.15"/><path fill-rule="evenodd" d="M22.5 14.5 A8 8 0 1 0 6.5 14.5 A8 8 0 1 0 22.5 14.5 Z M19.5 14.5 A5 5 0 1 0 9.5 14.5 A5 5 0 1 0 19.5 14.5 Z" fill="#f0f1f5" stroke="#111522" stroke-width="0.15"/><circle cx="14.5" cy="14.5" r="5" fill="#fff" stroke="#111522" stroke-width="0.15"/><circle cx="14.5" cy="14.5" r="0.35" fill="#111522"/><polygon points="18.47,18.07 19.96,20.2 17.99,21.58 16.5,19.45" fill="#111522"/><text x="1" y="3.6" font-size="3.6" font-weight="700">D</text></svg><div class="ans">입자·전하</div></div>
+<div><svg width="29mm" height="29mm" viewBox="0 0 29 29" role="img" aria-label="수수께끼 사건 E"><path fill-rule="evenodd" d="M28.8 14.5 A14.3 14.3 0 1 0 0.2 14.5 A14.3 14.3 0 1 0 28.8 14.5 Z M26.2 14.5 A11.7 11.7 0 1 0 2.8 14.5 A11.7 11.7 0 1 0 26.2 14.5 Z" fill="#fff" stroke="#111522" stroke-width="0.2"/><path fill-rule="evenodd" d="M27.3 14.5 A12.8 12.8 0 1 0 1.7 14.5 A12.8 12.8 0 1 0 27.3 14.5 Z M26.8 14.5 A12.3 12.3 0 1 0 2.2 14.5 A12.3 12.3 0 1 0 26.8 14.5 Z" fill="#c3c7d0"/><path fill-rule="evenodd" d="M28.3 14.5 A13.8 13.8 0 1 0 0.7 14.5 A13.8 13.8 0 1 0 28.3 14.5 Z M27.8 14.5 A13.3 13.3 0 1 0 1.2 14.5 A13.3 13.3 0 1 0 27.8 14.5 Z" fill="#c3c7d0"/><path fill-rule="evenodd" d="M26.2 14.5 A11.7 11.7 0 1 0 2.8 14.5 A11.7 11.7 0 1 0 26.2 14.5 Z M25.5 14.5 A11 11 0 1 0 3.5 14.5 A11 11 0 1 0 25.5 14.5 Z" fill="#8f95a3"/><path fill-rule="evenodd" d="M25.5 14.5 A11 11 0 1 0 3.5 14.5 A11 11 0 1 0 25.5 14.5 Z M22.5 14.5 A8 8 0 1 0 6.5 14.5 A8 8 0 1 0 22.5 14.5 Z" fill="#e3e6ec" stroke="#111522" stroke-width="0.15"/><path fill-rule="evenodd" d="M22.5 14.5 A8 8 0 1 0 6.5 14.5 A8 8 0 1 0 22.5 14.5 Z M19.5 14.5 A5 5 0 1 0 9.5 14.5 A5 5 0 1 0 19.5 14.5 Z" fill="#f0f1f5" stroke="#111522" stroke-width="0.15"/><circle cx="14.5" cy="14.5" r="5" fill="#fff" stroke="#111522" stroke-width="0.15"/><circle cx="14.5" cy="14.5" r="0.35" fill="#111522"/><path d="M14.5 14.5 L14.52 14.46 L14.6 14.32 L14.67 14.19 L14.75 14.07 L14.83 13.94 L14.91 13.81 L14.99 13.69 L15.08 13.56 L15.16 13.44 L15.25 13.32 L15.35 13.2 L15.44 13.09 L15.53 12.97 L15.63 12.86 L15.73 12.74 L15.83 12.63 L15.93 12.52 L16.04 12.42 L16.15 12.31 L16.25 12.21 L16.36 12.1 L16.47 12 L16.59 11.91 L16.7 11.81 L16.82 11.71 L16.94 11.62 L17.06 11.53 L17.18 11.44 L17.3 11.36 L17.42 11.27 L17.55 11.19 L17.68 11.11 L17.8 11.03 L17.93 10.95 L18.06 10.88 L18.2 10.81 L18.33 10.74 L18.46 10.67 L18.6 10.61 L18.73 10.54 L18.87 10.48 L19.01 10.42 L19.15 10.37 L19.29 10.32 L19.43 10.26 L19.57 10.21 L19.71 10.17 L19.86 10.12 L20 10.08 L20.15 10.04 L20.29 10.01 L20.44 9.97 L20.58 9.94 L20.73 9.91 L20.88 9.88 L21.03 9.86 L21.17 9.84 L21.27 9.82" fill="none" stroke="#111522" stroke-width="0.4" stroke-linecap="round"/><polygon points="18.77,10.82 19.43,10.37 20.11,11.36 19.45,11.81" fill="#111522"/><polygon points="20.34,8.52 22.48,7.05 24.3,9.68 22.16,11.16" fill="#111522"/><text x="1" y="3.6" font-size="3.6" font-weight="700">E</text></svg><div class="ans">입자·전하</div></div>
+<div><svg width="29mm" height="29mm" viewBox="0 0 29 29" role="img" aria-label="수수께끼 사건 F"><path fill-rule="evenodd" d="M28.8 14.5 A14.3 14.3 0 1 0 0.2 14.5 A14.3 14.3 0 1 0 28.8 14.5 Z M26.2 14.5 A11.7 11.7 0 1 0 2.8 14.5 A11.7 11.7 0 1 0 26.2 14.5 Z" fill="#fff" stroke="#111522" stroke-width="0.2"/><path fill-rule="evenodd" d="M27.3 14.5 A12.8 12.8 0 1 0 1.7 14.5 A12.8 12.8 0 1 0 27.3 14.5 Z M26.8 14.5 A12.3 12.3 0 1 0 2.2 14.5 A12.3 12.3 0 1 0 26.8 14.5 Z" fill="#c3c7d0"/><path fill-rule="evenodd" d="M28.3 14.5 A13.8 13.8 0 1 0 0.7 14.5 A13.8 13.8 0 1 0 28.3 14.5 Z M27.8 14.5 A13.3 13.3 0 1 0 1.2 14.5 A13.3 13.3 0 1 0 27.8 14.5 Z" fill="#c3c7d0"/><path fill-rule="evenodd" d="M26.2 14.5 A11.7 11.7 0 1 0 2.8 14.5 A11.7 11.7 0 1 0 26.2 14.5 Z M25.5 14.5 A11 11 0 1 0 3.5 14.5 A11 11 0 1 0 25.5 14.5 Z" fill="#8f95a3"/><path fill-rule="evenodd" d="M25.5 14.5 A11 11 0 1 0 3.5 14.5 A11 11 0 1 0 25.5 14.5 Z M22.5 14.5 A8 8 0 1 0 6.5 14.5 A8 8 0 1 0 22.5 14.5 Z" fill="#e3e6ec" stroke="#111522" stroke-width="0.15"/><path fill-rule="evenodd" d="M22.5 14.5 A8 8 0 1 0 6.5 14.5 A8 8 0 1 0 22.5 14.5 Z M19.5 14.5 A5 5 0 1 0 9.5 14.5 A5 5 0 1 0 19.5 14.5 Z" fill="#f0f1f5" stroke="#111522" stroke-width="0.15"/><circle cx="14.5" cy="14.5" r="5" fill="#fff" stroke="#111522" stroke-width="0.15"/><circle cx="14.5" cy="14.5" r="0.35" fill="#111522"/><path d="M14.5 14.5 L14.48 14.55 L14.41 14.68 L14.34 14.81 L14.27 14.95 L14.2 15.08 L14.12 15.21 L14.05 15.33 L13.97 15.46 L13.88 15.59 L13.8 15.71 L13.71 15.83 L13.62 15.95 L13.53 16.07 L13.43 16.19 L13.34 16.3 L13.24 16.41 L13.14 16.52 L13.03 16.63 L12.93 16.74 L12.82 16.85 L12.71 16.95 L12.6 17.05 L12.49 17.15 L12.38 17.25 L12.26 17.34 L12.14 17.43 L12.02 17.52 L11.9 17.61 L11.78 17.7 L11.65 17.78 L11.53 17.86 L11.4 17.94 L11.27 18.02 L11.14 18.09 L11.01 18.16 L10.96 18.19" fill="none" stroke="#111522" stroke-width="0.4" stroke-linecap="round"/><polygon points="11.77,19.08 9.97,20.96 8.24,19.3 10.03,17.42" fill="#111522"/><text x="1" y="3.6" font-size="3.6" font-weight="700">F</text></svg><div class="ans">입자·전하</div></div>
+</div>
+<p>A와 F는 같은 층에 신호를 남겼는데도 다른 입자입니다. 무엇이 다르고, 그것으로 무엇을 알 수 있나요?</p>
+<div class="write-lines kx-wl"></div>
+
+<h3>2. 보이지 않는 중성미자를 어떻게 '찾을까'?</h3>
+<div class="kx-two">
+<div style="flex:0 0 54mm"><svg width="52mm" height="52mm" viewBox="0 0 52 52" role="img" aria-label="횡운동량 벡터 격자: 뮤온 40 GeV/c 위쪽, 제트 30 GeV/c 오른쪽"><defs><marker id="k4m1" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="3.4" markerHeight="3.4" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#c42a72"/></marker><marker id="k4m2" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="3.4" markerHeight="3.4" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#d9690f"/></marker></defs><line x1="0" y1="0" x2="0" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="0" x2="52" y2="0" stroke="#c9cdd6" stroke-width="0.12"/><line x1="4" y1="0" x2="4" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="4" x2="52" y2="4" stroke="#c9cdd6" stroke-width="0.12"/><line x1="8" y1="0" x2="8" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="8" x2="52" y2="8" stroke="#c9cdd6" stroke-width="0.12"/><line x1="12" y1="0" x2="12" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="12" x2="52" y2="12" stroke="#c9cdd6" stroke-width="0.12"/><line x1="16" y1="0" x2="16" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="16" x2="52" y2="16" stroke="#c9cdd6" stroke-width="0.12"/><line x1="20" y1="0" x2="20" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="20" x2="52" y2="20" stroke="#c9cdd6" stroke-width="0.12"/><line x1="24" y1="0" x2="24" y2="52" stroke="#c9cdd6" stroke-width="0.3"/><line x1="0" y1="24" x2="52" y2="24" stroke="#c9cdd6" stroke-width="0.3"/><line x1="28" y1="0" x2="28" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="28" x2="52" y2="28" stroke="#c9cdd6" stroke-width="0.12"/><line x1="32" y1="0" x2="32" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="32" x2="52" y2="32" stroke="#c9cdd6" stroke-width="0.12"/><line x1="36" y1="0" x2="36" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="36" x2="52" y2="36" stroke="#c9cdd6" stroke-width="0.12"/><line x1="40" y1="0" x2="40" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="40" x2="52" y2="40" stroke="#c9cdd6" stroke-width="0.12"/><line x1="44" y1="0" x2="44" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="44" x2="52" y2="44" stroke="#c9cdd6" stroke-width="0.12"/><line x1="48" y1="0" x2="48" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="48" x2="52" y2="48" stroke="#c9cdd6" stroke-width="0.12"/><line x1="52" y1="0" x2="52" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="0" y1="52" x2="52" y2="52" stroke="#c9cdd6" stroke-width="0.12"/><line x1="24" y1="24" x2="24" y2="8.6" stroke="#c42a72" stroke-width="0.7" marker-end="url(#k4m1)"/><text x="25.2" y="11" font-size="2.8" font-weight="700" style="fill:#c42a72">μ 40</text><line x1="24" y1="24" x2="35.4" y2="24" stroke="#d9690f" stroke-width="0.7" marker-end="url(#k4m2)"/><text x="31" y="28.2" font-size="2.8" font-weight="700" style="fill:#d9690f">제트 30</text><circle cx="24" cy="24" r="0.8" fill="#111522"/><text x="1" y="50.6" font-size="2.5">1칸 = 10 GeV/c</text></svg></div>
+<div>
+<p>어떤 충돌에서 검출된 입자는 뮤온(횡운동량 40 GeV/c, 위쪽)과 제트(30 GeV/c, 오른쪽)뿐이었습니다. 충돌 전 두 양성자는 빔 방향으로만 움직였으므로 빔에 수직인 운동량(횡운동량)의 합은 0이었습니다.</p>
+<p>(1) 격자에 두 벡터의 합을 그리세요. 합의 크기 <span class="kx-fill"></span> GeV/c</p>
+<p>(2) 누락 횡운동량을 화살표로 그리세요. 크기 <span class="kx-fill"></span> GeV/c, 방향 <span class="kx-fill"></span></p>
+<p>(3) 이 화살표를 중성미자의 흔적으로 보는 까닭을 운동량 보존으로 설명하세요.</p>
+<div class="write-lines kx-wl"></div>
+</div>
+</div>
+
+<h3>3. 1:100 그림에서 뮤온의 횡운동량 구하기 (p<sub>T</sub> = 0.3·B·r, B = 3.8 T)</h3>
+<div class="kx-two">
+<div style="flex:0 0 87mm"><svg width="86mm" height="42mm" viewBox="0 0 86 42" role="img" aria-label="1:100 축척으로 그린 뮤온 궤적과 점 P0, P1, P2"><path d="M34 38 A12 12 0 0 1 58 38" fill="none" stroke="#a7acb8" stroke-width="0.15"/><path d="M33.1 38 A12.9 12.9 0 0 1 58.9 38" fill="none" stroke="#a7acb8" stroke-width="0.15"/><path d="M28 38 A18 18 0 0 1 64 38" fill="none" stroke="#a7acb8" stroke-width="0.15"/><path d="M16.5 38 A29.5 29.5 0 0 1 75.5 38" fill="none" stroke="#111522" stroke-width="0.3"/><line x1="2" y1="38" x2="84" y2="38" stroke="#c9cdd6" stroke-width="0.15"/><text x="69" y="18.5" font-size="2.3" style="fill:#4a5064">r = 2.95 m</text><path d="M46 38 L46 37.49 L45.99 36.99 L45.97 36.48 L45.94 35.97 L45.91 35.46 L45.87 34.96 L45.82 34.45 L45.76 33.95 L45.7 33.45 L45.63 32.94 L45.56 32.44 L45.47 31.94 L45.38 31.44 L45.28 30.94 L45.18 30.45 L45.06 29.95 L44.94 29.46 L44.81 28.97 L44.68 28.48 L44.54 27.99 L44.39 27.51 L44.23 27.02 L44.07 26.54 L43.9 26.06 L43.73 25.59 L43.54 25.11 L43.35 24.64 L43.15 24.18 L42.95 23.71 L42.74 23.25 L42.52 22.79 L42.3 22.34 L42.07 21.88 L41.83 21.43 L41.59 20.99 L41.34 20.55 L41.08 20.11 L40.82 19.68 L40.55 19.24 L40.28 18.82 L39.99 18.4 L39.71 17.98 L39.41 17.56 L39.11 17.15 L38.81 16.75 L38.5 16.35 L38.18 15.95 L37.86 15.56 L37.53 15.17 L37.2 14.79 L36.86 14.41 L36.51 14.04 L36.16 13.67 L35.81 13.31 L35.45 12.95 L35.08 12.6 L34.71 12.25 L34.33 11.91 L33.95 11.58 L33.57 11.25" fill="none" stroke="#c42a72" stroke-width="0.55"/><circle cx="46" cy="38" r="0.75" fill="#111522"/><text x="47.4" y="41.2" font-size="2.7" font-weight="700">P0</text><circle cx="42.74" cy="23.25" r="0.75" fill="#111522"/><text x="44.34" y="23.65" font-size="2.7" font-weight="700">P1</text><circle cx="33.57" cy="11.25" r="0.75" fill="#111522"/><text x="31.77" y="9.65" font-size="2.7" font-weight="700" text-anchor="end">P2</text><text x="47.4" y="41.2" font-size="0"></text><g transform="translate(60 33.6)"><circle r="1.4" fill="#fff" stroke="#111522" stroke-width="0.25"/><circle r="0.4" fill="#111522"/><text x="2.2" y="1" font-size="2.5">B = 3.8 T</text></g><g transform="translate(52 3)"><rect x="0" y="0" width="10" height="1.6" fill="#111522"/><rect x="10" y="0" width="10" height="1.6" fill="#fff" stroke="#111522" stroke-width="0.2"/><rect x="20" y="0" width="10" height="1.6" fill="#111522"/><text x="0" y="4.6" font-size="2.3">0</text><text x="28.6" y="4.6" font-size="2.3">3 m</text></g></svg></div>
+<div>
+<p>(1) 현 P0P1, P1P2의 수직이등분선을 그려 만나는 점 C(원의 중심)를 찾고, C에서 P0까지 재세요. 종이 위 반지름 <span class="kx-fill"></span> mm → 실제 r <span class="kx-fill"></span> m</p>
+<p>(2) p<sub>T</sub> = 0.3 × 3.8 × r = <span class="kx-fill"></span> GeV/c</p>
+<p>(3) 휘는 방향으로 본 전하의 부호: <span class="kx-fill"></span></p>
+<p>까닭: <span class="kx-fill" style="min-width:60mm"></span></p>
+</div>
+</div>
+<p>(4) 이 뮤온은 철 요크 안(B ≈ 2 T, 방향 반대)에서 반지름 몇 m의 원을 그리며, 어느 쪽으로 휠까요? 포스터(1쪽)의 μ⁻ 경로와 비교하세요.</p>
+<div class="write-lines kx-wl"></div>
+<h3>4. 생각 넓히기</h3>
+<p>포스터에서 트래커는 전체 반지름의 약 16 %밖에 안 됩니다. 그런데도 칼로리미터와 뮤온 챔버를 트래커 <b>바깥</b>에 두어야 하는 까닭을 '입자가 물질을 지날 때 일어나는 일'로 설명하세요.</p>
+<div class="write-lines kx-wl"></div>
+</div>
+<footer class="sheet-foot"><span>키트 K04 종이 CMS: 1:100 단면 포스터와 입자 식별 회전판</span><span>축척 막대 3 m가 3 cm인지 먼저 확인하세요</span></footer>
+</article>
+  </div>
+
+  <section class="kit-teacher section">
+    <div class="section__head"><span class="section__tag">교사용</span><h2>운영 안내와 정답</h2></div>
+    <details><summary>수업 운영 (차시 흐름, 모둠 구성)</summary>
+      <p><b>1차시(50분)</b> 도입 5분: 주제 5의 "검출기는 양파" 그림을 떠올리며 "실제 크기 비율이면 어떻게 보일까?" 질문 → 포스터 색칠 15분(2인 1조, 한 명은 층, 한 명은 경로) → 회전판 만들기 20분(개인) → 신호 지문 기록 10분. <b>2차시 전반(30분)</b> 활동지 1~3번, 짝과 근거 말하기 후 전체 확인.</p>
+      <p><b>미리 준비</b>: 창 오리기는 시간이 걸리므로 커터칼이 서툰 학급은 교사가 윗 원판 창을 미리 오려 두거나, 창 대신 가위로 바깥쪽에서 홈을 파도록 안내합니다(이때는 창 사이를 잇는 다리를 남겨야 원판이 찢어지지 않습니다). 할핀이 없으면 짧은 빨대 토막을 꽂고 양 끝을 벌려 테이프로 고정해도 됩니다.</p>
+      <p><b>색 제안</b>: CMS 공식 단면 그림의 관례를 따르면 트래커 연회색, ECAL 초록, HCAL 노랑(주황), 솔레노이드 회색, 철 요크 빨강, 뮤온 챔버 흰색(또는 연두)입니다. 입자 색은 사이트 공통(전자 파랑, 뮤온 분홍, 광자 노랑, 강입자 주황, 중성미자 회색 점선)과 같습니다.</p>
+      <p><b>정확성 메모</b>: 포스터 반지름은 근삿값입니다(빔관 반지름은 실제 약 2~3 cm, ECAL 결정은 1.29 m부터 약 23 cm 길이, HCAL 1.77~2.95 m, 솔레노이드 저온 용기 바깥 약 3.8 m, 요크 바깥 약 7.4~7.5 m). 요크 속 자기장은 약 2 T로 근삿값이며, 뮤온 챔버 사이 틈에서는 더 약합니다. 포스터의 궤적은 이 값으로 적분해 그렸습니다(전자 3 GeV/c, 뮤온 6 GeV/c, π⁺ 3 GeV/c). 실제 뮤온은 칼로리미터와 철을 지나며 수 GeV를 잃지만 그림에서는 무시했습니다.</p>
+      <p><b>회전판 신호 기준</b>: 연계 주제 5 지도서의 신호 지문(20 GeV/c 기준)과 같습니다. 뮤온의 칼로리미터 신호와 하전 강입자의 ECAL 신호는 '조금'이므로 <svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="약한 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/><path d="M0 -2.3 A2.3 2.3 0 0 0 0 2.3 Z" fill="currentColor"/></svg>(약한 신호)로 표시했습니다. 중성 강입자는 ECAL에서 일찍 소나기가 시작되는 경우도 있지만 대부분 ○로 봅니다.</p>
+    </details>
+    <details><summary>정답과 해설</summary>
+      <div class="table-wrap"><table class="data-table answer-table">
+        <tr><th>입자</th><th>트래커</th><th>ECAL</th><th>HCAL</th><th>뮤온 챔버</th><th>힌트</th></tr>
+        <tr><td>e⁻ 전자</td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="큰 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="currentColor" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="큰 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="currentColor" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td>전하 −1 · 트랙이 휜다 / ECAL에서 모두 멈춤</td></tr>
+        <tr><td>γ 광자</td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="큰 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="currentColor" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td>전하 0 · 트랙 없음 / ECAL에서 모두 멈춤</td></tr>
+        <tr><td>μ⁻ 뮤온</td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="큰 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="currentColor" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="약한 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/><path d="M0 -2.3 A2.3 2.3 0 0 0 0 2.3 Z" fill="currentColor"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="약한 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/><path d="M0 -2.3 A2.3 2.3 0 0 0 0 2.3 Z" fill="currentColor"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="큰 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="currentColor" stroke="currentColor" stroke-width="0.5"/></svg></td><td>전하 −1 · 트랙이 휜다 / 모든 층을 뚫고 나감</td></tr>
+        <tr><td>π⁺·p 하전 강입자</td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="큰 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="currentColor" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="약한 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/><path d="M0 -2.3 A2.3 2.3 0 0 0 0 2.3 Z" fill="currentColor"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="큰 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="currentColor" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td>전하 +1 · 반대로 휜다 / HCAL에서 대부분 멈춤</td></tr>
+        <tr><td>n 중성 강입자</td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="큰 신호" style="vertical-align:-0.1em"><circle r="2.3" fill="currentColor" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td>전하 0 · 트랙 없음 / HCAL에서 대부분 멈춤</td></tr>
+        <tr><td>ν 중성미자</td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td><svg width="0.9em" height="0.9em" viewBox="-3 -3 6 6" role="img" aria-label="신호 없음" style="vertical-align:-0.1em"><circle r="2.3" fill="transparent" stroke="currentColor" stroke-width="0.5"/></svg></td><td>전하 0 · 아무 신호 없음 / 누락 운동량으로 추론</td></tr>
+      </table></div>
+      <p><b>1번 수수께끼 사건</b> (자기장 ⊙에서 양전하는 시계 방향, 음전하는 반시계 방향으로 휩니다)</p>
+      <ul>
+        <li>A: 휜 트랙(반시계 방향) + ECAL 큰 신호 → <b>전자 e⁻</b></li>
+        <li>B: 트랙 없음 + HCAL 큰 신호 → <b>중성 강입자</b>(중성자 등)</li>
+        <li>C: 휜 트랙(시계 방향) + 칼로리미터 약한 신호 + 뮤온 챔버 신호 → <b>양뮤온 μ⁺</b></li>
+        <li>D: 트랙 없음 + ECAL 큰 신호 → <b>광자 γ</b></li>
+        <li>E: 휜 트랙(시계 방향) + ECAL 약간 + HCAL 큰 신호 → <b>양전하 강입자</b>(π⁺ 또는 양성자 p)</li>
+        <li>F: 휜 트랙(시계 방향) + ECAL 큰 신호 → <b>양전자 e⁺</b></li>
+        <li>A와 F: 신호 층은 같지만 휘는 방향이 반대 → 전하의 부호가 반대(전자와 양전자). 로렌츠 힘 F = q v × B의 방향이 q의 부호에 따라 바뀌기 때문입니다. 휘는 정도(반지름)로는 운동량 크기를 알 수 있습니다.</li>
+      </ul>
+      <p><b>2번 누락 횡운동량</b>: 보이는 입자의 횡운동량 합 = (30, 40) GeV/c → 크기 √(30² + 40²) = <b>50 GeV/c</b>(오른쪽 위, 수평에서 약 53°). 충돌 전 횡운동량 합이 0이므로 충돌 후에도 0이어야 합니다. 따라서 보이지 않는 입자(들)가 반대 방향(왼쪽 아래)으로 <b>50 GeV/c</b>를 가져갔습니다. 중성미자는 전하가 없고 약한 상호작용만 해서 어떤 층에도 신호를 남기지 않으므로, 이렇게 운동량 보존으로만 존재와 방향을 추론합니다. 빔 방향 성분은 충돌한 쿼크·글루온의 운동량을 모르므로 쓰지 못하고, 빔에 수직인 성분만 씁니다.</p>
+      <p><b>3번 뮤온 p<sub>T</sub></b>: 종이 위 반지름 35 mm(허용 32~38 mm) → 실제 r = 3.5 m → p<sub>T</sub> = 0.3 × 3.8 × 3.5 ≈ <b>4.0 GeV/c</b>(허용 약 3.6~4.4). 궤적이 반시계 방향으로 휘므로 <b>음전하(μ⁻)</b>. 수직이등분선 작도가 어려운 학생은 화살 높이 방법을 씁니다: 현 P0P2의 길이 L ≈ 29.5 mm, 현 가운데에서 궤적까지 높이 s ≈ 3.3 mm → r ≈ L²/(8s) + s/2 ≈ 35 mm.</p>
+      <p><b>3번 (4)</b>: r = 4.0 ÷ (0.3 × 2) ≈ <b>6.7 m</b>(근삿값). 요크 안 자기장이 반대이므로 솔레노이드 안과 <b>반대 방향(시계 방향)</b>으로 휩니다. 포스터의 μ⁻도 바깥에서 반대로 휘어 S자 모양이 됩니다. 실제로는 철을 지나며 에너지를 잃어 조금 더 휩니다. 뮤온 챔버는 이 두 번째 휨으로도 운동량을 잽니다.</p>
+      <p><b>4번</b>: 칼로리미터는 입자를 물질 속에서 소나기로 만들어 멈추게 해서 에너지를 잽니다. 트래커가 바깥에 있으면 입자가 이미 흡수되어 궤적을 잴 수 없습니다. 그래서 가볍고 얇은 트래커(물질이 적어 입자를 거의 방해하지 않음)를 가장 안쪽에 두고, 에너지를 다 빼앗는 칼로리미터를 그 바깥에, 칼로리미터와 두꺼운 철을 뚫고 나오는 뮤온만 남는 뮤온 챔버를 맨 바깥에 둡니다. 트래커 반지름이 작아도 3.8 T의 강한 자기장 덕분에 휨을 정밀하게 잴 수 있습니다.</p>
+      <p><b>더 생각하기</b>: p<sub>T</sub> = 0.74 GeV/c보다 작은 하전 입자는 지름 2r이 1.29 m보다 작아 ECAL에 닿지 못하고 트래커 안에서 맴돕니다(주제 5 B3과 연결). 포스터에서 트래커가 작아 보이지만 그 안에 1억 개가 넘는 픽셀·스트립 채널이 있다는 점도 함께 이야기해 볼 수 있습니다.</p>
+    </details>
+  </section>
+
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

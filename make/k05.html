@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>키트 K05 거품상자 탐정</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/kit.css">
+<style>
+  /* K05 전용 배치 (공통 kit.css 위에 덧붙임) */
+  .k5-photos { display: grid; grid-template-columns: repeat(2, 135mm); grid-auto-rows: 77mm; justify-content: center; }
+  .k5-card { border: 1pt dashed var(--cut); padding: 1.2mm 1.5mm; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .k5-card svg, .k5-gauge svg { display: block; }
+  .sheet .k5-tbl { width: 100%; border-collapse: collapse; }
+  .sheet .k5-tbl th, .sheet .k5-tbl td { padding: .6mm 1.2mm; line-height: 1.25; white-space: normal; font-size: 8.5pt; vertical-align: middle; }
+  .sheet .k5-tbl td.c, .sheet .k5-tbl th.c { text-align: center; }
+  .sheet .k5-rec td { height: 5.7mm; }
+  .sheet .k5-rec td.ph { font-family: var(--font-mono); font-weight: 600; text-align: center; }
+  .sheet .k5-rec tr.odd td { background: #eef0f4; }
+  .sheet .k5-rec tr:last-child td { border-bottom: 1px solid var(--paper-line); }
+  .k5-sag { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .sheet .k5-sag td, .sheet .k5-sag th { font-family: var(--font-mono); font-size: 7.8pt; padding: .5mm .8mm; text-align: center; }
+  .k5-box { border: .8pt solid var(--paper-ink); border-radius: 1.5mm; padding: 2mm 3mm; font-size: 9pt; }
+  .k5-box h3 { font-size: 10.5pt; margin-bottom: 1mm; }
+  .k5-box ol, .k5-box ul { margin: 0; padding-left: 5mm; }
+  .k5-box li + li { margin-top: .4mm; }
+  .k5-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .k5-sig { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5mm; }
+  .k5-sig > div { border: .6pt solid var(--paper-line); border-radius: 1.5mm; padding: 1.5mm 2mm; font-size: 8.3pt; line-height: 1.35; }
+  .k5-sig b { display: block; font-size: 9pt; }
+  .k5-q { font-size: 9.2pt; }
+  .k5-q p b { font-family: var(--font-mono); }
+  .k5-q .write-box { min-height: 0; }
+  .k5-note { font-size: 8.3pt; color: var(--paper-ink-2); }
+  .k5-fill { display: inline-block; min-width: 16mm; border-bottom: .6pt solid var(--paper-ink); }
+  .k5-key td, .k5-key th { font-size: .85rem; }
+  .k5-key td.num { white-space: nowrap; }
+</style>
+</head>
+<body data-page="make" data-root="../">
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--up">출력·만들기 키트</span>
+      <span class="badge badge--basic">연계: 주제 4, 5</span>
+      <span class="badge badge--time">약 100분</span>
+    </div>
+    <p class="eyebrow">키트 K05</p>
+    <h1>곡률 측정 투명 자와 거품상자 탐정 카드</h1>
+    <p class="lead">OHP 필름에 반지름 자를 인쇄해 직접 만들고, 거품상자 사진 12장의 흔적이 휘는 반지름을 재어 입자의 전하와 운동량(p = 0.3·B·r)을 알아냅니다. 보이지 않는 중성 입자는 전하·운동량 보존으로 추리합니다.</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="pdf/k05.pdf">인쇄용 PDF</a>
+      <a class="btn" href="../students/t04.html">연계 활동지</a>
+    </div>
+  </header>
+
+  <section class="kit-intro">
+    <dl class="kit-meta">
+      <div><dt>대상·인원</dt><dd>고2~3 · 2~4명 모둠 (모둠마다 사진 3장 이상)</dd></div>
+      <div><dt>준비물</dt><dd>OHP 필름(또는 트레이싱지) 모둠당 1장, A4 용지, 가위, 계산기, 연필, 자</dd></div>
+      <div><dt>시간</dt><dd>만들기 10분 · 활동 80~90분 (2차시)</dd></div>
+      <div><dt>인쇄</dt><dd>A4 · 실제 크기(100%) · 흑백 가능 · 1쪽은 필름에</dd></div>
+    </dl>
+    <p class="print-tip">인쇄할 때는 배율을 <b>실제 크기(100%)</b>로, 여백은 <b>없음</b>으로 고르세요. 브라우저 인쇄가 어렵다면 [인쇄용 PDF]를 쓰세요. 아래 회색 바탕 위의 흰 종이가 인쇄되는 부분입니다. 1쪽(투명 자)은 OHP 필름(프린터 종류에 맞는 레이저용·잉크젯용)이나 트레이싱지에, 2~4쪽(사진, 가로 방향)은 모둠당 1부(코팅하면 여러 반에서 다시 씀), 5~7쪽은 학생마다 1부 인쇄합니다.</p>
+    <div class="legend-lines"><span><i class="l-cut"></i>자르는 선</span><span><i class="l-fold"></i>접는 선</span><span><i class="l-glue"></i>풀칠하는 곳</span></div>
+    <h2 style="font-size:var(--step-2)">만드는 법과 활동 순서</h2>
+    <ol class="steps">
+      <li><span>1쪽을 필름에 100%로 인쇄한 뒤, 맨 위 자 가장자리의 굵은 점선을 따라 자릅니다. 인쇄된 자를 학교 자에 대어 <b>100 mm가 정확히 100 mm인지</b> 확인합니다(틀리면 배율 설정을 다시 확인).</span></li>
+      <li><span>2~4쪽의 사진 카드 12장을 점선을 따라 잘라 모둠에 나눕니다. 사진은 1:10 축척입니다(사진 1 mm = 실제 1 cm).</span></li>
+      <li><span>5쪽 '탐정 수칙'을 읽고, 사진 아래의 자기장 방향(⊙ 종이 밖으로, ⊗ 종이 안으로)과 흔적이 휘는 방향으로 각 트랙의 전하를 정합니다.</span></li>
+      <li><span>투명 자를 사진 위에 겹쳐 반지름을 잽니다. 작은 나선은 동심원, 보통 곡선은 한 점에서 접하는 원호 묶음, 거의 곧은 트랙은 활 높이(s) 눈금과 표를 씁니다.</span></li>
+      <li><span>종이 반지름(mm) ÷ 100 = 실제 반지름(m). p = 0.3 × B × r 로 운동량을 계산해 6쪽 기록표에 적습니다.</span></li>
+      <li><span>7쪽 질문으로 보이지 않는 중성 입자(광자, Λ⁰, K⁰, 중성미자)를 전하·운동량 보존으로 추리하고, 모둠별로 '사건 보고'를 발표합니다.</span></li>
+    </ol>
+  </section>
+
+  <div class="sheets">
+
+    <!-- 1쪽: 투명 곡률 자 -->
+    <article class="sheet">
+      <header class="sheet-head"><h2>곡률 측정 투명 자</h2><span class="kit-no">CERN 탐구 교실 · 키트 K05 · 1/7</span></header>
+      <p class="k5-note">OHP 필름이나 트레이싱지에 <b>실제 크기(100%)</b>로 인쇄합니다. 맨 위 점선을 잘라 자 가장자리를 만드세요. 사진 축척 1:10 → <b>종이 반지름(mm) ÷ 100 = 실제 반지름(m)</b>. 인쇄 뒤 자의 0~100 눈금이 학교 자로 100 mm인지 꼭 확인하세요. A는 기준점을 트랙 위에 놓고 가로선을 그 점의 접선 방향에 맞춘 뒤, 트랙과 겹치는 원호를 찾습니다(숫자는 반지름, mm).</p>
+      <div class="k5-gauge" id="k5-gauge"></div>
+      <div class="k5-sag" id="k5-sag"></div>
+      <footer class="sheet-foot"><span>키트 K05 곡률 측정 투명 자 · 이름 ____________</span><span>✂ 맨 위 점선을 잘라 자 가장자리로 씁니다</span></footer>
+    </article>
+
+    <!-- 2~4쪽: 거품상자 사진 -->
+    <article class="sheet sheet--landscape">
+      <header class="sheet-head"><h2>거품상자 사진 01–04</h2><span class="kit-no">CERN 탐구 교실 · 키트 K05 · 2/7</span></header>
+      <div class="k5-photos" data-photos="0,1,2,3"></div>
+      <footer class="sheet-foot"><span>키트 K05 거품상자 탐정 카드 · 가상의 2 m 액체 수소 거품상자 시뮬레이션 사진 · 축척 1:10</span><span>✂ 점선을 따라 잘라 카드로 씁니다</span></footer>
+    </article>
+    <article class="sheet sheet--landscape">
+      <header class="sheet-head"><h2>거품상자 사진 05–08</h2><span class="kit-no">CERN 탐구 교실 · 키트 K05 · 3/7</span></header>
+      <div class="k5-photos" data-photos="4,5,6,7"></div>
+      <footer class="sheet-foot"><span>키트 K05 거품상자 탐정 카드 · 가상의 2 m 액체 수소 거품상자 시뮬레이션 사진 · 축척 1:10</span><span>✂ 점선을 따라 잘라 카드로 씁니다</span></footer>
+    </article>
+    <article class="sheet sheet--landscape">
+      <header class="sheet-head"><h2>거품상자 사진 09–12</h2><span class="kit-no">CERN 탐구 교실 · 키트 K05 · 4/7</span></header>
+      <div class="k5-photos" data-photos="8,9,10,11"></div>
+      <footer class="sheet-foot"><span>키트 K05 거품상자 탐정 카드 · 가상의 2 m 액체 수소 거품상자 시뮬레이션 사진 · 축척 1:10</span><span>✂ 점선을 따라 잘라 카드로 씁니다</span></footer>
+    </article>
+
+    <!-- 5쪽: 탐정 수칙 -->
+    <article class="sheet">
+      <header class="sheet-head"><h2>거품상자 탐정 수칙</h2><span class="kit-no">CERN 탐구 교실 · 키트 K05 · 5/7</span></header>
+      <div class="name-line">학번 <span></span> 이름 <span></span> 모둠 <span></span></div>
+      <div class="k5-box">
+        <h3>거품상자란?</h3>
+        <p>끓는점 바로 아래의 액체 수소를 갑자기 감압하면, 대전 입자가 지나간 길을 따라 작은 거품이 생깁니다(1952년 글레이저 발명). 상자 전체에 균일한 자기장 B가 걸려 있어 대전 입자는 원(나선)을 그립니다. 중성 입자는 거품을 만들지 않아 <b>보이지 않습니다</b>. 이 사진들은 가상의 2 m 거품상자를 1:10으로 줄여 컴퓨터로 만든 것으로, 휘는 반지름은 p = 0.3·B·r과 액체 수소 속 에너지 손실을 따라 계산했습니다.</p>
+      </div>
+      <div class="k5-box">
+        <h3>탐정 수칙 5단계</h3>
+        <ol>
+          <li><b>자기장 읽기</b>: 사진 아래에서 B의 크기(T)와 방향(⊙ 종이 밖으로, ⊗ 종이 안으로)을 확인한다.</li>
+          <li><b>운동 방향 정하기</b>: 빔은 왼쪽에서 들어온다. 충돌·붕괴 꼭짓점에서 나온 입자는 꼭짓점에서 멀어진다. 나선은 에너지를 잃어 <b>안쪽으로 감기는 쪽</b>으로 움직인다.</li>
+          <li><b>전하 판정</b>: F = qv × B (오른손 법칙)로 양전하가 어느 쪽으로 휘는지 먼저 정하고, 반대로 휘면 음전하.</li>
+          <li><b>반지름 재기</b>: 투명 자의 원호가 흔적과 가장 잘 겹치는 것을 찾는다. 트랙의 <b>시작 부분(처음 4~5 cm)</b>을 잰다. 곧은 트랙은 줄(현) L을 대고 가운데 활 높이 s를 읽어 표에서 r을 찾는다.</li>
+          <li><b>운동량 계산</b>: 실제 r[m] = 종이 r[mm] ÷ 100, &nbsp; p [GeV/c] = 0.3 × B [T] × r [m].</li>
+        </ol>
+      </div>
+      <div class="k5-cols">
+        <div class="k5-box">
+          <h3>먼저 해 보기: 휘는 방향</h3>
+          <div id="k5-rule"></div>
+          <p>B가 ⊗(종이 안으로)일 때 오른쪽으로 달리는 <b>양전하</b>가 받는 힘은 <span class="k5-fill"></span> 쪽 → 궤도는 ( 시계 / 반시계 ) 방향.<br>B가 ⊙일 때 양전하는 ( 시계 / 반시계 ) 방향.</p>
+        </div>
+        <div class="k5-box">
+          <h3>계산 예시</h3>
+          <p>B = 1.5 T 사진에서 흔적이 투명 자의 150 mm 원호와 겹쳤다.</p>
+          <p style="font-family:var(--font-mono);font-size:8.8pt;margin-top:1mm">r = 150 mm ÷ 100 = 1.50 m<br>p = 0.3 × 1.5 × 1.50 ≈ 0.68 GeV/c</p>
+          <p style="margin-top:1mm">활 높이로: L = 100 mm 줄에서 s = 2 mm → 표에서 r ≈ 626 mm → 6.26 m → p ≈ 2.8 GeV/c.</p>
+          <p class="k5-note" style="margin-top:1mm">곧은 트랙일수록 s가 작아 오차가 커진다. 측정값이 ±15% 안이면 잘 잰 것이다.</p>
+        </div>
+      </div>
+      <div class="k5-box" style="padding-bottom:2.5mm">
+        <h3>흔적 사전: 이런 모양이면 이런 사건</h3>
+        <div class="k5-sig" id="k5-sig"></div>
+      </div>
+      <footer class="sheet-foot"><span>키트 K05 거품상자 탐정 카드 · 활동지 1</span><span>p [GeV/c] = 0.3 · B [T] · r [m]</span></footer>
+    </article>
+
+    <!-- 6쪽: 기록표 -->
+    <article class="sheet">
+      <header class="sheet-head"><h2>탐정 기록표: 사진 12장의 트랙</h2><span class="kit-no">CERN 탐구 교실 · 키트 K05 · 6/7</span></header>
+      <div class="name-line">학번 <span></span> 이름 <span></span> 모둠 <span></span></div>
+      <p class="k5-note">휘는 방향은 입자가 움직이는 방향을 따라 보았을 때 시계(↻)/반시계(↺). 종이 r은 트랙의 처음 4~5 cm에서 잰다. 맡은 사진만 채우고 나머지는 다른 모둠 발표를 듣고 채운다.</p>
+      <table class="k5-tbl k5-rec" id="k5-rec">
+        <thead><tr><th class="c">사진</th><th class="c">트랙</th><th class="c">B (T)<br>⊙/⊗</th><th class="c">휘는 방향<br>↻ / ↺</th><th class="c">전하<br>+ / −</th><th class="c">종이 r<br>(mm)</th><th class="c">실제 r<br>(m)</th><th class="c">p<br>(GeV/c)</th><th>입자·사건 추리</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <footer class="sheet-foot"><span>키트 K05 거품상자 탐정 카드 · 활동지 2</span><span>실제 r[m] = 종이 r[mm] ÷ 100</span></footer>
+    </article>
+
+    <!-- 7쪽: 보존 법칙 질문 -->
+    <article class="sheet">
+      <header class="sheet-head"><h2>보이지 않는 입자 추리하기: 보존 법칙</h2><span class="kit-no">CERN 탐구 교실 · 키트 K05 · 7/7</span></header>
+      <div class="name-line">학번 <span></span> 이름 <span></span> 모둠 <span></span></div>
+      <div class="k5-q">
+        <p><b>Q1</b> 사진 03·04·10·11·12에는 생성 꼭짓점과 떨어진 곳에서 갑자기 시작하는 V자 흔적이 있다. V의 두 트랙 전하를 더하면? 이로부터 V를 만든 '부모 입자'의 전하와, 부모가 보이지 않는 까닭을 설명하라.</p>
+        <div class="write-box" style="height:22mm"></div>
+      </div>
+      <div class="k5-q">
+        <p><b>Q2</b> 사진 11 아래쪽 V(트랙 c, d)의 시작 방향을 따라 운동량 화살표를 그려 더해 보자(축척 0.1 GeV/c = 10 mm, 각도기 사용). 합 화살표를 V 꼭짓점에서 거꾸로 늘이면 어디에 닿는가? 이것이 뜻하는 것은?</p>
+        <div class="write-box" style="height:44mm;background-image:radial-gradient(circle, #9aa0ad .35mm, transparent .4mm);background-size:5mm 5mm;background-position:2.5mm 2.5mm"></div>
+      </div>
+      <div class="k5-q">
+        <p><b>Q3</b> 사진 02의 V(트랙 a, b)는 앞의 V와 달리 두 트랙이 거의 같은 방향으로 출발해 서로 반대로 감긴다. 무엇이 무엇으로 바뀐 사건인가? 두 트랙의 출발 방향을 거꾸로 늘이면 무엇과 만나는가?</p>
+        <div class="write-box" style="height:19mm"></div>
+      </div>
+      <div class="k5-q">
+        <p><b>Q4</b> 사진 05의 트랙 a는 도중에 꺾여 b가 된다. 꺾이기 전후의 전하와 운동량을 비교하라. b만으로 a의 운동량을 설명할 수 없다면 무엇을 결론 내릴 수 있나?</p>
+        <div class="write-box" style="height:19mm"></div>
+      </div>
+      <div class="k5-q">
+        <p><b>Q5</b> 사진 08 꼭짓점에서 나온 네 트랙의 전하를 모두 더하라. 들어온 빔(π⁻)과 표적 양성자의 전하 합과 같은가? 사진 06에서는 빔 b의 운동량이 c와 a의 운동량 화살표 합과 같은지 확인하라.</p>
+        <div class="write-box" style="height:19mm"></div>
+      </div>
+      <div class="k5-q">
+        <p><b>도전</b> V의 정체 가리기: 불변질량 &nbsp;<b>m² = m₁² + m₂² + 2(E₁E₂ − p₁p₂ cos θ)</b>, &nbsp;E = √(p² + m²) &nbsp;(c = 1 단위, GeV). 사진 11의 a+b를 (양성자 0.938, π 0.140)로, c+d를 (π, π)로 계산해 Λ⁰(1.116 GeV/c²)와 K⁰(0.498 GeV/c²) 중 어느 것인지 판정하라. θ는 두 트랙이 갈라지는 각.</p>
+        <div class="write-box" style="height:24mm"></div>
+      </div>
+      <footer class="sheet-foot"><span>키트 K05 거품상자 탐정 카드 · 활동지 3</span><span>전하 보존 · 운동량 보존</span></footer>
+    </article>
+
+  </div>
+
+  <section class="kit-teacher section">
+    <div class="section__head"><span class="section__tag">교사용</span><h2>운영 안내와 정답</h2></div>
+    <details><summary>수업 운영 (2차시 흐름, 모둠 구성)</summary>
+      <p><b>1차시(50분)</b> 도입 5분: 실제 거품상자 사진 한 장(CERN 문서 서버) 보여 주기 → 만들기 10분: 투명 자 자르기, 100 mm 확인 → 시범 10분: 사진 01로 휘는 방향 → 전하, 나선 a를 동심원으로 재기 → 모둠 활동 25분: 모둠마다 사진 3장(예: 1모둠 01·05·09, 2모둠 02·06·10, 3모둠 03·07·11, 4모둠 04·08·12)을 맡아 6쪽 기록표 채우기.</p>
+      <p><b>2차시(50분)</b> 7쪽 보존 법칙 질문 20분 → 모둠별 '사건 보고' 발표 20분(사건 이름, 전하 판정 근거, 운동량, 보이지 않는 입자 추리) → 정리 10분: 거품상자에서 전자식 검출기(CMS 트래커)로, 원리는 같다(B 속에서 휘는 반지름 → 운동량).</p>
+      <p><b>준비 팁</b> 필름이 없으면 트레이싱지나 얇은 복사지를 사진에 대고 비춰 보아도 됩니다. 사진 카드는 코팅해 두면 화이트보드 마커로 화살표를 그렸다 지울 수 있습니다. 사진은 1:10이지만 화면 미리보기는 크기가 다르므로 반드시 100%로 인쇄한 종이로 잽니다.</p>
+      <p><b>측정 오차</b> 반지름이 작을수록(나선) 잘 맞고, 곧은 트랙(r &gt; 400 mm)은 활 높이 s가 1~2 mm라 오차가 큽니다. ±15%(곧은 트랙은 ±30%) 안이면 정답으로 인정하고, "곧은 트랙은 운동량의 하한만 확실하다"는 점을 토론거리로 씁니다. 저운동량 트랙은 액체 수소 속에서 에너지를 잃어 끝쪽 반지름이 줄어드므로 처음 4~5 cm에서 재게 합니다. 모든 트랙은 사진 평면과 나란하다고 가정했습니다(실제 사진은 여러 각도의 사진으로 기울기를 보정).</p>
+    </details>
+    <details><summary>사진별 사건과 정답표 (같은 데이터에서 자동 생성)</summary>
+      <p>참값은 각 트랙의 시작점에서의 값입니다. r(40 mm)은 트랙을 따라 40 mm 간 지점의 반지름으로, 에너지 손실의 크기를 보여 줍니다. 회전 방향은 입자의 진행 방향을 따라 본 것입니다. ⊗에서 양전하는 반시계(↺), 음전하는 시계(↻) 방향으로, ⊙에서는 그 반대로 휩니다.</p>
+      <div class="table-wrap"><table class="k5-key" id="k5-key"></table></div>
+    </details>
+    <details><summary>보존 법칙 질문(7쪽) 정답과 해설</summary>
+      <div id="k5-key2"></div>
+    </details>
+    <details><summary>시뮬레이션 모델 (교사 참고)</summary>
+      <p>가상의 2 m 액체 수소 거품상자(밀도 0.0708 g/cm³)를 1:10으로 줄였습니다. 각 트랙은 0.2 mm(실제 2 mm) 간격으로 적분하며, 매 걸음 곡률 1/r = 0.3·B/p와 베테 공식으로 계산한 에너지 손실(최소 전리 약 0.29 MeV/cm, 전자는 전리 0.34 MeV/cm + 제동 복사 E/890 cm)을 적용했습니다. 붕괴·쌍생성·탄성 산란은 상대론적 2체 운동학(정지계 각도를 정한 뒤 로렌츠 변환)으로 딸 입자의 운동량을 만들었으므로 V 붕괴의 운동량 합과 불변질량이 정확히 맞습니다. 사진의 작은 점(먼지 거품)과 거품 간격은 시드 고정 난수로 만들어 인쇄할 때마다 같습니다. 거품 굵기·밀도는 dE/dx에 비례하게 그렸습니다(느린 양성자는 굵고 진함).</p>
+    </details>
+  </section>
+
+</main>
+<script>
+(function () {
+  "use strict";
+  /* ---------- 상수 (GeV/c²) ---------- */
+  var M = { e: 0.000511, mu: 0.105658, pi: 0.139570, pi0: 0.134977, p: 0.938272, K: 0.493677, K0: 0.497611, L: 1.115683 };
+  var W = 130, H = 66;              // 사진 틀 크기 (종이 mm) — 실제 1.30 m × 0.66 m
+  var NS = "http://www.w3.org/2000/svg";
+  function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function f(x, d) { return x.toFixed(d === undefined ? 2 : d); }
+  function deg(r) { return r * 180 / Math.PI; }
+  function rad(d) { return d * Math.PI / 180; }
+
+  /* 액체 수소 속 에너지 손실 dE/dx [MeV/cm] */
+  function dedx(m, p) {
+    if (m < 0.001) { return 0.34 + Math.sqrt(p * p + m * m) * 1000 / 890; }
+    var bg = p / m, g = Math.sqrt(1 + bg * bg), b2 = bg * bg / (g * g), me = 0.511, mm = m * 1000;
+    var Tmax = 2 * me * bg * bg / (1 + 2 * g * me / mm + (me / mm) * (me / mm));
+    var I = 21.8e-6;
+    return 0.307075 * 0.99212 / b2 * (0.5 * Math.log(2 * me * bg * bg * Tmax / (I * I)) - b2) * 0.0708;
+  }
+  var DEDX_MIN = 0.287;
+  function ion(m, p) { return m < 0.001 ? 0.34 : dedx(m, p); }   // 거품 밀도는 전리 손실만 (제동 복사 제외)
+
+  /* 트랙 적분: 종이 좌표(mm, y 위쪽), 걸음 0.2 mm = 실제 2 mm */
+  function trace(o, B, sB) {
+    var x = o.x, y = o.y, th = rad(o.ang), m = o.m, q = o.q, p = o.p, E = Math.sqrt(p * p + m * m);
+    var ds = 0.2, s = 0, pts = [[x, y, ion(m, p), p]], limit = o.len || 1e9, stopped = false, exited = false;
+    var tmin = m < 0.001 ? 0.0015 : (m > 0.5 ? 0.003 : 0.002);
+    while (s < limit - 1e-9) {
+      var r = p / (0.3 * B) * 100;
+      var dth = -q * sB * ds / r;
+      var thm = th + dth / 2;
+      x += ds * Math.cos(thm); y += ds * Math.sin(thm); th += dth; s += ds;
+      E -= dedx(m, p) * ds / 1000;
+      if (E - m < tmin) { stopped = true; break; }
+      p = Math.sqrt(E * E - m * m);
+      pts.push([x, y, ion(m, p), p]);
+      if (!o.len && (x < -1 || x > W + 1 || y < -1 || y > H + 1)) { exited = true; break; }
+    }
+    return { o: o, pts: pts, x: x, y: y, ang: deg(th), p: p, s: s, stopped: stopped, exited: exited };
+  }
+  /* 2체 붕괴/반응: 부모 운동량 P, 질량 M0 → 딸 (m1 at θ*, m2 반대). 각도는 부모 방향 기준(도) */
+  function twoBody(P, M0, m1, m2, thStar) {
+    var ps = Math.sqrt((M0 * M0 - (m1 + m2) * (m1 + m2)) * (M0 * M0 - (m1 - m2) * (m1 - m2))) / (2 * M0);
+    var E0 = Math.sqrt(P * P + M0 * M0), g = E0 / M0, bg = P / M0;
+    function lab(m, t) { var Es = Math.sqrt(ps * ps + m * m), pl = ps * Math.cos(t), pt = ps * Math.sin(t), PL = g * pl + bg * Es; return { p: Math.sqrt(PL * PL + pt * pt), a: deg(Math.atan2(pt, PL)) }; }
+    var t = rad(thStar);
+    return [lab(m1, t), lab(m2, t + Math.PI)];
+  }
+  function sqrtS(pb, mb, mt) { var Eb = Math.sqrt(pb * pb + mb * mb); return Math.sqrt(mb * mb + mt * mt + 2 * Eb * mt); }
+  function deltaAngle(pe, pb, mb) {   // 빔 입자에 맞은 δ선 전자의 방출각(도)
+    var me = M.e, bg = pb / mb, g = Math.sqrt(1 + bg * bg);
+    var Tmax = 2 * me * bg * bg / (1 + 2 * g * me / mb + (me / mb) * (me / mb));
+    var pmax = Math.sqrt(Tmax * Tmax + 2 * Tmax * me), Ee = Math.sqrt(pe * pe + me * me);
+    return deg(Math.acos(Math.min(1, (Ee - me) / pe * pmax / Tmax)));
+  }
+  function at(t, s) { var i = Math.min(t.pts.length - 1, Math.round(s / 0.2)), a = t.pts[i], b = t.pts[Math.max(0, i - 1)], c = t.pts[Math.min(t.pts.length - 1, i + 1)]; return { x: a[0], y: a[1], ang: deg(Math.atan2(c[1] - b[1], c[0] - b[0])), p: a[3] }; }
+  function go(pt, ang, len) { return { x: pt.x + len * Math.cos(rad(ang)), y: pt.y + len * Math.sin(rad(ang)) }; }
+
+  /* ---------- 사진 12장 정의 ---------- */
+  function Scene(def) { this.def = def; this.B = def.B; this.sB = def.dir === "out" ? 1 : -1; this.tracks = []; this.checks = []; }
+  Scene.prototype.ch = function (o) { var t = trace(o, this.B, this.sB); this.tracks.push(t); return t; };
+  Scene.prototype.end = function (t) { return { x: t.x, y: t.y, ang: t.ang, p: t.p }; };
+
+  var PHOTOS = [
+    { B: 1.5, dir: "in", beam: "π⁻", seed: 101, title: "δ선(델타선) 전자 나선",
+      build: function (S) {
+        var b1 = S.ch({ x: 0, y: 10, ang: 3.5, p: 4.0, m: M.pi, q: -1 });
+        S.ch({ x: 0, y: 27, ang: 4.0, p: 4.0, m: M.pi, q: -1 });
+        var top = S.ch({ x: 0, y: 56, ang: 4.6, p: 4.0, m: M.pi, q: -1, label: "b", name: "빔 π⁻", labS: 104 });
+        var d = at(top, 44);
+        S.ch({ x: d.x, y: d.y, ang: d.ang - deltaAngle(0.055, 4.0, M.pi), p: 0.055, m: M.e, q: -1, label: "a", name: "δ선 전자 e⁻", labS: 3, labSide: 1 });
+        var d2 = at(b1, 78);
+        S.ch({ x: d2.x, y: d2.y, ang: d2.ang - deltaAngle(0.016, 4.0, M.pi), p: 0.016, m: M.e, q: -1 });
+      } },
+    { B: 1.5, dir: "in", beam: "π⁻", seed: 202, title: "광자의 쌍생성 γ → e⁺e⁻",
+      build: function (S) {
+        S.ch({ x: 0, y: 58, ang: 4.2, p: 4.0, m: M.pi, q: -1 });
+        var bm = S.ch({ x: 0, y: 40, ang: 2.5, p: 4.0, m: M.pi, q: -1, len: 26 });
+        var V = S.end(bm);
+        S.ch({ x: V.x, y: V.y, ang: V.ang + 4, p: 3.0, m: M.pi, q: -1 });
+        S.ch({ x: V.x, y: V.y, ang: V.ang - 58, p: 0.55, m: M.p, q: 1 });
+        var ga = V.ang - 11, C = go(V, ga, 44);
+        var ep = S.ch({ x: C.x, y: C.y, ang: ga + 0.6, p: 0.18, m: M.e, q: 1, label: "a", name: "양전자 e⁺", labSide: 1 });
+        var em = S.ch({ x: C.x, y: C.y, ang: ga - 0.6, p: 0.11, m: M.e, q: -1, label: "b", name: "전자 e⁻", labSide: -1 });
+        S.pair = { ep: ep, em: em, V: V, C: C, ga: ga };
+      } },
+    { B: 1.5, dir: "in", beam: "K⁻", seed: 303, title: "Λ⁰ → p + π⁻ 붕괴(V)",
+      build: function (S) {
+        S.ch({ x: 0, y: 59, ang: 10, p: 1.6, m: M.K, q: -1 });
+        var bm = S.ch({ x: 0, y: 24, ang: 10, p: 1.6, m: M.K, q: -1, len: 30 });
+        var V = S.end(bm);
+        S.ch({ x: V.x, y: V.y, ang: V.ang + 42, p: 0.35, m: M.pi, q: 1 });
+        S.ch({ x: V.x, y: V.y, ang: V.ang - 40, p: 0.30, m: M.pi, q: -1 });
+        var la = V.ang + 3, D = go(V, la, 16), d = twoBody(1.1, M.L, M.p, M.pi, 60);
+        S.V1 = { name: "Λ⁰", P: 1.1, ang: la, from: V, at: D,
+          a: S.ch({ x: D.x, y: D.y, ang: la + d[0].a, p: d[0].p, m: M.p, q: 1, label: "a", name: "양성자 p (Λ⁰의 딸)", labSide: 1 }),
+          b: S.ch({ x: D.x, y: D.y, ang: la + d[1].a, p: d[1].p, m: M.pi, q: -1, label: "b", name: "π⁻ (Λ⁰의 딸)", labSide: -1 }), m1: M.p, m2: M.pi };
+      } },
+    { B: 1.5, dir: "out", beam: "π⁻", seed: 404, title: "K⁰ → π⁺ + π⁻ 붕괴(V)",
+      build: function (S) {
+        S.ch({ x: 0, y: 12, ang: -3.6, p: 4.0, m: M.pi, q: -1 });
+        var bm = S.ch({ x: 0, y: 46, ang: -4, p: 4.0, m: M.pi, q: -1, len: 24 });
+        var V = S.end(bm);
+        S.ch({ x: V.x, y: V.y, ang: V.ang - 2, p: 2.5, m: M.pi, q: -1 });
+        S.ch({ x: V.x, y: V.y, ang: V.ang + 30, p: 0.8, m: M.pi, q: 1 });
+        var ka = V.ang - 12, D = go(V, ka, 11), d = twoBody(0.9, M.K0, M.pi, M.pi, 55);
+        S.V1 = { name: "K⁰", P: 0.9, ang: ka, from: V, at: D,
+          a: S.ch({ x: D.x, y: D.y, ang: ka + d[0].a, p: d[0].p, m: M.pi, q: 1, label: "a", name: "π⁺ (K⁰의 딸)", labSide: -1, labS: 16 }),
+          b: S.ch({ x: D.x, y: D.y, ang: ka + d[1].a, p: d[1].p, m: M.pi, q: -1, label: "b", name: "π⁻ (K⁰의 딸)", labSide: -1, labS: 16 }), m1: M.pi, m2: M.pi };
+      } },
+    { B: 1.5, dir: "in", beam: "π⁻", seed: 505, title: "π⁺ → μ⁺ + ν 꺾임(비행 중 붕괴)",
+      build: function (S) {
+        S.ch({ x: 0, y: 56, ang: 4.2, p: 4.0, m: M.pi, q: -1 });
+        var bm = S.ch({ x: 0, y: 12, ang: 3, p: 4.0, m: M.pi, q: -1, len: 28 });
+        var V = S.end(bm);
+        S.ch({ x: V.x, y: V.y, ang: V.ang - 7, p: 2.4, m: M.pi, q: -1 });
+        var pa = S.ch({ x: V.x, y: V.y, ang: V.ang + 24, p: 0.20, m: M.pi, q: 1, len: 30, label: "a", name: "π⁺ (붕괴 전)", labSide: -1, labS: 10 });
+        var K = S.end(pa), d = twoBody(K.p, M.pi, M.mu, 0, -120);
+        var mu = S.ch({ x: K.x, y: K.y, ang: K.ang + d[0].a, p: d[0].p, m: M.mu, q: 1, label: "b", name: "μ⁺ (붕괴 뒤)", labSide: -1, labS: 14 });
+        S.kink = { K: K, mu: d[0], nu: d[1], pa: pa };
+      } },
+    { B: 1.5, dir: "out", beam: "π⁺", seed: 606, title: "π⁺p 탄성 산란과 정지하는 양성자",
+      build: function (S) {
+        S.ch({ x: 0, y: 52, ang: 3.4, p: 4.0, m: M.pi, q: 1 });
+        var bm = S.ch({ x: 0, y: 17, ang: 3.4, p: 4.0, m: M.pi, q: 1, len: 46, label: "b", name: "빔 π⁺", labS: 20, labSide: 1 });
+        var V = S.end(bm), rs = sqrtS(V.p, M.pi, M.p), d = twoBody(V.p, rs, M.pi, M.p, -19.5);
+        var c = S.ch({ x: V.x, y: V.y, ang: V.ang + d[0].a, p: d[0].p, m: M.pi, q: 1, label: "c", name: "산란된 π⁺", labS: 30, labSide: -1 });
+        var a = S.ch({ x: V.x, y: V.y, ang: V.ang + d[1].a, p: d[1].p, m: M.p, q: 1, label: "a", name: "되튐 양성자 p (정지)", labSide: 1, labS: 6 });
+        S.elastic = { V: V, c: c, a: a };
+      } },
+    { B: 1.0, dir: "in", beam: "π⁻", seed: 707, title: "고운동량(거의 곧은) 트랙",
+      build: function (S) {
+        S.ch({ x: 0, y: 57, ang: 2.4, p: 6.0, m: M.pi, q: -1 });
+        var bm = S.ch({ x: 0, y: 26, ang: 2, p: 6.0, m: M.pi, q: -1, len: 22 });
+        var V = S.end(bm);
+        var a = S.ch({ x: V.x, y: V.y, ang: V.ang + 3.5, p: 3.0, m: M.pi, q: -1, label: "a", name: "빠른 π⁻", labS: 80, labSide: -1 });
+        S.ch({ x: V.x, y: V.y, ang: V.ang + 30, p: 0.35, m: M.pi, q: 1, label: "b", name: "느린 π⁺", labSide: -1, labS: 10 });
+        var d = at(a, 50);
+        S.ch({ x: d.x, y: d.y, ang: d.ang - deltaAngle(0.012, 3.0, M.pi), p: 0.012, m: M.e, q: -1 });
+      } },
+    { B: 1.5, dir: "out", beam: "π⁻", seed: 808, title: "4갈래 충돌(전하 보존)",
+      build: function (S) {
+        S.ch({ x: 0, y: 58, ang: -3.6, p: 4.0, m: M.pi, q: -1 });
+        var bm = S.ch({ x: 0, y: 30, ang: -3, p: 4.0, m: M.pi, q: -1, len: 32 });
+        var V = S.end(bm);
+        S.star = { V: V, beamP: V.p, list: [
+          S.ch({ x: V.x, y: V.y, ang: V.ang + 34, p: 0.9, m: M.pi, q: 1, label: "a", name: "π⁺", labSide: -1, labS: 9 }),
+          S.ch({ x: V.x, y: V.y, ang: V.ang - 24, p: 0.6, m: M.pi, q: -1, label: "b", name: "π⁻", labSide: -1, labS: 26 }),
+          S.ch({ x: V.x, y: V.y, ang: V.ang + 6, p: 1.4, m: M.pi, q: -1, label: "c", name: "π⁻", labSide: 1, labS: 34 }),
+          S.ch({ x: V.x, y: V.y, ang: V.ang - 58, p: 0.7, m: M.p, q: 1, label: "d", name: "양성자 p", labSide: 1, labS: 7 })] };
+      } },
+    { B: 1.0, dir: "out", beam: "π⁻", seed: 909, title: "비대칭 쌍생성과 콤프턴 전자",
+      build: function (S) {
+        S.ch({ x: 0, y: 8, ang: -2.6, p: 4.0, m: M.pi, q: -1 });
+        S.ch({ x: 0, y: 60, ang: -3.4, p: 4.0, m: M.pi, q: -1 });
+        var C = { x: 40, y: 36 }, ga = 3;
+        S.pair = { C: C, ga: ga,
+          em: S.ch({ x: C.x, y: C.y, ang: ga + 0.5, p: 0.30, m: M.e, q: -1, label: "a", name: "전자 e⁻ (쌍)", labS: 40, labSide: 1 }),
+          ep: S.ch({ x: C.x, y: C.y, ang: ga - 0.5, p: 0.05, m: M.e, q: 1, label: "b", name: "양전자 e⁺ (쌍)", labSide: 1, labS: 3 }) };
+        S.ch({ x: 98, y: 20, ang: 25, p: 0.03, m: M.e, q: -1, label: "c", name: "콤프턴 전자 e⁻", labSide: -1, labS: 2 });
+      } },
+    { B: 1.5, dir: "out", beam: "K⁻", seed: 1010, title: "K⁻p → Λ⁰π⁰, 빔이 사라지고 V가 나타남",
+      build: function (S) {
+        S.ch({ x: 0, y: 50, ang: -14, p: 1.0, m: M.K, q: -1 });
+        var bm = S.ch({ x: 0, y: 24, ang: -9, p: 1.0, m: M.K, q: -1, len: 46, label: "c", name: "빔 K⁻ (꼭짓점에서 끝남)", labS: 14, labSide: -1 });
+        var V = S.end(bm), rs = sqrtS(V.p, M.K, M.p), pr = twoBody(V.p, rs, M.L, M.pi0, 35);
+        var la = V.ang + pr[0].a, D = go(V, la, 14), d = twoBody(pr[0].p, M.L, M.p, M.pi, -70);
+        S.V1 = { name: "Λ⁰", P: pr[0].p, ang: la, from: V, at: D, prod: pr,
+          a: S.ch({ x: D.x, y: D.y, ang: la + d[0].a, p: d[0].p, m: M.p, q: 1, label: "a", name: "양성자 p (Λ⁰의 딸)", labSide: -1, labS: 9 }),
+          b: S.ch({ x: D.x, y: D.y, ang: la + d[1].a, p: d[1].p, m: M.pi, q: -1, label: "b", name: "π⁻ (Λ⁰의 딸)", labSide: 1 }), m1: M.p, m2: M.pi };
+      } },
+    { B: 1.5, dir: "in", beam: "π⁻", seed: 1111, title: "연관 생성 π⁻p → Λ⁰K⁰ (V 두 개)",
+      build: function (S) {
+        S.ch({ x: 0, y: 60, ang: 9, p: 1.05, m: M.pi, q: -1 });
+        var bm = S.ch({ x: 0, y: 30, ang: 8, p: 1.05, m: M.pi, q: -1, len: 34, label: "e", name: "빔 π⁻ (꼭짓점에서 끝남)", labS: 12, labSide: 1 });
+        var V = S.end(bm), rs = sqrtS(V.p, M.pi, M.p), pr = twoBody(V.p, rs, M.L, M.K0, 60);
+        var la = V.ang + pr[0].a, D1 = go(V, la, 11), d1 = twoBody(pr[0].p, M.L, M.p, M.pi, 50);
+        var ka = V.ang + pr[1].a, D2 = go(V, ka, 7), d2 = twoBody(pr[1].p, M.K0, M.pi, M.pi, 70);
+        S.V1 = { name: "Λ⁰", P: pr[0].p, ang: la, from: V, at: D1, prod: pr,
+          a: S.ch({ x: D1.x, y: D1.y, ang: la + d1[0].a, p: d1[0].p, m: M.p, q: 1, label: "a", name: "양성자 p (Λ⁰의 딸)", labSide: 1, labS: 10 }),
+          b: S.ch({ x: D1.x, y: D1.y, ang: la + d1[1].a, p: d1[1].p, m: M.pi, q: -1, label: "b", name: "π⁻ (Λ⁰의 딸)", labSide: -1, labS: 6 }), m1: M.p, m2: M.pi };
+        S.V2 = { name: "K⁰", P: pr[1].p, ang: ka, from: V, at: D2,
+          a: S.ch({ x: D2.x, y: D2.y, ang: ka + d2[0].a, p: d2[0].p, m: M.pi, q: 1, label: "c", name: "π⁺ (K⁰의 딸)", labSide: -1, labS: 26 }),
+          b: S.ch({ x: D2.x, y: D2.y, ang: ka + d2[1].a, p: d2[1].p, m: M.pi, q: -1, label: "d", name: "π⁻ (K⁰의 딸)", labSide: -1, labS: 14 }), m1: M.pi, m2: M.pi };
+        S.assoc = { V: V, beamP: V.p };
+      } },
+    { B: 1.5, dir: "out", beam: "π⁺", seed: 1212, title: "종합: 충돌 + K⁰ 붕괴 + 쌍생성",
+      build: function (S) {
+        S.ch({ x: 0, y: 8, ang: 4, p: 4.0, m: M.pi, q: 1 });
+        var bm = S.ch({ x: 0, y: 34, ang: 3, p: 4.0, m: M.pi, q: 1, len: 28 });
+        var V = S.end(bm);
+        S.ch({ x: V.x, y: V.y, ang: V.ang + 7, p: 1.6, m: M.pi, q: 1, label: "a", name: "π⁺", labS: 70, labSide: 1 });
+        S.ch({ x: V.x, y: V.y, ang: V.ang - 36, p: 0.9, m: M.p, q: 1, label: "b", name: "양성자 p", labS: 12, labSide: -1 });
+        var ka = V.ang + 38, D = go(V, ka, 11), d = twoBody(1.2, M.K0, M.pi, M.pi, -60);
+        S.V1 = { name: "K⁰", P: 1.2, ang: ka, from: V, at: D,
+          a: S.ch({ x: D.x, y: D.y, ang: ka + d[0].a, p: d[0].p, m: M.pi, q: 1, label: "c", name: "π⁺ (K⁰의 딸)", labSide: -1, labS: 16 }),
+          b: S.ch({ x: D.x, y: D.y, ang: ka + d[1].a, p: d[1].p, m: M.pi, q: -1, label: "d", name: "π⁻ (K⁰의 딸)", labSide: 1, labS: 10 }), m1: M.pi, m2: M.pi };
+        var ga = V.ang - 35, C = go(V, ga, 26);
+        S.ch({ x: C.x, y: C.y, ang: ga + 0.5, p: 0.05, m: M.e, q: 1 });
+        S.ch({ x: C.x, y: C.y, ang: ga - 0.5, p: 0.035, m: M.e, q: -1 });
+      } }
+  ];
+
+  var scenes = PHOTOS.map(function (def, i) { def.code = (i < 9 ? "0" : "") + (i + 1); var S = new Scene(def); def.build(S); return S; });
+
+  /* ---------- 그리기 ---------- */
+  function trackSVG(t, rnd) {
+    var out = "", pts = t.pts;
+    for (var i = 0; i < pts.length - 1; i += 12) {
+      var seg = pts.slice(i, Math.min(i + 13, pts.length));
+      var rel = Math.max(1, seg[0][2] / DEDX_MIN);
+      var w = Math.min(0.95, 0.30 + 0.11 * (rel - 1));
+      var dash = [];
+      for (var k = 0; k < 6; k++) { dash.push(f(0.03 + 0.22 * rnd(), 2)); dash.push(f((w + 0.08 + 0.42 * rnd()) / Math.pow(rel, 0.9), 2)); }
+      var d = "M" + seg.map(function (q) { return f(q[0]) + " " + f(H - q[1]); }).join("L");
+      out += '<path d="' + d + '" stroke-width="' + f(w) + '" stroke-dasharray="' + dash.join(" ") + '" stroke-dashoffset="' + f(rnd() * 2) + '"/>';
+    }
+    return out;
+  }
+  function bSymbol(x, y, dir) {
+    var s = '<circle cx="' + x + '" cy="' + y + '" r="1.9" fill="none" stroke="#111" stroke-width="0.35"/>';
+    if (dir === "out") s += '<circle cx="' + x + '" cy="' + y + '" r="0.55" fill="#111"/>';
+    else s += '<path d="M' + (x - 1.3) + ' ' + (y - 1.3) + 'L' + (x + 1.3) + ' ' + (y + 1.3) + 'M' + (x - 1.3) + ' ' + (y + 1.3) + 'L' + (x + 1.3) + ' ' + (y - 1.3) + '" stroke="#111" stroke-width="0.35"/>';
+    return s;
+  }
+  function photoSVG(S, idx) {
+    var def = S.def, rnd = mulberry32(def.seed), cid = "k5clip" + idx;
+    var s = '<svg xmlns="' + NS + '" width="131mm" height="74mm" viewBox="-0.5 -0.5 131 74" role="img" aria-label="거품상자 사진 ' + def.code + '">';
+    s += '<defs><clipPath id="' + cid + '"><rect x="0" y="0" width="' + W + '" height="' + H + '"/></clipPath></defs>';
+    s += '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="#fbfbf7" stroke="#111" stroke-width="0.5"/>';
+    s += '<g stroke="#555" stroke-width="0.25">';
+    [[8, 8], [W - 8, 8], [8, H - 8], [W - 8, H - 8], [W / 2, H / 2]].forEach(function (c) { s += '<path d="M' + (c[0] - 1.6) + ' ' + c[1] + 'h3.2M' + c[0] + ' ' + (c[1] - 1.6) + 'v3.2"/>'; });
+    s += '</g><g fill="#333">';
+    for (var k = 0; k < 26; k++) s += '<circle cx="' + f(2 + rnd() * (W - 4)) + '" cy="' + f(2 + rnd() * (H - 4)) + '" r="' + f(0.12 + rnd() * 0.22) + '"/>';
+    s += '</g><g clip-path="url(#' + cid + ')" fill="none" stroke="#111" stroke-linecap="round">';
+    S.tracks.forEach(function (t) { s += trackSVG(t, rnd); });
+    s += '</g>';
+    S.tracks.forEach(function (t) {
+      if (!t.o.label) return;
+      var a = at(t, t.o.labS || 6), side = t.o.labSide || 1, n = rad(a.ang + 90 * side);
+      var lx = a.x + 3.0 * Math.cos(n), ly = a.y + 3.0 * Math.sin(n);
+      lx = Math.max(2, Math.min(W - 2, lx)); ly = Math.max(2.2, Math.min(H - 1.5, ly));
+      s += '<text x="' + f(lx) + '" y="' + f(H - ly + 1.1) + '" text-anchor="middle" font-size="3.4" font-weight="700" style="paint-order:stroke;stroke:#fbfbf7;stroke-width:0.9px">' + t.o.label + '</text>';
+    });
+    var cy = H + 5.2;
+    s += '<text x="0" y="' + f(cy + 1.2) + '" font-size="3.8" font-weight="700">사진 ' + def.code + '</text>';
+    s += bSymbol(22, cy, def.dir);
+    s += '<text x="25" y="' + f(cy + 1.1) + '" font-size="3">B = ' + f(def.B, 1) + ' T (' + (def.dir === "out" ? "종이 밖으로" : "종이 안으로") + ')</text>';
+    s += '<g stroke="#111" stroke-width="0.4"><path d="M64 ' + cy + 'h20M64 ' + (cy - 1.3) + 'v2.6M74 ' + (cy - 0.8) + 'v1.6M84 ' + (cy - 1.3) + 'v2.6"/></g>';
+    s += '<text x="86" y="' + f(cy + 1.1) + '" font-size="2.6">20 mm = 실제 20 cm</text>';
+    s += '<text x="130" y="' + f(cy + 1.1) + '" font-size="3" text-anchor="end">빔 ' + def.beam + ' →</text>';
+    return s + "</svg>";
+  }
+  document.querySelectorAll("[data-photos]").forEach(function (box) {
+    box.innerHTML = box.getAttribute("data-photos").split(",").map(function (i) { return '<div class="k5-card">' + photoSVG(scenes[+i], +i) + "</div>"; }).join("");
+  });
+
+  /* ---------- 투명 자 ---------- */
+  (function gauge() {
+    var Wg = 186, Hg = 206, s = '<svg xmlns="' + NS + '" width="' + Wg + 'mm" height="' + Hg + 'mm" viewBox="0 0 ' + Wg + " " + Hg + '" role="img" aria-label="곡률 측정 투명 자">';
+    s += '<g fill="none" stroke="#111" stroke-linecap="round">';
+    // 자 (위 가장자리)
+    s += '<path d="M0 0.6H' + Wg + '" stroke-width="0.5" stroke-dasharray="2 1.2" stroke-linecap="butt"/>';
+    for (var i = 0; i <= 180; i++) { var x = 3 + i, L = i % 10 === 0 ? 5 : (i % 5 === 0 ? 3.5 : 2); s += '<path d="M' + x + " 0.6v" + L + '" stroke-width="' + (i % 10 === 0 ? 0.3 : 0.2) + '"/>'; }
+    s += "</g>";
+    for (i = 0; i <= 180; i += 10) s += '<text x="' + (3 + i) + '" y="8.6" font-size="2.4" text-anchor="middle">' + i + "</text>";
+    s += '<text x="184" y="12" font-size="2.4" text-anchor="end">mm</text>';
+    // 한 점에서 접하는 원호 묶음 (r = 40 ~ 400 mm)
+    var ox = 8, oy = 73, xmax = 165, dymax = 45, radii = [40, 50, 60, 80, 100, 120, 150, 200, 250, 300, 400];
+    s += '<text x="4" y="17" font-size="3" font-weight="700">A. 한 점에서 접하는 원호 묶음 (반지름 40~400 mm)</text>';
+    s += '<g fill="none" stroke="#111" stroke-width="0.25"><path d="M' + (ox - 4) + " " + oy + "H" + (ox + xmax + 6) + '" stroke-width="0.35"/>';
+    s += '<path d="M' + ox + " " + (oy - 4) + "v8" + '" stroke-width="0.35"/><circle cx="' + ox + '" cy="' + oy + '" r="1.2" stroke-width="0.35"/>';
+    var labs = "";
+    radii.forEach(function (r) {
+      var phi = Math.min(Math.PI / 2, Math.asin(Math.min(1, xmax / r)), Math.acos(1 - Math.min(dymax, r) / r));
+      var xe = ox + r * Math.sin(phi), dy = r * (1 - Math.cos(phi));
+      s += '<path d="M' + ox + " " + oy + "A" + r + " " + r + " 0 0 0 " + f(xe) + " " + f(oy - dy) + '"/>';
+      s += '<path d="M' + ox + " " + oy + "A" + r + " " + r + " 0 0 1 " + f(xe) + " " + f(oy + dy) + '"/>';
+      var tx = xe + (xe > ox + xmax - 1 ? 1 : 0), ty = dy;
+      var anchor = xe > ox + xmax - 1 ? "start" : "middle";
+      var up = anchor === "start" ? 1 : -1.2;
+      labs += '<text x="' + f(tx) + '" y="' + f(oy - ty + (anchor === "start" ? 1 : up)) + '" font-size="2.5" text-anchor="' + anchor + '">' + r + "</text>";
+      labs += '<text x="' + f(tx) + '" y="' + f(oy + ty + (anchor === "start" ? 1 : 3.2)) + '" font-size="2.5" text-anchor="' + anchor + '">' + r + "</text>";
+    });
+    s += "</g>" + labs;
+    s += '<text x="' + (ox - 1.6) + '" y="' + (oy - 2.2) + '" font-size="2.1" text-anchor="end">기준점</text>';
+    // B. 동심원 (r = 10 ~ 40 mm)
+    var cx = 42, cy = 166;
+    s += '<text x="4" y="' + (cy - 38.5) + '" font-size="3" font-weight="700">B. 동심원 (10~35 mm): 나선용</text>';
+    s += '<g fill="none" stroke="#111" stroke-width="0.25">';
+    [10, 15, 20, 25, 30, 35].forEach(function (r) { s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '"/>'; });
+    s += '<path d="M' + (cx - 2) + " " + cy + "h4M" + cx + " " + (cy - 2) + 'v4" stroke-width="0.3"/></g>';
+    [10, 15, 20, 25, 30, 35].forEach(function (r, k) { var a = rad(k % 2 ? 35 : 55); s += '<text x="' + f(cx + r * Math.cos(a) + 0.6) + '" y="' + f(cy - r * Math.sin(a) - 0.6) + '" font-size="2.3">' + r + "</text>"; });
+    // C. 활 높이 눈금
+    var sx = 82, sy = 136;
+    s += '<text x="' + sx + '" y="' + (sy - 9) + '" font-size="3" font-weight="700">C. 활 높이(s) 눈금: 곧은 트랙용</text>';
+    s += '<g fill="none" stroke="#111"><path d="M' + sx + " " + sy + "h100" + '" stroke-width="0.35"/>';
+    s += '<path d="M' + sx + " " + (sy - 3) + "v6M" + (sx + 100) + " " + (sy - 3) + 'v6" stroke-width="0.4"/>';
+    s += '<path d="M' + (sx + 25) + " " + (sy - 2) + "v4M" + (sx + 75) + " " + (sy - 2) + 'v4" stroke-width="0.35"/>';
+    for (i = 0; i <= 24; i++) { var yy = sy + i * 0.5, LL = i % 4 === 0 ? 2.6 : (i % 2 === 0 ? 1.8 : 1.1); s += '<path d="M' + (sx + 50) + " " + f(yy) + "h" + LL + '" stroke-width="0.2"/>'; }
+    s += '<path d="M' + (sx + 50) + " " + sy + "v12" + '" stroke-width="0.3"/></g>';
+    for (i = 0; i <= 12; i += 2) s += '<text x="' + (sx + 53.2) + '" y="' + f(sy + i + 0.8) + '" font-size="2">' + i + "</text>";
+    s += '<text x="' + sx + '" y="' + (sy - 4) + '" font-size="2.3">L = 100 mm 끝</text><text x="' + (sx + 100) + '" y="' + (sy - 4) + '" font-size="2.3" text-anchor="end">L = 100 mm 끝</text>';
+    s += '<text x="' + (sx + 25) + '" y="' + (sy + 5.5) + '" font-size="2.3" text-anchor="middle">L = 50</text><text x="' + (sx + 75) + '" y="' + (sy + 5.5) + '" font-size="2.3" text-anchor="middle">L = 50</text>';
+    s += '<text x="' + (sx + 58) + '" y="' + (sy + 10) + '" font-size="2.3">s (mm)</text>';
+    s += '<text x="' + sx + '" y="' + (sy + 16) + '" font-size="2.3">줄의 두 끝을 트랙 위에 놓고, 가운데 눈금에서 트랙까지 s를 읽는다.</text>';
+    s += '<text x="' + sx + '" y="' + (sy + 19.5) + '" font-size="2.3">s ≈ L²/(8r) → r ≈ L²/(8s) (정확히는 r = L²/(8s) + s/2, 아래 표)</text>';
+    // D. 각도기
+    var px = 132, py = 200, pr = 32;
+    s += '<text x="' + sx + '" y="' + (py - 34) + '" font-size="3" font-weight="700">D. 각도기</text>';
+    s += '<g fill="none" stroke="#111"><path d="M' + (px - pr - 3) + " " + py + "H" + (px + pr + 3) + '" stroke-width="0.35"/>';
+    s += '<path d="M' + (px - pr) + " " + py + "A" + pr + " " + pr + " 0 0 1 " + (px + pr) + " " + py + '" stroke-width="0.3"/>';
+    for (i = 0; i <= 180; i++) { var aa = rad(i), L2 = i % 10 === 0 ? 3 : (i % 5 === 0 ? 2 : 1.1); s += '<path d="M' + f(px + pr * Math.cos(aa)) + " " + f(py - pr * Math.sin(aa)) + "L" + f(px + (pr - L2) * Math.cos(aa)) + " " + f(py - (pr - L2) * Math.sin(aa)) + '" stroke-width="' + (i % 10 === 0 ? 0.25 : 0.15) + '"/>'; }
+    s += '<path d="M' + (px - 1.5) + " " + py + "h3M" + px + " " + (py - 1.5) + 'v1.5" stroke-width="0.3"/></g>';
+    for (i = 0; i <= 180; i += 30) { var a3 = rad(i); s += '<text x="' + f(px + (pr - 6) * Math.cos(a3)) + '" y="' + f(py - (pr - 6) * Math.sin(a3) + 0.8) + '" font-size="2.3" text-anchor="middle">' + i + "</text>"; }
+    s += '<text x="' + px + '" y="' + (py + 4) + '" font-size="2.2" text-anchor="middle">중심</text>';
+    document.getElementById("k5-gauge").innerHTML = s + "</svg>";
+
+    function tbl(L, ss) {
+      var h = '<table class="k5-tbl"><caption style="caption-side:top;text-align:left;font-size:8.5pt;font-weight:700;padding-bottom:.8mm">활 높이 → 반지름 (줄 L = ' + L + ' mm)</caption><tr><th>s (mm)</th>';
+      ss.forEach(function (v) { h += "<td>" + v + "</td>"; });
+      h += "</tr><tr><th>r (mm)</th>";
+      ss.forEach(function (v) { var r = L * L / (8 * v) + v / 2; h += "<td>" + (r >= 100 ? Math.round(r) : f(r, 0)) + "</td>"; });
+      return h + "</tr></table>";
+    }
+    document.getElementById("k5-sag").innerHTML = tbl(50, [0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10]) + tbl(100, [0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10, 15]);
+  })();
+
+  /* ---------- 활동지 그림 ---------- */
+  (function rule() {
+    var s = '<svg xmlns="' + NS + '" width="80mm" height="27mm" viewBox="0 0 80 27" role="img" aria-label="자기장 속 양전하">';
+    s += '<defs><marker id="k5arr" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L6 3L0 6z" fill="#111" stroke="none"/></marker></defs>';
+    s += '<g stroke="#777" stroke-width="0.3" fill="none">';
+    for (var x = 5; x < 80; x += 8) for (var y = 3; y < 23; y += 6.5) { if (y > 12 && y < 19 && x < 50) continue; s += '<path d="M' + (x - 0.9) + " " + (y - 0.9) + "l1.8 1.8m0 -1.8l-1.8 1.8" + '"/>'; }
+    s += '</g><g stroke="#111" fill="none"><path d="M4 16H38" stroke-width="0.6" marker-end="url(#k5arr)"/><circle cx="43" cy="16" r="3" fill="#fff" stroke-width="0.5"/></g>';
+    s += '<text x="43" y="17.4" font-size="4" text-anchor="middle" font-weight="700">+</text>';
+    s += '<text x="20" y="14.6" font-size="2.8" text-anchor="middle">속도 v</text>';
+    s += '<text x="80" y="26.3" font-size="2.6" text-anchor="end">× 표시: B가 종이 안으로(⊗)</text>';
+    document.getElementById("k5-rule").innerHTML = s + "</svg>";
+  })();
+  (function signatures() {
+    function mini(body) { return '<svg xmlns="' + NS + '" width="100%" height="15mm" viewBox="0 0 50 15" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><g fill="none" stroke="#111" stroke-width="0.45" stroke-linecap="round">' + body + "</g></svg>"; }
+    function spiral(cx, cy, r0, turns, dir) { var d = "", n = 90 * turns; for (var i = 0; i <= n; i++) { var t = i / n, a = dir * t * turns * 2 * Math.PI, r = r0 * (1 - 0.85 * t); d += (i ? "L" : "M") + f(cx + r * Math.sin(a)) + " " + f(cy - r * Math.cos(a)); } return '<path d="' + d + '"/>'; }
+    var items = [
+      ["δ선(델타선)", "빔 트랙에서 갈라져 나온 작은 나선. 원자 속 전자가 튕겨 나온 것(음전하).", mini('<path d="M2 4L48 4"/>' + spiral(22, 9.5, 5.2, 2.2, 1))],
+      ["쌍생성 γ → e⁺e⁻", "아무것도 없는 곳에서 같은 방향으로 출발해 서로 반대로 감기는 두 트랙. 광자(중성)는 안 보인다.", mini('<path d="M3 7.5Q14 7.5 24 2.5" /><path d="M3 7.5Q14 7.5 22 12.5"/><path stroke-dasharray="1 1.2" stroke="#777" d="M-6 7.5H3"/>')],
+      ["V 붕괴", "꼭짓점에서 떨어진 곳에서 갑자기 시작하는 V. 중성 입자(Λ⁰, K⁰)가 두 대전 입자로 붕괴.", mini('<path d="M2 11L14 10"/><path d="M14 10L19 8"/><path stroke-dasharray="1 1.2" stroke="#777" d="M19 8L30 6"/><path d="M30 6Q38 2 48 1.5"/><path d="M30 6Q36 9 42 14"/>')],
+      ["꺾임(kink)", "한 트랙이 도중에 꺾여 같은 전하로 이어진다. 보이지 않는 중성 입자(중성미자 등)를 내놓은 붕괴.", mini('<path d="M2 12Q15 10 26 6"/><path d="M26 6Q37 4 48 6"/>')],
+      ["정지하는 입자", "짧고 굵은 흔적, 끝으로 갈수록 더 굵고 더 휜다. 느리고 무거운 입자(양성자 등)가 멈춤.", mini('<path d="M4 12Q16 10 24 6" stroke-width="0.8"/><path d="M24 6Q27 4 27.5 2" stroke-width="1.3"/>')],
+      ["충돌(별 모양)", "빔 트랙이 끝나고 여러 트랙이 한 점에서 나온다. 전하 합은 빔+표적 양성자의 전하 합과 같다.", mini('<path d="M2 8H20"/><path d="M20 8Q34 7 48 3"/><path d="M20 8L48 9"/><path d="M20 8Q30 11 40 15"/><path d="M20 8Q26 3 30 0"/>')]
+    ];
+    document.getElementById("k5-sig").innerHTML = items.map(function (it) { return "<div><b>" + it[0] + "</b>" + it[2] + it[1] + "</div>"; }).join("");
+  })();
+
+  /* ---------- 기록표와 정답표 (같은 데이터) ---------- */
+  function rot(t, S) { return t.o.q * S.sB > 0 ? "시계 ↻" : "반시계 ↺"; }
+  function rAt(t, s, B) { var a = at(t, s); return a.p / (0.3 * B) * 100; }
+  var recRows = "", keyRows = "";
+  scenes.forEach(function (S) {
+    var lab = S.tracks.filter(function (t) { return t.o.label; }).sort(function (a, b) { return a.o.label < b.o.label ? -1 : 1; });
+    lab.forEach(function (t, k) {
+      recRows += '<tr class="' + (S.def.code % 2 ? "odd" : "") + '"><td class="ph">' + (k === 0 ? S.def.code : "") + '</td><td class="c">' + t.o.label + "</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+      var r0 = t.o.p / (0.3 * S.B) * 100, len = t.s, r40 = len > 40 ? rAt(t, 40, S.B) : null;
+      var note = t.stopped ? "정지 (길이 " + f(len, 0) + " mm, 끝으로 갈수록 반지름 감소)" : (r40 && Math.abs(r40 - r0) / r0 > 0.08 ? "에너지 손실로 반지름 감소" : "");
+      if (t.o.len && !t.stopped) note = (note ? note + ", " : "") + "꼭짓점/꺾임에서 끝남";
+      keyRows += "<tr>" + (k === 0 ? '<td rowspan="' + lab.length + '"><b>' + S.def.code + "</b><br>" + S.def.title + "<br>B = " + f(S.B, 1) + " T " + (S.sB > 0 ? "⊙" : "⊗") + "</td>" : "") +
+        "<td>" + t.o.label + "</td><td>" + t.o.name + "</td><td>" + (t.o.q > 0 ? "+" : "−") + "</td><td>" + rot(t, S) + '</td><td class="num">' + f(r0, 0) + '</td><td class="num">' + (r40 ? f(r40, 0) : "–") + '</td><td class="num">' + f(r0 / 100, 2) + '</td><td class="num">' + f(t.o.p, t.o.p < 0.1 ? 3 : 2) + "</td><td>" + note + "</td></tr>";
+    });
+  });
+  document.querySelector("#k5-rec tbody").innerHTML = recRows;
+  document.getElementById("k5-key").innerHTML = "<thead><tr><th>사진·사건</th><th>트랙</th><th>입자</th><th>전하</th><th>회전</th><th class=\"num\">종이 r (mm)</th><th class=\"num\">r(40 mm 뒤)</th><th class=\"num\">실제 r (m)</th><th class=\"num\">p (GeV/c)</th><th>비고</th></tr></thead><tbody>" + keyRows + "</tbody>";
+
+  /* 보존 법칙 해설: 데이터에서 계산 */
+  function vInfo(Vd) {
+    var a = Vd.a.o, b = Vd.b.o, th = Math.abs(a.ang - b.ang);
+    var px = a.p * Math.cos(rad(a.ang)) + b.p * Math.cos(rad(b.ang)), py = a.p * Math.sin(rad(a.ang)) + b.p * Math.sin(rad(b.ang));
+    var P = Math.sqrt(px * px + py * py), dir = deg(Math.atan2(py, px));
+    var E1 = Math.sqrt(a.p * a.p + Vd.m1 * Vd.m1), E2 = Math.sqrt(b.p * b.p + Vd.m2 * Vd.m2);
+    var m = Math.sqrt(Vd.m1 * Vd.m1 + Vd.m2 * Vd.m2 + 2 * (E1 * E2 - a.p * b.p * Math.cos(rad(th))));
+    var Epp = Math.sqrt(a.p * a.p + M.pi * M.pi) + Math.sqrt(b.p * b.p + M.pi * M.pi);
+    var mpp = Math.sqrt(2 * M.pi * M.pi + 2 * (Math.sqrt(a.p * a.p + M.pi * M.pi) * Math.sqrt(b.p * b.p + M.pi * M.pi) - a.p * b.p * Math.cos(rad(th))));
+    return { th: th, P: P, dir: dir, m: m, mpp: mpp, Epp: Epp };
+  }
+  var K2 = [];
+  var s11 = scenes[10], v11a = vInfo(s11.V1), v11b = vInfo(s11.V2);
+  K2.push("<p><b>Q1</b> V의 두 트랙은 늘 + 하나, − 하나라 전하 합이 0이다. 전하 보존에 따라 부모 입자의 전하도 0(중성)이다. 중성 입자는 액체 수소를 이온화하지 못해 거품을 남기지 않으므로 꼭짓점과 V 사이가 비어 보인다(사진 03·10·11: Λ⁰, 04·11·12: K⁰).</p>");
+  K2.push("<p><b>Q2</b> 사진 11 K⁰의 딸: c(π⁺) " + f(s11.V2.a.o.p, 3) + " GeV/c, d(π⁻) " + f(s11.V2.b.o.p, 3) + " GeV/c, 갈라지는 각 " + f(v11b.th, 0) + "°. 화살표 합 = " + f(v11b.P, 3) + " GeV/c(= K⁰의 운동량 " + f(s11.V2.P, 3) + " GeV/c). 합 방향을 거꾸로 늘이면 빔 트랙 e가 끝나는 생성 꼭짓점에 닿는다 → 보이지 않는 K⁰가 그 꼭짓점에서 생겨 그 방향으로 날아와 붕괴했다(운동량 보존). Λ⁰ V(a, b)도 같은 꼭짓점을 가리킨다: 합 " + f(v11a.P, 3) + " GeV/c. 또한 Λ⁰와 K⁰의 운동량 합(" + f(s11.V1.P, 3) + " + " + f(s11.V2.P, 3) + ", 벡터 합)은 꼭짓점에서의 빔 운동량 " + f(s11.assoc.beamP, 3) + " GeV/c와 같다(연관 생성 π⁻p → Λ⁰K⁰, 2체 반응).</p>");
+  var s2 = scenes[1], Eg = Math.sqrt(s2.pair.ep.o.p * s2.pair.ep.o.p + M.e * M.e) + Math.sqrt(s2.pair.em.o.p * s2.pair.em.o.p + M.e * M.e);
+  K2.push("<p><b>Q3</b> 광자 → 전자 + 양전자(쌍생성). B ⊗에서 a는 반시계 → 양전자 e⁺(" + f(s2.pair.ep.o.p, 2) + " GeV/c), b는 시계 → 전자 e⁻(" + f(s2.pair.em.o.p, 2) + " GeV/c). 광자 에너지 ≈ " + f(Eg, 2) + " GeV. 두 트랙의 출발 방향(거의 같음)을 거꾸로 늘이면 왼쪽의 충돌 꼭짓점(빔이 끝나고 두 트랙이 나오는 점)에 닿는다. 그곳에서 생긴 π⁰가 곧바로 광자 2개로 붕괴했고, 그중 하나가 날아와 쌍생성을 했다. 광자는 전하가 없어 흔적이 없다. 전하 보존: 0 → (+1) + (−1). 쌍생성은 전자·양전자 질량의 합(1.022 MeV) 이상의 에너지가 있어야 일어난다.</p>");
+  var s5 = scenes[4], kk = s5.kink;
+  K2.push("<p><b>Q4</b> a(π⁺, 시작 " + f(kk.pa.o.p, 2) + " GeV/c, 꺾이기 직전 " + f(kk.K.p, 3) + " GeV/c)와 b(μ⁺, " + f(kk.mu.p, 3) + " GeV/c)는 둘 다 양전하(전하 보존). 꺾인 각 약 " + f(Math.abs(kk.mu.a), 0) + "°. 꺾인 뒤 트랙 b 하나의 운동량은 크기와 방향 모두 a와 다르므로, 운동량 보존이 성립하려면 보이지 않는 중성 입자가 나머지(" + f(kk.nu.p, 3) + " GeV/c)를 가져가야 한다 → π⁺ → μ⁺ + ν(뮤온 중성미자). 실제로 파이온의 정지계에서 뮤온 운동량은 늘 29.8 MeV/c이다.</p>");
+  var s8 = scenes[7], st = s8.star, sumx = 0, qsum = 0;
+  st.list.forEach(function (t) { sumx += t.o.p * Math.cos(rad(t.o.ang - st.V.ang)); qsum += t.o.q; });
+  var s6 = scenes[5], el = s6.elastic, ex = el.c.o.p * Math.cos(rad(el.c.o.ang)) + el.a.o.p * Math.cos(rad(el.a.o.ang)), ey = el.c.o.p * Math.sin(rad(el.c.o.ang)) + el.a.o.p * Math.sin(rad(el.a.o.ang));
+  K2.push("<p><b>Q5</b> 사진 08: a(+) b(−) c(−) d(+) → 합 " + qsum + ". 들어온 쪽: π⁻(−1) + 양성자(+1) = 0, 같다(전하 보존). 보이는 네 트랙의 빔 방향 운동량 합은 " + f(sumx, 2) + " GeV/c로 빔 " + f(st.beamP, 2) + " GeV/c보다 작다 → 보이지 않는 중성 입자(π⁰ 등)가 나머지를 가져갔다. d는 같은 운동량의 파이온보다 거품이 진하다(느린 양성자). " +
+    "사진 06: b(빔 π⁺, 꼭짓점에서 " + f(el.V.p, 2) + " GeV/c) = c(" + f(el.c.o.p, 2) + " GeV/c) + a(" + f(el.a.o.p, 2) + " GeV/c)의 벡터 합 " + f(Math.sqrt(ex * ex + ey * ey), 2) + " GeV/c, 방향도 빔과 같다(탄성 산란 π⁺p → π⁺p). a가 양성자인 증거: 굵고 진한 흔적, 짧게 멈춤, 끝으로 갈수록 더 휘고 굵어짐(느려질수록 dE/dx ∝ 1/β² 증가). 길이 " + f(el.a.s, 0) + " mm = 실제 " + f(el.a.s / 10, 1) + " cm.</p>");
+  K2.push("<p><b>도전</b> 사진 11 a+b (p, π 가정): θ = " + f(v11a.th, 1) + "°, m = " + f(v11a.m, 3) + " GeV/c² → Λ⁰. c+d (π, π 가정): θ = " + f(v11b.th, 1) + "°, m = " + f(v11b.mpp, 3) + " GeV/c² → K⁰. 학생 측정값은 운동량 ±15%, 각도 ±3°에서 Λ⁰는 1.10~1.15, K⁰는 0.45~0.55 정도로 나오면 충분하다. 다른 사진: " +
+    [2, 3, 9, 11].map(function (i) { var v = vInfo(scenes[i].V1); return "사진 " + scenes[i].def.code + " " + scenes[i].V1.name + " θ " + f(v.th, 0) + "°, 운동량 합 " + f(v.P, 2) + " GeV/c, m = " + f(scenes[i].V1.name === "K⁰" ? v.mpp : v.m, 3); }).join(" · ") + ".</p>");
+  K2.push("<p><b>5쪽 '먼저 해 보기'</b> v는 오른쪽, B는 종이 안쪽: v × B는 위쪽 → 양전하는 위쪽(진행 방향의 왼쪽)으로 힘을 받아 <b>반시계</b> 방향으로 돈다. B가 ⊙이면 <b>시계</b> 방향.</p>");
+  document.getElementById("k5-key2").innerHTML = K2.join("");
+})();
+</script>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>
