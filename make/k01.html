@@ -1,0 +1,1309 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>키트 K01 하드론 공방</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/kit.css">
+<style>
+  /* K01 전용: 종이 위 색은 화면 테마와 상관없이 고정(인쇄용) */
+  .sheet { --k-q: #ece4f8; --k-l: #dcf1ec; --k-b: #dfeef8; --k-h: #f8e1ea; --k-o: #fbeedf; --k-act: #eef0f5; --k-dark: #111522; --k-white: #ffffff; }
+  .ov { text-decoration: overline; text-decoration-thickness: .07em; margin: 0 .05em; }
+  .ic { width: 1em; height: 1em; flex: none; }
+  .sheet--cards { padding: 7mm 12mm 6mm; gap: 2.5mm; }
+  .sheet--cards .card-grid { margin-top: 1mm; }
+
+  /* 큰 입자 카드 62×86 mm */
+  .pc { padding: 0; gap: 0; }
+  .pc-band { display: flex; align-items: center; gap: 1.6mm; height: 7mm; flex: none; padding: 0 3mm; font-size: 7.6pt; font-weight: 700; border-bottom: .6pt solid var(--paper-ink); }
+  .pc-band .ic { width: 4.6mm; height: 4.6mm; }
+  .band-q { background: var(--k-q); }
+  .band-a { background: var(--k-dark); color: var(--k-white); }
+  .band-l { background: var(--k-l); }
+  .band-b { background: var(--k-b); }
+  .band-h { background: var(--k-h); }
+  .band-o { background: var(--k-o); }
+  .band-act { background: var(--k-act); }
+  .band-blank { background: var(--k-white); }
+  .pc-body { flex: 1; display: flex; flex-direction: column; gap: 1mm; padding: 1.5mm 3.2mm 2.6mm; min-height: 0; }
+  .pc-sym { font-family: var(--font-display); font-size: 44pt; line-height: 1.22; font-weight: 700; text-align: center; padding-top: .5mm; }
+  .pc-sym sup { font-size: .45em; vertical-align: .9em; line-height: 0; }
+  .pc-sym sub { font-size: .42em; vertical-align: -.25em; line-height: 0; }
+  .pc-name { text-align: center; font-weight: 700; font-size: 12pt; line-height: 1.2; }
+  .pc-name small { display: block; font-weight: 400; font-size: 7.2pt; color: var(--paper-ink-2); letter-spacing: .03em; }
+  .sheet .pc-stats { width: 100%; border-collapse: collapse; font-size: 8.4pt; margin-top: .6mm; }
+  .sheet .pc-stats th, .sheet .pc-stats td { border: 0; border-bottom: .4pt solid var(--paper-line); padding: .45mm .3mm; background: none; line-height: 1.3; }
+  .sheet .pc-stats th { text-align: left; font-weight: 600; white-space: nowrap; color: var(--paper-ink-2); }
+  .sheet .pc-stats td { text-align: right; font-family: var(--font-mono); font-weight: 600; }
+  .pc-nu .pc-stats tr:first-child td { font-family: var(--font-body); font-size: 7pt; line-height: 1.2; }
+  .pc-fact { margin-top: auto; font-size: 7.9pt; line-height: 1.4; border-top: .6pt solid var(--paper-ink); padding-top: 1.2mm; }
+  .pc-bar { width: 100%; height: 8.6mm; display: block; margin-top: .5mm; }
+  .pc-bar text { font-family: var(--font-mono) !important; }
+  .blank-sym { height: 17mm; border: .6pt dashed var(--paper-line); border-radius: 1.5mm; display: grid; place-items: center; color: var(--paper-ink-2); font-size: 7pt; }
+  .blank-line { border-bottom: .6pt solid var(--paper-ink); font-size: 7pt; color: var(--paper-ink-2); padding-top: 3mm; }
+  .sheet .pc-blank .pc-stats td { height: 4.8mm; }
+  .blank-fact { margin-top: auto; height: 12mm; border-top: .6pt solid var(--paper-ink); font-size: 7pt; color: var(--paper-ink-2); padding-top: .8mm;
+    background-image: repeating-linear-gradient(transparent, transparent 5.4mm, var(--paper-line) 5.4mm, var(--paper-line) 5.6mm); }
+
+  /* 작은 게임 카드 46×62 mm */
+  .gc { padding: 0; gap: 0; font-size: 7.5pt; }
+  .gc-band { display: flex; align-items: center; gap: 1.2mm; height: 5.6mm; flex: none; padding: 0 2.4mm; font-size: 6.8pt; font-weight: 700; border-bottom: .5pt solid var(--paper-ink); }
+  .gc-band .ic { width: 3.6mm; height: 3.6mm; }
+  .gc-band .pts { margin-left: auto; font-family: var(--font-mono); font-size: 7.5pt; }
+  .gc-body { flex: 1; display: flex; flex-direction: column; gap: .8mm; padding: 1.4mm 2.6mm 2.2mm; min-height: 0; }
+  .ig-sym { font-family: var(--font-display); font-size: 40pt; line-height: 1.1; font-weight: 700; text-align: center; margin-top: 1.5mm; }
+  .ig-name { text-align: center; font-weight: 700; font-size: 8.5pt; }
+  .ig-vals { margin-top: 1.4mm; display: grid; grid-template-columns: 1fr 1fr; gap: 1.2mm; }
+  .ig-vals > div { border: .6pt solid var(--paper-ink); border-radius: 1.2mm; text-align: center; padding: .6mm 0 .8mm; line-height: 1.15; }
+  .ig-vals small { display: block; font-size: 6pt; color: var(--paper-ink-2); }
+  .ig-vals b { font-family: var(--font-mono); font-size: 10.5pt; }
+  .ig-cells { margin-top: auto; text-align: center; }
+  .ig-cells small { display: block; font-size: 5.8pt; color: var(--paper-ink-2); }
+  .ig-cells div { display: flex; justify-content: center; gap: 1mm; margin-top: .4mm; }
+  .ig-cells i { width: 5.4mm; height: 5.4mm; border: .7pt solid var(--paper-ink); display: grid; place-items: center; font-style: normal; font-family: var(--font-mono); font-weight: 600; font-size: 9pt; line-height: 1; }
+  .ig-a .ig-cells i { background: var(--k-dark); color: var(--k-white); }
+  .ig-top { margin-top: auto; font-size: 6.6pt; line-height: 1.35; border: .8pt solid var(--paper-ink); border-radius: 1.2mm; padding: 1mm 1.4mm; font-weight: 600; }
+  .ig-t .ig-sym { font-size: 32pt; }
+
+  .oc-rar { font-size: 6.6pt; font-weight: 700; letter-spacing: .02em; }
+  .oc-rar .pips { letter-spacing: .08em; }
+  .oc-sym { font-family: var(--font-display); font-size: 26pt; line-height: 1.05; font-weight: 700; text-align: center; }
+  .oc-sym sup { font-size: .5em; vertical-align: .8em; line-height: 0; }
+  .oc-name { text-align: center; font-weight: 700; font-size: 8.5pt; line-height: 1.2; }
+  .oc-clue { text-align: center; font-size: 6.8pt; line-height: 1.35; color: var(--paper-ink-2); }
+  .oc-fold { margin-top: auto; border-top: .9pt dashed var(--fold); position: relative; height: 2.6mm; }
+  .oc-fold span { position: absolute; left: 50%; top: -1.5mm; transform: translateX(-50%); background: var(--paper); padding: 0 1mm; font-size: 5.4pt; white-space: nowrap; color: var(--fold); }
+  .oc-recipe { display: flex; justify-content: center; gap: 1.4mm; }
+  .oc-recipe span { width: 7.6mm; height: 7.6mm; border: .8pt solid var(--paper-ink); border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 12pt; line-height: 1; }
+  .oc-recipe span.a { background: var(--k-dark); color: var(--k-white); border-color: var(--k-dark); }
+  .oc-mass { text-align: center; font-family: var(--font-mono); font-size: 6.2pt; color: var(--paper-ink-2); }
+
+  .ac-title { font-family: var(--font-display); font-weight: 700; font-size: 11.5pt; text-align: center; margin-top: .6mm; }
+  .ac-pic { width: 30mm; height: 9mm; margin: 0 auto; display: block; }
+  .ac-text { font-size: 6.9pt; line-height: 1.4; }
+  .ac-note { margin-top: auto; font-size: 6.2pt; line-height: 1.35; color: var(--paper-ink-2); border-top: .5pt solid var(--paper-line); padding-top: .8mm; }
+  .ac-eq { font-family: var(--font-display); font-weight: 700; font-size: 12pt; text-align: center; border: .8pt solid var(--paper-ink); border-radius: 1.2mm; padding: 1.4mm 0; margin-top: 1mm; }
+  .ac-eq sub { font-size: .6em; }
+  .ac-ans { margin-top: auto; transform: rotate(180deg); font-size: 6pt; line-height: 1.3; color: var(--paper-ink-2); border-bottom: .5pt solid var(--paper-line); padding-bottom: .6mm; }
+
+  /* 카드 뒷면 */
+  .cback { border: 0; padding: 0; }
+  .cback svg { width: 100%; height: 100%; display: block; }
+  .cback svg text { font-family: var(--font-display); }
+
+  /* 규칙서 */
+  .rules { font-size: 9.1pt; line-height: 1.48; gap: 3mm; }
+  .rules-top { display: grid; gap: 2mm; }
+  .rules-lead { font-size: 9.6pt; }
+  .icon-legend { display: flex; flex-wrap: wrap; gap: 1.5mm 4.5mm; font-size: 8pt; color: var(--paper-ink-2); }
+  .icon-legend span { display: inline-flex; align-items: center; gap: 1.2mm; }
+  .icon-legend .ic { width: 4.2mm; height: 4.2mm; color: var(--paper-ink); }
+  .rules-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .rcol { display: flex; flex-direction: column; gap: 3mm; }
+  .rbox { border: .6pt solid var(--paper-line); border-radius: 2mm; padding: 2.2mm 3mm; }
+  .rbox--key { border: 1.1pt solid var(--paper-ink); }
+  .rbox h3 { font-size: 10.2pt; margin-bottom: 1mm; font-family: var(--font-display); }
+  .rbox ol, .rbox ul { margin: 0; padding-left: 4.5mm; }
+  .rbox li + li { margin-top: .8mm; }
+  .rbox p + ol { margin-top: 1mm; }
+  .rnote { margin-top: 1.2mm !important; font-size: 8.3pt; background: #eef0f5; padding: 1mm 2mm; border-radius: 1mm; }
+  .sheet .score-t { width: 100%; border-collapse: collapse; margin-top: 1.5mm; font-size: 8.6pt; }
+  .sheet .score-t th, .sheet .score-t td { padding: .7mm 2mm; }
+  .sheet .score-t th { width: 22mm; text-align: left; }
+
+  .rex .ex-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin-top: 1mm; }
+  .rex .ex { display: grid; gap: 1.2mm; align-content: start; font-size: 8.3pt; line-height: 1.4; }
+  .rex .oc-recipe { justify-content: flex-start; }
+  .rex .ex-bad p { color: var(--paper-ink-2); }
+  .rex .ex-bad .oc-recipe span { border-style: dashed; }
+  .ex-cells { display: flex; gap: .8mm; }
+  .ex-cells i { width: 5.4mm; height: 7.6mm; border: .7pt solid var(--paper-ink); display: grid; place-items: center; font-style: normal; font-family: var(--font-mono); font-weight: 600; }
+  /* 활동지 */
+  .worksheet-sheet { gap: 2.6mm; font-size: 9.6pt; }
+  .worksheet-sheet h3 { font-family: var(--font-display); font-size: 11pt; margin-top: .8mm; }
+  .ws-ref { border: 1pt solid var(--paper-ink); border-radius: 1.5mm; padding: 1.5mm 3mm; font-size: 8.8pt; }
+  .sheet .ws-t { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  .sheet .ws-t th { text-align: center; padding: 1mm; }
+  .sheet .ws-t td { height: 8.2mm; padding: .5mm 1.5mm; vertical-align: middle; }
+  .ws-t td:nth-child(1) { width: 9mm; text-align: center; }
+  .ws-t td:nth-child(2) { width: 34mm; }
+  .ws-t td.qc { width: 20mm; text-align: center; font-family: var(--font-display); font-weight: 700; font-size: 11pt; }
+  .ws-t td:nth-child(5), .ws-t td:nth-child(6) { width: 15mm; }
+  .ws-t td:nth-child(7) { width: 21mm; }
+  .ws-t tr.ex td { color: var(--paper-ink-2); font-style: italic; height: 7mm; }
+  .sheet .ws-t tr:last-child td, .sheet .score-t tr:last-child td, .sheet .score-t tr:last-child th { border-bottom: 1px solid var(--paper-line); }
+  .ws-hint { font-size: 8pt; color: var(--paper-ink-2); margin-top: -1.4mm !important; }
+  .ws-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .ws-2 p, .ws-3 p { font-size: 9pt; }
+  .ws-2 > div { display: flex; flex-direction: column; }
+  .ws-2 .write-box { flex: 1; min-height: 19mm; margin-top: 1.2mm; }
+  .ws-p { font-size: 9pt; }
+  .ws-3 { display: grid; grid-template-columns: 52mm 1fr; gap: 4mm; }
+  .ws-penta { border: .8pt solid var(--paper-ink); border-radius: 1.5mm; padding: 2mm; display: grid; gap: 2.5mm; align-content: start; }
+  .calc-line { border-bottom: .6pt solid var(--paper-ink); padding-top: 3mm; font-size: 9pt; }
+  .ws-design { border: .8pt solid var(--paper-ink); border-radius: 1.5mm; padding: 2mm 2.5mm; display: grid; gap: 2.2mm; }
+  .design-row { display: flex; align-items: flex-end; gap: 2mm; font-size: 8.6pt; }
+  .design-row span { white-space: nowrap; font-weight: 600; }
+  .design-row i { flex: 1; border-bottom: .6pt solid var(--paper-ink); height: 6mm; min-width: 12mm; }
+  .design-row i.wide { flex: 1; }
+  .design-row .qbox { width: 7.5mm; height: 7.5mm; border: .8pt solid var(--paper-ink); border-radius: 50%; flex: none; }
+  .design-row em { font-style: normal; font-size: 8.2pt; white-space: nowrap; }
+
+  /* 화면 전용 설명 */
+  .kit-figure { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: .8rem 1rem; }
+</style>
+</head>
+<body data-page="make" data-root="../">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="k01-hatch" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="3" fill="#ffffff"/><line x1="0" y1="0" x2="0" y2="3" stroke="#b9bfcc" stroke-width=".8"/></pattern>
+    <symbol id="i-quark" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="10" cy="6.4" r="1.7" fill="currentColor"/><circle cx="6.8" cy="12" r="1.7" fill="currentColor"/><circle cx="13.2" cy="12" r="1.7" fill="currentColor"/></symbol>
+    <symbol id="i-anti" viewBox="0 0 20 20"><line x1="3" y1="1.3" x2="17" y2="1.3" stroke="currentColor" stroke-width="1.6"/><circle cx="10" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="10" cy="8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.1"/><circle cx="7.2" cy="13" r="1.5" fill="none" stroke="currentColor" stroke-width="1.1"/><circle cx="12.8" cy="13" r="1.5" fill="none" stroke="currentColor" stroke-width="1.1"/></symbol>
+    <symbol id="i-lepton" viewBox="0 0 20 20"><path d="M10 2 L18.5 17.5 L1.5 17.5 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="10" cy="12.5" r="2" fill="currentColor"/></symbol>
+    <symbol id="i-nu" viewBox="0 0 20 20"><path d="M10 2 L18.5 17.5 L1.5 17.5 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2.4 1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-boson" viewBox="0 0 20 20"><rect x="2" y="2" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 10 q1.4 -3.2 2.8 0 t2.8 0 t2.8 0 t2.8 0" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-higgs" viewBox="0 0 20 20"><path d="M10 1.5 L17.4 5.75 L17.4 14.25 L10 18.5 L2.6 14.25 L2.6 5.75 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="10" cy="10" r="3" fill="currentColor"/></symbol>
+    <symbol id="i-order" viewBox="0 0 20 20"><path d="M4 2 H13 L16 5 V18 H4 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><line x1="6.5" y1="8" x2="13.5" y2="8" stroke="currentColor" stroke-width="1.3"/><line x1="6.5" y1="11" x2="13.5" y2="11" stroke="currentColor" stroke-width="1.3"/><line x1="6.5" y1="14" x2="11" y2="14" stroke="currentColor" stroke-width="1.3"/></symbol>
+    <symbol id="i-act" viewBox="0 0 20 20"><path d="M11.5 1.5 L4 11 H9.5 L8 18.5 L16 8.5 H10.5 Z" fill="currentColor"/></symbol>
+    <symbol id="i-star" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 1.6"/><path d="M10 6 V14 M6 10 H14" stroke="currentColor" stroke-width="1.5"/></symbol>
+  </defs>
+</svg>
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--up">출력·만들기 키트</span>
+      <span class="badge badge--basic">연계: 주제 1</span>
+      <span class="badge badge--adv">연계: 주제 7</span>
+      <span class="badge badge--time">약 90분</span>
+    </div>
+    <p class="eyebrow">키트 K01</p>
+    <h1>표준모형 입자 카드와 ‘하드론 공방’ 카드 게임</h1>
+    <p class="lead">기본 입자 17종과 반쿼크 6종을 트레이딩 카드로 만들어 분류하고, 쿼크 카드를 모아 양성자·파이온·오메가 같은 하드론을 ‘주문 제작’합니다. 놀이를 하다 보면 전하가 정수가 되는 조합, 바리온수 보존, 무색 규칙이 저절로 몸에 익습니다.</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="pdf/k01.pdf">인쇄용 PDF</a>
+      <a class="btn" href="../students/t01.html">연계 활동지</a>
+    </div>
+  </header>
+
+  <section class="kit-intro">
+    <dl class="kit-meta">
+      <div><dt>대상·인원</dt><dd>고등학교 1~3학년 · 모둠 2~4명(게임), 활동지는 1인 1장</dd></div>
+      <div><dt>준비물</dt><dd>모둠당 A4 7장(뒷면까지 10장), 활동지 1인 1장, 가위 또는 종이 재단기, 카드 보관용 봉투</dd></div>
+      <div><dt>시간</dt><dd>만들기 15분 · 게임 20~30분 · 활동지 20분</dd></div>
+      <div><dt>인쇄</dt><dd>A4 세로 · 실제 크기(100%) · 흑백 가능 · 카드는 120~160 g/m² 두꺼운 종이 권장</dd></div>
+    </dl>
+    <p class="print-tip">인쇄할 때는 배율을 <b>실제 크기(100%)</b>로, 여백은 <b>없음</b>으로 고르세요. 브라우저 인쇄가 어렵다면 [인쇄용 PDF]를 쓰세요. 아래 회색 바탕 위의 흰 종이가 인쇄되는 부분입니다(모두 10쪽).</p>
+    <div class="legend-lines"><span><i class="l-cut"></i>자르는 선</span><span><i class="l-fold"></i>접는 선</span><span><i class="l-glue"></i>풀칠하는 곳</span></div>
+    <div class="table-wrap"><table>
+      <tr><th>쪽</th><th>내용</th><th>모둠당 인쇄</th></tr>
+      <tr><td>1</td><td>게임 규칙서(범례 포함)</td><td>1장</td></tr>
+      <tr><td>2~4</td><td>표준모형 입자 카드 23장 + 빈 카드 4장(62×86 mm)</td><td>각 1장</td></tr>
+      <tr><td>5</td><td>주문서 12장 + 행동 카드 4장(46×62 mm)</td><td>1장</td></tr>
+      <tr><td>6~7</td><td>재료(쿼크·반쿼크) 카드 32장</td><td>각 1장</td></tr>
+      <tr><td>8~9</td><td>카드 뒷면(선택, 양면 인쇄용)</td><td>필요한 만큼</td></tr>
+      <tr><td>10</td><td>학생 활동지</td><td>1인 1장</td></tr>
+    </table></div>
+    <h2 style="font-size:var(--step-2)">만드는 법과 활동 순서</h2>
+    <ol class="steps">
+      <li><span><b>인쇄하기.</b> 1·10쪽은 보통 종이, 2~9쪽은 두꺼운 종이에 인쇄합니다. 뒷면 무늬를 넣으려면 인쇄 대화상자의 쪽 지정에 <code>2,8,3,8,4,8</code>(입자 카드) 또는 <code>5,9,6,9,7,9</code>(게임 카드)를 넣고 <b>양면 · 긴 쪽 넘기기</b>로 인쇄합니다. 양면 인쇄가 안 되면 뒷면 시트를 따로 뽑아 앞면 시트 뒤에 통째로 얇게 풀칠한 뒤 자릅니다.</span></li>
+      <li><span><b>자르기.</b> 굵은 점선을 따라 카드를 자릅니다. 가로줄을 먼저 길게 자른 뒤 한 줄씩 나누면 빠릅니다. 교사가 재단기로 미리 잘라 두면 만들기 시간을 아낄 수 있습니다.</span></li>
+      <li><span><b>도감 놀이(5~10분).</b> 입자 카드 23장을 쿼크·반쿼크·렙톤·보손으로 나누고, 질량 순서로 줄 세워 봅니다. 모양 기호(원·막대 원·삼각형·네모·육각형)로 흑백에서도 종류를 구분할 수 있습니다.</span></li>
+      <li><span><b>규칙 익히기.</b> 규칙서의 ‘세 가지 약속’을 함께 읽고, 양성자(uud)의 전하를 소리 내어 계산하는 연습을 한 번 합니다.</span></li>
+      <li><span><b>게임하기(20~30분).</b> 재료 카드와 행동 카드를 섞어 더미를 만들고, 주문서 4장을 펼쳐 시작합니다. 주문서를 완성할 때마다 계산을 소리 내어 말해야 합니다.</span></li>
+      <li><span><b>활동지(20분).</b> 게임에서 만난 하드론과 새로운 하드론의 전하·바리온수를 계산하고, 펜타쿼크처럼 ‘이색 하드론’을 설계해 4쪽의 빈 카드에 그립니다.</span></li>
+    </ol>
+  </section>
+
+  <div class="sheets">
+<article class="sheet rules">
+  <header class="sheet-head"><h2>하드론 공방 — 게임 규칙서</h2><span class="kit-no">CERN 탐구 교실 · 키트 K01 · 1/10</span></header>
+  <div class="rules-top">
+    <p class="rules-lead"><b>2~4명 · 20~30분.</b> 쿼크는 혼자 돌아다닐 수 없고 언제나 둘이나 셋이 묶여 <b>하드론</b>이 됩니다. 여러분은 하드론 공방의 장인입니다. 쿼크 카드를 모아 주문서에 적힌 하드론을 완성하고 점수를 얻으세요.</p>
+    <div class="legend-lines"><span><i class="l-cut"></i>자르는 선</span><span><i class="l-fold"></i>접는 선(주문서, 고수 판에서만)</span><span><i class="l-glue"></i>풀칠(뒷면 시트를 통째로 붙일 때)</span></div>
+    <div class="icon-legend"><span><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg>쿼크</span><span><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg>반쿼크</span><span><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-lepton"/></svg>렙톤</span><span><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-nu"/></svg>중성미자</span><span><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-boson"/></svg>게이지 보손</span><span><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-higgs"/></svg>힉스</span><span><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg>주문서</span><span><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-act"/></svg>행동 카드</span></div>
+  </div>
+  <div class="rules-cols">
+    <div class="rcol">
+      <section class="rbox rbox--key">
+        <h3>하드론을 만드는 세 가지 약속</h3>
+        <ol>
+          <li><b>바리온 = 쿼크 3개</b> (예: 양성자 uud). <b>메손(중간자) = 쿼크 1개 + 반쿼크 1개</b> (예: π⁺ = u<span class="ov">d</span>).</li>
+          <li><b>전하의 합은 정수</b>(−1, 0, +1, +2 …)여야 한다. u·c·t는 +2/3, d·s·b는 −1/3, 반쿼크는 부호가 반대.</li>
+          <li><b>무색 규칙.</b> 쿼크는 강한 힘의 ‘색’ 전하를 가진다(빨강·초록·파랑은 빗댄 이름일 뿐 실제 색깔이 아니다). 세 색이 모이거나(쿼크 3개), 한 색과 그 반대색이 짝을 이루면(쿼크+반쿼크) ‘무색’이 되어 하드론으로 존재할 수 있다. 색은 쉬지 않고 바뀌므로 카드에는 적지 않는다.</li>
+        </ol>
+        <p class="rnote">바리온수: 쿼크 +1/3, 반쿼크 −1/3 → 바리온은 1, 메손은 0.</p>
+      </section>
+      <section class="rbox">
+        <h3>구성과 준비</h3>
+        <p>재료 카드 32장(6·7쪽), 주문서 12장과 행동 카드 4장(5쪽). 입자 카드 23장(2~4쪽)은 도감으로 옆에 펼쳐 둔다.</p>
+        <ol>
+          <li>재료 카드와 행동 카드를 섞어 뒤집어 쌓는다(더미).</li>
+          <li>한 사람에게 5장씩 나눠 준다.</li>
+          <li>주문서를 섞어 4장을 앞면으로 펼친다(주문 게시판). 나머지는 뒤집어 둔다.</li>
+        </ol>
+      </section>
+      <section class="rbox">
+        <h3>내 차례에 하는 일</h3>
+        <ol>
+          <li><b>뽑기</b> — 더미에서 2장, 또는 버린 카드 맨 위 1장.</li>
+          <li><b>교환</b>(선택, 1번) — 한 사람에게 1장씩 맞바꾸자고 제안한다. 상대는 거절할 수 있다.</li>
+          <li><b>제작</b>(선택, 여러 번) — 게시판의 주문서에 맞는 카드를 내려놓고 소리 내어 계산한다. “u, u, d: 2/3 + 2/3 − 1/3 = +1, 바리온수 1!” 다른 사람이 확인하면 주문서를 가져간다. 쓴 카드는 버리고 게시판을 4장으로 채운다.</li>
+          <li><b>정리</b> — 손에 든 카드가 7장을 넘으면 7장이 될 때까지 버린다.</li>
+        </ol>
+      </section>
+    </div>
+    <div class="rcol">
+      <section class="rbox">
+        <h3>특별한 카드</h3>
+        <ul>
+          <li><b>t, <span class="ov">t</span> (꼭대기 쿼크)</b> — 뽑는 즉시 모두에게 보이고 버린 뒤 1장을 더 뽑는다. 약 5×10⁻²⁵초 만에 붕괴해 하드론을 만들 틈이 없기 때문이다.</li>
+          <li><b>반물질 소멸</b>(2장) — 손에 들고 있다가 내 차례에 쓴다. 상대에게 짝이 맞는 쿼크가 없으면 반쿼크는 돌려받고 행동 카드만 버린다.</li>
+          <li><b>보존 법칙 챌린지</b>(2장) — 뽑으면 바로 문제를 읽는다. 모두 동시에 ○/× 손짓! 정답은 카드 아래에 거꾸로 적혀 있다. 맞힌 사람은 더미에서 1장씩, 까닭(전하·바리온수)을 가장 먼저 바르게 말한 사람은 1장 더 뽑는다.</li>
+        </ul>
+      </section>
+      <section class="rbox">
+        <h3>게임 끝과 점수</h3>
+        <p>주문서가 모두 완성되거나 정한 시간이 끝나면 게임 끝. 더미가 떨어지면 버린 카드를 섞어 다시 쓴다. 주문서 점수의 합이 가장 큰 사람이 이긴다(같으면 주문서가 많은 사람).</p>
+        <table class="score-t">
+          <tr><th>흔함 2점</th><td>p, n, π⁺, π⁻</td></tr>
+          <tr><th>보통 3점</th><td>K⁺, K⁰, Λ⁰, Σ⁺</td></tr>
+          <tr><th>희귀 4점</th><td>Δ⁺⁺, J/ψ, Υ</td></tr>
+          <tr><th>전설 5점</th><td>Ω⁻</td></tr>
+        </table>
+      </section>
+      <section class="rbox">
+        <h3>바꿔 하는 판 (1차시용)</h3>
+        <ul>
+          <li><b>짧은 판(15분)</b> — 행동 카드를 빼고 주문서는 p, n, π⁺, π⁻, K⁺, Λ⁰, Δ⁺⁺, J/ψ 8장만. 처음에 6장씩 받는다.</li>
+          <li><b>협동 판</b> — 모둠 전체가 한 팀. 손 카드를 모두 펼치고 10분 동안 주문서를 몇 장 완성하는지 다른 모둠과 겨룬다.</li>
+          <li><b>고수 판</b> — 주문서 아래 레시피 칸을 보라색 선에서 뒤로 접어 가리고, 전하·단서만 보고 조합을 찾는다.</li>
+          <li><b>도감 놀이(5분)</b> — 입자 카드 23장을 쿼크·반쿼크·렙톤·보손으로 나누고, 질량 순서로 줄 세운다.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+  <section class="rbox rex">
+    <h3>제작 예시 — 이렇게 소리 내어 계산해요</h3>
+    <div class="ex-row">
+      <div class="ex"><div class="oc-recipe"><span>u</span><span>u</span><span>d</span></div><p><b>양성자 p</b><br>+2/3 + 2/3 − 1/3 = <b>+1</b><br>바리온수 1/3 × 3 = <b>1</b> → 완성!</p></div>
+      <div class="ex"><div class="oc-recipe"><span>u</span><span class="a"><span class="ov">d</span></span></div><p><b>파이 플러스 π⁺</b><br>+2/3 + 1/3 = <b>+1</b><br>바리온수 1/3 − 1/3 = <b>0</b> → 완성!</p></div>
+      <div class="ex ex-bad"><div class="oc-recipe"><span>u</span><span>d</span></div><p><b>u + d ?</b><br>+2/3 − 1/3 = <b>+1/3</b><br>정수가 아니고 쿼크 2개 → 하드론이 될 수 없다</p></div>
+      <div class="ex"><div class="ex-cells"><i>+</i><i>+</i><i>+</i><i>+</i><i>−</i></div><p><b>칸 세기 요령</b><br>재료 카드의 ‘전하 칸’(1칸 = 1/3)을 더해 3칸, 0칸, −3칸처럼 <b>3의 배수</b>가 되면 정수 전하(uud: +2 +2 −1 = 3칸 = +1).</p></div>
+    </div>
+  </section>
+  <footer class="sheet-foot"><span>키트 K01 하드론 공방 · 규칙서</span><span>먼저 읽고, 카드는 2~9쪽</span></footer>
+</article>
+<article class="sheet sheet--cards"><header class="sheet-head"><h2>입자 카드 ① 쿼크와 반쿼크</h2><span class="kit-no">CERN 탐구 교실 · 키트 K01 · 2/10</span></header>
+  <div class="card-grid"><div class="pcard pc ">
+  <div class="pc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">u</div>
+    <div class="pc-name">위 쿼크<small>up</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M28.96 4.2 L27.56 1.2 L30.36 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>2.2 MeV/c²</td></tr><tr><th>전하</th><td>+2/3 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>바리온수</th><td>+1/3</td></tr></table>
+    <p class="pc-fact">가장 가벼운 쿼크. 양성자(uud)와 중성자(udd)를 이룬다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">d</div>
+    <div class="pc-name">아래 쿼크<small>down</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M30.36 4.2 L28.96 1.2 L31.76 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>4.7 MeV/c²</td></tr><tr><th>전하</th><td>−1/3 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>바리온수</th><td>+1/3</td></tr></table>
+    <p class="pc-fact">중성자가 베타 붕괴할 때 d 쿼크 하나가 u 쿼크로 바뀐다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 2세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">c</div>
+    <div class="pc-name">맵시 쿼크<small>charm</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M40.69 4.2 L39.29 1.2 L42.09 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>1.27 GeV/c²</td></tr><tr><th>전하</th><td>+2/3 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>바리온수</th><td>+1/3</td></tr></table>
+    <p class="pc-fact">1974년 J/ψ 입자(c<span class="ov">c</span>)가 발견되면서 존재가 확인되었다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 2세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">s</div>
+    <div class="pc-name">기묘 쿼크<small>strange</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M35.91 4.2 L34.51 1.2 L37.31 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>95 MeV/c²</td></tr><tr><th>전하</th><td>−1/3 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>바리온수</th><td>+1/3</td></tr></table>
+    <p class="pc-fact">우주선에서 처음 발견된 ‘기묘한’ 입자(K 중간자 등) 속에 있다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 3세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">t</div>
+    <div class="pc-name">꼭대기 쿼크<small>top</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M49.76 4.2 L48.36 1.2 L51.16 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>172.7 GeV/c²</td></tr><tr><th>전하</th><td>+2/3 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>바리온수</th><td>+1/3</td></tr></table>
+    <p class="pc-fact">가장 무거운 기본 입자. 너무 빨리 붕괴해 하드론을 만들지 못한다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 3세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">b</div>
+    <div class="pc-name">바닥 쿼크<small>bottom</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M42.89 4.2 L41.49 1.2 L44.29 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>4.18 GeV/c²</td></tr><tr><th>전하</th><td>−1/3 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>바리온수</th><td>+1/3</td></tr></table>
+    <p class="pc-fact">1977년 Υ(b<span class="ov">b</span>) 발견으로 확인. LHCb 실험의 주인공이다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 1세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym"><span class="ov">u</span></div>
+    <div class="pc-name">반위 쿼크<small>anti-up</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M28.96 4.2 L27.56 1.2 L30.36 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>2.2 MeV/c²</td></tr><tr><th>전하</th><td>−2/3 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>바리온수</th><td>−1/3</td></tr></table>
+    <p class="pc-fact">u의 반입자. 질량은 같고 전하·바리온수의 부호가 반대다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 1세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym"><span class="ov">d</span></div>
+    <div class="pc-name">반아래 쿼크<small>anti-down</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M30.36 4.2 L28.96 1.2 L31.76 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>4.7 MeV/c²</td></tr><tr><th>전하</th><td>+1/3 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>바리온수</th><td>−1/3</td></tr></table>
+    <p class="pc-fact">반쿼크라고 모두 음전하는 아니다. π⁺(u<span class="ov">d</span>) 속에 있다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 2세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym"><span class="ov">c</span></div>
+    <div class="pc-name">반맵시 쿼크<small>anti-charm</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M40.69 4.2 L39.29 1.2 L42.09 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>1.27 GeV/c²</td></tr><tr><th>전하</th><td>−2/3 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>바리온수</th><td>−1/3</td></tr></table>
+    <p class="pc-fact">c와 짝을 이루면 J/ψ(c<span class="ov">c</span>) 같은 ‘차모늄’이 된다.</p>
+  </div>
+</div></div><footer class="sheet-foot"><span>키트 K01 · 표준모형 입자 카드 9장 · 뒷면은 8쪽</span><span>✂ 굵은 점선을 따라 자르세요</span></footer></article>
+<article class="sheet sheet--cards"><header class="sheet-head"><h2>입자 카드 ② 반쿼크와 렙톤</h2><span class="kit-no">CERN 탐구 교실 · 키트 K01 · 3/10</span></header>
+  <div class="card-grid"><div class="pcard pc ">
+  <div class="pc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 2세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym"><span class="ov">s</span></div>
+    <div class="pc-name">반기묘 쿼크<small>anti-strange</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M35.91 4.2 L34.51 1.2 L37.31 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>95 MeV/c²</td></tr><tr><th>전하</th><td>+1/3 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>바리온수</th><td>−1/3</td></tr></table>
+    <p class="pc-fact">K⁺ 중간자(u<span class="ov">s</span>) 속에 들어 있다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 3세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym"><span class="ov">t</span></div>
+    <div class="pc-name">반꼭대기 쿼크<small>anti-top</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M49.76 4.2 L48.36 1.2 L51.16 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>172.7 GeV/c²</td></tr><tr><th>전하</th><td>−2/3 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>바리온수</th><td>−1/3</td></tr></table>
+    <p class="pc-fact">LHC에서는 t와 <span class="ov">t</span>가 쌍으로 만들어지는 사건이 많이 관측된다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 3세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym"><span class="ov">b</span></div>
+    <div class="pc-name">반바닥 쿼크<small>anti-bottom</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M42.89 4.2 L41.49 1.2 L44.29 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>4.18 GeV/c²</td></tr><tr><th>전하</th><td>+1/3 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>바리온수</th><td>−1/3</td></tr></table>
+    <p class="pc-fact">B⁺ 중간자(u<span class="ov">b</span>)는 LHCb가 연구하는 대표 입자다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-l"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-lepton"/></svg><span>렙톤 · 1세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">e<sup>−</sup></div>
+    <div class="pc-name">전자<small>electron</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M26.26 4.2 L24.86 1.2 L27.66 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>0.511 MeV/c²</td></tr><tr><th>전하</th><td>−1 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>렙톤수</th><td>+1</td></tr></table>
+    <p class="pc-fact">1897년 톰슨이 발견한 첫 기본 입자. 원자의 화학적 성질을 정한다.</p>
+  </div>
+</div><div class="pcard pc pc-nu">
+  <div class="pc-band band-l"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-nu"/></svg><span>렙톤 · 1세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">ν<sub>e</sub></div>
+    <div class="pc-name">전자 중성미자<small>electron neutrino</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M2 1.3 L5.5 1.3 L5.5 3.3 L2 3.3 Z" fill="url(#k01-hatch)" stroke="#111522" stroke-width=".3"/><text x="7" y="3.1" font-size="2.3">1 eV보다 작은 어딘가</text></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>< 1 eV 수준<br>(정확한 값 미정)</td></tr><tr><th>전하</th><td>0</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>렙톤수</th><td>+1</td></tr></table>
+    <p class="pc-fact">1956년 원자로 실험에서 처음 검출. 전하가 없어 거의 모든 것을 통과한다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-l"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-lepton"/></svg><span>렙톤 · 2세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">μ<sup>−</sup></div>
+    <div class="pc-name">뮤온<small>muon</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M36.10 4.2 L34.70 1.2 L37.50 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>105.7 MeV/c²</td></tr><tr><th>전하</th><td>−1 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>렙톤수</th><td>+1</td></tr></table>
+    <p class="pc-fact">전자보다 약 207배 무겁고 수명은 2.2 μs. 우주선 뮤온이 지금도 교실을 지난다.</p>
+  </div>
+</div><div class="pcard pc pc-nu">
+  <div class="pc-band band-l"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-nu"/></svg><span>렙톤 · 2세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">ν<sub>μ</sub></div>
+    <div class="pc-name">뮤온 중성미자<small>muon neutrino</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M2 1.3 L5.5 1.3 L5.5 3.3 L2 3.3 Z" fill="url(#k01-hatch)" stroke="#111522" stroke-width=".3"/><text x="7" y="3.1" font-size="2.3">1 eV보다 작은 어딘가</text></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>< 1 eV 수준<br>(정확한 값 미정)</td></tr><tr><th>전하</th><td>0</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>렙톤수</th><td>+1</td></tr></table>
+    <p class="pc-fact">1962년 발견. 중성미자에도 여러 종류(맛깔)가 있음을 보였다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-l"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-lepton"/></svg><span>렙톤 · 3세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">τ<sup>−</sup></div>
+    <div class="pc-name">타우<small>tau</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M41.31 4.2 L39.91 1.2 L42.71 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>1.777 GeV/c²</td></tr><tr><th>전하</th><td>−1 e</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>렙톤수</th><td>+1</td></tr></table>
+    <p class="pc-fact">1975년 발견. 양성자보다 약 2배 무거운 렙톤이다.</p>
+  </div>
+</div><div class="pcard pc pc-nu">
+  <div class="pc-band band-l"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-nu"/></svg><span>렙톤 · 3세대</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">ν<sub>τ</sub></div>
+    <div class="pc-name">타우 중성미자<small>tau neutrino</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M2 1.3 L5.5 1.3 L5.5 3.3 L2 3.3 Z" fill="url(#k01-hatch)" stroke="#111522" stroke-width=".3"/><text x="7" y="3.1" font-size="2.3">1 eV보다 작은 어딘가</text></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>< 1 eV 수준<br>(정확한 값 미정)</td></tr><tr><th>전하</th><td>0</td></tr><tr><th>스핀</th><td>1/2</td></tr><tr><th>렙톤수</th><td>+1</td></tr></table>
+    <p class="pc-fact">2000년 미국 페르미 연구소 DONUT 실험에서 직접 검출되었다.</p>
+  </div>
+</div></div><footer class="sheet-foot"><span>키트 K01 · 표준모형 입자 카드 9장 · 뒷면은 8쪽</span><span>✂ 굵은 점선을 따라 자르세요</span></footer></article>
+<article class="sheet sheet--cards"><header class="sheet-head"><h2>입자 카드 ③ 보손과 내가 만드는 카드</h2><span class="kit-no">CERN 탐구 교실 · 키트 K01 · 4/10</span></header>
+  <div class="card-grid"><div class="pcard pc ">
+  <div class="pc-band band-b"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-boson"/></svg><span>게이지 보손 · 전자기력</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">γ</div>
+    <div class="pc-name">광자<small>photon</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><text x="27.5" y="2.6" text-anchor="middle" font-size="2.4">질량 0 — 눈금 위에 없음</text></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>0</td></tr><tr><th>전하</th><td>0</td></tr><tr><th>스핀</th><td>1</td></tr><tr><th>전달하는 힘</th><td>전자기력</td></tr></table>
+    <p class="pc-fact">빛의 알갱이. 전하를 띤 입자 사이의 전자기력을 전달한다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-b"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-boson"/></svg><span>게이지 보손 · 강한 힘</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">g</div>
+    <div class="pc-name">글루온<small>gluon</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><text x="27.5" y="2.6" text-anchor="middle" font-size="2.4">질량 0 — 눈금 위에 없음</text></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>0</td></tr><tr><th>전하</th><td>0</td></tr><tr><th>스핀</th><td>1</td></tr><tr><th>전달하는 힘</th><td>강한 힘</td></tr></table>
+    <p class="pc-fact">쿼크를 묶어 양성자를 만든다. 1979년 독일 DESY에서 확인.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-b"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-boson"/></svg><span>게이지 보손 · 약한 힘</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">Z<sup>0</sup></div>
+    <div class="pc-name">Z 보손<small>Z boson</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M48.58 4.2 L47.18 1.2 L49.98 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>91.2 GeV/c²</td></tr><tr><th>전하</th><td>0</td></tr><tr><th>스핀</th><td>1</td></tr><tr><th>전달하는 힘</th><td>약한 힘</td></tr></table>
+    <p class="pc-fact">1983년 CERN의 UA1·UA2 실험에서 발견되었다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-b"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-boson"/></svg><span>게이지 보손 · 약한 힘</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">W<sup>±</sup></div>
+    <div class="pc-name">W 보손<small>W boson</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M48.35 4.2 L46.95 1.2 L49.75 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>80.4 GeV/c²</td></tr><tr><th>전하</th><td>±1 e</td></tr><tr><th>스핀</th><td>1</td></tr><tr><th>전달하는 힘</th><td>약한 힘</td></tr></table>
+    <p class="pc-fact">1983년 CERN에서 발견. 베타 붕괴를 일으키는 약한 힘을 전달한다.</p>
+  </div>
+</div><div class="pcard pc ">
+  <div class="pc-band band-h"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-higgs"/></svg><span>스칼라 보손 · 질량의 근원</span></div>
+  <div class="pc-body">
+    <div class="pc-sym">H</div>
+    <div class="pc-name">힉스 보손<small>Higgs boson</small></div>
+    <svg class="pc-bar" viewBox="0 0 55 8.6" aria-label="질량 눈금"><line x1="2" y1="4.5" x2="53" y2="4.5" stroke="#111522" stroke-width=".5"/><line x1="2" y1="3.6" x2="2" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="2" y="8.1" text-anchor="middle" font-size="2.3">eV</text><line x1="14.75" y1="3.6" x2="14.75" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="14.75" y="8.1" text-anchor="middle" font-size="2.3">keV</text><line x1="27.5" y1="3.6" x2="27.5" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="27.5" y="8.1" text-anchor="middle" font-size="2.3">MeV</text><line x1="40.25" y1="3.6" x2="40.25" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="40.25" y="8.1" text-anchor="middle" font-size="2.3">GeV</text><line x1="53" y1="3.6" x2="53" y2="5.4" stroke="#111522" stroke-width=".3"/><text x="53" y="8.1" text-anchor="middle" font-size="2.3">TeV</text><path d="M49.16 4.2 L47.76 1.2 L50.56 1.2 Z" fill="#111522"/></svg>
+    <table class="pc-stats"><tr><th>질량</th><td>125.1 GeV/c²</td></tr><tr><th>전하</th><td>0</td></tr><tr><th>스핀</th><td>0</td></tr><tr><th>발견</th><td>2012년 CERN</td></tr></table>
+    <p class="pc-fact">2012년 7월 4일 ATLAS·CMS가 발견 발표. 힉스 장이 입자에 질량을 준다.</p>
+  </div>
+</div><div class="pcard pc pc-blank">
+  <div class="pc-band band-blank"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-star"/></svg><span>내가 만드는 카드 · 종류:</span></div>
+  <div class="pc-body">
+    <div class="blank-sym">기호</div>
+    <div class="blank-line">이름</div>
+    <table class="pc-stats"><tr><th>질량</th><td></td></tr><tr><th>전하</th><td></td></tr><tr><th>스핀</th><td></td></tr><tr><th>바리온수</th><td></td></tr></table>
+    <div class="blank-fact">한 줄 사실</div>
+  </div>
+</div><div class="pcard pc pc-blank">
+  <div class="pc-band band-blank"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-star"/></svg><span>내가 만드는 카드 · 종류:</span></div>
+  <div class="pc-body">
+    <div class="blank-sym">기호</div>
+    <div class="blank-line">이름</div>
+    <table class="pc-stats"><tr><th>질량</th><td></td></tr><tr><th>전하</th><td></td></tr><tr><th>스핀</th><td></td></tr><tr><th>바리온수</th><td></td></tr></table>
+    <div class="blank-fact">한 줄 사실</div>
+  </div>
+</div><div class="pcard pc pc-blank">
+  <div class="pc-band band-blank"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-star"/></svg><span>내가 만드는 카드 · 종류:</span></div>
+  <div class="pc-body">
+    <div class="blank-sym">기호</div>
+    <div class="blank-line">이름</div>
+    <table class="pc-stats"><tr><th>질량</th><td></td></tr><tr><th>전하</th><td></td></tr><tr><th>스핀</th><td></td></tr><tr><th>바리온수</th><td></td></tr></table>
+    <div class="blank-fact">한 줄 사실</div>
+  </div>
+</div><div class="pcard pc pc-blank">
+  <div class="pc-band band-blank"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-star"/></svg><span>내가 만드는 카드 · 종류:</span></div>
+  <div class="pc-body">
+    <div class="blank-sym">기호</div>
+    <div class="blank-line">이름</div>
+    <table class="pc-stats"><tr><th>질량</th><td></td></tr><tr><th>전하</th><td></td></tr><tr><th>스핀</th><td></td></tr><tr><th>바리온수</th><td></td></tr></table>
+    <div class="blank-fact">한 줄 사실</div>
+  </div>
+</div></div><footer class="sheet-foot"><span>키트 K01 · 보손 5장 + 빈 카드 4장(양전자, 반양성자, 펜타쿼크 등) · 뒷면은 8쪽</span><span>✂ 굵은 점선을 따라 자르세요</span></footer></article>
+<article class="sheet sheet--cards"><header class="sheet-head"><h2>주문서 12장과 행동 카드 4장</h2><span class="kit-no">CERN 탐구 교실 · 키트 K01 · 5/10</span></header>
+  <div class="card-grid card-grid--small"><div class="pcard gc oc">
+  <div class="gc-band band-o"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg><span>주문서 · 바리온</span><b class="pts">2점</b></div>
+  <div class="gc-body">
+    <div class="oc-rar"><span class="pips">●○○○</span> 흔함</div>
+    <div class="oc-sym">p</div>
+    <div class="oc-name">양성자</div>
+    <div class="oc-clue">전하 +1 · 쿼크 3개<br>단서: u·d만</div>
+    <div class="oc-fold"><span>고수 판: 이 선에서 뒤로 접기</span></div>
+    <div class="oc-recipe"><span>u</span><span>u</span><span>d</span></div>
+    <div class="oc-mass">938.3 MeV/c²</div>
+  </div>
+</div><div class="pcard gc oc">
+  <div class="gc-band band-o"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg><span>주문서 · 바리온</span><b class="pts">2점</b></div>
+  <div class="gc-body">
+    <div class="oc-rar"><span class="pips">●○○○</span> 흔함</div>
+    <div class="oc-sym">n</div>
+    <div class="oc-name">중성자</div>
+    <div class="oc-clue">전하 0 · 쿼크 3개<br>단서: u·d만</div>
+    <div class="oc-fold"><span>고수 판: 이 선에서 뒤로 접기</span></div>
+    <div class="oc-recipe"><span>u</span><span>d</span><span>d</span></div>
+    <div class="oc-mass">939.6 MeV/c²</div>
+  </div>
+</div><div class="pcard gc oc">
+  <div class="gc-band band-o"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg><span>주문서 · 메손</span><b class="pts">2점</b></div>
+  <div class="gc-body">
+    <div class="oc-rar"><span class="pips">●○○○</span> 흔함</div>
+    <div class="oc-sym">π<sup>+</sup></div>
+    <div class="oc-name">파이 플러스</div>
+    <div class="oc-clue">전하 +1 · 쿼크+반쿼크<br>단서: u·d 종류만</div>
+    <div class="oc-fold"><span>고수 판: 이 선에서 뒤로 접기</span></div>
+    <div class="oc-recipe"><span>u</span><span class="a"><span class="ov">d</span></span></div>
+    <div class="oc-mass">139.6 MeV/c²</div>
+  </div>
+</div><div class="pcard gc oc">
+  <div class="gc-band band-o"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg><span>주문서 · 메손</span><b class="pts">2점</b></div>
+  <div class="gc-body">
+    <div class="oc-rar"><span class="pips">●○○○</span> 흔함</div>
+    <div class="oc-sym">π<sup>−</sup></div>
+    <div class="oc-name">파이 마이너스</div>
+    <div class="oc-clue">전하 −1 · 쿼크+반쿼크<br>단서: u·d 종류만</div>
+    <div class="oc-fold"><span>고수 판: 이 선에서 뒤로 접기</span></div>
+    <div class="oc-recipe"><span>d</span><span class="a"><span class="ov">u</span></span></div>
+    <div class="oc-mass">139.6 MeV/c²</div>
+  </div>
+</div><div class="pcard gc oc">
+  <div class="gc-band band-o"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg><span>주문서 · 메손</span><b class="pts">3점</b></div>
+  <div class="gc-body">
+    <div class="oc-rar"><span class="pips">●●○○</span> 보통</div>
+    <div class="oc-sym">K<sup>+</sup></div>
+    <div class="oc-name">케이 플러스</div>
+    <div class="oc-clue">전하 +1 · 쿼크+반쿼크<br>단서: 반쿼크는 s 종류</div>
+    <div class="oc-fold"><span>고수 판: 이 선에서 뒤로 접기</span></div>
+    <div class="oc-recipe"><span>u</span><span class="a"><span class="ov">s</span></span></div>
+    <div class="oc-mass">493.7 MeV/c²</div>
+  </div>
+</div><div class="pcard gc oc">
+  <div class="gc-band band-o"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg><span>주문서 · 메손</span><b class="pts">3점</b></div>
+  <div class="gc-body">
+    <div class="oc-rar"><span class="pips">●●○○</span> 보통</div>
+    <div class="oc-sym">K<sup>0</sup></div>
+    <div class="oc-name">케이 영</div>
+    <div class="oc-clue">전하 0 · 쿼크+반쿼크<br>단서: 반쿼크는 s 종류</div>
+    <div class="oc-fold"><span>고수 판: 이 선에서 뒤로 접기</span></div>
+    <div class="oc-recipe"><span>d</span><span class="a"><span class="ov">s</span></span></div>
+    <div class="oc-mass">497.6 MeV/c²</div>
+  </div>
+</div><div class="pcard gc oc">
+  <div class="gc-band band-o"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg><span>주문서 · 바리온</span><b class="pts">3점</b></div>
+  <div class="gc-body">
+    <div class="oc-rar"><span class="pips">●●○○</span> 보통</div>
+    <div class="oc-sym">Λ<sup>0</sup></div>
+    <div class="oc-name">람다</div>
+    <div class="oc-clue">전하 0 · 쿼크 3개<br>단서: s 1개</div>
+    <div class="oc-fold"><span>고수 판: 이 선에서 뒤로 접기</span></div>
+    <div class="oc-recipe"><span>u</span><span>d</span><span>s</span></div>
+    <div class="oc-mass">1115.7 MeV/c²</div>
+  </div>
+</div><div class="pcard gc oc">
+  <div class="gc-band band-o"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg><span>주문서 · 바리온</span><b class="pts">3점</b></div>
+  <div class="gc-body">
+    <div class="oc-rar"><span class="pips">●●○○</span> 보통</div>
+    <div class="oc-sym">Σ<sup>+</sup></div>
+    <div class="oc-name">시그마 플러스</div>
+    <div class="oc-clue">전하 +1 · 쿼크 3개<br>단서: s 1개</div>
+    <div class="oc-fold"><span>고수 판: 이 선에서 뒤로 접기</span></div>
+    <div class="oc-recipe"><span>u</span><span>u</span><span>s</span></div>
+    <div class="oc-mass">1189.4 MeV/c²</div>
+  </div>
+</div><div class="pcard gc oc">
+  <div class="gc-band band-o"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg><span>주문서 · 바리온</span><b class="pts">4점</b></div>
+  <div class="gc-body">
+    <div class="oc-rar"><span class="pips">●●●○</span> 희귀</div>
+    <div class="oc-sym">Δ<sup>++</sup></div>
+    <div class="oc-name">델타</div>
+    <div class="oc-clue">전하 +2 · 쿼크 3개<br>단서: 한 종류만</div>
+    <div class="oc-fold"><span>고수 판: 이 선에서 뒤로 접기</span></div>
+    <div class="oc-recipe"><span>u</span><span>u</span><span>u</span></div>
+    <div class="oc-mass">1232 MeV/c²</div>
+  </div>
+</div><div class="pcard gc oc">
+  <div class="gc-band band-o"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg><span>주문서 · 메손</span><b class="pts">4점</b></div>
+  <div class="gc-body">
+    <div class="oc-rar"><span class="pips">●●●○</span> 희귀</div>
+    <div class="oc-sym">J/ψ</div>
+    <div class="oc-name">제이프사이</div>
+    <div class="oc-clue">전하 0 · 쿼크+반쿼크<br>단서: c 쿼크와 그 반쿼크</div>
+    <div class="oc-fold"><span>고수 판: 이 선에서 뒤로 접기</span></div>
+    <div class="oc-recipe"><span>c</span><span class="a"><span class="ov">c</span></span></div>
+    <div class="oc-mass">3.097 GeV/c²</div>
+  </div>
+</div><div class="pcard gc oc">
+  <div class="gc-band band-o"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg><span>주문서 · 메손</span><b class="pts">4점</b></div>
+  <div class="gc-body">
+    <div class="oc-rar"><span class="pips">●●●○</span> 희귀</div>
+    <div class="oc-sym">Υ</div>
+    <div class="oc-name">입실론</div>
+    <div class="oc-clue">전하 0 · 쿼크+반쿼크<br>단서: b 쿼크와 그 반쿼크</div>
+    <div class="oc-fold"><span>고수 판: 이 선에서 뒤로 접기</span></div>
+    <div class="oc-recipe"><span>b</span><span class="a"><span class="ov">b</span></span></div>
+    <div class="oc-mass">9.460 GeV/c²</div>
+  </div>
+</div><div class="pcard gc oc">
+  <div class="gc-band band-o"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-order"/></svg><span>주문서 · 바리온</span><b class="pts">5점</b></div>
+  <div class="gc-body">
+    <div class="oc-rar"><span class="pips">●●●●</span> 전설</div>
+    <div class="oc-sym">Ω<sup>−</sup></div>
+    <div class="oc-name">오메가 마이너스</div>
+    <div class="oc-clue">전하 −1 · 쿼크 3개<br>단서: s만</div>
+    <div class="oc-fold"><span>고수 판: 이 선에서 뒤로 접기</span></div>
+    <div class="oc-recipe"><span>s</span><span>s</span><span>s</span></div>
+    <div class="oc-mass">1672.5 MeV/c²</div>
+  </div>
+</div><div class="pcard gc ac">
+  <div class="gc-band band-act"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-act"/></svg><span>행동 카드</span></div>
+  <div class="gc-body">
+    <div class="ac-title">반물질 소멸</div>
+    <svg class="ac-pic" viewBox="0 0 40 12" aria-hidden="true"><circle cx="7" cy="6" r="4.2" fill="none" stroke="currentColor" stroke-width=".8"/><text x="7" y="7.8" text-anchor="middle" font-size="5">q</text><circle cx="19" cy="6" r="4.2" fill="currentColor"/><text x="19" y="8.2" text-anchor="middle" font-size="5" style="fill:#fff">q</text><line x1="17.6" y1="3.6" x2="20.4" y2="3.6" stroke="#fff" stroke-width=".5"/><path d="M25 6 q1.5 -3 3 0 t3 0 t3 0" fill="none" stroke="currentColor" stroke-width=".8"/><text x="38" y="7.8" text-anchor="middle" font-size="5">γ</text></svg>
+    <p class="ac-text">다른 사람 1명을 고르고 내 반쿼크 1장을 보여 준다. 그 사람은 짝이 맞는 쿼크(예: ū ↔ u)가 있으면 1장을 버리고, 내 반쿼크도 함께 버린다.</p>
+    <p class="ac-note">입자와 반입자가 만나면 사라지고 빛(에너지)이 된다.</p>
+  </div>
+</div><div class="pcard gc ac">
+  <div class="gc-band band-act"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-act"/></svg><span>행동 카드</span></div>
+  <div class="gc-body">
+    <div class="ac-title">반물질 소멸</div>
+    <svg class="ac-pic" viewBox="0 0 40 12" aria-hidden="true"><circle cx="7" cy="6" r="4.2" fill="none" stroke="currentColor" stroke-width=".8"/><text x="7" y="7.8" text-anchor="middle" font-size="5">q</text><circle cx="19" cy="6" r="4.2" fill="currentColor"/><text x="19" y="8.2" text-anchor="middle" font-size="5" style="fill:#fff">q</text><line x1="17.6" y1="3.6" x2="20.4" y2="3.6" stroke="#fff" stroke-width=".5"/><path d="M25 6 q1.5 -3 3 0 t3 0 t3 0" fill="none" stroke="currentColor" stroke-width=".8"/><text x="38" y="7.8" text-anchor="middle" font-size="5">γ</text></svg>
+    <p class="ac-text">다른 사람 1명을 고르고 내 반쿼크 1장을 보여 준다. 그 사람은 짝이 맞는 쿼크(예: ū ↔ u)가 있으면 1장을 버리고, 내 반쿼크도 함께 버린다.</p>
+    <p class="ac-note">입자와 반입자가 만나면 사라지고 빛(에너지)이 된다.</p>
+  </div>
+</div><div class="pcard gc ac">
+  <div class="gc-band band-act"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-act"/></svg><span>행동 카드</span></div>
+  <div class="gc-body">
+    <div class="ac-title">보존 법칙 챌린지</div>
+    <p class="ac-text">뽑으면 바로 읽어 준다. 이 붕괴는 일어날 수 있을까? 다 같이 ○/×!</p>
+    <div class="ac-eq">n → p + e⁻ + <span class="ov">ν</span><sub>e</sub></div>
+    <p class="ac-ans">정답: ○ 가능(베타 붕괴). 전하 0 = +1 − 1 + 0, 바리온수 1 = 1</p>
+  </div>
+</div><div class="pcard gc ac">
+  <div class="gc-band band-act"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-act"/></svg><span>행동 카드</span></div>
+  <div class="gc-body">
+    <div class="ac-title">보존 법칙 챌린지</div>
+    <p class="ac-text">뽑으면 바로 읽어 준다. 이 붕괴는 일어날 수 있을까? 다 같이 ○/×!</p>
+    <div class="ac-eq">p → e⁺ + γ</div>
+    <p class="ac-ans">정답: × 불가능. 전하는 +1로 같지만 바리온수가 1 → 0으로 바뀐다</p>
+  </div>
+</div></div><footer class="sheet-foot"><span>키트 K01 · 주문서는 앞면으로 게시판에, 행동 카드는 재료 더미에 섞기 · 뒷면은 9쪽</span><span>✂ 굵은 점선을 따라 자르세요</span></footer></article>
+<article class="sheet sheet--cards"><header class="sheet-head"><h2>재료 카드 ① (16장)</h2><span class="kit-no">CERN 탐구 교실 · 키트 K01 · 6/10</span></header>
+  <div class="card-grid card-grid--small"><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">u</div>
+    <div class="ig-name">위 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+2/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">u</div>
+    <div class="ig-name">위 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+2/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">u</div>
+    <div class="ig-name">위 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+2/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">u</div>
+    <div class="ig-name">위 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+2/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">u</div>
+    <div class="ig-name">위 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+2/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">u</div>
+    <div class="ig-name">위 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+2/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">u</div>
+    <div class="ig-name">위 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+2/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">d</div>
+    <div class="ig-name">아래 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−1/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">d</div>
+    <div class="ig-name">아래 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−1/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">d</div>
+    <div class="ig-name">아래 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−1/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">d</div>
+    <div class="ig-name">아래 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−1/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">d</div>
+    <div class="ig-name">아래 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−1/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 2세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">s</div>
+    <div class="ig-name">기묘 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−1/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 2세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">s</div>
+    <div class="ig-name">기묘 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−1/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ig-t">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 3세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">t</div>
+    <div class="ig-name">꼭대기 쿼크</div>
+    <p class="ig-top">뽑으면 즉시 공개하고 버린 뒤 1장 더! 약 5×10⁻²⁵초 만에 붕괴해 하드론을 만들 시간이 없다.</p>
+  </div>
+</div><div class="pcard gc ig ig-a ig-t">
+  <div class="gc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 3세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym"><span class="ov">t</span></div>
+    <div class="ig-name">반꼭대기 쿼크</div>
+    <p class="ig-top">뽑으면 즉시 공개하고 버린 뒤 1장 더! 약 5×10⁻²⁵초 만에 붕괴해 하드론을 만들 시간이 없다.</p>
+  </div>
+</div></div><footer class="sheet-foot"><span>키트 K01 · u 7, d 5, s 2, t 1, <span class="ov">t</span> 1 · 뒷면은 9쪽</span><span>✂ 굵은 점선을 따라 자르세요</span></footer></article>
+<article class="sheet sheet--cards"><header class="sheet-head"><h2>재료 카드 ② (16장)</h2><span class="kit-no">CERN 탐구 교실 · 키트 K01 · 7/10</span></header>
+  <div class="card-grid card-grid--small"><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 2세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">s</div>
+    <div class="ig-name">기묘 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−1/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 2세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">s</div>
+    <div class="ig-name">기묘 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−1/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 2세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">c</div>
+    <div class="ig-name">맵시 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+2/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 2세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">c</div>
+    <div class="ig-name">맵시 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+2/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 3세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">b</div>
+    <div class="ig-name">바닥 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−1/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig  ">
+  <div class="gc-band band-q"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-quark"/></svg><span>쿼크 · 3세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym">b</div>
+    <div class="ig-name">바닥 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−1/3</b></div><div><small>바리온수</small><b>+1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig ig-a ">
+  <div class="gc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym"><span class="ov">u</span></div>
+    <div class="ig-name">반위 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−2/3</b></div><div><small>바리온수</small><b>−1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig ig-a ">
+  <div class="gc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym"><span class="ov">u</span></div>
+    <div class="ig-name">반위 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−2/3</b></div><div><small>바리온수</small><b>−1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig ig-a ">
+  <div class="gc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym"><span class="ov">d</span></div>
+    <div class="ig-name">반아래 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+1/3</b></div><div><small>바리온수</small><b>−1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig ig-a ">
+  <div class="gc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 1세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym"><span class="ov">d</span></div>
+    <div class="ig-name">반아래 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+1/3</b></div><div><small>바리온수</small><b>−1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig ig-a ">
+  <div class="gc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 2세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym"><span class="ov">s</span></div>
+    <div class="ig-name">반기묘 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+1/3</b></div><div><small>바리온수</small><b>−1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig ig-a ">
+  <div class="gc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 2세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym"><span class="ov">s</span></div>
+    <div class="ig-name">반기묘 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+1/3</b></div><div><small>바리온수</small><b>−1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig ig-a ">
+  <div class="gc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 2세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym"><span class="ov">c</span></div>
+    <div class="ig-name">반맵시 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−2/3</b></div><div><small>바리온수</small><b>−1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig ig-a ">
+  <div class="gc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 2세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym"><span class="ov">c</span></div>
+    <div class="ig-name">반맵시 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>−</i><i>−</i></div></div><div class="ig-vals"><div><small>전하</small><b>−2/3</b></div><div><small>바리온수</small><b>−1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig ig-a ">
+  <div class="gc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 3세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym"><span class="ov">b</span></div>
+    <div class="ig-name">반바닥 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+1/3</b></div><div><small>바리온수</small><b>−1/3</b></div></div>
+  </div>
+</div><div class="pcard gc ig ig-a ">
+  <div class="gc-band band-a"><svg class="ic " viewBox="0 0 20 20" aria-hidden="true"><use href="#i-anti"/></svg><span>반쿼크 · 3세대</span></div>
+  <div class="gc-body">
+    <div class="ig-sym"><span class="ov">b</span></div>
+    <div class="ig-name">반바닥 쿼크</div>
+    <div class="ig-cells"><small>전하 칸(1칸 = 1/3)</small><div><i>+</i></div></div><div class="ig-vals"><div><small>전하</small><b>+1/3</b></div><div><small>바리온수</small><b>−1/3</b></div></div>
+  </div>
+</div></div><footer class="sheet-foot"><span>키트 K01 · s 2, c 2, b 2, 반쿼크 ū <span class="ov">d</span> <span class="ov">s</span> <span class="ov">c</span> <span class="ov">b</span> 각 2 · 뒷면은 9쪽</span><span>✂ 굵은 점선을 따라 자르세요</span></footer></article>
+<article class="sheet sheet--cards"><header class="sheet-head"><h2>카드 뒷면 — 입자 카드용 (선택)</h2><span class="kit-no">CERN 탐구 교실 · 키트 K01 · 8/10</span></header>
+  <div class="card-grid"><div class="pcard cback"><svg viewBox="0 0 62 86" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="62" height="86" fill="url(#k01-hatch)"/>
+  <rect x="4" y="4" width="54" height="78" rx="3" fill="#fff" stroke="#111522" stroke-width=".6"/>
+  <rect x="6" y="6" width="50" height="74" rx="2" fill="none" stroke="#111522" stroke-width=".3"/>
+  <circle cx="31" cy="36" r="17" fill="none" stroke="#111522" stroke-width="1.2"/>
+  <circle cx="31" cy="36" r="13.5" fill="none" stroke="#6a3fb5" stroke-width=".5" stroke-dasharray="1.2 1"/>
+  <circle cx="31" cy="55.5" r="5" fill="none" stroke="#111522" stroke-width=".7"/>
+  <circle cx="31" cy="19" r="1.8" fill="#111522"/><circle cx="31" cy="53" r="1.8" fill="#111522"/>
+  <circle cx="14" cy="36" r="1.8" fill="#111522"/><circle cx="48" cy="36" r="1.8" fill="#111522"/>
+  <text x="31" y="38.6" text-anchor="middle" font-size="7" font-weight="700">LHC</text>
+  <text x="31" y="68" text-anchor="middle" font-size="5" font-weight="700">CERN 탐구 교실</text>
+  <text x="31" y="74" text-anchor="middle" font-size="3.4">표준모형 입자 카드</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 62 86" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="62" height="86" fill="url(#k01-hatch)"/>
+  <rect x="4" y="4" width="54" height="78" rx="3" fill="#fff" stroke="#111522" stroke-width=".6"/>
+  <rect x="6" y="6" width="50" height="74" rx="2" fill="none" stroke="#111522" stroke-width=".3"/>
+  <circle cx="31" cy="36" r="17" fill="none" stroke="#111522" stroke-width="1.2"/>
+  <circle cx="31" cy="36" r="13.5" fill="none" stroke="#6a3fb5" stroke-width=".5" stroke-dasharray="1.2 1"/>
+  <circle cx="31" cy="55.5" r="5" fill="none" stroke="#111522" stroke-width=".7"/>
+  <circle cx="31" cy="19" r="1.8" fill="#111522"/><circle cx="31" cy="53" r="1.8" fill="#111522"/>
+  <circle cx="14" cy="36" r="1.8" fill="#111522"/><circle cx="48" cy="36" r="1.8" fill="#111522"/>
+  <text x="31" y="38.6" text-anchor="middle" font-size="7" font-weight="700">LHC</text>
+  <text x="31" y="68" text-anchor="middle" font-size="5" font-weight="700">CERN 탐구 교실</text>
+  <text x="31" y="74" text-anchor="middle" font-size="3.4">표준모형 입자 카드</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 62 86" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="62" height="86" fill="url(#k01-hatch)"/>
+  <rect x="4" y="4" width="54" height="78" rx="3" fill="#fff" stroke="#111522" stroke-width=".6"/>
+  <rect x="6" y="6" width="50" height="74" rx="2" fill="none" stroke="#111522" stroke-width=".3"/>
+  <circle cx="31" cy="36" r="17" fill="none" stroke="#111522" stroke-width="1.2"/>
+  <circle cx="31" cy="36" r="13.5" fill="none" stroke="#6a3fb5" stroke-width=".5" stroke-dasharray="1.2 1"/>
+  <circle cx="31" cy="55.5" r="5" fill="none" stroke="#111522" stroke-width=".7"/>
+  <circle cx="31" cy="19" r="1.8" fill="#111522"/><circle cx="31" cy="53" r="1.8" fill="#111522"/>
+  <circle cx="14" cy="36" r="1.8" fill="#111522"/><circle cx="48" cy="36" r="1.8" fill="#111522"/>
+  <text x="31" y="38.6" text-anchor="middle" font-size="7" font-weight="700">LHC</text>
+  <text x="31" y="68" text-anchor="middle" font-size="5" font-weight="700">CERN 탐구 교실</text>
+  <text x="31" y="74" text-anchor="middle" font-size="3.4">표준모형 입자 카드</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 62 86" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="62" height="86" fill="url(#k01-hatch)"/>
+  <rect x="4" y="4" width="54" height="78" rx="3" fill="#fff" stroke="#111522" stroke-width=".6"/>
+  <rect x="6" y="6" width="50" height="74" rx="2" fill="none" stroke="#111522" stroke-width=".3"/>
+  <circle cx="31" cy="36" r="17" fill="none" stroke="#111522" stroke-width="1.2"/>
+  <circle cx="31" cy="36" r="13.5" fill="none" stroke="#6a3fb5" stroke-width=".5" stroke-dasharray="1.2 1"/>
+  <circle cx="31" cy="55.5" r="5" fill="none" stroke="#111522" stroke-width=".7"/>
+  <circle cx="31" cy="19" r="1.8" fill="#111522"/><circle cx="31" cy="53" r="1.8" fill="#111522"/>
+  <circle cx="14" cy="36" r="1.8" fill="#111522"/><circle cx="48" cy="36" r="1.8" fill="#111522"/>
+  <text x="31" y="38.6" text-anchor="middle" font-size="7" font-weight="700">LHC</text>
+  <text x="31" y="68" text-anchor="middle" font-size="5" font-weight="700">CERN 탐구 교실</text>
+  <text x="31" y="74" text-anchor="middle" font-size="3.4">표준모형 입자 카드</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 62 86" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="62" height="86" fill="url(#k01-hatch)"/>
+  <rect x="4" y="4" width="54" height="78" rx="3" fill="#fff" stroke="#111522" stroke-width=".6"/>
+  <rect x="6" y="6" width="50" height="74" rx="2" fill="none" stroke="#111522" stroke-width=".3"/>
+  <circle cx="31" cy="36" r="17" fill="none" stroke="#111522" stroke-width="1.2"/>
+  <circle cx="31" cy="36" r="13.5" fill="none" stroke="#6a3fb5" stroke-width=".5" stroke-dasharray="1.2 1"/>
+  <circle cx="31" cy="55.5" r="5" fill="none" stroke="#111522" stroke-width=".7"/>
+  <circle cx="31" cy="19" r="1.8" fill="#111522"/><circle cx="31" cy="53" r="1.8" fill="#111522"/>
+  <circle cx="14" cy="36" r="1.8" fill="#111522"/><circle cx="48" cy="36" r="1.8" fill="#111522"/>
+  <text x="31" y="38.6" text-anchor="middle" font-size="7" font-weight="700">LHC</text>
+  <text x="31" y="68" text-anchor="middle" font-size="5" font-weight="700">CERN 탐구 교실</text>
+  <text x="31" y="74" text-anchor="middle" font-size="3.4">표준모형 입자 카드</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 62 86" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="62" height="86" fill="url(#k01-hatch)"/>
+  <rect x="4" y="4" width="54" height="78" rx="3" fill="#fff" stroke="#111522" stroke-width=".6"/>
+  <rect x="6" y="6" width="50" height="74" rx="2" fill="none" stroke="#111522" stroke-width=".3"/>
+  <circle cx="31" cy="36" r="17" fill="none" stroke="#111522" stroke-width="1.2"/>
+  <circle cx="31" cy="36" r="13.5" fill="none" stroke="#6a3fb5" stroke-width=".5" stroke-dasharray="1.2 1"/>
+  <circle cx="31" cy="55.5" r="5" fill="none" stroke="#111522" stroke-width=".7"/>
+  <circle cx="31" cy="19" r="1.8" fill="#111522"/><circle cx="31" cy="53" r="1.8" fill="#111522"/>
+  <circle cx="14" cy="36" r="1.8" fill="#111522"/><circle cx="48" cy="36" r="1.8" fill="#111522"/>
+  <text x="31" y="38.6" text-anchor="middle" font-size="7" font-weight="700">LHC</text>
+  <text x="31" y="68" text-anchor="middle" font-size="5" font-weight="700">CERN 탐구 교실</text>
+  <text x="31" y="74" text-anchor="middle" font-size="3.4">표준모형 입자 카드</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 62 86" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="62" height="86" fill="url(#k01-hatch)"/>
+  <rect x="4" y="4" width="54" height="78" rx="3" fill="#fff" stroke="#111522" stroke-width=".6"/>
+  <rect x="6" y="6" width="50" height="74" rx="2" fill="none" stroke="#111522" stroke-width=".3"/>
+  <circle cx="31" cy="36" r="17" fill="none" stroke="#111522" stroke-width="1.2"/>
+  <circle cx="31" cy="36" r="13.5" fill="none" stroke="#6a3fb5" stroke-width=".5" stroke-dasharray="1.2 1"/>
+  <circle cx="31" cy="55.5" r="5" fill="none" stroke="#111522" stroke-width=".7"/>
+  <circle cx="31" cy="19" r="1.8" fill="#111522"/><circle cx="31" cy="53" r="1.8" fill="#111522"/>
+  <circle cx="14" cy="36" r="1.8" fill="#111522"/><circle cx="48" cy="36" r="1.8" fill="#111522"/>
+  <text x="31" y="38.6" text-anchor="middle" font-size="7" font-weight="700">LHC</text>
+  <text x="31" y="68" text-anchor="middle" font-size="5" font-weight="700">CERN 탐구 교실</text>
+  <text x="31" y="74" text-anchor="middle" font-size="3.4">표준모형 입자 카드</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 62 86" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="62" height="86" fill="url(#k01-hatch)"/>
+  <rect x="4" y="4" width="54" height="78" rx="3" fill="#fff" stroke="#111522" stroke-width=".6"/>
+  <rect x="6" y="6" width="50" height="74" rx="2" fill="none" stroke="#111522" stroke-width=".3"/>
+  <circle cx="31" cy="36" r="17" fill="none" stroke="#111522" stroke-width="1.2"/>
+  <circle cx="31" cy="36" r="13.5" fill="none" stroke="#6a3fb5" stroke-width=".5" stroke-dasharray="1.2 1"/>
+  <circle cx="31" cy="55.5" r="5" fill="none" stroke="#111522" stroke-width=".7"/>
+  <circle cx="31" cy="19" r="1.8" fill="#111522"/><circle cx="31" cy="53" r="1.8" fill="#111522"/>
+  <circle cx="14" cy="36" r="1.8" fill="#111522"/><circle cx="48" cy="36" r="1.8" fill="#111522"/>
+  <text x="31" y="38.6" text-anchor="middle" font-size="7" font-weight="700">LHC</text>
+  <text x="31" y="68" text-anchor="middle" font-size="5" font-weight="700">CERN 탐구 교실</text>
+  <text x="31" y="74" text-anchor="middle" font-size="3.4">표준모형 입자 카드</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 62 86" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="62" height="86" fill="url(#k01-hatch)"/>
+  <rect x="4" y="4" width="54" height="78" rx="3" fill="#fff" stroke="#111522" stroke-width=".6"/>
+  <rect x="6" y="6" width="50" height="74" rx="2" fill="none" stroke="#111522" stroke-width=".3"/>
+  <circle cx="31" cy="36" r="17" fill="none" stroke="#111522" stroke-width="1.2"/>
+  <circle cx="31" cy="36" r="13.5" fill="none" stroke="#6a3fb5" stroke-width=".5" stroke-dasharray="1.2 1"/>
+  <circle cx="31" cy="55.5" r="5" fill="none" stroke="#111522" stroke-width=".7"/>
+  <circle cx="31" cy="19" r="1.8" fill="#111522"/><circle cx="31" cy="53" r="1.8" fill="#111522"/>
+  <circle cx="14" cy="36" r="1.8" fill="#111522"/><circle cx="48" cy="36" r="1.8" fill="#111522"/>
+  <text x="31" y="38.6" text-anchor="middle" font-size="7" font-weight="700">LHC</text>
+  <text x="31" y="68" text-anchor="middle" font-size="5" font-weight="700">CERN 탐구 교실</text>
+  <text x="31" y="74" text-anchor="middle" font-size="3.4">표준모형 입자 카드</text>
+</svg></div></div><footer class="sheet-foot"><span>양면 인쇄: 2·3·4쪽 뒤에 이 쪽(긴 쪽 넘기기)</span><span>또는 앞면 시트 뒤에 통째로 풀칠한 뒤 자르기</span></footer></article>
+<article class="sheet sheet--cards"><header class="sheet-head"><h2>카드 뒷면 — 게임 카드용 (선택)</h2><span class="kit-no">CERN 탐구 교실 · 키트 K01 · 9/10</span></header>
+  <div class="card-grid card-grid--small"><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div><div class="pcard cback"><svg viewBox="0 0 46 62" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0" y="0" width="46" height="62" fill="url(#k01-hatch)"/>
+  <rect x="3.5" y="3.5" width="39" height="55" rx="2.5" fill="#fff" stroke="#111522" stroke-width=".5"/>
+  <circle cx="23" cy="25" r="10" fill="none" stroke="#111522" stroke-width=".9"/>
+  <circle cx="18.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="27.5" cy="22.5" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <circle cx="23" cy="30" r="2.6" fill="none" stroke="#111522" stroke-width=".6"/>
+  <path d="M18.5 22.5 L27.5 22.5 L23 30 Z" fill="none" stroke="#6a3fb5" stroke-width=".4" stroke-dasharray=".8 .6"/>
+  <text x="23" y="44" text-anchor="middle" font-size="5" font-weight="700">하드론 공방</text>
+  <text x="23" y="50" text-anchor="middle" font-size="3">CERN 탐구 교실</text>
+</svg></div></div><footer class="sheet-foot"><span>양면 인쇄: 5·6·7쪽 뒤에 이 쪽(긴 쪽 넘기기)</span><span>또는 앞면 시트 뒤에 통째로 풀칠한 뒤 자르기</span></footer></article>
+<article class="sheet worksheet-sheet">
+  <header class="sheet-head"><h2>활동지 — 하드론 공방 계산 노트</h2><span class="kit-no">CERN 탐구 교실 · 키트 K01 · 10/10</span></header><div class="name-line">학번 <span></span> 이름 <span></span> 모둠 <span></span></div>
+  <div class="ws-ref"><b>쿼크 전하표</b> u·c·t <b>+2/3</b> &nbsp;|&nbsp; d·s·b <b>−1/3</b> &nbsp;|&nbsp; 반쿼크는 부호 반대 &nbsp;|&nbsp; 바리온수: 쿼크 <b>+1/3</b>, 반쿼크 <b>−1/3</b></div>
+  <h3>1. 전하와 바리온수 계산하기</h3>
+  <table class="ws-t">
+    <thead><tr><th>번호</th><th>하드론</th><th>쿼크 조합</th><th>전하 계산(식)</th><th>전하</th><th>바리온수</th><th>종류</th></tr></thead>
+    <tbody>
+      <tr class="ex"><td>예</td><td>Δ⁺⁺ 델타</td><td class="qc">uuu</td><td>+2/3 + 2/3 + 2/3</td><td>+2</td><td>1</td><td>바리온</td></tr>
+      <tr><td>1</td><td>p 양성자</td><td class="qc">uud</td><td></td><td></td><td></td><td></td></tr><tr><td>2</td><td>n 중성자</td><td class="qc">udd</td><td></td><td></td><td></td><td></td></tr><tr><td>3</td><td>Σ⁻ 시그마 마이너스</td><td class="qc">dds</td><td></td><td></td><td></td><td></td></tr><tr><td>4</td><td>Ξ⁰ 크시 영</td><td class="qc">uss</td><td></td><td></td><td></td><td></td></tr><tr><td>5</td><td>π⁻ 파이 마이너스</td><td class="qc">d<span class="ov">u</span></td><td></td><td></td><td></td><td></td></tr><tr><td>6</td><td>K⁻ 케이 마이너스</td><td class="qc">s<span class="ov">u</span></td><td></td><td></td><td></td><td></td></tr><tr><td>7</td><td><span class="ov">p</span> 반양성자</td><td class="qc"><span class="ov">u</span><span class="ov">u</span><span class="ov">d</span></td><td></td><td></td><td></td><td></td></tr><tr><td>8</td><td>B⁺ 비 플러스</td><td class="qc">u<span class="ov">b</span></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <p class="ws-hint">종류 칸에는 바리온 / 메손 / 반바리온 중 하나를 쓰세요.</p>
+  <h3>2. 판정하기</h3>
+  <div class="ws-2">
+    <div><p>(가) uu 두 개로는 하드론을 만들 수 없다. 까닭을 두 가지 쓰세요.</p><div class="write-box"></div></div>
+    <div><p>(나) 친구가 u, <span class="ov">u</span>, d 세 장으로 바리온을 만들었다고 한다. 전하와 바리온수를 계산해 반박하세요.</p><div class="write-box"></div></div>
+  </div>
+  <h3>3. 나만의 이색 하드론 설계하기</h3>
+  <p class="ws-p">2015년 CERN의 <b>LHCb 실험</b>은 쿼크 4개와 반쿼크 1개(uudc<span class="ov">c</span>)로 이루어진 <b>펜타쿼크</b>를 발견했다고 발표했습니다. 쿼크 3개 또는 쿼크+반쿼크라는 틀을 벗어난 ‘이색 하드론’입니다.</p>
+  <div class="ws-3">
+    <div class="ws-penta"><p>(가) 펜타쿼크 uudc<span class="ov">c</span>의 전하와 바리온수는?</p><div class="calc-line">전하 = </div><div class="calc-line">바리온수 = </div></div>
+    <div class="ws-design">
+      <p>(나) 쿼크·반쿼크 4~5개로 나만의 하드론을 설계하세요. <b>조건: (쿼크 수 − 반쿼크 수)가 3의 배수</b>일 때 무색이 됩니다.</p>
+      <div class="design-row"><span>이름</span><i></i><span>조합</span><b class="qbox"></b><b class="qbox"></b><b class="qbox"></b><b class="qbox"></b><b class="qbox"></b></div>
+      <div class="design-row"><span>전하 계산</span><i class="wide"></i></div>
+      <div class="design-row"><span>바리온수</span><i></i><span>조건 확인</span><em>□ 전하가 정수 &nbsp; □ 3의 배수 조건</em></div>
+    </div>
+  </div>
+  <h3>4. 생각 넓히기</h3>
+  <p class="ws-p">게임에서 t 카드는 뽑자마자 버립니다. 실제 자연에서 ‘꼭대기 쿼크가 든 하드론’이 관측되지 않는 까닭을 한 문장으로 쓰세요.</p>
+  <div class="write-lines" style="min-height:15mm"></div>
+  <footer class="sheet-foot"><span>키트 K01 하드론 공방 · 활동지</span><span>완성한 설계는 4쪽 빈 카드에 카드로 그려 보세요</span></footer>
+</article>
+  </div>
+
+  <section class="kit-teacher section">
+    <div class="section__head"><span class="section__tag">교사용</span><h2>운영 안내와 정답</h2></div>
+    <details open><summary>수업 운영 — 차시 흐름</summary>
+      <div class="table-wrap"><table class="flow">
+        <tr><th>차시</th><th>흐름</th></tr>
+        <tr><td>1차시 (50분)</td><td>카드 자르기 15분(미리 잘라 오면 생략) → 도감 놀이 10분(분류, 질량 순 줄 세우기, “가장 무거운 입자와 가장 가벼운 입자는?”) → ‘세 가지 약속’ 설명 10분 → 짧은 판 연습 15분</td></tr>
+        <tr><td>2차시 (50분)</td><td>본 게임 25분(시간 제한, 행동 카드 포함) → 활동지 20분 → 정리 5분(“왜 쿼크는 혼자 보이지 않을까?”, 주제 7의 보존 법칙으로 연결)</td></tr>
+        <tr><td>1차시 압축</td><td>미리 자른 카드 사용 → 세 가지 약속 5분 → 짧은 판 또는 협동 판 15분 → 활동지 1·2번 20분 → 정리 10분</td></tr>
+      </table></div>
+      <p>주제 1에서는 도감 놀이와 짧은 판으로 표준모형 분류에 집중하고, 주제 7에서는 보존 법칙 챌린지와 활동지 2·3번으로 전하·바리온수 보존을 다룹니다. 3D 모의실험 <a href="../sims/t01.html">sims/t01.html</a>의 쿼크 조합 퍼즐과 이어서 쓰면 좋습니다.</p>
+    </details>
+    <details><summary>모둠 구성과 역할</summary>
+      <ul>
+        <li>3~4명이 가장 알맞습니다(2명이면 손 카드 6장으로 시작). 5명 이상이면 두 모둠으로 나눕니다.</li>
+        <li>역할을 차례마다 돌아가며 맡깁니다: <b>딜러</b>(더미·게시판 관리), <b>검산관</b>(주문서 완성 계산 확인), <b>기록원</b>(점수 기록). 검산관은 계산이 틀리면 주문서를 돌려보내고, 그 사람은 다음 차례에 다시 도전합니다.</li>
+        <li>카드는 모둠 번호를 적은 봉투에 보관하면 다음 해에도 쓸 수 있습니다. 두꺼운 종이로 뽑으면 코팅 없이도 한 학기 정도 쓸 수 있습니다.</li>
+      </ul>
+    </details>
+    <details><summary>차별화 — 기초·심화</summary>
+      <ul>
+        <li><b>기초:</b> 규칙서 맨 위 ‘쿼크 전하표’를 책상에 따로 놓고, 레시피를 펼친 채로 짧은 판을 합니다. 분수 계산이 어려운 학생은 전하를 ‘1/3 단위 칸 수’(u = +2칸, d = −1칸)로 세게 합니다. 합이 3칸의 배수이면 정수 전하입니다.</li>
+        <li><b>보통:</b> 기본 규칙 + 행동 카드. 주문서를 완성할 때 전하와 바리온수를 모두 말하게 합니다.</li>
+        <li><b>심화:</b> 고수 판(레시피 가리기). 빈 카드로 반바리온 주문서(예: 반양성자 <span class="ov">u</span><span class="ov">u</span><span class="ov">d</span>, 5점)나 펜타쿼크 주문서를 직접 만들어 게시판에 추가합니다. 이때 재료 카드가 부족하면 반쿼크 카드를 한 벌 더 인쇄합니다.</li>
+        <li><b>자주 나오는 오개념:</b> “색 전하 = 실제 색깔”, “반쿼크는 모두 음전하”(<span class="ov">d</span>와 <span class="ov">s</span>는 +1/3), “쿼크를 하나만 떼어 낼 수 있다”. 게임 중에 들리면 바로 짚어 줍니다.</li>
+      </ul>
+    </details>
+    <details><summary>정답과 해설 — 활동지</summary>
+      <div class="table-wrap"><table>
+        <tr><th>번호</th><th>하드론</th><th>전하 계산</th><th>전하</th><th>바리온수</th><th>종류</th></tr>
+        <tr><td>1</td><td>p (uud)</td><td>+2/3 + 2/3 − 1/3</td><td>+1</td><td>1</td><td>바리온</td></tr>
+        <tr><td>2</td><td>n (udd)</td><td>+2/3 − 1/3 − 1/3</td><td>0</td><td>1</td><td>바리온</td></tr>
+        <tr><td>3</td><td>Σ⁻ (dds)</td><td>−1/3 − 1/3 − 1/3</td><td>−1</td><td>1</td><td>바리온</td></tr>
+        <tr><td>4</td><td>Ξ⁰ (uss)</td><td>+2/3 − 1/3 − 1/3</td><td>0</td><td>1</td><td>바리온</td></tr>
+        <tr><td>5</td><td>π⁻ (d<span class="ov">u</span>)</td><td>−1/3 − 2/3</td><td>−1</td><td>0</td><td>메손</td></tr>
+        <tr><td>6</td><td>K⁻ (s<span class="ov">u</span>)</td><td>−1/3 − 2/3</td><td>−1</td><td>0</td><td>메손</td></tr>
+        <tr><td>7</td><td><span class="ov">p</span> (<span class="ov">u</span><span class="ov">u</span><span class="ov">d</span>)</td><td>−2/3 − 2/3 + 1/3</td><td>−1</td><td>−1</td><td>반바리온</td></tr>
+        <tr><td>8</td><td>B⁺ (u<span class="ov">b</span>)</td><td>+2/3 + 1/3</td><td>+1</td><td>0</td><td>메손</td></tr>
+      </table></div>
+      <ul>
+        <li><b>2(가)</b> uu: 전하 +4/3으로 정수가 아니다. 쿼크 2개는 세 색이 모이지도, 색–반대색 짝이 되지도 않아 무색이 될 수 없다(바리온수 2/3도 정수가 아님).</li>
+        <li><b>2(나)</b> u<span class="ov">u</span>d: 전하 = +2/3 − 2/3 − 1/3 = −1/3, 바리온수 = 1/3 − 1/3 + 1/3 = 1/3. 둘 다 정수가 아니므로 바리온이 아니다. u와 <span class="ov">u</span>가 짝을 이뤄도 d 하나가 홀로 남는다.</li>
+        <li><b>3(가)</b> uudc<span class="ov">c</span>: 전하 = 2/3 + 2/3 − 1/3 + 2/3 − 2/3 = <b>+1</b>, 바리온수 = 4×(1/3) − 1/3 = <b>1</b>. 바리온수가 1이므로 양성자와 같은 바리온 무리에 속한다. LHCb는 2015년 Λb⁰ → J/ψ p K⁻ 붕괴에서 J/ψ p 질량 분포의 봉우리로 이 상태를 찾았다.</li>
+        <li><b>3(나)</b> 예: 테트라쿼크 cc<span class="ov">u</span><span class="ov">d</span>(쿼크 2 − 반쿼크 2 = 0) 전하 = 2/3 + 2/3 − 2/3 + 1/3 = +1, 바리온수 0. 실제로 2021년 LHCb가 보고했다. ‘(쿼크 수 − 반쿼크 수)가 3의 배수’ 조건을 만족하면 전하와 바리온수가 자동으로 정수가 된다. 각 쿼크의 전하는 1/3 단위로 2/3과 같은 나머지를, 반쿼크는 −2/3과 같은 나머지를 갖기 때문이다(학생에게는 여러 예로 확인시키는 정도면 충분).</li>
+        <li><b>4</b> 꼭대기 쿼크의 수명(약 5×10⁻²⁵ s)이 쿼크들이 강한 힘으로 묶여 하드론을 이루는 데 걸리는 시간(약 10⁻²⁴~10⁻²³ s)보다 짧아서, 하드론을 이루기 전에 W 보손과 b 쿼크로 붕괴한다.</li>
+      </ul>
+    </details>
+    <details><summary>정답과 해설 — 행동 카드·게임</summary>
+      <ul>
+        <li><b>챌린지 1</b> n → p + e⁻ + <span class="ov">ν</span>e: <b>가능</b>(중성자의 베타 붕괴, 자유 중성자 수명 약 15분). 전하 0 = +1 − 1 + 0, 바리온수 1 = 1 + 0 + 0, 렙톤수 0 = 0 + 1 − 1. 쿼크로 보면 d → u + W⁻, W⁻ → e⁻ + <span class="ov">ν</span>e.</li>
+        <li><b>챌린지 2</b> p → e⁺ + γ: <b>불가능</b>. 전하(+1)와 에너지는 문제없지만 바리온수가 1에서 0이 된다. 실험에서 양성자 붕괴는 한 번도 관측되지 않았고, 수명의 하한은 10³⁴년 이상이다.</li>
+        <li><b>반물질 소멸</b>은 입자–반입자 쌍소멸(예: e⁺e⁻ → γγ, U2 PET 모듈과 연결)의 비유입니다. 실제 쿼크–반쿼크 쌍소멸은 광자뿐 아니라 글루온이나 다른 입자 쌍을 만들 수도 있습니다.</li>
+        <li>재료 카드 구성(u 7, d 5, s 4, c 2, b 2, ū <span class="ov">d</span> <span class="ov">s</span> <span class="ov">c</span> <span class="ov">b</span> 각 2, t·<span class="ov">t</span> 각 1)은 주문서 12장을 모두 만들 때 필요한 양(u 11, d 6, s 5 …)보다 적어서, 버린 카드를 다시 섞어 쓰며 교환과 선택을 하게 됩니다. Ω⁻(sss)가 가장 어려워 5점입니다. Ω⁻는 1962년 겔만이 존재와 질량을 예측하고 1964년 발견되어 쿼크 모형의 큰 근거가 되었습니다.</li>
+      </ul>
+    </details>
+    <details><summary>카드 값의 출처와 주의</summary>
+      <p>질량은 입자물리학 자료집(PDG) 값을 반올림했습니다. 가벼운 쿼크(u, d, s)의 질량은 직접 잴 수 없어 이론적 정의에 따라 달라지는 값이며, s 쿼크는 최신 자료에서 약 93 MeV/c²로 적기도 합니다. 중성미자 질량은 0이 아니라는 것(중성미자 진동)은 확인되었지만 정확한 값은 아직 모르므로 ‘1 eV 수준보다 작다’로만 적었습니다. 글루온과 광자의 질량은 이론적으로 0입니다.</p>
+    </details>
+  </section>
+
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

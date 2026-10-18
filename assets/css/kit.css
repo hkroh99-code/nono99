@@ -28,14 +28,15 @@
 /* 종이 미리보기 영역 */
 .sheets { background: var(--desk); border-radius: var(--radius); padding: 24px 12px; display: grid; gap: 24px; justify-items: center; overflow-x: auto; }
 .sheet {
-  width: 210mm; min-height: 297mm; max-width: none;
+  width: 210mm; height: 297mm; max-width: none; flex: none;
   background: var(--paper); color: var(--paper-ink);
   box-shadow: 0 2px 10px rgba(0, 0, 0, .18);
   padding: 12mm; position: relative; overflow: hidden;
   font-family: var(--font-body); font-size: 10.5pt; line-height: 1.5;
   display: flex; flex-direction: column; gap: 4mm;
 }
-.sheet--landscape { width: 297mm; min-height: 210mm; }
+.sheet--landscape { width: 297mm; height: 210mm; }
+.page:has(.sheet--landscape) { max-width: 1240px; }
 .sheet * { color: inherit; }
 .sheet a { color: var(--paper-ink); }
 .sheet h2 { font-family: var(--font-display); font-size: 16pt; margin: 0; letter-spacing: -.01em; }
