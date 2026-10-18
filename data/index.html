@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>실제 데이터 안내 · CERN 탐구 교실</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .preview th, .preview td { font-family: var(--font-mono); font-size: .78rem; padding: .35rem .5rem; white-space: nowrap; }
+  .cols td:first-child { font-family: var(--font-mono); font-weight: 600; white-space: nowrap; }
+  .file-card { display: grid; gap: .8rem; }
+  .file-card .meta { display: flex; flex-wrap: wrap; gap: .4rem .8rem; font-size: var(--step--1); color: var(--ink-2); }
+  .file-card .meta b { font-family: var(--font-mono); color: var(--ink); font-weight: 600; }
+  .dl { display: flex; flex-wrap: wrap; gap: .5rem; }
+</style>
+</head>
+<body data-page="data" data-root="../">
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--int">주제 10 연계</span>
+      <span class="badge badge--up">업그레이드 U1 연계</span>
+      <span class="badge badge--time">CC0 공개 데이터</span>
+    </div>
+    <p class="eyebrow">실제 데이터</p>
+    <h1>CMS 실제 충돌 데이터 안내</h1>
+    <p class="lead">이 폴더의 CSV 파일은 모두 CERN의 CMS 실험이 2011~2012년에 기록하고 공개한 실제 양성자–양성자 충돌 데이터입니다. 무엇이 들어 있는지, 어떻게 쓰는지, 원본을 직접 내려받는 방법을 정리했습니다.</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--sim" href="../sims/t10.html">3D 오픈데이터 분석실</a>
+      <a class="btn btn--primary" href="../students/t10.html">주제 10 학생용 활동지</a>
+      <a class="btn" href="../teachers/t10.html">주제 10 교사용 지도서</a>
+    </div>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#summary">한눈에 보기</a><a href="#files">파일별 설명</a><a href="#license">출처와 라이선스</a>
+      <a href="#download">원본 내려받기</a><a href="#atlas">ATLAS 오픈 데이터</a><a href="#tips">사용 팁</a>
+    </nav>
+  </header>
+
+  <section class="section" id="summary">
+    <div class="section__head"><span class="section__tag">01</span><h2>한눈에 보기</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>파일</th><th>내용</th><th class="num">사건 수</th><th class="num">크기</th><th>주로 쓰는 곳</th></tr>
+      <tr><td><a href="cms_dimuon_2011_mass.csv"><code>cms_dimuon_2011_mass.csv</code></a></td><td>이중뮤온 불변질량 M만</td><td class="num">100,000</td><td class="num">0.75 MB</td><td>로그 눈금 전체 스펙트럼, 공명 찾기</td></tr>
+      <tr><td><a href="cms_dimuon_2011_events.csv"><code>cms_dimuon_2011_events.csv</code></a></td><td>이중뮤온 사건의 4-벡터(E, px, py, pz)와 전하</td><td class="num">20,000</td><td class="num">1.8 MB</td><td>스프레드시트 불변질량 계산, 3D 사건 보기</td></tr>
+      <tr><td><a href="cms_zmumu_2011.csv"><code>cms_zmumu_2011.csv</code></a></td><td>Z→μμ 후보의 pT, η, φ, 전하, 고립도</td><td class="num">10,583</td><td class="num">0.79 MB</td><td>Z 질량과 폭 측정</td></tr>
+      <tr><td><a href="cms_higgs4l_2011_2012.csv"><code>cms_higgs4l_2011_2012.csv</code></a></td><td>4렙톤(4μ, 4e, 2e2μ) 사건의 4-벡터</td><td class="num">278</td><td class="num">0.05 MB</td><td>힉스(약 125 GeV) 후보 세기</td></tr>
+      <tr><td><a href="cms_wmunu_2011.csv"><code>cms_wmunu_2011.csv</code></a></td><td>W→μν 후보의 뮤온 pT, η, φ, 전하, 누락 횡운동량</td><td class="num">20,000</td><td class="num">1.2 MB</td><td>W⁺/W⁻ 비 (주제 9·10 업그레이드)</td></tr>
+    </table></div>
+    <p class="small muted">단위: 에너지 E, 운동량 px·py·pz·pt, 누락 횡운동량 MET, 불변질량 M은 모두 GeV(입자물리에서 c = 1로 둔 단위: GeV, GeV/c, GeV/c²). 각도 phi(φ)는 라디안(−π ~ π), eta(η)는 단위 없는 수. 전하 Q는 기본 전하 단위(+1 또는 −1).</p>
+    <div class="box box--tip prose">
+      <p><b>3D 모의실험에서 쓰는 방법.</b> 같은 데이터가 <code>data/js/</code> 폴더에 자바스크립트 파일로도 들어 있습니다. 모의실험은 <code>SimKit.data.load("cms_dimuon_2011_mass", "../")</code>처럼 이 파일을 불러오므로, 인터넷 없이 파일을 내려받아 더블클릭으로 열어도(file://) 동작합니다. 폴더 구조(<code>data/</code>와 <code>data/js/</code>)를 그대로 유지하세요.</p>
+    </div>
+  </section>
+
+  <section class="section" id="files">
+    <div class="section__head"><span class="section__tag">02</span><h2>파일별 설명과 미리 보기</h2></div>
+
+    <article class="box file-card" id="f-mass">
+      <h3>1. cms_dimuon_2011_mass.csv — 이중뮤온 불변질량 100,000건</h3>
+      <div class="meta"><span>사건 <b>100,000</b>건</span><span>열 <b>1</b>개</span><span>범위 <b>0.30 ~ 299.2 GeV</b></span></div>
+      <p>CMS 2011년 Run2011A의 DoubleMu(뮤온 두 개 트리거) 데이터에서 고른 반대 부호 뮤온 쌍의 불변질량입니다. 선택 조건: 두 뮤온 모두 |η| &lt; 2.4, 적어도 하나는 "전역 뮤온"(트래커와 뮤온 검출기 모두에서 측정), 불변질량 0.3~300 GeV, 반대 전하. 세로·가로축 모두 로그 눈금으로 그리면 ω, φ, J/ψ, ψ(2S), Υ(1S, 2S, 3S), Z 봉우리가 한 그래프에 나타납니다.</p>
+      <div class="table-wrap"><table class="cols"><tr><th>열</th><th>뜻</th><th>단위</th></tr><tr><td>M</td><td>두 뮤온의 불변질량</td><td>GeV/c²</td></tr></table></div>
+      <p class="small muted">미리 보기: 파일의 첫 5행(실제 값)</p>
+      <div class="table-wrap"><table class="preview"><tr><th class="num">M</th></tr>
+<tr><td class="num">17.4922</td></tr>
+<tr><td class="num">11.5534</td></tr>
+<tr><td class="num">9.1636</td></tr>
+<tr><td class="num">12.4774</td></tr>
+<tr><td class="num">14.3159</td></tr>
+</table></div>
+      <div class="dl"><a class="btn" href="cms_dimuon_2011_mass.csv" download>CSV 내려받기</a></div>
+    </article>
+
+    <article class="box file-card" id="f-events">
+      <h3>2. cms_dimuon_2011_events.csv — 이중뮤온 사건 20,000건(4-벡터)</h3>
+      <div class="meta"><span>사건 <b>20,000</b>건</span><span>열 <b>13</b>개</span><span>1번 파일의 처음 20,000건과 같은 사건(같은 순서)</span></div>
+      <p>위 데이터의 처음 20,000건에 대해 두 뮤온 각각의 에너지와 운동량 성분, 전하를 담았습니다. 스프레드시트에서 <code>=SQRT((C2+H2)^2-(D2+I2)^2-(E2+J2)^2-(F2+K2)^2)</code>로 불변질량을 직접 계산해 M 열과 비교할 수 있습니다. 20,000건 중 99.7% 이상이 0.01 GeV 이내로 일치하고, 에너지가 매우 큰 뮤온이 있는 소수의 사건은 원본의 소수점 반올림 때문에 차이가 납니다.</p>
+      <div class="table-wrap"><table class="cols">
+        <tr><th>열</th><th>뜻</th><th>단위</th></tr>
+        <tr><td>Run, Event</td><td>런 번호, 사건 번호(사건의 고유 이름)</td><td>–</td></tr>
+        <tr><td>E1, px1, py1, pz1</td><td>뮤온 1의 에너지와 운동량 x·y·z 성분</td><td>GeV</td></tr>
+        <tr><td>Q1</td><td>뮤온 1의 전하</td><td>e</td></tr>
+        <tr><td>E2, px2, py2, pz2, Q2</td><td>뮤온 2의 값</td><td>GeV, e</td></tr>
+        <tr><td>M</td><td>CMS 자료에 들어 있는 불변질량(검산용)</td><td>GeV/c²</td></tr>
+      </table></div>
+      <p class="small muted">미리 보기: 파일의 첫 5행(실제 값)</p>
+      <div class="table-wrap"><table class="preview"><tr><th class="num">Run</th><th class="num">Event</th><th class="num">E1</th><th class="num">px1</th><th class="num">py1</th><th class="num">pz1</th><th class="num">Q1</th><th class="num">E2</th><th class="num">px2</th><th class="num">py2</th><th class="num">pz2</th><th class="num">Q2</th><th class="num">M</th></tr>
+<tr><td class="num">165617</td><td class="num">74601703</td><td class="num">9.6987</td><td class="num">-9.5104</td><td class="num">0.3662</td><td class="num">1.8633</td><td class="num">-1</td><td class="num">9.7633</td><td class="num">7.3277</td><td class="num">-1.1524</td><td class="num">6.3473</td><td class="num">1</td><td class="num">17.4922</td></tr>
+<tr><td class="num">165617</td><td class="num">75100943</td><td class="num">6.2039</td><td class="num">-4.2666</td><td class="num">0.4565</td><td class="num">-4.4793</td><td class="num">-1</td><td class="num">9.669</td><td class="num">7.274</td><td class="num">-2.8211</td><td class="num">-5.7104</td><td class="num">1</td><td class="num">11.5534</td></tr>
+<tr><td class="num">165617</td><td class="num">75587682</td><td class="num">19.2892</td><td class="num">-4.2121</td><td class="num">-0.6516</td><td class="num">18.8121</td><td class="num">-1</td><td class="num">9.8244</td><td class="num">4.3439</td><td class="num">-0.4735</td><td class="num">8.7985</td><td class="num">1</td><td class="num">9.1636</td></tr>
+<tr><td class="num">165617</td><td class="num">75660978</td><td class="num">7.0427</td><td class="num">-6.3268</td><td class="num">-0.2685</td><td class="num">3.0802</td><td class="num">-1</td><td class="num">5.5857</td><td class="num">4.4748</td><td class="num">0.8489</td><td class="num">-3.2319</td><td class="num">1</td><td class="num">12.4774</td></tr>
+<tr><td class="num">165617</td><td class="num">75947690</td><td class="num">7.2751</td><td class="num">0.103</td><td class="num">-5.5331</td><td class="num">-4.7212</td><td class="num">-1</td><td class="num">7.3181</td><td class="num">-0.3988</td><td class="num">6.9408</td><td class="num">2.2825</td><td class="num">1</td><td class="num">14.3159</td></tr>
+</table></div>
+      <div class="dl"><a class="btn" href="cms_dimuon_2011_events.csv" download>CSV 내려받기</a></div>
+    </article>
+
+    <article class="box file-card" id="f-z">
+      <h3>3. cms_zmumu_2011.csv — Z→μμ 후보 10,583건</h3>
+      <div class="meta"><span>사건 <b>10,583</b>건</span><span>열 <b>12</b>개</span><span>반대 부호 10,227건 · 같은 부호 356건</span></div>
+      <p>선택 조건: 두 뮤온 모두 pT &gt; 20 GeV, |η| &lt; 2.1, 두 뮤온의 불변질량 60~120 GeV. 질량 열이 없으므로 <code>=SQRT(2*C2*H2*(COSH(D2-I2)-COS(E2-J2)))</code>(M² = 2·pT₁·pT₂·(cosh Δη − cos Δφ), 뮤온 질량 무시)로 계산합니다. 같은 부호 쌍은 Z 붕괴로는 생길 수 없으므로 배경을 살펴보는 데 쓸 수 있습니다.</p>
+      <div class="table-wrap"><table class="cols">
+        <tr><th>열</th><th>뜻</th><th>단위</th></tr>
+        <tr><td>Run, Event</td><td>런 번호, 사건 번호</td><td>–</td></tr>
+        <tr><td>pt1, eta1, phi1</td><td>뮤온 1의 횡운동량, 의사 빠르기, 방위각</td><td>GeV, –, rad</td></tr>
+        <tr><td>Q1</td><td>뮤온 1의 전하</td><td>e</td></tr>
+        <tr><td>iso1</td><td>고립도: 뮤온 주변의 트래커·ECAL·HCAL 신호(에너지) 합. 0에 가까울수록 주변에 다른 입자가 없는 "깨끗한" 뮤온</td><td>에너지 합</td></tr>
+        <tr><td>pt2, eta2, phi2, Q2, iso2</td><td>뮤온 2의 값</td><td>같음</td></tr>
+      </table></div>
+      <p class="small muted">미리 보기: 파일의 첫 5행(실제 값)</p>
+      <div class="table-wrap"><table class="preview"><tr><th class="num">Run</th><th class="num">Event</th><th class="num">pt1</th><th class="num">eta1</th><th class="num">phi1</th><th class="num">Q1</th><th class="num">iso1</th><th class="num">pt2</th><th class="num">eta2</th><th class="num">phi2</th><th class="num">Q2</th><th class="num">iso2</th></tr>
+<tr><td class="num">165617</td><td class="num">74969122</td><td class="num">54.7055</td><td class="num">-0.4324</td><td class="num">2.5742</td><td class="num">1</td><td class="num">0.4999</td><td class="num">34.2464</td><td class="num">-0.9885</td><td class="num">-0.4987</td><td class="num">-1</td><td class="num">3.4221</td></tr>
+<tr><td class="num">165617</td><td class="num">75138253</td><td class="num">24.5872</td><td class="num">-2.0522</td><td class="num">2.8666</td><td class="num">-1</td><td class="num">0</td><td class="num">28.5389</td><td class="num">0.3852</td><td class="num">-1.9912</td><td class="num">1</td><td class="num">0</td></tr>
+<tr><td class="num">165617</td><td class="num">75887636</td><td class="num">31.7386</td><td class="num">-2.2595</td><td class="num">-1.3323</td><td class="num">-1</td><td class="num">0</td><td class="num">30.2344</td><td class="num">-0.4684</td><td class="num">1.8833</td><td class="num">1</td><td class="num">0</td></tr>
+<tr><td class="num">165617</td><td class="num">75779415</td><td class="num">39.7394</td><td class="num">-0.7123</td><td class="num">-0.3123</td><td class="num">1</td><td class="num">0</td><td class="num">48.279</td><td class="num">-0.1956</td><td class="num">2.9703</td><td class="num">-1</td><td class="num">0</td></tr>
+<tr><td class="num">165617</td><td class="num">75098104</td><td class="num">41.2998</td><td class="num">-0.1571</td><td class="num">-3.0408</td><td class="num">1</td><td class="num">1.228</td><td class="num">43.4508</td><td class="num">0.591</td><td class="num">-0.0428</td><td class="num">-1</td><td class="num">0</td></tr>
+</table></div>
+      <div class="dl"><a class="btn" href="cms_zmumu_2011.csv" download>CSV 내려받기</a></div>
+    </article>
+
+    <article class="box file-card" id="f-4l">
+      <h3>4. cms_higgs4l_2011_2012.csv — 4렙톤 사건 278건(힉스 탐색)</h3>
+      <div class="meta"><span>사건 <b>278</b>건</span><span>2011년 38건 · 2012년 240건</span><span>4μ 113 · 4e 48 · 2e2μ 117</span><span>M 범위 <b>79.4 ~ 742.1 GeV</b></span></div>
+      <p>CMS 공개 데이터의 "힉스→4렙톤 분석 예제" 선택 기준을 통과한 사건입니다. 렙톤 네 개(전자 또는 뮤온)의 4-벡터와, 두 쌍으로 묶었을 때의 질량 mZ1(Z 질량에 가까운 쌍), mZ2, 네 렙톤 전체의 불변질량 M이 들어 있습니다. 120~130 GeV 구간에는 13건이 있습니다(2011년 2건, 2012년 11건). 이 자료는 교육용 일부이며, 이것만으로 힉스 발견의 통계적 유의성을 재현할 수는 없습니다.</p>
+      <div class="table-wrap"><table class="cols">
+        <tr><th>열</th><th>뜻</th><th>단위</th></tr>
+        <tr><td>year, channel</td><td>기록 연도(2011: 7 TeV, 2012: 8 TeV), 채널(4mu, 4e, 2e2mu)</td><td>–</td></tr>
+        <tr><td>Run, Event</td><td>런 번호, 사건 번호(원본의 일부 사건 번호는 음수로 저장되어 있음)</td><td>–</td></tr>
+        <tr><td>PIDi</td><td>입자 종류(PDG 번호): 11 = 전자 e⁻, −11 = 양전자 e⁺, 13 = μ⁻, −13 = μ⁺ (i = 1~4)</td><td>–</td></tr>
+        <tr><td>Ei, pxi, pyi, pzi, Qi</td><td>렙톤 i의 에너지, 운동량 성분, 전하</td><td>GeV, e</td></tr>
+        <tr><td>mZ1, mZ2</td><td>렙톤 쌍 두 개의 불변질량</td><td>GeV/c²</td></tr>
+        <tr><td>M</td><td>네 렙톤의 불변질량</td><td>GeV/c²</td></tr>
+      </table></div>
+      <p class="small muted">미리 보기: 파일의 첫 5행(실제 값)</p>
+      <div class="table-wrap"><table class="preview"><tr><th class="num">year</th><th>channel</th><th class="num">Run</th><th class="num">Event</th><th class="num">PID1</th><th class="num">E1</th><th class="num">px1</th><th class="num">py1</th><th class="num">pz1</th><th class="num">Q1</th><th class="num">PID2</th><th class="num">E2</th><th class="num">px2</th><th class="num">py2</th><th class="num">pz2</th><th class="num">Q2</th><th class="num">PID3</th><th class="num">E3</th><th class="num">px3</th><th class="num">py3</th><th class="num">pz3</th><th class="num">Q3</th><th class="num">PID4</th><th class="num">E4</th><th class="num">px4</th><th class="num">py4</th><th class="num">pz4</th><th class="num">Q4</th><th class="num">mZ1</th><th class="num">mZ2</th><th class="num">M</th></tr>
+<tr><td class="num">2011</td><td class="num">4mu</td><td class="num">173657</td><td class="num">34442568</td><td class="num">13</td><td class="num">35.998</td><td class="num">32.763</td><td class="num">-4.419</td><td class="num">-14.244</td><td class="num">-1</td><td class="num">-13</td><td class="num">29.08</td><td class="num">-19.311</td><td class="num">-5.314</td><td class="num">21.084</td><td class="num">1</td><td class="num">13</td><td class="num">17.315</td><td class="num">-10.87</td><td class="num">-3.646</td><td class="num">12.975</td><td class="num">-1</td><td class="num">-13</td><td class="num">11.494</td><td class="num">-1.21</td><td class="num">11.357</td><td class="num">1.29</td><td class="num">1</td><td class="num">62.551</td><td class="num">20.52</td><td class="num">91.452</td></tr>
+<tr><td class="num">2011</td><td class="num">4mu</td><td class="num">166512</td><td class="num">337493970</td><td class="num">13</td><td class="num">52.983</td><td class="num">-49.917</td><td class="num">8.171</td><td class="num">15.77</td><td class="num">-1</td><td class="num">13</td><td class="num">72.102</td><td class="num">15.328</td><td class="num">21.355</td><td class="num">-67.139</td><td class="num">-1</td><td class="num">-13</td><td class="num">89.755</td><td class="num">10.347</td><td class="num">-20.272</td><td class="num">86.821</td><td class="num">1</td><td class="num">-13</td><td class="num">30.216</td><td class="num">2.329</td><td class="num">-13.068</td><td class="num">27.144</td><td class="num">1</td><td class="num">92.135</td><td class="num">90.205</td><td class="num">235.88</td></tr>
+<tr><td class="num">2011</td><td class="num">4mu</td><td class="num">171091</td><td class="num">69105221</td><td class="num">13</td><td class="num">165.975</td><td class="num">-12.628</td><td class="num">-30.229</td><td class="num">162.71</td><td class="num">-1</td><td class="num">-13</td><td class="num">68.161</td><td class="num">6.938</td><td class="num">22.858</td><td class="num">63.838</td><td class="num">1</td><td class="num">-13</td><td class="num">19.506</td><td class="num">4.715</td><td class="num">8.504</td><td class="num">16.909</td><td class="num">1</td><td class="num">13</td><td class="num">24.839</td><td class="num">-8.097</td><td class="num">3.057</td><td class="num">23.282</td><td class="num">-1</td><td class="num">58.387</td><td class="num">14.354</td><td class="num">79.386</td></tr>
+<tr><td class="num">2011</td><td class="num">4mu</td><td class="num">172952</td><td class="num">559839432</td><td class="num">13</td><td class="num">110.26</td><td class="num">-69.151</td><td class="num">68.836</td><td class="num">-51.352</td><td class="num">-1</td><td class="num">13</td><td class="num">88.32</td><td class="num">85.944</td><td class="num">-16.82</td><td class="num">-11.451</td><td class="num">-1</td><td class="num">-13</td><td class="num">45.099</td><td class="num">-19.983</td><td class="num">-29.141</td><td class="num">-28.025</td><td class="num">1</td><td class="num">-13</td><td class="num">9.794</td><td class="num">3.021</td><td class="num">8.349</td><td class="num">-4.133</td><td class="num">1</td><td class="num">91.188</td><td class="num">37.376</td><td class="num">232.929</td></tr>
+<tr><td class="num">2011</td><td class="num">4mu</td><td class="num">167282</td><td class="num">44166176</td><td class="num">-13</td><td class="num">54.388</td><td class="num">-27.5</td><td class="num">-43.865</td><td class="num">-16.663</td><td class="num">1</td><td class="num">13</td><td class="num">39.842</td><td class="num">31.535</td><td class="num">18.853</td><td class="num">15.409</td><td class="num">-1</td><td class="num">-13</td><td class="num">20.321</td><td class="num">3.301</td><td class="num">16.012</td><td class="num">12.068</td><td class="num">1</td><td class="num">13</td><td class="num">6.837</td><td class="num">4.643</td><td class="num">-2.386</td><td class="num">4.415</td><td class="num">-1</td><td class="num">90.751</td><td class="num">14.735</td><td class="num">119.29</td></tr>
+</table></div>
+      <div class="dl"><a class="btn" href="cms_higgs4l_2011_2012.csv" download>CSV 내려받기</a></div>
+    </article>
+
+    <article class="box file-card" id="f-w">
+      <h3>5. cms_wmunu_2011.csv — W→μν 후보 20,000건</h3>
+      <div class="meta"><span>사건 <b>20,000</b>건</span><span>열 <b>8</b>개</span><span>Q = +1: 11,025건 · Q = −1: 8,975건</span></div>
+      <p>선택 조건: pT &gt; 25 GeV, |η| &lt; 2.1인 전역 뮤온이 딱 하나(다른 뮤온 pT &gt; 10 GeV이면 제외). 중성미자는 검출되지 않으므로 누락 횡운동량(MET)으로 그 존재를 추론합니다. 원본 파일의 처음 20,000건이며, 원본의 chiSq, dxy, iso 열은 뺐습니다. W⁺/W⁻ 비는 그대로 세면 1.23, 횡질량 m<sub>T</sub> &gt; 50 GeV인 사건만 쓰면 약 1.34입니다.</p>
+      <div class="table-wrap"><table class="cols">
+        <tr><th>열</th><th>뜻</th><th>단위</th></tr>
+        <tr><td>Run, Event</td><td>런 번호, 사건 번호</td><td>–</td></tr>
+        <tr><td>pt, eta, phi</td><td>뮤온의 횡운동량, 의사 빠르기, 방위각</td><td>GeV, –, rad</td></tr>
+        <tr><td>Q</td><td>뮤온의 전하(W⁺ → μ⁺ν, W⁻ → μ⁻ν̄)</td><td>e</td></tr>
+        <tr><td>MET, phiMET</td><td>누락 횡운동량의 크기와 방향</td><td>GeV, rad</td></tr>
+      </table></div>
+      <p class="small muted">미리 보기: 파일의 첫 5행(실제 값)</p>
+      <div class="table-wrap"><table class="preview"><tr><th class="num">Run</th><th class="num">Event</th><th class="num">pt</th><th class="num">eta</th><th class="num">phi</th><th class="num">Q</th><th class="num">MET</th><th class="num">phiMET</th></tr>
+<tr><td class="num">173389</td><td class="num">489963747</td><td class="num">29.3153</td><td class="num">-0.1393</td><td class="num">1.3561</td><td class="num">1</td><td class="num">30.667</td><td class="num">-2.1308</td></tr>
+<tr><td class="num">173389</td><td class="num">490024840</td><td class="num">44.1461</td><td class="num">-1.359</td><td class="num">-0.539</td><td class="num">1</td><td class="num">27.9521</td><td class="num">-2.6686</td></tr>
+<tr><td class="num">173389</td><td class="num">490102189</td><td class="num">42.7895</td><td class="num">-1.0193</td><td class="num">2.339</td><td class="num">-1</td><td class="num">5.1565</td><td class="num">0.3061</td></tr>
+<tr><td class="num">173389</td><td class="num">490092121</td><td class="num">31.2215</td><td class="num">-0.127</td><td class="num">-0.4889</td><td class="num">-1</td><td class="num">4.2143</td><td class="num">-0.1166</td></tr>
+<tr><td class="num">173389</td><td class="num">490193981</td><td class="num">36.9668</td><td class="num">1.8557</td><td class="num">1.3772</td><td class="num">1</td><td class="num">20.9963</td><td class="num">-1.6251</td></tr>
+</table></div>
+      <div class="dl"><a class="btn" href="cms_wmunu_2011.csv" download>CSV 내려받기</a></div>
+    </article>
+  </section>
+
+  <section class="section" id="license">
+    <div class="section__head"><span class="section__tag">03</span><h2>출처와 라이선스</h2></div>
+    <div class="box box--cern prose">
+      <p><b>데이터.</b> CMS Collaboration, CERN Open Data Portal. 이중뮤온·Z·W 데이터는 record 545 "Datasets derived from the Run2011A SingleElectron, SingleMu, DoubleElectron, and DoubleMu primary datasets"(T. McCauley, 2017)에서, 4렙톤 데이터는 record 5200 "Higgs candidate events from CMS 2011 and 2012 open data release selected in the Higgs-to-four-lepton analysis example"(T. McCauley, 2019, DOI 10.7483/OPENDATA.CMS.YGG7.333M)에서 왔습니다. 라이선스는 <b>CC0(퍼블릭 도메인)</b>으로, 누구나 자유롭게 복사·수정·배포할 수 있습니다. 다만 CMS와 CERN은 이 데이터로 만든 결과물을 보증하지 않으며, 교육용으로 고른 일부 정보이므로 정식 물리 분석에는 적합하지 않다고 밝히고 있습니다.</p>
+      <p><b>정리 형태.</b> 이 저장소의 파일은 cms-opendata-education의 교육 자료(<a href="https://github.com/cms-opendata-education" target="_blank" rel="noopener">github.com/cms-opendata-education</a>, CC-BY 4.0)에 함께 실린 같은 CSV를 바탕으로, 수업에 맞게 열을 줄이고 파일을 합치고 일부 사건만 남겨 만들었습니다. 숫자 값은 바꾸지 않았습니다(소수점 아래 4자리, 4렙톤은 3자리). 교육 자료를 활용할 때는 "CMS Open Data(CC0), cms-opendata-education 자료(CC-BY 4.0) 참고"라고 밝혀 주세요.</p>
+    </div>
+  </section>
+
+  <section class="section" id="download">
+    <div class="section__head"><span class="section__tag">04</span><h2>원본을 직접 내려받는 방법 (CERN 오픈 데이터 포털)</h2></div>
+    <p class="prose">학생이 데이터를 "어디서 어떻게 얻는지" 직접 경험하는 것도 주제 10의 학습 목표입니다. 아래 순서는 2026년 기준이며, 포털의 기록(record) 화면 구성과 파일 이름은 바뀔 수 있습니다. 링크가 바뀌었으면 포털 검색창에서 "Dimuon", "Zmumu", "Higgs four lepton" 등으로 찾으세요.</p>
+    <ol class="steps">
+      <li><span><b>포털 접속.</b> <a href="https://opendata.cern.ch" target="_blank" rel="noopener">opendata.cern.ch</a>에 들어갑니다. 회원 가입이나 로그인은 필요 없습니다. 화면은 영어이므로 브라우저 번역 기능을 써도 됩니다.</span></li>
+      <li><span><b>CMS 데이터셋 찾기.</b> <a href="https://opendata.cern.ch/search?q=&amp;experiment=CMS&amp;type=Dataset" target="_blank" rel="noopener">CMS 데이터셋 검색 결과</a>에서 왼쪽 필터의 "Derived"(가공된 자료)와 키워드 "education"을 고르면 교육용 CSV가 있는 기록만 남습니다. 원본(AOD 등)은 수 TB 규모라 수업용으로는 가공 자료(CSV)를 씁니다.</span></li>
+      <li><span><b>record 545 열기.</b> <a href="https://opendata.cern.ch/record/545" target="_blank" rel="noopener">opendata.cern.ch/record/545</a> — "Datasets derived from the Run2011A … DoubleMu primary datasets". 화면 위쪽 Description과 "Dataset semantics"(열 이름 설명), "How were these data selected?"(선택 조건)를 함께 읽어 봅니다.</span></li>
+      <li><span><b>파일 내려받기.</b> 아래쪽 "Files and indexes" 표에서 <code>Dimuon_DoubleMu.csv</code>(약 13 MiB, 100,000건) 옆의 [Download]를 누릅니다. 같은 기록에 Jpsimumu, Wmunu, Wenu 등 다른 CSV도 있고, Z→μμ 파일도 같은 데이터에서 만들어진 것입니다(파일 목록이 여러 쪽으로 나뉘어 보일 수 있음).</span></li>
+      <li><span><b>힉스 4렙톤 데이터.</b> <a href="https://opendata.cern.ch/record/5200" target="_blank" rel="noopener">opendata.cern.ch/record/5200</a>에서 <code>4mu_2011.csv</code>, <code>4e_2011.csv</code>, <code>2e2mu_2011.csv</code>와 2012년 파일들을 내려받습니다. 같은 기록의 <code>.ig</code> 파일은 온라인 사건 표시기에서 3D로 볼 수 있습니다. 분석 방법 전체는 record 5500 "Higgs-to-four-lepton analysis example using 2011-2012 data"에 있습니다.</span></li>
+      <li><span><b>열어 보기.</b> 구글 시트([파일] → [가져오기] → [업로드]) 또는 엑셀로 엽니다. <code>Dimuon_DoubleMu.csv</code>는 열이 21개(Run, Event, type1, E1, px1, py1, pz1, pt1, eta1, phi1, Q1, type2, E2, …, Q2, M)라 이 폴더의 파일보다 큽니다. type은 G(전역 뮤온) 또는 T(트래커 뮤온)입니다. 구글 시트의 셀 수 한도(1,000만 셀) 안에 들어가지만 느릴 수 있으니, 수업에서는 처음 20,000행만 남겨 쓰는 것을 권합니다.</span></li>
+      <li><span><b>분석실에서 불러오기.</b> <a href="../sims/t10.html">3D 오픈데이터 분석실</a>의 [내 CSV 불러오기]에 내려받은 파일을 그대로 넣으면 열 이름(E1, px1, … 또는 pt1, eta1, … 또는 M)을 알아보고 히스토그램과 3D 사건을 보여 줍니다. 파일은 기기 밖으로 전송되지 않습니다.</span></li>
+      <li><span><b>포털의 다른 도구.</b> 포털에는 <a href="https://opendata.cern.ch/visualise/histograms/CMS" target="_blank" rel="noopener">히스토그램 도구</a>와 <a href="https://opendata.cern.ch/visualise/events/CMS" target="_blank" rel="noopener">온라인 사건 표시기</a>, 스프레드시트 사용 안내(<a href="https://opendata.cern.ch/record/5100" target="_blank" rel="noopener">record 5100</a>), 주피터 노트북 안내(<a href="https://opendata.cern.ch/record/5101" target="_blank" rel="noopener">record 5101</a>)가 있습니다.</span></li>
+    </ol>
+    <div class="box box--safety"><h4>학교 네트워크에서 안 될 때</h4><ul>
+      <li>포털 접속이 막히거나 느리면 이 폴더의 CSV를 미리 USB나 학급 드라이브에 복사해 두고 쓰세요. 이 폴더의 파일은 원본에서 그대로 옮긴 값입니다.</li>
+      <li>3D 분석실과 활동지는 인터넷 없이도 열립니다(글꼴만 기본 글꼴로 바뀝니다).</li>
+    </ul></div>
+  </section>
+
+  <section class="section" id="atlas">
+    <div class="section__head"><span class="section__tag">05</span><h2>더 찾아볼 곳: ATLAS 오픈 데이터</h2></div>
+    <div class="box prose">
+      <p>CMS와 함께 힉스를 발견한 범용 실험 ATLAS도 교육용 데이터를 공개합니다. <a href="https://opendata.atlas.cern" target="_blank" rel="noopener">opendata.atlas.cern</a>에는 13 TeV 충돌 데이터와 모의 데이터, 브라우저에서 바로 돌아가는 파이썬 노트북, 학생용 활동 안내가 있습니다. 같은 Z 봉우리나 힉스 채널을 두 실험의 데이터로 각각 분석해 비교하면, "독립적인 두 실험이 같은 결과를 얻는다"는 과학의 검증 방식을 직접 체험할 수 있습니다. ATLAS 자료의 형식(ROOT 파일, 열 이름)은 CMS CSV와 다르므로 안내 문서를 먼저 읽으세요.</p>
+    </div>
+  </section>
+
+  <section class="section" id="tips">
+    <div class="section__head"><span class="section__tag">06</span><h2>사용 팁</h2></div>
+    <div class="grid-2">
+      <div class="box"><h3>스프레드시트</h3><ul>
+        <li>불변질량 수식은 큰 수끼리의 뺄셈이므로 중간값을 반올림하지 말 것.</li>
+        <li>COS, COSH의 각도는 라디안. phi 값을 그대로 넣으면 된다.</li>
+        <li>히스토그램 도수는 <code>COUNTIFS</code>로 "시작값 이상, 끝값 미만"을 세면 3D 분석실과 같은 기준이 된다.</li>
+        <li>한국어 엑셀에서 CSV가 한 열로만 보이면 [데이터] → [텍스트 나누기]에서 구분 기호를 쉼표로 고른다.</li>
+      </ul></div>
+      <div class="box"><h3>파이썬(Colab)</h3><ul>
+        <li><code>pd.read_csv("cms_dimuon_2011_mass.csv")</code>로 바로 읽힌다.</li>
+        <li>로그 스펙트럼: <code>np.logspace(np.log10(0.3), np.log10(150), 300)</code> 구간에 <code>plt.hist(..., bins=bins)</code>, <code>plt.xscale("log"); plt.yscale("log")</code>.</li>
+        <li>노트북은 <a href="../notebooks/">notebooks 폴더</a>와 <a href="../upgrade/index.html">업그레이드 U1</a>을 참고.</li>
+      </ul></div>
+    </div>
+  </section>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 10 실제 데이터 분석 · 학생용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .sheet-cols td:first-child { font-family: var(--font-mono); font-weight: 600; white-space: nowrap; }
+  .paper { display: grid; gap: .8rem; }
+  .paper .answer-field textarea { min-height: 6rem; }
+</style>
+</head>
+<body data-page="student" data-topic="10" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--student">학생용</span>
+      <span class="badge badge--int">종합과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 10 · 마지막 주제</p>
+    <h1>실제 CERN 데이터로 발견하기</h1>
+    <p class="lead">과학자들이 쓰는 실제 충돌 데이터에서, 우리가 직접 입자를 "발견"할 수 있을까?</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--sim" href="../sims/t10.html">3D 모의실험 열기</a>
+      <a class="btn" href="../data/index.html">실제 데이터 내려받기</a>
+      <button class="btn" type="button" data-copy-answers>내 답안 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>답안 지우기</button>
+    </div>
+    <p class="save-note">입력한 답은 이 기기의 브라우저에만 자동 저장됩니다. 제출할 때는 [내 답안 복사]를 눌러 붙여 넣으세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#goals">학습 목표</a><a href="#open">생각 열기</a><a href="#concept">핵심 개념</a>
+      <a href="#lab">실험 A</a><a href="#paper">발견 논문</a><a href="#sim">실험 B: 3D</a><a href="#cern">CERN에서는</a>
+      <a href="#check">확인 문제</a><a href="#up">업그레이드</a><a href="#self">자기 평가</a>
+    </nav>
+  </header>
+
+  <section class="section" id="goals">
+    <div class="box box--goal">
+      <h2 class="box__title" style="font-size:var(--step-1)">학습 목표</h2>
+      <ol>
+        <li>CERN 오픈 데이터 포털(opendata.cern.ch)에서 CMS 데이터를 찾아 내려받는 절차를 말할 수 있다.</li>
+        <li>두 뮤온의 4-벡터(E, px, py, pz) 또는 (pT, η, φ)로 불변질량을 직접 계산하고 히스토그램을 그릴 수 있다.</li>
+        <li>질량 스펙트럼에서 공명 봉우리(J/ψ, ψ(2S), Υ, Z)를 찾아 질량을 측정하고 기준값과 비교할 수 있다.</li>
+        <li>4렙톤 사건에서 약 125 GeV 근처에 모인 사건을 세어 힉스 보손의 흔적을 확인할 수 있다.</li>
+        <li>신호와 배경, 통계적 불확도(√N), 발견 기준(5σ)의 의미를 설명할 수 있다.</li>
+      </ol>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>활동</th></tr>
+      <tr><td>1차시 (50분)</td><td>생각 열기(2012년 7월 4일) → 핵심 개념(불변질량 복습, pT·η·φ, 히스토그램과 공명) → 실험 A: 스프레드시트로 실제 CMS 데이터의 불변질량 계산, J/ψ 히스토그램 그리기</td></tr>
+      <tr><td>2차시 (50분)</td><td>실험 A 마무리(Z 봉우리, 결과표) → 실험 B: 3D 오픈데이터 분석실 미션(로그 스펙트럼, 맞춤, 4렙톤 힉스 후보) → 미니 발견 논문 쓰기 → 확인 문제</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="open">
+    <div class="section__head"><span class="section__tag">01</span><h2>생각 열기</h2></div>
+    <div class="box box--think prose">
+      <p>2012년 7월 4일, 제네바의 CERN 대강당. CMS와 ATLAS 두 실험팀이 차례로 발표를 마치자 객석에서 박수가 쏟아졌습니다. 맨 앞줄에 앉아 있던 피터 힉스는 눈시울을 붉혔습니다. 두 팀은 서로 독립적으로, 질량이 약 125 GeV/c²인 새로운 입자를 발견했다고 발표했습니다. 1964년에 이론으로 예언된 지 48년 만이었습니다.</p>
+      <p>그런데 그날 화면에 나온 것은 입자 "사진"이 아니었습니다. 가로축이 질량, 세로축이 사건 수인 <b>그래프</b>였고, 그 위에 작게 솟은 <b>봉우리</b> 하나가 전부였습니다. 그 그래프를 만든 데이터의 일부가 지금 우리 손에 있습니다. CMS는 실제 충돌 데이터를 누구나 쓸 수 있게 공개했고, 이 활동지의 데이터는 모두 그 공개 데이터입니다.</p>
+    </div>
+    <label class="answer-field"><span>Q1. 입자를 직접 볼 수 없는데도 그래프의 "봉우리"가 새 입자의 증거가 되는 까닭은 무엇일까? 주제 7(불변질량)을 떠올려 써 보자.</span><textarea id="open-q1"></textarea></label>
+    <label class="answer-field"><span>Q2. 봉우리가 "우연히 솟은 것"이 아니라고 확신하려면 무엇이 더 필요할까?</span><textarea id="open-q2"></textarea></label>
+  </section>
+
+  <section class="section" id="concept">
+    <div class="section__head"><span class="section__tag">02</span><h2>핵심 개념</h2></div>
+    <div class="prose">
+      <h3>1. 불변질량: 사라진 입자의 질량을 되살리기</h3>
+      <p>J/ψ, Z, 힉스 같은 입자는 생기자마자(10⁻²⁰ 초보다 훨씬 짧은 시간 안에) 붕괴합니다. 검출기에 남는 것은 딸 입자(예: 뮤온 두 개)뿐입니다. 하지만 에너지와 운동량은 보존되므로, 딸 입자들의 에너지와 운동량을 모두 더하면 원래 입자의 에너지와 운동량이 됩니다. 입자물리에서는 c = 1 단위를 써서 에너지는 GeV, 운동량은 GeV/c, 질량은 GeV/c²로 나타내며, 식에서는 c를 생략합니다.</p>
+    </div>
+    <div class="formula">M² = (E₁+E₂)² − (px₁+px₂)² − (py₁+py₂)² − (pz₁+pz₂)²  →  <b>M = √M²</b></div>
+    <div class="prose">
+      <p>이 값은 어느 관성계에서 계산해도 같아서 <b>불변질량</b>이라 부릅니다. 두 뮤온이 정말로 한 입자에서 나왔다면, 사건마다 M이 그 입자의 질량 근처에 모입니다. 우연히 짝지은 뮤온 쌍(배경)은 M이 넓게 퍼집니다. 그래서 수만 개 사건의 M을 히스토그램으로 그리면 <b>배경 위에 솟은 봉우리</b>가 나타납니다.</p>
+      <h3>2. 검출기 좌표: pT, η, φ</h3>
+      <p>CMS는 빔 방향을 z축으로 잡습니다. 빔에 수직인 평면(횡평면)에서의 운동량 크기를 <b>횡운동량 pT</b>, 횡평면에서의 방향각을 <b>방위각 φ</b>(라디안)라 합니다. 빔 축과 이루는 각 θ 대신에는 <b>의사 빠르기 η = −ln tan(θ/2)</b>를 씁니다. η = 0은 빔에 수직, |η|가 클수록 빔 방향에 가깝습니다.</p>
+    </div>
+    <div class="formula">px = pT·cos φ,   py = pT·sin φ,   pz = pT·sinh η,   |p| = pT·cosh η</div>
+    <div class="prose"><p>뮤온의 질량(0.106 GeV)은 운동량(수~수십 GeV)에 비해 매우 작으므로 E ≈ |p|로 놓으면 다음 식을 얻습니다. Z→μμ 데이터처럼 pT, η, φ만 주어진 경우에 씁니다.</p></div>
+    <div class="formula">M² ≈ <b>2·pT₁·pT₂·(cosh(η₁−η₂) − cos(φ₁−φ₂))</b></div>
+    <figure class="diagram">
+      <svg viewBox="0 0 640 230" width="640" role="img" aria-label="CMS 좌표계: 빔 축 z, 횡평면에서의 pT와 방위각 φ, 빔과 이루는 각 θ">
+        <g fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="20" y1="120" x2="300" y2="120" stroke="var(--ink-3)" stroke-dasharray="6 4"/>
+          <polygon points="300,120 290,115 290,125" fill="var(--ink-3)" stroke="none"/>
+          <line x1="150" y1="120" x2="255" y2="45" stroke="var(--track)" stroke-width="3"/>
+          <polygon points="255,45 243,48 250,57" fill="var(--track)" stroke="none"/>
+          <path d="M190 120 A40 40 0 0 0 183 97" stroke="var(--accent)"/>
+          <line x1="255" y1="45" x2="255" y2="120" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
+          <circle cx="480" cy="120" r="80" stroke="var(--ink-3)"/>
+          <line x1="400" y1="120" x2="570" y2="120" stroke="var(--ink-3)"/>
+          <line x1="480" y1="210" x2="480" y2="30" stroke="var(--ink-3)"/>
+          <line x1="480" y1="120" x2="545" y2="70" stroke="var(--track)" stroke-width="3"/>
+          <polygon points="545,70 533,72 539,81" fill="var(--track)" stroke="none"/>
+          <path d="M515 120 A35 35 0 0 0 508 99" stroke="var(--accent)"/>
+          <circle cx="480" cy="120" r="5" fill="currentColor"/>
+          <circle cx="150" cy="120" r="5" fill="currentColor"/>
+        </g>
+        <text x="270" y="140" font-size="14">빔 축 z</text>
+        <text x="200" y="40" font-size="14">뮤온 운동량 p</text>
+        <text x="196" y="110" font-size="14">θ</text>
+        <text x="262" y="95" font-size="13">pT (z에 수직 성분)</text>
+        <text x="40" y="200" font-size="13">옆에서 본 모습: η = −ln tan(θ/2)</text>
+        <text x="556" y="66" font-size="14">pT</text>
+        <text x="520" y="112" font-size="14">φ</text>
+        <text x="574" y="125" font-size="13">x</text>
+        <text x="486" y="36" font-size="13">y</text>
+        <text x="400" y="225" font-size="13">빔 방향에서 본 횡평면(x–y)</text>
+      </svg>
+      <figcaption>그림 1. CMS 좌표계. 빔 축이 z, 횡평면에서 운동량 크기가 pT, 방향각이 φ입니다. θ가 90°이면 η = 0입니다.</figcaption>
+    </figure>
+    <div class="prose">
+      <h3>3. 봉우리 읽기: 질량, 폭, 신호와 배경</h3>
+      <p>봉우리의 가운데 위치가 입자의 <b>질량</b>입니다. 봉우리의 너비는 두 가지가 합쳐진 것입니다. 하나는 입자의 수명이 짧아서 생기는 <b>자연 폭</b>(Z는 약 2.5 GeV)이고, 다른 하나는 검출기가 운동량을 완벽하게 재지 못해 생기는 <b>측정 분해능</b>입니다. 봉우리를 종 모양 곡선(가우스 함수)으로 맞추면 가운데 μ와 퍼짐 σ를 얻습니다. 최댓값의 절반 높이에서 잰 폭(반치폭, FWHM)은 약 2.355σ입니다.</p>
+      <p>봉우리 아래의 사건이 모두 그 입자에서 온 것은 아닙니다. 봉우리 밖에서도 깔려 있는 사건들(<b>배경</b>)이 봉우리 아래에도 있습니다. 봉우리 양옆(옆띠)의 높이로 배경을 어림하고 빼면 <b>신호</b> 사건 수를 얻습니다. 사건을 N개 세었을 때 통계적 불확도는 약 <b>√N</b>입니다. 배경이 B개일 때 신호가 B의 요동(√B)보다 훨씬 커야 "진짜"라고 말할 수 있습니다. 입자물리에서 "발견"이라 부르려면 배경만으로 그만큼 솟을 확률이 약 350만 분의 1 이하, 즉 <b>5σ</b>(표준편차의 5배)를 넘어야 합니다.</p>
+      <h3>4. 로그 눈금</h3>
+      <p>이중뮤온 스펙트럼에서 가장 높은 막대는 수천 건, 가장 낮은 막대는 몇 건입니다. 세로축을 10배마다 같은 간격으로 그리는 <b>로그 눈금</b>을 쓰면 큰 봉우리와 작은 봉우리를 한 그래프에서 함께 볼 수 있습니다. 질량 범위도 0.3 GeV에서 100 GeV 이상까지 넓으므로 가로축도 로그 눈금으로 그리는 것이 CMS 논문 그림의 방식입니다.</p>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 640 250" width="640" role="img" aria-label="배경 위에 솟은 봉우리. 질량 μ, 폭 σ와 반치폭, 배경, 옆띠를 표시한 그림">
+        <line x1="50" y1="210" x2="610" y2="210" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="50" y1="210" x2="50" y2="20" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="70" y="20" width="110" height="190" fill="var(--accent)" opacity=".08"/>
+        <rect x="480" y="20" width="110" height="190" fill="var(--accent)" opacity=".08"/>
+        <path d="M60 165 L600 185" stroke="var(--ink-3)" stroke-width="2" stroke-dasharray="6 4" fill="none"/>
+        <path d="M60 165 C 250 172, 270 170, 290 140 C 310 100, 318 45, 330 45 C 342 45, 350 100, 370 140 C 390 172, 420 178, 600 185" stroke="var(--track)" stroke-width="3" fill="none"/>
+        <line x1="330" y1="45" x2="330" y2="210" stroke="var(--accent)" stroke-dasharray="4 3"/>
+        <line x1="306" y1="108" x2="354" y2="108" stroke="var(--accent)" stroke-width="2"/>
+        <text x="322" y="226" font-size="14">μ</text>
+        <text x="362" y="112" font-size="13">반치폭 FWHM ≈ 2.355σ</text>
+        <text x="380" y="160" font-size="13" class="muted-fill">배경(점선)</text>
+        <text x="82" y="40" font-size="13">왼쪽 옆띠</text>
+        <text x="490" y="40" font-size="13">오른쪽 옆띠</text>
+        <text x="256" y="35" font-size="13">신호 + 배경</text>
+        <text x="540" y="235" font-size="13">질량 M</text>
+        <text x="8" y="16" font-size="13">사건 수</text>
+      </svg>
+      <figcaption>그림 2. 봉우리의 해부. 옆띠(봉우리가 없는 양옆 구간)로 배경 높이를 어림하고, 봉우리 구간 사건 수에서 배경을 빼면 신호입니다.</figcaption>
+    </figure>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">03</span><h2>실험 A: 스프레드시트로 실제 CMS 데이터 분석하기</h2></div>
+    <p class="prose">이 실험의 데이터는 CMS가 2011년에 기록한 실제 양성자–양성자 충돌(7 TeV)에서 뮤온 두 개가 나온 사건입니다. 누구나 자유롭게 쓸 수 있는 CC0 라이선스로 공개되어 있습니다.</p>
+    <div class="grid-2">
+      <div class="box"><h3>준비물</h3><ul>
+        <li>컴퓨터 또는 태블릿(2인 1대), 구글 시트(구글 계정) 또는 엑셀</li>
+        <li><a href="../data/cms_dimuon_2011_events.csv">cms_dimuon_2011_events.csv</a> — 이중뮤온 사건 20,000건(4-벡터), 약 1.8 MB</li>
+        <li><a href="../data/cms_zmumu_2011.csv">cms_zmumu_2011.csv</a> — Z→μμ 후보 10,583건(pT, η, φ), 약 0.8 MB</li>
+        <li>(선택) <a href="../data/cms_dimuon_2011_mass.csv">cms_dimuon_2011_mass.csv</a> — 질량만 있는 100,000건</li>
+        <li>(선택) CERN 오픈 데이터 포털 record 545에서 직접 내려받은 원본 CSV — <a href="../data/index.html#download">내려받는 방법</a></li>
+      </ul></div>
+      <div class="box box--safety"><h4>데이터 다루기 주의</h4><ul>
+        <li>원본 CSV 파일은 그대로 두고, 복사본에서 작업한다. 정렬하다가 행이 섞이면 사건이 망가진다.</li>
+        <li>수식을 아래로 채울 때 20,000행 끝까지 채워졌는지 확인한다(마지막 행 번호 20001).</li>
+        <li>에너지·운동량은 GeV, 각도 φ는 라디안이다. 스프레드시트의 COS, COSH는 라디안을 쓴다.</li>
+        <li>계산 중간에 반올림하지 않는다. 불변질량은 큰 수끼리의 뺄셈이라 반올림하면 값이 크게 틀어진다.</li>
+      </ul></div>
+    </div>
+
+    <h3>파일의 열(column) 구성</h3>
+    <div class="table-wrap"><table class="sheet-cols">
+      <tr><th>열</th><th>cms_dimuon_2011_events.csv</th><th>열</th><th>cms_zmumu_2011.csv</th></tr>
+      <tr><td>A, B</td><td>Run, Event — 런 번호, 사건 번호</td><td>A, B</td><td>Run, Event</td></tr>
+      <tr><td>C–F</td><td>E1, px1, py1, pz1 — 뮤온 1의 에너지와 운동량(GeV)</td><td>C, D, E</td><td>pt1, eta1, phi1 — 뮤온 1의 pT(GeV), η, φ(라디안)</td></tr>
+      <tr><td>G</td><td>Q1 — 뮤온 1의 전하(+1 또는 −1)</td><td>F, G</td><td>Q1, iso1 — 전하, 고립도(주변 입자 에너지 합)</td></tr>
+      <tr><td>H–K</td><td>E2, px2, py2, pz2 — 뮤온 2</td><td>H, I, J</td><td>pt2, eta2, phi2 — 뮤온 2</td></tr>
+      <tr><td>L</td><td>Q2 — 뮤온 2의 전하</td><td>K, L</td><td>Q2, iso2</td></tr>
+      <tr><td>M</td><td>M — CMS가 계산해 둔 불변질량(검산용)</td><td>–</td><td>질량 열 없음: 직접 계산해야 한다</td></tr>
+    </table></div>
+
+    <h3>실험 방법</h3>
+    <ol class="steps">
+      <li><span><b>파일 열기.</b> 구글 시트: [파일] → [가져오기] → [업로드]에서 CSV 선택 → "새 스프레드시트 만들기". 엑셀: CSV 파일을 바로 열거나 [데이터] → [텍스트/CSV에서]. 첫 줄이 열 이름인지 확인한다.</span></li>
+      <li><span><b>불변질량 계산(4-벡터).</b> events 파일의 N1 칸에 <code>M_계산</code>이라고 쓰고, N2 칸에 다음 수식을 넣는다.<br><code>=SQRT((C2+H2)^2-(D2+I2)^2-(E2+J2)^2-(F2+K2)^2)</code><br>N2 칸을 선택하고 오른쪽 아래 작은 네모를 두 번 클릭하면 마지막 행까지 채워진다.</span></li>
+      <li><span><b>검산.</b> O2 칸에 <code>=N2-M2</code>를 넣고 채운다. 거의 모든 행이 0에 가까우면 성공이다. 첫 사건의 M은 17.49 GeV이다. 차이가 큰 행이 몇 개 있다면 어떤 사건인지 살펴보자(아주 큰 에너지의 뮤온이 섞여 있다).</span></li>
+      <li><span><b>불변질량 계산(pT, η, φ).</b> zmumu 파일의 M1 칸에 <code>M</code>, M2 칸에 다음 수식을 넣고 채운다.<br><code>=SQRT(2*C2*H2*(COSH(D2-I2)-COS(E2-J2)))</code><br>첫 사건의 값은 약 89.89 GeV이다.</span></li>
+      <li><span><b>구간 만들기.</b> 빈 열(예: Q열)에 구간의 시작값을 쓴다. J/ψ를 보려면 Q2에 2.80, Q3에 <code>=Q2+0.01</code>을 넣고 Q62(3.40)까지 채운다. 구간 폭은 0.01 GeV이다.</span></li>
+      <li><span><b>도수 세기.</b> R2 칸에 <code>=COUNTIFS($N$2:$N$20001,"&gt;="&amp;Q2,$N$2:$N$20001,"&lt;"&amp;(Q2+0.01))</code>을 넣고 R61까지 채운다. (다른 방법: <code>=FREQUENCY(N2:N20001,Q2:Q62)</code>는 "구간 끝값 이하"를 세므로 기준이 조금 다르다.)</span></li>
+      <li><span><b>히스토그램 그리기.</b> Q열과 R열을 함께 선택 → [삽입] → [차트] → 세로 막대 차트. 또는 구글 시트의 "히스토그램" 차트(맞춤설정 → 히스토그램 → 버킷 크기 0.01), 엑셀 2016 이후의 [삽입] → [통계 차트] → [히스토그램](축 서식 → 구간 너비)으로 N열을 바로 그려도 된다. 가로축 제목 "불변질량 (GeV/c²)", 세로축 제목 "사건 수 / 0.01 GeV"를 꼭 붙인다.</span></li>
+      <li><span><b>봉우리 측정.</b> 도수가 가장 큰 구간의 가운데 값을 읽는다. 봉우리 구간(예: 2.9~3.3 GeV)의 사건 수 <code>=COUNTIFS(N2:N20001,"&gt;=2.9",N2:N20001,"&lt;3.3")</code>, 평균 <code>=AVERAGEIFS(N2:N20001,N2:N20001,"&gt;=2.9",N2:N20001,"&lt;3.3")</code>, 표준편차 <code>=STDEV.S(FILTER(N2:N20001,(N2:N20001&gt;=2.9)*(N2:N20001&lt;3.3)))</code>를 구한다(FILTER는 구글 시트와 엑셀 365에서 쓸 수 있다).</span></li>
+      <li><span><b>폭과 배경.</b> 봉우리 높이에서 배경 높이(양옆 구간 도수의 평균)를 뺀 값의 절반이 되는 곳을 양쪽에서 찾아 그 사이 거리(반치폭)를 잰다. σ ≈ 반치폭 / 2.355. 봉우리 구간 사건 수에서 "배경 높이 × 구간 개수"를 빼면 신호 사건 수의 어림값이다.</span></li>
+      <li><span><b>다른 봉우리.</b> 구간을 바꿔 Υ(8.5~11.5 GeV, 폭 0.02 GeV), Z(zmumu 파일, 60~120 GeV, 폭 1 GeV)도 같은 방법으로 측정한다. 시간이 있으면 질량만 있는 100,000건 파일로 ψ(2S)(3.4~4.0 GeV)도 찾아본다.</span></li>
+    </ol>
+
+    <h3>결과표</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-lab">
+      <tr><th>입자</th><th>측정 질량 (GeV/c²)</th><th>기준 질량 (GeV/c²)</th><th>차이 (%)</th><th>봉우리 구간 사건 수</th><th>폭 σ (GeV)</th></tr>
+      <tr><td><input type="text" id="lab-r1p" aria-label="1행 입자" placeholder="J/ψ"></td><td><input type="number" step="any" id="lab-r1m" aria-label="1행 측정 질량"></td><td><input type="number" step="any" id="lab-r1ref" aria-label="1행 기준 질량" placeholder="3.097"></td><td><input type="number" step="any" id="lab-r1d" aria-label="1행 차이 퍼센트"></td><td><input type="number" step="1" id="lab-r1n" aria-label="1행 사건 수"></td><td><input type="number" step="any" id="lab-r1w" aria-label="1행 폭"></td></tr>
+      <tr><td><input type="text" id="lab-r2p" aria-label="2행 입자" placeholder="Υ(1S)"></td><td><input type="number" step="any" id="lab-r2m" aria-label="2행 측정 질량"></td><td><input type="number" step="any" id="lab-r2ref" aria-label="2행 기준 질량" placeholder="9.460"></td><td><input type="number" step="any" id="lab-r2d" aria-label="2행 차이 퍼센트"></td><td><input type="number" step="1" id="lab-r2n" aria-label="2행 사건 수"></td><td><input type="number" step="any" id="lab-r2w" aria-label="2행 폭"></td></tr>
+      <tr><td><input type="text" id="lab-r3p" aria-label="3행 입자" placeholder="Z"></td><td><input type="number" step="any" id="lab-r3m" aria-label="3행 측정 질량"></td><td><input type="number" step="any" id="lab-r3ref" aria-label="3행 기준 질량" placeholder="91.19"></td><td><input type="number" step="any" id="lab-r3d" aria-label="3행 차이 퍼센트"></td><td><input type="number" step="1" id="lab-r3n" aria-label="3행 사건 수"></td><td><input type="number" step="any" id="lab-r3w" aria-label="3행 폭"></td></tr>
+      <tr><td><input type="text" id="lab-r4p" aria-label="4행 입자" placeholder="ψ(2S)"></td><td><input type="number" step="any" id="lab-r4m" aria-label="4행 측정 질량"></td><td><input type="number" step="any" id="lab-r4ref" aria-label="4행 기준 질량" placeholder="3.686"></td><td><input type="number" step="any" id="lab-r4d" aria-label="4행 차이 퍼센트"></td><td><input type="number" step="1" id="lab-r4n" aria-label="4행 사건 수"></td><td><input type="number" step="any" id="lab-r4w" aria-label="4행 폭"></td></tr>
+      <tr><td><input type="text" id="lab-r5p" aria-label="5행 입자" placeholder="내가 찾은 봉우리"></td><td><input type="number" step="any" id="lab-r5m" aria-label="5행 측정 질량"></td><td><input type="number" step="any" id="lab-r5ref" aria-label="5행 기준 질량"></td><td><input type="number" step="any" id="lab-r5d" aria-label="5행 차이 퍼센트"></td><td><input type="number" step="1" id="lab-r5n" aria-label="5행 사건 수"></td><td><input type="number" step="any" id="lab-r5w" aria-label="5행 폭"></td></tr>
+    </table></div>
+    <p class="small muted">차이(%) = (측정 질량 − 기준 질량) ÷ 기준 질량 × 100. 기준 질량: J/ψ 3.097, ψ(2S) 3.686, Υ(1S) 9.460, Υ(2S) 10.023, Υ(3S) 10.355, Z 91.19 GeV/c² (입자물리학 데이터 그룹 PDG 값).</p>
+    <button class="btn no-print" type="button" data-copy-table="tbl-lab">결과표 복사</button>
+
+    <h3>결과 분석</h3>
+    <label class="answer-field"><span>A1. 내가 계산한 M_계산과 파일의 M이 거의 같았는가? 크게 다른 행이 있었다면 그 사건의 특징(에너지 크기 등)과 까닭을 추측해 보자.</span><textarea id="lab-a1"></textarea></label>
+    <label class="answer-field"><span>A2. 구간 폭을 0.001 GeV, 0.01 GeV, 0.1 GeV로 바꾸면 J/ψ 히스토그램은 어떻게 달라지는가? 좋은 구간 폭은 어떻게 정해야 할까?</span><textarea id="lab-a2"></textarea></label>
+    <label class="answer-field"><span>A3. 측정 질량이 기준값과 조금 다른 까닭을 두 가지 이상 들어 보자.</span><textarea id="lab-a3"></textarea></label>
+    <label class="answer-field"><span>A4. J/ψ 봉우리의 σ와 Z 봉우리의 σ를 비교하자. 둘의 크기가 크게 다른 까닭은 무엇일까? (힌트: 자연 폭 J/ψ 약 0.000093 GeV, Z 약 2.5 GeV)</span><textarea id="lab-a4"></textarea></label>
+  </section>
+
+  <section class="section" id="paper">
+    <div class="section__head"><span class="section__tag">03+</span><h2>미니 발견 논문 쓰기</h2></div>
+    <div class="box box--think prose"><p>CMS의 힉스 발견 논문(2012년)도 제목, 초록, 서론, 검출기, 분석 방법, 결과, 결론 순서로 쓰였습니다. 우리도 실험 A·B의 결과로 한 쪽짜리 "발견 논문"을 써 봅시다. 다른 사람이 읽고 똑같이 따라 할 수 있게 쓰는 것이 핵심입니다. 숫자에는 단위와 불확도를 붙이세요.</p></div>
+    <div class="paper">
+      <label class="answer-field"><span>제목 (예: "2011년 CMS 이중뮤온 데이터에서 J/ψ와 Z 보손 질량 측정")</span><input type="text" id="paper-title" style="width:100%"></label>
+      <label class="answer-field"><span>초록 — 무엇을, 어떤 데이터로, 어떻게 했고, 핵심 결과(숫자 ± 불확도)가 무엇인지 3~4문장</span><textarea id="paper-abstract"></textarea></label>
+      <label class="answer-field"><span>방법 — 데이터 출처(실험, 연도, 사건 수), 불변질량 계산식, 구간 폭, 봉우리 측정 방법(평균/맞춤), 배경 처리</span><textarea id="paper-method"></textarea></label>
+      <label class="answer-field"><span>결과 — 측정 질량, 폭, 신호 사건 수, 기준값과의 차이. 그래프를 설명하는 문장 포함</span><textarea id="paper-result"></textarea></label>
+      <label class="answer-field"><span>결론 — 무엇을 확인했는가, 한계는 무엇인가(통계, 배경, 검출기), 다음에 해 볼 분석</span><textarea id="paper-conclusion"></textarea></label>
+    </div>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">04</span><h2>실험 B: 3D 모의실험 — CMS 오픈데이터 분석실</h2></div>
+    <p class="prose">분석실은 실제 CMS 데이터(이중뮤온 100,000건, 4-벡터 20,000건, Z→μμ 10,583건, 4렙톤 278건)를 불러와 사건 하나하나를 3D 검출기 안의 궤적으로 보여 주고, 히스토그램 분석기로 봉우리를 측정하게 해 줍니다. 궤적이 휘는 방향은 전하에 따라 반대이고, 횡운동량이 클수록 덜 휩니다(주제 4: p = 0.3·B·r).</p>
+    <a class="btn btn--sim no-print" href="../sims/t10.html">3D 모의실험 열기</a>
+    <h3>미션</h3>
+    <ol class="steps">
+      <li><span><b>공명 찾기</b> — [전체 로그] 그래프(세로·가로 로그 눈금)에서 클릭 동작을 "봉우리 표시"로 바꾸고 봉우리를 4개 이상 표시한다. 어떤 봉우리를 찾았는지 기록한다.</span></li>
+      <li><span><b>J/ψ 측정</b> — [J/ψ] 버튼 → [가우스+배경 맞춤]. 맞춤 질량 μ가 3.097 GeV의 1% 이내인지 확인하고 [기록].</span></li>
+      <li><span><b>Z 질량과 폭</b> — [Z] 버튼(또는 Z→μμ 데이터셋) → 맞춤 → μ와 σ를 [기록]. 구간을 넓히거나 좁히면 결과가 어떻게 바뀌는지도 본다.</span></li>
+      <li><span><b>힉스의 흔적</b> — 데이터셋 "4렙톤 278건" → [힉스 70–180] → 분석 구간 120~130 GeV에서 [구간 통계]. 옆 구간(110~120, 130~140 GeV)의 사건 수와 비교한다.</span></li>
+      <li><span><b>손 계산 검증</b> — 사건 하나를 골라 표의 4-벡터로 불변질량을 계산기로 직접 구해 입력한다. "분석 구간 안의 사건만 넘기기"를 켜면 J/ψ나 Z 사건만 골라 볼 수 있다.</span></li>
+    </ol>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim">
+      <tr><th>측정</th><th>데이터셋</th><th>분석 구간 (GeV)</th><th>질량 μ 또는 평균 (GeV)</th><th>폭 σ (GeV)</th><th>사건 수</th></tr>
+      <tr><td>J/ψ</td><td><input type="text" id="sim-r1ds" aria-label="J/psi 데이터셋"></td><td><input type="text" id="sim-r1w" aria-label="J/psi 분석 구간"></td><td><input type="number" step="any" id="sim-r1m" aria-label="J/psi 질량"></td><td><input type="number" step="any" id="sim-r1s" aria-label="J/psi 폭"></td><td><input type="number" step="1" id="sim-r1n" aria-label="J/psi 사건 수"></td></tr>
+      <tr><td>Υ(1S)</td><td><input type="text" id="sim-r2ds" aria-label="Upsilon 데이터셋"></td><td><input type="text" id="sim-r2w" aria-label="Upsilon 분석 구간"></td><td><input type="number" step="any" id="sim-r2m" aria-label="Upsilon 질량"></td><td><input type="number" step="any" id="sim-r2s" aria-label="Upsilon 폭"></td><td><input type="number" step="1" id="sim-r2n" aria-label="Upsilon 사건 수"></td></tr>
+      <tr><td>Z</td><td><input type="text" id="sim-r3ds" aria-label="Z 데이터셋"></td><td><input type="text" id="sim-r3w" aria-label="Z 분석 구간"></td><td><input type="number" step="any" id="sim-r3m" aria-label="Z 질량"></td><td><input type="number" step="any" id="sim-r3s" aria-label="Z 폭"></td><td><input type="number" step="1" id="sim-r3n" aria-label="Z 사건 수"></td></tr>
+      <tr><td>4렙톤 120~130</td><td>4렙톤 278건</td><td>120~130</td><td><input type="number" step="any" id="sim-r4m" aria-label="4렙톤 평균 질량"></td><td><input type="number" step="any" id="sim-r4s" aria-label="4렙톤 표준편차"></td><td><input type="number" step="1" id="sim-r4n" aria-label="4렙톤 120에서 130 사건 수"></td></tr>
+      <tr><td>4렙톤 옆 구간</td><td>4렙톤 278건</td><td>110~120 / 130~140</td><td colspan="2"><input type="text" id="sim-r5side" aria-label="옆 구간 사건 수 메모" placeholder="각 구간의 사건 수"></td><td><input type="number" step="1" id="sim-r5n" aria-label="옆 구간 사건 수 합"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-sim">기록표 복사</button>
+    <label class="answer-field"><span>B1. 로그 눈금 스펙트럼에서 찾은 봉우리를 질량이 작은 것부터 써 보자. 각 봉우리는 어떤 쿼크 또는 보손과 관련이 있을까?</span><textarea id="sim-b1"></textarea></label>
+    <label class="answer-field"><span>B2. 3D 화면에서 J/ψ 사건의 뮤온과 Z 사건의 뮤온은 휘는 정도가 어떻게 다른가? 까닭을 pT로 설명하자.</span><textarea id="sim-b2"></textarea></label>
+    <label class="answer-field"><span>B3. 4렙톤 데이터에서 120~130 GeV 구간에 모인 사건 수와 옆 구간의 사건 수를 비교하고, 이것으로 "힉스를 발견했다"고 말할 수 있는지 판단해 보자.</span><textarea id="sim-b3"></textarea></label>
+    <label class="answer-field"><span>B4. 맞춤에서 분석 구간을 넓히거나 좁히면 μ와 σ가 조금씩 바뀐다. 측정 결과를 보고할 때 이 사실을 어떻게 다뤄야 할까?</span><textarea id="sim-b4"></textarea></label>
+  </section>
+
+  <section class="section" id="cern">
+    <div class="section__head"><span class="section__tag">05</span><h2>실제 CERN에서는: 과학자들은 어떻게 일하는가</h2></div>
+    <div class="box box--cern prose">
+      <p><b>CMS 협력단.</b> CMS 검출기(무게 약 14,000 t, 길이 21 m, 지름 15 m, 3.8 T 초전도 솔레노이드)는 수십 개 나라의 수천 명 과학자·공학자·학생이 함께 만들고 운영합니다. 논문 한 편에 저자가 수천 명 올라가며, 발표 전에 협력단 내부의 여러 단계 검토를 거칩니다.</p>
+      <p><b>트리거.</b> LHC에서는 설계상 25 ns마다(초당 약 4천만 번) 양성자 묶음이 교차합니다. 모든 사건을 저장할 수는 없으므로, 하드웨어로 된 1단계 트리거가 수 마이크로초 안에 흥미로운 사건(높은 pT의 뮤온, 큰 에너지 침착 등)을 골라 초당 약 10만 건으로 줄이고, 컴퓨터로 된 고수준 트리거가 다시 초당 수백~수천 건만 남깁니다. 우리가 쓴 이중뮤온 데이터도 "뮤온 두 개" 트리거(DoubleMu)를 통과한 사건입니다.</p>
+      <p><b>분석과 검증.</b> 분석팀은 신호 구간을 보기 전에 선택 기준을 모의 데이터와 옆띠로 먼저 정합니다(눈가림 분석). 같은 결과를 서로 독립적인 두 실험(ATLAS와 CMS)이 따로 얻어야 확신합니다. 발견을 선언하려면 배경만으로 그런 봉우리가 생길 확률이 약 350만 분의 1 이하, 곧 <b>5σ</b>여야 합니다.</p>
+      <p><b>2012년 7월 4일.</b> ATLAS와 CMS는 7 TeV(2011년)와 8 TeV(2012년) 충돌 데이터로 약 125 GeV의 새 보손을 각각 5σ 수준에서 관측했다고 발표했습니다. 결정적인 채널 중 하나가 바로 이 활동의 4렙톤(H → ZZ → 4ℓ) 채널입니다. 2013년 노벨 물리학상은 이 입자를 예언한 앙글레르와 힉스가 받았습니다.</p>
+      <p><b>오픈 데이터.</b> CMS는 데이터를 기록하고 일정 기간이 지나면 그 일부를 CERN 오픈 데이터 포털(opendata.cern.ch)에 공개합니다. 대학 연구자뿐 아니라 고등학생도 같은 데이터로 분석할 수 있습니다.</p>
+    </div>
+    <label class="answer-field"><span>C1. 트리거가 없다면 어떤 문제가 생길까? 반대로 트리거 때문에 놓칠 수 있는 것은 무엇일까?</span><textarea id="cern-c1"></textarea></label>
+  </section>
+
+  <section class="section" id="check">
+    <div class="section__head"><span class="section__tag">06</span><h2>확인 문제</h2></div>
+    <label class="answer-field"><span>1. CMS 이중뮤온 데이터의 10번째 사건에서 뮤온 1은 (E, px, py, pz) = (10.1623, 0.4763, −8.5164, 5.5231) GeV, 뮤온 2는 (19.7754, 2.7508, −13.9871, 13.7059) GeV이다. 불변질량을 계산하고, 어떤 입자가 붕괴했을 가능성이 큰지 쓰시오. (중간에 반올림하지 말 것)</span><textarea id="check-1"></textarea></label>
+    <label class="answer-field"><span>2. Z→μμ 데이터의 첫 사건은 pT₁ = 54.7055 GeV, η₁ = −0.4324, φ₁ = 2.5742, pT₂ = 34.2464 GeV, η₂ = −0.9885, φ₂ = −0.4987이다. 불변질량을 계산하시오.</span><textarea id="check-2"></textarea></label>
+    <label class="answer-field"><span>3. 두 뮤온의 질량을 각각 구해 더하면 붕괴한 입자의 질량이 될까? 불변질량을 "합을 먼저 구하고 제곱"해야 하는 까닭을 설명하시오.</span><textarea id="check-3"></textarea></label>
+    <label class="answer-field"><span>4. J/ψ의 자연 폭은 약 0.093 MeV인데, CMS 데이터에서 잰 J/ψ 봉우리의 σ는 약 30 MeV이다. 이 차이는 무엇 때문인가?</span><textarea id="check-4"></textarea></label>
+    <label class="answer-field"><span>5. 어떤 질량 구간에서 배경이 100건으로 예상되는데 130건이 관측되었다. 배경의 통계적 요동(√B)과 비교하면 초과분은 몇 σ 정도인가? 이것을 "발견"이라 할 수 있는가?</span><textarea id="check-5"></textarea></label>
+    <label class="answer-field"><span>6. 이중뮤온 질량 스펙트럼을 세로축 선형 눈금으로 그리면 ψ(2S)와 Υ(3S)가 잘 보이지 않는다. 로그 눈금이 필요한 까닭을 설명하시오.</span><textarea id="check-6"></textarea></label>
+  </section>
+
+  <section class="section" id="up">
+    <div class="box box--up">
+      <h3>업그레이드 도전</h3>
+      <p><b>1. 파이썬으로 같은 분석.</b> <a href="../notebooks/">notebooks 폴더</a>의 Colab 노트북(업그레이드 U1, <a href="../upgrade/index.html">업그레이드 모듈 안내</a>)을 열어 pandas로 CSV를 읽고, matplotlib로 로그 눈금 이중뮤온 스펙트럼을 그려 보자. 스프레드시트로 20,000행을 다룰 때와 무엇이 다른가?</p>
+      <p><b>2. W⁺/W⁻ 비 측정.</b> <a href="../data/cms_wmunu_2011.csv">cms_wmunu_2011.csv</a>(W→μν 후보 20,000건: pt, eta, phi, Q, MET, phiMET)에서 Q = +1과 Q = −1인 사건을 세어 W⁺/W⁻ 비와 불확도 R·√(1/N₊ + 1/N₋)를 구하자. 그다음 횡질량 m<sub>T</sub> = √(2·pT·MET·(1 − cos(φ − φ<sub>MET</sub>)))가 50 GeV보다 큰 사건만 골라 다시 계산해 보자. 비가 1보다 큰 까닭을 양성자 속 쿼크 구성(uud)으로 설명하고, 선택 기준을 바꾸면 왜 비가 달라지는지 생각해 보자(주제 9와 연결).</p>
+      <p><b>3. ATLAS 오픈 데이터.</b> <a href="https://opendata.atlas.cern" target="_blank" rel="noopener">ATLAS Open Data</a>에는 교육용 데이터와 브라우저에서 돌아가는 분석 노트북이 있다. 같은 Z 봉우리를 ATLAS 데이터로도 찾아 CMS 결과와 비교해 보자. 두 실험이 같은 답을 얻는 것이 왜 중요한가?</p>
+      <p><b>4. 5σ 감각 기르기.</b> 3D 분석실의 4렙톤 데이터에서 분석 구간을 115~135 GeV, 110~140 GeV로 넓혀 가며 사건 수가 어떻게 변하는지 기록하고, 구간을 넓히면 신호 대 배경 비가 왜 나빠지는지 설명해 보자.</p>
+      <label class="answer-field"><span>도전 기록 (어떤 도전을 했고, 숫자 결과와 해석은?)</span><textarea id="up-1"></textarea></label>
+    </div>
+  </section>
+
+  <section class="section" id="self">
+    <div class="section__head"><span class="section__tag">07</span><h2>자기 평가</h2></div>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="self-1"> <span>CERN 오픈 데이터 포털에서 CMS 데이터를 찾고 내려받는 방법을 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-2"> <span>4-벡터로 불변질량을 계산하는 스프레드시트 수식을 직접 쓸 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-3"> <span>pT, η, φ로 운동량 성분과 불변질량을 계산할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-4"> <span>히스토그램에서 봉우리를 찾아 질량과 폭을 재고 기준값과 비교할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-5"> <span>신호와 배경, √N 불확도, 5σ 발견 기준의 뜻을 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-6"> <span>4렙톤 데이터에서 힉스 후보 사건을 세고 그 의미와 한계를 말할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-7"> <span>내 분석을 다른 사람이 따라 할 수 있게 "발견 논문" 형식으로 쓸 수 있다.</span></label></li>
+    </ul>
+    <label class="answer-field"><span>20시간의 CERN 탐구를 마치며, 가장 기억에 남는 것과 더 알고 싶어진 것</span><textarea id="self-q"></textarea></label>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>
