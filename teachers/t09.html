@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 9 사건 분석 · 교사용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .key-ctl { display: flex; flex-wrap: wrap; gap: .6rem 1rem; align-items: center; font-size: var(--step--1); }
+  .key-ctl label { display: inline-flex; gap: .35rem; align-items: center; font-weight: 600; }
+  .key-ctl select { padding: .3rem .5rem; }
+  .ans-tag { display: inline-block; padding: 0 .45rem; border-radius: 6px; font-weight: 700; white-space: nowrap; }
+  .ans-wp { background: var(--accent-soft); color: var(--accent); }
+  .ans-wm { background: var(--lv-adv-soft); color: var(--lv-adv); }
+  .ans-z { background: var(--lv-basic-soft); color: var(--lv-basic); }
+  .ans-bg { background: var(--surface-2); color: var(--ink-2); }
+  #tbl-key td:nth-child(3) { min-width: 18rem; }
+  #tbl-key td:nth-child(3), #tbl-key td:nth-child(2) { white-space: normal; }
+  @media print { #tbl-key tr { break-inside: avoid; } }
+</style>
+</head>
+<body data-page="teacher" data-topic="9" data-root="../">
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--teacher">교사용</span>
+      <span class="badge badge--int">종합과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 9 · 지도서</p>
+    <h1>사건 분석가 되기: W·Z 보손 찾기</h1>
+    <p class="lead">수많은 충돌 사건 중에서 W·Z 보손이 만든 사건을 어떻게 골라낼까? — 검출기 신호(주제 5)와 운동량 보존·불변질량(주제 7)을 합쳐 사건을 분류하고, W⁺/W⁻ 비로 양성자의 쿼크 구성을 읽어 내는 종합 탐구입니다.</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="../students/t09.html">학생용 활동지</a>
+      <a class="btn" href="../students/t09-cards.html">사건 카드(인쇄용)</a>
+      <a class="btn btn--sim" href="../sims/t09.html">3D 모의실험</a>
+    </div>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#overview">개요</a><a href="#prep">준비</a><a href="#flow">수업 흐름</a><a href="#questions">핵심 발문</a>
+      <a href="#lab">실험 지도</a><a href="#key">카드 정답표</a><a href="#sim">3D 운영</a><a href="#miscon">오개념</a><a href="#answers">정답·해설</a>
+      <a href="#assess">평가</a><a href="#flex">차시 조정</a><a href="#refs">참고 자료</a>
+    </nav>
+  </header>
+
+  <section class="section" id="overview">
+    <div class="section__head"><span class="section__tag">01</span><h2>개요</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>과정 단계</th><td>종합과정(주제 8~10) 두 번째 주제. 2차시(50분 × 2). 주제 10(실제 CMS 데이터 분석)의 준비 단계입니다.</td></tr>
+      <tr><th>교육과정 연계</th><td>물리학 – 힘과 운동(운동량 보존) · 물리학 – 전기와 자기(자기장 속 전하의 운동) · 전자기와 양자 – 전자기장(로렌츠 힘) · 수학 – 확률과 통계(통계적 추정). 학교에서 쓰는 교육과정의 과목·단원 이름에 맞추어 조정하세요.</td></tr>
+      <tr><th>선수 학습</th><td>주제 4(로렌츠 힘, p = 0.3·B·r), 주제 5(검출기 층별 신호), 주제 7(운동량 보존, 불변질량). 주제 6(상대론적 에너지)은 있으면 좋음.</td></tr>
+      <tr><th>핵심 개념</th><td>신호 지문으로 입자 식별, 휘는 방향으로 전하 판별, 누락 횡운동량(MET), W·Z의 렙톤 붕괴, 두 렙톤 불변질량, 계수 통계의 √N 불확도, W⁺/W⁻ 비와 양성자 구조(uud)</td></tr>
+      <tr><th>수업 형태</th><td>1차시: 모둠(4인) 사건 카드 분류(마스터클래스형) → 2차시: 학급 결과 합산·통계 토론 → 개인 또는 2인 1기기 3D 이벤트 디스플레이 분석</td></tr>
+    </table></div>
+    <div class="box box--goal"><h3>학습 목표와 성취 판단 기준</h3><ol>
+      <li><b>검출기 신호로 입자를 식별하고 전하를 판단한다.</b> — 판단 기준: 카드 3장 이상에서 렙톤 종류(ECAL 탑 / 뮤온 챔버)와 전하(휘는 방향)를 근거와 함께 맞게 말한다.</li>
+      <li><b>MET로 중성미자의 존재를 추론한다.</b> — 판단 기준: "횡운동량 합 = 0"을 근거로 MET의 크기·방향을 설명하고, 빔 방향 성분을 쓰지 않는 까닭을 말한다.</li>
+      <li><b>사건을 분류하고 비율과 √N 불확도를 구한다.</b> — 판단 기준: 모둠 분류 정확도 80 % 이상, W⁺/W⁻·W/Z 비를 불확도와 함께 계산하고, 모둠 간 차이를 통계적 요동으로 해석한다.</li>
+      <li><b>W⁺/W⁻ &gt; 1을 양성자 구조로 설명한다.</b> — 판단 기준: u + d̄ → W⁺, d + ū → W⁻와 "u가 d보다 약 2배"를 연결하고, 비가 정확히 2가 아닌 까닭(바다 쿼크)을 언급한다.</li>
+    </ol></div>
+  </section>
+
+  <section class="section" id="prep">
+    <div class="section__head"><span class="section__tag">02</span><h2>준비물과 사전 준비</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>준비물</th><th>수량(4인 1모둠 기준)</th><th>구입·대체 방법</th></tr>
+      <tr><td>사건 카드 세트(A~F 중 1세트, 40장)</td><td class="num">모둠당 1세트</td><td><a href="../students/t09-cards.html">카드 페이지</a>에서 세트를 고르고 [카드 인쇄] → A4 세로, 약 8쪽(읽는 법 1쪽, 카드 5쪽, 기록지 2쪽). 컬러 권장, 흑백도 가능(신호는 위치로 구별됨). 세트마다 다른 색 종이에 인쇄하면 섞이지 않고, 코팅하면 해마다 재사용할 수 있습니다.</td></tr>
+      <tr><td>분류판(7칸: e⁺ν, e⁻ν̄, μ⁺ν, μ⁻ν̄, ee, μμ, 배경)</td><td class="num">모둠당 1장</td><td>A3 종이에 칸을 그리거나 책상 위에 포스트잇으로 7구역 표시</td></tr>
+      <tr><td>가위(카드 자르기)</td><td class="num">모둠당 2개</td><td>미리 잘라 두면 수업 시간 5분 절약. 잘라 두지 않고 한 장(9칸) 단위로 나눠 분류해도 됨</td></tr>
+      <tr><td>계산기</td><td class="num">1인 1개</td><td>휴대폰 계산기 가능(cosh 계산은 공학용 또는 eˣ 이용)</td></tr>
+      <tr><td>컴퓨터·태블릿(3D 모의실험)</td><td class="num">1인 1대 또는 2인 1대</td><td>크롬·엣지·사파리 최신판(WebGL). 인터넷 없이 파일만으로 동작. 학생 기기 사용 가능</td></tr>
+      <tr><td>학급 합산표</td><td class="num">1개</td><td>칠판에 세트(모둠)별 7칸 표, 또는 공유 스프레드시트</td></tr>
+      <tr><td>(선택) 스프레드시트 프로그램</td><td class="num">개인</td><td>업그레이드 도전(실제 CMS W → μν 데이터)용. 엑셀·구글 시트·한셀</td></tr>
+    </table></div>
+    <div class="box box--safety"><h4>안전 지도</h4><ul>
+      <li>카드를 자를 때 가위·칼 사용 주의. 커터칼은 교사가 미리 자르는 경우에만 사용합니다.</li>
+      <li>기기 사용 시 전원선을 통로에 두지 않고, 3D 화면을 오래 볼 때는 20분마다 눈을 쉬게 합니다.</li>
+      <li>모의실험은 브라우저에 분류 기록을 저장합니다. 공용 컴퓨터는 수업 시작 때 [분류 기록 모두 지우기]를 누르게 하세요.</li>
+    </ul></div>
+  </section>
+
+  <section class="section" id="flow">
+    <div class="section__head"><span class="section__tag">03</span><h2>수업 흐름</h2></div>
+    <h3>1차시 (50분): 신호 지문 읽기와 사건 카드 분류</h3>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>단계·시간</th><th>교사 활동</th><th>학생 활동</th><th>자료·유의점</th></tr>
+      <tr><td><span class="phase">도입</span><br>5분</td><td>"초당 10억 번 충돌, W는 3×10⁻²⁵ s 만에 사라진다" 제시. 감식반 비유. W⁺와 W⁻ 중 어느 쪽이 많을지 손들기 투표 결과를 칠판 구석에 기록</td><td>생각 열기 Q1·Q2에 예측 쓰기</td><td>투표 결과는 2차시 끝에 다시 확인(예측 → 검증 구조)</td></tr>
+      <tr><td><span class="phase">전개 1</span><br>15분</td><td>① 신호 지문 표(주제 5 복습 발문) ② 휘는 방향과 전하: p<sub>T</sub> = 0.3·B·r로 40 GeV → r ≈ 35 m 계산, "그래서 카드는 과장했다" ③ MET: 칠판에 횡운동량 화살표 더하기(주제 7) ④ W·Z 표와 판단 순서</td><td>활동지 핵심 개념 읽기, 개념 확인 문제(20 GeV 뮤온 반지름) 풀기</td><td>그림 1·2를 화면에 띄움. MET는 "횡"운동량만이라는 점을 꼭 짚기</td></tr>
+      <tr><td><span class="phase">시범</span><br>5분</td><td>실물화상기로 카드 2장(W 1장, Z 1장)을 함께 판단 순서대로 분류. 점선 기준선 쓰는 법 시범</td><td>교사와 함께 판단 순서 따라 하기</td><td>시범 카드는 정답표에서 W, Z를 하나씩 골라 사용</td></tr>
+      <tr><td><span class="phase">전개 2</span><br>20분</td><td>모둠마다 다른 세트(A~F) 배부. 순회하며 근거를 묻는 발문("왜 뮤온이라고 봤니?"). 논쟁 카드 수집</td><td>1인 10장 분류 → 짝 교차 검토 → 분류판 정리, 기록지 작성</td><td>세트 글자(A-01 …) 확인. 시간이 부족한 모둠은 1인 8장으로 줄이고 나머지는 교사가 함께</td></tr>
+      <tr><td><span class="phase">정리</span><br>5분</td><td>모둠 집계를 칠판 합산표에 적게 함. 논쟁 카드 번호 받기. 다음 차시 예고(비율·불확도, 3D)</td><td>집계표 "우리 모둠" 칸 완성</td><td>카드 세트는 걷어서 다음 차시 논쟁 카드 해설에 사용</td></tr>
+    </table></div>
+    <h3>2차시 (50분): 통계로 결론 내기와 3D 이벤트 디스플레이</h3>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>단계·시간</th><th>교사 활동</th><th>학생 활동</th><th>자료·유의점</th></tr>
+      <tr><td><span class="phase">도입</span><br>5분</td><td>칠판 합산표로 학급 전체 합 구하기. 논쟁 카드 2~3장 정답표로 해설</td><td>집계표 "학급 전체" 칸 채우기</td><td>아래 "세트별 정답 집계"로 모둠 결과의 분류 정확도를 바로 확인</td></tr>
+      <tr><td><span class="phase">전개 1</span><br>10분</td><td>√N과 비의 불확도 공식 설명. "모둠마다 비가 다른데 누가 틀렸을까?" 발문 → 통계적 요동. 모둠 값과 학급 값의 오차 크기 비교</td><td>비율·불확도 직접 계산 → 자동 계산과 비교, A1·A2 쓰기</td><td>세트 E(0.80)와 F(2.71)처럼 실제 구성부터 크게 다른 세트가 있어 토론거리가 됨</td></tr>
+      <tr><td><span class="phase">전개 2</span><br>20분</td><td>3D 모의실험 시연(시점 바꾸기, 트래커 확대, 정답 보기). 순회 지도. 25·50개마다 [현재 집계 기록] 안내</td><td>미션 1~4 수행, 기록표 작성, B1~B3 쓰기</td><td>목표: 최소 50개. 빠른 학생은 100개와 미션 5, 곡률 ×1 비교(B3)</td></tr>
+      <tr><td><span class="phase">전개 3</span><br>8분</td><td>실제 CMS 결과(W⁺/W⁻ ≈ 1.42, W/Z ≈ 10.5) 제시. 1차시 투표 결과와 비교. uud 설명, 양성자–반양성자 충돌과 대비</td><td>"실제 CERN에서는" 읽기, 생각 열기 Q2 고쳐 쓰기</td><td>카드 묶음의 W/Z(약 4)는 일부러 Z를 많이 넣은 표본임을 밝힘(B4)</td></tr>
+      <tr><td><span class="phase">정리</span><br>7분</td><td>확인 문제 1·4·6 풀이 확인. 업그레이드 도전(실제 CMS 데이터) 안내, 주제 10 예고</td><td>확인 문제, 자기 평가, [내 답안 복사]로 제출</td><td>나머지 확인 문제는 과제</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="questions">
+    <div class="section__head"><span class="section__tag">04</span><h2>핵심 발문과 예상 답변</h2></div>
+    <details><summary>발문 1. 중성미자는 검출기에 아무것도 남기지 않는데, 어떻게 "있었다"고 말할 수 있을까?</summary><p>예상 답변: "보이는 입자들의 운동량을 다 더했는데 한쪽으로 치우쳐 있으면, 반대쪽으로 무언가 보이지 않는 것이 운동량을 가져갔다." / 오답 예: "에너지가 줄어서" — 전체 에너지는 알 수 없음(빔 방향으로 빠져나가는 조각)을 짚어 줍니다.</p><p>후속 발문: 빔 방향(z) 운동량은 왜 쓰지 않을까? → 충돌한 쿼크가 양성자 운동량을 얼마씩 나눠 가졌는지 모르고, 빔관 쪽으로 빠져나가는 입자는 측정할 수 없기 때문.</p></details>
+    <details><summary>발문 2. 전자와 뮤온은 트래커에서 똑같이 생긴 트랙을 남기는데, 어떻게 구별할까?</summary><p>예상 답변: 트랙이 끝나는 곳을 본다. 전자는 ECAL에서 에너지를 모두 내놓고 멈추고(큰 초록 탑), 뮤온은 질량이 전자의 약 200배라 제동 복사가 적어 칼로리미터와 철을 뚫고 뮤온 챔버까지 간다.</p><p>후속 발문: 같은 트랙 + HCAL에 큰 에너지라면? → 하전 강입자(π⁺ 등).</p></details>
+    <details><summary>발문 3. 휘는 방향만으로 어떻게 전하를 알 수 있을까? 그럼 휘는 정도는 무엇을 알려 줄까?</summary><p>예상 답변: 로렌츠 힘 F = qv × B의 방향이 전하 부호에 따라 반대. 휘는 정도(반지름)는 운동량에 비례(r = p/qB): 덜 휠수록 운동량이 큼.</p><p>후속 발문: 40 GeV 렙톤은 반지름이 35 m인데, 지름 2.4 m 트래커 안에서 전하를 어떻게 알까? → 처짐 약 4 mm를 수십 μm 정밀도로 재기 때문에 가능. 아주 높은 p<sub>T</sub>(수 TeV)에서는 전하 판별이 어려워진다.</p></details>
+    <details><summary>발문 4. 모둠마다 W⁺/W⁻ 비가 다르게 나왔다. 누가 틀린 걸까?</summary><p>예상 답변: "아무도 안 틀렸을 수 있다. 사건 수가 적어서 우연히 많이 나오거나 적게 나올 수 있다." 모둠 값의 오차 막대(약 ±0.5)가 서로 겹치는지 확인시키고, 학급 합(약 ±0.2)은 더 정밀함을 보입니다.</p><p>후속 발문: 오차를 절반으로 줄이려면 사건이 몇 배 필요할까? → 4배.</p></details>
+    <details><summary>발문 5. 카드 묶음에서 W/Z ≈ 4가 나왔다. 그럼 LHC에서도 W가 Z보다 4배 많다고 말해도 될까?</summary><p>예상 답변: 안 된다. 카드는 수업용으로 Z를 일부러 많이 넣은 표본이다(선택 편향). 실제 분석에서도 검출 효율·수용 범위를 보정해야 진짜 비율을 말할 수 있다.</p><p>후속 발문: 3D 모의실험(W:Z ≈ 10:1)은 왜 10일까? → W 생성이 Z보다 약 3배 많고, W → ℓν 붕괴 비율(약 11 %)이 Z → ℓℓ(약 3.4 %)보다 약 3배 크기 때문(3 × 3 ≈ 10).</p></details>
+    <details><summary>발문 6. Z 후보의 불변질량이 91.19 GeV 한 값이 아니라 퍼져 있는 까닭은?</summary><p>예상 답변: 측정 오차(검출기 분해능 약 2 GeV) + Z 자체의 질량 폭(약 2.5 GeV). 수명이 짧을수록 질량(에너지)이 덜 확정된다(불확정성 원리, ΔE·Δt ~ ħ).</p><p>후속 발문: 분포가 낮은 질량 쪽으로 꼬리를 끄는 까닭? → 렙톤이 광자를 내보내(최종 상태 복사) 에너지 일부를 잃기 때문(심화).</p></details>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">05</span><h2>실험 A 지도 팁과 예시 결과</h2></div>
+    <div class="box box--tip prose">
+      <p><b>카드 구성</b>: 세트마다 씨앗값이 고정된 난수로 만들어져 언제 인쇄해도 같은 카드가 나옵니다. 세트 하나의 기대 구성은 W⁺ 14, W⁻ 10, Z 6, 배경 10장이지만, 실제 측정처럼 세트마다 무작위로 달라집니다. 6개 세트를 모두 합치면 <b>W⁺ 84, W⁻ 60(비 1.40), Z 36(W/Z = 4.0), 배경 60, 전자:뮤온 = 90:90</b>이 되도록 맞추어 두었습니다.</p>
+      <p><b>시범이 중요합니다</b>: 첫 카드는 반드시 함께 판단 순서대로 분류하세요. 특히 "점선(직진 기준선)보다 시계 방향이면 양전하"를 손가락으로 따라 그리며 보여 주면 전하 판단 오류가 크게 줄어듭니다.</p>
+      <p><b>자주 나오는 실수</b>: ① 전하를 반대로 읽음(자기장 ⊙ 규칙 혼동) → 카드 왼쪽 위 "B ⊙" 확인 ② 제트 속 렙톤(이름표 A가 있지만 트랙 다발·주황 막대에 둘러싸이고 MET가 작음)을 W로 분류 ③ Z 사건에서 렙톤 하나만 보고 W로 분류(MET가 작다는 점 놓침) ④ 가운데의 작은 고리(파일업, 낮은 운동량 트랙)를 렙톤으로 착각 → 이름표 A, B가 붙은 트랙만 렙톤 후보임을 강조.</p>
+      <p><b>판단 경계</b>: 이 카드에서 W 사건은 모두 렙톤 p<sub>T</sub> &gt; 25 GeV, MET &gt; 20 GeV이고, 배경은 모두 MET &lt; 15 GeV, Z 사건의 두 렙톤은 각각 p<sub>T</sub> &gt; 20 GeV, MET는 대부분 10 GeV 미만입니다. 학생이 "MET가 애매하다"고 하면 이 경계를 근거로 판단하게 하세요.</p>
+      <p><b>흑백 인쇄</b>: ECAL 막대는 안쪽 고리(42~50), HCAL 막대는 바깥 고리에서 시작하고, 뮤온 챔버 신호는 맨 바깥 네 줄에 찍히므로 위치로 구별할 수 있습니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="key">
+    <div class="section__head"><span class="section__tag">05-1</span><h2>사건 카드 정답표</h2></div>
+    <p class="prose">아래 표는 학생 카드 페이지와 <b>같은 생성기</b>(<code>students/t09-cards.js</code>)로 그 자리에서 만들어지므로 인쇄한 카드와 항상 일치합니다. 세트를 고르면 해당 세트의 정답이 나오고, [전체 세트]를 고르면 240장 모두 나옵니다.</p>
+    <div class="key-ctl no-print">
+      <label for="key-set">세트 <select id="key-set" aria-label="정답표 세트 고르기">
+        <option value="A">세트 A</option><option value="B">세트 B</option><option value="C">세트 C</option>
+        <option value="D">세트 D</option><option value="E">세트 E</option><option value="F">세트 F</option><option value="ALL">전체 세트</option>
+      </select></label>
+      <button class="btn" type="button" data-copy-table="tbl-key">정답표 복사</button>
+    </div>
+    <div class="table-wrap"><table id="tbl-key"><tr><th>카드</th><th>정답</th><th>판단 근거</th><th class="num">M(A,B)</th></tr></table></div>
+
+    <h3>세트별 정답 집계와 학급 기대값</h3>
+    <p class="prose small muted">수업에서 사용한 세트만 체크하면 학급 전체의 기대값(학생이 모두 맞게 분류했을 때)이 계산됩니다. 오차는 √N 통계 불확도입니다.</p>
+    <div class="key-ctl no-print" id="set-checks"></div>
+    <div class="table-wrap"><table id="tbl-sets"></table></div>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">06</span><h2>3D 모의실험 운영 가이드</h2></div>
+    <div class="box box--tip prose">
+      <p><b>무엇이 보이나</b>: 원통형 검출기(트래커 반지름 1.2 m, ECAL, HCAL, 3.8 T 솔레노이드, 철 요크 속 뮤온 챔버 4층과 끝판)를 실제 CMS 크기에 가깝게 그렸습니다. 하전 입자는 p<sub>T</sub> = 0.3·B·r로 계산한 나선을 그리며, 솔레노이드 밖(철 요크, −1.8 T)에서는 뮤온이 반대로 휩니다. 화면에서 보이도록 곡률을 ×3(기본) 과장했고 HUD에 실제 반지름을 함께 표시합니다. 전자는 ECAL 탑(초록), 강입자는 HCAL 탑(주황)을 남기고(탑 높이 ∝ 에너지), 뮤온은 챔버에 분홍 신호를 남깁니다. MET는 횡평면의 회색 점선 화살표입니다. 모든 사건에 파일업(겹친 충돌) 저운동량 트랙이 섞여 있습니다.</p>
+      <p><b>사건 구성(100개, 고정)</b>: W⁺ → e⁺ν 24, W⁺ → μ⁺ν 23, W⁻ → e⁻ν̄ 16, W⁻ → μ⁻ν̄ 17, Z → ee 4, Z → μμ 4, 배경 12(두 제트, 또는 제트 속 렙톤 + 작은 MET). 앞의 6개는 연습용입니다: 1 μ⁺ν(29.9 GeV, MET 32.4), 2 e⁻ν̄(36.5 GeV, MET 41.2), 3 Z → μμ(M = 94.1 GeV), 4 두 제트 배경(MET 4.4), 5 Z → ee(M = 87.7 GeV), 6 e⁺ν(40.2 GeV, MET 39.4).</p>
+      <p><b>조작</b>: 기본 화면은 자동 회전하는 3D 보기. [정면(횡단면)]은 카드와 같은 방향, [트래커 확대]는 휘는 방향 확인용입니다. [입자 종류별 색 보기(힌트)]는 기본으로 꺼져 있습니다(트랙이 모두 흰색 → 신호로 판단). 지원이 필요한 학생에게만 켜 주세요. 키보드 ←/→ 이동, 1~7 분류.</p>
+    </div>
+    <ol class="steps">
+      <li><b>미션 1 신호 지문 익히기</b> — 연습용 사건 1~6을 모두 맞히면 다섯 유형(전자 W, 뮤온 W, Z → ee, Z → μμ, 배경)이 채워져 완료됩니다. 기대 결과: 5분 안에 완료. 틀린 사건은 [정답 보기]의 근거 문장을 읽게 하세요.</li>
+      <li><b>미션 2 사건 50개 분류</b> — 정확히 분류하면 처음 50개에는 W⁺ 24, W⁻ 15, Z 5, 배경 6이 들어 있습니다(W⁺/W⁻ = 1.60 ± 0.53).</li>
+      <li><b>미션 3 W⁺/W⁻ 비</b> — W 후보를 40개 이상 분류하면 완료. 100개를 모두 맞게 분류하면 W⁺ 47, W⁻ 33 → <b>1.42 ± 0.32</b>. 50개일 때 오차(약 0.5)와 100개일 때 오차(약 0.3)를 비교시키면 √N 효과가 드러납니다.</li>
+      <li><b>미션 4 Z 질량 피크</b> — Z 후보 4개 이상, 평균 86~96 GeV면 완료(사건 3, 5, 18, 43이 처음 네 개, 평균 90.1 GeV). 8개 모두의 불변질량은 94.1, 87.7, 90.5, 88.0, 79.1, 89.5, 88.8, 88.8 GeV → 평균 88.3 GeV, 표준편차 4.2 GeV. 79.1 GeV 사건은 질량 분포의 꼬리입니다. 표본이 8개뿐이라 평균이 91.19에서 약간 벗어나는 것도 통계적 요동임을 짚어 주세요.</li>
+      <li><b>미션 5 전문 분석가</b> — 100개 모두, 정확도 90 % 이상. 기대 결과: W/Z = 80/8 = <b>10.0 ± 3.7</b>, e/μ = 44/44 = 1.00 ± 0.21. 어려운 사건은 주로 렙톤 p<sub>T</sub>가 낮은(25~30 GeV) W, 제트 속 렙톤 배경입니다.</li>
+    </ol>
+    <div class="box prose small">
+      <p><b>문제 해결</b>: 3D가 안 보이면 WebGL을 지원하는 최신 브라우저로 여세요. 오래된 기기에서 느리면 [파일업 트랙 보기]와 [검출기 이름표]를 끄고 [자동 회전]을 끄면 가벼워집니다. 기록표·미션·분류는 기기 브라우저에 저장되므로, 다음 시간에 같은 기기로 이어서 할 수 있습니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="miscon">
+    <div class="section__head"><span class="section__tag">07</span><h2>흔한 오개념과 대응</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>오개념</th><th>바른 개념</th><th>대응 활동</th></tr>
+      <tr><td>W 보손이 검출기에 직접 트랙을 남긴다.</td><td>W·Z는 약 3×10⁻²⁵ s 만에 붕괴해 충돌점을 벗어나지 못한다. 검출하는 것은 딸 입자뿐.</td><td>cτ ≈ 10⁻¹⁶ m(원자핵보다 작음) 계산. "범인은 현장에 없고 흔적만 있다"</td></tr>
+      <tr><td>중성미자는 흔적이 없으니 알아낼 방법이 없다.</td><td>운동량 보존으로 보이지 않는 입자의 횡운동량(MET)을 추론한다.</td><td>그림 2의 벡터 삼각형을 직접 그리기</td></tr>
+      <tr><td>MET는 중성미자의 운동량(또는 에너지) 전체다.</td><td>횡성분만 알 수 있다. 빔 방향 성분은 모른다.</td><td>발문 1 후속. 확인 문제 3</td></tr>
+      <tr><td>트랙이 많이 휠수록 에너지가 크다.</td><td>반대. r = p/(qB)이므로 운동량이 클수록 덜 휜다.</td><td>카드의 작은 고리(파일업, 1 GeV 미만)와 거의 곧은 렙톤 트랙 비교</td></tr>
+      <tr><td>전자와 뮤온은 트랙 모양이 다르다.</td><td>트래커에서는 비슷하다. 구별은 바깥 층(ECAL에서 멈춤 / 챔버까지 관통)으로 한다.</td><td>힌트 색을 끈 3D 화면에서 트랙만 보고 구별해 보게 하기</td></tr>
+      <tr><td>모둠 결과가 다르면 누군가 틀린 것이다.</td><td>사건 수가 적으면 통계적 요동이 크다(√N). 오차 범위가 겹치면 서로 모순이 아니다.</td><td>세트별 집계표로 실제 구성 자체가 다름을 공개(발문 4)</td></tr>
+      <tr><td>양성자는 u, u, d뿐이니 W⁺/W⁻는 정확히 2다.</td><td>양성자 속에는 글루온과 쿼크–반쿼크 바다가 있어, 측정값은 약 1.4.</td><td>W 생성에는 반쿼크가 꼭 필요하다는 점(u + d̄)에서 출발해 "반쿼크는 어디서 오나?" 발문</td></tr>
+      <tr><td>Z 질량 분포의 폭은 측정 실수 때문이다.</td><td>검출기 분해능 + Z 자체의 자연 폭(약 2.5 GeV, 짧은 수명).</td><td>3D 히스토그램의 기대 곡선(폭 2.5 GeV ⊗ 분해능 2 GeV) 해석</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="answers">
+    <div class="section__head"><span class="section__tag">08</span><h2>활동지 정답과 해설</h2></div>
+    <div class="box box--answer"><h4>생각 열기 Q1</h4><p>충돌 전 두 양성자는 빔 방향으로만 움직이므로 빔에 수직인 운동량의 합은 0이다. 충돌 뒤 보이는 입자들의 횡운동량을 모두 더했을 때 0이 아니면, 모자란 만큼을 보이지 않는 입자가 반대 방향으로 가져간 것이다(누락 횡운동량, MET). 파울리가 베타 붕괴에서 중성미자를 예언한 논리(에너지·운동량이 모자람)와 같다.</p></div>
+    <div class="box box--answer"><h4>생각 열기 Q2</h4><p>예측은 자유. 2차시 뒤 정답: W⁺가 약 1.4배 많다. 양성자(uud)에는 u가 d보다 많아 u + d̄ → W⁺가 d + ū → W⁻보다 자주 일어나기 때문.</p></div>
+    <div class="box box--answer"><h4>개념 확인 (20 GeV 뮤온의 반지름)</h4><p>r = p<sub>T</sub> / (0.3·B) = 20 / (0.3 × 3.8) ≈ <b>17.5 m</b>. 트래커(반지름 약 1.1 m)보다 훨씬 커서 거의 직선으로 보인다.</p></div>
+    <div class="box box--answer"><h4>실험 A — 집계와 비율(예시: 6개 세트 모두 사용, 분류가 모두 맞을 때)</h4>
+      <p>W⁺ = 84, W⁻ = 60 → W⁺/W⁻ = 1.40 ± 1.40·√(1/84 + 1/60) = <b>1.40 ± 0.24</b> · W/Z = 144/36 = <b>4.0 ± 0.7</b> · e/μ = 90/90 = <b>1.00 ± 0.15</b>. 모둠(세트 하나) 값은 0.80 ~ 2.71로 흩어지고 오차도 ±0.4 ~ ±1.2로 큽니다.</p></div>
+    <div class="box box--answer"><h4>A1</h4><p>학급 전체 값의 불확도가 더 작다. 사건 수 N이 커질수록 상대 불확도가 1/√N로 줄기 때문(6배 많으면 약 1/√6 ≈ 0.4배).</p></div>
+    <div class="box box--answer"><h4>A2</h4><p>① 통계적 요동: 세트마다 무작위로 뽑힌 사건이라 실제 구성 자체가 다르다(세트별 집계표 참고). ② 분류 실수: 전하를 반대로 읽거나, 제트 속 렙톤을 W로, Z를 W로 분류하는 등. ①은 사건을 늘리면 줄고, ②는 사건을 늘려도 줄지 않는다(계통 오차의 씨앗).</p></div>
+    <div class="box box--answer"><h4>A3</h4><p>개인 답. 좋은 답은 카드 번호와 함께 애매했던 신호(예: "트랙 A가 뮤온 챔버까지 갔지만 주변에 트랙 다발이 있고 MET가 12 GeV라 배경으로 판단")를 구체적으로 쓴다.</p></div>
+    <div class="box box--answer"><h4>A4</h4><p>대개 렙톤과 거의 반대 방향. W가 거의 정지 상태(횡운동량 작음)에서 렙톤과 중성미자로 붕괴하면 두 입자의 횡운동량은 크기가 같고 방향이 반대다(정지한 입자의 두 몸 붕괴, 주제 7). W가 약간 움직이면 정확히 반대에서 조금 벗어난다.</p></div>
+    <div class="box box--answer"><h4>도전: Z 후보 불변질량</h4><p>정답표의 M(A,B) 열과 비교하세요. 학생 계산은 카드에 적힌 소수 첫째 자리 값으로 하므로 ±0.5 GeV 정도 차이는 정상입니다. 세트 전체 Z 후보 36개는 대부분 84~98 GeV에 모입니다.</p></div>
+    <div class="box box--answer"><h4>B1</h4><p>사건이 늘수록 오차가 줄어든다. 오차 ∝ 1/√N이므로 사건 수가 4배가 되면 오차는 약 1/2. (예: 25개 → 100개에서 W⁺/W⁻ 오차가 약 0.6 → 0.3)</p></div>
+    <div class="box box--answer"><h4>B2</h4><p>8개를 모두 맞게 분류했다면 피크는 88~91 GeV 근처, 평균 88.3 GeV, 퍼짐(표준편차) 약 4 GeV. 91.19 GeV와 비교해 표본이 작아 생긴 차이. 폭의 까닭: ① Z의 자연 폭(약 2.5 GeV, 수명이 매우 짧아 질량이 하나로 정해지지 않음) ② 검출기의 운동량 측정 분해능(이 모의실험에서 약 2 GeV).</p></div>
+    <div class="box box--answer"><h4>B3</h4><p>×1에서는 40 GeV 렙톤 트랙이 트래커 안에서 거의 직선으로 보여 눈으로는 전하를 알기 어렵다(처짐 약 4 mm). 실제 검출기는 수십 μm 정밀도의 실리콘 검출기 여러 층으로 위치를 재고, 강한 자기장(3.8 T)과 넓은 트래커로 휘어짐을 키워 전하와 운동량을 계산한다.</p></div>
+    <div class="box box--answer"><h4>B4</h4><p>카드 묶음은 수업에서 Z를 충분히 보도록 Z를 일부러 많이 넣은 표본이기 때문. 실제 비율을 말하려면 표본이 실제 충돌을 대표해야 하고, 검출 효율·수용 범위 보정도 필요하다. 실제(7 TeV) W → ℓν : Z → ℓℓ ≈ 10.5 : 1.</p></div>
+    <div class="box box--answer"><h4>확인 문제 1</h4><p><b>W⁻ → μ⁻ν̄</b>. 근거: ① 뮤온 챔버까지 이어짐 → 뮤온 ② 반시계 방향으로 휨 → 음전하, 렙톤 전하 = W 전하 ③ 큰 MET(35 GeV)가 렙톤의 반대쪽 → 중성미자, 고에너지 렙톤이 하나뿐.</p></div>
+    <div class="box box--answer"><h4>확인 문제 2</h4><p>Z → e⁺e⁻에서는 보이지 않는 입자가 생기지 않는다. 두 전자(+ 약간의 되튐 강입자)가 Z의 횡운동량을 모두 가져가므로, 보이는 입자의 횡운동량 합이 0에 가깝고 MET는 측정 오차·파일업 정도로만 작게 남는다.</p></div>
+    <div class="box box--answer"><h4>확인 문제 3</h4><p>실제로 충돌하는 것은 양성자 속 쿼크·글루온이고, 이들이 빔 방향 운동량을 얼마나 가졌는지는 사건마다 다르고 알 수 없다. 또 빔관 방향으로 빠져나가는 양성자 조각은 측정할 수 없다. 빔에 수직인 방향은 충돌 전 운동량이 확실히 0이므로 보존 법칙을 쓸 수 있다.</p></div>
+    <div class="box box--answer"><h4>확인 문제 4</h4><p>R = 96/64 = <b>1.50</b>, σ = 1.50 × √(1/96 + 1/64) ≈ <b>0.24</b> → 1.50 ± 0.24. CMS 값 1.42와의 차이 0.08은 불확도(0.24)보다 작으므로 <b>일치한다</b>고 볼 수 있다.</p></div>
+    <div class="box box--answer"><h4>확인 문제 5</h4><p>M² = 2 × 42 × 38 × (1.337 − (−0.985)) = 3192 × 2.322 ≈ 7412 → <b>M ≈ 86 GeV</b>. 반대 전하 두 뮤온이면 Z → μ⁺μ⁻ 후보(분해능·자연 폭·최종 상태 복사를 고려하면 91 GeV와 어긋나지 않음).</p></div>
+    <div class="box box--answer"><h4>확인 문제 6</h4><p>양성자–양성자: W⁺는 u + d̄, W⁻는 d + ū에서 생긴다. 반쿼크는 두 경우 모두 바다에서 비슷하게 오지만 원자가 u가 d의 2배라 W⁺가 많다(약 1.4). 양성자–반양성자: W⁺는 양성자의 u + 반양성자의 d̄(반양성자 = ūūd̄), W⁻는 양성자의 d + 반양성자의 ū에서 주로 생긴다. 두 경우 모두 "u 하나 × d 하나" 조합이라 생성률이 같고(전하 켤레 대칭) W⁺/W⁻ ≈ 1.</p></div>
+    <div class="box box--answer"><h4>업그레이드 도전 (실제 CMS W → μν 데이터 20,000개)</h4>
+      <p>모든 사건: N(+) = 11,025, N(−) = 8,975 → W⁺/W⁻ = <b>1.23 ± 0.02</b>. MET &gt; 25 GeV: N(+) = 5,769, N(−) = 4,363 → <b>1.32 ± 0.03</b>. (참고: 가로질량 m<sub>T</sub> &gt; 50 GeV 조건이면 5,673 / 4,232 → 1.34 ± 0.03)</p>
+      <p>해설: MET가 작은 사건에는 제트 사건 속 가짜·비고립 뮤온 같은 배경이 많은데, 이 배경은 +/− 전하가 거의 같아 비를 1 쪽으로 끌어내린다. MET 조건으로 배경을 줄이면 비가 커진다. 그래도 1.42보다 작은 까닭: 남은 배경, 그리고 검출기가 보는 범위(|η| &lt; 2.1, p<sub>T</sub> &gt; 25 GeV)가 W⁺와 W⁻에 다르게 작용하는데 이를 보정하지 않았기 때문(CMS 1.42는 수용 범위를 보정한 전체 생성 비). 이 파일의 모든 뮤온은 p<sub>T</sub> &gt; 25 GeV, |η| &lt; 2.1입니다.</p></div>
+  </section>
+
+  <section class="section" id="assess">
+    <div class="section__head"><span class="section__tag">09</span><h2>평가 루브릭</h2></div>
+    <div class="table-wrap"><table class="rubric">
+      <tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>신호 판독</td><td>렙톤 종류·전하·MET를 모두 근거와 함께 판단하고, 제트 속 렙톤 같은 함정 사건을 구별한다.</td><td>렙톤 종류와 전하는 맞게 판단하나 배경 판단에서 가끔 실수한다.</td><td>도움(힌트 색, 판단 순서 카드)이 있어야 렙톤 종류를 구별한다.</td></tr>
+      <tr><td>MET와 보존 법칙</td><td>횡운동량 보존으로 MET를 설명하고, 빔 방향 성분을 쓰지 않는 까닭까지 말한다.</td><td>"보이지 않는 입자가 운동량을 가져갔다"고 설명한다.</td><td>MET를 신호 이름으로만 안다.</td></tr>
+      <tr><td>통계 분석</td><td>비와 √N 불확도를 계산하고, 모둠 간 차이를 오차 범위로 해석하며, 표본 선택 편향(B4)까지 지적한다.</td><td>비와 불확도를 계산하나 해석이 부분적이다.</td><td>개수는 세지만 비나 불확도 계산에 도움이 필요하다.</td></tr>
+      <tr><td>과학적 설명</td><td>W⁺/W⁻ &gt; 1을 uud, 반쿼크 바다, 양성자–반양성자와의 대비로 설명한다.</td><td>"양성자에 u가 많아서"라고 설명한다.</td><td>설명이 없거나 사실과 다르다.</td></tr>
+      <tr><td>협업과 소통</td><td>모둠 토론에서 근거를 들어 합의를 이끌고, 논쟁 카드를 정리해 제출한다.</td><td>자기 판단의 근거를 말한다.</td><td>다른 사람의 분류를 그대로 따른다.</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="flex">
+    <div class="section__head"><span class="section__tag">10</span><h2>차시 조정과 수준별 지도</h2></div>
+    <div class="grid-3">
+      <div class="box"><h4>1차시 압축안 (50분)</h4><p>개념 12분(신호 지문·전하·MET만) → 모둠별 세트에서 20장만 분류 15분 → 학급 합산·W⁺/W⁻ 비와 √N 10분 → CERN 결과·uud 설명 8분 → 확인 문제 1·4 5분. 3D 모의실험은 과제(미션 1~3)로 내고, 다음 주제 시작 때 결과를 2분 공유합니다.</p></div>
+      <div class="box"><h4>3차시 확장안 (150분)</h4><p>1·2차시는 그대로. 3차시: ① 업그레이드 도전 — 실제 CMS W → μν 데이터를 스프레드시트로 분석(전하별 개수, MET 조건, MET·m<sub>T</sub> 히스토그램) 25분 ② Z 후보 불변질량 손 계산과 학급 히스토그램 만들기 10분 ③ 마스터클래스식 "화상 회의" 발표: 모둠별 결과를 2분씩 발표하고 학급 결론 합의 15분.</p></div>
+      <div class="box"><h4>보충·심화</h4><p><b>보충</b>: 판단 순서를 카드 크기로 인쇄해 책상에 두기, 3D에서 힌트 색 켜기, 짝 활동으로 한 명은 신호 읽기·한 명은 기록. <b>심화</b>: ① W/Z ≈ 10 계산: σ(W)·B / σ(Z)·B = 10.30 nb / 0.974 nb ≈ 10.6 ② 가로질량 m<sub>T</sub> = √(2·p<sub>T</sub>·MET·(1 − cos Δφ))의 최댓값이 W 질량 근처라는 점으로 W 질량 측정 원리 탐구 ③ 렙톤 p<sub>T</sub> 분포의 야코비안 봉우리(약 40 GeV) 설명 → 주제 10과 업그레이드 U1(Python)로 연결.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="refs">
+    <div class="section__head"><span class="section__tag">11</span><h2>참고 자료</h2></div>
+    <ul>
+      <li><a href="https://physicsmasterclasses.org" target="_blank" rel="noopener">International Masterclasses</a> — 국제 마스터클래스 공식 누리집(CMS·ATLAS 측정 과정 안내)</li>
+      <li><a href="https://quarknet.org" target="_blank" rel="noopener">QuarkNet</a> — CMS 마스터클래스(W·Z 측정) 운영 자료를 제공하는 미국 교육 프로그램</li>
+      <li><a href="https://cms.cern" target="_blank" rel="noopener">CMS 실험 공식 누리집</a> — 검출기 구조, 사건 그림, 교육 자료</li>
+      <li><a href="https://opendata.cern.ch" target="_blank" rel="noopener">CERN Open Data Portal</a> — 이 수업의 실제 데이터(CMS 2011, CC0) 출처</li>
+      <li><a href="https://arxiv.org/abs/1107.4789" target="_blank" rel="noopener">CMS Collaboration, "Measurement of the inclusive W and Z production cross sections in pp collisions at √s = 7 TeV", JHEP 10 (2011) 132</a> — W⁺/W⁻ = 1.421, W/Z = 10.54의 출처</li>
+      <li><a href="https://pdg.lbl.gov" target="_blank" rel="noopener">Particle Data Group</a> — W·Z 질량, 폭, 붕괴 비율 기준값</li>
+      <li><a href="https://home.cern" target="_blank" rel="noopener">CERN 공식 누리집</a> — 1983년 W·Z 발견(UA1·UA2)과 1984년 노벨상 이야기</li>
+    </ul>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../students/t09-cards.js"></script>
+<script>
+/* 사건 카드 정답표: 학생 카드와 같은 생성기·같은 씨앗값으로 만든다 */
+(function () {
+  "use strict";
+  var T = window.T09Cards;
+  var cache = {};
+  function get(set) { return cache[set] || (cache[set] = T.generate(set)); }
+  function cls(cat) { var b = T.CAT[cat].boson; return "ans-tag ans-" + (b === "W+" ? "wp" : (b === "W-" ? "wm" : (b === "Z" ? "z" : "bg"))); }
+  function row(ev) {
+    return "<tr><td class=\"num\">" + ev.id + '</td><td><span class="' + cls(ev.cat) + '">' + T.CAT[ev.cat].label + "</span></td><td>" + T.reason(ev) +
+      '</td><td class="num">' + (ev.mass ? T.f1(ev.mass) : "") + "</td></tr>";
+  }
+  var tbl = document.getElementById("tbl-key"), sel = document.getElementById("key-set");
+  function renderKey() {
+    var v = sel.value, sets = v === "ALL" ? T.SETS : [v];
+    var h = "<tr><th>카드</th><th>정답</th><th>판단 근거</th><th class=\"num\">M(A,B) (GeV)</th></tr>";
+    sets.forEach(function (s) { get(s).forEach(function (ev) { h += row(ev); }); });
+    tbl.innerHTML = h;
+  }
+  sel.addEventListener("change", renderKey);
+  renderKey();
+
+  /* 세트별 집계 + 사용한 세트의 학급 기대값 */
+  var checks = document.getElementById("set-checks");
+  checks.innerHTML = '<span>사용한 세트:</span>' + T.SETS.map(function (s) {
+    return '<label for="use-' + s + '"><input type="checkbox" id="use-' + s + '" checked> ' + s + "</label>";
+  }).join("");
+  function ratio(a, b) { if (!a || !b) return "–"; var r = a / b; return r.toFixed(2) + " ± " + (r * Math.sqrt(1 / a + 1 / b)).toFixed(2); }
+  function renderSets() {
+    var h = "<tr><th>세트</th><th class=\"num\">e⁺ν</th><th class=\"num\">e⁻ν̄</th><th class=\"num\">μ⁺ν</th><th class=\"num\">μ⁻ν̄</th><th class=\"num\">ee</th><th class=\"num\">μμ</th><th class=\"num\">배경</th><th class=\"num\">W⁺/W⁻</th><th class=\"num\">W/Z</th></tr>";
+    var tot = { wpe: 0, wme: 0, wpm: 0, wmm: 0, zee: 0, zmm: 0, bg: 0 }, used = [];
+    T.SETS.forEach(function (s) {
+      var c = T.counts(get(s)), on = document.getElementById("use-" + s).checked;
+      if (on) { used.push(s); Object.keys(tot).forEach(function (k) { tot[k] += c[k]; }); }
+      h += "<tr" + (on ? "" : ' class="muted"') + "><td>" + s + (on ? "" : " (미사용)") + "</td>" + ["wpe", "wme", "wpm", "wmm", "zee", "zmm", "bg"].map(function (k) { return '<td class="num">' + c[k] + "</td>"; }).join("") +
+        '<td class="num">' + ratio(c.wpe + c.wpm, c.wme + c.wmm) + '</td><td class="num">' + ratio(c.wpe + c.wpm + c.wme + c.wmm, c.zee + c.zmm) + "</td></tr>";
+    });
+    var wp = tot.wpe + tot.wpm, wm = tot.wme + tot.wmm, z = tot.zee + tot.zmm;
+    h += "<tr><th>학급 기대값 (" + (used.join("·") || "없음") + ")</th>" + ["wpe", "wme", "wpm", "wmm", "zee", "zmm", "bg"].map(function (k) { return '<th class="num">' + tot[k] + "</th>"; }).join("") +
+      '<th class="num">' + ratio(wp, wm) + '</th><th class="num">' + ratio(wp + wm, z) + "</th></tr>";
+    var e = tot.wpe + tot.wme + tot.zee, m = tot.wpm + tot.wmm + tot.zmm;
+    h += '<tr><td colspan="10">학급 기대값: W⁺ ' + wp + " · W⁻ " + wm + " · Z " + z + " · 배경 " + tot.bg + " · e/μ = " + ratio(e, m) + "</td></tr>";
+    document.getElementById("tbl-sets").innerHTML = h;
+  }
+  checks.addEventListener("change", renderSets);
+  renderSets();
+})();
+</script>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

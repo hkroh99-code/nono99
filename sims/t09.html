@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>이벤트 디스플레이 분석기 모의실험</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/sim.css">
+<style>
+  .cls-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4rem; }
+  .cls-grid .sbtn { width: 100%; text-align: left; display: flex; justify-content: space-between; gap: .4rem; }
+  .cls-grid .sbtn kbd { font-family: var(--font-mono); font-size: .72rem; color: var(--s-ink-3); }
+  .cls-grid .sbtn.sel { border-color: var(--s-ok); background: #173526; }
+  .cls-grid .sbtn.is-bg { grid-column: 1 / -1; }
+  .nav-row { display: grid; grid-template-columns: auto 1fr auto; gap: .4rem; align-items: center; }
+  .nav-row .evno { text-align: center; font-family: var(--font-mono); font-size: 1rem; }
+  .status { font-size: .86rem; color: var(--s-ink-2); min-height: 1.4em; }
+  .status b { color: var(--s-ink); }
+  .tally { width: 100%; border-collapse: collapse; font-size: .8rem; }
+  .tally th, .tally td { padding: .25rem .4rem; border-bottom: 1px solid var(--s-line); text-align: right; font-variant-numeric: tabular-nums; }
+  .tally th:first-child, .tally td:first-child { text-align: left; }
+  .tally td { font-family: var(--font-mono); }
+  .tally td:first-child { font-family: var(--font-body); }
+  .tally tr.sum td { color: var(--s-ink); font-weight: 600; }
+  .hud .row { white-space: nowrap; }
+  .hud .lab { display: inline-block; min-width: 1.4em; font-weight: 700; color: var(--s-track); }
+  .hud-scale { font-size: .74rem; color: var(--s-ink-3); }
+  .truth-ok { color: var(--s-ok); font-weight: 700; }
+  .truth-bad { color: var(--s-bad); font-weight: 700; }
+  @media (max-width: 560px) {
+    .hud { font-size: .74rem; padding: .3rem .5rem; }
+    .hud-scale { display: none; }
+    .stage-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="sim">
+  <header class="sim-head">
+    <span class="tag">주제 9 · 3D</span>
+    <h1>이벤트 디스플레이 분석기: W·Z 보손 찾기</h1>
+    <nav aria-label="관련 자료">
+      <a href="../students/t09.html">학생용 활동지</a>
+      <a href="../teachers/t09.html">교사용 지도서</a>
+      <a href="index.html">모의실험 목록</a>
+    </nav>
+  </header>
+  <div class="sim-body">
+    <div class="stage" id="stage">
+      <div class="stage-overlay" id="overlay">
+        <div class="hud" id="hud-ev"></div>
+        <div class="hud" id="hud-trk"></div>
+        <div class="hud hud-scale" id="hud-scale"></div>
+      </div>
+      <div class="stage-hint">드래그: 회전 · 휠/두 손가락: 확대 · 오른쪽 드래그: 이동 · ←/→: 사건 이동 · 1~7: 분류</div>
+    </div>
+    <aside class="panel" id="panel" aria-label="조작과 기록"></aside>
+  </div>
+</div>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/vendor/three/OrbitControls.js"></script>
+<script src="../assets/js/sim-kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var THREE = window.THREE, K = window.SimKit, ui = K.ui, COL = K.COLORS;
+  var TWO_PI = Math.PI * 2;
+
+  /* =========================================================
+     1. 모의 사건 100개 (씨앗 고정 난수 → 언제 열어도 같은 사건)
+     구성: W⁺→e⁺ν 24, W⁺→μ⁺ν 23, W⁻→e⁻ν̄ 16, W⁻→μ⁻ν̄ 17 (W⁺:W⁻ = 47:33 ≈ 1.4)
+           Z→ee 4, Z→μμ 4 (W:Z = 80:8 = 10), 배경 12 / e:μ = 44:44
+     앞의 6개는 연습용(유형별 1개씩), 나머지는 섞음
+     ========================================================= */
+  var CATS = [
+    { key: "wpe", label: "W⁺ → e⁺ν", btn: "e⁺ν", boson: "Wp", flav: "e" },
+    { key: "wme", label: "W⁻ → e⁻ν̄", btn: "e⁻ν̄", boson: "Wm", flav: "e" },
+    { key: "wpm", label: "W⁺ → μ⁺ν", btn: "μ⁺ν", boson: "Wp", flav: "mu" },
+    { key: "wmm", label: "W⁻ → μ⁻ν̄", btn: "μ⁻ν̄", boson: "Wm", flav: "mu" },
+    { key: "zee", label: "Z → e⁺e⁻", btn: "ee (Z)", boson: "Z", flav: "e" },
+    { key: "zmm", label: "Z → μ⁺μ⁻", btn: "μμ (Z)", boson: "Z", flav: "mu" },
+    { key: "bg", label: "배경", btn: "배경", boson: "", flav: "" }
+  ];
+  var CAT = {}; CATS.forEach(function (c) { CAT[c.key] = c; });
+  var MW = 80.37, GW = 2.085, MZ = 91.19, GZ = 2.50, ETA_MAX = 1.2, N_EV = 100;
+
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  var u = mulberry32(9090);
+  function uni(a, b) { return a + (b - a) * u(); }
+  function rint(a, b) { return a + Math.floor(u() * (b - a + 1)); }
+  function gauss(m, s) { var x = 1 - u(), y = u(); return m + s * Math.sqrt(-2 * Math.log(x)) * Math.cos(TWO_PI * y); }
+  function rexp(mean) { return -mean * Math.log(1 - u()); }
+  function sgn() { return u() < 0.5 ? -1 : 1; }
+  function wrap(p) { while (p <= -Math.PI) p += TWO_PI; while (p > Math.PI) p -= TWO_PI; return p; }
+  function bw(m, g, lo, hi) { for (var i = 0; i < 1000; i++) { var x = m + 0.5 * g * Math.tan(Math.PI * (u() - 0.5)); if (x > lo && x < hi) return x; } return m; }
+  function boost(v, bx, by, bz, g) {
+    var b2 = bx * bx + by * by + bz * bz, bp = bx * v.px + by * v.py + bz * v.pz;
+    var k = b2 > 0 ? (g - 1) * bp / b2 + g * v.E : 0;
+    return { E: g * (v.E + bp), px: v.px + k * bx, py: v.py + k * by, pz: v.pz + k * bz };
+  }
+  function decay2(M, pT, y, phi) {
+    var mT = Math.sqrt(M * M + pT * pT), E = mT * Math.cosh(y);
+    var px = pT * Math.cos(phi), py = pT * Math.sin(phi), pz = mT * Math.sinh(y);
+    var c = uni(-1, 1), s = Math.sqrt(1 - c * c), f = uni(0, TWO_PI), p = M / 2;
+    var d1 = { E: p, px: p * s * Math.cos(f), py: p * s * Math.sin(f), pz: p * c };
+    var d2 = { E: p, px: -d1.px, py: -d1.py, pz: -d1.pz };
+    return [boost(d1, px / E, py / E, pz / E, E / M), boost(d2, px / E, py / E, pz / E, E / M)];
+  }
+  function kin(v) { var pt = Math.sqrt(v.px * v.px + v.py * v.py); return { pt: pt, eta: Math.asinh(v.pz / pt), phi: Math.atan2(v.py, v.px) }; }
+  function four(t) { return { E: t.pt * Math.cosh(t.eta), px: t.pt * Math.cos(t.phi), py: t.pt * Math.sin(t.phi), pz: t.pt * Math.sinh(t.eta) }; }
+
+  function addJet(ev, pt, eta, phi) {
+    var n = rint(4, 7), w = [], sw = 0, i;
+    for (i = 0; i < n; i++) { var x = 0.3 + u(); w.push(x); sw += x; }
+    for (i = 0; i < n; i++) {
+      var tp = Math.min(12, Math.max(4, 0.55 * pt * w[i] / sw));
+      ev.parts.push({ kind: "h", q: sgn(), pt: tp, eta: eta + gauss(0, 0.08), phi: wrap(phi + gauss(0, 0.09)), z0: 0, lab: "" });
+    }
+    ev.jets.push({ pt: pt, eta: eta, phi: phi });
+  }
+  function lep(flav, q, v, lab) { var k = kin(v); return { kind: flav, q: q, pt: k.pt, eta: k.eta, phi: k.phi, z0: 0, lab: lab }; }
+  function genW(ev, q, flav) {
+    for (var t = 0; t < 500; t++) {
+      var M = bw(MW, GW, 60, 100), pTW = Math.min(30, rexp(6)), y = uni(-2, 2), phW = uni(-Math.PI, Math.PI);
+      var d = decay2(M, pTW, y, phW), l = lep(flav, q, d[0], "A"), nu = kin(d[1]);
+      l.pt *= 1 + gauss(0, 0.02);
+      var mx = nu.pt * Math.cos(nu.phi) + gauss(0, 3.5), my = nu.pt * Math.sin(nu.phi) + gauss(0, 3.5), met = Math.sqrt(mx * mx + my * my);
+      if (Math.abs(l.eta) < ETA_MAX && l.pt > 25 && met > 20) {
+        ev.parts.push(l); ev.met = { pt: met, phi: Math.atan2(my, mx) }; ev.nu = nu;
+        if (pTW > 12) addJet(ev, pTW * uni(0.75, 1), uni(-ETA_MAX, ETA_MAX), wrap(phW + Math.PI + gauss(0, 0.2)));
+        return;
+      }
+    }
+  }
+  function genZ(ev, flav) {
+    for (var t = 0; t < 500; t++) {
+      var M = bw(MZ, GZ, 70, 112), pTZ = Math.min(25, rexp(5)), y = uni(-1.4, 1.4), phZ = uni(-Math.PI, Math.PI);
+      var d = decay2(M, pTZ, y, phZ), a = lep(flav, -1, d[0], ""), b = lep(flav, 1, d[1], "");
+      a.pt *= 1 + gauss(0, 0.031); b.pt *= 1 + gauss(0, 0.031);
+      if (Math.abs(a.eta) < ETA_MAX && Math.abs(b.eta) < ETA_MAX && a.pt > 20 && b.pt > 20) {
+        if (a.pt >= b.pt) { a.lab = "A"; b.lab = "B"; ev.parts.push(a, b); } else { b.lab = "A"; a.lab = "B"; ev.parts.push(b, a); }
+        var mx = gauss(0, 3.5), my = gauss(0, 3.5);
+        ev.met = { pt: Math.sqrt(mx * mx + my * my), phi: Math.atan2(my, mx) }; ev.trueM = M;
+        return;
+      }
+    }
+  }
+  function genBg(ev) {
+    var lepJet = u() < 0.4;
+    for (var t = 0; t < 500; t++) {
+      var n0 = ev.parts.length, j0 = ev.jets.length;
+      var p1 = 25 + Math.min(45, rexp(12)), e1 = uni(-ETA_MAX, ETA_MAX), f1 = uni(-Math.PI, Math.PI);
+      var p2 = p1 * uni(0.84, 1), e2 = uni(-ETA_MAX, ETA_MAX), f2 = wrap(f1 + Math.PI + gauss(0, 0.12));
+      if (lepJet) {
+        var flav = u() < 0.5 ? "e" : "mu", lp = uni(18, 24);
+        ev.parts.push({ kind: flav, q: sgn(), pt: lp, eta: e1 + gauss(0, 0.04), phi: wrap(f1 + gauss(0, 0.05)), z0: 0, lab: "A" });
+        addJet(ev, p1 - lp * 0.3, e1, f1);
+        ev.bgType = flav === "e" ? "제트 속에 묻힌 전자(고립 안 됨) + 작은 MET" : "제트 속에 묻힌 뮤온(고립 안 됨) + 작은 MET";
+      } else { addJet(ev, p1, e1, f1); ev.bgType = "두 제트(QCD) 사건"; }
+      addJet(ev, p2, e2, f2);
+      var mx = -(p1 * Math.cos(f1) + p2 * Math.cos(f2)) + gauss(0, 3.5), my = -(p1 * Math.sin(f1) + p2 * Math.sin(f2)) + gauss(0, 3.5);
+      var met = Math.sqrt(mx * mx + my * my);
+      if (met < 15) { ev.met = { pt: met, phi: Math.atan2(my, mx) }; return; }
+      ev.parts.length = n0; ev.jets.length = j0;
+    }
+  }
+  function genPileup(ev) {
+    var n = rint(6, 11);
+    for (var i = 0; i < n; i++) ev.parts.push({ kind: "pu", q: sgn(), pt: Math.min(1.6, 0.3 + rexp(0.4)), eta: uni(-2.4, 2.4), phi: uni(-Math.PI, Math.PI), z0: gauss(0, 0.05), lab: "" });
+    var m = rint(4, 8);
+    for (var j = 0; j < m; j++) ev.noise.push({ eta: uni(-1.4, 1.4), phi: uni(-Math.PI, Math.PI), ecal: uni(0.3, 1.2), hcal: uni(0.5, 2.5) });
+  }
+
+  var order = ["wpm", "wme", "zmm", "bg", "zee", "wpe"];
+  var rest = [];
+  [["wpe", 23], ["wpm", 22], ["wme", 15], ["wmm", 17], ["zee", 3], ["zmm", 3], ["bg", 11]].forEach(function (c) { for (var i = 0; i < c[1]; i++) rest.push(c[0]); });
+  for (var si = rest.length - 1; si > 0; si--) { var sj = Math.floor(u() * (si + 1)); var tmp = rest[si]; rest[si] = rest[sj]; rest[sj] = tmp; }
+  order = order.concat(rest);
+  var EVENTS = order.map(function (cat, i) {
+    var ev = { n: i + 1, cat: cat, parts: [], jets: [], noise: [], met: { pt: 0, phi: 0 }, bgType: "" };
+    if (cat === "wpe") genW(ev, 1, "e"); else if (cat === "wme") genW(ev, -1, "e");
+    else if (cat === "wpm") genW(ev, 1, "mu"); else if (cat === "wmm") genW(ev, -1, "mu");
+    else if (cat === "zee") genZ(ev, "e"); else if (cat === "zmm") genZ(ev, "mu"); else genBg(ev);
+    genPileup(ev);
+    ev.labeled = ev.parts.filter(function (p) { return p.lab; });
+    ev.mass = ev.labeled.length === 2 ? K.invariantMass([four(ev.labeled[0]), four(ev.labeled[1])]) : null;
+    return ev;
+  });
+
+  /* =========================================================
+     2. 장면과 검출기 (단위: m, 빔 = z축, 자기장 3.8 T는 +z 방향)
+     ========================================================= */
+  var stageEl = document.getElementById("stage");
+  var VIEW3D = [9.6, 5.6, 11.6];
+  var sim = K.create({ stage: stageEl, cameraPos: VIEW3D, target: [0, 0, 0], grid: false, fov: 45 });
+  var scene = sim.scene, controls = sim.controls;
+  controls.autoRotate = true; controls.autoRotateSpeed = 0.7;
+
+  var GEO = { trk: 1.2, trkZ: 2.8, ecal0: 1.3, ecal1: 1.55, hcal0: 1.8, hcal1: 2.9, sol: 3.05, mu: [4.0, 4.9, 5.9, 6.9], muZ: 6.6, disks: [7.0, 8.0, 9.0], rOut: 7.3, zOut: 9.8 };
+  var detector = new THREE.Group(); scene.add(detector);
+  function shell(r, len, color, op) {
+    var m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 72, 1, true),
+      new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: op, side: THREE.DoubleSide, depthWrite: false }));
+    m.rotation.x = Math.PI / 2; detector.add(m); return m;
+  }
+  function ring(r, z, color, op) {
+    var pts = []; for (var i = 0; i <= 96; i++) { var a = TWO_PI * i / 96; pts.push(new THREE.Vector3(r * Math.cos(a), r * Math.sin(a), z)); }
+    var l = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: op }));
+    detector.add(l); return l;
+  }
+  (function buildDetector() {
+    var beam = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, -11), new THREE.Vector3(0, 0, 11)]), new THREE.LineBasicMaterial({ color: 0x55608a }));
+    detector.add(beam);
+    shell(GEO.trk, GEO.trkZ * 2, 0x7f9cff, 0.06);
+    [-GEO.trkZ, 0, GEO.trkZ].forEach(function (z) { ring(GEO.trk, z, 0x7f9cff, 0.45); });
+    [0.35, 0.7].forEach(function (r) { ring(r, 0, 0x7f9cff, 0.18); });
+    shell(GEO.ecal0, 6.0, 0x5fd08a, 0.05); shell(GEO.ecal1, 6.0, 0x5fd08a, 0.05);
+    [-3, 3].forEach(function (z) { ring(GEO.ecal0, z, 0x5fd08a, 0.35); ring(GEO.ecal1, z, 0x5fd08a, 0.35); });
+    shell(GEO.hcal0, 8.6, 0xff9f43, 0.04); shell(GEO.hcal1, 8.6, 0xff9f43, 0.04);
+    [-4.3, 4.3].forEach(function (z) { ring(GEO.hcal0, z, 0xff9f43, 0.3); ring(GEO.hcal1, z, 0xff9f43, 0.3); });
+    shell(GEO.sol, 12.5, 0x8899cc, 0.09);
+    [-6.25, 6.25].forEach(function (z) { ring(GEO.sol, z, 0x8899cc, 0.5); });
+    var muMat = new THREE.MeshBasicMaterial({ color: COL.muon, transparent: true, opacity: 0.016, depthWrite: false, side: THREE.DoubleSide });
+    var edgeMat = new THREE.LineBasicMaterial({ color: COL.muon, transparent: true, opacity: 0.09 });
+    var box = new THREE.BoxGeometry(1, 1, 1), edges = new THREE.EdgesGeometry(box);
+    GEO.mu.forEach(function (r) {
+      for (var k = 0; k < 12; k++) {
+        var a = (k + 0.5) * TWO_PI / 12, w = 2 * r * Math.tan(Math.PI / 12) * 0.92;
+        var m = new THREE.Mesh(box, muMat); m.scale.set(0.2, w, GEO.muZ * 2); m.rotation.z = a; m.position.set(r * Math.cos(a), r * Math.sin(a), 0);
+        var e = new THREE.LineSegments(edges, edgeMat); e.scale.copy(m.scale); e.rotation.z = a; e.position.copy(m.position);
+        detector.add(m); detector.add(e);
+      }
+    });
+    var diskMat = new THREE.MeshBasicMaterial({ color: COL.muon, transparent: true, opacity: 0.012, depthWrite: false, side: THREE.DoubleSide });
+    GEO.disks.forEach(function (z) {
+      [-z, z].forEach(function (zz) {
+        var d = new THREE.Mesh(new THREE.RingGeometry(1.5, 7.0, 48), diskMat); d.position.z = zz; detector.add(d);
+        ring(7.0, zz, COL.muon, 0.12); ring(1.5, zz, COL.muon, 0.12);
+      });
+    });
+  })();
+  var labels = new THREE.Group(); scene.add(labels);
+  [["트래커", 0.75, -3.3], ["ECAL", 1.45, -3.6], ["HCAL", 2.35, -4.8], ["솔레노이드 3.8 T", 3.15, -6.7], ["뮤온 챔버", 5.4, -7.2]].forEach(function (l) {
+    var s = K.label(l[0], { height: 0.42, color: "#a9b0c8" }); s.position.set(0, l[1], l[2]); labels.add(s);
+  });
+
+  /* =========================================================
+     3. 사건 그리기
+     ========================================================= */
+  var state = { cur: 0, mag: 3, hint: false, ref: true, pu: true, revealed: false, autoNext: false, view: "3d", labels: true };
+  var evGroup = null, anim = { t: 1, tracks: [], towers: [], late: [], met: [] };
+  var matCache = {};
+  function mat(color, opts) {
+    var key = color + JSON.stringify(opts || {});
+    if (!matCache[key]) {
+      var o = opts || {};
+      matCache[key] = o.lambert ? new THREE.MeshLambertMaterial({ color: color, emissive: color, emissiveIntensity: 0.35, transparent: !!o.op, opacity: o.op || 1 })
+        : new THREE.MeshBasicMaterial({ color: color, transparent: !!o.op, opacity: o.op || 1 });
+    }
+    matCache[key].userData.cached = true;
+    return matCache[key];
+  }
+  var NEUTRAL = 0xe6e9f4;
+  function partColor(p) {
+    if (!(state.hint || state.revealed)) return p.kind === "pu" ? 0x8a93b0 : NEUTRAL;
+    if (p.kind === "e") return COL.electron;
+    if (p.kind === "mu") return COL.muon;
+    if (p.kind === "h") return COL.hadron;
+    return 0x8a93b0;
+  }
+  /* 나선 궤적: 솔레노이드 안 3.8 T, 바깥(철 요크) −1.8 T. 화면용으로 곡률을 state.mag배 과장 */
+  function propagate(p) {
+    var mag = state.mag, x = 0, y = 0, z = p.z0 || 0, phi = p.phi, sh = Math.sinh(p.eta), ds = 0.02, s = 0;
+    var kIn = -p.q * 0.3 * 3.8 * mag / p.pt, kOut = p.q * 0.3 * 1.8 * mag / p.pt;
+    var isMu = p.kind === "mu", rStop = isMu ? GEO.rOut : 1.25, zStop = isMu ? GEO.zOut : GEO.trkZ;
+    var rc = p.pt / (0.3 * 3.8 * mag), maxS = isMu ? 40 : Math.min(3 * TWO_PI * rc, 14);
+    var pts = [new THREE.Vector3(x, y, z)], hits = [], st = 0, diskDone = {}, exit = null, n = 0;
+    while (s < maxS) {
+      var r = Math.sqrt(x * x + y * y), k = r < 2.95 ? kIn : (r > 3.15 ? kOut : 0);
+      phi += k * ds; x += Math.cos(phi) * ds; y += Math.sin(phi) * ds; z += sh * ds; s += ds; n++;
+      var r2 = Math.sqrt(x * x + y * y);
+      if (isMu) {
+        if (st < GEO.mu.length && r2 >= GEO.mu[st]) { if (Math.abs(z) < GEO.muZ) hits.push({ x: x, y: y, z: z, end: false }); st++; }
+        for (var d = 0; d < GEO.disks.length; d++) {
+          var D = GEO.disks[d];
+          if (!diskDone[d] && Math.abs(z) >= D) { diskDone[d] = true; if (r2 > 1.5 && r2 < 7) hits.push({ x: x, y: y, z: z, end: true }); }
+        }
+      }
+      if (n % 3 === 0) pts.push(new THREE.Vector3(x, y, z));
+      if (r2 >= rStop || Math.abs(z) >= zStop) { pts.push(new THREE.Vector3(x, y, z)); exit = { x: x, y: y, z: z, r: r2, barrel: r2 >= rStop }; break; }
+    }
+    return { pts: pts, hits: hits, exit: exit };
+  }
+  var DPHI = TWO_PI / 72, DETA = 0.174, NETA = 17;
+  function cellOf(eta, phi) {
+    var ie = Math.floor((eta + NETA * DETA / 2) / DETA); if (ie < 0 || ie >= NETA) return -1;
+    var ip = Math.floor((wrap(phi) + Math.PI) / DPHI) % 72;
+    return ie * 72 + ip;
+  }
+  var unitBox = new THREE.BoxGeometry(1, 1, 1);
+  function clearEvent() {
+    if (!evGroup) return;
+    evGroup.traverse(function (o) {
+      if (o.geometry && o.geometry !== unitBox) o.geometry.dispose();
+      if (o.material && !o.material.userData.cached) { if (o.material.map) o.material.map.dispose(); o.material.dispose(); }
+    });
+    scene.remove(evGroup); evGroup = null;
+  }
+  function buildEvent(ev, animate) {
+    clearEvent();
+    evGroup = new THREE.Group(); scene.add(evGroup);
+    anim = { t: animate ? 0 : 1, start: performance.now(), tracks: [], towers: [], late: [], met: [] };
+    var ecal = {}, hcal = {};
+    function dep(map, eta, phi, E) { var c = cellOf(eta, phi); if (c >= 0) map[c] = (map[c] || 0) + E; }
+    ev.noise.forEach(function (n) { dep(ecal, n.eta, n.phi, n.ecal); dep(hcal, n.eta, n.phi, n.hcal); });
+    ev.jets.forEach(function (j) {
+      var E = 0.45 * j.pt * Math.cosh(j.eta);
+      [[0, 0, 0.5], [1, 0, 0.125], [-1, 0, 0.125], [0, 1, 0.125], [0, -1, 0.125]].forEach(function (w) {
+        dep(ecal, j.eta + w[0] * DETA, j.phi + w[1] * DPHI, E * 0.55 * w[2]); dep(hcal, j.eta + w[0] * DETA, j.phi + w[1] * DPHI, E * 0.45 * w[2]);
+      });
+    });
+    ev.parts.forEach(function (p) {
+      if (p.kind === "pu" && !state.pu) return;
+      var pr = propagate(p), color = partColor(p), obj;
+      if (p.kind === "pu") {
+        obj = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pr.pts), new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: 0.55 }));
+        anim.tracks.push({ obj: obj, count: pr.pts.length, line: true, p: p });
+      } else {
+        var curve = new THREE.CatmullRomCurve3(pr.pts), segs = Math.max(8, Math.min(240, pr.pts.length));
+        var geo = new THREE.TubeGeometry(curve, segs, p.lab ? 0.02 : 0.011, 6, false);
+        obj = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: color }));
+        anim.tracks.push({ obj: obj, count: segs * 6 * 6, line: false, p: p });
+      }
+      evGroup.add(obj);
+      if (pr.exit && pr.exit.barrel && p.kind !== "mu") {
+        var e1 = pr.exit;
+        {
+          var etaPos = Math.asinh(e1.z / e1.r), phiPos = Math.atan2(e1.y, e1.x), E = p.pt * Math.cosh(p.eta);
+          if (p.kind === "e") dep(ecal, etaPos, phiPos, E);
+          else if (p.kind === "h") { dep(ecal, etaPos, phiPos, 0.3 * E); dep(hcal, etaPos, phiPos, 0.7 * E); }
+        }
+      }
+      if (p.kind === "mu") {
+        /* 뮤온은 칼로리미터에 아주 작은 흔적(최소 이온화)만 남김 */
+        var mp = propagateTo(p, 1.4);
+        if (mp) { dep(ecal, mp.eta, mp.phi, 0.4); dep(hcal, mp.eta, mp.phi, 2.2); }
+        pr.hits.forEach(function (h) {
+          var m = new THREE.Mesh(unitBox, mat(COL.muon, { lambert: true }));
+          var a = Math.atan2(h.y, h.x);
+          if (h.end) m.scale.set(0.55, 0.55, 0.16); else m.scale.set(0.24, 0.6, 0.6);
+          m.rotation.z = a; m.position.set(h.x, h.y, h.z); m.visible = false;
+          evGroup.add(m); anim.late.push(m);
+        });
+      }
+      if (p.lab) {
+        var ept = pr.pts[Math.min(pr.pts.length - 1, Math.max(1, nearestIdx(pr.pts, 1.25)))];
+        var tag = K.label(p.lab + (state.revealed ? " " + partName(p) : ""), { height: 0.36, color: "#f0a35e" });
+        var off = new THREE.Vector3(ept.x, ept.y, 0).normalize().multiplyScalar(0.35);
+        tag.position.set(ept.x + off.x, ept.y + off.y, ept.z + 0.2); tag.visible = false; tag.userData.base = tag.scale.clone();
+        evGroup.add(tag); anim.late.push(tag);
+        if (state.ref) {
+          var dir = new THREE.Vector3(Math.cos(p.phi), Math.sin(p.phi), Math.sinh(p.eta)), L = 1.25;
+          var refL = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), dir.multiplyScalar(L)]),
+            new THREE.LineDashedMaterial({ color: 0x9aa3c0, dashSize: 0.06, gapSize: 0.05, transparent: true, opacity: 0.85 }));
+          refL.computeLineDistances(); evGroup.add(refL);
+        }
+      }
+    });
+    function towers(map, r0, scale, color, thr) {
+      Object.keys(map).forEach(function (key) {
+        var E = map[key]; if (E < thr) return;
+        var c = +key, ie = Math.floor(c / 72), ip = c % 72;
+        var eta = -NETA * DETA / 2 + (ie + 0.5) * DETA, phi = -Math.PI + (ip + 0.5) * DPHI;
+        var h = Math.min(2.6, Math.max(0.04, scale * E));
+        var w = r0 * DPHI * 0.88, d = r0 * (Math.sinh(eta + DETA / 2) - Math.sinh(eta - DETA / 2)) * 0.88;
+        var m = new THREE.Mesh(unitBox, mat(color, { lambert: true, op: 0.92 }));
+        m.rotation.z = phi;
+        evGroup.add(m);
+        anim.towers.push({ m: m, h: h, w: w, d: d, r0: r0, phi: phi, z: r0 * Math.sinh(eta), E: E });
+      });
+    }
+    towers(ecal, GEO.ecal0, 0.03, COL.ok, 0.4);
+    towers(hcal, GEO.hcal0, 0.03, COL.hadron, 0.8);
+    /* MET: 횡평면의 회색 점선 화살표 */
+    var L = Math.min(6, 0.07 * ev.met.pt + 0.15), dir = new THREE.Vector3(Math.cos(ev.met.phi), Math.sin(ev.met.phi), 0);
+    var metLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), dir.clone().multiplyScalar(L * 0.93)]),
+      new THREE.LineDashedMaterial({ color: COL.neutrino, dashSize: 0.18, gapSize: 0.12 }));
+    metLine.computeLineDistances();
+    var cone = new THREE.Mesh(new THREE.ConeGeometry(0.11, 0.3, 14), mat(COL.neutrino));
+    cone.position.copy(dir.clone().multiplyScalar(L - 0.15));
+    cone.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
+    var metTag = K.label("MET " + ev.met.pt.toFixed(1) + " GeV", { height: 0.34, color: "#b9bfd3" });
+    metTag.position.copy(dir.clone().multiplyScalar(L + 0.45)); metTag.userData.base = metTag.scale.clone();
+    [metLine, cone, metTag].forEach(function (o) { o.visible = false; evGroup.add(o); anim.met.push(o); });
+    var ip = new THREE.Mesh(new THREE.SphereGeometry(0.05, 12, 8), mat(0xffffff));
+    evGroup.add(ip);
+    applyLabelScale();
+    applyAnim();
+  }
+  function nearestIdx(pts, r) { for (var i = 0; i < pts.length; i++) { if (Math.sqrt(pts[i].x * pts[i].x + pts[i].y * pts[i].y) >= r) return i; } return pts.length - 1; }
+  function propagateTo(p, rT) {
+    var x = 0, y = 0, z = 0, phi = p.phi, sh = Math.sinh(p.eta), k = -p.q * 0.3 * 3.8 * state.mag / p.pt;
+    for (var i = 0; i < 2000; i++) { phi += k * 0.02; x += Math.cos(phi) * 0.02; y += Math.sin(phi) * 0.02; z += sh * 0.02; if (x * x + y * y >= rT * rT) return { eta: Math.asinh(z / rT), phi: Math.atan2(y, x) }; }
+    return null;
+  }
+  function partName(p) { return p.kind === "e" ? (p.q > 0 ? "e⁺" : "e⁻") : (p.q > 0 ? "μ⁺" : "μ⁻"); }
+  function smooth(x) { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); }
+  function applyAnim() {
+    var t = anim.t, f = smooth(t / 0.6);
+    anim.tracks.forEach(function (tr) {
+      var n = Math.max(2, Math.floor(tr.count * f));
+      if (tr.line) tr.obj.geometry.setDrawRange(0, n); else tr.obj.geometry.setDrawRange(0, Math.floor(n / 6) * 6);
+    });
+    var g = smooth((t - 0.35) / 0.5);
+    anim.towers.forEach(function (tw) {
+      var h = Math.max(0.001, tw.h * g), rc = tw.r0 + h / 2;
+      tw.m.scale.set(h, tw.w, tw.d); tw.m.position.set(rc * Math.cos(tw.phi), rc * Math.sin(tw.phi), tw.z); tw.m.visible = g > 0;
+    });
+    anim.late.forEach(function (o) { o.visible = t > 0.55; });
+    anim.met.forEach(function (o) { o.visible = t > 0.8; });
+  }
+  sim.onFrame(function (dt, time, real) {
+    /* 벽시계 기준: 느린 기기에서도 1.3초 안에 사건이 다 그려짐 */
+    if (anim.t < 1) { anim.t = Math.min(1, (performance.now() - anim.start) / 1300); applyAnim(); }
+  });
+
+  /* =========================================================
+     4. 분류 기록과 집계
+     ========================================================= */
+  var CLS_KEY = "cern-class:t09:cls";
+  var cls = new Array(N_EV).fill(null);
+  try { var saved = JSON.parse(localStorage.getItem(CLS_KEY) || "null"); if (saved && saved.length === N_EV) cls = saved; } catch (e) {}
+  function persist() { try { localStorage.setItem(CLS_KEY, JSON.stringify(cls)); } catch (e) {} }
+
+  var panel = document.getElementById("panel");
+  var mission = K.Mission(ui.section(panel, "미션"), { id: "t09", steps: [
+    "<b>신호 지문 익히기</b> — 전자 W, 뮤온 W, Z → ee, Z → μμ, 배경을 각각 1개 이상 맞게 분류(앞의 6개가 연습용)",
+    "<b>분류</b> — 사건 50개 분류하기",
+    "<b>W⁺/W⁻ 비</b> — W 후보 40개 이상 분류하고 비와 √N 오차 확인",
+    "<b>Z 질량 피크</b> — Z 후보 4개 이상, 평균 불변질량 86~96 GeV",
+    "<b>전문 분석가</b> — 100개 모두 분류하고 정확도 90 % 이상"
+  ] });
+
+  /* 사건 이동 */
+  var navSec = ui.section(panel, "사건");
+  var nav = document.createElement("div"); nav.className = "nav-row"; navSec.appendChild(nav);
+  var prevBtn = ui.button(nav, { label: "◀ 이전", onClick: function () { go(state.cur - 1); } });
+  var evNo = document.createElement("div"); evNo.className = "evno"; nav.insertBefore(evNo, prevBtn.parentNode === nav ? prevBtn.nextSibling : null);
+  var nextBtn = ui.button(nav, { label: "다음 ▶", onClick: function () { go(state.cur + 1); } });
+  var navRow2 = ui.buttonRow(navSec);
+  ui.button(navRow2, { label: "다음 미분류 사건", onClick: function () { nextUnclassified(); } });
+  ui.button(navRow2, { label: "다시 그리기", onClick: function () { buildEvent(EVENTS[state.cur], true); } });
+
+  /* 분류 버튼 */
+  var clsSec = ui.section(panel, "분류", "신호 지문을 읽고 하나를 고르세요. 렙톤의 전하는 트랙이 휘는 방향(점선 기준선과 비교)으로 판단합니다.");
+  var grid = document.createElement("div"); grid.className = "cls-grid"; clsSec.appendChild(grid);
+  var clsBtns = {};
+  CATS.forEach(function (c, i) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "sbtn" + (c.key === "bg" ? " is-bg" : "");
+    b.innerHTML = "<span>" + (c.key === "bg" ? "배경 (W·Z 아님)" : c.label) + "</span><kbd>" + (i + 1) + "</kbd>";
+    b.addEventListener("click", function () { classify(c.key); });
+    grid.appendChild(b); clsBtns[c.key] = b;
+  });
+  var status = document.createElement("div"); status.className = "status"; status.setAttribute("aria-live", "polite"); clsSec.appendChild(status);
+  var revRow = ui.buttonRow(clsSec);
+  var revealBtn = ui.button(revRow, { label: "정답 보기", kind: "primary", onClick: function () { setReveal(!state.revealed); } });
+  ui.toggle(clsSec, { id: "auto-next", label: "분류하면 자동으로 다음 사건", checked: false, onChange: function (v) { state.autoNext = v; } });
+
+  /* 보기 설정 */
+  var viewSec = ui.section(panel, "보기");
+  var vrow = ui.buttonRow(viewSec);
+  ui.button(vrow, { label: "3D 보기", onClick: function () { setView("3d"); } });
+  ui.button(vrow, { label: "정면(횡단면)", onClick: function () { setView("end"); } });
+  ui.button(vrow, { label: "트래커 확대", onClick: function () { setView("zoom"); } });
+  ui.button(vrow, { label: "측면", onClick: function () { setView("side"); } });
+  ui.slider(viewSec, { id: "mag", label: "곡률 과장 (×1 = 실제)", min: 1, max: 8, step: 1, value: 3, format: function (v) { return "×" + v; },
+    onInput: function (v) { state.mag = v; buildEvent(EVENTS[state.cur], false); updateHud(); } });
+  var rotT = ui.toggle(viewSec, { id: "rot", label: "자동 회전", checked: true, onChange: function (v) { controls.autoRotate = v; } });
+  ui.toggle(viewSec, { id: "hint", label: "입자 종류별 색 보기(힌트)", checked: false, onChange: function (v) { state.hint = v; buildEvent(EVENTS[state.cur], false); } });
+  ui.toggle(viewSec, { id: "ref", label: "직진 기준선(점선) 보기", checked: true, onChange: function (v) { state.ref = v; buildEvent(EVENTS[state.cur], false); } });
+  ui.toggle(viewSec, { id: "pu", label: "파일업(겹친 충돌) 트랙 보기", checked: true, onChange: function (v) { state.pu = v; buildEvent(EVENTS[state.cur], false); } });
+  ui.toggle(viewSec, { id: "labels", label: "검출기 이름표", checked: true, onChange: function (v) { state.labels = v; applyLabelScale(); } });
+  ui.html(viewSec, '<div class="legend"><span><i style="background:#e6e9f4"></i>트랙(힌트 끔)</span><span><i style="background:#3fb6ff"></i>전자</span><span><i style="background:#ff5d8f"></i>뮤온·뮤온 챔버 신호</span>' +
+    '<span><i style="background:#ff9f43"></i>강입자·HCAL 탑</span><span><i style="background:#5fd08a"></i>ECAL 탑</span><span><i style="background:repeating-linear-gradient(90deg,#b9bfd3 0 4px,transparent 4px 7px)"></i>MET</span></div>' +
+    '<p class="note">탑의 높이 ∝ 에너지(1 m ≈ 33 GeV). 자기장은 빔 방향(+z). 정면 시점에서 자기장은 화면 밖으로 나오는 방향(⊙)이므로 양전하는 시계 방향으로 휩니다.</p>');
+
+  /* 집계 */
+  var tallySec = ui.section(panel, "집계 (내 분류 기준)");
+  var ro = ui.readouts(tallySec, [
+    { key: "n", label: "분류한 사건", unit: "/ 100" }, { key: "acc", label: "정확도", unit: "%" },
+    { key: "pm", label: "W⁺/W⁻ ± 오차", unit: "" }, { key: "wz", label: "W/Z ± 오차", unit: "" }
+  ]);
+  var tallyTbl = document.createElement("table"); tallyTbl.className = "tally"; tallySec.appendChild(tallyTbl);
+  ui.html(tallySec, '<p class="note">오차는 √N 통계 불확도: σ<sub>R</sub> = R·√(1/N₁ + 1/N₂). 사건 수가 4배가 되면 오차는 약 절반.</p>');
+
+  /* Z 질량 히스토그램 */
+  var zSec = ui.section(panel, "Z 후보 불변질량", "ee 또는 μμ로 분류한 사건의 두 렙톤(A, B) 불변질량이 자동으로 쌓입니다. 주황 곡선은 Z의 기대 분포(폭 2.5 GeV + 분해능 2 GeV).");
+  var cv = document.createElement("canvas"); cv.className = "plot"; zSec.appendChild(cv);
+  var zNote = document.createElement("p"); zNote.className = "note"; zSec.appendChild(zNote);
+
+  /* 기록표 */
+  var recSec = ui.section(panel, "기록표", "분류한 사건이 25, 50, 75, 100개가 될 때 [현재 집계 기록]을 누르세요. 활동지 기록표에 옮겨 적습니다.");
+  ui.button(recSec, { label: "현재 집계 기록", kind: "primary", onClick: function () { recordSnapshot(); } });
+  var rec = K.Recorder(recSec, { id: "t09", columns: [
+    { key: "n", label: "분류 수" }, { key: "wp", label: "W⁺" }, { key: "wm", label: "W⁻" }, { key: "z", label: "Z" }, { key: "bg", label: "배경" },
+    { key: "pm", label: "W⁺/W⁻" }, { key: "wz", label: "W/Z" }, { key: "acc", label: "정확도", unit: "%" }
+  ] });
+
+  var resetSec = ui.section(panel, "처음부터");
+  var resetBtn = ui.button(resetSec, { label: "분류 기록 모두 지우기", kind: "warn", onClick: function () {
+    if (!resetBtn.dataset.armed) { resetBtn.dataset.armed = "1"; resetBtn.textContent = "한 번 더 누르면 지워짐"; setTimeout(function () { delete resetBtn.dataset.armed; resetBtn.textContent = "분류 기록 모두 지우기"; }, 2500); return; }
+    delete resetBtn.dataset.armed; resetBtn.textContent = "분류 기록 모두 지우기";
+    cls = new Array(N_EV).fill(null); persist(); mission.reset(); go(0); refreshTally();
+  } });
+
+  function tally() {
+    var c = { n: 0, ok: 0 }; CATS.forEach(function (k) { c[k.key] = 0; });
+    var masses = [], okTypes = {};
+    cls.forEach(function (k, i) {
+      if (!k) return; c.n++; c[k]++;
+      var ev = EVENTS[i];
+      if (k === ev.cat) { c.ok++; var ty = ev.cat === "wpe" || ev.cat === "wme" ? "eW" : (ev.cat === "wpm" || ev.cat === "wmm" ? "muW" : ev.cat); okTypes[ty] = true; }
+      if ((k === "zee" || k === "zmm") && ev.mass) masses.push(ev.mass);
+    });
+    c.wp = c.wpe + c.wpm; c.wm = c.wme + c.wmm; c.w = c.wp + c.wm; c.z = c.zee + c.zmm;
+    c.e = c.wpe + c.wme + c.zee; c.mu = c.wpm + c.wmm + c.zmm;
+    c.masses = masses; c.okTypes = okTypes;
+    return c;
+  }
+  function ratio(a, b) { if (!a || !b) return null; var r = a / b; return { r: r, s: r * Math.sqrt(1 / a + 1 / b) }; }
+  function rtxt(x) { return x ? x.r.toFixed(2) + " ± " + x.s.toFixed(2) : "–"; }
+  /* 기대 분포: 브라이트-비그너(91.19, 2.50) ⊗ 가우스(σ = 2 GeV), 70~112 GeV에서 정규화 */
+  var shape = (function () {
+    var lo = 70, hi = 112, n = 421, xs = [], ys = [], sum = 0, dx = (hi - lo) / (n - 1);
+    for (var i = 0; i < n; i++) {
+      var x = lo + i * dx, v = 0;
+      for (var j = -40; j <= 40; j++) { var m = x + j * 0.2, g = Math.exp(-0.5 * Math.pow(j * 0.2 / 2, 2)); v += g * (GZ / 2) / (Math.PI * ((m - MZ) * (m - MZ) + GZ * GZ / 4)); }
+      xs.push(x); ys.push(v); sum += v * dx;
+    }
+    return function (x) { var k = Math.round((x - lo) / dx); if (k < 0 || k >= n) return 0; return ys[k] / sum; };
+  })();
+  function drawHist(c) {
+    var lo = 70, hi = 112, nb = 21, bwid = (hi - lo) / nb, N = c.masses.length;
+    K.plot.hist(cv, { lo: lo, hi: hi, counts: K.plot.bin(c.masses, lo, hi, nb), xlabel: "두 렙톤 불변질량 (GeV)", ylabel: "사건 수",
+      curve: N ? function (x) { return N * bwid * shape(x); } : null, marks: [{ x: 91.19, label: "Z 91.19" }] });
+    if (N) {
+      var mean = c.masses.reduce(function (a, b) { return a + b; }, 0) / N;
+      var sd = Math.sqrt(c.masses.reduce(function (a, b) { return a + (b - mean) * (b - mean); }, 0) / Math.max(1, N - 1));
+      zNote.textContent = "Z 후보 " + N + "개 · 평균 " + mean.toFixed(1) + " GeV · 표준편차 " + (N > 1 ? sd.toFixed(1) : "–") + " GeV";
+      c.zMean = mean;
+    } else zNote.textContent = "아직 Z 후보가 없습니다.";
+  }
+  function refreshTally() {
+    var c = tally();
+    ro.set("n", String(c.n)); ro.set("acc", c.n ? (100 * c.ok / c.n).toFixed(0) : "–");
+    ro.set("pm", rtxt(ratio(c.wp, c.wm))); ro.set("wz", rtxt(ratio(c.w, c.z)));
+    var h = "<tr><th>분류</th><th>N</th><th>√N</th></tr>";
+    CATS.forEach(function (k) { h += "<tr><td>" + k.label + "</td><td>" + c[k.key] + "</td><td>" + Math.sqrt(c[k.key]).toFixed(1) + "</td></tr>"; });
+    h += '<tr class="sum"><td>W⁺ 합 / W⁻ 합</td><td>' + c.wp + " / " + c.wm + "</td><td></td></tr>";
+    h += '<tr class="sum"><td>W 합 / Z 합</td><td>' + c.w + " / " + c.z + "</td><td></td></tr>";
+    h += '<tr class="sum"><td>e/μ 비</td><td colspan="2">' + rtxt(ratio(c.e, c.mu)) + "</td></tr>";
+    tallyTbl.innerHTML = h;
+    drawHist(c);
+    checkMissions(c);
+    return c;
+  }
+  function checkMissions(c) {
+    var t = c.okTypes;
+    if (t.eW && t.muW && t.zee && t.zmm && t.bg) mission.complete(0, "미션 1 완료! 다섯 가지 신호 지문을 모두 익혔어요.");
+    if (c.n >= 50) mission.complete(1, "미션 2 완료! 사건 50개를 분류했어요.");
+    if (c.w >= 40) { var r = ratio(c.wp, c.wm); mission.complete(2, "미션 3 완료! W⁺/W⁻ = " + rtxt(r)); }
+    if (c.masses.length >= 4 && c.zMean > 86 && c.zMean < 96) mission.complete(3, "미션 4 완료! Z 질량 피크 평균 " + c.zMean.toFixed(1) + " GeV");
+    if (c.n === N_EV && c.ok / c.n >= 0.9) mission.complete(4, "미션 5 완료! 정확도 " + (100 * c.ok / c.n).toFixed(0) + " %로 100개를 모두 분류했어요.");
+  }
+  function recordSnapshot() {
+    var c = tally();
+    if (!c.n) { K.toast("먼저 사건을 분류하세요."); return; }
+    rec.add({ n: c.n, wp: c.wp, wm: c.wm, z: c.z, bg: c.bg, pm: rtxt(ratio(c.wp, c.wm)), wz: rtxt(ratio(c.w, c.z)), acc: Math.round(100 * c.ok / c.n) });
+    K.toast("현재 집계를 기록했어요 (분류 " + c.n + "개).");
+  }
+
+  /* =========================================================
+     5. 화면 갱신, 조작
+     ========================================================= */
+  function f1(x) { return x.toFixed(1); }
+  function deg(phi) { var d = phi * 180 / Math.PI; if (d < 0) d += 360; return Math.round(d) % 360; }
+  function updateHud() {
+    var ev = EVENTS[state.cur], k = cls[state.cur];
+    var h = '<div class="row"><span class="k">사건</span> <span class="v">' + ev.n + "</span><span class=\"k\"> / " + N_EV + "</span></div>";
+    h += '<div class="row"><span class="k">내 분류</span> <span class="v">' + (k ? CAT[k].label : "–") + "</span></div>";
+    if (state.revealed) {
+      var ok = k === ev.cat;
+      h += '<div class="row"><span class="k">정답</span> <span class="' + (ok ? "truth-ok" : "truth-bad") + '">' + CAT[ev.cat].label + (ok ? " (맞음)" : " (다름)") + "</span></div>";
+    }
+    document.getElementById("hud-ev").innerHTML = h;
+    var t = "";
+    ev.labeled.forEach(function (p) {
+      t += '<div class="row"><span class="lab">' + p.lab + '</span><span class="k">p<sub>T</sub></span> <span class="v">' + f1(p.pt) + ' GeV</span> <span class="k">η</span> <span class="v">' + (p.eta >= 0 ? "+" : "−") + Math.abs(p.eta).toFixed(2) + '</span> <span class="k">φ</span> <span class="v">' + deg(p.phi) + "°</span></div>";
+    });
+    if (!ev.labeled.length) t += '<div class="row"><span class="k">p<sub>T</sub> 15 GeV 넘는 트랙 없음</span></div>';
+    t += '<div class="row"><span class="lab">MET</span><span class="v">' + f1(ev.met.pt) + ' GeV</span> <span class="k">φ</span> <span class="v">' + deg(ev.met.phi) + "°</span></div>";
+    if (ev.mass) t += '<div class="row"><span class="k">M(A,B)</span> <span class="v">' + f1(ev.mass) + " GeV</span></div>";
+    document.getElementById("hud-trk").innerHTML = t;
+    var realR = ev.labeled.length ? ev.labeled[0].pt / (0.3 * 3.8) : 35;
+    document.getElementById("hud-scale").innerHTML = "자기장 3.8 T (빔 방향)<br>곡률 ×" + state.mag + " 과장 · 트랙 A의 실제 반지름 " + realR.toFixed(0) + " m<br>단위: m · GeV · 검출기 바깥 반지름 7.3 m";
+  }
+  function updatePanel() {
+    var k = cls[state.cur];
+    evNo.textContent = (state.cur + 1) + " / " + N_EV;
+    prevBtn.disabled = state.cur === 0; nextBtn.disabled = state.cur === N_EV - 1;
+    CATS.forEach(function (c) { clsBtns[c.key].classList.toggle("sel", c.key === k); clsBtns[c.key].setAttribute("aria-pressed", c.key === k ? "true" : "false"); });
+    revealBtn.disabled = !k;
+    revealBtn.textContent = state.revealed ? "정답 숨기기" : "정답 보기";
+    if (!k) status.innerHTML = "아직 분류하지 않은 사건입니다.";
+    else if (state.revealed) {
+      var ev = EVENTS[state.cur], ok = k === ev.cat;
+      var why = ev.cat === "bg" ? ev.bgType : (ev.labeled.map(function (p) { return p.lab + " = " + partName(p); }).join(", ") + ", MET " + f1(ev.met.pt) + " GeV");
+      status.innerHTML = (ok ? '<span class="result-ok">맞음</span> ' : '<span class="result-bad">다름</span> ') + "정답: <b>" + CAT[ev.cat].label + "</b> · " + why;
+    } else status.innerHTML = "내 분류: <b>" + CAT[k].label + "</b> — [정답 보기]로 확인하세요.";
+  }
+  function go(i) {
+    if (i < 0 || i >= N_EV) return;
+    state.cur = i; state.revealed = false;
+    buildEvent(EVENTS[i], true); updateHud(); updatePanel();
+  }
+  function nextUnclassified() {
+    for (var d = 1; d <= N_EV; d++) { var j = (state.cur + d) % N_EV; if (!cls[j]) { go(j); return; } }
+    K.toast("모든 사건을 분류했어요!");
+  }
+  function classify(key) {
+    cls[state.cur] = key; persist();
+    var c = refreshTally();
+    updatePanel(); updateHud();
+    if (state.autoNext && state.cur < N_EV - 1) setTimeout(function () { go(state.cur + 1); }, 250);
+    void c;
+  }
+  function setReveal(v) {
+    if (!cls[state.cur]) { K.toast("먼저 분류한 뒤에 정답을 볼 수 있어요."); return; }
+    state.revealed = v; buildEvent(EVENTS[state.cur], false); updateHud(); updatePanel();
+  }
+  /* 시점: 정면·확대·측면은 좁은 화각으로 멀리서 봐서 원근 왜곡을 줄임 */
+  function setFov(f) { sim.camera.fov = f; sim.camera.updateProjectionMatrix(); }
+  function applyLabelScale() {
+    var k = state.view === "zoom" ? 0.4 : (state.view === "end" ? 1.3 : 1);
+    if (evGroup) evGroup.traverse(function (o) { if (o.userData && o.userData.base) o.scale.copy(o.userData.base).multiplyScalar(k); });
+    labels.visible = state.labels && state.view !== "zoom";
+  }
+  function setView(v) {
+    state.view = v;
+    if (v === "3d") { setFov(45); sim.setView(VIEW3D, [0, 0, 0]); }
+    else {
+      controls.autoRotate = false; rotT.set(false);
+      if (v === "end") { setFov(26); sim.setView([0, 0, 33], [0, 0, 0]); }
+      else if (v === "zoom") { setFov(13); sim.setView([0, 0, 17], [0, 0, 0]); }
+      else if (v === "side") { setFov(30); sim.setView([40, 0.01, 0], [0, 0, 0]); }
+    }
+    applyLabelScale();
+  }
+  document.addEventListener("keydown", function (e) {
+    var tag = (e.target && e.target.tagName) || "";
+    if (/INPUT|TEXTAREA|SELECT/.test(tag) || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === "ArrowRight") { go(state.cur + 1); e.preventDefault(); }
+    else if (e.key === "ArrowLeft") { go(state.cur - 1); e.preventDefault(); }
+    else if (/^[1-7]$/.test(e.key)) classify(CATS[+e.key - 1].key);
+  });
+  window.addEventListener("resize", function () { drawHist(tally()); });
+
+  go(0);
+  refreshTally();
+  /* 확인·시험용(지도서 예시 값 검증) */
+  window.T09Sim = { events: EVENTS, classify: classify, go: go, tally: tally, info: function () { return { cur: state.cur, mag: state.mag, t: anim.t, late: anim.late.length, lateVis: anim.late.filter(function (o) { return o.visible; }).length, towers: anim.towers.length }; } };
+})();
+</script>
+</body>
+</html>
