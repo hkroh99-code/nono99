@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>키트 K07 양성자의 여행</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/kit.css">
+<style>
+  /* K07 전용 배치 (공통 kit.css 위에 덧붙임) */
+  .k7-board svg, .k7-parts svg { display: block; }
+  .sheet .k7-cards { grid-auto-rows: 49mm; }
+  .k7-cards .pcard { padding: 2.2mm 2.4mm; gap: 1mm; font-size: 7.9pt; line-height: 1.38; }
+  .k7-cards .pcard .tag { display: flex; justify-content: space-between; align-items: center; border-bottom: .6pt solid var(--paper-ink); padding-bottom: .8mm; font-size: 7.2pt; }
+  .k7-cards .pcard .tag b { font-family: var(--font-mono); font-weight: 600; }
+  .k7-cards .q .tag span::before { content: "?"; display: inline-block; width: 3.6mm; height: 3.6mm; line-height: 3.6mm; text-align: center; border-radius: 50%; border: .7pt solid var(--paper-ink); margin-right: 1mm; font-size: 7pt; }
+  .k7-cards .ev .tag span::before { content: "!"; display: inline-block; width: 3.6mm; height: 3.6mm; line-height: 3.6mm; text-align: center; background: var(--paper-ink); color: #fff; margin-right: 1mm; font-size: 7pt; font-weight: 700; border-radius: .6mm; }
+  .k7-cards .pcard h4 { margin: 0; font-size: 8.6pt; line-height: 1.3; }
+  .k7-cards .ans { margin-top: auto; border-top: .6pt dashed var(--paper-ink-2); padding-top: 1mm; transform: rotate(180deg); font-size: 7pt; line-height: 1.3; color: var(--paper-ink-2); }
+  .k7-cards .ans b { color: var(--paper-ink); }
+  .k7-cards .eff { margin-top: auto; border: .8pt solid var(--paper-ink); border-radius: 1mm; padding: .8mm 1.2mm; font-weight: 700; font-size: 7.8pt; line-height: 1.3; }
+  .k7-cards .ev { background: repeating-linear-gradient(135deg, #fff, #fff 2.2mm, #f1f2f5 2.2mm, #f1f2f5 2.6mm); }
+  .k7-cards .ev > * { background: #fff; }
+  .k7-cards .blank .line { border-bottom: .5pt solid var(--paper-line); height: 4.6mm; }
+  .k7-rules { columns: 2; column-gap: 6mm; font-size: 9.1pt; line-height: 1.45; }
+  .k7-rules h3 { font-size: 10pt; margin: 0 0 .8mm; break-after: avoid; }
+  .k7-rules section { break-inside: avoid; margin-bottom: 2.6mm; }
+  .k7-rules ol, .k7-rules ul { margin: 0; padding-left: 4.5mm; }
+  .k7-rules li + li { margin-top: .5mm; }
+  .k7-rules p { margin: 0; }
+  .sheet .k7-rules table { width: 100%; border-collapse: collapse; }
+  .sheet .k7-rules th, .sheet .k7-rules td { padding: .6mm 1mm; font-size: 7.9pt; line-height: 1.3; vertical-align: top; }
+  .k7-box { border: .8pt solid var(--paper-ink); border-radius: 1.5mm; padding: 1.6mm 2.4mm; }
+  .k7-note { font-size: 8.3pt; color: var(--paper-ink-2); }
+</style>
+</head>
+<body data-page="make" data-root="../">
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--up">출력·만들기 키트</span>
+      <span class="badge badge--basic">연계: 주제 3, 4, 8</span>
+      <span class="badge badge--time">약 60분</span>
+    </div>
+    <p class="eyebrow">키트 K07</p>
+    <h1>보드게임 '양성자의 여행: LHC까지'</h1>
+    <p class="lead">수소 병에서 꺼낸 양성자 묶음이 되어 Linac4 → PS 부스터 → PS → SPS → LHC를 지나 충돌점까지 달립니다. 가속기마다 퀴즈를 맞혀야 다음 가속기로 '주입'되고, 실제 가속기 운전에서 일어나는 사건(퀜치, 빔 덤프, 진공 누설)이 길을 막습니다.</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="pdf/k07.pdf">인쇄용 PDF</a>
+      <a class="btn" href="../students/t08.html">연계 활동지</a>
+    </div>
+  </header>
+
+  <section class="kit-intro">
+    <dl class="kit-meta">
+      <div><dt>대상·인원</dt><dd>고1~3 · 보드 1개당 2~4명 (협동 모드는 2~4명 한 팀)</dd></div>
+      <div><dt>준비물</dt><dd>A4 6장(1~2쪽·5쪽은 두꺼운 종이 권장), 가위, 풀, 투명 테이프, 필기구</dd></div>
+      <div><dt>시간</dt><dd>만들기 20분 · 게임 30~40분</dd></div>
+      <div><dt>인쇄</dt><dd>A4 · 실제 크기(100%) · 흑백 가능 · 1~2쪽 가로</dd></div>
+    </dl>
+    <p class="print-tip">인쇄할 때는 배율을 <b>실제 크기(100%)</b>로, 여백은 <b>없음</b>으로 고르세요. 브라우저 인쇄가 어렵다면 [인쇄용 PDF]를 쓰세요. 아래 회색 바탕 위의 흰 종이가 인쇄되는 부분입니다. 1~2쪽(보드)은 가로 방향이며, 두 장을 이어 붙이면 A3 크기 보드가 됩니다.</p>
+    <div class="legend-lines"><span><i class="l-cut"></i>자르는 선</span><span><i class="l-fold"></i>접는 선</span><span><i class="l-glue"></i>풀칠하는 곳</span></div>
+    <h2 style="font-size:var(--step-2)">만드는 법과 활동 순서</h2>
+    <ol class="steps">
+      <li><span><b>보드</b>: 1쪽의 맨 아래 굵은 점선(보드 아래 가장자리)을 따라 자릅니다. 2쪽 위쪽 빗금 띠에 풀을 바르고, 1쪽의 잘린 가장자리를 빗금 띠의 아래 끝선에 맞춰 겹쳐 붙입니다. 양쪽 끝의 ▼ 표시와 빔관 선이 이어지는지 확인하세요. 뒷면을 투명 테이프로 한 번 더 붙이면 튼튼합니다.</span></li>
+      <li><span><b>카드</b>: 3~4쪽의 카드 40장(퀴즈 18 + 사건 18 + 빈 카드 4)을 점선대로 자릅니다. 퀴즈와 사건을 따로 섞어 보드의 두 '카드 더미' 자리에 뒷면이 위로 오게 놓습니다. 빈 카드에는 모둠이 직접 문제·사건을 만들어 넣습니다.</span></li>
+      <li><span><b>말과 주사위</b>: 5쪽의 말 4개를 잘라 가운데 선에서 산 모양으로 접고, 아래 두 받침을 바깥으로 접어 서로 겹쳐 붙입니다(삼각 텐트 모양). 주사위 전개도를 잘라 접는 선을 접고 빗금 날개에 풀칠해 정육면체를 만듭니다. 에너지 토큰 20개를 오립니다.</span></li>
+      <li><span><b>게임</b>: 6쪽 규칙서를 읽고 시작합니다. 관문에서 퀴즈를 낼 때는 왼쪽 사람이 카드를 읽고, 카드 아래쪽에 거꾸로 인쇄된 정답으로 채점합니다.</span></li>
+      <li><span><b>정리 활동</b>: 게임 뒤 에너지 트랙의 γ·β 값을 보며 "에너지는 약 4만 배 커지는데 속력은 왜 2배도 안 커질까?"를 토론합니다(주제 6·8 연결).</span></li>
+    </ol>
+  </section>
+
+  <div class="sheets">
+
+    <!-- 1쪽: 보드 위쪽 -->
+    <article class="sheet sheet--landscape">
+      <header class="sheet-head"><h2>보드 ① 위쪽: 수소 병에서 SPS까지</h2><span class="kit-no">CERN 탐구 교실 · 키트 K07 · 1/6</span></header>
+      <div class="k7-board" id="k7-board1"></div>
+      <footer class="sheet-foot"><span>✂ 바로 위의 굵은 점선(보드 아래 가장자리)을 따라 잘라, 2쪽 빗금 띠 위에 겹쳐 붙입니다.</span><span>키트 K07 양성자의 여행</span></footer>
+    </article>
+
+    <!-- 2쪽: 보드 아래쪽 -->
+    <article class="sheet sheet--landscape">
+      <header class="sheet-head"><h2>보드 ② 아래쪽: SPS에서 LHC·충돌점까지</h2><span class="kit-no">CERN 탐구 교실 · 키트 K07 · 2/6</span></header>
+      <div class="k7-board" id="k7-board2"></div>
+      <footer class="sheet-foot"><span>키트 K07 양성자의 여행 · 위쪽 빗금 띠에 1쪽을 겹쳐 붙이면 A3 보드</span><span>✂ 테두리 밖은 잘라 내도 됩니다</span></footer>
+    </article>
+
+    <!-- 3~4쪽: 카드 -->
+    <article class="sheet">
+      <header class="sheet-head"><h2>카드 ①: 물리 퀴즈 18장과 빈 카드</h2><span class="kit-no">CERN 탐구 교실 · 키트 K07 · 3/6</span></header>
+      <div class="card-grid card-grid--small k7-cards" id="k7-cards1"></div>
+      <footer class="sheet-foot"><span>키트 K07 · 정답은 카드 아래쪽에 거꾸로 인쇄되어 있습니다. 읽어 주는 사람만 보세요.</span><span>✂ 점선을 따라 자릅니다</span></footer>
+    </article>
+    <article class="sheet">
+      <header class="sheet-head"><h2>카드 ②: 사건 카드 18장과 빈 카드</h2><span class="kit-no">CERN 탐구 교실 · 키트 K07 · 4/6</span></header>
+      <div class="card-grid card-grid--small k7-cards" id="k7-cards2"></div>
+      <footer class="sheet-foot"><span>키트 K07 · 사건은 실제 가속기 운전에서 일어나는 일을 바탕으로 했습니다.</span><span>✂ 점선을 따라 자릅니다</span></footer>
+    </article>
+
+    <!-- 5쪽: 말, 주사위, 토큰 -->
+    <article class="sheet">
+      <header class="sheet-head"><h2>말 4개 · 주사위 · 에너지 토큰</h2><span class="kit-no">CERN 탐구 교실 · 키트 K07 · 5/6</span></header>
+      <div class="k7-parts" id="k7-parts"></div>
+      <footer class="sheet-foot"><span>키트 K07 양성자의 여행 · 두꺼운 종이에 인쇄하면 튼튼합니다</span><span>✂ 자르는 선 · 접는 선 표시를 따르세요</span></footer>
+    </article>
+
+    <!-- 6쪽: 규칙서 -->
+    <article class="sheet">
+      <header class="sheet-head"><h2>규칙서: 양성자의 여행</h2><span class="kit-no">CERN 탐구 교실 · 키트 K07 · 6/6</span></header>
+      <div class="k7-box" style="font-size:9pt">
+        <b>목표</b> — 여러분은 수소 병에서 꺼낸 양성자 묶음입니다. 다섯 가속기를 지나 6.8 TeV까지 가속되고, 충돌점에서 마지막 퀴즈를 맞혀 <b>입자를 가장 먼저 '발견'하는 사람</b>이 이깁니다. &nbsp;2~4명 · 30~40분 · 주사위 1개.
+      </div>
+      <div class="k7-rules">
+        <section><h3>1. 준비</h3><ol>
+          <li>보드를 펴고, 퀴즈 카드와 사건 카드를 따로 섞어 각 '카드 더미' 자리에 뒷면이 위로 오게 놓는다.</li>
+          <li>각자 말 하나를 골라 '출발: 수소 병'에 놓는다. 에너지 토큰은 보드 옆에 단계별로 쌓아 둔다.</li>
+          <li>가장 최근에 수소(물)를 마신 사람부터 시계 방향으로 돌아간다.</li>
+        </ol></section>
+        <section><h3>2. 차례에 할 일</h3><ol>
+          <li>주사위를 굴려 나온 수만큼 화살표 방향으로 말을 옮긴다. 한 칸에 말이 여럿 있어도 된다.</li>
+          <li>멈춘 칸의 지시를 따른다(아래 표). 지시로 옮겨 간 칸의 지시는 다시 따르지 않는다.</li>
+          <li>'뒤로' 지시는 지금 있는 가속기의 첫 칸보다 더 뒤로 가지 않는다.</li>
+        </ol></section>
+        <section><h3>3. 관문과 주입 (가장 중요)</h3>
+          <p>각 가속기 끝의 네모난 <b>관문</b> 칸은 그냥 지나갈 수 없다. 주사위 눈이 남아도 관문에서 멈춘다.</p>
+          <ol>
+            <li>관문에 도착하면 왼쪽 사람이 퀴즈 카드 1장을 읽어 준다(정답은 카드 아래 거꾸로).</li>
+            <li><b>맞히면 주입 성공</b>: 다음 가속기의 첫 칸으로 바로 옮기고, 방금 지난 가속기의 에너지 토큰을 받는다.</li>
+            <li><b>틀리면</b> 관문에 머문다. 다음 차례에는 주사위 대신 새 퀴즈에 도전한다. 두 번 연속 틀리면 세 번째 차례에는 자동으로 주입된다(운전 팀이 도와줌).</li>
+          </ol>
+        </section>
+        <section><h3>4. 칸의 종류</h3>
+          <table>
+            <tr><th>칸</th><th>할 일</th></tr>
+            <tr><td>RF 가속</td><td>2칸 앞으로 (관문은 넘지 못함)</td></tr>
+            <tr><td>퀴즈 ?</td><td>퀴즈 1장. 맞히면 한 번 더 굴린다</td></tr>
+            <tr><td>사건</td><td>사건 카드 1장을 뽑아 따른다</td></tr>
+            <tr><td>진공 누설</td><td>다음 차례 1회 쉰다</td></tr>
+            <tr><td>자석 퀜치</td><td>3칸 뒤로 (초전도 자석을 쓰는 LHC에만 있음)</td></tr>
+            <tr><td>빔 덤프</td><td>주사위: 1~2 수소 병으로, 3~6 이 가속기 첫 칸으로. 받은 토큰은 그대로</td></tr>
+            <tr><td>검출기 트리거</td><td>주사위 4 이상이면 '흥미로운 사건 기록' → 2칸 앞으로</td></tr>
+          </table>
+        </section>
+        <section><h3>5. 충돌과 발견 (승리)</h3><ol>
+          <li>LHC 관문(37)에서 퀴즈를 맞히면 LHC 토큰을 받고, 가운데 <b>충돌점</b>의 실험(ATLAS·CMS·ALICE·LHCb) 하나에 말을 놓는다.</li>
+          <li>다음 차례에 <b>발견 도전</b>: 퀴즈 1장을 맞히고, 찾고 싶은 입자 이름(예: 힉스 보손)을 외치면 '발견!' 칸으로 가서 승리한다.</li>
+          <li>틀리면 충돌점에 머물러 다음 차례에 다시 도전한다(자동 통과 없음).</li>
+        </ol></section>
+        <section><h3>6. 변형 규칙</h3><ul>
+          <li><b>협동 모드 (빔 강도 지키기)</b>: 모두 한 팀. 보드의 '빔 강도' 칸 10에 표시 토큰을 놓는다. 퀜치·빔 덤프·진공 누설 칸이나 '뒤로' 사건이 나올 때마다 빔 강도 −1, 관문·퀴즈 칸에서 정답이면 +1(최대 10). 빔 강도가 0이 되기 전에 <b>모든 말</b>이 충돌점에 도착하고 팀이 함께 발견 퀴즈 1장을 맞히면 팀 승리. 퀴즈는 모두 의논해서 답해도 된다.</li>
+          <li><b>짧은 게임(20분)</b>: 관문 퀴즈는 PS·SPS·LHC 관문에서만 낸다.</li>
+          <li><b>계산 도전</b>: 관문에서 퀴즈 대신 에너지 트랙을 보고 다음 가속기의 γ나 β를 계산기로 구한다(γ = 1 + T/0.938 GeV).</li>
+        </ul></section>
+        <section><h3>7. 이건 실제와 같을까?</h3>
+          <p>실제로는 양성자 묶음 수천 개가 함께 가속되고, Linac4에서 LHC 6.8 TeV까지 가는 데 수십 분이 걸린다. LHC는 빔 하나를 몇 시간 동안 돌리며 충돌시키고, 빔이 약해지면 빔 덤프로 안전하게 버린 뒤 다시 주입한다.</p>
+        </section>
+      </div>
+      <div class="k7-box">
+        <b style="font-size:9.5pt">한눈에 보는 내 차례</b>
+        <div id="k7-flow"></div>
+      </div>
+      <footer class="sheet-foot"><span>키트 K07 보드게임 '양성자의 여행: LHC까지'</span><span>2~4명 · 30~40분</span></footer>
+    </article>
+
+  </div>
+
+  <section class="kit-teacher section">
+    <div class="section__head"><span class="section__tag">교사용</span><h2>운영 안내와 정답</h2></div>
+    <details><summary>수업 운영 (차시 흐름, 모둠 구성)</summary>
+      <p><b>권장 위치</b> 주제 8(나만의 LHC 설계하기) 도입 또는 주제 3·4를 마친 뒤 복습 시간. 1차시(50분) 기준: 만들기 15~20분(보드·카드는 미리 잘라 두면 5분) → 규칙 설명 5분 → 게임 25~30분 → 정리 5분.</p>
+      <p><b>모둠</b> 3~4명이 보드 하나. 퀴즈를 어려워하는 반은 협동 모드로 시작하면 모두가 답을 의논하며 배웁니다. 경쟁 모드는 관문에서 틀렸을 때 정답 해설을 소리 내어 읽게 해 학습 효과를 높이세요.</p>
+      <p><b>정리 질문</b> (1) 에너지 트랙에서 운동 에너지는 160 MeV → 6.8 TeV로 약 4만 배 커지는데 β는 0.52 → 0.99999999로 2배도 안 된다. 왜? (상대론: 에너지가 커지면 γ가 커지고 속력은 c에 다가갈 뿐) (2) 퀜치 칸이 LHC에만 있는 까닭은? (PS·SPS는 상온 전자석, LHC는 1.9 K 초전도 자석) (3) LHC가 한 번에 6.8 TeV까지 가속하지 않고 사슬을 쓰는 까닭은? (각 가속기는 정해진 에너지 범위에서만 자석·RF를 맞출 수 있음: 자석 세기의 최솟값~최댓값 비율에 한계)</p>
+      <p><b>인쇄 팁</b> 보드 2장은 120~160 g/m² 종이에 인쇄하면 A3 보드가 휘지 않습니다. 사건 카드는 빗금 테두리로 퀴즈 카드와 구분되지만, 색지에 따로 인쇄하면 더 편합니다.</p>
+    </details>
+    <details><summary>정답과 해설: 물리 퀴즈 18장 (카드와 같은 데이터에서 생성)</summary>
+      <ol id="k7-key"></ol>
+    </details>
+    <details><summary>에너지 트랙 값의 계산과 사건 카드 배경</summary>
+      <div id="k7-key2"></div>
+      <p>사건 카드의 실제 배경: 2008년 9월 LHC 자석 사이 초전도 접속부 결함으로 헬륨이 새어 나와 자석 여러 대가 손상되었고 2009년 11월에야 다시 빔을 돌렸습니다. 2009년 11월에는 새가 떨어뜨린 빵 조각이 지상 전기 설비에 문제를 일으킨 일이, 2016년 4월에는 담비가 변압기 전선을 건드려 정전된 일이 있었습니다. 'UFO'(빔관 속 미세 먼지가 빔에 떨어져 생기는 빔 손실), 전자 구름과 스크러빙, 겨울 기술 정지, Linac4의 H⁻ 이온과 PS 부스터의 전자 벗기기 막, 흑연 빔 덤프는 모두 실제 운전 용어입니다.</p>
+    </details>
+  </section>
+
+</main>
+<script>
+(function () {
+  "use strict";
+  var NS = "http://www.w3.org/2000/svg";
+  function f(x, d) { return (+x).toFixed(d === undefined ? 1 : d); }
+  function rad(d) { return d * Math.PI / 180; }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+
+  /* ---------- 가속 단계: 운동 에너지 T (GeV) → γ, β ---------- */
+  var MP = 0.93827;
+  var STAGES = [
+    { id: "start", name: "출발: 수소 병", T: 0, Ttxt: "정지", note: "양성자 = 수소 원자핵" },
+    { id: "linac", name: "Linac4", T: 0.160, Ttxt: "160 MeV", note: "H⁻ 이온 가속" },
+    { id: "psb", name: "PS 부스터", T: 2, Ttxt: "2 GeV", note: "둘레 157 m" },
+    { id: "ps", name: "PS", T: 26, Ttxt: "26 GeV", note: "둘레 628 m" },
+    { id: "sps", name: "SPS", T: 450, Ttxt: "450 GeV", note: "둘레 6.9 km" },
+    { id: "lhc", name: "LHC", T: 6800, Ttxt: "6.8 TeV", note: "둘레 26.7 km" }
+  ];
+  STAGES.forEach(function (s) {
+    s.g = 1 + s.T / MP; s.b = Math.sqrt(1 - 1 / (s.g * s.g));
+    s.gtxt = s.g < 10 ? f(s.g, 2) : (s.g < 1000 ? f(s.g, s.g < 100 ? 1 : 0) : "약 7250");
+    if (s.T === 0) { s.gtxt = "1"; s.btxt = "0"; }
+    else if (s.b < 0.99) s.btxt = f(s.b, 3);
+    else if (s.b < 0.9999) s.btxt = f(s.b, 4);
+    else if (s.b < 0.9999999) s.btxt = f(s.b, 6);
+    else s.btxt = "0.99999999";
+  });
+
+  /* ---------- 보드 칸 ---------- */
+  var T = {
+    N: "", RF: "RF 가속", Q: "퀴즈", E: "사건", VAC: "진공 누설", QN: "자석 퀜치", DUMP: "빔 덤프", TRIG: "검출기 트리거", G: "관문"
+  };
+  var rings = {
+    psb: { cx: 190, cy: 50, r: 24 }, ps: { cx: 150, cy: 106, r: 28 }, sps: { cx: 50, cy: 101, r: 32 }, lhc: { cx: 112, cy: 228, r: 58 }
+  };
+  function onRing(id, a) { var R = rings[id]; return { x: R.cx + R.r * Math.cos(rad(a)), y: R.cy + R.r * Math.sin(rad(a)), ring: id, a: a }; }
+  var S = [];
+  // Linac4
+  [40, 62, 84, 106, 128].forEach(function (x) { S.push({ x: x, y: 34, ring: null }); });
+  // PS 부스터 (시계 방향)
+  [210, 270, 330, 390, 450].forEach(function (a) { S.push(onRing("psb", a)); });
+  // PS
+  [315, 360, 405, 450, 495, 540, 585].forEach(function (a) { S.push(onRing("ps", a)); });
+  // SPS (반시계 방향)
+  [0, -45, -90, -135, -180, -225, -270, -315].forEach(function (a) { S.push(onRing("sps", a)); });
+  // LHC (시계 방향)
+  [240, 270, 300, 330, 360, 390, 420, 450, 480, 510, 540, 570].forEach(function (a) { S.push(onRing("lhc", a)); });
+  var TYPES = ["N", "RF", "E", "Q", "G",
+    "E", "RF", "VAC", "Q", "G",
+    "N", "E", "RF", "VAC", "Q", "E", "G",
+    "N", "Q", "RF", "DUMP", "E", "VAC", "RF", "G",
+    "N", "E", "QN", "RF", "Q", "DUMP", "E", "QN", "RF", "TRIG", "VAC", "G"];
+  var GATE_E = { 5: "160 MeV", 10: "2 GeV", 17: "26 GeV", 25: "450 GeV", 37: "6.8 TeV" };
+  S.forEach(function (s, i) { s.n = i + 1; s.t = TYPES[i]; });
+
+  function stationSVG(s) {
+    var x = s.x, y = s.y, o = "", t = s.t, num = '<text x="' + f(x) + '" y="' + f(y - 5.2) + '" font-size="2.3" text-anchor="middle" font-weight="700">' + s.n + "</text>";
+    function txt(str, dy, size, extra) { return '<text x="' + f(x) + '" y="' + f(y + dy) + '" font-size="' + size + '" text-anchor="middle" ' + (extra || "") + ">" + str + "</text>"; }
+    if (t === "G") {
+      o += '<rect x="' + f(x - 10.5) + '" y="' + f(y - 10.5) + '" width="21" height="21" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>';
+      o += '<rect x="' + f(x - 9.2) + '" y="' + f(y - 9.2) + '" width="18.4" height="18.4" rx="1.4" fill="none" stroke="#111" stroke-width="0.3"/>';
+      o += '<text x="' + f(x) + '" y="' + f(y - 5.6) + '" font-size="2.2" text-anchor="middle" font-weight="700">' + s.n + " 관문</text>";
+      o += txt(GATE_E[s.n] || "에너지", 0.6, 2.9, 'font-weight="700"') + txt("퀴즈 → 주입", 4.6, 2.1) + txt("멈춤!", 7.6, 2.1);
+      return o;
+    }
+    var fill = "#fff", stroke = '#111', sw = 0.5, dash = "";
+    if (t === "E") fill = "#e4e6eb";
+    if (t === "DUMP") fill = "#111";
+    if (t === "QN") fill = "url(#k7hatch)";
+    if (t === "VAC") dash = ' stroke-dasharray="1.3 0.9"';
+    o += '<circle cx="' + f(x) + '" cy="' + f(y) + '" r="9" fill="' + fill + '" stroke="' + stroke + '" stroke-width="' + (t === "VAC" ? 0.6 : sw) + '"' + dash + "/>";
+    if (t === "N") { return o + txt(s.n, 1.5, 4.4, 'font-weight="700"'); }
+    if (t === "RF") { o += '<circle cx="' + f(x) + '" cy="' + f(y) + '" r="7.6" fill="none" stroke="#111" stroke-width="0.35"/>'; return o + num + txt("RF", 1.3, 3.4, 'font-weight="700"') + txt("+2칸", 4.6, 2.3); }
+    if (t === "Q") return o + num + txt("?", 2.4, 6, 'font-weight="700"') + txt("퀴즈", 6.2, 2);
+    if (t === "E") return o + num + '<rect x="' + f(x - 3) + '" y="' + f(y - 3.3) + '" width="6" height="4.4" rx="0.5" fill="#fff" stroke="#111" stroke-width="0.35"/>' + txt("!", 0.3, 3.2, 'font-weight="700"') + txt("사건", 4.6, 2.4, 'font-weight="700"');
+    if (t === "VAC") return o + num + txt("진공 누설", 0.6, 2.3, 'font-weight="700"') + txt("1회 쉼", 4, 2.3);
+    if (t === "QN") return o + '<rect x="' + f(x - 6.2) + '" y="' + f(y - 7.4) + '" width="12.4" height="13.4" rx="1" fill="#fff"/>' + num + '<path d="M' + f(x - 3.2) + " " + f(y - 3.6) + "l-1.6 2.4h1.6l-1.4 2.6" + '" fill="none" stroke="#111" stroke-width="0.45"/>' + '<text x="' + f(x + 1.4) + '" y="' + f(y + 0.6) + '" font-size="2.5" text-anchor="middle" font-weight="700">퀜치</text>' + txt("3칸 뒤로", 4.4, 2.1);
+    if (t === "DUMP") return o + '<text x="' + f(x) + '" y="' + f(y - 5.2) + '" font-size="2.3" text-anchor="middle" font-weight="700" fill="#fff">' + s.n + "</text>" + txt("빔 덤프", 1, 2.6, 'font-weight="700" fill="#fff"') + txt("주사위!", 4.4, 2.1, 'fill="#fff"');
+    if (t === "TRIG") return o + '<circle cx="' + f(x) + '" cy="' + f(y - 1.4) + '" r="2" fill="none" stroke="#111" stroke-width="0.3"/><path d="M' + f(x - 3) + " " + f(y - 1.4) + "h6M" + f(x) + " " + f(y - 4.4) + 'v6" stroke="#111" stroke-width="0.25"/>' + '<text x="' + f(x - 4.6) + '" y="' + f(y - 3.6) + '" font-size="2.1" text-anchor="middle" font-weight="700">' + s.n + "</text>" + txt("트리거", 3.4, 2.3, 'font-weight="700"') + txt("4↑ +2칸", 6.4, 1.9);
+    return o;
+  }
+
+  function boardSVG(y0, h, part) {
+    var s = '<svg xmlns="' + NS + '" width="273mm" height="' + h + 'mm" viewBox="0 ' + y0 + " 273 " + h + '" role="img" aria-label="게임 보드 ' + part + '">';
+    s += '<defs><pattern id="k7hatch' + part + '" width="2" height="2" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2" height="2" fill="#fff"/><path d="M0 0V2" stroke="#111" stroke-width="0.55"/></pattern>';
+    s += '<pattern id="k7glue' + part + '" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#fff"/><rect width="2" height="4" fill="#e3e8f3"/></pattern>';
+    s += '<marker id="k7ar' + part + '" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L6 3L0 6z" fill="#111"/></marker></defs>';
+    // 보드 테두리
+    var P2 = part === 2;
+    s += P2 ? '<rect x="0.4" y="140" width="272.2" height="159.6" rx="3" fill="#fff" stroke="#111" stroke-width="0.6"/>' : '<rect x="0.4" y="0.4" width="272.2" height="170" rx="3" fill="#fff" stroke="#111" stroke-width="0.6"/>';
+    // 제목
+    s += '<text x="5" y="10" font-size="7" font-weight="700" style="font-family:var(--font-display)">양성자의 여행: LHC까지</text>';
+    s += '<text x="5" y="15.5" font-size="2.7">양성자 묶음이 되어 CERN 가속 사슬을 지나 충돌점에서 새 입자를 발견하자!</text>';
+    // 고리 (빔관)
+    Object.keys(rings).forEach(function (k) { var R = rings[k]; if (!P2 && R.cy - R.r > 160) return; s += '<circle cx="' + R.cx + '" cy="' + R.cy + '" r="' + R.r + '" fill="none" stroke="#d3d6de" stroke-width="5"/><circle cx="' + R.cx + '" cy="' + R.cy + '" r="' + R.r + '" fill="none" stroke="#111" stroke-width="0.35"/>'; });
+    // 수송 빔관 (가속기 사이)
+    var path = "M28 34";
+    S.forEach(function (st, i) {
+      var prev = i ? S[i - 1] : null;
+      if (!P2 && i > 25) return;
+      if (!P2 && i === 25) { var tt = (160 - prev.y) / (st.y - prev.y); path += "L" + f(prev.x + tt * (st.x - prev.x), 2) + " 160"; return; }
+      if (prev && prev.ring && prev.ring === st.ring) {
+        var R = rings[st.ring], sweep = st.a > prev.a ? 1 : 0;
+        path += "A" + R.r + " " + R.r + " 0 0 " + sweep + " " + f(st.x, 2) + " " + f(st.y, 2);
+      } else path += "L" + f(st.x, 2) + " " + f(st.y, 2);
+    });
+    s += '<path d="' + path + '" fill="none" stroke="#111" stroke-width="1.1"/>';
+    // 진행 방향 화살표 (칸 사이 가운데)
+    S.forEach(function (st, i) {
+      if (!i) return; var p = S[i - 1], mx, my, ang;
+      if (p.ring && p.ring === st.ring) { var R = rings[st.ring], am = (p.a + st.a) / 2; mx = R.cx + R.r * Math.cos(rad(am)); my = R.cy + R.r * Math.sin(rad(am)); ang = am + (st.a > p.a ? 90 : -90); }
+      else { mx = (p.x + st.x) / 2; my = (p.y + st.y) / 2; ang = Math.atan2(st.y - p.y, st.x - p.x) * 180 / Math.PI; }
+      if (!P2 && my > 160) return;
+      s += '<path d="M-1.6 -1.5L1.6 0L-1.6 1.5z" fill="#111" transform="translate(' + f(mx, 2) + " " + f(my, 2) + ") rotate(" + f(ang, 1) + ')"/>';
+    });
+    // 출발: 수소 병
+    s += '<path d="M12 22h8v5c4 1 7 4 7 8v15c0 1.5-1 2.5-2.5 2.5h-17C6 52.5 5 51.5 5 50V35c0-4 3-7 7-8z" fill="#fff" stroke="#111" stroke-width="0.7"/>';
+    s += '<rect x="11" y="19.5" width="10" height="3" rx="0.8" fill="#111"/>';
+    s += '<text x="16" y="41" font-size="4.2" text-anchor="middle" font-weight="700">H₂</text><text x="16" y="47" font-size="2.4" text-anchor="middle">수소</text>';
+    s += '<text x="16" y="57.5" font-size="2.7" text-anchor="middle" font-weight="700">출발</text><text x="16" y="61" font-size="2.2" text-anchor="middle">수소 병</text>';
+    // 가속기 이름
+    s += '<text x="34" y="23.5" font-size="3.1" font-weight="700">Linac4 <tspan font-weight="400" font-size="2.5">선형 가속기 · 수소 음이온(H⁻)을 160 MeV까지</tspan></text>';
+    function ringLabel(k, l1, l2, l3) { var R = rings[k]; return '<text x="' + R.cx + '" y="' + (R.cy - 2.5) + '" font-size="3.2" text-anchor="middle" font-weight="700">' + l1 + '</text><text x="' + R.cx + '" y="' + (R.cy + 1.6) + '" font-size="2.5" text-anchor="middle">' + l2 + '</text><text x="' + R.cx + '" y="' + (R.cy + 5) + '" font-size="2.3" text-anchor="middle">' + l3 + "</text>"; }
+    s += ringLabel("psb", "PS 부스터", "→ 2 GeV", "둘레 157 m");
+    s += ringLabel("ps", "PS", "→ 26 GeV", "둘레 628 m");
+    s += ringLabel("sps", "SPS", "→ 450 GeV", "둘레 6.9 km");
+    if (P2) {
+    s += '<text x="112" y="186" font-size="3.6" text-anchor="middle" font-weight="700">LHC <tspan font-size="2.6" font-weight="400">→ 6.8 TeV · 둘레 26.7 km</tspan></text>';
+    s += '<text x="112" y="190" font-size="2.2" text-anchor="middle">1232개 초전도 쌍극자석(8.3 T, 1.9 K)</text>';
+    // 충돌점과 발견
+    s += '<path d="M' + f(S[36].x + 10.5, 2) + " " + f(S[36].y + 3, 2) + 'L89 207" fill="none" stroke="#111" stroke-width="1.1" marker-end="url(#k7ar' + part + ')"/>';
+    s += '<rect x="90" y="196" width="44" height="36" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>';
+    s += '<text x="112" y="200.6" font-size="2.6" text-anchor="middle" font-weight="700">38 충돌점: 실험 하나에!</text>';
+    [["ATLAS", 91.5, 202.5], ["CMS", 112.5, 202.5], ["ALICE", 91.5, 217], ["LHCb", 112.5, 217]].forEach(function (e) {
+      s += '<rect x="' + e[1] + '" y="' + e[2] + '" width="20" height="13.5" rx="1" fill="#fff" stroke="#111" stroke-width="0.4"/><text x="' + (e[1] + 10) + '" y="' + (e[2] + 8.2) + '" font-size="2.7" text-anchor="middle" font-weight="700">' + e[0] + "</text>";
+    });
+    s += '<path d="M112 232v5" stroke="#111" stroke-width="1.1" marker-end="url(#k7ar' + part + ')"/>';
+    var star = ""; for (var k = 0; k < 10; k++) { var rr = k % 2 ? 6 : 13, aa = rad(-90 + k * 36); star += (k ? "L" : "M") + f(112 + rr * 1.55 * Math.cos(aa), 2) + " " + f(252 + rr * Math.sin(aa), 2); }
+    s += '<path d="' + star + 'z" fill="#fff" stroke="#111" stroke-width="0.9"/>';
+    s += '<text x="112" y="251.5" font-size="3.6" text-anchor="middle" font-weight="700">39 발견!</text><text x="112" y="255.5" font-size="2" text-anchor="middle">퀴즈 맞히면 승리</text>';
+    }
+    // 칸
+    S.forEach(function (st) { if (!P2 && st.y > 160) return; s += stationSVG(st).replace(/k7hatch/g, "k7hatch" + part); });
+    // 에너지 트랙
+    s += P2 ? '<rect x="231" y="140" width="39" height="157" rx="2" fill="#f4f5f8" stroke="#111" stroke-width="0.4"/>' : '<rect x="231" y="3" width="39" height="162" rx="2" fill="#f4f5f8" stroke="#111" stroke-width="0.4"/>';
+    s += '<text x="250.5" y="9" font-size="3" text-anchor="middle" font-weight="700">에너지 트랙</text><text x="250.5" y="12.5" font-size="2" text-anchor="middle">운동 에너지 · γ · β = v/c</text>';
+    var boxes = [[STAGES[0], 15], [STAGES[1], 46], [STAGES[2], 77], [STAGES[3], 108], [STAGES[4], 162], [STAGES[5], 194]];
+    boxes.forEach(function (bx, i) {
+      var st = bx[0], y = bx[1];
+      if (!P2 && y > 150) return;
+      s += '<rect x="233" y="' + y + '" width="35" height="27" rx="1.5" fill="#fff" stroke="#111" stroke-width="0.5"/>';
+      s += '<text x="250.5" y="' + (y + 4.4) + '" font-size="2.6" text-anchor="middle" font-weight="700">' + st.name + "</text>";
+      s += '<text x="250.5" y="' + (y + 10.6) + '" font-size="4.6" text-anchor="middle" font-weight="700">' + st.Ttxt + "</text>";
+      s += '<text x="235" y="' + (y + 15.6) + '" font-size="2.5">γ = ' + st.gtxt + "</text>";
+      s += '<text x="235" y="' + (y + 19.6) + '" font-size="2.5">β = ' + st.btxt + "</text>";
+      s += '<text x="250.5" y="' + (y + 24.6) + '" font-size="2" text-anchor="middle">' + st.note + "</text>";
+      if (i < boxes.length - 1 && i !== 3) s += '<path d="M250.5 ' + (y + 27.4) + 'v2.4" stroke="#111" stroke-width="0.6" marker-end="url(#k7ar' + part + ')"/>';
+    });
+    s += '<path d="M250.5 135.4V160" stroke="#111" stroke-width="0.6" stroke-dasharray="1.5 1" marker-end="url(#k7ar' + part + ')"/>';
+    if (!P2) return finish();
+    s += '<path d="M250.5 221.4v2.4" stroke="#111" stroke-width="0.6" marker-end="url(#k7ar' + part + ')"/>';
+    s += '<rect x="233" y="226" width="35" height="24" rx="1.5" fill="#111"/>';
+    s += '<text x="250.5" y="231" font-size="2.6" text-anchor="middle" font-weight="700" fill="#fff">정면 충돌</text><text x="250.5" y="238" font-size="4.4" text-anchor="middle" font-weight="700" fill="#fff">13.6 TeV</text><text x="250.5" y="242.4" font-size="2.1" text-anchor="middle" fill="#fff">6.8 TeV 빔 두 개가</text><text x="250.5" y="246" font-size="2.1" text-anchor="middle" fill="#fff">맞부딪힘</text>';
+    s += '<text x="250.5" y="257" font-size="2.2" text-anchor="middle">γ = 1 + T / (mc²)</text><text x="250.5" y="261" font-size="2.2" text-anchor="middle">β = √(1 − 1/γ²)</text><text x="250.5" y="265" font-size="2.2" text-anchor="middle">양성자 mc² = 0.938 GeV</text>';
+    s += '<text x="250.5" y="272" font-size="2.1" text-anchor="middle">에너지는 약 4만 배,</text><text x="250.5" y="275.5" font-size="2.1" text-anchor="middle">속력은 2배도 안 된다!</text><text x="250.5" y="279" font-size="2.1" text-anchor="middle">(속력의 한계 c)</text>';
+    // 카드 더미 자리
+    [["퀴즈 카드 더미", "물리 퀴즈 18장", 157], ["사건 카드 더미", "사건 18장", 211]].forEach(function (c) {
+      s += '<rect x="181" y="' + c[2] + '" width="48.5" height="51" rx="2" fill="#fff" stroke="#111" stroke-width="0.5" stroke-dasharray="2 1.2"/>';
+      s += '<text x="205.5" y="' + (c[2] + 22) + '" font-size="3" text-anchor="middle" font-weight="700">' + c[0] + '</text><text x="205.5" y="' + (c[2] + 27) + '" font-size="2.3" text-anchor="middle">' + c[1] + " · 뒷면이 위로</text>";
+    });
+    // 협동 모드 빔 강도
+    s += '<text x="182" y="266.6" font-size="2.6" font-weight="700">빔 강도 (협동 모드)</text>';
+    for (k = 0; k < 10; k++) { var bx2 = 182 + (k % 5) * 9.4, by = 269 + Math.floor(k / 5) * 13; s += '<rect x="' + f(bx2) + '" y="' + by + '" width="8.4" height="11" rx="1" fill="#fff" stroke="#111" stroke-width="0.4"/><text x="' + f(bx2 + 4.2) + '" y="' + (by + 7.2) + '" font-size="3.4" text-anchor="middle" font-weight="700">' + (10 - k) + "</text>"; }
+    // 범례
+    var lg = [["RF", "RF 가속", ["2칸 앞으로"]], ["Q", "퀴즈", ["맞히면 한 번 더 굴림"]], ["E", "사건", ["사건 카드 1장"]], ["VAC", "진공 누설", ["1회 쉼"]], ["QN", "자석 퀜치", ["3칸 뒤로", "(초전도 LHC에만)"]], ["DUMP", "빔 덤프", ["주사위 1~2: 수소 병,", "3~6: 이 가속기 첫 칸"]], ["TRIG", "검출기 트리거", ["주사위 4 이상이면", "2칸 앞으로"]], ["G", "관문", ["반드시 멈춰서 퀴즈,", "맞히면 다음 가속기로"]]];
+    s += '<text x="4" y="164" font-size="3" font-weight="700">칸 안내</text>';
+    lg.forEach(function (l, i) {
+      var y = 172 + i * 15.6, st = { x: 11, y: y, n: "", t: l[0] };
+      if (l[0] === "G") s += '<g transform="translate(11 ' + y + ') scale(0.62) translate(-11 ' + (-y) + ')">' + stationSVG({ x: 11, y: y, n: "", t: "G" }) + "</g>";
+      else s += '<g transform="translate(11 ' + y + ') scale(0.62) translate(-11 ' + (-y) + ')">' + stationSVG(st).replace(/k7hatch/g, "k7hatch" + part) + "</g>";
+      s += '<text x="18.5" y="' + (y - 1) + '" font-size="2.6" font-weight="700">' + l[1] + "</text>";
+      l[2].forEach(function (w, j) { s += '<text x="18.5" y="' + (y + 2.6 + j * 3) + '" font-size="2.2">' + w + "</text>"; });
+    });
+    return finish();
+    function finish() {
+    if (part === 1) {
+      s += '<path d="M0 155.6H273" stroke="#111" stroke-width="0.7" stroke-dasharray="2.6 1.4"/>';
+      s += '<path d="M4 151l2 3.6 2-3.6z M265 151l2 3.6 2-3.6z" fill="#111"/>';
+    } else {
+      s += '<rect x="0" y="144" width="273" height="12" fill="url(#k7glue2)" stroke="#111" stroke-width="0.3"/>';
+      s += '<rect x="56" y="146.6" width="161" height="6.8" fill="#fff"/>';
+      s += '<text x="136.5" y="151.2" font-size="2.8" text-anchor="middle" font-weight="700">풀칠: 1쪽의 잘린 아래 가장자리를 이 띠의 아래 끝선에 맞춰 겹쳐 붙이기</text>';
+      s += '<path d="M4 152.4l2 3.6 2-3.6z M265 152.4l2 3.6 2-3.6z" fill="#111"/>';
+    }
+    return s + "</svg>";
+    }
+  }
+  document.getElementById("k7-board1").innerHTML = boardSVG(0, 156, 1);
+  document.getElementById("k7-board2").innerHTML = boardSVG(144, 156, 2);
+
+  /* ---------- 카드 ---------- */
+  var QUIZ = [
+    ["1 eV(전자볼트)는 무엇이고, 몇 J인가?", "전자 하나(전하 e)가 1 V의 전위차로 가속될 때 얻는 에너지. 1 eV = 1.6×10⁻¹⁹ J", "에너지 = qV = (1.6×10⁻¹⁹ C)(1 V)."],
+    ["전하 e인 입자가 전위차 1 kV를 지나며 가속되면 얻는 에너지는?", "1 keV = 1000 eV = 1.6×10⁻¹⁶ J", "qV에서 V가 1000배이므로 에너지도 1000배."],
+    ["p [GeV/c] = 0.3·B[T]·r[m]. B = 2 T, r = 5 m인 원 궤도를 도는 양성자의 운동량은?", "p = 0.3 × 2 × 5 = 3 GeV/c", "자기장 속 원운동 반지름 r = p/(qB)를 입자물리 단위로 쓴 식."],
+    ["LHC는 왜 직선이 아니라 원형일까?", "원형이면 같은 RF 가속 공동을 매 바퀴(초당 약 11,245바퀴) 다시 지나며 조금씩 계속 가속할 수 있다", "직선으로 6.8 TeV를 얻으려면 매우 긴 선형가속기가 필요하다. 원형에서는 자석이 궤도를 휘어 붙잡는다."],
+    ["LHC 초전도 자석은 몇 K로 식힐까? 무엇을 쓸까?", "1.9 K(약 −271 °C), 초유체 헬륨", "초전도 상태에서는 저항이 0이라 큰 전류로 강한 자기장(약 8.3 T)을 만들 수 있다."],
+    ["LHC에서 빔을 휘는 쌍극자석은 몇 개이고, 자기장은 약 몇 T인가?", "1232개, 약 8.3 T", "p = 0.3·B·r에서 r ≈ 2.8 km, p = 6.8 TeV/c이면 B ≈ 8 T가 필요하다."],
+    ["6.8 TeV 양성자의 γ(로런츠 인자)는 약 얼마인가? (양성자 mc² ≈ 0.938 GeV)", "γ ≈ 6800 ÷ 0.938 ≈ 7250", "γ = E/(mc²). 시간 지연·길이 수축이 약 7250배."],
+    ["ATLAS와 CMS가 힉스 보손 발견을 발표한 날은?", "2012년 7월 4일 (2013년 노벨 물리학상: 앙글레르·힉스)", "질량 약 125 GeV/c²의 새 입자."],
+    ["같은 에너지일 때, 원형 가속기에서 전자가 양성자보다 싱크로트론 복사로 훨씬 많은 에너지를 잃는 까닭은?", "손실 ∝ γ⁴/r. 같은 에너지면 전자의 γ가 약 1836배 커서 손실이 약 10¹³배", "그래서 LHC는 양성자를 쓴다."],
+    ["자기장 속을 운동하는 양성자에게 로렌츠 힘이 하는 일은?", "0. 힘이 속도에 늘 수직이라 방향만 바꾸고 속력·운동 에너지는 그대로", "가속(에너지 증가)은 전기장(RF 공동)이, 휘기는 자기장이 맡는다."],
+    ["CERN 가속 사슬 다섯 단계를 순서대로 말하라.", "Linac4 → PS 부스터 → PS → SPS → LHC", "160 MeV → 2 GeV → 26 GeV → 450 GeV → 6.8 TeV."],
+    ["Linac4가 처음 가속하는 것은 양성자가 아니라 무엇일까?", "수소 음이온 H⁻ (양성자 1 + 전자 2). PS 부스터에 들어갈 때 얇은 막으로 전자 2개를 벗겨 양성자로 만든다", "음이온으로 주입하면 이미 돌고 있는 빔에 겹쳐 넣기 쉽다."],
+    ["RF 가속 공동에서 입자들이 '묶음(bunch)'으로 다니는 까닭은?", "전기장이 진동하므로, 가속하는 방향일 때(알맞은 위상) 간극을 지나는 입자만 가속되기 때문", "LHC에서 묶음 사이 간격은 25 ns."],
+    ["선형가속기의 드리프트 튜브는 왜 뒤로 갈수록 길어질까?", "입자가 빨라져 RF 반주기 동안 더 멀리 가기 때문 (L = v/2f)", "속력이 c에 가까워지면 길이 증가가 멈춘다."],
+    ["LHC 양성자(6.8 TeV)의 속력은 빛의 몇 %? 빛보다 빨라질 수 있을까?", "약 99.999999%. 빛보다 빨라질 수 없다", "에너지가 커져도 β는 1에 다가갈 뿐. 1 − β ≈ 10⁻⁸."],
+    ["B가 일정할 때 양성자의 운동량을 2배로 하면 원 궤도 반지름은?", "2배 (r = p/qB)", "그래서 싱크로트론은 에너지를 올리는 동안 자기장도 함께 올린다."],
+    ["LHC의 4대 실험 중 납 이온 충돌로 쿼크–글루온 플라스마를 주로 연구하는 것은?", "ALICE", "ATLAS·CMS는 범용, LHCb는 b 쿼크와 CP 대칭성 깨짐."],
+    ["160 MeV(Linac4 출구) 양성자의 γ와 속력은 대략?", "γ = 1 + 160/938 ≈ 1.17, 속력 ≈ 0.52c", "β = √(1 − 1/γ²)."]
+  ];
+  var EVENTS = [
+    ["초전도 자석 트레이닝", "자석이 퀜치를 몇 번 겪으며 더 큰 전류를 견디게 되었다.", "2칸 앞으로"],
+    ["2008년 9월의 교훈", "자석 사이 전기 접속부 결함으로 헬륨이 새어 LHC가 1년 넘게 멈췄다. 접속부 점검!", "1회 쉼"],
+    ["담비의 습격 (2016년)", "작은 야생동물(담비)이 변압기 전선을 건드려 전원이 끊겼다.", "1회 쉼"],
+    ["빵 조각 소동 (2009년)", "새가 떨어뜨린 빵 조각이 지상 전기 설비를 멈추게 했다.", "2칸 뒤로"],
+    ["사중극자 집속 성공", "사중극자석이 빔을 가늘게 모았다.", "주사위를 한 번 더 굴린다"],
+    ["RF 위상 어긋남", "묶음이 감속하는 위상에 들어갔다.", "2칸 뒤로"],
+    ["전자 구름 경보", "빔관 벽에서 나온 전자들이 빔을 흔든다. 빔관 표면 처리(스크러빙) 중.", "1회 쉼"],
+    ["UFO 감지", "빔관 속 미세 먼지('UFO')가 빔을 스쳐 빔 손실 감시 장치가 경고했다.", "1칸 뒤로"],
+    ["1.9 K 도달", "초유체 헬륨이 자석을 고르게 식혔다.", "1칸 앞으로"],
+    ["겨울 기술 정지", "해마다 겨울에는 가속기를 멈추고 정비한다.", "1회 쉼. 대신 다음 관문에서 퀴즈 2장 중 쉬운 쪽을 고른다"],
+    ["킥커 자석 완벽!", "주입 킥커 자석이 정확한 순간에 켜졌다.", "보관: 관문 퀴즈 1번 면제"],
+    ["궤도 오차", "궤도 보정 자석으로 바로잡는 중.", "주사위가 홀수면 1칸 뒤로"],
+    ["제어실의 팀워크", "교대 근무 운전원이 뒤처진 빔을 도왔다.", "가장 뒤에 있는 플레이어가 2칸 앞으로"],
+    ["25 ns 간격 맞춤", "묶음 사이 간격이 정확히 25 ns로 맞았다.", "2칸 앞으로"],
+    ["광도 기록 갱신!", "초당 충돌 수가 최고 기록을 넘었다.", "3칸 앞으로 (관문은 넘지 못함)"],
+    ["H⁻ 벗기기 성공", "PS 부스터 입구의 얇은 탄소 막이 전자 2개를 떼어 냈다.", "1칸 앞으로"],
+    ["진공 펌프 가동", "빔관 진공을 회복하는 중. 남은 기체 분자가 빔과 부딪힌다.", "다음 차례 주사위 눈 −1 (최소 1)"],
+    ["빔 덤프 시험", "흑연 빔 덤프 블록이 빔을 안전하게 흡수하는지 시험한다.", "주사위 1이면 이 가속기 첫 칸으로, 아니면 그대로"]
+  ];
+  function qCard(q, i) { return '<div class="pcard q"><div class="tag"><span>물리 퀴즈</span><b>Q' + (i < 9 ? "0" : "") + (i + 1) + "</b></div><p>" + esc(q[0]) + '</p><div class="ans"><b>정답</b> ' + esc(q[1]) + "</div></div>"; }
+  function eCard(e, i) { return '<div class="pcard ev"><div class="tag"><span>사건</span><b>E' + (i < 9 ? "0" : "") + (i + 1) + "</b></div><h4>" + esc(e[0]) + "</h4><p>" + esc(e[1]) + '</p><div class="eff">→ ' + esc(e[2]) + "</div></div>"; }
+  function blank(kind) { return '<div class="pcard blank ' + (kind === "q" ? "q" : "ev") + '"><div class="tag"><span>' + (kind === "q" ? "물리 퀴즈" : "사건") + '</span><b>나만의 카드</b></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="' + (kind === "q" ? "ans" : "eff") + '">' + (kind === "q" ? "<b>정답</b>" : "→") + "</div></div>"; }
+  document.getElementById("k7-cards1").innerHTML = QUIZ.map(qCard).join("") + blank("q") + blank("q");
+  document.getElementById("k7-cards2").innerHTML = EVENTS.map(eCard).join("") + blank("e") + blank("e");
+  document.getElementById("k7-key").innerHTML = QUIZ.map(function (q, i) { return "<li><b>" + esc(q[0]) + "</b><br>정답: " + esc(q[1]) + ". <span class=\"muted\">" + esc(q[2]) + "</span></li>"; }).join("");
+  document.getElementById("k7-key2").innerHTML = '<div class="table-wrap"><table><thead><tr><th>단계</th><th class="num">운동 에너지 T</th><th class="num">γ = 1 + T/0.938 GeV</th><th class="num">β = √(1 − 1/γ²)</th><th class="num">1 − β</th></tr></thead><tbody>' +
+    STAGES.slice(1).map(function (s) { return "<tr><td>" + s.name + '</td><td class="num">' + s.Ttxt + '</td><td class="num">' + (s.g < 100 ? s.g.toFixed(3) : s.g.toFixed(1)) + '</td><td class="num">' + s.b.toFixed(s.b > 0.9999 ? 10 : 4) + '</td><td class="num">' + (1 - s.b).toExponential(2) + "</td></tr>"; }).join("") +
+    "</tbody></table></div><p>보드의 에너지 트랙은 가속 사슬 각 단계의 출구 에너지를 운동 에너지로 보고 계산했습니다(t08 활동지와 같은 방식). 6.8 TeV에서는 전체 에너지로 계산해도 γ ≈ 7247로 거의 같습니다.</p>";
+
+  /* ---------- 차례 흐름도 ---------- */
+  (function flow() {
+    var s = '<svg xmlns="' + NS + '" width="180mm" height="36mm" viewBox="0 0 180 36" role="img" aria-label="차례 흐름도">';
+    s += '<defs><marker id="k7fa" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L6 3L0 6z" fill="#111"/></marker></defs>';
+    function box(x, y, w, h, t1, t2, dark) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="1.6" fill="' + (dark ? "#111" : "#fff") + '" stroke="#111" stroke-width="0.5"/><text x="' + (x + w / 2) + '" y="' + (y + (t2 ? h / 2 - 0.6 : h / 2 + 1.1)) + '" font-size="2.9" text-anchor="middle" font-weight="700"' + (dark ? ' fill="#fff"' : "") + ">" + t1 + "</text>" + (t2 ? '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 + 3.4) + '" font-size="2.4" text-anchor="middle"' + (dark ? ' fill="#fff"' : "") + ">" + t2 + "</text>" : ""); }
+    function ar(x1, y1, x2, y2, lab) { return '<path d="M' + x1 + " " + y1 + "L" + x2 + " " + y2 + '" stroke="#111" stroke-width="0.5" marker-end="url(#k7fa)"/>' + (lab ? '<text x="' + ((x1 + x2) / 2) + '" y="' + ((y1 + y2) / 2 - 1.2) + '" font-size="2.3" text-anchor="middle">' + lab + "</text>" : ""); }
+    s += box(0, 4, 28, 12, "주사위 굴리기", "") + ar(28, 10, 36, 10) + box(36, 4, 30, 12, "말 옮기기", "관문에서는 멈춤") + ar(66, 10, 74, 10) + box(74, 4, 30, 12, "칸 지시 따르기", "RF·사건·퀴즈…");
+    s += ar(104, 10, 114, 10, "관문") + box(114, 4, 26, 12, "관문 퀴즈", "왼쪽 사람이 읽음") + ar(140, 10, 148, 10, "정답") + box(148, 4, 32, 12, "다음 가속기로 주입", "+ 에너지 토큰", true);
+    s += ar(127, 16, 127, 23, "") + box(110, 23, 34, 11, "오답: 관문에 머묾", "다음 차례 새 퀴즈");
+    s += box(150, 23, 30, 11, "LHC 관문 다음", "충돌점 → 발견 퀴즈") + ar(164, 16, 164, 23, "");
+    s += '<text x="0" y="27" font-size="2.4">끝나면 왼쪽(시계 방향) 사람 차례.</text><text x="0" y="31" font-size="2.4">두 번 연속 오답 → 세 번째는 자동 주입.</text>';
+    document.getElementById("k7-flow").innerHTML = s + "</svg>";
+  })();
+
+  /* ---------- 말·주사위·토큰 ---------- */
+  (function parts() {
+    var W = 186, H = 236, s = '<svg xmlns="' + NS + '" width="' + W + 'mm" height="' + H + 'mm" viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="말, 주사위 전개도, 에너지 토큰">';
+    s += '<defs><pattern id="k7gl" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="3" fill="#fff"/><rect width="1.5" height="3" fill="#dfe4ef"/></pattern>';
+    s += '<pattern id="pA" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height="3" fill="#fff"/><circle cx="1.5" cy="1.5" r="0.55" fill="#111"/></pattern>';
+    s += '<pattern id="pB" width="2.4" height="2.4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2.4" height="2.4" fill="#fff"/><path d="M0 0V2.4" stroke="#111" stroke-width="0.6"/></pattern>';
+    s += '<pattern id="pC" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height="3" fill="#fff"/><path d="M0 0V3M0 0H3" stroke="#111" stroke-width="0.4"/></pattern>';
+    s += '<pattern id="pD" width="2" height="2" patternUnits="userSpaceOnUse"><rect width="2" height="2" fill="#444"/></pattern></defs>';
+    var CUT = 'fill="none" stroke="#111" stroke-width="0.45" stroke-dasharray="2 1.2"', FOLD = 'stroke="#6a3fb5" stroke-width="0.35" stroke-dasharray="1 0.8"';
+    s += '<text x="0" y="4" font-size="3.2" font-weight="700">말 4개 (양성자 묶음 A~D)</text><text x="0" y="8" font-size="2.3">가운데 접는 선에서 산 모양으로 접고, 양 끝 받침을 바깥으로 접어 겹쳐 붙인다.</text>';
+    function face(cx, cy, L, pat, flip) {
+      var g = '<g transform="translate(' + cx + " " + cy + ")" + (flip ? " rotate(180)" : "") + '">';
+      g += '<circle cx="0" cy="-3" r="8.5" fill="url(#' + pat + ')" stroke="#111" stroke-width="0.5"/><circle cx="0" cy="-3" r="5.2" fill="#fff" stroke="#111" stroke-width="0.4"/>';
+      g += '<text x="0" y="-1.4" font-size="4.6" text-anchor="middle" font-weight="700">' + L + '</text><text x="0" y="10" font-size="2.6" text-anchor="middle" font-weight="700">양성자 p⁺</text><text x="0" y="13.4" font-size="2" text-anchor="middle">묶음 ' + L + "</text></g>";
+      return g;
+    }
+    ["A", "B", "C", "D"].forEach(function (L, i) {
+      var x = 2 + i * 27, y = 12, w = 24;
+      s += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="14" fill="url(#k7gl)"/><rect x="' + x + '" y="' + (y + 78) + '" width="' + w + '" height="14" fill="url(#k7gl)"/>';
+      s += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="92" ' + CUT + "/>";
+      s += '<path d="M' + x + " " + (y + 14) + "h" + w + "M" + x + " " + (y + 46) + "h" + w + "M" + x + " " + (y + 78) + "h" + w + '" ' + FOLD + "/>";
+      s += face(x + w / 2, y + 30, L, "p" + L, true) + face(x + w / 2, y + 62, L, "p" + L, false);
+      s += '<text x="' + (x + w / 2) + '" y="' + (y + 8.4) + '" font-size="2.2" text-anchor="middle" font-weight="700">받침(풀칠)</text><text x="' + (x + w / 2) + '" y="' + (y + 87.4) + '" font-size="2.2" text-anchor="middle" font-weight="700">받침(풀칠)</text>';
+    });
+    // 주사위 전개도
+    var d = 19, ox = 122, oy = 16;
+    s += '<text x="114" y="4" font-size="3.2" font-weight="700">주사위 전개도</text><text x="114" y="8" font-size="2.3">마주 보는 면의 합 = 7</text>';
+    var faces = [[1, 1, 0], [2, 1, 1], [6, 1, 2], [5, 1, 3], [3, 0, 1], [4, 2, 1]];
+    var pipPos = { 1: [[0, 0]], 2: [[-1, -1], [1, 1]], 3: [[-1, -1], [0, 0], [1, 1]], 4: [[-1, -1], [1, -1], [-1, 1], [1, 1]], 5: [[-1, -1], [1, -1], [0, 0], [-1, 1], [1, 1]], 6: [[-1, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [1, 1]] };
+    function tab(x1, y1, x2, y2, nx, ny) { var t = 5, ix = (x2 - x1) * 0.18, iy = (y2 - y1) * 0.18; return '<path d="M' + x1 + " " + y1 + "L" + (x1 + ix + nx * t) + " " + (y1 + iy + ny * t) + "L" + (x2 - ix + nx * t) + " " + (y2 - iy + ny * t) + "L" + x2 + " " + y2 + '" fill="url(#k7gl)" stroke="#111" stroke-width="0.45" stroke-dasharray="2 1.2"/>'; }
+    var L0 = ox, T0 = oy;
+    function fx(c) { return L0 + c * d; } function fy(r) { return T0 + r * d; }
+    // 날개: L(3) 위·왼쪽·아래, R(4) 위·오른쪽·아래, 5 아래
+    s += tab(fx(0), fy(1), fx(1), fy(1), 0, -1) + tab(fx(0), fy(2), fx(0), fy(1), -1, 0) + tab(fx(1), fy(2), fx(0), fy(2), 0, 1);
+    s += tab(fx(2), fy(1), fx(3), fy(1), 0, -1) + tab(fx(3), fy(1), fx(3), fy(2), 1, 0) + tab(fx(3), fy(2), fx(2), fy(2), 0, 1);
+    s += tab(fx(2), fy(4), fx(1), fy(4), 0, 1);
+    faces.forEach(function (F) {
+      var x = fx(F[1]), y = fy(F[2]);
+      s += '<rect x="' + x + '" y="' + y + '" width="' + d + '" height="' + d + '" fill="#fff" stroke="#6a3fb5" stroke-width="0.35" stroke-dasharray="1 0.8"/>';
+      pipPos[F[0]].forEach(function (p) { s += '<circle cx="' + (x + d / 2 + p[0] * 5.2) + '" cy="' + (y + d / 2 + p[1] * 5.2) + '" r="' + (F[0] === 1 ? 2.4 : 1.6) + '" fill="#111"/>'; });
+    });
+    // 바깥 자르는 선 (면 둘레 중 날개가 없는 변)
+    var cutEdges = [[fx(1), fy(0), fx(2), fy(0)], [fx(1), fy(0), fx(1), fy(1)], [fx(2), fy(0), fx(2), fy(1)], [fx(1), fy(2), fx(1), fy(4)], [fx(2), fy(2), fx(2), fy(4)]];
+    cutEdges.forEach(function (e) { s += '<path d="M' + e[0] + " " + e[1] + "L" + e[2] + " " + e[3] + '" ' + CUT + "/>"; });
+    s += '<text x="114" y="104" font-size="2.2">굵은 점선은 자르고, 보라 점선은 접고, 빗금 날개에 풀칠.</text>';
+    // 에너지 토큰
+    var ty0 = 118;
+    s += '<text x="0" y="' + ty0 + '" font-size="3.2" font-weight="700">에너지 토큰 20개</text><text x="0" y="' + (ty0 + 4) + '" font-size="2.3">관문 퀴즈를 맞혀 다음 가속기로 주입될 때, 방금 지난 가속기의 토큰을 받는다. 무늬는 말과 같다(A~D).</text>';
+    var st5 = STAGES.slice(1);
+    ["A", "B", "C", "D"].forEach(function (L, r) {
+      st5.forEach(function (st, c) {
+        var cx = 14 + c * 25, cy = ty0 + 18 + r * 25;
+        s += '<circle cx="' + cx + '" cy="' + cy + '" r="11.2" ' + CUT + '/><circle cx="' + cx + '" cy="' + cy + '" r="10.2" fill="url(#p' + L + ')" stroke="#111" stroke-width="0.3"/><circle cx="' + cx + '" cy="' + cy + '" r="8" fill="#fff" stroke="#111" stroke-width="0.3"/>';
+        s += '<text x="' + cx + '" y="' + (cy - 3) + '" font-size="2.3" text-anchor="middle" font-weight="700">' + st.name + '</text><text x="' + cx + '" y="' + (cy + 1.4) + '" font-size="3.1" text-anchor="middle" font-weight="700">' + st.Ttxt + '</text><text x="' + cx + '" y="' + (cy + 4.9) + '" font-size="2.1" text-anchor="middle">γ ' + st.gtxt.replace("약 ", "≈") + "</text>";
+      });
+    });
+    // 협동 모드 표시 토큰과 메모
+    var mx = 132, my = ty0 + 8;
+    s += '<text x="' + mx + '" y="' + (my + 2) + '" font-size="3" font-weight="700">협동 모드 표시 토큰</text>';
+    s += '<rect x="' + mx + '" y="' + (my + 5) + '" width="12" height="16" rx="1" ' + CUT + '/><rect x="' + (mx + 0.8) + '" y="' + (my + 5.8) + '" width="10.4" height="14.4" rx="0.8" fill="#111"/><text x="' + (mx + 6) + '" y="' + (my + 12.5) + '" font-size="2.4" text-anchor="middle" font-weight="700" fill="#fff">빔</text><text x="' + (mx + 6) + '" y="' + (my + 16) + '" font-size="2.4" text-anchor="middle" font-weight="700" fill="#fff">강도</text>';
+    s += '<rect x="' + (mx + 16) + '" y="' + (my + 5) + '" width="34" height="16" rx="1" ' + CUT + '/><text x="' + (mx + 33) + '" y="' + (my + 11.2) + '" font-size="2.4" text-anchor="middle" font-weight="700">보관 카드 자리</text><text x="' + (mx + 33) + '" y="' + (my + 15.4) + '" font-size="2.1" text-anchor="middle">(킥커 자석 카드 등)</text>';
+    s += '<rect x="' + mx + '" y="' + (my + 28) + '" width="52" height="68" rx="1.5" fill="#fff" stroke="#111" stroke-width="0.4"/>';
+    var tips = ["토큰 모으기 기록", "", "A ____________", "", "B ____________", "", "C ____________", "", "D ____________", "", "발견한 입자:", "______________"];
+    tips.forEach(function (t, i) { if (t) s += '<text x="' + (mx + 3) + '" y="' + (my + 34 + i * 4.9) + '" font-size="' + (i ? 2.6 : 2.8) + '"' + (i ? "" : ' font-weight="700"') + ">" + t + "</text>"; });
+    document.getElementById("k7-parts").innerHTML = s + "</svg>";
+  })();
+})();
+</script>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>
