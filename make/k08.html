@@ -46,33 +46,34 @@
 .sheet .h-tab tr.sumrow td { background: #fff; border: .9pt solid var(--paper-ink); }
 /* 포스터 */
 .sheet--poster { padding: 0; }
+.sheet--poster .poster-wrap { width: 297mm; height: 210mm; }
 .sheet--poster svg.poster { display: block; max-width: none; }
-.poster .pp-title { font-family: var(--font-display); font-size: 6.2px; font-weight: 700; }
-.poster .pp-sub { font-size: 3.4px; fill: var(--paper-ink-2); }
-.poster .pp-kit { font-family: var(--font-mono); font-size: 3.2px; font-weight: 600; }
-.poster .pp-band { fill: var(--glue); }
-.poster .pp-grid { stroke: var(--paper-line); stroke-width: .2; }
-.poster .pp-grid5 { stroke: var(--paper-ink-2); stroke-width: .3; stroke-dasharray: 1 1; }
-.poster .pp-vline { stroke: var(--paper-line); stroke-width: .25; }
-.poster .pp-dot { fill: none; stroke: var(--paper-line); stroke-width: .3; }
-.poster .pp-axis { stroke: var(--paper-ink); stroke-width: .5; }
-.poster .pp-major { font-family: var(--font-mono); font-size: 3.8px; font-weight: 600; }
-.poster .pp-minor { font-family: var(--font-mono); font-size: 2.6px; fill: var(--paper-ink-2); }
-.poster .pp-axt { font-size: 3.8px; font-weight: 700; }
-.poster .pp-ynum { font-family: var(--font-mono); font-size: 2.8px; fill: var(--paper-ink-2); }
-.poster .pp-ynum5 { font-family: var(--font-mono); font-size: 3.2px; font-weight: 600; }
-.poster .pp-hatch { stroke: var(--paper-line); stroke-width: .6; }
-.poster .pp-glue { stroke: var(--paper-line); stroke-width: .3; }
-.poster .pp-gluet { font-size: 3.2px; font-weight: 700; fill: var(--paper-ink-2); }
-.poster .pp-align { stroke: var(--paper-ink); stroke-width: .5; }
-.poster .pp-tri { fill: var(--paper-ink); }
-.poster .pp-cut { stroke: var(--cut); stroke-width: .5; stroke-dasharray: 2.4 1.4; }
-.poster .pp-cutt { font-size: 3.2px; font-weight: 700; }
-.poster .pp-footline { stroke: var(--paper-line); stroke-width: .25; }
-.poster .pp-foot { font-size: 2.8px; fill: var(--paper-ink-2); }
-.poster .pp-box { fill: none; stroke: var(--paper-ink); stroke-width: .4; }
-.poster .pp-boxt { font-size: 3.6px; font-weight: 700; }
-.poster .pp-boxs { font-size: 2.8px; fill: var(--paper-ink-2); }
+.sheet .poster .pp-title { font-family: var(--font-display); font-size: 6.2px; font-weight: 700; }
+.sheet .poster .pp-sub { font-size: 3.4px; fill: var(--paper-ink-2); }
+.sheet .poster .pp-kit { font-family: var(--font-mono); font-size: 3.2px; font-weight: 600; }
+.sheet .poster .pp-band { fill: var(--glue); }
+.sheet .poster .pp-grid { stroke: var(--paper-line); stroke-width: .2; }
+.sheet .poster .pp-grid5 { stroke: var(--paper-ink-2); stroke-width: .3; stroke-dasharray: 1 1; }
+.sheet .poster .pp-vline { stroke: var(--paper-line); stroke-width: .25; }
+.sheet .poster .pp-dot { fill: none; stroke: var(--paper-line); stroke-width: .3; }
+.sheet .poster .pp-axis { stroke: var(--paper-ink); stroke-width: .5; }
+.sheet .poster .pp-major { font-family: var(--font-mono); font-size: 3.8px; font-weight: 600; }
+.sheet .poster .pp-minor { font-family: var(--font-mono); font-size: 2.6px; fill: var(--paper-ink-2); }
+.sheet .poster .pp-axt { font-size: 3.8px; font-weight: 700; }
+.sheet .poster .pp-ynum { font-family: var(--font-mono); font-size: 2.8px; fill: var(--paper-ink-2); }
+.sheet .poster .pp-ynum5 { font-family: var(--font-mono); font-size: 3.2px; font-weight: 600; }
+.sheet .poster .pp-hatch { stroke: var(--paper-line); stroke-width: .6; }
+.sheet .poster .pp-glue { stroke: var(--paper-line); stroke-width: .3; }
+.sheet .poster .pp-gluet { font-size: 3.2px; font-weight: 700; fill: var(--paper-ink-2); }
+.sheet .poster .pp-align { stroke: var(--paper-ink); stroke-width: .5; }
+.sheet .poster .pp-tri { fill: var(--paper-ink); }
+.sheet .poster .pp-cut { stroke: var(--cut); stroke-width: .5; stroke-dasharray: 2.4 1.4; }
+.sheet .poster .pp-cutt { font-size: 3.2px; font-weight: 700; }
+.sheet .poster .pp-footline { stroke: var(--paper-line); stroke-width: .25; }
+.sheet .poster .pp-foot { font-size: 2.8px; fill: var(--paper-ink-2); }
+.sheet .poster .pp-box { fill: none; stroke: var(--paper-ink); stroke-width: .4; }
+.sheet .poster .pp-boxt { font-size: 3.6px; font-weight: 700; }
+.sheet .poster .pp-boxs { font-size: 2.8px; fill: var(--paper-ink-2); }
 /* 계산 안내·정리 시트 */
 .sheet .formula-box { border: 1.2pt solid var(--paper-ink); border-radius: 2mm; padding: 3mm 4mm; font-family: var(--font-mono); font-size: 11.5pt; text-align: center; }
 .sheet .formula-box small { display: block; font-family: var(--font-body); font-size: 8.5pt; color: var(--paper-ink-2); margin-top: 1mm; }
@@ -879,7 +880,7 @@
     </article>
 
     <!-- 10~13. 포스터 -->
-    <article class="sheet sheet--landscape sheet--poster"><svg class="poster" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="교실 히스토그램 ① 저질량 영역 2–12 GeV (P1, 왼쪽)">
+    <article class="sheet sheet--landscape sheet--poster"><div class="poster-wrap"><svg class="poster" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="교실 히스토그램 ① 저질량 영역 2–12 GeV (P1, 왼쪽)">
 <defs><pattern id="hatch-10" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="3" class="pp-hatch"/></pattern></defs>
 <text x="25" y="17" class="pp-title">교실 히스토그램 ① 저질량 영역 2–12 GeV (P1, 왼쪽)</text>
 <text x="25" y="24" class="pp-sub">구간 0.2 GeV · 카드에서 구한 M이 들어가는 칸에 점을 찍거나 스티커를 붙이세요 · 예: M = 3.07 → 3.0–3.2 칸</text>
@@ -1389,7 +1390,6 @@
 <line x1="255.0" y1="176.0" x2="255.0" y2="178.2" class="pp-axis"/>
 <text x="255.0" y="183.4" text-anchor="middle" class="pp-minor">6.6</text>
 <line x1="265.0" y1="176.0" x2="265.0" y2="178.2" class="pp-axis"/>
-<text x="265.0" y="183.4" text-anchor="middle" class="pp-minor">6.8</text>
 <line x1="275.0" y1="176.0" x2="275.0" y2="180.0" class="pp-axis"/>
 <text x="274.4" y="185.0" text-anchor="end" class="pp-major">7.0</text>
 <text x="150.0" y="194" text-anchor="middle" class="pp-axt">두 뮤온의 불변질량 M (GeV) — 칸 하나 = 0.2 GeV</text>
@@ -1419,8 +1419,8 @@
 <line x1="10" y1="200" x2="287" y2="200" class="pp-footline"/>
 <text x="25" y="205" class="pp-foot">키트 K08 교실 히스토그램 포스터 · 데이터: CMS Open Data (CC0), 2011년 이중뮤온</text>
 <text x="287" y="205" text-anchor="end" class="pp-foot">점 하나 = 사건 하나 · 아래 칸부터 채우기 · 경계값은 오른쪽(큰 값) 칸</text>
-<text transform="translate(11,104.0) rotate(-90)" text-anchor="middle" class="pp-axt">사건 수 (점의 개수)</text></svg></article>
-    <article class="sheet sheet--landscape sheet--poster"><svg class="poster" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="교실 히스토그램 ① 저질량 영역 2–12 GeV (P2, 오른쪽)">
+<text transform="translate(11,104.0) rotate(-90)" text-anchor="middle" class="pp-axt">사건 수 (점의 개수)</text></svg></div></article>
+    <article class="sheet sheet--landscape sheet--poster"><div class="poster-wrap"><svg class="poster" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="교실 히스토그램 ① 저질량 영역 2–12 GeV (P2, 오른쪽)">
 <defs><pattern id="hatch-11" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="3" class="pp-hatch"/></pattern></defs>
 <text x="24" y="17" class="pp-title">교실 히스토그램 ① 저질량 영역 2–12 GeV (P2, 오른쪽)</text>
 <text x="24" y="24" class="pp-sub">7–12 GeV · P1 오른쪽에 이어 붙입니다</text>
@@ -1953,8 +1953,8 @@
 <line x1="10" y1="200" x2="287" y2="200" class="pp-footline"/>
 <text x="24" y="205" class="pp-foot">키트 K08 교실 히스토그램 포스터 · 데이터: CMS Open Data (CC0), 2011년 이중뮤온</text>
 <text x="287" y="205" text-anchor="end" class="pp-foot">점 하나 = 사건 하나 · 아래 칸부터 채우기 · 경계값은 오른쪽(큰 값) 칸</text>
-</svg></article>
-    <article class="sheet sheet--landscape sheet--poster"><svg class="poster" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="교실 히스토그램 ② 고질량 영역 60–120 GeV (P3, 왼쪽)">
+</svg></div></article>
+    <article class="sheet sheet--landscape sheet--poster"><div class="poster-wrap"><svg class="poster" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="교실 히스토그램 ② 고질량 영역 60–120 GeV (P3, 왼쪽)">
 <defs><pattern id="hatch-12" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="3" class="pp-hatch"/></pattern></defs>
 <text x="50" y="17" class="pp-title">교실 히스토그램 ② 고질량 영역 60–120 GeV (P3, 왼쪽)</text>
 <text x="50" y="24" class="pp-sub">구간 2 GeV · 예: M = 85.40 → 84–86 칸</text>
@@ -2300,8 +2300,8 @@
 <text x="50" y="205" class="pp-foot">키트 K08 교실 히스토그램 포스터 · 데이터: CMS Open Data (CC0), 2011년 이중뮤온</text>
 <text x="287" y="205" text-anchor="end" class="pp-foot">점 하나 = 사건 하나 · 아래 칸부터 채우기 · 경계값은 오른쪽(큰 값) 칸</text>
 <text transform="translate(18,104.0) rotate(-90)" text-anchor="middle" class="pp-axt">사건 수 (점의 개수)</text>
-</svg></article>
-    <article class="sheet sheet--landscape sheet--poster"><svg class="poster" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="교실 히스토그램 ② 고질량 영역 60–120 GeV (P4, 오른쪽)">
+</svg></div></article>
+    <article class="sheet sheet--landscape sheet--poster"><div class="poster-wrap"><svg class="poster" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="교실 히스토그램 ② 고질량 영역 60–120 GeV (P4, 오른쪽)">
 <defs><pattern id="hatch-13" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="3" class="pp-hatch"/></pattern></defs>
 <text x="24" y="17" class="pp-title">교실 히스토그램 ② 고질량 영역 60–120 GeV (P4, 오른쪽)</text>
 <text x="24" y="24" class="pp-sub">90–120 GeV · P3 오른쪽에 이어 붙입니다</text>
@@ -2656,7 +2656,7 @@
 <line x1="258.5" y1="146.4" x2="284.5" y2="146.4" class="pp-grid"/>
 <line x1="258.5" y1="156.0" x2="284.5" y2="156.0" class="pp-grid"/>
 <line x1="258.5" y1="165.6" x2="284.5" y2="165.6" class="pp-grid"/>
-</svg></article>
+</svg></div></article>
 
     <!-- 14. 정리 활동지 -->
     <article class="sheet">
