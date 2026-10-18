@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>출력·만들기 키트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .kits { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
+  .kit { display: grid; gap: .45rem; align-content: start; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.1rem; min-width: 0; }
+  .kit__top { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; }
+  .kit__no { font-family: var(--font-mono); font-weight: 600; color: var(--lv-up); font-size: 1.15rem; }
+  .kit h3 { font-size: 1.05rem; }
+  .kit h3 a { color: var(--ink); text-decoration: none; }
+  .kit h3 a:hover { color: var(--accent); }
+  .kit p { font-size: var(--step--1); color: var(--ink-2); }
+  .kit__meta { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .kit__links { display: flex; gap: .9rem; font-size: var(--step--1); font-weight: 700; margin-top: .2rem; }
+  .kit__links a { text-decoration: none; }
+  .kit__links a:hover { text-decoration: underline; }
+  .make-steps { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+</style>
+</head>
+<body data-page="make" data-root="../">
+<main class="page">
+  <header class="doc-head">
+    <div class="doc-head__meta"><span class="badge badge--up">출력·만들기 키트</span><span class="badge badge--time">10종</span></div>
+    <h1>출력해서 만드는 입자물리</h1>
+    <p class="lead">A4로 출력해 자르고, 접고, 붙여서 직접 만들고 활동하는 자료입니다. 카드 게임과 보드게임, 종이 검출기와 자석 모형, 실제 CMS 사건으로 만드는 교실 히스토그램, 그리고 모든 주제를 아우르는 방탈출까지 담았습니다.</p>
+  </header>
+
+  <section class="section">
+    <div class="section__head"><span class="section__tag">인쇄</span><h2>출력 전에 확인하세요</h2></div>
+    <div class="make-steps">
+      <div class="box"><h3>배율은 실제 크기</h3><p>인쇄 창에서 <b>배율 100%(실제 크기)</b>, 용지 <b>A4</b>, 여백 <b>없음</b>을 고릅니다. ‘페이지에 맞춤’을 고르면 자와 전개도의 치수가 틀어집니다.</p></div>
+      <div class="box"><h3>PDF가 가장 확실합니다</h3><p>각 키트의 [인쇄용 PDF]를 내려받아 인쇄하면 브라우저마다 다른 인쇄 설정 걱정이 없습니다. 학교 복사실에 맡길 때도 PDF를 보내세요.</p></div>
+      <div class="box"><h3>종이 고르기</h3><p>카드와 전개도는 <b>180~220 g/m² 두꺼운 종이</b>가 좋습니다. 곡률 자는 OHP 필름(레이저 프린터용)에, 나머지는 일반 복사지로 충분합니다.</p></div>
+      <div class="box"><h3>흑백으로도 됩니다</h3><p>모든 시트는 선 모양으로 구분해 흑백 인쇄에서도 읽힙니다. 자르는 선은 굵은 점선, 접는 선은 가는 점선, 풀칠하는 곳은 빗금입니다.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><span class="section__tag">키트</span><h2>10가지 만들기 키트</h2></div>
+    <div class="kits" id="kits"></div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><span class="section__tag">준비물</span><h2>한 학급(32명, 8모둠) 준비물 모음</h2></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>준비물</th><th class="num">수량</th><th>쓰는 키트</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>A4 복사지</td><td class="num">약 400장</td><td>전체</td><td>키트별 장수 × 인원</td></tr>
+        <tr><td>A4 두꺼운 종이(180~220 g/m²)</td><td class="num">약 120장</td><td>K01, K04, K06, K07, K10</td><td>카드·회전판·전개도·모형</td></tr>
+        <tr><td>OHP 필름(레이저용)</td><td class="num">32장</td><td>K05</td><td>없으면 트레이싱지</td></tr>
+        <tr><td>가위, 풀(딱풀), 자</td><td class="num">모둠당 4세트</td><td>전체</td><td>커터칼은 교사 지도 아래</td></tr>
+        <tr><td>할핀(양갈래 핀)</td><td class="num">32개</td><td>K04</td><td>문구점 ‘할핀’</td></tr>
+        <tr><td>쌀 또는 작은 종이 조각</td><td class="num">모둠당 한 줌</td><td>K03</td><td>주사위 좌표법이면 필요 없음</td></tr>
+        <tr><td>동전·바둑돌 등 말</td><td class="num">모둠당 100개</td><td>K06, K07</td><td>K06 기록판 토큰</td></tr>
+        <tr><td>계산기(공학용 권장)</td><td class="num">1인 1대</td><td>K05, K08, K09</td><td>스마트폰 계산기 가능</td></tr>
+        <tr><td>원형 스티커(8 mm)</td><td class="num">약 100개</td><td>K08</td><td>교실 히스토그램 포스터</td></tr>
+        <tr><td>색연필</td><td class="num">모둠당 1세트</td><td>K04, K10</td><td>층별 색칠</td></tr>
+        <tr><td>숫자 자물쇠(선택)</td><td class="num">모둠당 1~2개</td><td>K09</td><td>없으면 종이 정답판으로 진행</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</main>
+<script src="../assets/js/common.js"></script>
+<script>
+(function () {
+  "use strict";
+  var C = window.CERNClass;
+  var INFO = {
+    k01: { time: "만들기 20분 · 게임 30분", what: "기본 입자 23장과 하드론 주문서 12장으로 쿼크를 모아 양성자·중성자·파이온을 만드는 카드 게임. 전하와 바리온수 보존을 놀이로 익힙니다." },
+    k02: { time: "15분", what: "A4 한 장을 접고 한 번 잘라 8쪽짜리 책을 만듭니다. CERN의 역사, 가속기, 실험, 발견 연표를 담고, 빈 틀로 나만의 미니북도 만듭니다." },
+    k03: { time: "40분", what: "숨은 원들이 그려진 표적판에 쌀알을 떨어뜨리거나 주사위로 좌표를 뽑아, 맞힌 비율만으로 원의 크기를 추정합니다. 러더퍼드가 핵의 크기를 잰 방법입니다." },
+    k04: { time: "만들기 30분 · 활동 20분", what: "실제 비율의 1:100 CMS 단면 포스터를 색칠하고, 할핀으로 돌리는 회전판을 만들어 입자마다 어느 층에 신호가 남는지 확인합니다." },
+    k05: { time: "50분", what: "OHP 필름에 출력한 곡률 자로 거품상자 사진 속 궤적의 반지름을 재고, p = 0.3Br로 운동량을 구합니다. 전하, 붕괴, 쌍생성도 찾아냅니다." },
+    k06: { time: "만들기 20분 · 실험 30분", what: "정이십면체 주사위를 접어 만들고 ‘1이 나오면 붕괴’ 규칙으로 뮤온 100개의 붕괴를 재현합니다. 반로그 그래프로 반감기를 구합니다." },
+    k07: { time: "만들기 20분 · 게임 40분", what: "수소 병에서 출발한 양성자가 Linac4, PS, SPS를 거쳐 LHC 충돌점까지 가는 보드게임. 단계마다 물리 퀴즈를 풀어야 다음 가속기로 주입됩니다." },
+    k08: { time: "50분", what: "2011년 CMS가 실제로 기록한 이중뮤온 사건 72개를 카드로 나눠 계산기로 불변질량을 구하고, 교실 포스터에 점을 찍어 J/ψ, Υ, Z 피크를 함께 만듭니다." },
+    k09: { time: "45~50분", what: "CMS 지하 동굴에 갇힌 하계 학생 연구원이 되어 퍼즐 8개를 풀고 탈출합니다. 쿼크 전하부터 불변질량까지 20시간 과정 전체를 복습합니다." },
+    k10: { time: "만들기 30분 · 활동 20분", what: "LHC 쌍극자석을 1:10으로 접어 만들고, 두 빔관의 자기장이 왜 서로 반대 방향인지 로렌츠 힘으로 설명합니다." }
+  };
+  document.getElementById("kits").innerHTML = C.KITS.map(function (k) {
+    var t = k.topics.length > 5 ? "주제 1~10 종합" : "주제 " + k.topics.join(", ");
+    return '<article class="kit"><div class="kit__top"><span class="kit__no">' + k.id.toUpperCase() + '</span><span class="badge badge--time">' + INFO[k.id].time + '</span></div>' +
+      '<h3><a href="' + k.id + '.html">' + k.title + '</a></h3><p>' + INFO[k.id].what + '</p>' +
+      '<div class="kit__meta"><span class="badge badge--up">연계: ' + t + '</span></div>' +
+      '<div class="kit__links"><a href="' + k.id + '.html">키트 열기</a><a href="pdf/' + k.id + '.pdf">인쇄용 PDF</a></div></article>';
+  }).join("");
+})();
+</script>
+</body>
+</html>

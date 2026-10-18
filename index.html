@@ -72,12 +72,13 @@
       <h1>학생이 <em>CERN 과학자</em>처럼 실험하는 교실</h1>
       <p class="lead">원자 속을 들여다본 러더퍼드에서 시작해, 가속기와 검출기를 직접 다뤄 보고, 마지막에는 CMS 실험의 실제 충돌 데이터로 Z 보손과 힉스 보손의 흔적을 찾습니다. 주제마다 학교에서 할 수 있는 실물 실험과 3D 모의실험이 짝을 이룹니다.</p>
       <div class="hero__facts">
-        <span><b>10</b>개 주제</span><span><b>20</b>시간(차시 조정 가능)</span><span><b>10</b>개 3D 모의실험</span><span><b>15만</b>건 실제 CMS 사건</span>
+        <span><b>10</b>개 주제</span><span><b>20</b>시간(차시 조정 가능)</span><span><b>10</b>개 3D 모의실험</span><span><b>10</b>종 출력·만들기 키트</span><span><b>15만</b>건 실제 CMS 사건</span>
       </div>
       <div class="doc-head__actions">
         <a class="btn btn--primary" href="students/index.html">학생용 활동지</a>
         <a class="btn" href="teachers/index.html">교사용 지도서</a>
         <a class="btn btn--sim" href="sims/index.html">3D 모의실험</a>
+        <a class="btn" href="make/index.html">만들기 키트</a>
       </div>
     </div>
     <figure class="chain" aria-labelledby="chain-cap">
@@ -109,6 +110,13 @@
     <div class="section__head"><span class="section__tag">차시 지도</span><h2>10개 주제, 세 단계</h2></div>
     <p class="prose muted">각 주제는 50분 2차시가 기본입니다. 주제마다 학생용 활동지, 교사용 지도서, 3D 모의실험이 한 묶음입니다.</p>
     <div id="topic-map"></div>
+  </section>
+
+  <section class="section" id="make">
+    <div class="section__head"><span class="section__tag">만들기</span><h2>출력해서 만드는 활동 10종</h2></div>
+    <p class="prose">화면 밖에서도 실험합니다. A4로 출력해 자르고 접어 만드는 카드 게임, 보드게임, 종이 검출기, 자석 모형, 실제 CMS 사건 카드, 방탈출 키트가 주제와 짝을 이룹니다. 키트마다 인쇄용 PDF와 교사용 정답이 있습니다.</p>
+    <div class="topic-list" id="kit-list"></div>
+    <p><a class="btn" href="make/index.html">만들기 키트 전체 보기</a></p>
   </section>
 
   <section class="section" id="planner">
@@ -189,6 +197,13 @@
     html += "</div></div>";
   });
   map.innerHTML = html;
+
+  /* 만들기 키트 */
+  document.getElementById("kit-list").innerHTML = window.CERNClass.KITS.map(function (k) {
+    var t = k.topics.length > 5 ? "주제 1~10 종합" : "연계 주제 " + k.topics.join(", ");
+    return '<article class="topic"><span class="topic__n" style="color:var(--lv-up);font-size:1.1rem">' + k.id.toUpperCase() + '</span><h4>' + k.title + '</h4><p>' + t + '</p>' +
+      '<div class="topic__links"><a href="make/' + k.id + '.html">키트 열기</a><a href="make/pdf/' + k.id + '.pdf">인쇄용 PDF</a></div></article>';
+  }).join("");
 
   /* 가속 사슬 그림 위 정거장 */
   var pos = { 1: [40, 300], 2: [80, 300], 3: [120, 300], 4: [160, 300], 5: [200, 300], 6: [215, 214], 7: [285, 286], 8: [150, 120], 9: [320, 49], 10: [320, 191] };

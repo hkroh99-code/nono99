@@ -309,7 +309,11 @@ figcaption { font-size: var(--step--1); color: var(--ink-3); }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+@page { size: A4; margin: 14mm 13mm 16mm; }
 @media print {
+  h2, h3, h4, .section__head { break-after: avoid; page-break-after: avoid; }
+  .answer-field, figure, .formula { break-inside: avoid; }
+  .page { padding: 0 !important; }
   .topbar, .theme-btn, .doc-head__actions, .pager, .footer, .no-print { display: none !important; }
   body { background: #fff; color: #000; }
   .box, .table-wrap, details { break-inside: avoid; }

@@ -16,6 +16,19 @@
     { n: 9, level: "int", title: "사건 분석가 되기: W·Z 보손 찾기", short: "사건 분석", hours: 2 },
     { n: 10, level: "int", title: "실제 CERN 데이터로 발견하기", short: "실제 데이터 분석", hours: 2 }
   ];
+  /* 출력·만들기 키트: 연계 주제 번호 */
+  var KITS = [
+    { id: "k01", title: "표준모형 입자 카드와 '하드론 공방' 카드 게임", topics: [1, 7] },
+    { id: "k02", title: "한 장으로 접는 미니북 'CERN 이야기'", topics: [1] },
+    { id: "k03", title: "몬테카를로 숨은 표적판", topics: [2] },
+    { id: "k04", title: "종이 CMS: 1:100 단면 포스터와 입자 식별 회전판", topics: [5] },
+    { id: "k05", title: "곡률 측정 투명 자와 거품상자 탐정 카드", topics: [4, 5] },
+    { id: "k06", title: "정이십면체 붕괴 주사위와 반감기 기록판", topics: [6] },
+    { id: "k07", title: "보드게임 '양성자의 여행: LHC까지'", topics: [3, 4, 8] },
+    { id: "k08", title: "실제 CMS 사건 계산 카드와 교실 히스토그램 포스터", topics: [7, 10] },
+    { id: "k09", title: "입자물리 방탈출 'CERN 지하 100 m'", topics: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
+    { id: "k10", title: "LHC 쌍극자석 1:10 페이퍼크래프트", topics: [4, 8] }
+  ];
   var LEVELS = {
     basic: { name: "기본과정", cls: "badge--basic" },
     adv: { name: "심화과정", cls: "badge--adv" },
@@ -26,7 +39,7 @@
 
   var body = document.body;
   var root = body.getAttribute("data-root") || "";
-  var kind = body.getAttribute("data-page") || "";          // home | student | teacher | sim | upgrade | data | guide
+  var kind = body.getAttribute("data-page") || "";          // home | student | teacher | sim | make | upgrade | data | guide
   var topicN = parseInt(body.getAttribute("data-topic") || "0", 10);
 
   /* ---------- 테마 ---------- */
@@ -62,6 +75,7 @@
       link("students/index.html", "학생용", kind === "student") +
       link("teachers/index.html", "교사용", kind === "teacher") +
       link("sims/index.html", "3D 모의실험", false) +
+      link("make/index.html", "만들기 키트", kind === "make") +
       link("upgrade/index.html", "업그레이드", kind === "upgrade") +
       link("data/index.html", "실제 데이터", kind === "data") +
       "</nav>" +
@@ -105,9 +119,21 @@
     pagerEl.innerHTML = html;
   }
 
+  /* ---------- 연계 만들기 키트 안내 (주제 페이지) ---------- */
+  if (pagerEl && topicN && (kind === "student" || kind === "teacher")) {
+    var kits = KITS.filter(function (k) { return k.topics.indexOf(topicN) >= 0; });
+    if (kits.length) {
+      var kb = document.createElement("section");
+      kb.className = "section no-print";
+      kb.innerHTML = '<div class="box box--up"><h3>출력해서 만드는 활동</h3><p>이 주제와 연계된 만들기 키트입니다. A4로 출력해 자르고 접어서 활동합니다.</p><ul>' +
+        kits.map(function (k) { return '<li><a href="' + root + "make/" + k.id + '.html">' + k.id.toUpperCase() + " " + k.title + "</a></li>"; }).join("") + "</ul></div>";
+      pagerEl.parentNode.insertBefore(kb, pagerEl);
+    }
+  }
+
   /* ---------- 학습지 자동 저장 ----------
      .worksheet 안의 입력칸(id 필수)을 이 브라우저에만 저장합니다. */
-  var SAVE_PREFIX = "cern-class:" + location.pathname.replace(/^.*\/(students|teachers|upgrade|sims)\//, "$1/") + ":";
+  var SAVE_PREFIX = "cern-class:" + location.pathname.replace(/^.*\/(students|teachers|upgrade|sims|make)\//, "$1/") + ":";
   function fields() { return Array.prototype.slice.call(document.querySelectorAll(".worksheet input[id], .worksheet textarea[id], .worksheet select[id]")); }
   fields().forEach(function (el) {
     try {
@@ -185,5 +211,5 @@
     });
   });
 
-  window.CERNClass = { TOPICS: TOPICS, LEVELS: LEVELS, pad: pad, root: root };
+  window.CERNClass = { TOPICS: TOPICS, KITS: KITS, LEVELS: LEVELS, pad: pad, root: root };
 })();
