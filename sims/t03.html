@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>선형가속기 위상 맞추기 모의실험</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/sim.css">
+<style>
+  /* 이 모의실험에서만 쓰는 작은 보조 스타일 (sim.css 색 변수 사용) */
+  .hud .row { display: flex; gap: .35rem .8rem; flex-wrap: wrap; }
+  .hud .ok { color: var(--s-ok); font-weight: 700; }
+  .hud .bad { color: var(--s-bad); font-weight: 700; }
+  .hud .warn { color: var(--s-warn); font-weight: 700; }
+  .hud .sw { display: inline-block; width: .7rem; height: .7rem; border-radius: 2px; vertical-align: -1px; margin-right: .25rem; }
+  .check-row { display: flex; gap: .4rem; align-items: end; flex-wrap: wrap; }
+  .check-row .ctl { flex: 1 1 8rem; }
+  .info { font-size: .85rem; color: var(--s-ink-2); background: var(--s-panel-2); border-radius: 7px; padding: .5rem .65rem; }
+  .info b { color: var(--s-ink); font-family: var(--font-mono); font-weight: 600; }
+  @media (max-width: 560px) {
+    .hud { font-size: .74rem; padding: .3rem .5rem; }
+    .hud.opt { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="sim">
+  <header class="sim-head">
+    <span class="tag">주제 3 · 3D</span>
+    <h1>선형가속기 위상 맞추기</h1>
+    <nav aria-label="관련 자료">
+      <a href="../students/t03.html">학생용 활동지</a>
+      <a href="../teachers/t03.html">교사용 지도서</a>
+      <a href="index.html">모의실험 목록</a>
+    </nav>
+  </header>
+  <div class="sim-body">
+    <div class="stage" id="stage">
+      <div class="stage-overlay" id="overlay">
+        <div class="hud" id="hud-beam"></div>
+        <div class="hud" id="hud-rf"></div>
+        <div class="hud opt" id="hud-scale"></div>
+      </div>
+      <div class="stage-hint">드래그: 회전 · 휠/두 손가락: 확대 · 오른쪽 드래그: 이동</div>
+    </div>
+    <aside class="panel" id="panel" aria-label="조작과 기록"></aside>
+  </div>
+</div>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/vendor/three/OrbitControls.js"></script>
+<script src="../assets/js/sim-kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var THREE = window.THREE, K = window.SimKit, ui = K.ui, fmt = K.fmt;
+  var CL = K.C.c;                         // 빛의 속력 (m/s)
+  var sim = K.create({ stage: document.getElementById("stage"), cameraPos: [0, 5.2, 12.5], target: [0, 0.6, 0] });
+  var panel = document.getElementById("panel");
+
+  /* ---------------- 상수와 상태 ---------------- */
+  var NT = 12;                 // 드리프트 튜브 개수
+  var NG = NT + 1;             // 간극 개수 (입구 간극 0 ~ 출구 간극 12)
+  var Y0 = 0.9;                // 빔축 높이(화면 단위)
+  var TUBE_R = 0.32;           // 튜브 반지름(화면 단위, 축척과 무관하게 과장)
+  var PERIOD_REAL = 0.9;       // 재생 속도 1배일 때 RF 한 주기를 화면에서 0.9초로 보여 줌
+  var PARTS = {
+    proton: { name: "양성자", m: K.C.mp_MeV, q: 1, T0: 3.0, color: K.COLORS.proton, src: "이온원+RFQ (3 MeV)" },
+    electron: { name: "전자", m: K.C.me_MeV, q: -1, T0: 0.05, color: K.COLORS.electron, src: "전자총 (50 keV)" }
+  };
+  var state = { part: "proton", f: 200, V: 1.0, phi: 0 };
+  var layout = null;           // 튜브 배치
+  var layoutBuilt = false;
+  var run = null;              // 현재(또는 마지막) 발사
+  var lastDone = null;         // 마지막으로 끝난 발사
+  var prevDone = null;         // 그 이전 발사(그래프 비교용)
+  var clock = 0;               // 발사 기준 시간(초, 실제 물리 시간)
+  var waitReal = 0;            // 다음 자동 발사까지 남은 실제 시간
+  var flashes = [];            // 간극 반짝임 남은 시간
+
+  function kin(Ek, m) {
+    var g = 1 + Ek / m;
+    return { g: g, b: Math.sqrt(Math.max(0, 1 - 1 / (g * g))) };
+  }
+  function wrapDeg(rad) {
+    var d = rad * 180 / Math.PI;
+    d = ((d + 180) % 360 + 360) % 360 - 180;
+    return d;
+  }
+  function niceUnit(v) {
+    var e = Math.floor(Math.log10(v)), f = v / Math.pow(10, e);
+    var n = f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10;
+    return n * Math.pow(10, e);
+  }
+  function lenText(m) {
+    if (m >= 1) return fmt(m, 3) + " m";
+    if (m >= 0.01) return fmt(m * 100, 3) + " cm";
+    return fmt(m * 1000, 3) + " mm";
+  }
+  function layoutName(t) { return t === "equal" ? "같은 길이" : t === "mystery" ? "수수께끼" : "L=v/2f 설계"; }
+
+  /* ---------------- 미션 ---------------- */
+  var mission = K.Mission(ui.section(panel, "미션"), { id: "t03", steps: [
+    "<b>위상 어긋남 관찰</b> — [같은 길이 튜브]를 누르거나 RF 주파수를 바꿔 발사하고, 묶음이 <b>감속</b>되는 간극(빨간 반짝임)을 찾으세요.",
+    "<b>위상 맞추기 게임</b> — [수수께끼 가속기]를 받은 뒤 RF 주파수만 조절해 13개 간극 모두에서 가속시키세요. (힌트: f = v / (2L₁))",
+    "<b>에너지 그래프</b> — 간극 전압을 두 가지 값으로 바꿔 각각 성공시키고 [기록]하세요. 운동에너지–간극 그래프의 기울기는 얼마인가요?",
+    "<b>튜브 길이 검산</b> — 성공한 발사에서 튜브 하나의 속력으로 L = v/(2f)를 계산해 입력하고 [확인]하세요.",
+    "<b>빛의 속력의 벽</b> — 입자를 전자로 바꿔 성공시키세요. β가 0.99를 넘으면 튜브 길이 그래프는 어떻게 되나요?"
+  ] });
+
+  /* ---------------- 조작 ---------------- */
+  var ctl = ui.section(panel, "조작", "바꾼 값은 곧바로 새 묶음 발사에 적용됩니다.");
+  ui.select(ctl, { id: "part", label: "입자", value: "proton", options: [
+    { value: "proton", label: "양성자 (입사 3 MeV, Linac4 RFQ 출구와 같음)" },
+    { value: "electron", label: "전자 (입사 50 keV, 전자총)" }
+  ], onChange: function (v) { state.part = v; design("design", state.f, state.V); relaunchSoon(0); } });
+  var fS = ui.slider(ctl, { id: "freq", label: "RF 주파수 f", min: 50, max: 500, step: 0.5, value: state.f, unit: "MHz",
+    format: function (v) { return v.toFixed(1); }, onInput: function (v) { state.f = v; relaunchSoon(); } });
+  var vS = ui.slider(ctl, { id: "volt", label: "간극 전압(최댓값) V", min: 0.1, max: 5, step: 0.05, value: state.V, unit: "MV",
+    format: function (v) { return v.toFixed(2); }, onInput: function (v) { state.V = v; relaunchSoon(); } });
+  var pS = ui.slider(ctl, { id: "phase", label: "첫 간극 도착 위상 (0° = 전압 최대)", min: -180, max: 180, step: 5, value: 0, unit: "°",
+    format: function (v) { return String(Math.round(v)); }, onInput: function (v) { state.phi = v; relaunchSoon(); } });
+  ui.html(ctl, "튜브 배치 바꾸기", "note");
+  var rowL = ui.buttonRow(ctl);
+  ui.button(rowL, { label: "튜브 다시 설계 (현재 f·V)", kind: "primary", onClick: function () { design("design", state.f, state.V); relaunchSoon(0); } });
+  ui.button(rowL, { label: "같은 길이 튜브", onClick: function () { design("equal", state.f, state.V); relaunchSoon(0); } });
+  ui.button(rowL, { label: "수수께끼 가속기", kind: "warn", onClick: function () {
+    var fd;
+    do { fd = Math.round((140 + Math.random() * 200) * 2) / 2; } while (Math.abs(fd - state.f) < 20);
+    design("mystery", fd, state.V); relaunchSoon(0);
+    K.toast("숨겨진 주파수로 설계된 튜브입니다. RF 주파수를 맞춰 보세요!");
+  } });
+  var rowR = ui.buttonRow(ctl);
+  ui.button(rowR, { label: "묶음 발사", kind: "primary", onClick: function () { launch(); } });
+  ui.button(rowR, { label: "일시정지/재생", onClick: function () { sim.toggle(); } });
+  ui.button(rowR, { label: "시점 초기화", onClick: function () { fitView(); } });
+  ui.slider(ctl, { id: "speed", label: "재생 속도", min: 0.25, max: 3, step: 0.25, value: 1, unit: "배",
+    format: function (v) { return v.toFixed(2); }, onInput: function (v) { sim.timeScale = v; updateRfHud(); } });
+  var autoT = ui.toggle(ctl, { id: "auto", label: "끝나면 자동으로 다시 발사", checked: true });
+
+  /* ---------------- 측정값 ---------------- */
+  var ro = ui.readouts(ui.section(panel, "측정값 (묶음 중심)"), [
+    { key: "ek", label: "운동에너지 Eₖ", unit: "MeV" },
+    { key: "beta", label: "속력 β = v/c", unit: "" },
+    { key: "gamma", label: "로런츠 인자 γ", unit: "" },
+    { key: "bcl", label: "고전 공식 β (비교)", unit: "" },
+    { key: "gap", label: "지나온 간극", unit: "/ " + NG },
+    { key: "de", label: "마지막 간극 ΔEₖ", unit: "MeV" },
+    { key: "ph", label: "도착 위상(마루 기준)", unit: "°" },
+    { key: "tube", label: "지금 튜브 길이", unit: "" }
+  ]);
+
+  /* ---------------- 그래프 ---------------- */
+  var gSec = ui.section(panel, "그래프");
+  var gSel = ui.select(gSec, { id: "graph", label: "보기", value: "ek", options: [
+    { value: "ek", label: "운동에너지 – 지나온 간극 수" },
+    { value: "beta", label: "속력 β – 지나온 간극 수" },
+    { value: "len", label: "튜브 길이 – 튜브 번호" }
+  ], onChange: drawGraph });
+  var cv = document.createElement("canvas"); cv.className = "plot plot--tall"; cv.setAttribute("aria-label", "모의실험 그래프"); gSec.appendChild(cv);
+  var legend = ui.html(gSec, "", "legend");
+
+  /* ---------------- 튜브 길이 검산 ---------------- */
+  var chkSec = ui.section(panel, "튜브 길이 검산 (미션 4)", "튜브 안에서는 전기장이 없어 묶음이 일정한 속력으로 갑니다. 그동안 RF 전압이 반 주기(T/2)만큼 바뀌어야 하므로 L = v·T/2 = v/(2f) 입니다.");
+  var tubeS = ui.slider(chkSec, { id: "tubeN", label: "튜브 번호", min: 1, max: NT, step: 1, value: 4,
+    format: function (v) { return String(Math.round(v)); }, onInput: showTubeInfo });
+  var tubeInfo = ui.html(chkSec, "", "info");
+  var chkRow = ui.html(chkSec, '<div class="ctl"><label class="ctl-row" for="guessL"><span>내가 계산한 L</span><span class="val">cm</span></label>' +
+    '<input type="number" id="guessL" step="0.01" min="0" inputmode="decimal" placeholder="예: 7.43"></div>', "check-row");
+  var guessIn = chkRow.querySelector("input");
+  ui.button(chkRow, { label: "확인", kind: "primary", onClick: checkTube });
+  var chkOut = ui.html(chkSec, "", "note");
+
+  /* ---------------- 기록표 ---------------- */
+  var recSec = ui.section(panel, "기록표", "한 번의 발사가 끝나면 [기록]을 눌러 결과를 저장하세요.");
+  ui.button(recSec, { label: "기록 (마지막 발사)", kind: "primary", onClick: record });
+  var rec = K.Recorder(recSec, { id: "t03", columns: [
+    { key: "part", label: "입자" }, { key: "lay", label: "튜브" },
+    { key: "f", label: "f", unit: "MHz" }, { key: "V", label: "V", unit: "MV" },
+    { key: "res", label: "결과" }, { key: "ek", label: "출구 Eₖ", unit: "MeV" },
+    { key: "beta", label: "β" }, { key: "gamma", label: "γ" }
+  ], onChange: checkRecMission });
+
+  /* ---------------- 장면 ---------------- */
+  var world = new THREE.Group(); sim.scene.add(world);
+  var axisMat = new THREE.LineDashedMaterial({ color: 0x3a4670, dashSize: 0.15, gapSize: 0.1 });
+  var tubes = [], arrows = [], rings = [], plates = [], labels = [];
+  var scale = 1, center = 0, gapD = 0.3, srcX = 0, endX = 0, unitM = 1;
+  var COL_POS = new THREE.Color(0xff6b6b), COL_NEG = new THREE.Color(0x4dabf7), COL_ZERO = new THREE.Color(0x6a7393);
+  var RING_BASE = new THREE.Color(0x3a4670);
+
+  var bunch = new THREE.Group(); sim.scene.add(bunch);
+  var bunchMat = new THREE.MeshBasicMaterial({ color: PARTS.proton.color });
+  (function () {
+    var g = new THREE.SphereGeometry(0.05, 10, 8);
+    for (var i = 0; i < 22; i++) {
+      var m = new THREE.Mesh(g, bunchMat);
+      var u = Math.random() * 2 - 1, a = Math.random() * Math.PI * 2, rr = Math.sqrt(Math.random());
+      m.position.set(u * 0.16, rr * 0.11 * Math.cos(a), rr * 0.11 * Math.sin(a));
+      bunch.add(m);
+    }
+    var glow = new THREE.Mesh(new THREE.SphereGeometry(0.16, 16, 12), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.12 }));
+    glow.scale.set(1.4, 1, 1); bunch.add(glow);
+  })();
+  var bunchLabel = K.label("묶음", { height: 0.4 }); sim.scene.add(bunchLabel);
+
+  function clearWorld() {
+    while (world.children.length) {
+      var o = world.children.pop();
+      o.traverse(function (n) {
+        if (n.geometry) n.geometry.dispose();
+        if (n.material) { if (n.material.map) n.material.map.dispose(); n.material.dispose(); }
+      });
+    }
+    tubes = []; arrows = []; rings = []; plates = []; labels = [];
+  }
+  function dx(xm) { return (xm - center) * scale; }
+
+  function design(type, fd, Vd) {
+    var P = PARTS[state.part], L = [], X = [0], w = 2 * fd * 1e6;
+    for (var k = 1; k <= NT; k++) {
+      var Ek = P.T0 + (type === "equal" ? 1 : k) * Math.abs(P.q) * Vd;
+      L.push(kin(Ek, P.m).b * CL / w);
+      X.push(X[k - 1] + L[k - 1]);
+    }
+    layout = { type: type, part: state.part, fd: fd, Vd: Vd, L: L, X: X };
+    bunchMat.color.set(P.color);
+    buildScene();
+    if (layoutBuilt) fitView();
+    layoutBuilt = true;
+    updateRfHud(); showTubeInfo(); drawGraph();
+  }
+
+  function buildScene() {
+    clearWorld();
+    var X = layout.X, L = layout.L;
+    var dPre = 1.4 * L[0], dPost = 1.4 * L[NT - 1];
+    var total = X[NT] + dPre + dPost;
+    unitM = niceUnit(total / 16);
+    scale = 1 / unitM;
+    center = (X[NT] + dPost - dPre) / 2;
+    srcX = -dPre; endX = X[NT] + dPost;
+    var minL = Math.min.apply(null, L) * scale;
+    gapD = Math.min(0.32, 0.3 * minL);
+
+    // 빔축
+    var ag = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(dx(srcX), Y0, 0), new THREE.Vector3(dx(endX) + 0.6, Y0, 0)]);
+    var axis = new THREE.Line(ag, axisMat.clone()); axis.computeLineDistances(); world.add(axis);
+
+    // 입자원(왼쪽)과 출구 표시
+    var srcBox = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.9, 0.9), new THREE.MeshStandardMaterial({ color: 0x2a3458, metalness: 0.2, roughness: 0.7 }));
+    srcBox.position.set(dx(srcX) - 0.35, Y0, 0); world.add(srcBox);
+    var sl = K.label(PARTS[layout.part].src, { height: 0.42 }); sl.position.set(dx(srcX) - 0.35, Y0 + 0.95, 0); world.add(sl);
+    var el = K.label("→ 다음 가속기", { height: 0.42, color: "#a9b0c8" }); el.position.set(dx(endX) + 0.3, Y0 - 0.75, 0); world.add(el);
+
+    // 전극: 0 = 입구판, 1..NT = 튜브, NT+1 = 출구판
+    var plateGeo = new THREE.CylinderGeometry(TUBE_R * 1.6, TUBE_R * 1.6, 0.05, 32);
+    function plate(xm, sgn) {
+      var m = new THREE.Mesh(plateGeo.clone(), new THREE.MeshStandardMaterial({ color: COL_ZERO, transparent: true, opacity: 0.55, metalness: 0.3, roughness: 0.5 }));
+      m.rotation.z = Math.PI / 2; m.position.set(dx(xm) + sgn * 0.025, Y0, 0); world.add(m); return m;
+    }
+    plates.push(plate(X[0] - gapD / 2 / scale, -1));
+    for (var k = 1; k <= NT; k++) {
+      var len = L[k - 1] * scale - gapD;
+      var grp = new THREE.Group();
+      var mat = new THREE.MeshStandardMaterial({ color: COL_ZERO, transparent: true, opacity: 0.5, side: THREE.DoubleSide, metalness: 0.35, roughness: 0.45, emissive: 0x000000 });
+      var cyl = new THREE.Mesh(new THREE.CylinderGeometry(TUBE_R, TUBE_R, len, 36, 1, true), mat);
+      cyl.rotation.z = Math.PI / 2; grp.add(cyl);
+      var rimMat = new THREE.MeshBasicMaterial({ color: 0x9aa3c2 });
+      [-1, 1].forEach(function (s) {
+        var rim = new THREE.Mesh(new THREE.TorusGeometry(TUBE_R, 0.022, 8, 36), rimMat);
+        rim.rotation.y = Math.PI / 2; rim.position.x = s * len / 2; grp.add(rim);
+      });
+      grp.position.set(dx((X[k - 1] + X[k]) / 2), Y0, 0);
+      world.add(grp);
+      tubes.push({ grp: grp, mat: mat });
+      var lb = K.label(String(k), { height: 0.4, color: "#a9b0c8", bg: false });
+      lb.position.set(grp.position.x, Y0 - TUBE_R - 0.34, 0); world.add(lb);
+    }
+    plates.push(plate(X[NT] + gapD / 2 / scale, 1));
+
+    // 간극: 고리 + 전기장 화살표
+    for (var j = 0; j <= NT; j++) {
+      var ring = new THREE.Mesh(new THREE.TorusGeometry(TUBE_R * 1.18, 0.025, 8, 40), new THREE.MeshBasicMaterial({ color: RING_BASE.clone() }));
+      ring.rotation.y = Math.PI / 2; ring.position.set(dx(X[j]), Y0, 0); world.add(ring); rings.push(ring);
+      var ar = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), new THREE.Vector3(dx(X[j]), Y0 + TUBE_R + 0.32, 0), 0.5, K.COLORS.field, 0.16, 0.12);
+      world.add(ar); arrows.push(ar);
+    }
+    flashes = new Array(NG).fill(0);
+    var sc = document.getElementById("hud-scale");
+    sc.innerHTML = '<div><span class="k">화면 축척</span> <span class="v">1칸 = ' + lenText(unitM) + '</span></div>' +
+      '<div class="k">튜브 굵기·간극 폭은 보기 좋게 과장</div>' +
+      '<div><span class="sw" style="background:#ff6b6b"></span>+ 전위 <span class="sw" style="background:#4dabf7;margin-left:.4rem"></span>− 전위 · 화살표 = 간극 전기장</div>';
+  }
+
+  /* 선형가속기 전체가 화면에 들어오도록 시점 맞추기 (좁은 화면은 비스듬히) */
+  function fitView() {
+    var st = sim.stage, w = st.clientWidth || 300, h = st.clientHeight || 300, asp = w / h;
+    var cam = sim.camera;
+    cam.aspect = asp; cam.updateProjectionMatrix();
+    var dir = (asp < 1 ? new THREE.Vector3(1, 0.62, 0.42) : new THREE.Vector3(0.1, 0.42, 1)).normalize();
+    var tgt = new THREE.Vector3((dx(srcX) + dx(endX)) / 2, Y0, 0);
+    var ends = [new THREE.Vector3(dx(srcX) - 0.8, Y0 + 0.9, 0), new THREE.Vector3(dx(endX) + 1.2, Y0 + 0.9, 0),
+      new THREE.Vector3(dx(srcX) - 0.8, Y0 - 0.6, 0), new THREE.Vector3(dx(endX) + 1.2, Y0 - 0.6, 0)];
+    var d = 4, v = new THREE.Vector3();
+    for (; d < 120; d *= 1.04) {
+      cam.position.copy(tgt).addScaledVector(dir, d); cam.lookAt(tgt); cam.updateMatrixWorld();
+      var ok = ends.every(function (p) { v.copy(p).project(cam); return Math.abs(v.x) < 0.92 && v.y < 0.55 && v.y > -0.85; });
+      if (ok) break;
+    }
+    // 위쪽 HUD에 가리지 않도록 목표점을 조금 올림
+    var pos = tgt.clone().addScaledVector(dir, d);
+    sim.setView([pos.x, pos.y, pos.z], [tgt.x, tgt.y + d * 0.06, tgt.z]);
+  }
+
+  /* ---------------- 물리: 한 번의 발사를 미리 계산 ----------------
+     얇은 간극 근사: 간극 j를 지나는 순간 ΔEₖ = |q|·V·(−1)^j·cos(θ₀ + ωt)
+     (이웃한 간극은 전압 방향이 반대 → π 모드 비데뢰형 선형가속기) */
+  function computeRun() {
+    var P = PARTS[layout.part], X = layout.X;
+    var w = 2 * Math.PI * state.f * 1e6, th0 = state.phi * Math.PI / 180;
+    var Ek = P.T0, k0 = kin(Ek, P.m), v = k0.b * CL;
+    var r = { f: state.f, V: state.V, phi: state.phi, th0: th0, w: w, part: layout.part, lay: layout.type,
+      segs: [], ev: [], next: 0, tubeBeta: [], done: false, lost: false, anyDecel: false, success: false };
+    var t = -(0 - srcX) / v;
+    r.tStart = t;
+    r.segs.push({ t: t, x: srcX, v: v });
+    r.pts = [{ n: 0, ek: Ek, b: k0.b, g: k0.g }];
+    var x = srcX, okAll = true;
+    for (var j = 0; j <= NT; j++) {
+      t = t + (X[j] - x) / v; x = X[j];
+      var dE = Math.abs(P.q) * state.V * (j % 2 ? -1 : 1) * Math.cos(th0 + w * t);
+      var ph = wrapDeg(th0 + w * t + j * Math.PI);
+      if (dE < 0) r.anyDecel = true;
+      if (dE < 0.9 * Math.abs(P.q) * state.V) okAll = false;
+      var EkN = Ek + dE;
+      if (EkN <= 0) {
+        r.ev.push({ j: j, t: t, dE: -Ek, ek: 0, b: 0, g: 1, ph: ph, lost: true });
+        r.segs.push({ t: t, x: x, v: 0 });
+        r.lost = true; r.tEnd = t + 0.6 / state.f / 1e6;
+        r.lostGap = j;
+        return finishCalc(r, okAll);
+      }
+      Ek = EkN;
+      var kk = kin(Ek, P.m); v = kk.b * CL;
+      r.ev.push({ j: j, t: t, dE: dE, ek: Ek, b: kk.b, g: kk.g, ph: ph });
+      r.segs.push({ t: t, x: x, v: v });
+      if (j < NT) r.tubeBeta[j + 1] = kk.b;
+    }
+    r.tEnd = t + (endX - x) / v;
+    return finishCalc(r, okAll);
+  }
+  function finishCalc(r, okAll) {
+    r.success = !r.lost && okAll;
+    var last = r.ev[r.ev.length - 1];
+    r.ekOut = last.ek; r.bOut = last.b; r.gOut = last.g;
+    r.res = r.lost ? "멈춤" : r.success ? "성공" : r.anyDecel ? "감속 발생" : "부분 가속";
+    return r;
+  }
+  function posAt(r, t) {
+    var s = r.segs[0];
+    for (var i = 1; i < r.segs.length; i++) { if (r.segs[i].t <= t) s = r.segs[i]; else break; }
+    return s.x + s.v * Math.max(0, t - s.t);
+  }
+
+  /* ---------------- 발사·진행 ---------------- */
+  var relaunchTimer = null;
+  function relaunchSoon(ms) {
+    clearTimeout(relaunchTimer);
+    relaunchTimer = setTimeout(launch, ms === undefined ? 250 : ms);
+  }
+  function launch() {
+    if (!layout) return;
+    run = computeRun();
+    clock = run.tStart;
+    waitReal = 0;
+    flashes.fill(0);
+    setHudBeam();
+    drawGraph();
+  }
+  function finishRun() {
+    run.done = true;
+    prevDone = lastDone; lastDone = run;
+    if (run.anyDecel || run.lost) mission.complete(0, "미션 1 완료! 위상이 어긋나 도착하면 간극에서 오히려 에너지를 잃어요.");
+    if (run.success && run.lay === "mystery") {
+      mission.complete(1, "미션 2 완료! 숨겨진 설계 주파수는 " + layout.fd.toFixed(1) + " MHz였어요.");
+    }
+    if (run.success && run.part === "electron" && run.bOut > 0.99) {
+      mission.complete(4, "미션 5 완료! β가 1에 가까워지면 속력이 거의 늘지 않아 튜브 길이도 c/(2f)에서 멈춰요.");
+    }
+    waitReal = 1.3;
+    setHudBeam(); showTubeInfo(); drawGraph();
+  }
+
+  /* ---------------- 매 프레임 ---------------- */
+  var tmpCol = new THREE.Color();
+  sim.onFrame(function (dt, t, real) {
+    if (!layout) return;
+    var r = run;
+    var f = r ? r.f : state.f;
+    var k = (1 / (f * 1e6)) / PERIOD_REAL;       // 화면 1초당 물리 시간
+    clock += dt * k;
+    var th = (r ? r.th0 + r.w * clock : 0);
+    var P = PARTS[layout.part], sq = P.q > 0 ? 1 : -1;
+    var cs = Math.cos(th);
+
+    // 전극 전위 Uₖ ∝ sgn(q)·(−1)ᵏ·cos θ → 색
+    function colorFor(u) {
+      if (u >= 0) tmpCol.copy(COL_ZERO).lerp(COL_POS, u); else tmpCol.copy(COL_ZERO).lerp(COL_NEG, -u);
+      return tmpCol;
+    }
+    for (var i = 0; i < tubes.length; i++) {
+      var u = sq * ((i + 1) % 2 ? -1 : 1) * cs;
+      tubes[i].mat.color.copy(colorFor(u));
+      tubes[i].mat.emissive.copy(tmpCol).multiplyScalar(0.25 * Math.abs(u));
+    }
+    plates[0].material.color.copy(colorFor(sq * cs));
+    plates[1].material.color.copy(colorFor(sq * ((NT + 1) % 2 ? -1 : 1) * cs));
+    // 간극 j의 전기장: 전위가 높은 쪽 → 낮은 쪽. U_j − U_{j+1} ∝ sgn(q)·(−1)^j·cos θ
+    for (var j = 0; j < arrows.length; j++) {
+      var e = sq * (j % 2 ? -1 : 1) * cs;
+      var len = 0.12 + 0.42 * Math.abs(e);
+      arrows[j].setDirection(new THREE.Vector3(e >= 0 ? 1 : -1, 0, 0));
+      arrows[j].setLength(len, Math.min(0.16, len * 0.45), 0.12);
+      arrows[j].position.x = rings[j].position.x - (e >= 0 ? 1 : -1) * len / 2;
+      // 간극 반짝임
+      if (flashes[j] > 0) {
+        flashes[j] -= real;
+        var a = Math.max(0, flashes[j] / 0.7);
+        rings[j].material.color.copy(RING_BASE).lerp(rings[j].userData.fc || RING_BASE, a);
+        rings[j].scale.setScalar(1 + 0.35 * a);
+      } else { rings[j].material.color.copy(RING_BASE); rings[j].scale.setScalar(1); }
+    }
+
+    if (r) {
+      // 간극 통과 사건 처리
+      while (r.next < r.ev.length && r.ev[r.next].t <= clock) {
+        var ev = r.ev[r.next++];
+        var q = Math.abs(P.q) * r.V;
+        rings[ev.j].userData.fc = new THREE.Color(ev.dE < 0 ? 0xff7a6b : ev.dE >= 0.9 * q ? 0x5fd08a : 0xf0c060);
+        flashes[ev.j] = 0.7;
+        setHudBeam(); drawGraph();
+      }
+      var xm = posAt(r, clock);
+      bunch.position.set(dx(xm), Y0, 0);
+      bunchLabel.position.set(dx(xm), Y0 + 1.15, 0);
+      bunch.visible = bunchLabel.visible = true;
+      if (!r.done && clock >= r.tEnd) finishRun();
+      if (r.done && waitReal > 0 && sim.running) {
+        waitReal -= real;
+        if (waitReal <= 0 && autoT.get()) launch();
+      }
+    }
+  });
+
+  /* ---------------- 표시 갱신 ---------------- */
+  function currentState() {
+    var r = run, P = PARTS[layout.part];
+    if (!r) return null;
+    var n = r.next, e = n ? r.ev[n - 1] : null;
+    var ek = e ? e.ek : P.T0, kk = kin(ek, P.m);
+    return { n: n, e: e, ek: ek, b: kk.b, g: kk.g };
+  }
+  function setHudBeam() {
+    var s = currentState(); if (!s) return;
+    var P = PARTS[layout.part], r = run;
+    ro.set("ek", s.ek, 4);
+    ro.set("beta", s.b.toFixed(4));
+    ro.set("gamma", s.g.toFixed(4));
+    var bcl = Math.sqrt(2 * s.ek / P.m);
+    ro.set("bcl", bcl.toFixed(4));
+    ro.set("gap", String(s.n));
+    ro.set("de", s.e ? (s.e.dE >= 0 ? "+" : "") + s.e.dE.toFixed(3) : "–");
+    ro.set("ph", s.e ? String(Math.round(s.e.ph)) : "–");
+    var tubeIdx = s.n >= 1 && s.n <= NT ? s.n : 0;
+    ro.set("tube", tubeIdx ? lenText(layout.L[tubeIdx - 1]) : "–");
+    var st;
+    if (!r.done) st = s.e && s.e.dE < 0 ? '<span class="bad">감속 중!</span>' : '<span class="warn">가속 중…</span>';
+    else if (r.success) st = '<span class="ok">성공: 13개 간극 모두 가속</span>';
+    else if (r.lost) st = '<span class="bad">멈춤: 간극 ' + r.lostGap + '에서 되밀려남</span>';
+    else if (r.anyDecel) st = '<span class="bad">감속 발생 (위상 어긋남)</span>';
+    else st = '<span class="warn">부분 가속 (위상이 조금 어긋남)</span>';
+    document.getElementById("hud-beam").innerHTML =
+      '<div>' + st + '</div>' +
+      '<div class="row"><span><span class="k">' + P.name + ' Eₖ</span> <span class="v">' + fmt(s.ek, 4) + ' MeV</span></span>' +
+      '<span><span class="k">β</span> <span class="v">' + s.b.toFixed(4) + '</span></span>' +
+      '<span><span class="k">γ</span> <span class="v">' + s.g.toFixed(3) + '</span></span></div>';
+  }
+  function updateRfHud() {
+    if (!layout) return;
+    var T = 1 / (state.f * 1e6);
+    var per = (T / PERIOD_REAL / sim.timeScale);
+    var lay;
+    if (layout.type === "mystery") lay = '수수께끼 가속기 · 설계 f = <b class="warn">?</b> · 설계 V = ' + layout.Vd.toFixed(2) + ' MV · 튜브 1 길이 L₁ = ' + lenText(layout.L[0]);
+    else if (layout.type === "equal") lay = '튜브 배치: 모두 같은 길이 ' + lenText(layout.L[0]);
+    else lay = '튜브 배치: L = v/(2f) 설계 (' + layout.fd.toFixed(1) + ' MHz, ' + layout.Vd.toFixed(2) + ' MV)';
+    document.getElementById("hud-rf").innerHTML =
+      '<div><span class="k">RF</span> <span class="v">' + state.f.toFixed(1) + ' MHz</span> <span class="k">· 주기 T</span> <span class="v">' + fmt(T * 1e9, 3) + ' ns</span></div>' +
+      '<div class="k">시간 느리게: 화면 1초 = ' + fmt(per * 1e9, 3) + ' ns</div>' +
+      '<div class="k">' + lay + '</div>';
+  }
+
+  function drawGraph() {
+    if (!layout) return;
+    var mode = gSel.get(), P = PARTS[layout.part];
+    var series = [], xr, yr, xl, yl, leg = "";
+    function ptsOf(r, key) {
+      if (!r) return [];
+      var arr = [[0, key === "ek" ? P.T0 : kin(P.T0, P.m).b]];
+      var upto = r === run ? r.next : r.ev.length;
+      for (var i = 0; i < upto; i++) arr.push([i + 1, key === "ek" ? r.ev[i].ek : r.ev[i].b]);
+      return arr;
+    }
+    if (mode === "ek" || mode === "beta") {
+      var Vq = Math.abs(P.q) * state.V;
+      var ideal = [];
+      for (var n = 0; n <= NG; n++) {
+        var E = P.T0 + n * Vq;
+        ideal.push([n, mode === "ek" ? E : kin(E, P.m).b]);
+      }
+      if (prevDone && prevDone !== run && prevDone.part === layout.part) series.push({ points: ptsOf(prevDone, mode), color: "#7880a0", line: true, dots: true, r: 2.4, width: 1.5, label: "이전 발사" });
+      series.push({ points: ideal, color: "#5fd08a", line: true, dots: false, dash: [5, 4], width: 1.5, label: mode === "ek" ? "모두 마루에서 가속(Eₖ₀ + n·qV)" : "모두 마루에서 가속할 때" });
+      series.push({ points: ptsOf(run, mode), color: "#f0a35e", line: true, dots: true, label: "이번 발사" });
+      if (mode === "beta") series.push({ points: [[0, 1], [NG, 1]], color: "#ff7a6b", line: true, dots: false, dash: [2, 3], width: 1, label: "빛의 속력 (β = 1)" });
+      xr = [0, NG];
+      if (mode === "ek") { var top = Math.max(P.T0 + NG * Vq, run ? Math.max.apply(null, ptsOf(run, "ek").map(function (p) { return p[1]; })) : 0); yr = [0, top * 1.15]; yl = "Eₖ (MeV)"; }
+      else { yr = [0, 1.7]; yl = "β = v/c"; }
+      xl = "지나온 간극 수 n";
+      leg = mode === "ek" ? "초록 점선의 기울기 = 간극 하나에서 얻는 에너지 qV" : "고전 공식이라면 β가 1을 넘을 수도 있지만 실제로는 1에 다가갈 뿐입니다.";
+    } else {
+      var pts = layout.L.map(function (L, i) { return [i + 1, L * 100]; });
+      var lim = CL / (2 * state.f * 1e6) * 100;
+      series.push({ points: pts, color: "#7f9cff", line: true, dots: true, label: "튜브 길이 (cm)" });
+      series.push({ points: [[0.5, lim], [NT + 0.5, lim]], color: "#ff7a6b", line: true, dots: false, dash: [5, 4], width: 1.5, label: "한계 c/(2f) = " + fmt(lim, 3) + " cm" });
+      xr = [0.5, NT + 0.5];
+      yr = [0, Math.max(lim, Math.max.apply(null, pts.map(function (p) { return p[1]; }))) * 1.55];
+      xl = "튜브 번호"; yl = "길이 (cm)";
+      leg = "튜브 길이는 튜브 안 속력에 비례합니다. 속력이 c에 가까워지면 길이도 c/(2f)에 가까워집니다.";
+    }
+    K.plot.xy(cv, { series: series, xr: xr, yr: yr, xlabel: xl, ylabel: yl });
+    legend.textContent = leg;
+  }
+
+  function showTubeInfo() {
+    if (!layout) return;
+    var n = Math.round(tubeS.get());
+    var r = lastDone;
+    var html;
+    if (r && r.success && r.part === layout.part && r.tubeBeta[n]) {
+      var b = r.tubeBeta[n];
+      html = "마지막 성공 발사에서 튜브 " + n + " 안의 속력: β = <b>" + b.toFixed(4) + "</b> (v = <b>" + fmt(b * CL, 4) + "</b> m/s)<br>RF 주파수 f = <b>" + r.f.toFixed(1) + " MHz</b> → L = v/(2f) = ? cm";
+    } else {
+      html = "먼저 13개 간극 모두에서 가속에 <b>성공</b>한 발사가 필요합니다. (성공하면 여기에 튜브 속력이 나타나요.)";
+    }
+    tubeInfo.innerHTML = html;
+  }
+  function checkTube() {
+    var n = Math.round(tubeS.get()), r = lastDone;
+    var g = parseFloat(guessIn.value);
+    if (!(r && r.success && r.part === layout.part && r.tubeBeta[n])) { chkOut.innerHTML = '<span class="result-bad">성공한 발사가 아직 없습니다.</span>'; return; }
+    if (!(g > 0)) { chkOut.innerHTML = '<span class="result-bad">계산한 길이(cm)를 숫자로 입력하세요.</span>'; return; }
+    var actual = layout.L[n - 1] * 100;
+    var diff = (g - actual) / actual * 100;
+    var ok = Math.abs(diff) < 3;
+    chkOut.innerHTML = "실제 튜브 " + n + " 길이(간극 중심 사이) = <b>" + actual.toFixed(2) + " cm</b>, 내 계산과 차이 " +
+      (diff >= 0 ? "+" : "") + diff.toFixed(1) + "% → " + (ok ? '<span class="result-ok">일치! L = v/(2f) 확인</span>' : '<span class="result-bad">다시 계산해 보세요 (단위: m → cm, MHz → Hz)</span>');
+    if (ok) mission.complete(3, "미션 4 완료! 튜브 길이는 그 안을 지나는 속력에 비례해요: L = v/(2f)");
+  }
+
+  function record() {
+    var r = lastDone;
+    if (!r) { K.toast("아직 끝난 발사가 없어요. 묶음이 출구까지 갈 때까지 기다리세요."); return; }
+    rec.add({ part: PARTS[r.part].name, lay: layoutName(r.lay), f: r.f, V: r.V, res: r.res,
+      ek: r.ekOut, beta: Number(r.bOut.toFixed(5)), gamma: Number(r.gOut.toFixed(4)), ok: r.success ? 1 : 0, pk: r.part });
+    K.toast("기록했습니다: " + PARTS[r.part].name + ", " + r.res + ", 출구 " + fmt(r.ekOut, 4) + " MeV");
+  }
+  function checkRecMission(rows) {
+    var byPart = {};
+    rows.forEach(function (row) {
+      if (row.ok !== 1) return;
+      var key = row.pk || row.part;
+      byPart[key] = byPart[key] || {};
+      byPart[key][Number(row.V).toFixed(2)] = true;
+    });
+    for (var p in byPart) if (Object.keys(byPart[p]).length >= 2) {
+      mission.complete(2, "미션 3 완료! 운동에너지는 간극 수에 비례해 늘어나고, 기울기는 간극 전압 qV와 같아요.");
+      return;
+    }
+  }
+
+  /* ---------------- 시작 ---------------- */
+  sim.timeScale = 1;
+  design("design", state.f, state.V);
+  fitView();
+  launch();
+  checkRecMission(rec.rows);
+  window.addEventListener("resize", function () { drawGraph(); });
+})();
+</script>
+</body>
+</html>

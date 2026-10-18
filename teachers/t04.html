@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 4 자기장과 원운동 · 교사용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-page="teacher" data-topic="04" data-root="../">
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--teacher">교사용</span>
+      <span class="badge badge--basic">기본과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 4 · 지도서</p>
+    <h1>자기장으로 입자 휘기</h1>
+    <p class="lead">LHC는 왜 둥글고, 왜 그렇게 강한 자석이 필요할까?</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="../students/t04.html">학생용 활동지</a>
+      <a class="btn btn--sim" href="../sims/t04.html">3D 모의실험</a>
+    </div>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#overview">개요</a><a href="#prep">준비</a><a href="#flow">수업 흐름</a><a href="#questions">핵심 발문</a>
+      <a href="#lab">실험 지도</a><a href="#sim">3D 운영</a><a href="#miscon">오개념</a><a href="#answers">정답·해설</a>
+      <a href="#assess">평가</a><a href="#flex">차시 조정</a><a href="#refs">참고 자료</a>
+    </nav>
+  </header>
+
+  <section class="section" id="overview">
+    <div class="section__head"><span class="section__tag">01</span><h2>개요</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>과정 단계</th><td>기본과정 (전체 10개 주제 중 4번째), 2차시(100분). 주제 3(전기장으로 가속)과 함께 가속기의 두 기둥을 완성하고, 주제 5(검출기의 운동량 측정)·주제 8(LHC 설계)·주제 9(트랙의 휘는 방향으로 전하 판별)로 이어집니다.</td></tr>
+      <tr><th>교육과정 연계</th><td>물리학 – 힘과 운동(등속 원운동과 구심력) / 물리학 – 전기와 자기(자기장, 전류가 받는 자기력, 오른손 법칙) / 전자기와 양자 – 전자기장(로렌츠 힘, 하전 입자의 운동) / 역학과 에너지 – 원운동과 운동량</td></tr>
+      <tr><th>선수 학습</th><td>등속 원운동의 구심력 mv²/r, 일과 운동에너지, 자석 주위의 자기장과 자기력선, 전류의 방향, 운동량 p = mv. 주제 3의 eV 단위와 γ(결과만)</td></tr>
+      <tr><th>핵심 개념</th><td>로렌츠 힘 F = qvB sinθ와 방향(오른손 법칙, 전하 부호), 자기력은 일을 하지 않음, r = mv/(qB) = p/(qB), 주기 T = 2πm/(qB), 나선 운동, p [GeV/c] = 0.3 B r, 싱크로트론의 자기장 램프, LHC 쌍극자석(약 8 T)</td></tr>
+      <tr><th>수업 형태</th><td>1차시: 설명 + 4인 모둠 실험(로렌츠 힘 그네) / 2차시: 설명 + 2인 1대 3D 모의실험(실험실 모드·싱크로트론 링 모드) + 전체 정리</td></tr>
+    </table></div>
+    <div class="box box--goal"><h3>학습 목표와 성취 판단 기준</h3><ol>
+      <li><b>로렌츠 힘</b>: F = qvB의 크기와 방향을 설명한다. — 판단 기준: 실험 A의 방향 예상 4가지를 모두 맞히고, 확인 문제 1에서 양성자·전자의 힘 방향과 회전 방향을 바르게 답하면 도달.</li>
+      <li><b>원운동 반지름</b>: 원운동하는 까닭을 설명하고 r = mv/(qB)를 계산한다. — 판단 기준: "힘이 속도에 수직 → 일 0 → 속력 일정 → 구심력"의 논리를 쓰고, 확인 문제 2·3을 맞히면 도달.</li>
+      <li><b>나선 운동</b>: 속도를 두 성분으로 나누어 나선 운동을 설명한다. — 판단 기준: 모의실험 B4에서 "나란한 성분은 힘을 받지 않는다"를 근거로 쓰면 도달.</li>
+      <li><b>LHC 자석</b>: p = 0.3Br로 LHC에 필요한 자기장을 추정한다. — 판단 기준: 싱크로트론 링 계산표의 LHC B₀ ≈ 0.54 T, B₁ ≈ 8.1 T를 구하고 미션 5를 완료하면 도달.</li>
+    </ol></div>
+  </section>
+
+  <section class="section" id="prep">
+    <div class="section__head"><span class="section__tag">02</span><h2>준비물과 사전 준비</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>준비물</th><th>수량(4인 1모둠 기준)</th><th>구입·대체 방법</th></tr>
+      <tr><td>네오디뮴 원판 자석(지름 약 20 mm, 두께 5 mm)</td><td class="num">4개</td><td>과학 교구사·온라인(개당 수백 원~1천 원대). 말굽자석(U자 자석)이 있으면 자석 사이에 포일을 지나게 해도 됩니다(이때 자기장은 수평).</td></tr>
+      <tr><td>나침반</td><td class="num">1개</td><td>과학실 기자재. 스마트폰 나침반 앱은 자석에 영향을 받으니 실험 전 극 확인용으로만 씁니다.</td></tr>
+      <tr><td>알루미늄 포일 띠(폭 5 mm × 25 cm)</td><td class="num">5~6개</td><td>주방용 포일을 자와 칼로 잘라 미리 준비합니다. 대체: 피복을 사포로 벗긴 에나멜 구리선(지름 0.3~0.5 mm), 껌 포장 은박.</td></tr>
+      <tr><td>스탠드 2개(또는 나무젓가락·연필 + 책 더미)</td><td class="num">1세트</td><td>과학실 스탠드. 없으면 책 두 더미 위에 연필을 걸치고 포일을 테이프로 붙입니다.</td></tr>
+      <tr><td>악어클립 전선</td><td class="num">3개</td><td>과학실 기자재·전자 부품점.</td></tr>
+      <tr><td>AA 건전지와 홀더</td><td class="num">2개 / 1개(2구)</td><td>새 알칼리 건전지가 효과가 좋습니다. 2구 홀더 대신 1구 홀더 2개를 직렬로 이어도 됩니다.</td></tr>
+      <tr><td>누름 스위치</td><td class="num">1개</td><td>전자 부품점. 없으면 악어클립 하나를 손으로 잠깐 대었다 뗍니다.</td></tr>
+      <tr><td>보호 저항 1 Ω (5 W 시멘트 저항)</td><td class="num">1개</td><td>전자 부품점(수백 원). 단락 전류를 약 1 A로 제한해 건전지·포일 발열을 줄이고, 건전지 수와 전류가 비례에 가깝게 합니다. 없으면 스위치를 1초 이내로만 누릅니다.</td></tr>
+      <tr><td>모눈종이 배경판, 자</td><td class="num">1개씩</td><td>모눈종이를 두꺼운 종이에 붙여 포일 뒤에 세웁니다.</td></tr>
+      <tr><td>(선택) 전자빔 편향관(e/m 장치)</td><td class="num">학급 1대</td><td>과학실에 있으면 교사 시연. 고전압 장치이므로 교사만 조작합니다.</td></tr>
+      <tr><td>컴퓨터·태블릿(크롬·엣지·사파리 최신판)</td><td class="num">2인 1대</td><td>3D 모의실험은 인터넷 없이 파일로 열어도 동작합니다.</td></tr>
+    </table></div>
+    <div class="box box--tip prose"><p><b>사전 준비(약 15분).</b> 포일 띠를 넉넉히 잘라 두고(실험 중 찢어짐), 교사용 그네를 하나 만들어 흔들림이 모눈종이에서 잘 보이는 높이를 확인합니다. 자석 극은 미리 매직으로 표시해 두면 시간을 아낄 수 있지만, 학생이 나침반으로 확인하는 과정도 의미가 있습니다.</p></div>
+    <div class="box box--safety"><h4>안전 지도</h4><ul>
+      <li>보호 저항 없이 연결하면 사실상 단락 회로이므로 4 A 이상이 흐를 수 있습니다. 스위치는 1~2초만 누르고, 포일이나 건전지가 뜨거우면 즉시 중단합니다. 리튬·충전식 배터리, 전원 장치는 쓰지 않습니다.</li>
+      <li>네오디뮴 자석은 서로 세게 달라붙어 손가락이 끼이거나 깨진 조각이 튈 수 있습니다. 하나씩 쌓고, 자석끼리 멀리서 던지듯 붙이지 않게 합니다.</li>
+      <li>심장 박동기 등 의료 기기를 쓰는 학생은 자석을 다루지 않게 하고, 휴대폰·카드·노트북은 30 cm 이상 떨어뜨립니다.</li>
+      <li>전자빔 편향관 시연 시 고전압 단자에 손대지 않으며, 시연은 교사만 합니다.</li>
+    </ul></div>
+  </section>
+
+  <section class="section" id="flow">
+    <div class="section__head"><span class="section__tag">03</span><h2>수업 흐름</h2></div>
+    <h3>1차시 (50분): 로렌츠 힘과 원운동, 전류 그네</h3>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>단계·시간</th><th>교사 활동</th><th>학생 활동</th><th>자료·유의점</th></tr>
+      <tr><td><span class="phase">도입</span><br>5분</td><td>LHC 터널 속 쌍극자석 사진을 보여 주며 "이 자석들은 양성자를 빠르게 할까?"를 묻고, 주제 3에서 배운 "가속은 전기장"을 떠올리게 합니다.</td><td>생각 열기 Q1·Q2에 답합니다.</td><td>활동지 01. 자석이 가속한다는 오개념을 드러내는 것이 목적입니다.</td></tr>
+      <tr><td><span class="phase">전개 1</span><br>13분</td><td>F = qvB sinθ와 오른손 법칙을 그림 1로 설명하고, 학생이 직접 손으로 해 보게 합니다. "힘 ⊥ 속도 → 일 0 → 속력 일정 → 원운동"을 판서하고 r = mv/(qB), T = 2πm/(qB)를 유도합니다. 양성자 예제(0.21 m)를 풉니다.</td><td>핵심 개념 1·2를 읽고 오른손 법칙을 연습합니다. 그림 2의 회전 방향을 확인합니다.</td><td>음전하는 방향이 반대임을 반드시 짚습니다. 교과서마다 오른손 법칙 표현이 다르면 교과서 방식을 따르게 합니다.</td></tr>
+      <tr><td><span class="phase">전개 2</span><br>25분</td><td>전류 그네 장치를 시범으로 보여 주고(약 3분) 안전 수칙을 강조합니다. 모둠 순회하며 "예상을 먼저 쓰고 스위치를 누르라"고 지도합니다.</td><td>나침반으로 자석 극 확인 → 방향 실험 4가지(기록표 1) → 크기 실험 5가지 조건 × 3회(기록표 2).</td><td>스위치는 1~2초. 포일이 자석에 닿지 않게 높이를 조절합니다.</td></tr>
+      <tr><td><span class="phase">정리</span><br>7분</td><td>모둠 결과를 모아 "전류(또는 자기장) 하나만 반대 → 힘 반대, 둘 다 반대 → 힘 그대로"를 정리하고, F = BIL에서 전하 하나의 힘 qvB로 연결합니다.</td><td>결과 분석 A1~A3을 작성합니다(A4는 과제).</td><td>흔들림이 정확히 비례하지 않는 것은 정상(자석을 쌓으면 위쪽 자석만큼 자기장이 늘지 않음)입니다.</td></tr>
+    </table></div>
+    <h3>2차시 (50분): 나선 운동, p = 0.3Br, 싱크로트론</h3>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>단계·시간</th><th>교사 활동</th><th>학생 활동</th><th>자료·유의점</th></tr>
+      <tr><td><span class="phase">도입</span><br>4분</td><td>오로라 사진을 보여 주며 "태양에서 온 하전 입자는 왜 극지방으로 모일까?"를 묻습니다.</td><td>짝과 짧게 추측합니다.</td><td>나선 운동으로 자연스럽게 연결합니다.</td></tr>
+      <tr><td><span class="phase">전개 1</span><br>10분</td><td>속도 분해로 나선 운동을 설명(그림 3)하고, p [GeV/c] = 0.3Br을 소개합니다. LHC 휨 반지름이 4.25 km가 아니라 2.8 km인 까닭(자석 총 길이 17.6 km ÷ 2π)과 B ≈ 8.1 T 계산을 함께 합니다.</td><td>핵심 개념 3·4를 읽고 LHC 계산을 따라 합니다.</td><td>0.3이 어디서 오는지(e·c/10⁹)는 심화 학생에게만 보여 줍니다.</td></tr>
+      <tr><td><span class="phase">전개 2</span><br>25분</td><td>모의실험 화면(화살표 색, 측정 r, 자동 축척)을 2분간 시연합니다. 미션 1~4(실험실 모드, 15분) → 미션 5(싱크로트론 링, 8분) 순서로 진행하며 순회합니다.</td><td>2인 1조로 미션을 수행하고 기록표·계산표와 B1~B5를 작성합니다.</td><td>재생 속도 2배 추천. 미션 5는 반드시 B₀·B₁을 손으로 계산한 뒤 입력하게 합니다([자동 설정]은 미션으로 인정되지 않음).</td></tr>
+      <tr><td><span class="phase">전개 3</span><br>4분</td><td>LHC 쌍극자석(초전도, 1.9 K, 빔관 2개에 반대 방향 자기장)과 CMS 솔레노이드(3.8 T)를 소개합니다.</td><td>"실제 CERN에서는"을 읽습니다.</td><td>참고 자료의 CERN 자석 페이지 사진 활용.</td></tr>
+      <tr><td><span class="phase">정리</span><br>7분</td><td>확인 문제 1·2·6을 함께 풀고 나머지는 과제로 냅니다. 주제 5(검출기)에서 "휘는 정도로 운동량을 잰다"를 예고합니다.</td><td>확인 문제와 자기 평가를 작성하고 [내 답안 복사]로 제출합니다.</td><td>업그레이드 도전은 희망자 과제.</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="questions">
+    <div class="section__head"><span class="section__tag">04</span><h2>핵심 발문과 예상 답변</h2></div>
+    <details><summary>발문 1. LHC의 강한 자석은 양성자를 빠르게 할까?</summary><p>예상 답변: "강하니까 빠르게 한다", "끌어당겨서 가속한다."</p><p>후속 발문: 자기력의 방향은 속도와 어떤 관계인가요? 힘이 운동 방향에 수직이면 일 W = Fs cos 90° = 0 → 운동에너지 변화 0. 자석은 방향만 바꾸고, 가속은 RF 공동(주제 3)이 합니다.</p></details>
+    <details><summary>발문 2. 양성자와 전자가 같은 속력으로 같은 자기장에 들어가면 누가 더 크게 돌까? 같은 방향일까?</summary><p>예상 답변: "가벼운 전자가 더 크게 휜다(반지름이 작다)", "같은 방향."</p><p>후속 발문: r = mv/(qB)에서 전하 크기는 같고 질량은 1836배 → 양성자 반지름이 1836배. 전하 부호가 반대이므로 반대 방향으로 돕니다. 모의실험 미션 3에서 확인합니다.</p></details>
+    <details><summary>발문 3. 빔의 에너지가 2배가 되면 같은 링에서 자기장은 몇 배가 필요할까?</summary><p>예상 답변: "2배", "4배(운동에너지가 v²에 비례하니까)."</p><p>후속 발문: LHC 양성자처럼 빛의 속력에 가까우면 E ≈ pc이므로 운동량이 2배 → B도 2배. 저속에서는 Eₖ ∝ p²이라 √2배. 싱크로트론 램프 그래프(B–p)가 직선임을 확인합니다.</p></details>
+    <details><summary>발문 4. 왜 가속기를 직선으로 길게 만들지 않고 둥글게 만들까?</summary><p>예상 답변: "땅이 부족해서", "계속 돌면서 여러 번 가속하려고."</p><p>후속 발문: 원형이면 같은 RF 공동을 1초에 약 11,000번 다시 쓸 수 있고, 빔을 몇 시간씩 저장하며 충돌시킬 수 있습니다. 대신 더 높은 에너지에는 더 강한 자석이나 더 큰 링이 필요합니다(그리고 전자는 싱크로트론 복사로 에너지를 잃는다 — 주제 8).</p></details>
+    <details><summary>발문 5. 검출기에서 입자의 궤적이 휘는 정도로 무엇을 알 수 있을까?</summary><p>예상 답변: "속력", "질량", "전하."</p><p>후속 발문: r = p/(qB)이므로 반지름 → 운동량, 휘는 방향 → 전하 부호. 질량은 따로 알 수 없다는 점(모의실험 "r – p" 그래프에서 전자·양성자가 한 직선에 놓임)을 확인합니다.</p></details>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">05</span><h2>실험 A 지도 팁과 예시 결과</h2></div>
+    <div class="box box--tip prose">
+      <p><b>방향 판정.</b> 원판 자석의 N극을 위로 두면 포일 위치의 자기장은 대체로 위쪽입니다. 포일 수평 부분에 왼쪽 → 오른쪽으로 전류가 흐르면 F = IL × B는 학생 쪽(앞)입니다. 학생들이 "전류 방향 = 건전지 + 극에서 나오는 방향"을 헷갈리므로, 기록표에 그림으로 전류 방향을 화살표로 그리게 하세요. 음전하인 전자가 실제로는 반대로 움직이지만, 반대 전하가 반대로 움직이므로 힘의 방향은 같다는 점(q와 v가 모두 부호를 바꿈)을 심화 질문으로 던질 수 있습니다.</p>
+      <p><b>크기 판정.</b> 자석을 아래에 쌓으면 위쪽 자석이 포일에 가장 가깝고 아래쪽 자석은 멀어서 자기장이 개수에 정비례하지 않습니다. 건전지를 2개로 늘려도 내부 저항 때문에 전류가 2배가 되지 않으므로, 보호 저항 1 Ω을 넣으면 비례에 더 가까워집니다(건전지 1개 약 1.1 A, 2개 약 1.9 A). 핵심 결론은 "B가 클수록, I가 클수록 힘이 크다"는 경향입니다.</p>
+      <p><b>잘 안 될 때.</b> 포일이 너무 팽팽하면 움직임이 작습니다(살짝 늘어지게). 포일과 자석 사이를 5 mm 이하로 하면 효과가 큽니다. 악어클립 접촉이 나쁘면 전류가 거의 흐르지 않으니 포일 끝을 접어 두껍게 물립니다.</p>
+    </div>
+    <h4>예시 결과 1: 방향 (포일 전류 왼쪽 → 오른쪽을 ①로 함, 앞 = 학생 쪽)</h4>
+    <div class="table-wrap"><table>
+      <tr><th>경우</th><th>전류 방향</th><th>자기장 방향</th><th>예상한 힘</th><th>관찰</th><th>일치</th></tr>
+      <tr><td>① 처음 연결</td><td>왼쪽 → 오른쪽</td><td>위(N극 위)</td><td>앞</td><td>앞으로 튀어나옴</td><td>O</td></tr>
+      <tr><td>② 전류만 반대</td><td>오른쪽 → 왼쪽</td><td>위</td><td>뒤</td><td>뒤로 밀려남</td><td>O</td></tr>
+      <tr><td>③ 자석만 뒤집기</td><td>왼쪽 → 오른쪽</td><td>아래(S극 위)</td><td>뒤</td><td>뒤로 밀려남</td><td>O</td></tr>
+      <tr><td>④ 둘 다 반대</td><td>오른쪽 → 왼쪽</td><td>아래</td><td>앞</td><td>앞으로 튀어나옴</td><td>O</td></tr>
+    </table></div>
+    <h4>예시 결과 2: 크기 (보호 저항 1 Ω, 포일–자석 거리 5 mm)</h4>
+    <div class="table-wrap"><table>
+      <tr><th>조건</th><th class="num">1회 (mm)</th><th class="num">2회 (mm)</th><th class="num">3회 (mm)</th><th class="num">평균 (mm)</th></tr>
+      <tr><td>자석 1개 · 건전지 1개</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">4.3</td></tr>
+      <tr><td>자석 2개 · 건전지 1개</td><td class="num">7</td><td class="num">7</td><td class="num">8</td><td class="num">7.3</td></tr>
+      <tr><td>자석 3개 · 건전지 1개</td><td class="num">9</td><td class="num">10</td><td class="num">9</td><td class="num">9.3</td></tr>
+      <tr><td>자석 4개 · 건전지 1개</td><td class="num">10</td><td class="num">11</td><td class="num">10</td><td class="num">10.3</td></tr>
+      <tr><td>자석 3개 · 건전지 2개</td><td class="num">15</td><td class="num">16</td><td class="num">14</td><td class="num">15.0</td></tr>
+    </table></div>
+    <p class="prose small muted">해석: 자석 수가 늘수록 흔들림이 커지지만 증가 폭이 줄어듭니다(먼 자석의 기여가 작음). 전류를 약 1.7배로 늘리자 흔들림이 약 1.6배가 되어 F ∝ I에 가깝습니다. 대략적인 크기: B ≈ 0.2 T, 유효 길이 L ≈ 2 cm, I ≈ 1.1 A이면 F = BIL ≈ 4×10⁻³ N으로, 포일 띠 무게(약 5×10⁻⁴ N)의 8배쯤 되어 눈에 띄게 움직입니다.</p>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">06</span><h2>3D 모의실험 운영 가이드</h2></div>
+    <div class="box box--tip prose">
+      <p><b>모형.</b> 실험실 모드는 상자 안에만 균일한 자기장 B = (0, ±B, 0)이 있고, 상대론적 로렌츠 힘을 보리스(Boris) 회전법으로 적분합니다. 이 방법은 속도 벡터를 정확히 회전시키므로 수치 오차로 원이 나선형으로 퍼지지 않습니다(측정–이론 차이 약 0.004%). "측정 r"은 궤적 점들에 원을 맞춰 얻은 값이고, "이론 r"은 p⊥/(|q|B)(p = γmv)입니다. 입자가 상자를 벗어나면 자기장이 없어 직진합니다. 화면 축척은 자동으로 바뀌므로(HUD에 1칸의 실제 길이 표시) 크기 비교를 화면으로 하려면 "자동 축척"을 끕니다. 시간은 한 바퀴를 화면 3초로 늦추어 보여 줍니다.</p>
+      <p><b>싱크로트론 링 모드.</b> 링 반지름 R이 고정되고, [램프 시작]을 누르면 15초(재생 속도 1배) 동안 빔 운동량이 p₀ → p₁, 자기장이 B₀ → B₁로 함께 직선적으로 올라갑니다. 궤도 반지름 r = p/(0.2998B)가 R에서 ±2%를 벗어나면 빔이 벽에 부딪힙니다(화면의 반지름 차이는 5배 과장, 빔관 폭은 실제보다 훨씬 넓게 설정). 주입 상태에서 B₀가 틀리면 "주입 실패"가 반복됩니다.</p>
+    </div>
+    <ol class="steps">
+      <li><span>처음 화면 — 양성자, v = 1.0×10⁷ m/s, B = 0.50 T: 이론 r = 측정 r = 20.89 cm, p = 31.3 MeV/c, Eₖ = 0.522 MeV, 한 바퀴 뒤 주기 T = 131.3 ns. 흰 화살표(v)는 접선, 주황 화살표(F)는 늘 중심을 향합니다.</span></li>
+      <li><span>미션 1(r ∝ v) — 기대 결과: v = 10, 20, 30 (×10⁶ m/s) → r = 20.89, 41.85, 62.95 cm. 원점을 지나는 직선(기울기 ≈ 0.0209 m/(10⁶ m/s)). 30×10⁶ m/s에서 3배보다 0.45% 큰 것은 γ = 1.005 때문입니다.</span></li>
+      <li><span>미션 2(r ∝ 1/B) — v = 30×10⁶ m/s에서 B = 0.5, 1.0, 1.5 T → r = 62.95, 31.48, 20.98 cm. r – 1/B 그래프가 원점을 지나는 직선입니다.</span></li>
+      <li><span>미션 3(전자 vs 양성자) — v = 30×10⁶ m/s, B = 1.5 T: 전자 r = 114.3 μm, 양성자 r = 20.98 cm → 비 1836(= mₚ/mₑ). 양성자는 위에서 볼 때 시계 방향, 전자는 반대 방향으로 돕니다(B 위쪽 기준). 자동 축척을 끄고 양성자 → 전자 순서로 쏘면 전자의 원은 점처럼 작게 보입니다.</span></li>
+      <li><span>미션 4(나선 운동) — 예: 전자, v = 30×10⁶ m/s, B = 1.5 T, 입사각 20°: r = 107.4 μm(= 114.3 × cos 20°), 주기 T = 23.9 ps(입사각 0°와 같음), 피치 = 2πr·tan 20° ≈ 246 μm. 입사각 10° 이상에서 한 바퀴를 돌면 자동 완료됩니다. B를 뒤집으면 도는 방향만 바뀌고 나선은 그대로 위로 갑니다.</span></li>
+      <li><span>미션 5(LHC) — 정답: B₀ = 450 ÷ (0.2998 × 2804) = 0.535 T, B₁ = 6800 ÷ (0.2998 × 2804) = 8.09 T(0.3을 쓰면 0.535·8.08 T로도 성공). 참고: SPS 0.117 → 2.025 T, PS 0.133 → 1.238 T. B₁을 6.5 T로 넣으면 램프 시작 직후 약 500 GeV/c에서 바깥쪽 벽에 부딪힙니다(B 부족 → r 증가). 학생 계산에서 흔한 실수: R 대신 둘레나 4.25 km 사용, TeV와 GeV 혼동.</span></li>
+      <li><span>더 해 보기 — 전자를 290×10⁶ m/s로 쏘면 γ = 3.94라 측정 r(4.34 mm)이 고전 r(1.10 mm)의 약 3.9배입니다. 전하를 0으로 하면 직진합니다. 알파 입자(q = +2e)는 같은 v·B에서 양성자보다 약 2배 큰 원(질량 약 4배, 전하 2배)을 그립니다.</span></li>
+    </ol>
+    <p class="prose small muted">기록표·미션 상태는 각 브라우저에 저장됩니다. 실험실 모드 기록표와 링 모드 기록표는 따로 저장되며, [기록 지우기]를 두 번 누르면 비워집니다.</p>
+  </section>
+
+  <section class="section" id="miscon">
+    <div class="section__head"><span class="section__tag">07</span><h2>흔한 오개념과 대응</h2></div>
+    <div class="table-wrap"><table><tr><th>오개념</th><th>바른 개념</th><th>대응 활동</th></tr>
+      <tr><td>자기력이 입자를 가속한다(빠르게 한다).</td><td>자기력은 속도에 수직이라 일을 하지 않으므로 속력은 일정하고 방향만 바뀝니다.</td><td>모의실험에서 원운동 중 "운동에너지" 측정값이 변하지 않는 것을 확인합니다.</td></tr>
+      <tr><td>자기력의 방향은 자기장 방향(자기력선 방향)이다.</td><td>로렌츠 힘은 속도와 자기장 모두에 수직입니다. 전기력(전기장 방향)과 다릅니다.</td><td>그네 실험에서 자기장은 위쪽인데 포일은 앞뒤로 움직이는 것을 관찰합니다.</td></tr>
+      <tr><td>정지한 전하도 자기장에서 힘을 받는다.</td><td>F = qvB이므로 v = 0이면 힘이 0입니다. 그네도 전류가 흐를 때만 움직입니다.</td><td>스위치를 누르지 않으면(전류 0) 포일이 움직이지 않는 것을 확인합니다.</td></tr>
+      <tr><td>무거운 입자가 더 많이 휜다 / 전자와 양성자는 같은 방향으로 돈다.</td><td>같은 v·B에서 r ∝ m이라 무거울수록 덜 휩니다. 전하 부호가 반대면 반대로 돕니다.</td><td>모의실험 미션 3.</td></tr>
+      <tr><td>LHC 휨 반지름 = 둘레 ÷ 2π = 4.25 km.</td><td>쌍극자석은 둘레의 약 2/3에만 있고, 나머지는 직선 구간(실험·RF·빔 덤프 등)입니다. 휨 반지름은 약 2.8 km입니다.</td><td>자석 총 길이(1232 × 14.3 m ≈ 17.6 km) ÷ 2π를 계산하게 합니다.</td></tr>
+      <tr><td>원운동하는 입자는 결국 속력이 줄며 안쪽으로 감겨 들어간다.</td><td>진공의 균일 자기장에서는 영원히 같은 원을 돕니다. 검출기 사진의 소용돌이 궤적은 물질과 충돌하며 에너지를 잃어 생긴 것입니다.</td><td>모의실험의 닫힌 원과 거품상자 사진(주제 5)을 비교합니다.</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="answers">
+    <div class="section__head"><span class="section__tag">08</span><h2>활동지 정답과 해설</h2></div>
+    <div class="box box--answer"><h4>생각 열기 Q1·Q2</h4><p>Q1. 원형이면 같은 가속 장치(RF 공동)를 매 바퀴 다시 써서 여러 번 가속할 수 있고(LHC는 1초에 약 11,000바퀴), 빔을 오래 저장하며 같은 지점에서 반복해 충돌시킬 수 있습니다. 직선이면 한 번 지나가면 끝이라 같은 에너지를 얻으려면 훨씬 길어야 합니다.</p><p>Q2. 에너지(운동량)가 큰 입자일수록 방향을 바꾸기 어렵습니다(r = p/(qB)). 빠른 자동차가 급커브를 돌려면 큰 구심력이 필요한 것과 같습니다. 링의 반지름이 정해져 있으므로 운동량이 커지면 B도 커져야 합니다.</p></div>
+    <div class="box box--answer"><h4>결과 분석 A1~A4</h4>
+      <p>A1. (예시 결과 기준) 네 경우 모두 일치. 전류나 자기장 중 하나만 반대로 하면 힘이 반대가 되고, 둘 다 반대로 하면 힘의 방향은 처음과 같습니다(F = IL × B에서 두 벡터의 부호가 모두 바뀌면 곱의 부호는 그대로).</p>
+      <p>A2. 자석 수와 건전지 수를 늘릴수록 흔들림이 커졌습니다. F = BIL에서 B(자석 수)와 I(건전지 수)가 커지면 힘이 커지기 때문입니다. 단, 자석을 쌓으면 포일 위치의 B가 개수만큼 늘지 않고, 건전지를 직렬로 늘려도 내부 저항 때문에 전류가 정확히 2배가 되지 않아 정비례하지는 않습니다.</p>
+      <p>A3. 도선 단면적 A, 단위 부피당 전하 수 n, 전하들의 속력 v이면 I = nqvA입니다. 길이 L 안의 전하 수는 nAL이므로 F = BIL = B(nqvA)L = (nAL) × qvB. 즉 도선이 받는 힘은 전하 하나하나가 받는 로렌츠 힘 qvB의 합입니다.</p>
+      <p>A4. 자석과 포일 사이 거리가 매번 조금씩 다름, 건전지가 쓰면서 약해짐(전압 저하), 포일의 무게·탄성·늘어진 정도, 흔들림의 최대 위치를 눈으로 읽는 오차, 악어클립의 접촉 저항 등.</p></div>
+    <div class="box box--answer"><h4>모의실험 B1~B5</h4>
+      <p>B1. 두 그래프 모두 원점을 지나는 직선입니다. r ∝ v, r ∝ 1/B → r = k·v/B(k = m/q). 즉 r = mv/(qB).</p>
+      <p>B2. 약 1836배(예: 20.98 cm ÷ 114.3 μm ≈ 1836). 양성자와 전자의 질량비 mₚ/mₑ와 같습니다(같은 속력이면 γ도 같아 정확히 질량비). 전하 부호가 반대이므로 같은 v × B에 대해 힘의 방향이 반대 → 반대 방향으로 돕니다.</p>
+      <p>B3. 측정 r = 4.34 mm, 고전 r = 1.10 mm로 약 3.9배. v = 2.9×10⁸ m/s(β = 0.967)에서 γ = 3.94이고 실제 운동량 p = γmv가 고전 운동량 mv의 3.94배이기 때문입니다. 빠른 입자는 고전 공식보다 휘기 어렵습니다.</p>
+      <p>B4. 자기장과 나란한 속도 성분은 sin 0° = 0이라 힘을 받지 않아 일정합니다(관성). 주기 T = 2πγm/(qB)는 속력이나 입사각과 관계없으므로 입사각 0°일 때와 같습니다(예: 전자, 1.5 T에서 23.9 ps).</p>
+      <p>B5. 바깥쪽 벽에 부딪혔습니다. 운동량은 계획대로 오르는데 B가 필요한 만큼 오르지 않으면 r = p/(0.3B)가 R보다 커지기 때문입니다(반대로 B가 너무 크면 안쪽 벽). 6.5 T로 계획하면 램프 초반 약 500 GeV/c에서 이미 2%를 벗어납니다.</p></div>
+    <div class="box box--answer"><h4>싱크로트론 링 계산표</h4>
+      <div class="table-wrap"><table>
+        <tr><th>링</th><th class="num">R (m)</th><th class="num">p₀ (GeV/c)</th><th class="num">B₀ (T)</th><th class="num">p₁ (GeV/c)</th><th class="num">B₁ (T)</th></tr>
+        <tr><td style="white-space:nowrap">LHC</td><td class="num">2804</td><td class="num">450</td><td class="num">0.535</td><td class="num">6800</td><td class="num">8.09</td></tr>
+        <tr><td style="white-space:nowrap">SPS</td><td class="num">741.3</td><td class="num">26</td><td class="num">0.117</td><td class="num">450</td><td class="num">2.02</td></tr>
+        <tr><td style="white-space:nowrap">PS</td><td class="num">70.08</td><td class="num">2.78</td><td class="num">0.133</td><td class="num">26</td><td class="num">1.24</td></tr>
+      </table></div>
+      <p>계산: B = p ÷ (0.2998 × R). 0.3을 써도 차이가 0.07%라 모의실험에서 성공합니다.</p></div>
+    <div class="box box--answer"><h4>확인 문제</h4>
+      <p>1. 양성자: 위쪽(오른손: 엄지 → 오른쪽, 네 손가락 → 종이 속, 손바닥 → 위). 원의 중심이 위에 있으므로 시계 반대 방향으로 돕니다. 전자: 아래쪽, 시계 방향.</p>
+      <p>2. r = mv/(qB) = (9.11×10⁻³¹ × 2.0×10⁷) ÷ (1.60×10⁻¹⁹ × 1.0×10⁻³) = 1.82×10⁻²³ ÷ 1.60×10⁻²² = 0.114 m ≈ <b>11 cm</b>.</p>
+      <p>3. 전하 크기와 v, B가 같으므로 r ∝ m: 1.67×10⁻²⁷ ÷ 9.11×10⁻³¹ ≈ <b>1.8×10³배</b>(약 1836배, 반지름 약 21 m). 전하 부호가 반대이므로 도는 방향이 반대입니다.</p>
+      <p>4. 둘 다 일정합니다. 로렌츠 힘은 늘 속도에 수직이라 W = Fs cos 90° = 0, 일·운동에너지 정리에 따라 운동에너지(속력)가 변하지 않습니다.</p>
+      <p>5. r = p/(0.3B) = 50 ÷ (0.3 × 3.8) ≈ <b>44 m</b>. 반지름 1.1 m 안에서는 궤적이 원래 직선에서 약 L²/(8r) = 1.1² ÷ (8 × 44) ≈ 3.4 mm밖에 벗어나지 않아 거의 곧게 보입니다. 그래서 CMS는 매우 정밀한 실리콘 트래커로 작은 휨을 잽니다.</p>
+      <p>6. p = 0.3 × 10 × 2804 ≈ <b>8.4×10³ GeV/c = 8.4 TeV/c</b>. 휨 반지름을 2배(5608 m)로 하면 p = 0.3 × 8.1 × 5608 ≈ <b>13.6 TeV/c</b>(운동량은 B와 r에 각각 비례).</p></div>
+    <div class="box box--answer"><h4>업그레이드 도전</h4>
+      <p>① T = 2π × 1.67×10⁻²⁷ ÷ (1.60×10⁻¹⁹ × 0.50) = 1.31×10⁻⁷ s = 131 ns. 모의실험 측정값: v = 5, 10, 20 (×10⁶ m/s)에서 131.2, 131.3, 131.5 ns로 거의 같습니다(아주 작은 증가는 γ 때문).</p>
+      <p>② v = 200×10⁶ m/s이면 γ = 1.34라 T ≈ 176 ns로 길어집니다. 사이클로트론은 일정한 주파수로 가속하므로, 빨라질수록 입자가 늦게 돌아와 가속 전압과 위상이 맞지 않게 됩니다. 그래서 높은 에너지에서는 주파수와 자기장을 바꾸는 싱크로사이클로트론·싱크로트론을 씁니다.</p>
+      <p>③ r = mv/(qB): 탄소-12 m = 12 × 1.66×10⁻²⁷ = 1.99×10⁻²⁶ kg → r = 1.99×10⁻²⁶ × 1.0×10⁵ ÷ (1.60×10⁻¹⁹ × 0.20) = 0.0623 m. 탄소-13 → 0.0674 m. 차이 약 <b>5.2 mm</b>(지름으로는 10 mm 이상 벌어져 검출판에서 구별 가능).</p></div>
+  </section>
+
+  <section class="section" id="assess">
+    <div class="section__head"><span class="section__tag">09</span><h2>평가 루브릭</h2></div>
+    <div class="table-wrap"><table class="rubric"><tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>로렌츠 힘의 방향</td><td>양·음전하, 전류·자기장 반전 상황에서 힘과 회전 방향을 모두 맞히고 오른손 법칙으로 근거를 댄다.</td><td>양전하의 힘 방향은 맞히나 음전하나 반전 상황에서 실수가 있다.</td><td>힘의 방향을 자기장 방향과 혼동한다.</td></tr>
+      <tr><td>원운동 설명과 계산</td><td>"수직인 힘 → 일 0 → 속력 일정 → 구심력"의 논리로 원운동을 설명하고 r, T를 단위까지 바르게 계산한다.</td><td>r = mv/(qB)로 계산은 하지만 원운동이 되는 까닭 설명이 부족하다.</td><td>공식 대입에서 오류가 많거나 원운동 까닭을 설명하지 못한다.</td></tr>
+      <tr><td>실험 수행과 자료 해석</td><td>예상을 먼저 기록하고 3회 측정·평균을 내며, 비례에서 벗어난 까닭을 자석 거리·내부 저항 등으로 분석한다.</td><td>측정은 했으나 해석이 경향 서술에 그친다.</td><td>기록표가 비어 있거나 관찰과 예상을 구별하지 못한다.</td></tr>
+      <tr><td>모의실험과 LHC 추정</td><td>미션 5개를 완료하고 r ∝ v, r ∝ 1/B 그래프와 p = 0.3Br로 LHC의 B ≈ 8 T와 링이 둥글고 커지는 까닭을 논리적으로 설명한다.</td><td>미션 3~4개를 완료하고 LHC의 B를 계산하지만 해석이 부족하다.</td><td>미션 2개 이하를 완료하고 B 계산을 하지 못한다.</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="flex">
+    <div class="section__head"><span class="section__tag">10</span><h2>차시 조정과 수준별 지도</h2></div>
+    <div class="grid-3">
+      <div class="box"><h4>1차시 압축안 (50분)</h4><p>도입 3분 → 로렌츠 힘·원운동·p = 0.3Br 압축 설명 15분 → 전류 그네는 교사 시연으로 방향 4가지만 확인(학생은 오른손 법칙으로 예상 후 관찰) 7분 → 모의실험 미션 1·3·5 집중 20분 → 확인 문제 1·2 5분. 크기 측정과 나머지 문제는 과제로 돌립니다.</p></div>
+      <div class="box"><h4>3차시 확장안 (150분)</h4><p>3차시에 "검출기 속 운동량 측정" 활동을 더합니다. CMS 사건 화면이나 거품상자 사진의 트랙에서 세 점을 골라 반지름을 작도(현의 수직이등분선)하고 p = 0.3Br로 운동량을 구합니다. 또는 전자빔 편향관으로 가속 전압 V와 반지름 r을 측정해 e/m = 2V/(B²r²)를 구하는 정량 실험을 합니다(교사 시연+모둠 데이터 분석).</p></div>
+      <div class="box"><h4>보충·심화</h4><p><b>보충:</b> 오른손 법칙 카드(그림 상황 6개)로 방향 연습, 숫자를 바꾼 r 계산 연습. 모의실험은 미션 1·3만 수행해도 핵심을 잡을 수 있습니다. <b>심화:</b> 0.3의 유도(p = eBr을 GeV/c로: e·c/10⁹ ≈ 0.2998), 나선 피치 계산, 자기 거울과 오로라, 사이클로트론과 싱크로트론 비교, 업그레이드 도전 ②·③, 주제 8의 싱크로트론 복사 예고.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="refs">
+    <div class="section__head"><span class="section__tag">11</span><h2>참고 자료</h2></div>
+    <ul>
+      <li><a href="https://home.cern" target="_blank" rel="noopener">CERN 공식 누리집</a></li>
+      <li><a href="https://home.cern/science/engineering/pulling-together-superconducting-electromagnets" target="_blank" rel="noopener">CERN – Pulling together: Superconducting electromagnets (쌍극자석 1232개, 8.3 T, 11,080 A, 길이 15 m)</a></li>
+      <li><a href="https://home.cern/science/accelerators/large-hadron-collider" target="_blank" rel="noopener">CERN – The Large Hadron Collider</a></li>
+      <li><a href="https://home.cern/science/accelerators/accelerator-complex" target="_blank" rel="noopener">CERN – The accelerator complex (PS, SPS, LHC로 이어지는 가속 사슬)</a></li>
+      <li><a href="https://home.cern/science/experiments/cms" target="_blank" rel="noopener">CERN – CMS (3.8 T 초전도 솔레노이드 검출기)</a></li>
+      <li>이 사이트의 주제 3(전기장으로 입자 가속하기), 주제 5(입자 검출기), 주제 8(나만의 LHC 설계하기)</li>
+    </ul>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

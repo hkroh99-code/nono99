@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 3 입자 가속 · 학생용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-page="student" data-topic="03" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--student">학생용</span>
+      <span class="badge badge--basic">기본과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 3</p>
+    <h1>전기장으로 입자 가속하기</h1>
+    <p class="lead">입자를 거의 빛의 속력까지 가속하려면 전기장을 어떻게 써야 할까? 한 번에 큰 전압을 거는 대신, 같은 전압을 리듬에 맞춰 여러 번 쓰는 방법을 알아봅니다.</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--sim" href="../sims/t03.html">3D 모의실험 열기</a>
+      <button class="btn" type="button" data-copy-answers>내 답안 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>답안 지우기</button>
+    </div>
+    <p class="save-note">입력한 답은 이 기기의 브라우저에만 자동 저장됩니다. 제출할 때는 [내 답안 복사]를 눌러 붙여 넣으세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#goals">학습 목표</a><a href="#open">생각 열기</a><a href="#concept">핵심 개념</a>
+      <a href="#lab">실험 A</a><a href="#sim">실험 B: 3D</a><a href="#cern">CERN에서는</a>
+      <a href="#check">확인 문제</a><a href="#up">업그레이드</a><a href="#self">자기 평가</a>
+    </nav>
+  </header>
+
+  <section class="section" id="goals">
+    <div class="box box--goal">
+      <h2 class="box__title" style="font-size:var(--step-1)">학습 목표</h2>
+      <ol>
+        <li>전위차 V를 지난 전하 q가 얻는 에너지 qV와 전자볼트(eV)의 뜻을 설명하고 계산할 수 있다.</li>
+        <li>직류 전압으로 가속하는 방법의 한계와, 교류(RF) 전압으로 여러 번 가속하는 선형가속기의 원리를 설명할 수 있다.</li>
+        <li>드리프트 튜브가 뒤로 갈수록 길어지는 까닭을 속력과 RF 주기로 설명하고 L = v/(2f)로 계산할 수 있다.</li>
+        <li>에너지가 커져도 속력은 빛의 속력을 넘지 못한다는 것을 자료로 확인하고, CERN 가속 사슬의 첫 단계인 Linac4와 연결할 수 있다.</li>
+      </ol>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>활동</th></tr>
+      <tr><td>1차시 (50분)</td><td>생각 열기: 번개로 LHC 에너지를 만들 수 있을까? (5분) → 핵심 개념 1·2: 일과 에너지 qV, 전자볼트, 직류 가속의 한계 (12분) → 실험 A: 정전기 관찰과 계단 경사로 측정 (25분) → 결과 분석과 계산 활동 (8분)</td></tr>
+      <tr><td>2차시 (50분)</td><td>핵심 개념 3·4: RF 가속과 드리프트 튜브, 빛의 속력의 벽 (12분) → 실험 B: 3D 선형가속기 위상 맞추기 미션 (23분) → 실제 CERN의 Linac4 (5분) → 확인 문제와 자기 평가 (10분)</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="open">
+    <div class="section__head"><span class="section__tag">01</span><h2>생각 열기</h2></div>
+    <div class="box box--think prose">
+      <p>번개가 칠 때 구름과 땅 사이의 전위차는 수억 볼트(V)에 이른다고 알려져 있습니다. 옛날 브라운관 텔레비전은 약 25,000 V(25 kV)로 전자를 가속해 화면을 빛나게 했습니다.</p>
+      <p>LHC는 양성자 하나에 <b>6.8 TeV = 6.8×10¹² eV</b>의 에너지를 줍니다. 양성자의 전하는 기본 전하 e이므로, 이 에너지를 <b>한 번에</b> 주려면 6.8×10¹² V, 즉 6조 8천억 볼트의 전위차가 필요합니다. 번개 수만 개를 한 줄로 세운 것과 같은 전압입니다.</p>
+    </div>
+    <label class="answer-field"><span>Q1. 6조 볼트가 넘는 전압을 실제로 만들어 거는 것이 왜 불가능할지 생각나는 까닭을 써 보세요.</span><textarea id="open-q1"></textarea></label>
+    <label class="answer-field"><span>Q2. 공을 높은 곳에서 한 번에 떨어뜨리지 않고 더 빠르게 만들고 싶다면 어떤 방법이 있을까요? (힌트: 계단, 반복)</span><textarea id="open-q2"></textarea></label>
+  </section>
+
+  <section class="section" id="concept">
+    <div class="section__head"><span class="section__tag">02</span><h2>핵심 개념</h2></div>
+    <div class="prose">
+      <h3>1. 전위차를 지나면 에너지를 얻는다: W = qV</h3>
+      <p>전기장 속의 전하는 힘 F = qE를 받습니다. 균일한 전기장 E 속에서 거리 d만큼 움직이면 전기력이 한 일은 W = qEd이고, 두 지점의 전위차가 V = Ed이므로 <b>W = qV</b>입니다. 이 일은 모두 운동에너지로 바뀝니다. 중력장에서 질량 m인 물체가 높이 h를 내려오며 mgh의 에너지를 얻는 것과 똑같은 구조입니다(높이 h ↔ 전위차 V, 질량 m ↔ 전하 q).</p>
+      <p>입자물리에서는 에너지 단위로 <b>전자볼트(eV)</b>를 씁니다. 1 eV는 기본 전하 e(1.602×10⁻¹⁹ C)를 가진 입자가 1 V의 전위차를 지나며 얻는 에너지입니다.</p>
+    </div>
+    <div class="formula">Eₖ = <b>qV</b> &nbsp;&nbsp;·&nbsp;&nbsp; 1 eV = 1.602×10⁻¹⁹ C × 1 V = <b>1.602×10⁻¹⁹ J</b></div>
+    <div class="formula">1 keV = 10³ eV, 1 MeV = 10⁶ eV, 1 GeV = 10⁹ eV, 1 TeV = 10¹² eV</div>
+    <figure class="diagram">
+      <svg viewBox="0 0 680 230" width="680" role="img" aria-label="평행한 두 금속판 사이의 균일한 전기장에서 양성자가 가속되는 모습과, 계단을 내려가는 공의 비유"><style>text{paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round}</style>
+        <defs>
+          <marker id="ar3a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+          <marker id="ar3b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--track)"/></marker>
+        </defs>
+        <rect x="40" y="30" width="14" height="150" rx="3" fill="var(--danger)" opacity=".85"/>
+        <rect x="286" y="30" width="14" height="150" rx="3" fill="var(--accent)" opacity=".85"/>
+        <text x="47" y="22" text-anchor="middle" font-size="18">+</text>
+        <text x="293" y="22" text-anchor="middle" font-size="18">−</text>
+        <g stroke="var(--accent)" stroke-width="1.6" marker-end="url(#ar3a)">
+          <line x1="70" y1="60" x2="270" y2="60"/><line x1="70" y1="150" x2="270" y2="150"/>
+        </g>
+        <text x="170" y="52" text-anchor="middle" font-size="13">전기장 E</text>
+        <circle cx="90" cy="105" r="9" fill="var(--danger)"/>
+        <text x="90" y="109" text-anchor="middle" font-size="11" fill="var(--surface)" style="fill:var(--surface);stroke:none">p</text>
+        <line x1="104" y1="105" x2="250" y2="105" stroke="var(--track)" stroke-width="2.5" marker-end="url(#ar3b)"/>
+        <text x="175" y="98" text-anchor="middle" font-size="13">F = qE, 점점 빨라짐</text>
+        <line x1="47" y1="200" x2="293" y2="200" stroke="currentColor" stroke-width="1"/>
+        <text x="170" y="220" text-anchor="middle" font-size="13">전위차 V = Ed → 얻는 에너지 qV</text>
+        <g transform="translate(360,0)">
+          <path d="M10 50 H70 L110 90 H170 L210 130 H270 L300 160" fill="none" stroke="currentColor" stroke-width="2.5"/>
+          <circle cx="40" cy="41" r="8" fill="var(--track)"/>
+          <circle cx="140" cy="81" r="8" fill="var(--track)" opacity=".7"/>
+          <circle cx="240" cy="121" r="8" fill="var(--track)" opacity=".5"/>
+          <line x1="80" y1="50" x2="80" y2="90" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
+          <text x="86" y="76" font-size="13">h</text>
+          <line x1="180" y1="90" x2="180" y2="130" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
+          <text x="186" y="116" font-size="13">h</text>
+          <text x="150" y="190" text-anchor="middle" font-size="13">계단마다 mgh씩 운동에너지 증가</text>
+          <text x="150" y="212" text-anchor="middle" font-size="13" class="muted-fill">(전위차 V를 한 번 지날 때마다 qV)</text>
+        </g>
+      </svg>
+      <figcaption>그림 1. 전위차를 지나는 전하(왼쪽)와 계단을 내려가는 공(오른쪽). 높이 h ↔ 전위차 V, mgh ↔ qV.</figcaption>
+    </figure>
+    <div class="prose">
+      <p><b>예제.</b> 1 kV(1000 V)로 가속한 전자의 운동에너지는 1 keV = 1.602×10⁻¹⁶ J입니다. ½mv² = qV에서 v = √(2qV/m) = √(2 × 1.602×10⁻¹⁶ J ÷ 9.11×10⁻³¹ kg) ≈ <b>1.88×10⁷ m/s</b>로, 빛의 속력의 약 6%입니다. 같은 1 kV로 가속한 양성자는 질량이 1836배 크므로 속력은 √1836 ≈ 43배 느린 약 4.4×10⁵ m/s입니다.</p>
+      <h3>2. 직류 전압 하나로는 한계가 있다</h3>
+      <p>가장 단순한 가속기는 높은 직류 전압을 건 두 전극 사이로 입자를 한 번 통과시키는 것입니다(코크로프트–월턴 가속기, 반데그라프 가속기). 그러나 전압이 수백만 볼트(MV)를 넘으면 공기나 절연체가 견디지 못하고 <b>방전(불꽃)</b>이 일어나 더 올릴 수 없습니다. 그래서 직류 가속기는 수 MeV~수십 MeV 정도가 한계입니다.</p>
+      <p>"그러면 같은 전압을 여러 번 지나가게 하면 되지 않을까?" 정전기장(시간에 따라 변하지 않는 전기장)에서는 그렇게 할 수 없습니다. 입자가 출발점과 같은 전위로 돌아오면 얻은 에너지와 잃은 에너지의 합이 0이기 때문입니다. 계단을 내려간 공을 다시 처음 높이로 올려 보내면 내려가며 얻은 에너지를 그대로 잃는 것과 같습니다. 해결책은 <b>시간에 따라 방향이 바뀌는 전압</b>입니다.</p>
+      <h3>3. RF(고주파 교류) 전압과 드리프트 튜브</h3>
+      <p>1928년 비데뢰(Rolf Wideröe)는 속이 빈 금속 원통(<b>드리프트 튜브</b>)을 일렬로 세우고, 이웃한 튜브에 서로 반대 부호의 교류 전압을 걸었습니다. 도체로 둘러싸인 튜브 <b>안에는 전기장이 없어서</b> 입자는 일정한 속력으로 그냥 지나갑니다(드리프트). 입자가 튜브 안에 숨어 있는 동안 전압의 방향이 바뀌고, 입자가 다음 <b>간극(틈)</b>에 도착하면 그곳의 전기장이 다시 앞으로 미는 방향이 되어 또 가속됩니다.</p>
+      <p>이렇게 되려면 입자가 튜브 하나를 지나는 시간이 교류 전압의 <b>반 주기(T/2)</b>와 같아야 합니다. 입자는 간극을 지날 때마다 빨라지므로, 같은 시간 T/2 동안 더 먼 거리를 갑니다. 그래서 <b>튜브는 뒤로 갈수록 길어져야</b> 합니다. 입자가 간극에 도착하는 순간의 전압 상태를 <b>위상</b>이라 하고, 매번 전압이 가장 큰 순간(마루) 근처에 도착하도록 맞추는 것을 <b>위상 맞추기</b>라고 합니다. 위상이 반 주기 어긋나면 전기장이 거꾸로 되어 입자는 오히려 <b>감속</b>됩니다.</p>
+    </div>
+    <div class="formula">튜브 길이 L = v × <b>T/2</b> = <b>v / (2f)</b> = βλ/2</div>
+    <p class="small muted">f: RF 주파수, T = 1/f: RF 주기, β = v/c, λ = c/f: RF 파장</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 720 280" width="720" role="img" aria-label="드리프트 튜브 선형가속기 그림. 튜브가 뒤로 갈수록 길어지고, 이웃 튜브의 전위 부호가 번갈아 바뀌며, 간극의 전기장이 입자를 앞으로 민다. 아래에는 RF 전압의 사인 곡선이 있다."><style>text{paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round}</style>
+        <defs>
+          <marker id="ar3c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+        </defs>
+        <rect x="8" y="62" width="40" height="46" rx="4" fill="var(--surface-2)" stroke="currentColor"/>
+        <text x="28" y="130" text-anchor="middle" font-size="12">입자원</text>
+        <line x1="48" y1="85" x2="712" y2="85" stroke="var(--ink-3)" stroke-dasharray="4 4"/>
+        <g font-size="15" text-anchor="middle">
+          <rect x="70" y="66" width="56" height="38" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="98" y="58">−</text>
+          <rect x="144" y="66" width="76" height="38" rx="6" fill="var(--danger-soft)" stroke="var(--danger)"/>
+          <text x="182" y="58">+</text>
+          <rect x="238" y="66" width="96" height="38" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="286" y="58">−</text>
+          <rect x="352" y="66" width="112" height="38" rx="6" fill="var(--danger-soft)" stroke="var(--danger)"/>
+          <text x="408" y="58">+</text>
+          <rect x="482" y="66" width="124" height="38" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="544" y="58">−</text>
+        </g>
+        <g font-size="12" text-anchor="middle" class="muted-fill">
+          <text x="98" y="122">L₁</text><text x="182" y="122">L₂</text><text x="286" y="122">L₃</text><text x="408" y="122">L₄</text><text x="544" y="122">L₅</text>
+        </g>
+        <line x1="128" y1="34" x2="142" y2="34" stroke="var(--accent)" stroke-width="2" marker-end="url(#ar3c)" transform="rotate(180 135 34)"/>
+        <line x1="222" y1="34" x2="236" y2="34" stroke="var(--accent)" stroke-width="2" marker-end="url(#ar3c)"/>
+        <text x="229" y="24" text-anchor="middle" font-size="11">E</text>
+        <text x="135" y="24" text-anchor="middle" font-size="11">E</text>
+        <circle cx="229" cy="85" r="7" fill="var(--danger)"/>
+        <text x="229" y="146" text-anchor="middle" font-size="12">지금 이 간극에서 가속 중</text>
+        <text x="640" y="80" font-size="12">→ 출구</text>
+        <g transform="translate(70,170)">
+          <line x1="0" y1="45" x2="600" y2="45" stroke="currentColor" stroke-width="1"/>
+          <line x1="0" y1="0" x2="0" y2="90" stroke="currentColor" stroke-width="1"/>
+          <path d="M0 45 C 25 -15, 75 -15, 100 45 S 175 105, 200 45 S 275 -15, 300 45 S 375 105, 400 45 S 475 -15, 500 45 S 575 105, 600 45" fill="none" stroke="var(--track)" stroke-width="2.2"/>
+          <g fill="var(--lv-basic)">
+            <circle cx="50" cy="0" r="4.5"/><circle cx="150" cy="90" r="4.5"/><circle cx="250" cy="0" r="4.5"/><circle cx="350" cy="90" r="4.5"/><circle cx="450" cy="0" r="4.5"/><circle cx="550" cy="90" r="4.5"/>
+          </g>
+          <text x="6" y="-2" font-size="12">RF 전압</text>
+          <text x="600" y="62" text-anchor="end" font-size="12">시간 →</text>
+          <text x="100" y="105" text-anchor="middle" font-size="11" class="muted-fill">T/2</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 드리프트 튜브 선형가속기(비데뢰형). 이웃 튜브의 부호가 반대이고 반 주기마다 뒤바뀝니다. 초록 점: 입자가 각 간극에 도착하는 순간. 번갈아 놓인 간극의 방향이 반대이므로, 반 주기마다 도착하면 매번 앞으로 미는 전기장을 만납니다.</figcaption>
+    </figure>
+    <div class="prose">
+      <p><b>예제.</b> 운동에너지 3 MeV인 양성자의 속력은 β ≈ 0.080(v ≈ 2.39×10⁷ m/s)입니다. RF 주파수가 200 MHz이면 T/2 = 2.5 ns이므로 L = 2.39×10⁷ m/s × 2.5×10⁻⁹ s ≈ <b>6.0 cm</b>입니다.</p>
+      <h3>4. 빛의 속력의 벽: 에너지는 계속 늘지만 속력은 c에 다가갈 뿐</h3>
+      <p>고전 역학의 ½mv²는 속력이 빛의 속력에 가까워지면 맞지 않습니다. 특수 상대성이론에 따르면 운동에너지는 아래와 같고, 여기서 γ(감마, 로런츠 인자)는 속력이 클수록 커집니다. 에너지를 아무리 많이 주어도 β = v/c는 1에 다가갈 뿐 넘지 못합니다(자세한 내용은 주제 6).</p>
+    </div>
+    <div class="formula">Eₖ = (<b>γ − 1</b>) mc² &nbsp;&nbsp;→&nbsp;&nbsp; γ = 1 + Eₖ/(mc²), &nbsp; β = √(1 − 1/γ²)</div>
+    <p class="small muted">정지 에너지 mc²: 양성자 938.27 MeV, 전자 0.511 MeV</p>
+    <div class="table-wrap"><table>
+      <tr><th>입자</th><th class="num">운동에너지</th><th class="num">γ</th><th class="num">β = v/c (상대론)</th><th class="num">고전 공식 √(2Eₖ/m)/c</th><th>어디서?</th></tr>
+      <tr><td>양성자</td><td class="num">3 MeV</td><td class="num">1.0032</td><td class="num">0.080</td><td class="num">0.080</td><td>Linac4의 RFQ 출구</td></tr>
+      <tr><td>양성자</td><td class="num">50 MeV</td><td class="num">1.053</td><td class="num">0.314</td><td class="num">0.326</td><td>Linac4의 DTL 출구</td></tr>
+      <tr><td>양성자</td><td class="num">160 MeV</td><td class="num">1.171</td><td class="num">0.520</td><td class="num">0.584</td><td>Linac4 출구</td></tr>
+      <tr><td>양성자</td><td class="num">2 GeV</td><td class="num">3.13</td><td class="num">0.948</td><td class="num">2.06 (불가능)</td><td>PS 부스터 출구</td></tr>
+      <tr><td>양성자</td><td class="num">6.8 TeV</td><td class="num">약 7250</td><td class="num">0.999 999 990</td><td class="num">120 (불가능)</td><td>LHC</td></tr>
+      <tr><td>전자</td><td class="num">1 MeV</td><td class="num">2.96</td><td class="num">0.941</td><td class="num">1.98 (불가능)</td><td>소형 전자 가속기</td></tr>
+    </table></div>
+    <p class="prose">속력이 c에 거의 닿으면 더 가속해도 속력은 거의 변하지 않습니다. 그래서 이때부터는 <b>튜브 길이도 거의 일정</b>해지고(L → c/(2f)), 전자 선형가속기는 처음 몇 칸만 지나면 같은 길이의 칸을 반복해서 씁니다.</p>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">03</span><h2>실험 A: 정전기 가속 관찰과 계단 경사로 모형</h2></div>
+    <p class="prose">1부에서는 전기력이 물체를 정말로 "가속"한다는 것을 눈으로 확인합니다. 2부에서는 계단 모양 경사로에서 구슬이 단을 내려갈 때마다 빨라지는 것을 측정하여, 선형가속기의 "간극(가속)–튜브(등속)" 구조를 몸으로 이해합니다.</p>
+    <div class="grid-2">
+      <div class="box"><h3>준비물 (모둠별)</h3><ul>
+        <li>1부: 고무풍선 2개, 털목도리나 마른 수건, 빈 알루미늄 음료 캔 1개, 잘게 자른 종이·은박지 조각, (있으면) 반데그라프 발전기 — 교사 시연</li>
+        <li>2부: 홈이 있는 레일 약 2.5 m(전선 몰딩, 커튼 레일, 장난감 자동차 트랙 등), 쇠구슬 또는 유리구슬(지름 15~25 mm), 같은 두께의 책·나무 블록(높이 5 cm씩 쌓을 수 있게), 마스킹테이프, 줄자, 스마트폰(슬로모션 240 fps 촬영) 또는 스마트 계시기·포토게이트</li>
+        <li>계산기(또는 스마트폰 계산기), 활동지</li>
+      </ul></div>
+      <div class="box box--safety"><h4>안전 수칙</h4><ul>
+        <li>반데그라프 발전기 시연은 교사만 조작합니다. 심장 박동기 등 의료 기기를 쓰는 사람, 전자 기기(휴대폰·노트북)는 1 m 이상 떨어집니다. 금속 구에 손가락을 가까이 대지 않습니다.</li>
+        <li>구슬이 바닥에 떨어져 굴러다니지 않도록 레일 끝에 받침 상자(수건을 깐 상자)를 둡니다. 밟고 미끄러질 수 있습니다.</li>
+        <li>책 더미가 무너지지 않게 레일을 테이프로 단단히 고정하고, 책상 가장자리에서 떨어진 곳에 설치합니다.</li>
+        <li>풍선 조각은 삼킬 위험이 있으니 터진 풍선은 바로 치웁니다.</li>
+      </ul></div>
+    </div>
+    <h3>1부. 정전기력으로 움직이기 (관찰, 약 7분)</h3>
+    <ol class="steps">
+      <li><span>풍선을 불어 묶고 털목도리(또는 머리카락)에 10번 정도 문질러 대전시킵니다.</span></li>
+      <li><span>알루미늄 캔을 책상 위에 눕혀 놓고, 풍선을 캔에서 2~3 cm 떨어진 곳에 가져갑니다. 캔이 어떻게 움직이는지, 처음과 나중의 빠르기가 어떻게 다른지 관찰합니다.</span></li>
+      <li><span>풍선을 조금씩 뒤로 빼면서 캔이 계속 따라오게 해 봅니다. 풍선을 캔에 너무 가까이 대면 어떻게 되는지도 봅니다.</span></li>
+      <li><span>(교사 시연) 반데그라프 발전기 위에 은박지 조각을 올려 두고 작동시켜 조각이 튀어 나가는 모습을 관찰합니다.</span></li>
+    </ol>
+    <label class="answer-field"><span>관찰 1. 캔은 처음 정지해 있다가 어떻게 움직였나요? 빠르기의 변화를 힘과 에너지라는 말을 써서 설명해 보세요.</span><textarea id="lab-obs1"></textarea></label>
+    <label class="answer-field"><span>관찰 2. 은박지 조각이 튀어 나간 까닭을 전하의 종류(같은 부호·반대 부호)로 설명해 보세요.</span><textarea id="lab-obs2"></textarea></label>
+    <h3>2부. 계단 경사로에서 구슬 가속하기 (측정, 약 18분)</h3>
+    <figure class="diagram">
+      <svg viewBox="0 0 700 200" width="700" role="img" aria-label="계단 경사로 모형. 경사 구간과 수평 구간이 번갈아 있고, 경사 구간마다 높이 h만큼 내려간다. 수평 구간 길이 d를 지나는 시간을 잰다."><style>text{paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round}</style>
+        <path d="M20 40 L90 40 Q100 40 108 48 L150 80 Q158 86 168 86 L268 86 Q278 86 286 94 L328 126 Q336 132 346 132 L446 132 Q456 132 464 140 L506 172 Q514 178 524 178 L680 178" fill="none" stroke="currentColor" stroke-width="3"/>
+        <circle cx="40" cy="32" r="8" fill="var(--track)"/>
+        <g stroke="var(--accent)" stroke-width="2">
+          <line x1="188" y1="70" x2="188" y2="100"/><line x1="248" y1="70" x2="248" y2="100"/>
+          <line x1="366" y1="116" x2="366" y2="146"/><line x1="426" y1="116" x2="426" y2="146"/>
+          <line x1="544" y1="162" x2="544" y2="192"/><line x1="604" y1="162" x2="604" y2="192"/>
+        </g>
+        <text x="218" y="66" text-anchor="middle" font-size="12">d (측정 구간)</text>
+        <text x="396" y="112" text-anchor="middle" font-size="12">d</text>
+        <text x="574" y="158" text-anchor="middle" font-size="12">d</text>
+        <line x1="120" y1="40" x2="120" y2="86" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
+        <text x="112" y="70" text-anchor="end" font-size="12">h</text>
+        <text x="130" y="28" font-size="12" class="muted-fill">경사 = 간극(가속)</text>
+        <text x="200" y="124" font-size="12" class="muted-fill">수평 = 드리프트 튜브(등속)</text>
+        <text x="60" y="190" font-size="12">1단</text><text x="300" y="190" font-size="12">2단</text><text x="470" y="120" font-size="12">3단 …</text>
+      </svg>
+      <figcaption>그림 3. 계단 경사로. 경사 구간(높이 h씩 내려감)은 선형가속기의 간극, 수평 구간은 드리프트 튜브에 해당합니다.</figcaption>
+    </figure>
+    <ol class="steps">
+      <li><span>책이나 블록으로 높이가 5 cm씩 낮아지는 계단 4단을 만듭니다(예: 20 cm → 15 cm → 10 cm → 5 cm → 0 cm). 각 단 사이를 짧은 경사 레일(약 20 cm)로 잇고, 각 단 위에는 수평 레일(약 40 cm)을 놓습니다. 이음매가 부드럽게 이어지도록 테이프로 붙입니다.</span></li>
+      <li><span>각 수평 구간 가운데에 마스킹테이프로 측정 구간 d = 30 cm의 시작선과 끝선을 표시합니다. 한 단의 높이 h를 자로 정확히 재어 기록합니다.</span></li>
+      <li><span>스마트폰을 레일 옆 50 cm쯤 떨어진 곳에 고정하고 슬로모션(240 fps)으로 촬영합니다. 맨 위에서 구슬을 <b>살짝 놓아(밀지 않고)</b> 굴립니다.</span></li>
+      <li><span>영상을 한 프레임씩 넘기며 구슬이 각 측정 구간의 시작선에서 끝선까지 가는 데 걸린 프레임 수를 셉니다. 시간 t = 프레임 수 ÷ 240 (s)입니다. (스마트 계시기가 있으면 그것을 씁니다.)</span></li>
+      <li><span>같은 방법으로 3회 반복하고 평균 시간을 구한 뒤 v = d/t, v²을 계산합니다.</span></li>
+      <li><span>이론값 v = √(10gnh/7)을 계산합니다(g = 9.8 m/s²). 구르는 구슬은 에너지의 일부가 회전 운동에 쓰이므로 √(2gnh) 대신 이 식을 씁니다.</span></li>
+      <li><span>마지막 열에는 "모든 수평 구간을 똑같이 0.20초 만에 지나게 하려면 수평 구간이 얼마나 길어야 하는가?"를 L = v × 0.20 s로 계산합니다.</span></li>
+    </ol>
+    <p class="small muted">측정 조건: 한 단 높이 h = <input type="number" step="any" id="lab-h" aria-label="한 단 높이 h (cm)" style="width:6rem"> cm, 측정 구간 d = <input type="number" step="any" id="lab-d" aria-label="측정 구간 길이 d (cm)" style="width:6rem"> cm, 구슬 종류·지름 <input type="text" id="lab-ball" aria-label="구슬 종류와 지름" style="width:10rem"></p>
+    <h3>기록표</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-lab">
+<tr><th>단 n</th><th>누적 높이 n·h (cm)</th><th>통과 시간 t₁ (s)</th><th>t₂ (s)</th><th>t₃ (s)</th><th>평균 t (s)</th><th>속력 v = d/t (m/s)</th><th>v² (m²/s²)</th><th>이론 v = √(10gnh/7) (m/s)</th><th>L = v × 0.20 s (cm)</th></tr>
+<tr><td>1단</td><td><input type="number" id="lab-r1c1" step="any" aria-label="1단 누적 높이 n·h (cm)"></td><td><input type="number" id="lab-r1c2" step="any" aria-label="1단 통과 시간 t₁ (s)"></td><td><input type="number" id="lab-r1c3" step="any" aria-label="1단 t₂ (s)"></td><td><input type="number" id="lab-r1c4" step="any" aria-label="1단 t₃ (s)"></td><td><input type="number" id="lab-r1c5" step="any" aria-label="1단 평균 t (s)"></td><td><input type="number" id="lab-r1c6" step="any" aria-label="1단 속력 v = d/t (m/s)"></td><td><input type="number" id="lab-r1c7" step="any" aria-label="1단 v² (m²/s²)"></td><td><input type="number" id="lab-r1c8" step="any" aria-label="1단 이론 v = √(10gnh/7) (m/s)"></td><td><input type="number" id="lab-r1c9" step="any" aria-label="1단 L = v × 0.20 s (cm)"></td></tr>
+<tr><td>2단</td><td><input type="number" id="lab-r2c1" step="any" aria-label="2단 누적 높이 n·h (cm)"></td><td><input type="number" id="lab-r2c2" step="any" aria-label="2단 통과 시간 t₁ (s)"></td><td><input type="number" id="lab-r2c3" step="any" aria-label="2단 t₂ (s)"></td><td><input type="number" id="lab-r2c4" step="any" aria-label="2단 t₃ (s)"></td><td><input type="number" id="lab-r2c5" step="any" aria-label="2단 평균 t (s)"></td><td><input type="number" id="lab-r2c6" step="any" aria-label="2단 속력 v = d/t (m/s)"></td><td><input type="number" id="lab-r2c7" step="any" aria-label="2단 v² (m²/s²)"></td><td><input type="number" id="lab-r2c8" step="any" aria-label="2단 이론 v = √(10gnh/7) (m/s)"></td><td><input type="number" id="lab-r2c9" step="any" aria-label="2단 L = v × 0.20 s (cm)"></td></tr>
+<tr><td>3단</td><td><input type="number" id="lab-r3c1" step="any" aria-label="3단 누적 높이 n·h (cm)"></td><td><input type="number" id="lab-r3c2" step="any" aria-label="3단 통과 시간 t₁ (s)"></td><td><input type="number" id="lab-r3c3" step="any" aria-label="3단 t₂ (s)"></td><td><input type="number" id="lab-r3c4" step="any" aria-label="3단 t₃ (s)"></td><td><input type="number" id="lab-r3c5" step="any" aria-label="3단 평균 t (s)"></td><td><input type="number" id="lab-r3c6" step="any" aria-label="3단 속력 v = d/t (m/s)"></td><td><input type="number" id="lab-r3c7" step="any" aria-label="3단 v² (m²/s²)"></td><td><input type="number" id="lab-r3c8" step="any" aria-label="3단 이론 v = √(10gnh/7) (m/s)"></td><td><input type="number" id="lab-r3c9" step="any" aria-label="3단 L = v × 0.20 s (cm)"></td></tr>
+<tr><td>4단</td><td><input type="number" id="lab-r4c1" step="any" aria-label="4단 누적 높이 n·h (cm)"></td><td><input type="number" id="lab-r4c2" step="any" aria-label="4단 통과 시간 t₁ (s)"></td><td><input type="number" id="lab-r4c3" step="any" aria-label="4단 t₂ (s)"></td><td><input type="number" id="lab-r4c4" step="any" aria-label="4단 t₃ (s)"></td><td><input type="number" id="lab-r4c5" step="any" aria-label="4단 평균 t (s)"></td><td><input type="number" id="lab-r4c6" step="any" aria-label="4단 속력 v = d/t (m/s)"></td><td><input type="number" id="lab-r4c7" step="any" aria-label="4단 v² (m²/s²)"></td><td><input type="number" id="lab-r4c8" step="any" aria-label="4단 이론 v = √(10gnh/7) (m/s)"></td><td><input type="number" id="lab-r4c9" step="any" aria-label="4단 L = v × 0.20 s (cm)"></td></tr>
+</table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-lab">기록표 복사</button>
+    <h3>계산 활동: 전자를 가속하면?</h3>
+    <p class="prose">전자의 질량 m = 9.11×10⁻³¹ kg, 기본 전하 e = 1.602×10⁻¹⁹ C, 빛의 속력 c = 3.00×10⁸ m/s. 속력은 ½mv² = eV로 계산하세요(이 정도 에너지에서는 고전 공식이 잘 맞습니다).</p>
+    <div class="table-wrap"><table class="data-table" id="tbl-calc">
+<tr><th>가속 전압</th><th>전자의 운동에너지 (eV)</th><th>운동에너지 (J)</th><th>속력 v (m/s)</th><th>v/c</th></tr>
+<tr><td>1 V</td><td><input type="text" id="calc-r1c1" aria-label="1 V 전자의 운동에너지 (eV)"></td><td><input type="text" id="calc-r1c2" aria-label="1 V 운동에너지 (J)"></td><td><input type="text" id="calc-r1c3" aria-label="1 V 속력 v (m/s)"></td><td><input type="text" id="calc-r1c4" aria-label="1 V v/c"></td></tr>
+<tr><td>1 kV</td><td><input type="text" id="calc-r2c1" aria-label="1 kV 전자의 운동에너지 (eV)"></td><td><input type="text" id="calc-r2c2" aria-label="1 kV 운동에너지 (J)"></td><td><input type="text" id="calc-r2c3" aria-label="1 kV 속력 v (m/s)"></td><td><input type="text" id="calc-r2c4" aria-label="1 kV v/c"></td></tr>
+<tr><td>25 kV (브라운관)</td><td><input type="text" id="calc-r3c1" aria-label="25 kV (브라운관) 전자의 운동에너지 (eV)"></td><td><input type="text" id="calc-r3c2" aria-label="25 kV (브라운관) 운동에너지 (J)"></td><td><input type="text" id="calc-r3c3" aria-label="25 kV (브라운관) 속력 v (m/s)"></td><td><input type="text" id="calc-r3c4" aria-label="25 kV (브라운관) v/c"></td></tr>
+</table></div>
+    <h3>결과 분석</h3>
+    <label class="answer-field"><span>A1. n(단의 수)을 가로축, v²을 세로축으로 그래프를 그리면 어떤 모양인가요? 그 모양이 뜻하는 것을 "단마다 얻는 에너지"로 설명하세요.</span><textarea id="lab-a1"></textarea></label>
+    <label class="answer-field"><span>A2. 측정한 속력과 이론값 √(10gnh/7)을 비교하세요. 차이가 있다면 몇 % 정도이고, 그 까닭은 무엇일까요?</span><textarea id="lab-a2"></textarea></label>
+    <label class="answer-field"><span>A3. 마지막 열(L = v × 0.20 s)의 값은 단을 내려갈수록 어떻게 변하나요? 이것이 선형가속기의 드리프트 튜브 길이와 어떻게 연결되나요?</span><textarea id="lab-a3"></textarea></label>
+    <label class="answer-field"><span>A4. 계단 경사로 비유가 실제 선형가속기와 다른 점을 두 가지 이상 써 보세요. (힌트: 높이를 계속 잃는가? 속력에 한계가 있는가?)</span><textarea id="lab-a4"></textarea></label>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">04</span><h2>실험 B: 3D 모의실험 — 선형가속기 위상 맞추기</h2></div>
+    <p class="prose">드리프트 튜브 12개와 간극 13개로 된 선형가속기에서 양성자(또는 전자) 묶음을 가속합니다. 튜브 색은 그 순간의 전위(빨강 +, 파랑 −), 간극 위 화살표는 전기장의 방향입니다. RF 주파수 f, 간극 전압 V, 첫 간극에 도착하는 위상, 튜브 배치를 바꾸며 언제 가속되고 언제 감속되는지 탐구합니다. 측정값 칸에서 운동에너지 Eₖ, β, γ를, 그래프에서 간극 수에 따른 에너지 변화를 볼 수 있습니다.</p>
+    <a class="btn btn--sim no-print" href="../sims/t03.html">3D 모의실험 열기</a>
+    <h3>미션</h3>
+    <ol class="steps">
+      <li><span><b>위상 어긋남 관찰</b> — 처음 화면(L = v/(2f) 설계)에서 묶음이 13개 간극에서 모두 가속되는 것을 본 뒤, [같은 길이 튜브]를 누르거나 RF 주파수를 바꿔 발사합니다. 간극이 빨갛게 반짝이며 감속되는 곳을 찾으세요.</span></li>
+      <li><span><b>위상 맞추기 게임</b> — [수수께끼 가속기]를 누르면 숨겨진 주파수로 설계된 튜브가 나옵니다. 화면 위 안내에 나오는 튜브 1의 길이 L₁과 튜브 1 안의 속력(입사 에너지 + 간극 한 번에서 얻는 에너지로 계산)을 이용해 f = v/(2L₁)을 계산하고, RF 주파수를 맞춰 13개 간극 모두에서 가속시키세요.</span></li>
+      <li><span><b>에너지 그래프</b> — 간극 전압을 두 가지 값(예: 1 MV, 2 MV)으로 바꾸고 [튜브 다시 설계]를 눌러 각각 성공시킨 뒤 [기록]하세요. 운동에너지–간극 그래프의 기울기를 읽습니다.</span></li>
+      <li><span><b>튜브 길이 검산</b> — "튜브 길이 검산" 칸에서 튜브 번호를 고르고, 표시된 속력 v와 주파수 f로 L = v/(2f)를 계산해 cm 단위로 입력하고 [확인]하세요.</span></li>
+      <li><span><b>빛의 속력의 벽</b> — 입자를 전자로 바꿔 성공시킨 뒤 그래프를 "튜브 길이 – 튜브 번호"로 바꿔 보세요. 양성자의 그래프와 비교합니다.</span></li>
+    </ol>
+    <h3>모의실험 기록표</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim">
+<tr><th>회</th><th>입자</th><th>튜브 배치</th><th>f (MHz)</th><th>V (MV)</th><th>결과</th><th>출구 Eₖ (MeV)</th><th>β</th><th>γ</th></tr>
+<tr><td>1</td><td><input type="text" id="sim-r1c1" aria-label="1 입자"></td><td><input type="text" id="sim-r1c2" aria-label="1 튜브 배치"></td><td><input type="number" id="sim-r1c3" step="any" aria-label="1 f (MHz)"></td><td><input type="number" id="sim-r1c4" step="any" aria-label="1 V (MV)"></td><td><input type="text" id="sim-r1c5" aria-label="1 결과"></td><td><input type="number" id="sim-r1c6" step="any" aria-label="1 출구 Eₖ (MeV)"></td><td><input type="number" id="sim-r1c7" step="any" aria-label="1 β"></td><td><input type="number" id="sim-r1c8" step="any" aria-label="1 γ"></td></tr>
+<tr><td>2</td><td><input type="text" id="sim-r2c1" aria-label="2 입자"></td><td><input type="text" id="sim-r2c2" aria-label="2 튜브 배치"></td><td><input type="number" id="sim-r2c3" step="any" aria-label="2 f (MHz)"></td><td><input type="number" id="sim-r2c4" step="any" aria-label="2 V (MV)"></td><td><input type="text" id="sim-r2c5" aria-label="2 결과"></td><td><input type="number" id="sim-r2c6" step="any" aria-label="2 출구 Eₖ (MeV)"></td><td><input type="number" id="sim-r2c7" step="any" aria-label="2 β"></td><td><input type="number" id="sim-r2c8" step="any" aria-label="2 γ"></td></tr>
+<tr><td>3</td><td><input type="text" id="sim-r3c1" aria-label="3 입자"></td><td><input type="text" id="sim-r3c2" aria-label="3 튜브 배치"></td><td><input type="number" id="sim-r3c3" step="any" aria-label="3 f (MHz)"></td><td><input type="number" id="sim-r3c4" step="any" aria-label="3 V (MV)"></td><td><input type="text" id="sim-r3c5" aria-label="3 결과"></td><td><input type="number" id="sim-r3c6" step="any" aria-label="3 출구 Eₖ (MeV)"></td><td><input type="number" id="sim-r3c7" step="any" aria-label="3 β"></td><td><input type="number" id="sim-r3c8" step="any" aria-label="3 γ"></td></tr>
+<tr><td>4</td><td><input type="text" id="sim-r4c1" aria-label="4 입자"></td><td><input type="text" id="sim-r4c2" aria-label="4 튜브 배치"></td><td><input type="number" id="sim-r4c3" step="any" aria-label="4 f (MHz)"></td><td><input type="number" id="sim-r4c4" step="any" aria-label="4 V (MV)"></td><td><input type="text" id="sim-r4c5" aria-label="4 결과"></td><td><input type="number" id="sim-r4c6" step="any" aria-label="4 출구 Eₖ (MeV)"></td><td><input type="number" id="sim-r4c7" step="any" aria-label="4 β"></td><td><input type="number" id="sim-r4c8" step="any" aria-label="4 γ"></td></tr>
+<tr><td>5</td><td><input type="text" id="sim-r5c1" aria-label="5 입자"></td><td><input type="text" id="sim-r5c2" aria-label="5 튜브 배치"></td><td><input type="number" id="sim-r5c3" step="any" aria-label="5 f (MHz)"></td><td><input type="number" id="sim-r5c4" step="any" aria-label="5 V (MV)"></td><td><input type="text" id="sim-r5c5" aria-label="5 결과"></td><td><input type="number" id="sim-r5c6" step="any" aria-label="5 출구 Eₖ (MeV)"></td><td><input type="number" id="sim-r5c7" step="any" aria-label="5 β"></td><td><input type="number" id="sim-r5c8" step="any" aria-label="5 γ"></td></tr>
+<tr><td>6</td><td><input type="text" id="sim-r6c1" aria-label="6 입자"></td><td><input type="text" id="sim-r6c2" aria-label="6 튜브 배치"></td><td><input type="number" id="sim-r6c3" step="any" aria-label="6 f (MHz)"></td><td><input type="number" id="sim-r6c4" step="any" aria-label="6 V (MV)"></td><td><input type="text" id="sim-r6c5" aria-label="6 결과"></td><td><input type="number" id="sim-r6c6" step="any" aria-label="6 출구 Eₖ (MeV)"></td><td><input type="number" id="sim-r6c7" step="any" aria-label="6 β"></td><td><input type="number" id="sim-r6c8" step="any" aria-label="6 γ"></td></tr>
+</table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-sim">기록표 복사</button>
+    <p class="small muted">미션 2에서 찾은 설계 주파수: <input type="number" step="any" id="sim-fd" aria-label="미션 2에서 찾은 설계 주파수 (MHz)" style="width:7rem"> MHz · 미션 4에서 검산한 튜브 번호 <input type="number" step="1" id="sim-tn" aria-label="검산한 튜브 번호" style="width:4.5rem">, 계산한 L <input type="number" step="any" id="sim-tl" aria-label="계산한 튜브 길이 (cm)" style="width:6rem"> cm</p>
+    <label class="answer-field"><span>B1. [같은 길이 튜브]로 발사했을 때 처음 몇 개의 간극에서는 가속되다가 나중에 감속된 까닭을 "도착 시각"과 "반 주기"라는 말을 써서 설명하세요.</span><textarea id="sim-b1"></textarea></label>
+    <label class="answer-field"><span>B2. 미션 2에서 설계 주파수를 어떻게 찾았는지 계산 과정을 쓰세요. 주파수가 1~2%만 틀려도 뒤쪽 간극에서 가속이 약해지는 까닭은 무엇일까요?</span><textarea id="sim-b2"></textarea></label>
+    <label class="answer-field"><span>B3. 간극 전압 V를 2배로 하면 운동에너지–간극 그래프의 기울기는 어떻게 되나요? 출구 운동에너지를 Eₖ,출구 = Eₖ,입구 + (간극 수) × qV로 계산한 값과 모의실험 값을 비교하세요.</span><textarea id="sim-b3"></textarea></label>
+    <label class="answer-field"><span>B4. 전자와 양성자의 "튜브 길이 – 튜브 번호" 그래프는 어떻게 다른가요? 측정값 칸의 β와 "고전 공식 β"를 비교하며 그 까닭을 설명하세요.</span><textarea id="sim-b4"></textarea></label>
+  </section>
+
+  <section class="section" id="cern">
+    <div class="section__head"><span class="section__tag">05</span><h2>실제 CERN에서는</h2></div>
+    <div class="box box--cern prose">
+      <p><b>Linac4: LHC로 가는 모든 양성자의 출발점.</b> CERN의 가속 사슬은 선형가속기 Linac4에서 시작합니다. 길이 약 86 m의 Linac4는 2020년부터 이 역할을 맡았고, 그 전에는 Linac2(1978~2018년, 50 MeV)가 맡았습니다.</p>
+      <p>Linac4가 가속하는 것은 맨 양성자가 아니라 <b>음수소 이온(H⁻: 양성자 1개 + 전자 2개)</b>입니다. 이온원에서 나온 45 keV의 이온은 RFQ(고주파 사중극)에서 3 MeV, 드리프트 튜브 선형가속기(DTL)에서 50 MeV, 그 뒤 두 종류의 가속 구조를 거쳐 <b>160 MeV</b>가 됩니다. 이때 속력은 빛의 속력의 약 52%입니다. 가속 전압은 <b>352.2 MHz</b>의 RF로 바뀝니다. 다음 가속기인 PS 부스터에 들어갈 때 얇은 박막이 전자 2개를 벗겨 내어 양성자만 남깁니다.</p>
+      <p>그 뒤 양성자는 PS 부스터(2 GeV) → PS(26 GeV) → SPS(450 GeV) → LHC(6.8 TeV) 순서로 점점 큰 원형 가속기로 옮겨 갑니다. 원형 가속기에서도 에너지를 올리는 일은 전기장이 합니다. LHC에는 빔마다 8개의 초전도 RF 공동(400 MHz)이 있어, 양성자 묶음이 1초에 약 11,000바퀴를 돌 때마다 조금씩 에너지를 더해 줍니다. 오늘 배운 "위상에 맞춰 반복해서 밀어 주기"가 LHC의 핵심 원리입니다. 원형 궤도를 만드는 자석 이야기는 주제 4에서 이어집니다.</p>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>단계</th><th>가속기</th><th class="num">출구 에너지</th><th>가속하는 방법</th></tr>
+      <tr><td>1</td><td>Linac4 (선형)</td><td class="num">160 MeV</td><td>RFQ·드리프트 튜브 등 RF 가속 구조를 한 번 통과</td></tr>
+      <tr><td>2</td><td>PS 부스터 (원형)</td><td class="num">2 GeV</td><td>링을 돌며 RF 공동으로 반복 가속</td></tr>
+      <tr><td>3</td><td>PS (원형)</td><td class="num">26 GeV</td><td>링을 돌며 반복 가속</td></tr>
+      <tr><td>4</td><td>SPS (원형)</td><td class="num">450 GeV</td><td>링을 돌며 반복 가속</td></tr>
+      <tr><td>5</td><td>LHC (원형)</td><td class="num">6.8 TeV</td><td>400 MHz 초전도 RF 공동으로 반복 가속</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="check">
+    <div class="section__head"><span class="section__tag">06</span><h2>확인 문제</h2></div>
+    <p class="small muted">필요한 값: e = 1.602×10⁻¹⁹ C, c = 3.00×10⁸ m/s, 양성자 mc² = 938.27 MeV, 전자 mc² = 0.511 MeV</p>
+    <label class="answer-field"><span>1. (계산) 알파 입자(전하 +2e)가 5.0 kV의 전위차를 지나 가속되었습니다. 얻은 운동에너지를 eV와 J로 각각 나타내세요.</span><textarea id="check-1"></textarea></label>
+    <label class="answer-field"><span>2. (개념) 직류 전압 하나를 여러 번 지나게 하는 방법으로는 입자를 계속 가속할 수 없는 까닭과, RF(교류) 전압을 쓰면 해결되는 까닭을 설명하세요.</span><textarea id="check-2"></textarea></label>
+    <label class="answer-field"><span>3. (계산) 간극 전압이 0.50 MV이고 간극이 40개인 선형가속기에 운동에너지 3.0 MeV인 양성자가 들어옵니다. 모든 간극에서 위상이 맞는다면 출구 운동에너지는 몇 MeV인가요?</span><textarea id="check-3"></textarea></label>
+    <label class="answer-field"><span>4. (계산) RF 주파수가 352.2 MHz인 비데뢰형 선형가속기에서, 속력이 β = 0.30인 양성자가 지나는 튜브의 길이 L = v/(2f)는 몇 cm인가요?</span><textarea id="check-4"></textarea></label>
+    <label class="answer-field"><span>5. (개념) 어떤 입자 묶음이 간극에 반 주기(T/2) 늦게 도착했습니다. 이 간극에서 묶음의 운동에너지는 어떻게 되나요? 그 까닭은?</span><textarea id="check-5"></textarea></label>
+    <label class="answer-field"><span>6. (자료 해석) 전자 선형가속기에서는 처음 몇 칸만 길이가 늘어나고 그 뒤로는 칸 길이가 거의 같습니다. 핵심 개념의 표를 근거로 그 까닭을 설명하세요.</span><textarea id="check-6"></textarea></label>
+  </section>
+
+  <section class="section" id="up">
+    <div class="box box--up">
+      <h3>업그레이드 도전: Linac4 출구 속력 계산하기</h3>
+      <p>Linac4는 양성자(정확히는 H⁻ 이온)를 운동에너지 160 MeV까지 가속합니다.</p>
+      <ol>
+        <li>상대론 공식 Eₖ = (γ − 1)mc²로 γ를 구하고, β = √(1 − 1/γ²)로 출구 속력을 구하세요. (목표: β ≈ 0.52)</li>
+        <li>고전 공식 Eₖ = ½mv²으로 계산한 속력과 비교하면 몇 % 차이가 나나요?</li>
+        <li>Linac4의 DTL은 알바레즈형으로, 한 칸의 길이가 βλ(λ = c/f)입니다. f = 352.2 MHz일 때 3 MeV(β = 0.080)와 50 MeV(β = 0.314) 양성자가 지나는 칸의 길이를 각각 구하세요.</li>
+        <li>더 도전: 같은 160 MeV의 전자라면 β는 얼마일까요? LHC 6.8 TeV 양성자의 γ는?</li>
+      </ol>
+      <label class="answer-field"><span>도전 기록</span><textarea id="up-1"></textarea></label>
+    </div>
+  </section>
+
+  <section class="section" id="self">
+    <div class="section__head"><span class="section__tag">07</span><h2>자기 평가</h2></div>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="self-1"> <span>전위차 V를 지난 전하가 얻는 에너지 qV를 계산하고, eV와 J 사이를 바꿀 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-2"> <span>직류 가속의 한계와 RF 가속이 필요한 까닭을 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-3"> <span>드리프트 튜브가 뒤로 갈수록 길어지는 까닭을 설명하고 L = v/(2f)로 길이를 계산할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-4"> <span>위상이 어긋나면 감속된다는 것을 모의실험 결과로 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-5"> <span>에너지가 커져도 속력이 c를 넘지 못한다는 것과 Linac4의 역할을 설명할 수 있다.</span></label></li>
+    </ul>
+    <label class="answer-field"><span>오늘 가장 궁금해진 것 한 가지</span><textarea id="self-q"></textarea></label>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>
