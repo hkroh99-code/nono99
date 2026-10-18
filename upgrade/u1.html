@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>U1 Python 오픈데이터 분석 · 업그레이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  pre.code { background: var(--surface-2); border-radius: 8px; padding: .8rem 1rem; overflow-x: auto; font-family: var(--font-mono); font-size: .85rem; line-height: 1.55; margin: 0; color: var(--ink); }
+  .nb-card { border-top: 4px solid var(--lv-up); }
+  .url { font-family: var(--font-mono); font-size: .82rem; background: var(--surface-2); padding: .4rem .6rem; border-radius: 6px; overflow-wrap: anywhere; }
+  .teacher-part { margin-top: 2.5rem; border-color: var(--teacher); }
+  .teacher-part > summary { color: var(--teacher); font-size: var(--step-1); }
+  .kbd { font-family: var(--font-mono); font-size: .85em; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 .35rem; background: var(--surface); }
+</style>
+</head>
+<body data-page="upgrade" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--student">학생용</span>
+      <span class="badge badge--up">업그레이드 U1</span>
+      <span class="badge badge--int">종합</span>
+      <span class="badge badge--time">2~3차시</span>
+    </div>
+    <p class="eyebrow">업그레이드 U1 · 연결 주제 7, 9, 10</p>
+    <h1>Python으로 오픈데이터 분석하기</h1>
+    <p class="lead">물리학자들은 수백만 개의 충돌 사건을 손으로 세지 않습니다. 실제 CMS 데이터를 Python 코드 몇 줄로 분석해 J/ψ·Z 보손의 질량을 재고, 보이지 않는 중성미자의 흔적을 찾아봅시다.</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="https://colab.research.google.com/github/hkroh99-code/nono99/blob/main/notebooks/01_dimuon_mass_spectrum.ipynb" target="_blank" rel="noopener">노트북 1 Colab에서 열기</a>
+      <a class="btn btn--primary" href="https://colab.research.google.com/github/hkroh99-code/nono99/blob/main/notebooks/02_w_charge_ratio.ipynb" target="_blank" rel="noopener">노트북 2 Colab에서 열기</a>
+      <button class="btn" type="button" data-copy-answers>내 답안 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>답안 지우기</button>
+    </div>
+    <p class="save-note">입력한 답은 이 기기의 브라우저에만 자동 저장됩니다. 제출할 때는 [내 답안 복사]를 눌러 붙여 넣으세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#goals">학습 목표</a><a href="#start">Colab 시작</a><a href="#basics">Python 10분</a>
+      <a href="#nb1">노트북 1</a><a href="#nb2">노트북 2</a><a href="#errors">오류 해결</a>
+      <a href="#check">확인 문제</a><a href="#self">자기 평가</a><a href="#teacher">교사용</a>
+    </nav>
+  </header>
+
+  <section class="section" id="goals">
+    <div class="box box--goal">
+      <h2 class="box__title" style="font-size:var(--step-1)">학습 목표</h2>
+      <ol>
+        <li>Colab에서 노트북을 열고, 셀을 차례로 실행하고, 결과를 해석할 수 있다.</li>
+        <li>pandas로 CSV 데이터를 불러오고, 4-벡터로 불변질량을 계산하는 코드를 읽고 고칠 수 있다.</li>
+        <li>히스토그램과 맞춤(피팅)으로 공명 입자의 질량을 측정하고 기준값과 비교할 수 있다.</li>
+        <li>W⁺/W⁻ 비와 그 통계적 불확도(√N)를 구하고, 선택 조건(컷)의 효과를 설명할 수 있다.</li>
+      </ol>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>활동</th></tr>
+      <tr><td>1차시 (50분)</td><td>Colab 시작, Python 기초 10분, 노트북 1의 1~5단계(불러오기 → 로그–로그 스펙트럼 → 4-벡터 계산)</td></tr>
+      <tr><td>2차시 (50분)</td><td>노트북 1의 6~8단계(J/ψ·Z 맞춤, 연습 문제), 결과 기록</td></tr>
+      <tr><td>3차시 (50분, 선택)</td><td>노트북 2: W⁺/W⁻ 비, 횡질량, 컷의 효과, 연습 문제</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="start">
+    <div class="section__head"><span class="section__tag">01</span><h2>Colab 시작하기</h2></div>
+    <div class="prose">
+      <p><strong>구글 Colab(Colaboratory)</strong>은 웹 브라우저에서 Python을 실행하는 무료 서비스입니다. 프로그램을 설치하지 않아도 되고, 계산은 구글 서버에서 합니다. 구글 계정이 필요합니다.</p>
+      <p><strong>노트북(.ipynb)</strong>은 설명 글(텍스트 셀)과 코드(코드 셀)가 번갈아 들어 있는 문서입니다. 코드 셀을 실행하면 그 바로 아래에 결과(숫자, 표, 그래프)가 나타납니다.</p>
+    </div>
+    <ol class="steps">
+      <li><span>위의 <strong>[노트북 1 Colab에서 열기]</strong> 버튼을 누릅니다. 학교 계정으로 막히면 개인 구글 계정으로 로그인합니다.</span></li>
+      <li><span>위쪽에 "GitHub에서 열린 노트북" 안내가 보이면 메뉴 <strong>파일 → Drive에 사본 저장</strong>을 누릅니다. 이제 내 구글 드라이브의 사본이므로 마음껏 고쳐도 됩니다.</span></li>
+      <li><span>첫 번째 코드 셀을 클릭하고 <span class="kbd">Shift</span> + <span class="kbd">Enter</span>를 누릅니다. 셀 왼쪽에 숫자 <code>[1]</code>이 생기면 실행된 것입니다. "경고: 이 노트북은 Google에서 작성하지 않았습니다" 창이 뜨면 <strong>무시하고 계속</strong>을 누릅니다.</span></li>
+      <li><span>위에서부터 <strong>순서대로</strong> 실행합니다. 아래 셀은 위 셀에서 만든 변수를 쓰므로 건너뛰면 오류가 납니다. 한 번에 모두 실행하려면 <strong>런타임 → 모두 실행</strong>.</span></li>
+      <li><span>결과가 나오면 이 활동지의 기록표에 옮겨 적습니다. 그래프는 오른쪽 클릭으로 이미지 저장할 수 있습니다.</span></li>
+    </ol>
+    <div class="grid-2">
+      <div class="box nb-card">
+        <h3>노트북 1: 이중뮤온 질량 스펙트럼</h3>
+        <p class="small">데이터: <code>cms_dimuon_2011_mass.csv</code>(사건 100,000개), <code>cms_dimuon_2011_events.csv</code>(사건 20,000개, 4-벡터)</p>
+        <p class="url">https://colab.research.google.com/github/hkroh99-code/nono99/blob/main/notebooks/01_dimuon_mass_spectrum.ipynb</p>
+        <p class="small"><a href="../notebooks/01_dimuon_mass_spectrum.ipynb" download>노트북 파일 내려받기(.ipynb)</a> — 컴퓨터에 Jupyter가 있으면 직접 열 수 있습니다.</p>
+      </div>
+      <div class="box nb-card">
+        <h3>노트북 2: W⁺/W⁻ 비와 횡질량</h3>
+        <p class="small">데이터: <code>cms_wmunu_2011.csv</code>(W → μν 후보 사건 20,000개)</p>
+        <p class="url">https://colab.research.google.com/github/hkroh99-code/nono99/blob/main/notebooks/02_w_charge_ratio.ipynb</p>
+        <p class="small"><a href="../notebooks/02_w_charge_ratio.ipynb" download>노트북 파일 내려받기(.ipynb)</a></p>
+      </div>
+    </div>
+    <div class="box box--cern prose">
+      <p><strong>주소의 규칙</strong> — GitHub에 있는 어떤 노트북이든 아래 형식으로 Colab에서 바로 열 수 있습니다. 내가 만든 노트북을 GitHub에 올리면 친구에게 이 주소로 공유할 수 있습니다.</p>
+      <p class="url">https://colab.research.google.com/github/<b>사용자</b>/<b>저장소</b>/blob/<b>브랜치</b>/<b>경로/파일</b>.ipynb</p>
+    </div>
+  </section>
+
+  <section class="section" id="basics">
+    <div class="section__head"><span class="section__tag">02</span><h2>Python 10분: 노트북에 나오는 코드 읽기</h2></div>
+    <p class="prose">코드를 처음부터 쓸 필요는 없습니다. 아래 표의 코드가 무슨 뜻인지 알면 노트북을 읽고 숫자를 바꿀 수 있습니다.</p>
+    <div class="table-wrap"><table>
+      <tr><th>코드</th><th>뜻</th><th>스프레드시트로 치면</th></tr>
+      <tr><td><code>import pandas as pd</code></td><td>표 다루는 도구를 <code>pd</code>라는 짧은 이름으로 불러옴</td><td>추가 기능 켜기</td></tr>
+      <tr><td><code>df = pd.read_csv(URL)</code></td><td>CSV 파일을 읽어 표(데이터프레임) <code>df</code>에 담음</td><td>파일 열기</td></tr>
+      <tr><td><code>df.head()</code></td><td>표의 처음 5줄 보기</td><td>맨 위 몇 줄 보기</td></tr>
+      <tr><td><code>len(df)</code></td><td>행(사건) 개수</td><td><code>=COUNTA(A:A)-1</code></td></tr>
+      <tr><td><code>df["E1"] + df["E2"]</code></td><td>열 전체를 한 번에 더함(행마다)</td><td>새 열에 <code>=C2+H2</code>를 끝까지 채우기</td></tr>
+      <tr><td><code>np.sqrt(x)</code></td><td>제곱근</td><td><code>=SQRT()</code></td></tr>
+      <tr><td><code>df[df["Q"] &gt; 0]</code></td><td>조건에 맞는 행만 골라냄(필터)</td><td>필터 기능</td></tr>
+      <tr><td><code>(df["Q"] &gt; 0).sum()</code></td><td>조건에 맞는 행의 개수</td><td><code>=COUNTIF(F:F,"&gt;0")</code></td></tr>
+      <tr><td><code>plt.hist(M, bins=240, range=(0,120))</code></td><td>0~120을 240구간으로 나눈 히스토그램</td><td>히스토그램 차트</td></tr>
+      <tr><td><code># 설명</code></td><td><code>#</code> 뒤는 주석(실행되지 않는 메모)</td><td>메모</td></tr>
+    </table></div>
+    <pre class="code" aria-label="불변질량 계산 코드">E  = ev["E1"]  + ev["E2"]
+px = ev["px1"] + ev["px2"]
+py = ev["py1"] + ev["py2"]
+pz = ev["pz1"] + ev["pz2"]
+ev["M_calc"] = np.sqrt(E**2 - px**2 - py**2 - pz**2)   # ** 는 거듭제곱</pre>
+    <label class="answer-field"><span>B1. 위 코드는 주제 7의 어떤 식을 옮긴 것인가요? 식으로 쓰고, 스프레드시트로 같은 계산을 할 때와 비교해 좋은 점을 한 가지 쓰세요.</span><textarea id="basic-b1"></textarea></label>
+  </section>
+
+  <section class="section" id="nb1">
+    <div class="section__head"><span class="section__tag">03</span><h2>노트북 1: 이중뮤온 질량 스펙트럼</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>단계</th><th>하는 일</th><th>확인할 것</th></tr>
+      <tr><td>1. 도구 불러오기</td><td>numpy, pandas, matplotlib 불러오기</td><td>"준비 완료"가 출력되는가</td></tr>
+      <tr><td>2. 데이터 불러오기</td><td>GitHub에서 CSV를 읽음(안 되면 로컬 파일)</td><td>사건 수 100,000</td></tr>
+      <tr><td>3. 보통 축 히스토그램</td><td>0~120 GeV, 0.5 GeV 구간</td><td>왜 Z 피크가 잘 안 보이는가</td></tr>
+      <tr><td>4. 로그–로그 히스토그램</td><td>로그 간격 구간, 알려진 공명에 점선</td><td>피크와 점선이 맞는가</td></tr>
+      <tr><td>5. 4-벡터 계산</td><td>E, px, py, pz로 M 직접 계산, 파일의 M과 비교</td><td>대각선 위의 점, 뮤온 질량 0.1057 GeV</td></tr>
+      <tr><td>6. J/ψ 맞춤</td><td>2.8~3.4 GeV 확대, 가우스 + 직선 배경 맞춤</td><td>μ와 σ, 기준값 3.097 GeV와의 차이</td></tr>
+      <tr><td>7. Z 맞춤</td><td>70~110 GeV 확대, 같은 방법</td><td>μ와 σ, 기준값 91.19 GeV와의 차이</td></tr>
+      <tr><td>8. 연습 문제</td><td><code>None</code> 자리를 채워 ψ(2S), Υ(1S), 신호 사건 수, pT 분석</td><td>채우지 않으면 안내 문구만 나옴</td></tr>
+    </table></div>
+    <h3>기록표 1: 공명 피크 측정</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-nb1">
+      <tr><th>입자</th><th>기준값 (GeV)</th><th>맞춤 μ (GeV)</th><th>μ의 오차 (GeV)</th><th>σ (GeV)</th><th>기준값과의 차이</th></tr>
+      <tr><td>J/ψ</td><td class="num">3.097</td><td><input type="number" step="any" id="nb1-jpsi-mu" aria-label="J/psi 맞춤 평균"></td><td><input type="number" step="any" id="nb1-jpsi-err" aria-label="J/psi 평균 오차"></td><td><input type="number" step="any" id="nb1-jpsi-sig" aria-label="J/psi 시그마"></td><td><input type="text" id="nb1-jpsi-d" aria-label="J/psi 기준값과의 차이"></td></tr>
+      <tr><td>ψ(2S)</td><td class="num">3.686</td><td><input type="number" step="any" id="nb1-psi2-mu" aria-label="psi(2S) 맞춤 평균"></td><td><input type="number" step="any" id="nb1-psi2-err" aria-label="psi(2S) 평균 오차"></td><td><input type="number" step="any" id="nb1-psi2-sig" aria-label="psi(2S) 시그마"></td><td><input type="text" id="nb1-psi2-d" aria-label="psi(2S) 기준값과의 차이"></td></tr>
+      <tr><td>Υ(1S)</td><td class="num">9.460</td><td><input type="number" step="any" id="nb1-ups-mu" aria-label="Upsilon(1S) 맞춤 평균"></td><td><input type="number" step="any" id="nb1-ups-err" aria-label="Upsilon(1S) 평균 오차"></td><td><input type="number" step="any" id="nb1-ups-sig" aria-label="Upsilon(1S) 시그마"></td><td><input type="text" id="nb1-ups-d" aria-label="Upsilon(1S) 기준값과의 차이"></td></tr>
+      <tr><td>Z</td><td class="num">91.19</td><td><input type="number" step="any" id="nb1-z-mu" aria-label="Z 맞춤 평균"></td><td><input type="number" step="any" id="nb1-z-err" aria-label="Z 평균 오차"></td><td><input type="number" step="any" id="nb1-z-sig" aria-label="Z 시그마"></td><td><input type="text" id="nb1-z-d" aria-label="Z 기준값과의 차이"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-nb1">기록표 복사</button>
+    <label class="answer-field"><span>A1. 로그–로그 스펙트럼에서 찾은 피크의 이름을 모두 쓰세요. 점선이 있지만 피크가 뚜렷하지 않은 곳도 있나요?</span><textarea id="nb1-a1"></textarea></label>
+    <label class="answer-field"><span>A2. 4-벡터로 계산한 질량과 파일의 M 값이 크게 다른 사건은 어떤 특징이 있었나요? 왜 그런지 설명하세요.</span><textarea id="nb1-a2"></textarea></label>
+    <label class="answer-field"><span>A3. J/ψ 피크의 σ와 Z 피크의 σ는 몇 배 차이 나나요? 그 이유 두 가지를 쓰세요(주제 4의 r = p/(qB)를 떠올려 보세요).</span><textarea id="nb1-a3"></textarea></label>
+    <label class="answer-field"><span>A4. 연습 3에서 구한 J/ψ 신호 사건 수와 신호 비율을 쓰세요.</span><textarea id="nb1-a4"></textarea></label>
+  </section>
+
+  <section class="section" id="nb2">
+    <div class="section__head"><span class="section__tag">04</span><h2>노트북 2: W⁺/W⁻ 비와 횡질량</h2></div>
+    <div class="prose">
+      <p>W 보손은 뮤온과 중성미자로 붕괴합니다(W⁺ → μ⁺ν, W⁻ → μ⁻ν̄). 중성미자는 보이지 않지만, 빔에 수직한 방향의 운동량 합이 0이어야 한다는 <strong>운동량 보존</strong>으로 그 몫(누락 횡에너지 MET)을 알아냅니다. 뮤온과 MET로 만든 <strong>횡질량</strong>은 W 질량을 넘지 않습니다.</p>
+    </div>
+    <div class="formula">m<sub>T</sub> = √( 2 · <b>p<sub>T</sub></b> · <b>MET</b> · (1 − cos Δφ) ) &nbsp;&nbsp;&nbsp; σ<sub>R</sub> = R · √(1/N⁺ + 1/N⁻)</div>
+    <h3>기록표 2: 전하 비율</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-nb2">
+      <tr><th>선택 조건</th><th>N⁺</th><th>N⁻</th><th>R = N⁺/N⁻</th><th>오차 σ<sub>R</sub></th></tr>
+      <tr><td>조건 없음</td><td><input type="number" id="nb2-r1-p" aria-label="조건 없음 N+"></td><td><input type="number" id="nb2-r1-m" aria-label="조건 없음 N-"></td><td><input type="number" step="any" id="nb2-r1-r" aria-label="조건 없음 R"></td><td><input type="number" step="any" id="nb2-r1-e" aria-label="조건 없음 오차"></td></tr>
+      <tr><td>MET &gt; 25 GeV</td><td><input type="number" id="nb2-r2-p" aria-label="MET 25 N+"></td><td><input type="number" id="nb2-r2-m" aria-label="MET 25 N-"></td><td><input type="number" step="any" id="nb2-r2-r" aria-label="MET 25 R"></td><td><input type="number" step="any" id="nb2-r2-e" aria-label="MET 25 오차"></td></tr>
+      <tr><td>MET &gt; 25, m<sub>T</sub> &gt; 50</td><td><input type="number" id="nb2-r3-p" aria-label="MET 25 mT 50 N+"></td><td><input type="number" id="nb2-r3-m" aria-label="MET 25 mT 50 N-"></td><td><input type="number" step="any" id="nb2-r3-r" aria-label="MET 25 mT 50 R"></td><td><input type="number" step="any" id="nb2-r3-e" aria-label="MET 25 mT 50 오차"></td></tr>
+      <tr><td><input type="text" id="nb2-r4-name" aria-label="내가 고른 조건"></td><td><input type="number" id="nb2-r4-p" aria-label="내 조건 N+"></td><td><input type="number" id="nb2-r4-m" aria-label="내 조건 N-"></td><td><input type="number" step="any" id="nb2-r4-r" aria-label="내 조건 R"></td><td><input type="number" step="any" id="nb2-r4-e" aria-label="내 조건 오차"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-nb2">기록표 복사</button>
+    <label class="answer-field"><span>C1. W⁺가 W⁻보다 많은 이유를 양성자의 쿼크 구성(uud)으로 설명하세요.</span><textarea id="nb2-c1"></textarea></label>
+    <label class="answer-field"><span>C2. 횡질량 분포에서 사건 수가 갑자기 줄어드는 곳(에지)은 약 몇 GeV인가요? 이 위치가 뜻하는 것은?</span><textarea id="nb2-c2"></textarea></label>
+    <label class="answer-field"><span>C3. 선택 조건을 걸었더니 R이 커졌습니다. 왜 그런가요? 조건을 너무 강하게 걸면 어떤 문제가 생기나요?</span><textarea id="nb2-c3"></textarea></label>
+    <label class="answer-field"><span>C4. (연습 1) |η| 구간별 R을 쓰고, 경향을 한 문장으로 정리하세요.</span><textarea id="nb2-c4"></textarea></label>
+  </section>
+
+  <section class="section" id="errors">
+    <div class="section__head"><span class="section__tag">05</span><h2>자주 나는 오류와 해결</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>메시지</th><th>뜻</th><th>해결</th></tr>
+      <tr><td><code>NameError: name 'ev' is not defined</code></td><td>아직 만들지 않은 변수를 썼음</td><td>위쪽 셀을 먼저 실행(런타임 → 이전 셀 모두 실행)</td></tr>
+      <tr><td><code>SyntaxError</code></td><td>문법 오류: 괄호·따옴표 짝, 쉼표 빠짐</td><td>오류 줄의 <code>^</code> 표시 근처 확인. 한글 따옴표(“ ”) 대신 영문 따옴표(" ") 사용</td></tr>
+      <tr><td><code>KeyError: 'e1'</code></td><td>없는 열 이름. 대소문자를 구별함</td><td><code>df.columns</code>로 열 이름 확인(<code>E1</code>)</td></tr>
+      <tr><td><code>FileNotFoundError</code></td><td>인터넷에서도, 로컬에서도 파일을 못 찾음</td><td>인터넷 연결 확인. 로컬이면 노트북이 <code>notebooks/</code> 폴더에 있는지 확인</td></tr>
+      <tr><td><code>RuntimeWarning: invalid value encountered in sqrt</code></td><td>음수의 제곱근(반올림 오차)</td><td>경고일 뿐 오류는 아님. <code>.clip(lower=0)</code>로 처리</td></tr>
+      <tr><td><code>OptimizeWarning</code> / 맞춤 곡선이 엉뚱함</td><td>처음 추측값이 실제와 너무 다름</td><td><code>mu0</code>를 피크 위치에, <code>sigma0</code>를 피크 폭 정도로. 범위를 좁힘</td></tr>
+      <tr><td>연결 끊김, 변수가 모두 사라짐</td><td>오래 쉬면 Colab 런타임이 초기화됨</td><td>런타임 → 모두 실행</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="check">
+    <div class="section__head"><span class="section__tag">06</span><h2>확인 문제</h2></div>
+    <label class="answer-field"><span>1. N⁺ = 4825, N⁻ = 3583일 때 R과 σ<sub>R</sub>을 계산 과정과 함께 쓰세요.</span><textarea id="check-1"></textarea></label>
+    <label class="answer-field"><span>2. 사건 수를 4배로 늘리면 R의 통계 오차는 어떻게 변하나요? 그 이유는?</span><textarea id="check-2"></textarea></label>
+    <label class="answer-field"><span>3. 로그–로그 그래프가 이중뮤온 질량 스펙트럼에 알맞은 이유를 두 가지 쓰세요.</span><textarea id="check-3"></textarea></label>
+  </section>
+
+  <section class="section" id="up">
+    <div class="box box--up">
+      <h3>업그레이드 도전</h3>
+      <p>노트북 1을 바탕으로 <code>cms_zmumu_2011.csv</code>(pt, η, φ만 있는 Z 후보 사건)의 불변질량을 계산해 보세요. 질량이 아주 작은 뮤온에서는 M² ≈ 2·pT1·pT2·(cosh(Δη) − cos(Δφ))입니다. 계산한 Z 피크를 노트북 1의 결과와 비교하세요. (데이터 주소는 노트북의 URL에서 파일 이름만 바꾸면 됩니다.)</p>
+      <label class="answer-field"><span>도전 기록</span><textarea id="up-1"></textarea></label>
+    </div>
+  </section>
+
+  <section class="section" id="self">
+    <div class="section__head"><span class="section__tag">07</span><h2>자기 평가</h2></div>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="self-1"> <span>Colab에서 노트북을 열고 셀을 순서대로 실행할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-2"> <span>4-벡터로 불변질량을 계산하는 코드를 읽고 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-3"> <span>맞춤 결과의 μ, σ, 오차가 무엇을 뜻하는지 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-4"> <span>W⁺/W⁻ 비와 √N 불확도를 계산하고, 컷의 효과를 설명할 수 있다.</span></label></li>
+    </ul>
+    <label class="answer-field"><span>코드로 분석해 보니 스프레드시트와 무엇이 달랐나요? 더 해 보고 싶은 분석은?</span><textarea id="self-q"></textarea></label>
+  </section>
+
+  <details class="teacher-part" id="teacher">
+    <summary>교사용 안내 (정답·운영 팁)</summary>
+    <div class="prose">
+      <p>아래 값은 이 저장소의 <code>data/</code> 파일로 두 노트북을 실제로 실행해 얻은 값입니다. 학생이 구간 수나 범위를 바꾸면 마지막 자리가 조금 달라질 수 있습니다.</p>
+    </div>
+    <h3>예시 결과 (노트북 1)</h3>
+    <div class="table-wrap"><table>
+      <tr><th>항목</th><th>결과</th><th>비고</th></tr>
+      <tr><td>사건 수</td><td class="num">100,000 / 20,000</td><td>질량 파일 / 4-벡터 파일</td></tr>
+      <tr><td>4-벡터 계산 vs M 열</td><td>차이 중앙값 약 7×10⁻⁵ GeV, 최댓값 0.83 GeV</td><td>최댓값 사건은 E₂ ≈ 1605 GeV 뮤온(반올림 오차 증폭). M² &lt; 0 사건 1개</td></tr>
+      <tr><td>뮤온 질량 확인</td><td class="num">0.1057 GeV</td><td>E₁ &lt; 20 GeV 사건의 중앙값</td></tr>
+      <tr><td>J/ψ (2.8~3.4, 60구간)</td><td class="num">μ = 3.0931 ± 0.0007, σ = 0.031</td><td>기준값보다 약 4 MeV 낮음(운동량 척도 보정 없음)</td></tr>
+      <tr><td>Z (70~110, 40구간)</td><td class="num">μ = 90.77 ± 0.10, σ = 2.3</td><td>가우스 모양의 한계, 광자 방출로 생긴 왼쪽 꼬리</td></tr>
+      <tr><td>ψ(2S) (3.4~4.0)</td><td class="num">μ = 3.685 ± 0.004, σ = 0.038</td><td>연습 1 예시 답</td></tr>
+      <tr><td>Υ(1S) (9.1~9.8)</td><td class="num">μ = 9.446 ± 0.003, σ = 0.082</td><td>연습 2: 범위를 10 GeV 넘게 잡으면 Υ(2S)가 섞여 맞춤이 어긋남</td></tr>
+      <tr><td>J/ψ 신호 사건 수</td><td class="num">약 6,500개 (비율 약 0.75)</td><td>연습 3, 범위 안 전체 8,628개</td></tr>
+    </table></div>
+    <h3>예시 결과 (노트북 2)</h3>
+    <div class="table-wrap"><table>
+      <tr><th>선택 조건</th><th class="num">N⁺</th><th class="num">N⁻</th><th class="num">R ± σ<sub>R</sub></th></tr>
+      <tr><td>조건 없음</td><td class="num">11,025</td><td class="num">8,975</td><td class="num">1.228 ± 0.017</td></tr>
+      <tr><td>MET &gt; 25</td><td class="num">5,769</td><td class="num">4,363</td><td class="num">1.322 ± 0.027</td></tr>
+      <tr><td>MET &gt; 25, m<sub>T</sub> &gt; 50</td><td class="num">4,825</td><td class="num">3,583</td><td class="num">1.347 ± 0.030</td></tr>
+      <tr><td>p<sub>T</sub> &gt; 30, MET &gt; 30, m<sub>T</sub> &gt; 60</td><td class="num">3,249</td><td class="num">2,435</td><td class="num">1.334 ± 0.036</td></tr>
+      <tr><td>|η| &lt; 0.8 (MET &gt; 25, m<sub>T</sub> &gt; 50)</td><td class="num">2,004</td><td class="num">1,567</td><td class="num">1.28 ± 0.04</td></tr>
+      <tr><td>0.8 ≤ |η| &lt; 1.4</td><td class="num">1,316</td><td class="num">964</td><td class="num">1.37 ± 0.06</td></tr>
+      <tr><td>1.4 ≤ |η| &lt; 2.1</td><td class="num">1,505</td><td class="num">1,052</td><td class="num">1.43 ± 0.06</td></tr>
+    </table></div>
+    <div class="box box--answer">
+      <h4>활동지 정답 요지</h4>
+      <ul>
+        <li><strong>B1</strong> M² = (E₁+E₂)² − |p⃗₁+p⃗₂|² (c = 1). 2만 행에 한 번에 적용, 식을 고치면 전체가 다시 계산됨, 재현 가능(코드가 곧 기록).</li>
+        <li><strong>A1</strong> 뚜렷한 피크: J/ψ, ψ(2S), Υ(1S·2S·3S 무리), Z, 저질량 쪽 φ, ρ/ω. η는 트리거 조건 때문에 약하게 보이거나 거의 보이지 않을 수 있음.</li>
+        <li><strong>A2</strong> 에너지가 수백 GeV 이상인 뮤온. E와 |p|가 거의 같은 큰 수라 E² − p²에서 반올림 오차가 크게 증폭됨.</li>
+        <li><strong>A3</strong> 약 70배. (1) Z의 자연 폭(약 2.5 GeV)이 J/ψ보다 훨씬 큼, (2) 운동량이 큰 뮤온은 트랙이 덜 휘어 운동량 분해능이 나빠짐.</li>
+        <li><strong>C1</strong> W⁺는 u + d̄, W⁻는 d + ū로 주로 생성. 양성자에 u가 d의 두 배이므로 W⁺가 더 많음. 반쿼크는 양쪽 모두 바다 쿼크에서 오므로 비슷함.</li>
+        <li><strong>C2</strong> 80 GeV 근처(반값 지점은 약 89 GeV). W 질량의 흔적. 분해능, W의 자연 폭, W 자체의 횡운동량 때문에 에지가 무뎌지고 80.4 GeV를 조금 넘는 사건도 있음.</li>
+        <li><strong>C3</strong> 배경(R ≈ 1)이 줄어 W의 비율이 커짐. 너무 강한 컷은 사건 수가 줄어 통계 오차가 커지고, 특정 운동학 영역만 남아 편향될 수 있음.</li>
+        <li><strong>C4</strong> |η|가 클수록 R 증가(1.28 → 1.37 → 1.43). u 쿼크가 d보다 큰 운동량 비율을 갖는 경우가 많아 W⁺가 앞쪽(빔 방향)으로 더 많이 날아감.</li>
+        <li><strong>확인 1</strong> R = 4825/3583 = 1.347, σ<sub>R</sub> = 1.347 × √(1/4825 + 1/3583) = 1.347 × 0.0221 ≈ 0.030.</li>
+        <li><strong>확인 2</strong> 1/2로 줄어듦. 상대 오차 ∝ 1/√N.</li>
+        <li><strong>확인 3</strong> 질량 범위가 1000배 넘게 넓음, 사건 수도 수십~수만으로 차이가 큼. 로그 축이면 작은 피크(Z)와 큰 피크(J/ψ)를 한 그림에서 볼 수 있음.</li>
+      </ul>
+    </div>
+    <h3>운영 팁</h3>
+    <ul>
+      <li><strong>계정</strong>: 학교 구글 워크스페이스 계정은 관리자 설정에 따라 Colab이 막혀 있을 수 있습니다. 수업 전에 교사 계정과 학생 계정 하나로 미리 열어 보세요. 막혀 있으면 개인 계정, 또는 컴퓨터실에 Anaconda(Jupyter) 설치, 또는 시연 + 결과 해석 수업으로 바꿉니다.</li>
+      <li><strong>데이터 경로</strong>: 노트북은 GitHub 원본 주소에서 먼저 읽고, 실패하면 <code>../data/</code>, <code>data/</code> 순서로 찾습니다. 저장소가 비공개이거나 주소가 다르면 노트북의 <code>URL</code> 줄만 고치면 됩니다. 오프라인 컴퓨터실에서는 저장소 전체를 복사해 <code>notebooks/</code>에서 Jupyter를 실행합니다.</li>
+      <li><strong>짝 코딩</strong>: 2인 1조로 한 명은 실행, 한 명은 활동지 기록을 맡고 단계마다 역할을 바꿉니다. 코딩 경험 차이에 따른 소외를 줄입니다.</li>
+      <li><strong>속도 차이</strong>: 빠른 학생은 연습 문제와 업그레이드 도전, 느린 학생은 "런타임 → 모두 실행" 후 결과 해석에 집중하게 합니다. 이 수업의 목표는 코딩 실력이 아니라 <strong>데이터로 주장하기</strong>입니다.</li>
+      <li><strong>그래프 글자</strong>: 노트북 그래프의 축 이름은 Colab의 한글 글꼴 문제를 피하려고 영어로 썼습니다. 한글을 쓰려면 한글 글꼴 설치 셀이 필요합니다(설치 후 런타임 재시작).</li>
+      <li><strong>연계</strong>: 결과는 U5 연구 프로젝트의 출발점으로 쓰기 좋습니다(η 구간별 R, 피크 폭과 η의 관계 등).</li>
+    </ul>
+    <h3>평가 기준(예)</h3>
+    <div class="table-wrap"><table class="rubric">
+      <tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>도구 사용</td><td>노트북을 실행하고 값을 바꿔 새 결과를 얻음</td><td>노트북을 끝까지 실행함</td><td>도움을 받아 일부 실행</td></tr>
+      <tr><td>측정과 비교</td><td>μ ± 오차를 기준값과 비교하고 차이의 원인을 제시</td><td>μ를 기록하고 기준값과 비교</td><td>값만 옮겨 적음</td></tr>
+      <tr><td>통계 해석</td><td>컷의 효과를 순도와 통계 오차의 절충으로 설명</td><td>R과 σ<sub>R</sub>을 바르게 계산</td><td>R만 계산</td></tr>
+    </table></div>
+  </details>
+
+  <nav class="pager no-print" aria-label="모듈 이동">
+    <a class="prev" href="index.html"><span>← 업그레이드 트랙</span>모듈 목록</a>
+    <a class="next" href="u2.html"><span>다음 모듈 U2 →</span>반물질과 PET</a>
+  </nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

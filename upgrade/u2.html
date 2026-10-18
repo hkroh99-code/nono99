@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>U2 반물질과 PET · 업그레이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .teacher-part { margin-top: 2.5rem; border-color: var(--teacher); }
+  .teacher-part > summary { color: var(--teacher); font-size: var(--step-1); }
+  .pet-lab { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; }
+  @media (max-width: 860px) { .pet-lab { grid-template-columns: minmax(0, 1fr); } }
+  .pet-stage { position: relative; height: 480px; background: #070b16; border-radius: var(--radius); overflow: hidden; }
+  @media (max-width: 560px) { .pet-stage { height: 340px; } }
+  .pet-stage canvas { display: block; }
+  .pet-hud { position: absolute; left: 10px; top: 8px; right: 10px; pointer-events: none; color: #c9cfe3; font-size: .78rem; line-height: 1.5; display: flex; flex-wrap: wrap; gap: .3rem .9rem; }
+  .pet-hud b { color: #ffd23f; font-family: var(--font-mono); font-weight: 600; }
+  .pet-hint { position: absolute; left: 10px; bottom: 8px; color: #8e94ab; font-size: .72rem; pointer-events: none; }
+  .pet-side { display: grid; gap: .8rem; min-width: 0; }
+  .pet-img-wrap { background: #070b16; border-radius: var(--radius); padding: .5rem; display: grid; gap: .3rem; justify-items: center; }
+  .pet-img-wrap canvas { width: 100%; max-width: 360px; aspect-ratio: 1 / 1; display: block; }
+  .pet-img-wrap p { color: #a9b0c8; font-size: .75rem; text-align: center; }
+  .pet-ctl { display: grid; gap: .55rem; }
+  .pet-ctl .row { display: flex; flex-wrap: wrap; gap: .45rem; }
+  .pet-ctl label.inline { display: flex; gap: .5rem; align-items: center; font-size: var(--step--1); flex-wrap: wrap; }
+  .pet-ctl input[type="range"] { flex: 1 1 140px; accent-color: var(--accent); }
+  .pet-ctl .val { font-family: var(--font-mono); font-size: .85rem; color: var(--ink-2); min-width: 5.5em; }
+  .pet-ctl .btn { padding: .45rem .75rem; }
+  .toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--surface); color: var(--ink); border: 1px solid var(--accent); border-radius: 8px; padding: .5rem .9rem; font-size: .88rem; z-index: 50; max-width: calc(100% - 32px); box-shadow: var(--shadow); }
+</style>
+</head>
+<body data-page="upgrade" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--student">학생용</span>
+      <span class="badge badge--up">업그레이드 U2</span>
+      <span class="badge badge--adv">심화</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">업그레이드 U2 · 연결 주제 1, 5, 7</p>
+    <h1>반물질과 PET: 입자물리가 병원으로</h1>
+    <p class="lead">반물질은 공상과학 소설 속에만 있을까요? 병원의 PET 검사는 날마다 반물질(양전자)을 만들고, 그것이 사라질 때 나오는 광자 두 개로 몸속을 봅니다. 그 원리를 운동량 보존과 E = mc²로 설명해 봅시다.</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--sim" href="#sim">미니 모의실험으로 가기</a>
+      <button class="btn" type="button" data-copy-answers>내 답안 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>답안 지우기</button>
+    </div>
+    <p class="save-note">입력한 답은 이 기기의 브라우저에만 자동 저장됩니다. 제출할 때는 [내 답안 복사]를 눌러 붙여 넣으세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#goals">학습 목표</a><a href="#open">생각 열기</a><a href="#concept">핵심 개념</a>
+      <a href="#calc">계산 활동</a><a href="#sim">PET 모의실험</a><a href="#paper">종이 PET</a>
+      <a href="#cern">CERN에서는</a><a href="#check">확인 문제</a><a href="#self">자기 평가</a><a href="#teacher">교사용</a>
+    </nav>
+  </header>
+
+  <section class="section" id="goals">
+    <div class="box box--goal">
+      <h2 class="box__title" style="font-size:var(--step-1)">학습 목표</h2>
+      <ol>
+        <li>양전자가 전자의 반입자임을 알고, β⁺ 붕괴로 양전자가 생기는 과정을 설명할 수 있다.</li>
+        <li>전자–양전자 쌍소멸에서 광자 두 개가 각각 511 keV로, 서로 반대 방향으로 나가는 까닭을 에너지·운동량 보존으로 설명할 수 있다.</li>
+        <li>동시 계수와 반응선(LOR)을 모아 영상을 재구성하는 원리를 모의실험으로 확인할 수 있다.</li>
+        <li>입자 검출기 기술이 의료 영상으로 이어진 사례를 들 수 있다.</li>
+      </ol>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>활동</th></tr>
+      <tr><td>1차시 (50분)</td><td>생각 열기 → 반물질과 β⁺ 붕괴 → 쌍소멸의 에너지·운동량 보존 → 계산 활동</td></tr>
+      <tr><td>2차시 (50분)</td><td>PET 미니 모의실험(숨은 모양 맞히기, TOF 비교) 또는 종이 PET 놀이 → CERN 연결 → 확인 문제</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="open">
+    <div class="section__head"><span class="section__tag">01</span><h2>생각 열기</h2></div>
+    <div class="box box--think prose">
+      <p>암이 의심되는 환자가 PET-CT 검사를 받습니다. 검사 전에 포도당과 비슷한 물질에 방사성 플루오린(¹⁸F)을 붙인 약을 주사합니다. 암세포는 보통 세포보다 포도당을 많이 쓰므로 이 약이 암세포에 더 많이 모입니다. 약 한 시간 뒤, 환자는 도넛 모양의 기계 안에 눕습니다. 기계는 아무것도 쏘지 않는데, 몇 분 뒤 몸속에서 약이 모인 곳이 밝게 빛나는 영상이 나옵니다.</p>
+    </div>
+    <label class="answer-field"><span>Q1. 기계가 아무것도 쏘지 않는데 어떻게 영상을 만들까요? 무엇이 몸 밖으로 나와야 할까요?</span><textarea id="open-q1"></textarea></label>
+    <label class="answer-field"><span>Q2. "반물질"이라는 말을 들으면 떠오르는 것을 쓰세요. 반물질은 실제로 존재할까요?</span><textarea id="open-q2"></textarea></label>
+  </section>
+
+  <section class="section" id="concept">
+    <div class="section__head"><span class="section__tag">02</span><h2>핵심 개념</h2></div>
+    <div class="prose">
+      <h3>1. 반물질과 양전자</h3>
+      <p>모든 입자에는 질량은 같고 전하 같은 성질이 반대인 <strong>반입자</strong>가 있습니다. 전자(e⁻)의 반입자는 <strong>양전자</strong>(e⁺, 전하 +e, 질량 0.511 MeV/c²)입니다. 디랙이 1928년 무렵 이론으로 예측했고, 앤더슨이 1932년 우주선(cosmic ray) 사진에서 발견했습니다. 주제 5의 구름상자에서도 자기장을 걸면 전자와 반대로 휘는 양전자 흔적을 볼 수 있습니다.</p>
+      <h3>2. 양전자는 어디서 오나: β⁺ 붕괴</h3>
+      <p>양성자가 너무 많은 원자핵에서는 양성자 하나가 중성자로 바뀌며 양전자와 중성미자를 내놓습니다(양성자 → 중성자 + e⁺ + ν). PET에 가장 많이 쓰는 ¹⁸F는 반감기가 약 110분이고 β⁺ 붕괴해 ¹⁸O가 됩니다. 반감기가 짧아 병원 가까운 곳의 사이클로트론(주제 4의 원형 가속기)에서 양성자를 쏘아 만들어 바로 씁니다.</p>
+      <h3>3. 쌍소멸: 질량이 빛으로</h3>
+      <p>몸속에서 나온 양전자는 1 mm 안팎을 지나며 속력을 잃고, 주변 전자와 만나 함께 사라집니다. 두 입자의 질량 에너지 2 × 0.511 MeV가 광자(감마선)로 바뀝니다. 거의 정지한 상태에서 소멸하므로 처음 운동량 합은 거의 0입니다.</p>
+    </div>
+    <div class="formula">e⁺ + e⁻ → γ + γ &nbsp;&nbsp; E<sub>γ</sub> = <b>m<sub>e</sub>c²</b> = 0.511 MeV = 511 keV &nbsp;&nbsp; p⃗<sub>γ1</sub> + p⃗<sub>γ2</sub> = 0</div>
+    <div class="prose">
+      <p><strong>왜 광자가 두 개일까?</strong> 광자 하나는 운동량 E/c를 가지므로 운동량 합이 0이 될 수 없습니다. 광자 두 개가 크기가 같고(그래서 각각 511 keV) 방향이 정반대(180°)이면 에너지와 운동량이 모두 보존됩니다. 주제 7에서 정지한 입자가 두 조각으로 붕괴할 때와 같은 원리입니다.</p>
+      <h3>4. 동시 계수와 반응선(LOR)</h3>
+      <p>환자를 둘러싼 고리 모양 검출기(섬광 결정 + 광검출기)가 광자를 잡습니다. 서로 다른 두 검출기가 <strong>몇 나노초 안에 동시에</strong> 511 keV 광자를 잡으면, 소멸은 두 검출기를 잇는 선 위 어딘가에서 일어났다고 봅니다. 이 선을 <strong>반응선(LOR, line of response)</strong>이라고 합니다. 반응선 하나로는 위치를 모르지만, 수백만 개를 겹치면 많이 겹치는 곳(약이 모인 곳)이 드러납니다. 이것이 <strong>역투영(back-projection)</strong>입니다.</p>
+      <h3>5. 비행시간(TOF) PET</h3>
+      <p>두 광자가 도착한 시간 차 Δt를 재면 반응선 위의 위치까지 어림할 수 있습니다. 소멸 지점이 가운데에서 x만큼 떨어져 있으면 한 광자는 2x만큼 더 갑니다.</p>
+    </div>
+    <div class="formula">Δx = <b>c · Δt</b> / 2 &nbsp;&nbsp;&nbsp; (Δt = 400 ps → Δx = 6 cm)</div>
+    <figure class="diagram">
+      <svg viewBox="0 0 520 300" width="520" role="img" aria-label="검출기 고리 안에서 쌍소멸로 생긴 두 광자가 반대 방향으로 나가 반응선을 만드는 그림">
+        <circle cx="160" cy="150" r="120" fill="none" stroke="var(--ink-3)" stroke-width="10" stroke-dasharray="14 4"/>
+        <ellipse cx="160" cy="150" rx="70" ry="55" fill="var(--surface-2)" stroke="var(--line)"/>
+        <line x1="62" y1="81" x2="258" y2="219" stroke="var(--track)" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <circle cx="180" cy="164" r="5" fill="var(--accent)"/>
+        <path d="M180 164 L 236 203" stroke="var(--track)" stroke-width="3" marker-end="url(#ah)"/>
+        <path d="M180 164 L 98 106" stroke="var(--track)" stroke-width="3" marker-end="url(#ah)"/>
+        <rect x="250" y="210" width="16" height="16" fill="var(--track)" transform="rotate(35 258 218)"/>
+        <rect x="54" y="72" width="16" height="16" fill="var(--track)" transform="rotate(35 62 80)"/>
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--track)"/></marker></defs>
+        <text x="300" y="60" font-size="14">검출기 고리 (섬광 결정)</text>
+        <line x1="296" y1="56" x2="270" y2="70" stroke="var(--ink-3)"/>
+        <text x="300" y="118" font-size="14">쌍소멸 지점 (e⁺ + e⁻)</text>
+        <line x1="296" y1="114" x2="188" y2="160" stroke="var(--ink-3)"/>
+        <text x="300" y="176" font-size="14">광자 511 keV ← → 511 keV</text>
+        <text x="300" y="234" font-size="14">반응선(LOR): 두 검출기를 잇는 선</text>
+        <line x1="296" y1="230" x2="246" y2="208" stroke="var(--ink-3)"/>
+        <text x="110" y="290" font-size="13" class="muted-fill">환자 몸(약이 모인 곳에서 소멸이 많음)</text>
+      </svg>
+      <figcaption>그림 1. 쌍소멸로 생긴 두 광자는 반대 방향으로 나가 고리의 두 검출기에 동시에 닿는다. 두 검출기를 잇는 선이 반응선이다.</figcaption>
+    </figure>
+    <label class="answer-field"><span>K1. 광자가 하나만 나오면 안 되는 까닭을 운동량 보존으로 설명하세요.</span><textarea id="concept-k1"></textarea></label>
+  </section>
+
+  <section class="section" id="calc">
+    <div class="section__head"><span class="section__tag">03</span><h2>계산 활동</h2></div>
+    <p class="prose small muted">사용할 값: m<sub>e</sub>c² = 0.511 MeV, 1 eV = 1.6×10⁻¹⁹ J, c = 3.0×10⁸ m/s, hc = 1240 eV·nm</p>
+    <div class="table-wrap"><table class="data-table" id="tbl-calc">
+      <tr><th>번호</th><th>문제</th><th>내 답 (단위 포함)</th></tr>
+      <tr><td>C1</td><td>광자 하나의 에너지 511 keV를 줄(J)로 나타내면?</td><td><input type="text" id="calc-c1" aria-label="C1 답"></td></tr>
+      <tr><td>C2</td><td>이 광자의 파장 λ = hc/E는 몇 nm인가? 가시광선(400~700 nm)과 비교하면?</td><td><input type="text" id="calc-c2" aria-label="C2 답"></td></tr>
+      <tr><td>C3</td><td>광자 하나의 운동량 p = E/c를 MeV/c 단위로 쓰면? 두 광자의 운동량 합은?</td><td><input type="text" id="calc-c3" aria-label="C3 답"></td></tr>
+      <tr><td>C4</td><td>두 광자의 도착 시간 차가 0.5 ns이면 소멸 지점은 가운데에서 몇 cm 떨어져 있는가?</td><td><input type="text" id="calc-c4" aria-label="C4 답"></td></tr>
+      <tr><td>C5</td><td>¹⁸F(반감기 110분)를 주사하고 220분 뒤 검사하면 처음 방사능의 몇 %가 남는가?</td><td><input type="text" id="calc-c5" aria-label="C5 답"></td></tr>
+      <tr><td>C6</td><td>고리 지름 80 cm인 PET에서 시간 분해능이 같을 때, 지름이 2배인 고리라면 C4의 위치 불확도는 달라지는가?</td><td><input type="text" id="calc-c6" aria-label="C6 답"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-calc">표 복사</button>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">04</span><h2>PET 미니 모의실험: 숨은 모양 찾기</h2></div>
+    <div class="prose">
+      <p>가운데 회색 원기둥(환자) 안에 약이 모인 곳이 <strong>숨겨져</strong> 있습니다. 소멸이 일어날 때마다 노란 광자 두 개가 반대로 날아가 고리의 검출기를 깜빡이게 하고, 반응선이 그려집니다. 오른쪽 영상판에는 반응선이 계속 쌓입니다(역투영). 사건이 쌓일수록 숨은 모양이 드러납니다. 정답을 보기 전에 모양을 추측하세요.</p>
+    </div>
+    <div class="pet-lab">
+      <div class="pet-stage" id="pet-stage" aria-label="PET 검출기 고리 3D 화면">
+        <div class="pet-hud"><span>반응선 수 <b id="pet-hud-n">0</b></span><span>모드 <b id="pet-hud-mode">역투영</b></span><span>화면 축척: 고리 지름 = 80 cm</span></div>
+        <div class="pet-hint">드래그: 회전 · 휠/두 손가락: 확대 · 오른쪽 드래그: 이동</div>
+      </div>
+      <div class="pet-side">
+        <div class="pet-img-wrap">
+          <canvas id="pet-img" width="360" height="360" aria-label="역투영으로 쌓인 PET 영상"></canvas>
+          <p>재구성 영상 (위에서 본 단면, 1픽셀 = 5 mm)</p>
+        </div>
+        <div class="pet-ctl no-print">
+          <div class="row">
+            <button class="btn btn--primary" type="button" data-pet="toggle">일시정지</button>
+            <button class="btn" type="button" data-pet="burst">사건 1000개 한꺼번에</button>
+            <button class="btn" type="button" data-pet="clear">영상 지우기</button>
+          </div>
+          <div class="row">
+            <button class="btn" type="button" data-pet="new">새 문제</button>
+            <button class="btn btn--ghost" type="button" data-pet="reveal">정답 보기</button>
+          </div>
+          <label class="inline">사건 발생률 <input type="range" min="5" max="300" step="5" value="40" data-pet="rate"> <span class="val" data-pet="rate-val">40 개/초</span></label>
+          <label class="inline">시간 분해능(TOF)
+            <select data-pet="tof">
+              <option value="0">끔 (역투영만)</option>
+              <option value="600">600 ps (Δx ≈ 9 cm)</option>
+              <option value="300">300 ps (Δx ≈ 4.5 cm)</option>
+              <option value="100">100 ps (Δx ≈ 1.5 cm)</option>
+            </select>
+          </label>
+          <label class="inline"><input type="checkbox" data-pet="filter"> 선명하게 (흐린 배경을 빼는 필터)</label>
+          <label class="inline"><input type="checkbox" data-pet="body"> 몸 전체에 약한 배경 활동 넣기</label>
+          <label class="inline"><input type="checkbox" data-pet="lines" checked> 반응선 보이기</label>
+        </div>
+      </div>
+    </div>
+
+    <h3>미션</h3>
+    <ol class="steps">
+      <li><span><strong>관찰</strong> — 한 소멸 사건에서 두 광자는 어느 방향으로 나가나요? 3D 화면을 돌려 고리를 옆에서도 보세요.</span></li>
+      <li><span><strong>추측</strong> — TOF를 끈 상태에서 반응선 100개, 1000개, 5000개일 때 영상을 보고 숨은 모양을 추측하세요(아래 표).</span></li>
+      <li><span><strong>비교</strong> — [영상 지우기] 후 TOF 300 ps로 같은 수의 사건을 모아 보세요. 무엇이 달라지나요?</span></li>
+      <li><span><strong>필터</strong> — "선명하게"를 켜고 끄며 비교하세요. 역투영만 하면 왜 흐린 후광이 생길까요?</span></li>
+      <li><span><strong>확인</strong> — 최종 답을 고른 뒤 [정답 보기]를 누르세요. [새 문제]로 다른 모양에 도전할 수 있습니다.</span></li>
+    </ol>
+    <div class="table-wrap"><table class="data-table" id="tbl-pet">
+      <tr><th>반응선 수</th><th>TOF 끔: 보이는 것</th><th>TOF 300 ps: 보이는 것</th></tr>
+      <tr><td>약 100</td><td><input type="text" id="pet-100-off" aria-label="100개 TOF 끔"></td><td><input type="text" id="pet-100-on" aria-label="100개 TOF 켬"></td></tr>
+      <tr><td>약 1000</td><td><input type="text" id="pet-1000-off" aria-label="1000개 TOF 끔"></td><td><input type="text" id="pet-1000-on" aria-label="1000개 TOF 켬"></td></tr>
+      <tr><td>약 5000</td><td><input type="text" id="pet-5000-off" aria-label="5000개 TOF 끔"></td><td><input type="text" id="pet-5000-on" aria-label="5000개 TOF 켬"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-pet">기록표 복사</button>
+    <div class="grid-2">
+      <label class="answer-field"><span>내가 추측한 모양</span>
+        <select id="pet-guess">
+          <option value="">고르세요</option>
+          <option value="two">크기가 다른 두 점</option>
+          <option value="ring">고리(도넛)</option>
+          <option value="L">L자</option>
+          <option value="tri">삼각형</option>
+          <option value="T">T자</option>
+          <option value="three">작은 점 세 개</option>
+        </select>
+      </label>
+      <label class="answer-field"><span>그렇게 추측한 근거</span><textarea id="pet-reason"></textarea></label>
+    </div>
+    <label class="answer-field"><span>S1. 사건 수가 많아질수록 영상이 어떻게 변했나요? 실제 PET에서 사건 수를 늘리는 방법과 그 대가(환자에게)를 생각해 보세요.</span><textarea id="sim-s1"></textarea></label>
+    <label class="answer-field"><span>S2. TOF 정보가 영상을 좋게 만드는 까닭을 Δx = cΔt/2로 설명하세요.</span><textarea id="sim-s2"></textarea></label>
+  </section>
+
+  <section class="section" id="paper">
+    <div class="section__head"><span class="section__tag">05</span><h2>종이 PET 놀이 (컴퓨터 없이, 2인 1조)</h2></div>
+    <div class="grid-2">
+      <div class="box"><h3>준비물</h3><ul><li>지름 16 cm 원 둘레에 1~24번 점을 같은 간격으로 찍은 종이 2장(각자)</li><li>자, 연필, 색연필</li></ul></div>
+      <div class="box"><h3>규칙</h3><ul><li>출제자는 원 안에 "약이 모인 곳" 점 2개를 몰래 찍는다.</li><li>각 점을 지나는 직선을 아무 방향으로 5개씩 긋고, 직선이 원과 만나는 가장 가까운 번호 쌍(예: 3–15)을 목록으로 만든다.</li><li>목록 10줄을 섞어서 해결자에게 준다.</li></ul></div>
+    </div>
+    <ol class="steps">
+      <li><span>해결자는 자기 종이에 번호 쌍을 잇는 선(반응선)을 모두 긋는다.</span></li>
+      <li><span>선이 많이 겹치는 곳 두 군데를 찾아 표시한다.</span></li>
+      <li><span>출제자의 종이와 겹쳐 비교하고, 거리 오차를 자로 잰다(mm).</span></li>
+      <li><span>번호 점을 48개로 늘리면 오차가 어떻게 될지 예상한다.</span></li>
+    </ol>
+    <div class="table-wrap"><table class="data-table" id="tbl-paper">
+      <tr><th>점</th><th>위치 오차 (mm)</th><th>그 점을 지나는 선 수</th></tr>
+      <tr><td>점 1</td><td><input type="number" step="any" id="paper-e1" aria-label="점 1 위치 오차"></td><td><input type="number" id="paper-n1" aria-label="점 1 선 수"></td></tr>
+      <tr><td>점 2</td><td><input type="number" step="any" id="paper-e2" aria-label="점 2 위치 오차"></td><td><input type="number" id="paper-n2" aria-label="점 2 선 수"></td></tr>
+    </table></div>
+    <label class="answer-field"><span>P1. 오차가 생긴 원인을 두 가지 쓰고, 실제 PET에서 이에 해당하는 것은 무엇인지 연결하세요.</span><textarea id="paper-p1"></textarea></label>
+  </section>
+
+  <section class="section" id="cern">
+    <div class="section__head"><span class="section__tag">06</span><h2>실제 CERN에서는</h2></div>
+    <div class="box box--cern prose">
+      <p><strong>검출기 기술이 병원으로</strong> — PET의 핵심 부품인 섬광 결정과 빠른 광검출기, 동시 계수 전자회로는 입자물리 실험의 칼로리미터(주제 5의 ECAL)와 같은 기술입니다. 1970년대 후반 CERN의 연구자들은 입자 검출용 다선 비례 계수함으로 초기 PET 영상을 시험했고, 1990년대에는 CERN에서 시작한 Crystal Clear 협력 연구가 의료 영상용 새 섬광 결정을 개발했습니다. PET과 CT를 한 기계로 합친 PET-CT 개발에도 CERN에서 일했던 물리학자가 참여했습니다.</p>
+      <p><strong>Medipix</strong> — LHC 검출기용 픽셀 칩 기술에서 나온 광자 계수 칩으로, X선 광자 하나하나의 에너지를 재어 "컬러" X선 CT 영상을 만듭니다.</p>
+      <p><strong>반물질 공장</strong> — CERN의 반양성자 감속기(AD)와 ELENA는 반양성자를 느리게 만들어 반수소 원자를 만드는 실험에 공급합니다. 1995년 CERN에서 반수소 원자가 처음 만들어졌고, 이후 ALPHA 실험 등은 반수소를 가두어 빛 스펙트럼과 중력에 대한 반응을 재고 있습니다. 병원의 양전자는 하루에도 엄청나게 많이 생기지만, 모으지 않고 곧바로 소멸시켜 영상에 씁니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="check">
+    <div class="section__head"><span class="section__tag">07</span><h2>확인 문제</h2></div>
+    <label class="answer-field"><span>1. 양전자가 운동 에너지가 거의 0인 상태로 소멸할 때, 두 광자의 에너지와 방향을 근거와 함께 쓰세요.</span><textarea id="check-1"></textarea></label>
+    <label class="answer-field"><span>2. 양전자는 몸속에서 1 mm 안팎을 움직인 뒤 소멸합니다. 이것이 PET 영상의 선명도에 주는 영향은?</span><textarea id="check-2"></textarea></label>
+    <label class="answer-field"><span>3. 두 검출기가 각각 511 keV 광자를 잡았지만 도착 시간 차가 50 ns였다면, 같은 소멸에서 나온 광자 쌍으로 볼 수 있을까요? (고리 지름 80 cm, 빛이 80 cm를 가는 데 약 2.7 ns)</span><textarea id="check-3"></textarea></label>
+    <label class="answer-field"><span>4. 반감기가 짧은 ¹⁸F를 쓰는 장점과 단점을 하나씩 쓰세요.</span><textarea id="check-4"></textarea></label>
+  </section>
+
+  <section class="section" id="up">
+    <div class="box box--up">
+      <h3>업그레이드 도전</h3>
+      <p>실제로는 소멸 직전의 양전자–전자 쌍이 조금 움직이고 있어서 두 광자 사이 각이 정확히 180°가 아니라 평균 0.25° 정도 어긋납니다(비공선성). 지름 80 cm 고리에서 이 어긋남 때문에 반응선이 고리 가운데에서 얼마나 비켜 갈 수 있는지 어림 계산하고(작은 각 근사: 거리 × 각(라디안)), 양전자 이동 거리(약 1 mm)와 비교해 PET 해상도를 정하는 요인을 정리하세요.</p>
+      <label class="answer-field"><span>도전 기록</span><textarea id="up-1"></textarea></label>
+    </div>
+  </section>
+
+  <section class="section" id="self">
+    <div class="section__head"><span class="section__tag">08</span><h2>자기 평가</h2></div>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="self-1"> <span>양전자가 무엇이고 어디서 생기는지 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-2"> <span>쌍소멸 광자가 511 keV 두 개, 반대 방향인 까닭을 보존 법칙으로 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-3"> <span>반응선과 역투영으로 영상이 만들어지는 과정을 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-4"> <span>CERN의 검출기 기술이 의료에 쓰인 예를 들 수 있다.</span></label></li>
+    </ul>
+    <label class="answer-field"><span>오늘 가장 궁금해진 것 한 가지</span><textarea id="self-q"></textarea></label>
+  </section>
+
+  <details class="teacher-part" id="teacher">
+    <summary>교사용 안내 (정답·운영 팁)</summary>
+    <div class="box box--answer">
+      <h4>생각 열기 · 핵심 개념</h4>
+      <ul>
+        <li><strong>Q1</strong> 몸속에서 나오는 감마선(광자)을 밖에서 잡는다. 방사선을 "쏘는" X선·CT와 달리 PET는 몸속 약이 내는 방사선을 "받는" 방식(방출 단층 촬영).</li>
+        <li><strong>Q2</strong> 학생의 생각을 그대로 받되, 반물질은 실제로 존재하며 우주선·방사성 붕괴·가속기에서 날마다 생긴다는 점으로 이어 간다.</li>
+        <li><strong>K1</strong> 소멸 전 운동량 합 ≈ 0. 광자 하나는 운동량 E/c ≠ 0을 가지므로 보존이 깨진다. 두 광자가 같은 크기, 반대 방향이면 합이 0.</li>
+      </ul>
+    </div>
+    <div class="box box--answer">
+      <h4>계산 활동 정답</h4>
+      <ul>
+        <li><strong>C1</strong> 5.11×10⁵ eV × 1.6×10⁻¹⁹ J/eV ≈ 8.2×10⁻¹⁴ J</li>
+        <li><strong>C2</strong> λ = 1240 eV·nm / 511,000 eV ≈ 2.4×10⁻³ nm(2.4 pm). 가시광선보다 약 20만 배 짧다.</li>
+        <li><strong>C3</strong> 0.511 MeV/c. 반대 방향이므로 합은 0.</li>
+        <li><strong>C4</strong> Δx = (3×10⁸ × 0.5×10⁻⁹)/2 = 0.075 m = 7.5 cm</li>
+        <li><strong>C5</strong> 220분 = 반감기 2번 → 1/4 = 25 %</li>
+        <li><strong>C6</strong> 달라지지 않는다. Δx는 시간 분해능에만 달려 있다(고리 크기와 무관).</li>
+      </ul>
+    </div>
+    <h3>모의실험 운영 가이드와 기대 결과</h3>
+    <ul>
+      <li><strong>모델</strong>: 고리 반지름 = 40 cm, 검출기 블록 72개(블록마다 작은 결정이 많다고 보고 정확한 도달점을 사용), 숨은 분포는 6가지 모양 중 하나를 무작위로 고름. 2D 영상은 160×160 픽셀(5 mm). TOF 모드는 실제 소멸 위치에 가우스 오차(표준편차 = cΔt/2)를 더한 위치를 중심으로 반응선 위에 가우스 무게를 쌓음. 감쇠·산란·우연 동시 계수는 넣지 않음.</li>
+      <li><strong>미션 2</strong>: TOF 끔에서 100개는 거의 알아볼 수 없음, 1000개부터 대략적인 위치, 5000개 이상에서 모양 윤곽(두 점·세 점·고리는 쉽고, L·T·삼각형은 필터를 켜야 구분이 쉬움).</li>
+      <li><strong>미션 3</strong>: TOF 300 ps이면 같은 사건 수에서 훨씬 빨리, 또렷하게 모양이 나타남. 100 ps이면 거의 점을 바로 찍는 수준. 실제 장비의 시간 분해능은 대략 수백 ps 수준이며 연구 목표는 더 짧은 값이다.</li>
+      <li><strong>미션 4</strong>: 역투영은 각 반응선을 선 전체에 고르게 칠하므로 점 하나도 1/r로 퍼진 별 모양 후광을 만든다. 실제 장비는 필터 역투영(FBP)이나 반복 재구성으로 이를 보정한다. 모의실험의 "선명하게"는 흐리게 만든 영상을 빼는 간단한 고주파 강조로, FBP의 아이디어만 흉내 낸다.</li>
+      <li><strong>S1</strong> 사건이 많을수록 통계 잡음이 줄어 또렷해짐. 실제로는 약을 더 많이 주사(피폭 증가)하거나 촬영 시간을 늘림(환자 움직임, 대기 시간). 검출기 효율을 높이는 것이 근본 해결 → 입자물리 검출기 기술의 기여.</li>
+      <li><strong>S2</strong> TOF가 반응선 위치를 Δx 범위로 좁혀 주므로, 선 전체가 아니라 일부에만 칠하게 되어 잡음과 후광이 줄어든다.</li>
+      <li><strong>P1</strong> 번호 점 간격(검출기 크기 → 공간 분해능), 선을 긋는 오차(측정 오차), 선의 수가 적음(통계).</li>
+    </ul>
+    <div class="box box--answer">
+      <h4>확인 문제 · 업그레이드 정답</h4>
+      <ul>
+        <li><strong>1</strong> 각각 511 keV, 정반대 방향. 에너지 보존(2m<sub>e</sub>c²)과 운동량 보존(합 0).</li>
+        <li><strong>2</strong> 약이 있는 곳과 소멸 지점이 최대 수 mm 다를 수 있어 영상이 그만큼 흐려진다(근본적 한계).</li>
+        <li><strong>3</strong> 아니다. 고리 안 어디서 소멸해도 도착 시간 차는 약 2.7 ns를 넘을 수 없으므로 서로 다른 소멸에서 온 광자(우연 동시 계수)다. 실제 장비도 수 ns 정도의 동시 계수 창을 쓴다.</li>
+        <li><strong>4</strong> 장점: 몸에 오래 남지 않아 피폭이 짧다. 단점: 가까운 곳에서 만들어 빨리 운반·투여해야 한다.</li>
+        <li><strong>도전</strong> 0.25° ≈ 0.0044 rad. 가운데에서 고리까지 40 cm 거리라면 0.40 m × 0.0044 ÷ 2 ≈ 0.9 mm 정도(두 광자에 나누어). 흔히 쓰는 어림식 "흐림 ≈ 0.0022 × 고리 지름"으로 약 1.8 mm(반치폭). 양전자 이동 거리(~1 mm), 검출기 결정 크기(수 mm)와 함께 PET 해상도를 몇 mm 수준으로 제한한다.</li>
+      </ul>
+    </div>
+    <h3>흔한 오개념</h3>
+    <div class="table-wrap"><table>
+      <tr><th>오개념</th><th>바른 개념</th></tr>
+      <tr><td>반물질은 공상과학 속에만 있다.</td><td>양전자는 β⁺ 붕괴, 우주선, 가속기에서 늘 생긴다. 다만 모아 두기 어렵다.</td></tr>
+      <tr><td>두 광자는 같은 방향으로 함께 날아간다.</td><td>운동량 보존 때문에 반대 방향이다.</td></tr>
+      <tr><td>PET 기계가 방사선을 쏜다.</td><td>방사선은 몸속 약에서 나온다. 기계는 받기만 한다(PET-CT의 CT 부분은 X선을 쏜다).</td></tr>
+      <tr><td>질량이 "없어지면" 에너지 보존이 깨진다.</td><td>질량 에너지 mc²가 광자 에너지로 바뀌므로 총에너지는 보존된다.</td></tr>
+    </table></div>
+    <h3>운영 팁</h3>
+    <ul>
+      <li>모의실험은 웹 브라우저(WebGL)만 있으면 됩니다. 저사양 기기에서는 사건 발생률을 낮추고 [사건 1000개 한꺼번에]로 영상을 쌓게 하세요.</li>
+      <li>정답을 미리 보지 않도록, 모둠마다 [새 문제]를 눌러 서로 다른 모양으로 시작하게 하고 추측 근거를 발표하게 합니다.</li>
+      <li>피폭 이야기는 공포를 키우지 않도록 "이익과 위험을 비교해 의사가 판단한다", "반감기가 짧아 몸 안 방사능이 빨리 줄어든다" 수준으로 다룹니다. 수치는 검사 종류에 따라 크게 다르므로 구체적 값을 단정하지 않습니다.</li>
+      <li>보건·의학 진로 학생에게는 U3(양성자 치료)와 이어서 "진단(PET)과 치료(양성자)" 비교 발표를 과제로 줄 수 있습니다.</li>
+      <li>교육과정 연계: 물리학 – 운동량 보존, 에너지; 전자기와 양자 – 빛의 입자성(광자 에너지); 화학·생명과학 – 포도당 대사(융합).</li>
+    </ul>
+  </details>
+
+  <nav class="pager no-print" aria-label="모듈 이동">
+    <a class="prev" href="u1.html"><span>← 이전 모듈 U1</span>Python으로 오픈데이터 분석하기</a>
+    <a class="next" href="u3.html"><span>다음 모듈 U3 →</span>하드론 치료와 브래그 피크</a>
+  </nav>
+</main>
+<script src="../assets/js/common.js"></script>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/vendor/three/OrbitControls.js"></script>
+<script src="../assets/js/sim-kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var THREE = window.THREE, K = window.SimKit;
+  var stage = document.getElementById("pet-stage");
+  if (!THREE || !K) return;
+
+  /* ---------- 상수 ---------- */
+  var R = 5;                 // 고리 반지름(화면 단위) = 40 cm → 1 단위 = 8 cm
+  var CM = 8;                // 1 화면 단위 = 8 cm
+  var NDET = 72;
+  var NIMG = 160;            // 영상 픽셀 수(가로·세로), 1픽셀 = 80cm/160 = 5 mm
+  var PIX = 2 * R / NIMG;
+  var VPHOT = 14;            // 광자 애니메이션 속력(화면 단위/초)
+  var MAXANIM = 40, MAXL = 90;
+
+  /* ---------- 숨은 모양(정규화 좌표, 고리 반지름 = 1) ---------- */
+  function inTri(x, y) {
+    var ax = 0, ay = 0.45, bx = -0.42, by = -0.3, cx = 0.42, cy = -0.3;
+    var d1 = (x - bx) * (ay - by) - (ax - bx) * (y - by);
+    var d2 = (x - cx) * (by - cy) - (bx - cx) * (y - cy);
+    var d3 = (x - ax) * (cy - ay) - (cx - ax) * (y - ay);
+    var neg = d1 < 0 || d2 < 0 || d3 < 0, pos = d1 > 0 || d2 > 0 || d3 > 0;
+    return !(neg && pos);
+  }
+  function disc(x, y, cx, cy, r) { return (x - cx) * (x - cx) + (y - cy) * (y - cy) < r * r; }
+  var SHAPES = {
+    two: function (x, y) { return disc(x, y, -0.3, 0.15, 0.11) || disc(x, y, 0.24, -0.2, 0.2); },
+    ring: function (x, y) { var r = Math.sqrt(x * x + y * y); return r > 0.24 && r < 0.42; },
+    L: function (x, y) { return (x > -0.38 && x < -0.16 && y > -0.42 && y < 0.42) || (x > -0.38 && x < 0.34 && y > -0.42 && y < -0.2); },
+    tri: inTri,
+    T: function (x, y) { return (x > -0.42 && x < 0.42 && y > 0.2 && y < 0.42) || (x > -0.11 && x < 0.11 && y > -0.45 && y < 0.42); },
+    three: function (x, y) { return disc(x, y, -0.32, 0.25, 0.07) || disc(x, y, 0.3, 0.2, 0.07) || disc(x, y, 0.02, -0.32, 0.07); }
+  };
+  var SHAPE_KEYS = Object.keys(SHAPES);
+  var SHAPE_NAMES = { two: "크기가 다른 두 점", ring: "고리(도넛)", L: "L자", tri: "삼각형", T: "T자", three: "작은 점 세 개" };
+  var shapeKey = SHAPE_KEYS[Math.floor(Math.random() * SHAPE_KEYS.length)];
+  function inBody(x, y) { return (x * x) / (0.62 * 0.62) + (y * y) / (0.5 * 0.5) < 1; }
+
+  function samplePoint() {
+    var useBody = state.body && Math.random() < 0.3;
+    for (var k = 0; k < 2000; k++) {
+      var x = (Math.random() * 2 - 1) * 0.65, y = (Math.random() * 2 - 1) * 0.65;
+      if (useBody ? inBody(x, y) : SHAPES[shapeKey](x, y)) return { x: x * R, y: y * R };
+    }
+    return { x: 0, y: 0 };
+  }
+
+  /* ---------- 장면 ---------- */
+  var sim;
+  try {
+    sim = K.create({ stage: stage, cameraPos: [0, -7.5, 11.5], target: [0, 0, 0], grid: false, background: 0x070b16 });
+  } catch (e) { return; }
+  var scene = sim.scene;
+
+  var detMats = [], flash = new Float32Array(NDET);
+  var detGeo = new THREE.BoxGeometry(2 * Math.PI * R / NDET * 0.86, 0.7, 1.4);
+  for (var i = 0; i < NDET; i++) {
+    var a = (i + 0.5) * 2 * Math.PI / NDET;
+    var mat = new THREE.MeshLambertMaterial({ color: K.COLORS.detector, emissive: 0x000000 });
+    var m = new THREE.Mesh(detGeo, mat);
+    m.position.set((R + 0.35) * Math.cos(a), (R + 0.35) * Math.sin(a), 0);
+    m.rotation.z = a - Math.PI / 2;
+    scene.add(m); detMats.push(mat);
+  }
+  // 환자(가림막)
+  var bodyMat = new THREE.MeshLambertMaterial({ color: 0x3b4566, transparent: true, opacity: 1 });
+  var bodyMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.72 * R, 0.72 * R, 5, 48), bodyMat);
+  bodyMesh.rotation.x = Math.PI / 2;
+  scene.add(bodyMesh);
+  // 정답 판(숨김)
+  var maskCanvas = document.createElement("canvas"); maskCanvas.width = maskCanvas.height = 128;
+  var maskTex = new THREE.CanvasTexture(maskCanvas);
+  var answerPlane = new THREE.Mesh(new THREE.PlaneGeometry(2 * R, 2 * R), new THREE.MeshBasicMaterial({ map: maskTex, transparent: true, depthWrite: false }));
+  answerPlane.visible = false; answerPlane.renderOrder = 5;
+  scene.add(answerPlane);
+  function drawMask() {
+    var c = maskCanvas.getContext("2d"), n = maskCanvas.width, img = c.createImageData(n, n);
+    for (var py = 0; py < n; py++) for (var px = 0; px < n; px++) {
+      var x = (px + 0.5) / n * 2 - 1, y = 1 - (py + 0.5) / n * 2, o = (py * n + px) * 4;
+      if (SHAPES[shapeKey](x, y)) { img.data[o] = 95; img.data[o + 1] = 208; img.data[o + 2] = 255; img.data[o + 3] = 220; }
+    }
+    c.putImageData(img, 0, 0); maskTex.needsUpdate = true;
+  }
+  drawMask();
+  var lbl = K.label("검출기 고리 (지름 80 cm)", { height: 0.5 });
+  lbl.position.set(0, R + 1.6, 0); scene.add(lbl);
+
+  // 광자(점)
+  var photPos = new Float32Array(MAXANIM * 2 * 3);
+  var photGeo = new THREE.BufferGeometry();
+  photGeo.setAttribute("position", new THREE.BufferAttribute(photPos, 3));
+  var photPts = new THREE.Points(photGeo, new THREE.PointsMaterial({ color: K.COLORS.photon, size: 0.28, depthTest: false }));
+  photPts.frustumCulled = false; photPts.renderOrder = 8; scene.add(photPts);
+  // 반응선
+  var lorPos = new Float32Array(MAXL * 2 * 3);
+  var lorGeo = new THREE.BufferGeometry();
+  lorGeo.setAttribute("position", new THREE.BufferAttribute(lorPos, 3));
+  lorGeo.setDrawRange(0, 0);
+  var lorLines = new THREE.LineSegments(lorGeo, new THREE.LineBasicMaterial({ color: K.COLORS.photon, transparent: true, opacity: 0.28, depthTest: false }));
+  lorLines.frustumCulled = false; lorLines.renderOrder = 7; scene.add(lorLines);
+  var lorIdx = 0, lorCount = 0;
+  function drawLOR(A, B) {
+    var o = lorIdx * 6;
+    lorPos[o] = A.x; lorPos[o + 1] = A.y; lorPos[o + 2] = 0; lorPos[o + 3] = B.x; lorPos[o + 4] = B.y; lorPos[o + 5] = 0;
+    lorIdx = (lorIdx + 1) % MAXL; lorCount = Math.min(lorCount + 1, MAXL);
+    lorGeo.attributes.position.needsUpdate = true; lorGeo.setDrawRange(0, lorCount * 2);
+  }
+
+  /* ---------- 상태 ---------- */
+  var state = { rate: 40, tof: 0, filter: false, body: false, lines: true, revealed: false };
+  var img = new Float32Array(NIMG * NIMG);
+  var nLOR = 0, acc = 0, anim = [], dirty = true;
+
+  function detIndex(p) { var a = Math.atan2(p.y, p.x); if (a < 0) a += 2 * Math.PI; return Math.floor(a / (2 * Math.PI / NDET)) % NDET; }
+  function hitRing(p, dx, dy) {
+    var b = p.x * dx + p.y * dy, c = p.x * p.x + p.y * p.y - R * R;
+    var t = -b + Math.sqrt(b * b - c);
+    return { x: p.x + t * dx, y: p.y + t * dy, t: t };
+  }
+
+  /* 역투영: 반응선 A–B 위 픽셀에 값을 더한다. TOF면 측정 위치 주변에 가우스 무게 */
+  function backProject(A, B, p) {
+    var Lx = B.x - A.x, Ly = B.y - A.y, L = Math.sqrt(Lx * Lx + Ly * Ly);
+    var ux = Lx / L, uy = Ly / L;
+    var s0 = 0, s1 = L, sMeas = 0, sig = 0;
+    if (state.tof > 0) {
+      sig = (3e8 * state.tof * 1e-12 / 2) * 100 / CM;          // cΔt/2 → cm → 화면 단위
+      sMeas = (p.x - A.x) * ux + (p.y - A.y) * uy + K.gauss(0, sig);
+      s0 = Math.max(0, sMeas - 3 * sig); s1 = Math.min(L, sMeas + 3 * sig);
+    }
+    var step = PIX * 0.7;
+    for (var s = s0; s < s1; s += step) {
+      var x = A.x + ux * s, y = A.y + uy * s;
+      var ix = Math.floor((x + R) / PIX), iy = Math.floor((R - y) / PIX);
+      if (ix < 0 || iy < 0 || ix >= NIMG || iy >= NIMG) continue;
+      var w = 1;
+      if (sig > 0) { var d = (s - sMeas) / sig; w = Math.exp(-0.5 * d * d); }
+      img[iy * NIMG + ix] += w;
+    }
+  }
+
+  function makeEvent() {
+    var p = samplePoint();
+    var th = Math.random() * Math.PI, dx = Math.cos(th), dy = Math.sin(th);
+    var A = hitRing(p, dx, dy), B = hitRing(p, -dx, -dy);
+    return { p: p, A: A, B: B, dx: dx, dy: dy, t: 0, hitA: false, hitB: false };
+  }
+  function register(ev, drawLine) {
+    backProject(ev.A, ev.B, ev.p);
+    nLOR++; dirty = true;
+    if (drawLine && state.lines) drawLOR(ev.A, ev.B);
+  }
+  function instant(n) {
+    for (var k = 0; k < n; k++) {
+      var ev = makeEvent();
+      register(ev, k > n - 25);
+      flash[detIndex(ev.A)] = 1; flash[detIndex(ev.B)] = 1;
+    }
+  }
+
+  /* ---------- 2D 영상 ---------- */
+  var cv = document.getElementById("pet-img"), ctx = cv.getContext("2d");
+  var off = document.createElement("canvas"); off.width = off.height = NIMG;
+  var offCtx = off.getContext("2d"), offImg = offCtx.createImageData(NIMG, NIMG);
+  var tmp = new Float32Array(NIMG * NIMG), blur = new Float32Array(NIMG * NIMG), smooth = new Float32Array(NIMG * NIMG);
+  function boxBlur(src, dst, r) {
+    var n = NIMG, i, x, y, s;
+    for (y = 0; y < n; y++) { s = 0; for (x = -r; x <= r; x++) s += src[y * n + Math.min(n - 1, Math.max(0, x))];
+      for (x = 0; x < n; x++) { tmp[y * n + x] = s / (2 * r + 1); s += src[y * n + Math.min(n - 1, x + r + 1)] - src[y * n + Math.max(0, x - r)]; } }
+    for (x = 0; x < n; x++) { s = 0; for (y = -r; y <= r; y++) s += tmp[Math.min(n - 1, Math.max(0, y)) * n + x];
+      for (y = 0; y < n; y++) { dst[y * n + x] = s / (2 * r + 1); s += tmp[Math.min(n - 1, y + r + 1) * n + x] - tmp[Math.max(0, y - r) * n + x]; } }
+  }
+  function render2D() {
+    var n = NIMG, i, v, vmax = 0, show = img;
+    if (state.filter) {
+      boxBlur(img, smooth, 1);           // 잡음을 조금 줄이고
+      boxBlur(img, blur, 10);            // 넓게 흐린 영상(후광)을 만든 뒤
+      show = blur;                       // 빼기: 결과를 blur 배열에 덮어씀
+      for (i = 0; i < n * n; i++) show[i] = Math.max(0, smooth[i] - 0.9 * blur[i]);
+    }
+    var vmin = Infinity;
+    for (var qy = 0; qy < n; qy++) for (var qx = 0; qx < n; qx++) {
+      var rx = (qx + 0.5) * PIX - R, ry = R - (qy + 0.5) * PIX;
+      if (rx * rx + ry * ry > 0.9 * R * R) continue;
+      v = show[qy * n + qx]; if (v > vmax) vmax = v; if (v < vmin) vmin = v;
+    }
+    if (!(vmin < vmax)) vmin = 0;
+    var d = offImg.data;
+    for (var py = 0; py < n; py++) for (var px = 0; px < n; px++) {
+      i = py * n + px; var o = i * 4;
+      var xx = (px + 0.5) * PIX - R, yy = R - (py + 0.5) * PIX;
+      if (xx * xx + yy * yy > R * R) { d[o] = 7; d[o + 1] = 11; d[o + 2] = 22; d[o + 3] = 255; continue; }
+      v = vmax > vmin ? Math.pow(Math.min(1, Math.max(0, (show[i] - vmin) / (vmax - vmin))), 1.3) : 0;   // 대비 조정
+      d[o] = Math.min(255, 255 * 3 * v); d[o + 1] = Math.min(255, Math.max(0, 255 * (3 * v - 1))); d[o + 2] = Math.min(255, Math.max(0, 255 * (3 * v - 2)));
+      d[o + 3] = 255;
+      if (state.revealed && SHAPES[shapeKey](xx / R, yy / R) && (px + py) % 3 === 0) { d[o] = 95; d[o + 1] = 208; d[o + 2] = 255; }
+    }
+    offCtx.putImageData(offImg, 0, 0);
+    var W = cv.width;
+    ctx.fillStyle = "#070b16"; ctx.fillRect(0, 0, W, W);
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(off, 0, 0, W, W);
+    ctx.strokeStyle = "#3a4670"; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(W / 2, W / 2, W / 2 - 2, 0, 2 * Math.PI); ctx.stroke();
+    ctx.fillStyle = "#a9b0c8"; ctx.font = "12px " + '"IBM Plex Sans KR", sans-serif';
+    ctx.fillText("반응선 " + nLOR.toLocaleString("ko-KR") + "개", 10, 18);
+    if (state.revealed) { ctx.fillStyle = "#5fd0ff"; ctx.fillText("정답: " + SHAPE_NAMES[shapeKey], 10, W - 10); }
+    // 축척 막대 10 cm
+    var bar = W * 10 / 80;
+    ctx.strokeStyle = "#a9b0c8"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(W - 14 - bar, W - 14); ctx.lineTo(W - 14, W - 14); ctx.stroke();
+    ctx.fillText("10 cm", W - 14 - bar, W - 20);
+    dirty = false;
+  }
+
+  /* ---------- 매 프레임 ---------- */
+  var hudN = document.getElementById("pet-hud-n"), hudMode = document.getElementById("pet-hud-mode");
+  var since2D = 0;
+  sim.onFrame(function (dt, t, real) {
+    if (dt > 0) {
+      acc += state.rate * dt;
+      while (acc >= 1) {
+        acc -= 1;
+        var ev = makeEvent();
+        if (anim.length < MAXANIM && state.rate <= 120) anim.push(ev);
+        else { register(ev, true); flash[detIndex(ev.A)] = 1; flash[detIndex(ev.B)] = 1; }
+      }
+    }
+    var np = 0;
+    for (var k = anim.length - 1; k >= 0; k--) {
+      var e = anim[k]; e.t += dt * VPHOT;
+      var ta = Math.min(e.t, e.A.t), tb = Math.min(e.t, e.B.t);
+      if (!e.hitA && e.t >= e.A.t) { e.hitA = true; flash[detIndex(e.A)] = 1; }
+      if (!e.hitB && e.t >= e.B.t) { e.hitB = true; flash[detIndex(e.B)] = 1; }
+      if (e.hitA && e.hitB) { register(e, true); anim.splice(k, 1); continue; }
+      if (!e.hitA) { photPos[np * 3] = e.p.x + e.dx * ta; photPos[np * 3 + 1] = e.p.y + e.dy * ta; photPos[np * 3 + 2] = 0; np++; }
+      if (!e.hitB) { photPos[np * 3] = e.p.x - e.dx * tb; photPos[np * 3 + 1] = e.p.y - e.dy * tb; photPos[np * 3 + 2] = 0; np++; }
+    }
+    photGeo.setDrawRange(0, np); photGeo.attributes.position.needsUpdate = true;
+    for (var j = 0; j < NDET; j++) {
+      if (flash[j] > 0) { flash[j] = Math.max(0, flash[j] - real * 3); detMats[j].emissive.setRGB(flash[j], flash[j] * 0.82, flash[j] * 0.2); }
+    }
+    lorLines.visible = state.lines;
+    since2D += real;
+    if (dirty && since2D > 0.25) { since2D = 0; render2D(); }
+    hudN.textContent = nLOR.toLocaleString("ko-KR");
+  });
+
+  /* ---------- 조작 ---------- */
+  function q(name) { return document.querySelector('[data-pet="' + name + '"]'); }
+  var tBtn = q("toggle");
+  tBtn.addEventListener("click", function () { var on = sim.toggle(); tBtn.textContent = on ? "일시정지" : "재생"; });
+  q("burst").addEventListener("click", function () { instant(1000); render2D(); });
+  function clearImg() { img.fill(0); nLOR = 0; lorCount = 0; lorGeo.setDrawRange(0, 0); anim.length = 0; dirty = true; render2D(); }
+  q("clear").addEventListener("click", clearImg);
+  q("new").addEventListener("click", function () {
+    var keys = SHAPE_KEYS.filter(function (k) { return k !== shapeKey; });
+    shapeKey = keys[Math.floor(Math.random() * keys.length)];
+    setReveal(false); drawMask(); clearImg();
+    K.toast("새 문제를 냈어요. 숨은 모양을 찾아보세요.");
+  });
+  var revealBtn = q("reveal");
+  function setReveal(on) {
+    state.revealed = on;
+    answerPlane.visible = on;
+    bodyMat.opacity = on ? 0.25 : 1; bodyMat.depthWrite = !on;
+    revealBtn.textContent = on ? "정답 숨기기" : "정답 보기";
+    dirty = true; render2D();
+  }
+  revealBtn.addEventListener("click", function () { setReveal(!state.revealed); });
+  var rate = q("rate"), rateVal = q("rate-val");
+  rate.addEventListener("input", function () { state.rate = parseFloat(rate.value); rateVal.textContent = rate.value + " 개/초"; });
+  q("tof").addEventListener("change", function (e) {
+    state.tof = parseFloat(e.target.value);
+    hudMode.textContent = state.tof ? "TOF " + state.tof + " ps" : "역투영";
+  });
+  q("filter").addEventListener("change", function (e) { state.filter = e.target.checked; dirty = true; render2D(); });
+  q("body").addEventListener("change", function (e) { state.body = e.target.checked; });
+  q("lines").addEventListener("change", function (e) { state.lines = e.target.checked; });
+
+  instant(150);
+  render2D();
+})();
+</script>
+</body>
+</html>

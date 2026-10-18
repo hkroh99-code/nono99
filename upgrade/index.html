@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>업그레이드 트랙 · CERN 탐구 교실</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .mod-card { display: grid; gap: .5rem; align-content: start; border-top: 4px solid var(--lv-up); text-decoration: none; color: var(--ink); }
+  .mod-card:hover { border-color: var(--accent); border-top-color: var(--lv-up); }
+  .mod-card__code { font-family: var(--font-mono); font-weight: 600; color: var(--lv-up); font-size: .85rem; }
+  .mod-card h3 { color: var(--ink); }
+  .mod-card p { color: var(--ink-2); font-size: var(--step--1); }
+  .mod-card .tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .route { display: grid; gap: .4rem; }
+  .route__path { display: flex; flex-wrap: wrap; gap: .3rem; align-items: center; font-size: var(--step--1); }
+  .route__path span { background: var(--surface-2); border-radius: 6px; padding: .1rem .5rem; font-family: var(--font-mono); }
+  .route__path span.u { background: var(--lv-up-soft); color: var(--lv-up); font-weight: 600; }
+  .route__path i { font-style: normal; color: var(--ink-3); }
+  pre.code { background: var(--surface-2); border-radius: 8px; padding: .8rem 1rem; overflow-x: auto; font-family: var(--font-mono); font-size: .85rem; line-height: 1.55; margin: 0; }
+  .use { white-space: normal; }
+</style>
+</head>
+<body data-page="upgrade" data-root="../">
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--up">업그레이드</span>
+      <span class="badge badge--time">모듈 6개 · 각 2~4차시</span>
+    </div>
+    <p class="eyebrow">업그레이드 트랙</p>
+    <h1>20시간 너머로: 확장 모듈</h1>
+    <p class="lead">기본 20시간 수업에서 배운 가속·검출·불변질량·데이터 분석을 코딩, 의학, 우주의 수수께끼, 학생 연구로 넓히는 확장 모듈입니다. 학교 사정에 맞게 골라 쓰고, 새 주제를 더해 키워 갈 수 있습니다.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#what">업그레이드란</a><a href="#modules">모듈 목록</a><a href="#table">운영 표</a>
+      <a href="#routes">추천 경로</a><a href="#policy">버전·업그레이드 정책</a>
+    </nav>
+  </header>
+
+  <section class="section" id="what">
+    <div class="section__head"><span class="section__tag">01</span><h2>여기서 말하는 "업그레이드"</h2></div>
+    <div class="prose">
+      <p>이 자료의 기본과정은 <strong>10개 주제 × 2차시 = 20시간</strong>입니다. 업그레이드는 그 위에 얹는 세 가지 층을 말합니다.</p>
+    </div>
+    <div class="grid-3">
+      <div class="box"><h3>1. 확장 모듈 (U1~U6)</h3><p>이 페이지의 모듈. 기본 주제 하나 이상과 이어지며, 한 모듈은 <strong>2~4차시</strong> 분량입니다. 기본과정을 마친 뒤 이어서 하거나, 관련 주제 바로 뒤에 끼워 넣어 함께 운영할 수 있습니다.</p></div>
+      <div class="box"><h3>2. 주제별 업그레이드 도전</h3><p>각 학생용 활동지 끝의 "업그레이드 도전" 상자. 빨리 끝낸 학생, 심화 과제, 수행평가 가산 과제로 씁니다. 수업 시간을 늘리지 않습니다.</p></div>
+      <div class="box"><h3>3. 교사가 키우는 자료</h3><p>새 주제나 모듈을 더하는 것. 모든 페이지가 같은 틀(<code>templates/</code>)과 설계서(<code>docs/curriculum-spec.md</code>)를 따르므로, 아래 <a href="#policy">정책</a>대로 추가하면 내비게이션과 저장 기능이 그대로 작동합니다.</p></div>
+    </div>
+    <div class="box box--tip prose">
+      <p><strong>모듈 페이지 구성</strong> — 모든 모듈 페이지는 앞부분이 학생 활동(입력칸 자동 저장, [내 답안 복사] 가능), 끝부분이 접힌 상자 "교사용 안내 (정답·운영 팁)"입니다. 학생에게 화면을 보여 줄 때는 교사용 상자를 펼치지 마세요. U6은 교사용 설계 자료입니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="modules">
+    <div class="section__head"><span class="section__tag">02</span><h2>모듈 목록</h2></div>
+    <div class="grid-3">
+      <a class="box mod-card" href="u1.html">
+        <span class="mod-card__code">U1</span>
+        <h3>Python으로 오픈데이터 분석하기</h3>
+        <p>구글 Colab에서 노트북 2개를 실행해 CMS 실제 데이터로 J/ψ·Z 질량을 맞춤으로 측정하고, W⁺/W⁻ 비와 횡질량을 구합니다.</p>
+        <div class="tags"><span class="badge badge--int">종합</span><span class="badge badge--time">2~3차시</span></div>
+      </a>
+      <a class="box mod-card" href="u2.html">
+        <span class="mod-card__code">U2</span>
+        <h3>반물질과 PET: 입자물리가 병원으로</h3>
+        <p>양전자–전자 쌍소멸로 생긴 511 keV 광자 두 개로 몸속 영상을 만드는 원리. 3D 미니 모의실험으로 숨은 모양을 재구성합니다.</p>
+        <div class="tags"><span class="badge badge--adv">심화</span><span class="badge badge--time">2차시</span></div>
+      </a>
+      <a class="box mod-card" href="u3.html">
+        <span class="mod-card__code">U3</span>
+        <h3>하드론 치료와 브래그 피크</h3>
+        <p>X선과 양성자의 깊이별 선량 곡선을 비교하고, 양성자 에너지를 조절해 종양 깊이에 브래그 피크를 맞춥니다.</p>
+        <div class="tags"><span class="badge badge--adv">심화</span><span class="badge badge--time">2차시</span></div>
+      </a>
+      <a class="box mod-card" href="u4.html">
+        <span class="mod-card__code">U4</span>
+        <h3>암흑물질과 남은 수수께끼</h3>
+        <p>은하 회전 곡선 그래프로 보이지 않는 질량을 추정하고, 누락 에너지 탐색·물질–반물질 비대칭·중성미자 질량을 토론합니다.</p>
+        <div class="tags"><span class="badge badge--int">종합</span><span class="badge badge--time">2차시</span></div>
+      </a>
+      <a class="box mod-card" href="u5.html">
+        <span class="mod-card__code">U5</span>
+        <h3>연구 프로젝트 가이드</h3>
+        <p>탐구 보고서·R&amp;E 구조, 이 자료의 데이터와 모의실험으로 할 수 있는 연구 질문 15개, 일정표, 국제 프로그램 소개, 보고서 루브릭.</p>
+        <div class="tags"><span class="badge badge--int">종합</span><span class="badge badge--time">3~4차시 + 과제</span></div>
+      </a>
+      <a class="box mod-card" href="u6.html">
+        <span class="mod-card__code">U6</span>
+        <h3>차시 재구성과 평가 설계</h3>
+        <p>10·15·20·30시간 운영안, 블록타임·동아리 운영, 수행평가 과제와 루브릭, 과목별 세부능력 및 특기사항 예시 문장.</p>
+        <div class="tags"><span class="badge badge--teacher">교사용</span><span class="badge badge--time">설계 자료</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" id="table">
+    <div class="section__head"><span class="section__tag">03</span><h2>모듈 운영 표</h2></div>
+    <p class="prose">수준은 기본과정 주제와 같은 기준입니다(기본 · 심화 · 종합). "연결 주제"는 먼저 하면 좋은 기본 주제입니다. 굵게 표시한 주제는 꼭 먼저 해야 합니다.</p>
+    <div class="table-wrap"><table>
+      <tr><th>모듈</th><th>연결 주제</th><th>시간</th><th>수준</th><th>추천 운영</th><th>필요 환경</th></tr>
+      <tr><td><a href="u1.html">U1 Python 오픈데이터</a></td><td><strong>7 불변질량</strong>, 9 사건 분석, <strong>10 실제 데이터</strong></td><td class="num">2~3</td><td><span class="badge badge--int">종합</span></td><td class="use">과제연구, 영재반, 방과후(정보 교과 연계)</td><td>구글 계정, 인터넷, 컴퓨터실 또는 노트북</td></tr>
+      <tr><td><a href="u2.html">U2 반물질과 PET</a></td><td>1 물질의 구성, 5 검출기, <strong>7 불변질량(E = mc², 운동량 보존)</strong></td><td class="num">2</td><td><span class="badge badge--adv">심화</span></td><td class="use">동아리, 자유학기(중학교 적용 시 개념 단순화), 진로(의학·보건) 연계</td><td>웹 브라우저(모의실험 내장)</td></tr>
+      <tr><td><a href="u3.html">U3 하드론 치료</a></td><td><strong>3 입자 가속</strong>, 4 자기장, 8 LHC 설계</td><td class="num">2</td><td><span class="badge badge--adv">심화</span></td><td class="use">동아리, 방과후, 진로(의학·공학) 연계</td><td>웹 브라우저(그래프 내장)</td></tr>
+      <tr><td><a href="u4.html">U4 암흑물질과 수수께끼</a></td><td>1 표준모형, 9 MET, 10 실제 데이터 / 물리학 – 원운동·만유인력</td><td class="num">2</td><td><span class="badge badge--int">종합</span></td><td class="use">동아리, 영재반, 지구과학 융합 수업</td><td>웹 브라우저, 계산기</td></tr>
+      <tr><td><a href="u5.html">U5 연구 프로젝트</a></td><td>모든 주제(특히 5, 6, 9, 10)</td><td class="num">3~4 + 과제</td><td><span class="badge badge--int">종합</span></td><td class="use">과제연구, R&amp;E, 영재반, 동아리 연간 활동</td><td>U1 환경 권장</td></tr>
+      <tr><td><a href="u6.html">U6 차시 재구성·평가</a></td><td>전체 설계</td><td class="num">교사용</td><td><span class="badge badge--teacher">교사용</span></td><td class="use">교육과정 편성, 수행평가 계획, 학생부 기록</td><td>—</td></tr>
+    </table></div>
+    <div class="grid-2">
+      <div class="box"><h4>운영 형태별 추천 조합</h4>
+        <ul>
+          <li><strong>동아리(연간 15~20시간)</strong>: 기본 주제 1·4·5·7·10 + U2 + U4</li>
+          <li><strong>방과후(8주 × 2시간)</strong>: 주제 3·4·5 + U3 + 주제 7·10 + U1</li>
+          <li><strong>자유학기·진로 탐색</strong>: 주제 1·2·5 + U2(개념 단순화) + U3 그래프 활동</li>
+          <li><strong>과제연구·R&amp;E</strong>: 주제 7·9·10 → U1 → U5(한 학기 프로젝트)</li>
+          <li><strong>영재반</strong>: 30시간 운영안(U6) + U1 + U4 + U5</li>
+        </ul>
+      </div>
+      <div class="box"><h4>끼워 넣기 vs 이어 하기</h4>
+        <ul>
+          <li><strong>끼워 넣기</strong>: 연결 주제 바로 뒤에 1~2차시로 압축해 넣습니다. 예) 주제 7 다음에 U2 1차시(쌍소멸과 운동량 보존만).</li>
+          <li><strong>이어 하기</strong>: 20시간을 마친 뒤 2~4차시 모듈로 운영합니다. 학기 말, 시험 뒤 기간에 알맞습니다.</li>
+          <li>U1·U5는 학생 과제 시간이 필요하므로 2주 이상 간격을 두고 운영하면 좋습니다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="routes">
+    <div class="section__head"><span class="section__tag">04</span><h2>관심사별 추천 경로</h2></div>
+    <div class="grid-2">
+      <div class="box route"><h4>데이터 과학 경로</h4>
+        <div class="route__path"><span>T7</span><i>→</i><span>T9</span><i>→</i><span>T10</span><i>→</i><span class="u">U1</span><i>→</i><span class="u">U5</span></div>
+        <p class="small muted">스프레드시트 분석에서 Python 분석으로, 다시 자기 연구 질문으로.</p></div>
+      <div class="box route"><h4>의학물리 경로</h4>
+        <div class="route__path"><span>T3</span><i>→</i><span>T4</span><i>→</i><span>T5</span><i>→</i><span class="u">U2</span><i>→</i><span class="u">U3</span></div>
+        <p class="small muted">가속기·검출기 기술이 진단(PET)과 치료(양성자 치료)로 이어지는 흐름.</p></div>
+      <div class="box route"><h4>우주와 미해결 문제 경로</h4>
+        <div class="route__path"><span>T1</span><i>→</i><span>T6</span><i>→</i><span>T9</span><i>→</i><span class="u">U4</span><i>→</i><span class="u">U5</span></div>
+        <p class="small muted">표준모형이 설명하지 못하는 것: 암흑물질, 반물질, 중성미자.</p></div>
+      <div class="box route"><h4>교사 설계 경로</h4>
+        <div class="route__path"><span class="u">U6</span><i>→</i><span>학교 운영안</span><i>→</i><span>수행평가</span><i>→</i><span>학생부 기록</span></div>
+        <p class="small muted">학교 시수에 맞춰 주제를 합치거나 나누고, 평가와 기록까지 한 번에.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="policy">
+    <div class="section__head"><span class="section__tag">05</span><h2>버전·업그레이드 정책</h2></div>
+    <div class="prose">
+      <p>이 자료는 빌드 과정이 없는 정적 HTML입니다. 파일을 고치고 브라우저로 열면 바로 반영됩니다. 여러 교사가 함께 고쳐도 모양과 기능이 흐트러지지 않도록 아래 규칙을 따릅니다.</p>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>버전</th><th>뜻</th><th>예</th></tr>
+      <tr><td class="mono">v1.0</td><td>기본 20시간(주제 1~10) + 업그레이드 U1~U6</td><td>현재 구성</td></tr>
+      <tr><td class="mono">v1.x</td><td>내용 보완, 업그레이드 모듈 추가(기존 주제 번호는 그대로)</td><td>U7 "가속기와 문화재 분석" 추가</td></tr>
+      <tr><td class="mono">v2.0</td><td>주제 구성이나 차시 구조 자체를 바꿈</td><td>주제 11 추가, 주제 순서 변경</td></tr>
+    </table></div>
+
+    <h3>새 기본 주제를 추가하는 방법 (예: 주제 11)</h3>
+    <ol class="steps">
+      <li><span><strong>설계 먼저</strong> — <code>docs/curriculum-spec.md</code> 3절 형식(핵심 질문 / 학습 목표 / 실험 A / 실험 B(3D) / CERN 연결 / 업그레이드 도전)으로 설계를 적습니다. 수치는 2절 "자주 쓰는 정확한 값" 표를 따르고, 표에 없는 값은 출처를 확인합니다.</span></li>
+      <li><span><strong>틀 복사</strong> — <code>templates/student.html</code> → <code>students/t11.html</code>, <code>templates/teacher.html</code> → <code>teachers/t11.html</code>, <code>templates/sim.html</code> → <code>sims/t11.html</code>. 파일 안의 <code>NN</code>을 <code>11</code>로, <code>__…__</code> 자리를 내용으로 바꿉니다. <code>body</code>의 <code>data-topic="11"</code>을 꼭 고칩니다.</span></li>
+      <li><span><strong>목록 등록</strong> — <code>assets/js/common.js</code>의 <code>TOPICS</code> 배열 끝에 한 줄을 더합니다. 이 배열이 이전/다음 링크의 유일한 출처입니다.</span></li>
+      <li><span><strong>지도 고치기</strong> — 첫 화면 <code>index.html</code>의 차시 지도와 각 목록 페이지(<code>students/</code>, <code>teachers/</code>, <code>sims/</code>의 index)에 링크를 더합니다.</span></li>
+      <li><span><strong>기록</strong> — <code>CHANGELOG.md</code>에 날짜, 버전, 바꾼 내용, 작성자를 적습니다.</span></li>
+      <li><span><strong>점검</strong> — 아래 점검 목록을 확인하고, 휴대전화 폭(약 400 px)에서도 가로 스크롤이 생기지 않는지 봅니다.</span></li>
+    </ol>
+    <pre class="code" aria-label="TOPICS 배열에 추가하는 예">// assets/js/common.js
+var TOPICS = [
+  …,
+  { n: 10, level: "int", title: "실제 CERN 데이터로 발견하기", short: "실제 데이터 분석", hours: 2 },
+  { n: 11, level: "int", title: "새 주제 제목", short: "짧은 이름", hours: 2 }   // ← 추가
+];
+// level: "basic"(기본과정) · "adv"(심화과정) · "int"(종합과정)</pre>
+
+    <h3>새 업그레이드 모듈을 추가하는 방법 (예: U7)</h3>
+    <ol class="steps">
+      <li><span>가장 비슷한 모듈 페이지(예: <code>upgrade/u3.html</code>)를 복사해 <code>upgrade/u7.html</code>로 저장합니다. <code>body</code>는 <code>data-page="upgrade" data-root="../"</code>를 유지합니다.</span></li>
+      <li><span>학생 활동은 <code>&lt;main class="page worksheet"&gt;</code> 안에 두고, 모든 입력칸에 페이지 안에서 겹치지 않는 <code>id</code>와 라벨을 붙입니다(자동 저장의 열쇠).</span></li>
+      <li><span>정답과 운영 팁은 맨 끝 <code>&lt;details&gt;</code> "교사용 안내 (정답·운영 팁)"에 넣습니다.</span></li>
+      <li><span>이 페이지의 <a href="#modules">모듈 목록</a>과 <a href="#table">운영 표</a>에 한 줄씩 더하고, 모듈 페이지 아래의 이전/다음 링크를 고칩니다.</span></li>
+    </ol>
+
+    <div class="grid-2">
+      <div class="box"><h4>작성 점검 목록</h4>
+        <ul class="checklist">
+          <li><label><input type="checkbox"> <span>한국어, 고등학생이 읽을 수 있는 짧은 문장, 교과서 용어</span></label></li>
+          <li><label><input type="checkbox"> <span>교육과정 연계는 과목·단원 이름만(성취기준 코드를 지어내지 않음)</span></label></li>
+          <li><label><input type="checkbox"> <span>불확실한 최신 수치는 범위로("20여 개 회원국")</span></label></li>
+          <li><label><input type="checkbox"> <span>색은 CSS 변수만, 꾸밈용 이모지 없음</span></label></li>
+          <li><label><input type="checkbox"> <span>모든 입력칸에 고유 id와 라벨</span></label></li>
+          <li><label><input type="checkbox"> <span>외부 네트워크 요청 없음(구글 폰트만 예외), three.js는 <code>assets/vendor/three/</code></span></label></li>
+          <li><label><input type="checkbox"> <span>파일을 직접 열어도(file://) 동작</span></label></li>
+        </ul>
+      </div>
+      <div class="box"><h4>여러 교사가 함께 고칠 때</h4>
+        <ul>
+          <li>공통 파일(<code>assets/</code>, <code>templates/</code>, <code>docs/</code>)은 한 사람이 맡아 고치고, 바꾼 내용을 CHANGELOG에 남깁니다.</li>
+          <li>데이터(<code>data/</code>)는 원본 CSV를 바꾸지 않습니다. 가공한 데이터는 새 파일 이름으로 더하고 출처를 적습니다.</li>
+          <li>학생 답안은 각자의 브라우저에만 저장되므로, 파일을 고쳐도 학생 답안은 지워지지 않습니다. 단 입력칸의 <code>id</code>를 바꾸면 그 칸의 저장 답안은 다시 보이지 않습니다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

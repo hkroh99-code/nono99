@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>U3 하드론 치료와 브래그 피크 · 업그레이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .teacher-part { margin-top: 2.5rem; border-color: var(--teacher); }
+  .teacher-part > summary { color: var(--teacher); font-size: var(--step-1); }
+  .bragg { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; }
+  @media (max-width: 860px) { .bragg { grid-template-columns: minmax(0, 1fr); } }
+  .bragg-plot { background: #172038; border-radius: var(--radius); padding: .4rem; }
+  .bragg-plot canvas { width: 100%; height: 380px; display: block; }
+  @media (max-width: 560px) { .bragg-plot canvas { height: 300px; } }
+  .bragg-ctl { display: grid; gap: .7rem; min-width: 0; }
+  .bragg-ctl .ctl-line { display: grid; gap: .25rem; font-size: var(--step--1); }
+  .bragg-ctl .ctl-line > span { display: flex; justify-content: space-between; gap: .5rem; font-weight: 600; }
+  .bragg-ctl .ctl-line b { font-family: var(--font-mono); color: var(--track); }
+  .bragg-ctl input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .bragg-ctl label.inline { display: flex; gap: .5rem; align-items: center; font-size: var(--step--1); }
+  .readout-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4rem; }
+  .readout-grid div { background: var(--surface-2); border-radius: 8px; padding: .35rem .55rem; display: grid; }
+  .readout-grid span { font-size: .75rem; color: var(--ink-3); }
+  .readout-grid b { font-family: var(--font-mono); font-size: 1rem; }
+  .legend { display: flex; flex-wrap: wrap; gap: .3rem 1rem; font-size: .8rem; color: var(--ink-2); }
+  .legend i { display: inline-block; width: 14px; height: 4px; border-radius: 2px; vertical-align: middle; margin-right: .3rem; }
+  .toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--surface); color: var(--ink); border: 1px solid var(--accent); border-radius: 8px; padding: .5rem .9rem; font-size: .88rem; z-index: 50; max-width: calc(100% - 32px); box-shadow: var(--shadow); }
+</style>
+</head>
+<body data-page="upgrade" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--student">학생용</span>
+      <span class="badge badge--up">업그레이드 U3</span>
+      <span class="badge badge--adv">심화</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">업그레이드 U3 · 연결 주제 3, 4, 8</p>
+    <h1>하드론 치료와 브래그 피크</h1>
+    <p class="lead">X선은 몸을 지나가며 길 전체에 에너지를 남기지만, 양성자는 멈추기 직전에 에너지를 한꺼번에 내려놓습니다. 이 성질로 종양만 정확히 겨냥하려면 양성자를 얼마의 에너지로 가속해야 할까요?</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--sim" href="#lab">선량 곡선 실험실로 가기</a>
+      <button class="btn" type="button" data-copy-answers>내 답안 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>답안 지우기</button>
+    </div>
+    <p class="save-note">입력한 답은 이 기기의 브라우저에만 자동 저장됩니다. 제출할 때는 [내 답안 복사]를 눌러 붙여 넣으세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#goals">학습 목표</a><a href="#open">생각 열기</a><a href="#concept">핵심 개념</a>
+      <a href="#range">비정 계산</a><a href="#lab">선량 곡선 실험실</a><a href="#cern">CERN에서는</a>
+      <a href="#check">확인 문제</a><a href="#self">자기 평가</a><a href="#teacher">교사용</a>
+    </nav>
+  </header>
+
+  <section class="section" id="goals">
+    <div class="box box--goal">
+      <h2 class="box__title" style="font-size:var(--step-1)">학습 목표</h2>
+      <ol>
+        <li>X선과 양성자의 깊이–선량 곡선 모양이 다른 까닭을 설명할 수 있다.</li>
+        <li>하전 입자가 느려질수록 단위 길이당 에너지를 더 많이 잃어 브래그 피크가 생김을 설명할 수 있다.</li>
+        <li>비정–에너지 관계 R ≈ αE<sup>p</sup>로 종양 깊이에 맞는 양성자 에너지를 계산할 수 있다.</li>
+        <li>CERN의 가속기 연구가 하드론 치료 시설로 이어진 사례를 말할 수 있다.</li>
+      </ol>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>활동</th></tr>
+      <tr><td>1차시 (50분)</td><td>생각 열기 → 선량과 저지능 → 브래그 피크의 원인 → 비정 계산(R = αE<sup>p</sup>)</td></tr>
+      <tr><td>2차시 (50분)</td><td>선량 곡선 실험실: 피크를 종양에 맞추기, X선과 비교, 퍼진 브래그 피크(SOBP) 설계 → CERN 연결 → 확인 문제</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="open">
+    <div class="section__head"><span class="section__tag">01</span><h2>생각 열기</h2></div>
+    <div class="box box--think prose">
+      <p>어린이의 뇌 깊은 곳, 시신경과 뇌줄기 바로 앞에 종양이 있습니다. 방사선은 종양 세포의 DNA를 망가뜨려 치료하지만, 지나가는 길의 건강한 조직도 똑같이 다치게 합니다. 의사는 "종양에는 충분한 선량을, 그 뒤의 뇌줄기에는 거의 0을" 원합니다.</p>
+    </div>
+    <label class="answer-field"><span>Q1. 빛(X선)을 쏘면 종양 앞과 뒤의 조직은 어떻게 될까요? 종양 뒤에 방사선이 가지 않게 하려면 방사선이 어떤 성질을 가져야 할까요?</span><textarea id="open-q1"></textarea></label>
+  </section>
+
+  <section class="section" id="concept">
+    <div class="section__head"><span class="section__tag">02</span><h2>핵심 개념</h2></div>
+    <div class="prose">
+      <h3>1. 흡수 선량</h3>
+      <p>방사선이 물질 1 kg에 남긴 에너지를 <strong>흡수 선량</strong>이라 하고 단위는 그레이(Gy = J/kg)입니다. 치료에서는 종양에 수십 Gy를 여러 번에 나누어 줍니다.</p>
+      <h3>2. X선(광자): 지수 함수로 약해진다</h3>
+      <p>치료용 고에너지 X선은 피부 바로 아래 1~2 cm에서 선량이 가장 크고(전자가 생겨 쌓이는 구간), 그 뒤로는 깊어질수록 지수 함수로 서서히 줄어듭니다. 그래서 종양 뒤의 조직에도 상당한 선량이 갑니다. 이를 줄이려고 여러 방향에서 빔을 쏘아 종양에서 겹치게 합니다.</p>
+      <h3>3. 양성자: 멈추기 직전에 에너지를 쏟는다</h3>
+      <p>빠른 하전 입자는 물질 속 전자를 전기력으로 끌어당기거나 밀어 이온화시키며 에너지를 잃습니다. 입자가 <strong>느릴수록</strong> 한 전자 곁에 머무는 시간이 길어 더 큰 충격량을 주므로, 단위 길이당 잃는 에너지(<strong>저지능</strong>, dE/dx)가 커집니다(대략 1/v²에 비례). 그래서 양성자는 처음에는 에너지를 조금씩 남기다가, 거의 멈추는 곳에서 갑자기 많이 남기고 그 뒤로는 선량이 0이 됩니다. 이 봉우리를 <strong>브래그 피크</strong>라 합니다(1904년 무렵 브래그가 알파 입자에서 처음 측정).</p>
+      <h3>4. 비정(도달 거리)과 에너지</h3>
+      <p>양성자가 물속에서 멈출 때까지 가는 거리 <strong>비정 R</strong>은 처음 운동 에너지 E로 정해집니다. 물에서는 다음 근사식(브래그–클리먼 규칙)이 잘 맞습니다.</p>
+    </div>
+    <div class="formula">R ≈ <b>α · E<sup>p</sup></b> &nbsp;&nbsp; (물: α ≈ 0.0022 cm/MeV<sup>p</sup>, p ≈ 1.77, E는 MeV, R은 cm) &nbsp;&nbsp; ⇔ &nbsp;&nbsp; E ≈ (R/α)<sup>1/p</sup></div>
+    <figure class="diagram">
+      <svg viewBox="0 0 560 250" width="560" role="img" aria-label="X선과 양성자의 깊이에 따른 상대 선량을 비교한 개념 그래프">
+        <line x1="50" y1="210" x2="530" y2="210" stroke="currentColor"/>
+        <line x1="50" y1="210" x2="50" y2="20" stroke="currentColor"/>
+        <text x="290" y="242" font-size="13" text-anchor="middle">깊이 →</text>
+        <text x="16" y="120" font-size="13" transform="rotate(-90 16 120)" text-anchor="middle">상대 선량</text>
+        <rect x="330" y="20" width="60" height="190" fill="var(--danger-soft)"/>
+        <text x="360" y="38" font-size="12" text-anchor="middle">종양</text>
+        <path d="M50 150 C 60 70, 75 60, 90 62 C 200 80, 330 120, 520 165" fill="none" stroke="var(--accent)" stroke-width="3"/>
+        <path d="M50 160 C 150 150, 280 140, 340 110 C 360 95, 365 30, 372 30 C 380 30, 384 120, 392 210" fill="none" stroke="var(--track)" stroke-width="3"/>
+        <text x="430" y="150" font-size="13" fill="var(--accent)">X선: 종양 뒤에도 선량</text>
+        <text x="400" y="70" font-size="13" fill="var(--track)">양성자: 브래그 피크</text>
+        <text x="400" y="88" font-size="13" fill="var(--track)">피크 뒤 선량 ≈ 0</text>
+      </svg>
+      <figcaption>그림 1. 깊이–선량 곡선의 개념도. 실제 모양은 아래 실험실에서 계산해 그려 본다.</figcaption>
+    </figure>
+    <label class="answer-field"><span>K1. 양성자의 선량이 처음에는 작다가 끝에서 커지는 까닭을 "속력"과 "머무는 시간"이라는 말을 넣어 설명하세요.</span><textarea id="concept-k1"></textarea></label>
+  </section>
+
+  <section class="section" id="range">
+    <div class="section__head"><span class="section__tag">03</span><h2>비정 계산 (계산기 사용)</h2></div>
+    <p class="prose">R = 0.0022 × E<sup>1.77</sup>을 써서 표를 채우세요. 계산기의 x<sup>y</sup> 단추를 씁니다. 참고값은 미국 NIST의 양성자 비정 자료에서 반올림한 값입니다.</p>
+    <div class="table-wrap"><table class="data-table" id="tbl-range-calc">
+      <tr><th>에너지 E (MeV)</th><th>계산한 R (cm)</th><th>참고값 (cm)</th><th>차이 (%)</th></tr>
+      <tr><td class="num">70</td><td><input type="number" step="any" id="rc-70" aria-label="70 MeV 계산 비정"></td><td class="num">4.1</td><td><input type="number" step="any" id="rc-70d" aria-label="70 MeV 차이"></td></tr>
+      <tr><td class="num">150</td><td><input type="number" step="any" id="rc-150" aria-label="150 MeV 계산 비정"></td><td class="num">15.8</td><td><input type="number" step="any" id="rc-150d" aria-label="150 MeV 차이"></td></tr>
+      <tr><td class="num">230</td><td><input type="number" step="any" id="rc-230" aria-label="230 MeV 계산 비정"></td><td class="num">32.9</td><td><input type="number" step="any" id="rc-230d" aria-label="230 MeV 차이"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-range-calc">표 복사</button>
+    <label class="answer-field"><span>R1. 에너지를 2배로 하면 비정은 몇 배가 되나요? (2<sup>1.77</sup>을 계산) 비례 관계(R ∝ E)가 아닌 까닭을 저지능과 연결해 보세요.</span><textarea id="range-r1"></textarea></label>
+    <label class="answer-field"><span>R2. 피부에서 20 cm 깊이까지 닿게 하려면 양성자 에너지가 약 몇 MeV여야 하나요? E = (R/α)<sup>1/p</sup>로 계산하세요.</span><textarea id="range-r2"></textarea></label>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">04</span><h2>선량 곡선 실험실</h2></div>
+    <p class="prose">양성자 에너지를 바꾸면 브래그 피크가 움직입니다. 환자 사례를 고르고, 피크가 종양(빨간 띠) 가운데에 오도록 에너지를 맞추세요. 보라색 띠는 종양 바로 뒤의 지켜야 할 장기입니다.</p>
+    <div class="bragg">
+      <div class="bragg-plot">
+        <canvas id="bragg-cv" aria-label="깊이에 따른 상대 선량 그래프"></canvas>
+      </div>
+      <div class="bragg-ctl">
+        <div class="legend">
+          <span><i style="background:#7f9cff"></i>X선(6 MV 근사)</span>
+          <span><i style="background:#f0a35e"></i>양성자 단일 빔</span>
+          <span><i style="background:#5fd08a"></i>퍼진 브래그 피크(SOBP)</span>
+        </div>
+        <label class="ctl-line"><span>환자 사례</span>
+          <select id="bragg-case">
+            <option value="a">사례 A: 뇌종양, 깊이 6~8 cm (뒤: 뇌줄기)</option>
+            <option value="b">사례 B: 간, 깊이 12~15 cm (뒤: 척수)</option>
+            <option value="c">사례 C: 전립선, 깊이 18~22 cm (뒤: 직장)</option>
+          </select>
+        </label>
+        <label class="ctl-line"><span>양성자 에너지 <b data-bragg="e-val">120 MeV</b></span>
+          <input type="range" min="50" max="250" step="1" value="120" data-bragg="energy" aria-label="양성자 에너지">
+        </label>
+        <label class="inline"><input type="checkbox" data-bragg="xray" checked> X선 곡선 함께 보기</label>
+        <label class="inline"><input type="checkbox" data-bragg="sobp"> 종양 전체를 덮는 SOBP 만들기</label>
+        <div class="readout-grid" aria-live="polite">
+          <div><span>비정 R</span><b data-bragg="r">–</b></div>
+          <div><span>피크 깊이</span><b data-bragg="peak">–</b></div>
+          <div><span>종양 가운데 선량 (양성자)</span><b data-bragg="dt">–</b></div>
+          <div><span>입구 선량 (양성자)</span><b data-bragg="d0">–</b></div>
+          <div><span>뒤 장기 평균 선량 (양성자)</span><b data-bragg="dop">–</b></div>
+          <div><span>뒤 장기 평균 선량 (X선)</span><b data-bragg="dox">–</b></div>
+        </div>
+        <p class="small muted" data-bragg="note">선량은 각 곡선의 최댓값을 100 %로 한 상대값입니다.</p>
+        <button class="btn no-print" type="button" data-bragg="rec">현재 값 기록표에 넣기</button>
+      </div>
+    </div>
+
+    <h3>미션</h3>
+    <ol class="steps">
+      <li><span><strong>관찰</strong> — 에너지를 50 MeV에서 250 MeV까지 천천히 올리며 피크의 위치·높이·폭이 어떻게 변하는지 보세요.</span></li>
+      <li><span><strong>측정</strong> — 에너지 5가지에서 피크 깊이를 기록표에 넣고, R ∝ E<sup>1.77</sup>이 맞는지 확인하세요.</span></li>
+      <li><span><strong>조준</strong> — 사례 A, B, C 각각에서 피크를 종양 가운데에 맞추는 에너지를 찾으세요.</span></li>
+      <li><span><strong>비교</strong> — 같은 사례에서 X선과 양성자의 "뒤 장기 평균 선량"을 비교하세요.</span></li>
+      <li><span><strong>설계</strong> — 단일 피크는 너무 좁아 종양 전체를 덮지 못합니다. SOBP를 켜고, 여러 에너지를 섞은 곡선의 입구 선량이 어떻게 변하는지 보세요.</span></li>
+    </ol>
+    <h3>기록표: 에너지와 피크 깊이</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-bragg">
+      <tr><th>회</th><th>에너지 E (MeV)</th><th>피크 깊이 (cm)</th><th>입구 선량 (%)</th><th>메모</th></tr>
+      <tr><td>1</td><td><input type="number" step="any" id="br-r1-e" aria-label="1회 에너지"></td><td><input type="number" step="any" id="br-r1-d" aria-label="1회 피크 깊이"></td><td><input type="number" step="any" id="br-r1-0" aria-label="1회 입구 선량"></td><td><input type="text" id="br-r1-m" aria-label="1회 메모"></td></tr>
+      <tr><td>2</td><td><input type="number" step="any" id="br-r2-e" aria-label="2회 에너지"></td><td><input type="number" step="any" id="br-r2-d" aria-label="2회 피크 깊이"></td><td><input type="number" step="any" id="br-r2-0" aria-label="2회 입구 선량"></td><td><input type="text" id="br-r2-m" aria-label="2회 메모"></td></tr>
+      <tr><td>3</td><td><input type="number" step="any" id="br-r3-e" aria-label="3회 에너지"></td><td><input type="number" step="any" id="br-r3-d" aria-label="3회 피크 깊이"></td><td><input type="number" step="any" id="br-r3-0" aria-label="3회 입구 선량"></td><td><input type="text" id="br-r3-m" aria-label="3회 메모"></td></tr>
+      <tr><td>4</td><td><input type="number" step="any" id="br-r4-e" aria-label="4회 에너지"></td><td><input type="number" step="any" id="br-r4-d" aria-label="4회 피크 깊이"></td><td><input type="number" step="any" id="br-r4-0" aria-label="4회 입구 선량"></td><td><input type="text" id="br-r4-m" aria-label="4회 메모"></td></tr>
+      <tr><td>5</td><td><input type="number" step="any" id="br-r5-e" aria-label="5회 에너지"></td><td><input type="number" step="any" id="br-r5-d" aria-label="5회 피크 깊이"></td><td><input type="number" step="any" id="br-r5-0" aria-label="5회 입구 선량"></td><td><input type="text" id="br-r5-m" aria-label="5회 메모"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-bragg">기록표 복사</button>
+    <div class="table-wrap"><table class="data-table" id="tbl-cases">
+      <tr><th>사례</th><th>종양 깊이</th><th>맞춘 에너지 (MeV)</th><th>뒤 장기 선량: 양성자 (%)</th><th>뒤 장기 선량: X선 (%)</th></tr>
+      <tr><td>A</td><td>6~8 cm</td><td><input type="number" step="any" id="case-a-e" aria-label="사례 A 에너지"></td><td><input type="number" step="any" id="case-a-p" aria-label="사례 A 양성자 뒤 장기 선량"></td><td><input type="number" step="any" id="case-a-x" aria-label="사례 A X선 뒤 장기 선량"></td></tr>
+      <tr><td>B</td><td>12~15 cm</td><td><input type="number" step="any" id="case-b-e" aria-label="사례 B 에너지"></td><td><input type="number" step="any" id="case-b-p" aria-label="사례 B 양성자 뒤 장기 선량"></td><td><input type="number" step="any" id="case-b-x" aria-label="사례 B X선 뒤 장기 선량"></td></tr>
+      <tr><td>C</td><td>18~22 cm</td><td><input type="number" step="any" id="case-c-e" aria-label="사례 C 에너지"></td><td><input type="number" step="any" id="case-c-p" aria-label="사례 C 양성자 뒤 장기 선량"></td><td><input type="number" step="any" id="case-c-x" aria-label="사례 C X선 뒤 장기 선량"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-cases">사례 표 복사</button>
+    <label class="answer-field"><span>L1. 에너지가 커질수록 피크의 높이와 폭은 어떻게 변했나요? 왜 그럴까요?</span><textarea id="lab-l1"></textarea></label>
+    <label class="answer-field"><span>L2. SOBP를 만들면 종양 앞쪽 건강한 조직의 선량은 어떻게 되나요? 양성자 치료의 장점과 한계를 함께 쓰세요.</span><textarea id="lab-l2"></textarea></label>
+    <label class="answer-field"><span>L3. 환자의 몸속 물질은 물과 다릅니다(뼈, 폐의 공기). 비정 계산이 1 cm 틀리면 어떤 일이 생길 수 있을까요?</span><textarea id="lab-l3"></textarea></label>
+  </section>
+
+  <section class="section" id="cern">
+    <div class="section__head"><span class="section__tag">05</span><h2>실제 CERN에서는</h2></div>
+    <div class="box box--cern prose">
+      <p><strong>PIMMS</strong> — 1996~2000년 CERN은 여러 유럽 기관과 함께 양성자·탄소 이온 치료용 싱크로트론 설계 연구 PIMMS(Proton-Ion Medical Machine Study)를 진행했습니다. 주제 8에서 배운 싱크로트론 설계(자석 세기, 링 크기, 빔 추출)가 그대로 쓰였습니다.</p>
+      <p><strong>CNAO와 MedAustron</strong> — PIMMS 설계를 바탕으로 이탈리아 파비아의 CNAO와 오스트리아 비너노이슈타트의 MedAustron이 세워져 양성자와 탄소 이온으로 환자를 치료하고 있습니다. MedAustron은 CERN과 협력해 가속기를 만들었습니다.</p>
+      <p><strong>지금의 연구</strong> — CERN은 더 작고 값싼 치료 가속기를 위해 소형 선형가속기, 초전도 자석을 쓴 가벼운 회전 갠트리, 차세대 이온 치료 가속기(NIMMS) 연구를 이어 가고 있습니다. 의료와 물리 연구자를 잇는 유럽 네트워크(ENLIGHT)도 CERN이 중심이 되어 운영합니다.</p>
+      <p><strong>우리나라</strong> — 국내에도 양성자 치료기를 운영하는 병원들이 있고, 탄소 이온(중입자) 치료도 도입되기 시작했습니다. 이 장비들 역시 가속기(사이클로트론·싱크로트론)와 자석, 빔 진단 기술 위에 서 있습니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="check">
+    <div class="section__head"><span class="section__tag">06</span><h2>확인 문제</h2></div>
+    <label class="answer-field"><span>1. 종양이 10 cm 깊이에 있을 때 필요한 양성자 에너지를 R ≈ 0.0022E<sup>1.77</sup>로 구하세요.</span><textarea id="check-1"></textarea></label>
+    <label class="answer-field"><span>2. 150 MeV 양성자의 속력은 빛의 속력의 몇 배인가요? (양성자 정지 에너지 938 MeV, γ = 1 + E/mc², β = √(1 − 1/γ²)) — 주제 3·6과 연결</span><textarea id="check-2"></textarea></label>
+    <label class="answer-field"><span>3. 양성자 치료가 X선 치료보다 특히 유리한 환자는 어떤 경우일지 두 가지 쓰고, 이유를 설명하세요.</span><textarea id="check-3"></textarea></label>
+  </section>
+
+  <section class="section" id="up">
+    <div class="box box--up">
+      <h3>업그레이드 도전</h3>
+      <p>치료실에서는 빔을 환자 주위로 돌려 여러 방향에서 쏘기 위해 커다란 회전 자석 장치(갠트리)를 씁니다. 150 MeV 양성자의 운동량은 pc = √(E² + 2E·mc²)로 구할 수 있습니다(약 0.55 GeV/c). 주제 4의 p [GeV/c] = 0.3·B [T]·r [m]를 써서 1.5 T 자석으로 휘게 할 때 회전 반지름을 구하세요. 같은 비정을 갖는 탄소 이온은 운동량이 훨씬 커서 갠트리가 수백 톤에 이릅니다. 왜 그런지, CERN의 초전도 갠트리 연구가 왜 필요한지 설명해 보세요.</p>
+      <label class="answer-field"><span>도전 기록</span><textarea id="up-1"></textarea></label>
+    </div>
+  </section>
+
+  <section class="section" id="self">
+    <div class="section__head"><span class="section__tag">07</span><h2>자기 평가</h2></div>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="self-1"> <span>X선과 양성자의 깊이–선량 곡선을 그리고 차이를 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-2"> <span>브래그 피크가 생기는 까닭을 저지능으로 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-3"> <span>종양 깊이에 맞는 양성자 에너지를 계산할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-4"> <span>CERN의 가속기 연구와 치료 시설의 관계를 말할 수 있다.</span></label></li>
+    </ul>
+    <label class="answer-field"><span>오늘 가장 궁금해진 것 한 가지</span><textarea id="self-q"></textarea></label>
+  </section>
+
+  <details class="teacher-part" id="teacher">
+    <summary>교사용 안내 (정답·운영 팁)</summary>
+    <h3>그래프 모델 설명</h3>
+    <ul>
+      <li><strong>양성자</strong>: 브래그–클리먼 규칙 R = αE<sup>p</sup>(α = 0.0022 cm/MeV<sup>p</sup>, p = 1.77)에서 깊이 z의 남은 에너지 E(z) = ((R − z)/α)<sup>1/p</sup>를 구하고, 0.02 cm 칸마다 잃은 에너지를 선량으로 둠. 핵반응으로 1차 양성자가 줄어드는 효과(1 cm당 약 1.2 %, 그 에너지의 절반은 근처에 남는다고 봄)와 비정 퍼짐(표준편차 = 비정의 2 %: 비정 흩어짐 + 빔 에너지 퍼짐)을 넣어 피크를 둥글게 만듦. 이 모형의 피크/입구 선량 비는 약 5배로, 실제 단일 피크(대략 3~4배)보다 조금 뾰족합니다.</li>
+      <li><strong>X선</strong>: 6 MV 광자 빔을 (1 − e<sup>−z/0.45</sup>)·e<sup>−0.048z</sup>로 근사(최대 선량 깊이 약 1.5 cm, 10 cm에서 약 67 %).</li>
+      <li><strong>SOBP</strong>: 종양 뒤 끝부터 앞 끝까지 비정 간격 0.5 cm로 에너지를 고르고, 무게를 반복 조정해 종양 안 선량을 고르게 함.</li>
+      <li>교육용 근사이므로 실제 치료 계획과 수치가 다릅니다. 특히 몸속의 뼈·폐는 물과 저지능이 달라 실제로는 CT로 물 등가 깊이를 계산합니다(L3과 연결).</li>
+    </ul>
+    <div class="box box--answer">
+      <h4>비정 계산 정답</h4>
+      <ul>
+        <li>70 MeV → 0.0022 × 70<sup>1.77</sup> ≈ 4.06 cm (차이 약 −1 %)</li>
+        <li>150 MeV → 약 15.6 cm (약 −1 %)</li>
+        <li>230 MeV → 약 33.3 cm (약 +1 %)</li>
+        <li><strong>R1</strong> 2<sup>1.77</sup> ≈ 3.4배. 에너지가 크면 처음에는 빨라서 저지능이 작아 에너지를 천천히 잃으므로, 같은 에너지 증가가 더 긴 거리로 이어진다.</li>
+        <li><strong>R2</strong> E = (20/0.0022)<sup>1/1.77</sup> = 9091<sup>0.565</sup> ≈ 172 MeV</li>
+      </ul>
+    </div>
+    <div class="box box--answer">
+      <h4>실험실 기대 결과</h4>
+      <ul>
+        <li><strong>미션 1·L1</strong> 에너지가 커질수록 피크가 깊어지고, 피크 높이(입구 대비)는 낮아지고 폭은 넓어짐. 비정 퍼짐이 비정에 비례하고, 깊이 갈수록 핵반응으로 양성자 수가 줄기 때문.</li>
+        <li><strong>미션 3</strong> 사례 A(가운데 7 cm) 약 96 MeV, 사례 B(13.5 cm) 약 140 MeV, 사례 C(20 cm) 약 174 MeV. 그래프의 피크는 비정보다 조금(수 mm) 얕으므로 학생 값이 몇 MeV 달라도 정답으로 인정.</li>
+        <li><strong>미션 4</strong> 뒤 장기 평균 선량: 양성자는 피크를 종양 가운데에 맞추면 거의 0 %, X선은 사례 A 약 72 %, 사례 B 약 51 %, 사례 C 약 36 %.</li>
+        <li><strong>미션 5·L2</strong> SOBP는 종양 전체를 고르게 덮지만 입구 선량이 단일 피크(약 17 %)보다 커짐(이 모형에서 약 35 %, 실제로는 종양이 두꺼울수록 더 커짐). 뒤 장기에는 떨어지는 꼬리 때문에 5~10 % 정도가 감. 장점: 종양 뒤 선량이 거의 0, 몸 전체가 받는 선량이 적음 → 어린이, 중요 장기 가까운 종양. 한계: 시설이 크고 비쌈, 비정 불확도에 민감, 움직이는 장기는 어려움.</li>
+        <li><strong>L3</strong> 피크가 종양 앞에 멈추면 종양 일부에 선량이 부족하고, 뒤로 넘치면 뒤의 중요 장기가 큰 선량을 받는다. 그래서 실제 치료는 여유(마진)를 두고 여러 방향에서 쏜다.</li>
+      </ul>
+    </div>
+    <div class="box box--answer">
+      <h4>확인 문제 · 업그레이드 정답</h4>
+      <ul>
+        <li><strong>1</strong> E = (10/0.0022)<sup>1/1.77</sup> = 4545<sup>0.565</sup> ≈ 116 MeV</li>
+        <li><strong>2</strong> γ = 1 + 150/938 = 1.16, β = √(1 − 1/1.16²) ≈ 0.51 → 약 0.5c</li>
+        <li><strong>3</strong> 어린이(자라는 조직, 평생 2차 암 위험), 뇌줄기·척수·눈 등 중요 장기 바로 앞의 종양, 이미 방사선 치료를 받은 부위의 재발 등.</li>
+        <li><strong>도전</strong> pc = √(150² + 2·150·938) ≈ 551 MeV → 0.55 GeV/c. r = 0.55/(0.3 × 1.5) ≈ 1.2 m. 탄소 이온은 질량이 양성자의 약 12배이고 같은 비정을 위해 큰 운동 에너지가 필요해 자기 강성(p/q)이 약 3배 커서, 같은 자석이면 반지름이 커지고 자석이 매우 무거워진다. 초전도 자석은 더 강한 B로 반지름과 무게를 줄인다.</li>
+      </ul>
+    </div>
+    <h3>운영 팁</h3>
+    <ul>
+      <li>1차시 비정 계산은 공학용 계산기나 스마트폰 계산기(가로 모드의 x<sup>y</sup>)로 합니다. 스프레드시트에서는 <code>=0.0022*A2^1.77</code>.</li>
+      <li>"방사선 = 위험"이라는 감정적 반응이 나오면, 같은 원리가 치료에 쓰인다는 점과 선량 개념(얼마나, 어디에)을 강조합니다. 실제 환자 사례는 일반적인 형태로만 다루고 특정 병원·치료 성과를 단정하지 않습니다.</li>
+      <li>주제 3(가속)·4(자기장)·8(설계)를 먼저 했다면 "치료용 가속기 설계 회의" 역할극(물리학자·의사·병원 경영자)으로 확장할 수 있습니다.</li>
+      <li>교육과정 연계: 물리학 – 역학적 에너지, 전기력; 전자기와 양자 – 전기장과 자기장 속 하전 입자의 운동; 생명과학 – DNA 손상과 세포(융합).</li>
+    </ul>
+    <h3>평가 기준(예)</h3>
+    <div class="table-wrap"><table class="rubric">
+      <tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>개념 설명</td><td>저지능과 속력의 관계로 브래그 피크를 설명하고 X선과 비교</td><td>피크 위치에서 에너지를 많이 잃는다고 설명</td><td>곡선 모양만 서술</td></tr>
+      <tr><td>계산</td><td>R ↔ E를 양방향으로 바르게 계산하고 참고값과 비교</td><td>한 방향 계산이 바름</td><td>도움을 받아 계산</td></tr>
+      <tr><td>설계 판단</td><td>SOBP의 장단점과 비정 불확도의 위험을 근거와 함께 제시</td><td>사례별 에너지를 맞춤</td><td>에너지 맞추기 일부 수행</td></tr>
+    </table></div>
+  </details>
+
+  <nav class="pager no-print" aria-label="모듈 이동">
+    <a class="prev" href="u2.html"><span>← 이전 모듈 U2</span>반물질과 PET</a>
+    <a class="next" href="u4.html"><span>다음 모듈 U4 →</span>암흑물질과 남은 수수께끼</a>
+  </nav>
+</main>
+<script src="../assets/js/common.js"></script>
+<script src="../assets/js/sim-kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var K = window.SimKit;
+  if (!K) return;
+  var ALPHA = 0.0022, P = 1.77, ZMAX = 30, DZ = 0.02, N = Math.round(ZMAX / DZ);
+  var CASES = {
+    a: { lo: 6, hi: 8, organ: [8.3, 10], organName: "뇌줄기" },
+    b: { lo: 12, hi: 15, organ: [15.3, 17.5], organName: "척수" },
+    c: { lo: 18, hi: 22, organ: [22.3, 25], organName: "직장" }
+  };
+  function range(E) { return ALPHA * Math.pow(E, P); }
+  function energy(R) { return Math.pow(R / ALPHA, 1 / P); }
+
+  /* 양성자 단일 빔: 칸마다 잃은 에너지 → 비정 퍼짐(가우스)으로 흐리기. 정규화 전 값 */
+  function proton(E) {
+    var R0 = range(E), raw = new Float64Array(N), out = new Float64Array(N);
+    function Eleft(z) { return z >= R0 ? 0 : Math.pow((R0 - z) / ALPHA, 1 / P); }
+    for (var i = 0; i < N; i++) {
+      var z = i * DZ, fl = Math.max(0, 1 - 0.012 * (z + DZ / 2));
+      raw[i] = fl * (Eleft(z) - Eleft(z + DZ)) / DZ + 0.5 * 0.012 * Eleft(z + DZ / 2);   // 1차 양성자 + 핵반응 2차 입자(근처에 남는 몫)
+    }
+    var sig = Math.max(0.05, 0.02 * R0), k = Math.ceil(4 * sig / DZ), w = [], ws = 0;
+    for (var j = -k; j <= k; j++) { var v = Math.exp(-0.5 * Math.pow(j * DZ / sig, 2)); w.push(v); ws += v; }
+    for (i = 0; i < N; i++) {
+      if (!raw[i]) continue;
+      for (j = -k; j <= k; j++) { var t = i + j; if (t >= 0 && t < N) out[t] += raw[i] * w[j + k] / ws; }
+    }
+    return out;
+  }
+  function xray() {
+    var out = new Float64Array(N), mx = 0;
+    for (var i = 0; i < N; i++) { var z = i * DZ; out[i] = (1 - Math.exp(-z / 0.45)) * Math.exp(-0.048 * z); if (out[i] > mx) mx = out[i]; }
+    for (i = 0; i < N; i++) out[i] = 100 * out[i] / mx;
+    return out;
+  }
+  function normalize(a) { var mx = 0, i; for (i = 0; i < N; i++) if (a[i] > mx) mx = a[i]; var o = new Float64Array(N); for (i = 0; i < N; i++) o[i] = 100 * a[i] / mx; return o; }
+  function idx(z) { return Math.min(N - 1, Math.max(0, Math.round(z / DZ))); }
+  function meanIn(a, lo, hi) { var s = 0, n = 0; for (var i = idx(lo); i <= idx(hi); i++) { s += a[i]; n++; } return s / n; }
+
+  /* SOBP: 종양 뒤 끝 → 앞 끝, 비정 간격 0.5 cm. 무게는 곱셈 갱신으로 평평하게 */
+  function sobp(lo, hi) {
+    var ranges = [], beams = [];
+    for (var Rr = hi + 0.25; Rr >= lo - 0.01; Rr -= 0.5) ranges.push(Rr);
+    ranges.forEach(function (Rr) { beams.push(proton(energy(Rr))); });
+    var peaks = beams.map(function (b) { var m = 0, im = 0; for (var i = 0; i < N; i++) if (b[i] > m) { m = b[i]; im = i; } return im; });
+    var wts = beams.map(function () { return 0.3; }); wts[0] = 1;
+    var sum = new Float64Array(N);
+    function total() { sum.fill(0); beams.forEach(function (b, k) { for (var i = 0; i < N; i++) sum[i] += wts[k] * b[i]; }); }
+    for (var it = 0; it < 40; it++) {
+      total();
+      var target = 0; peaks.forEach(function (p) { target += sum[p]; }); target /= peaks.length;
+      peaks.forEach(function (p, k) { wts[k] *= Math.pow(target / sum[p], 0.7); });
+    }
+    total();
+    return { dose: normalize(sum), n: beams.length, emax: energy(ranges[0]) };
+  }
+
+  var XR = xray();
+  var cv = document.getElementById("bragg-cv");
+  function q(n) { return document.querySelector('[data-bragg="' + n + '"]'); }
+  var eSl = q("energy"), eVal = q("e-val"), xrCb = q("xray"), sobpCb = q("sobp"), caseSel = document.getElementById("bragg-case");
+  var last = {};
+
+  function pts(a) { var p = []; for (var i = 0; i < N; i += 5) p.push([i * DZ, a[i]]); return p; }
+  function fmt1(v) { return (Math.round(v * 10) / 10).toFixed(1); }
+
+  function draw() {
+    var E = parseFloat(eSl.value), c = CASES[caseSel.value];
+    var series = [];
+    if (xrCb.checked) series.push({ points: pts(XR), color: "#7f9cff", line: true, dots: false, label: "X선 (6 MV)" });
+    var pr, label = "양성자 " + E + " MeV", note;
+    if (sobpCb.checked) {
+      var s = sobp(c.lo, c.hi);
+      pr = s.dose;
+      series.push({ points: pts(pr), color: "#5fd08a", line: true, dots: false, width: 2.5, label: "SOBP (빔 " + s.n + "개)" });
+      eSl.disabled = true;
+      note = "SOBP: 에너지 " + s.n + "개(최대 " + Math.round(s.emax) + " MeV)를 섞어 종양 전체를 덮었습니다. 각 곡선의 최댓값 = 100 %.";
+    } else {
+      pr = normalize(proton(E));
+      series.push({ points: pts(pr), color: "#f0a35e", line: true, dots: false, width: 2.5, label: label });
+      eSl.disabled = false;
+      note = "선량은 각 곡선의 최댓값을 100 %로 한 상대값입니다.";
+    }
+    var g = K.plot.xy(cv, { series: series, xr: [0, ZMAX], yr: [0, 115], xlabel: "깊이 (cm, 물)", ylabel: "상대 선량 (%)" });
+    // 종양·장기 띠
+    var ctx = cv.getContext("2d"), top = g.Y(115), bot = g.Y(0);
+    ctx.fillStyle = "rgba(255,107,107,0.16)"; ctx.fillRect(g.X(c.lo), top, g.X(c.hi) - g.X(c.lo), bot - top);
+    ctx.fillStyle = "rgba(185,154,240,0.18)"; ctx.fillRect(g.X(c.organ[0]), top, g.X(c.organ[1]) - g.X(c.organ[0]), bot - top);
+    ctx.font = "12px " + '"IBM Plex Sans KR", sans-serif'; ctx.textAlign = "center"; ctx.textBaseline = "top";
+    ctx.fillStyle = "#ff8a8a"; ctx.fillText("종양", (g.X(c.lo) + g.X(c.hi)) / 2, bot - 18);
+    ctx.fillStyle = "#c9b3f5"; ctx.fillText(c.organName, (g.X(c.organ[0]) + g.X(c.organ[1])) / 2, bot - 34);
+
+    var pk = 0, ipk = 0; for (var i = 0; i < N; i++) if (pr[i] > pk) { pk = pr[i]; ipk = i; }
+    var res = {
+      E: sobpCb.checked ? "SOBP" : E, R: range(E), peak: ipk * DZ, d0: pr[idx(0.1)],
+      dt: pr[idx((c.lo + c.hi) / 2)], dop: meanIn(pr, c.organ[0], c.organ[1]), dox: meanIn(XR, c.organ[0], c.organ[1])
+    };
+    last = res;
+    eVal.textContent = E + " MeV";
+    q("r").textContent = sobpCb.checked ? "–" : fmt1(res.R) + " cm";
+    q("peak").textContent = sobpCb.checked ? "평평한 구간" : fmt1(res.peak) + " cm";
+    q("dt").textContent = Math.round(res.dt) + " %";
+    q("d0").textContent = Math.round(res.d0) + " %";
+    q("dop").textContent = Math.round(res.dop) + " %";
+    q("dox").textContent = Math.round(res.dox) + " %";
+    q("note").textContent = note;
+  }
+  [eSl].forEach(function (el) { el.addEventListener("input", draw); });
+  [xrCb, sobpCb, caseSel].forEach(function (el) { el.addEventListener("change", draw); });
+  window.addEventListener("resize", function () { clearTimeout(draw._t); draw._t = setTimeout(draw, 150); });
+
+  q("rec").addEventListener("click", function () {
+    if (sobpCb.checked) { K.toast("SOBP를 끄고 단일 빔 값을 기록하세요."); return; }
+    for (var r = 1; r <= 5; r++) {
+      var e = document.getElementById("br-r" + r + "-e");
+      if (!e.value) {
+        var vals = { e: last.E, d: fmt1(last.peak), "0": Math.round(last.d0) };
+        Object.keys(vals).forEach(function (k) {
+          var el = document.getElementById("br-r" + r + "-" + k);
+          el.value = vals[k]; el.dispatchEvent(new Event("input", { bubbles: true }));
+        });
+        K.toast(r + "회 기록을 넣었어요.");
+        return;
+      }
+    }
+    K.toast("기록표가 가득 찼어요. 지울 칸을 비우고 다시 누르세요.");
+  });
+  draw();
+})();
+</script>
+</body>
+</html>

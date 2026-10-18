@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>U5 연구 프로젝트 가이드 · 업그레이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .teacher-part { margin-top: 2.5rem; border-color: var(--teacher); }
+  .teacher-part > summary { color: var(--teacher); font-size: var(--step-1); }
+  .flowline { display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; font-size: var(--step--1); }
+  .flowline span { background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: .15rem .7rem; font-weight: 700; }
+  .flowline i { font-style: normal; color: var(--ink-3); }
+  .lvl { font-family: var(--font-mono); font-weight: 600; white-space: nowrap; }
+  .q-table td:nth-child(2) { min-width: 16rem; }
+  .q-table td:nth-child(4) { min-width: 14rem; }
+  .ext { overflow-wrap: anywhere; }
+</style>
+</head>
+<body data-page="upgrade" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--student">학생용</span>
+      <span class="badge badge--up">업그레이드 U5</span>
+      <span class="badge badge--int">종합</span>
+      <span class="badge badge--time">3~4차시 + 과제</span>
+    </div>
+    <p class="eyebrow">업그레이드 U5 · 모든 주제와 연결</p>
+    <h1>연구 프로젝트 가이드</h1>
+    <p class="lead">20시간 동안 과학자처럼 측정하고 분석했습니다. 이제 남이 낸 문제가 아니라 내가 세운 질문에 데이터로 답해 볼 차례입니다. 탐구 보고서·R&amp;E를 계획하고, 쓰고, 발표하는 과정을 한 페이지에 담았습니다.</p>
+    <div class="doc-head__actions no-print">
+      <button class="btn" type="button" data-copy-answers>내 답안 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>답안 지우기</button>
+    </div>
+    <p class="save-note">입력한 답은 이 기기의 브라우저에만 자동 저장됩니다. 연구 계획서를 제출할 때는 [내 답안 복사]를 눌러 붙여 넣으세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#flow">탐구의 흐름</a><a href="#question">좋은 질문</a><a href="#ideas">연구 질문 15</a>
+      <a href="#plan">연구 계획서</a><a href="#timeline">일정표</a><a href="#report">보고서 구조</a>
+      <a href="#programs">국제 프로그램</a><a href="#rubric">루브릭</a><a href="#ethics">연구 윤리</a><a href="#teacher">교사용</a>
+    </nav>
+  </header>
+
+  <section class="section" id="flow">
+    <div class="section__head"><span class="section__tag">01</span><h2>탐구의 흐름</h2></div>
+    <div class="flowline" aria-label="탐구 단계">
+      <span>궁금증</span><i>→</i><span>연구 질문</span><i>→</i><span>가설</span><i>→</i><span>설계</span><i>→</i><span>데이터</span><i>→</i><span>분석</span><i>→</i><span>결론·한계</span><i>→</i><span>공유</span>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>운영 형태</th><th>기간</th><th>결과물</th><th>이 페이지 활용</th></tr>
+      <tr><td>탐구 보고서(수행평가·동아리)</td><td>3~5주</td><td>보고서 4~8쪽, 5분 발표</td><td>연구 질문 15 → 계획서 → 보고서 구조 → 루브릭</td></tr>
+      <tr><td>과제연구</td><td>한 학기</td><td>보고서 10쪽 안팎, 포스터 또는 발표</td><td>위 전체 + 일정표 + 중간 발표</td></tr>
+      <tr><td>R&amp;E(연구와 교육)</td><td>6개월~1년</td><td>연구 계획서, 중간·최종 보고서, 연구 노트, 발표</td><td>위 전체 + 국제 프로그램 연계</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="question">
+    <div class="section__head"><span class="section__tag">02</span><h2>좋은 연구 질문 만들기</h2></div>
+    <div class="prose">
+      <p>좋은 연구 질문은 <strong>구체적</strong>이고(무엇을, 어떤 조건에서), <strong>측정할 수 있으며</strong>(숫자로 답이 나옴), <strong>주어진 시간과 자료로 답할 수 있고</strong>, 답이 나오면 <strong>의미가 있는</strong>(왜 궁금한지 설명할 수 있는) 질문입니다.</p>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>막연한 질문</th><th>다듬은 연구 질문</th><th>무엇이 나아졌나</th></tr>
+      <tr><td>힉스 입자는 어떻게 발견되었을까?</td><td>CMS 4렙톤 공개 데이터에서 120~130 GeV 구간의 사건 수는 양옆 구간에서 예상되는 배경보다 얼마나 많은가?</td><td>자료(4렙톤 278건)와 측정량(사건 수, 배경 추정)이 정해짐</td></tr>
+      <tr><td>뮤온은 왜 땅까지 올까?</td><td>구름상자에서 1분당 뮤온 흔적 수는 상자를 수평으로 둘 때와 세워 둘 때 어떻게 다른가?</td><td>독립 변인(방향)과 종속 변인(1분당 흔적 수)이 분명함</td></tr>
+      <tr><td>W 보손을 연구하고 싶다.</td><td>W⁺/W⁻ 비는 뮤온의 |η| 구간에 따라 달라지는가? 달라진다면 양성자 속 쿼크 분포로 설명할 수 있는가?</td><td>비교할 조건과 해석의 방향이 있음</td></tr>
+    </table></div>
+    <label class="answer-field"><span>Q1. 내가 궁금한 것을 막연한 질문으로 하나 쓰고, 위 기준에 맞게 연구 질문으로 다듬어 보세요.</span><textarea id="q-refine"></textarea></label>
+  </section>
+
+  <section class="section" id="ideas">
+    <div class="section__head"><span class="section__tag">03</span><h2>이 자료로 할 수 있는 연구 질문 15</h2></div>
+    <p class="prose">모두 이 사이트의 <a href="../data/index.html">실제 데이터</a>(CMS Open Data, CC0), 3D 모의실험, 실물 실험으로 시작할 수 있습니다. 난이도: ★ 스프레드시트로 가능, ★★ U1 노트북을 고쳐서 가능, ★★★ 새 코드와 통계 해석 필요.</p>
+    <div class="table-wrap"><table class="q-table">
+      <tr><th>번호</th><th>연구 질문</th><th>자료·도구</th><th>방법 힌트</th><th>난이도</th></tr>
+      <tr><td>1</td><td>J/ψ 피크의 폭(σ)은 두 뮤온의 에너지가 클수록 넓어지는가?</td><td><code>cms_dimuon_2011_events.csv</code>, U1 노트북 1</td><td>E₁+E₂로 사건을 3구간으로 나누고 구간마다 가우스 맞춤. 주제 4의 r = p/(qB)로 해석</td><td class="lvl">★★</td></tr>
+      <tr><td>2</td><td>Z 피크의 폭은 두 뮤온이 검출기 중앙(|η| &lt; 0.8)에 있을 때와 앞쪽(|η| &gt; 1.2)에 있을 때 다른가?</td><td><code>cms_zmumu_2011.csv</code></td><td>pT, η, φ로 불변질량 계산(U1 업그레이드 도전의 식) → η 조건별 맞춤</td><td class="lvl">★★★</td></tr>
+      <tr><td>3</td><td>고립도(iso) 조건은 Z 후보 사건의 배경을 얼마나 줄이는가?</td><td><code>cms_zmumu_2011.csv</code> (iso1, iso2)</td><td>iso 기준값을 바꾸며 피크 영역/측면 영역 사건 수의 비교</td><td class="lvl">★★</td></tr>
+      <tr><td>4</td><td>W⁺/W⁻ 비는 뮤온의 |η| 구간에 따라 어떻게 변하는가?</td><td><code>cms_wmunu_2011.csv</code>, U1 노트북 2</td><td>구간별 R ± σ<sub>R</sub> 그래프, 경향의 유의성 판단</td><td class="lvl">★★</td></tr>
+      <tr><td>5</td><td>횡질량 분포의 에지로 W 질량을 얼마나 정확히 어림할 수 있는가?</td><td><code>cms_wmunu_2011.csv</code></td><td>무작위 방향으로 붕괴하는 W를 간단히 모의 생성해 m<sub>T</sub> 모양을 만들고, 질량을 바꿔 가며 데이터와 비교</td><td class="lvl">★★★</td></tr>
+      <tr><td>6</td><td>MET 조건을 바꿀 때 신호 순도와 통계 오차 사이의 가장 좋은 절충점은 어디인가?</td><td><code>cms_wmunu_2011.csv</code></td><td>컷별 사건 수, R, σ<sub>R</sub> 표 → 기준(예: R의 변화가 오차보다 작아지는 지점) 정하기</td><td class="lvl">★★</td></tr>
+      <tr><td>7</td><td>4렙톤 사건에서 120~130 GeV 구간 사건 수는 측면 구간으로 추정한 배경보다 의미 있게 많은가?</td><td><code>cms_higgs4l_2011_2012.csv</code>, 3D 모의실험 주제 10</td><td>측면 구간의 평균으로 배경 추정 → 초과 사건 수와 √N 비교. "5σ 기준" 조사</td><td class="lvl">★★★</td></tr>
+      <tr><td>8</td><td>4렙톤 사건의 채널(4μ, 4e, 2e2μ) 비율은 2011년과 2012년 자료에서 같은가?</td><td><code>cms_higgs4l_2011_2012.csv</code> (year, channel)</td><td>교차표(연도 × 채널), 비율과 √N 오차 비교</td><td class="lvl">★</td></tr>
+      <tr><td>9</td><td>Υ(1S)–Υ(2S)–Υ(3S)의 질량 간격은 J/ψ–ψ(2S)의 간격과 어떻게 비교되는가?</td><td><code>cms_dimuon_2011_mass.csv</code></td><td>피크마다 맞춤 → 간격 비교. 쿼크–반쿼크 묶음(쿼코늄) 조사</td><td class="lvl">★★</td></tr>
+      <tr><td>10</td><td>CMS 자기장(3.8 T)에서 Z 사건 뮤온의 곡률 반지름은 얼마이며, 반지름 약 1.1 m의 트래커 안에서 얼마나 휘는가?</td><td><code>cms_zmumu_2011.csv</code>, 주제 4</td><td>p<sub>T</sub> = 0.3·B·r로 r 분포 → 트래커 안에서 휘어진 거리(새그) 계산</td><td class="lvl">★</td></tr>
+      <tr><td>11</td><td>구름상자의 1분당 흔적 수는 시간대나 날씨(기압)에 따라 달라지는가?</td><td>주제 5 구름상자(실물)</td><td>같은 조건으로 여러 날 반복 측정, 평균 ± √N, 기상청 기압 자료와 비교</td><td class="lvl">★</td></tr>
+      <tr><td>12</td><td>뮤온 계수율은 검출 방향의 천정각에 따라 어떻게 변하는가?</td><td>주제 6(계수기나 섬광 검출기가 있는 학교)</td><td>각도별 계수, cos²θ 모형과 비교</td><td class="lvl">★★</td></tr>
+      <tr><td>13</td><td>붕괴 재구성 실험실에서 분해능을 켰을 때 질량 측정의 불확도는 사건 수 N에 따라 1/√N으로 줄어드는가?</td><td>3D 모의실험 주제 7</td><td>N = 10, 40, 160 사건으로 질량 평균의 표준오차 측정, 로그 그래프 기울기</td><td class="lvl">★</td></tr>
+      <tr><td>14</td><td>브래그–클리먼 근사 R = αE<sup>p</sup>의 p는 물, 뼈, 공기에서 어떻게 다른가?</td><td>U3, 미국 NIST의 양성자 비정 공개 자료(PSTAR)</td><td>로그–로그 그래프 기울기로 p, 절편으로 α 구하기</td><td class="lvl">★★</td></tr>
+      <tr><td>15</td><td>PET 미니 모의실험에서 모양을 맞히는 데 필요한 사건 수는 시간 분해능(TOF)에 따라 어떻게 변하는가?</td><td>U2 모의실험</td><td>모둠원이 모르는 모양으로 반복 시행, 정답률 50 %가 되는 사건 수 비교</td><td class="lvl">★</td></tr>
+    </table></div>
+    <label class="answer-field"><span>Q2. 관심 가는 질문 번호 두 개와 그 이유를 쓰세요. 그대로 쓰지 않고 바꾸고 싶은 부분이 있다면 함께 쓰세요.</span><textarea id="q-pick"></textarea></label>
+  </section>
+
+  <section class="section" id="plan">
+    <div class="section__head"><span class="section__tag">04</span><h2>연구 계획서</h2></div>
+    <p class="prose">아래 칸을 채우면 연구 계획서 초안이 됩니다. [내 답안 복사]로 문서에 붙여 넣어 다듬으세요.</p>
+    <div class="grid-2">
+      <label class="answer-field"><span>연구 제목(질문이 드러나게)</span><input type="text" id="plan-title"></label>
+      <label class="answer-field"><span>연구자(모둠원)와 역할</span><input type="text" id="plan-team"></label>
+    </div>
+    <label class="answer-field"><span>1. 연구 동기: 왜 궁금한가? 어떤 수업 활동에서 출발했나?</span><textarea id="plan-motive"></textarea></label>
+    <label class="answer-field"><span>2. 연구 질문</span><textarea id="plan-question"></textarea></label>
+    <label class="answer-field"><span>3. 가설과 그 근거(이론, 앞선 결과)</span><textarea id="plan-hypo"></textarea></label>
+    <div class="grid-3">
+      <label class="answer-field"><span>독립 변인(바꾸는 것)</span><input type="text" id="plan-iv"></label>
+      <label class="answer-field"><span>종속 변인(재는 것)</span><input type="text" id="plan-dv"></label>
+      <label class="answer-field"><span>통제 변인(같게 하는 것)</span><input type="text" id="plan-cv"></label>
+    </div>
+    <label class="answer-field"><span>4. 자료와 도구(데이터 파일, 모의실험, 실험 장치, 프로그램)</span><textarea id="plan-data"></textarea></label>
+    <label class="answer-field"><span>5. 분석 방법(어떤 그래프, 어떤 계산, 불확도는 어떻게?)</span><textarea id="plan-method"></textarea></label>
+    <label class="answer-field"><span>6. 예상 결과와, 예상과 다를 때의 해석</span><textarea id="plan-expect"></textarea></label>
+    <label class="answer-field"><span>7. 어려울 것 같은 점과 대안(데이터 부족, 코드 오류, 장비 고장 등)</span><textarea id="plan-risk"></textarea></label>
+  </section>
+
+  <section class="section" id="timeline">
+    <div class="section__head"><span class="section__tag">05</span><h2>일정표 (10주 기본형)</h2></div>
+    <p class="prose">기간이 짧으면 단계를 합치고, 길면 4~8주 차의 "데이터–분석" 반복을 늘립니다. 날짜와 완료 여부를 기록하세요.</p>
+    <div class="table-wrap"><table class="data-table" id="tbl-timeline">
+      <tr><th>주</th><th>단계</th><th>산출물</th><th>내 날짜</th><th>완료</th></tr>
+      <tr><td>1</td><td>주제 탐색, 자료 둘러보기</td><td>관심 질문 3개</td><td><input type="text" id="tl-1" aria-label="1주 날짜"></td><td><input type="checkbox" id="tl-1c" aria-label="1주 완료"></td></tr>
+      <tr><td>2</td><td>연구 질문 확정, 계획서 작성</td><td>연구 계획서(교사 피드백)</td><td><input type="text" id="tl-2" aria-label="2주 날짜"></td><td><input type="checkbox" id="tl-2c" aria-label="2주 완료"></td></tr>
+      <tr><td>3</td><td>이론적 배경 조사, 방법 시험</td><td>참고 자료 목록, 시험 분석 1개</td><td><input type="text" id="tl-3" aria-label="3주 날짜"></td><td><input type="checkbox" id="tl-3c" aria-label="3주 완료"></td></tr>
+      <tr><td>4~5</td><td>데이터 수집·분석 1차</td><td>그래프·표 초안, 연구 노트</td><td><input type="text" id="tl-4" aria-label="4~5주 날짜"></td><td><input type="checkbox" id="tl-4c" aria-label="4~5주 완료"></td></tr>
+      <tr><td>6</td><td>중간 발표(3분)와 동료 질문</td><td>중간 발표 자료, 받은 질문 목록</td><td><input type="text" id="tl-6" aria-label="6주 날짜"></td><td><input type="checkbox" id="tl-6c" aria-label="6주 완료"></td></tr>
+      <tr><td>7~8</td><td>분석 보완, 불확도 평가</td><td>최종 그래프, 오차 분석</td><td><input type="text" id="tl-7" aria-label="7~8주 날짜"></td><td><input type="checkbox" id="tl-7c" aria-label="7~8주 완료"></td></tr>
+      <tr><td>9</td><td>보고서 초안, 동료 검토(루브릭)</td><td>보고서 초안, 검토 의견</td><td><input type="text" id="tl-9" aria-label="9주 날짜"></td><td><input type="checkbox" id="tl-9c" aria-label="9주 완료"></td></tr>
+      <tr><td>10</td><td>최종 보고서 제출, 발표</td><td>최종 보고서, 발표 자료</td><td><input type="text" id="tl-10" aria-label="10주 날짜"></td><td><input type="checkbox" id="tl-10c" aria-label="10주 완료"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-timeline">일정표 복사</button>
+    <div class="box box--tip prose"><p><strong>연구 노트</strong>는 날짜, 한 일, 결과(숫자·그래프), 문제와 해결, 다음 할 일을 짧게 적는 기록입니다. 코드도 바꿀 때마다 무엇을 바꿨는지 한 줄 적어 두면 보고서 쓸 때 시간이 크게 줄어듭니다.</p></div>
+  </section>
+
+  <section class="section" id="report">
+    <div class="section__head"><span class="section__tag">06</span><h2>보고서 구조</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>항목</th><th>들어갈 내용</th><th>분량(탐구 보고서 기준)</th><th>자주 하는 실수</th></tr>
+      <tr><td>제목</td><td>연구 질문이 드러나는 한 줄</td><td>1줄</td><td>"힉스 입자 연구"처럼 너무 넓음</td></tr>
+      <tr><td>초록</td><td>질문, 방법, 핵심 결과(숫자), 결론을 4~5문장으로</td><td>5문장</td><td>결과 숫자가 없음</td></tr>
+      <tr><td>1. 서론</td><td>동기, 배경, 연구 질문, 가설</td><td>0.5~1쪽</td><td>교과서 내용을 길게 옮김</td></tr>
+      <tr><td>2. 이론적 배경</td><td>분석에 쓰는 식과 개념만(불변질량, √N 등), 출처 표시</td><td>1쪽</td><td>쓰지 않는 이론까지 나열</td></tr>
+      <tr><td>3. 방법</td><td>자료의 출처와 크기, 선택 조건, 계산 절차, 도구. 다른 사람이 따라 할 수 있게</td><td>1쪽</td><td>"분석했다"로만 끝남</td></tr>
+      <tr><td>4. 결과</td><td>그래프·표(축 이름, 단위, 번호, 제목), 측정값 ± 불확도</td><td>1~2쪽</td><td>그래프에 단위·설명이 없음, 해석을 섞음</td></tr>
+      <tr><td>5. 논의</td><td>결과의 의미, 기준값·가설과 비교, 오차 원인, 한계, 개선 방향</td><td>1쪽</td><td>"오차는 사람의 실수 때문"으로 끝냄</td></tr>
+      <tr><td>6. 결론</td><td>연구 질문에 대한 답을 한두 문단으로</td><td>0.5쪽</td><td>새 내용을 끼워 넣음</td></tr>
+      <tr><td>참고 문헌</td><td>자료·문헌·웹 페이지(접속 날짜), 데이터셋</td><td>—</td><td>출처 누락</td></tr>
+      <tr><td>부록</td><td>코드, 원자료 일부, 추가 그래프</td><td>—</td><td>본문에 코드 전체를 넣음</td></tr>
+    </table></div>
+    <label class="answer-field"><span>R1. 내 연구의 초록을 미리 써 보세요(결과 숫자는 예상값으로 비워 두어도 됩니다).</span><textarea id="report-abstract"></textarea></label>
+  </section>
+
+  <section class="section" id="programs">
+    <div class="section__head"><span class="section__tag">07</span><h2>더 넓은 무대: 국제 프로그램</h2></div>
+    <div class="grid-2">
+      <div class="box">
+        <h3>CERN Beamline for Schools (BL4S)</h3>
+        <p>CERN이 2014년부터 운영해 온 고등학생 대상 국제 대회입니다. 학생 팀이 <strong>실제 입자 가속기의 빔 라인</strong>으로 하고 싶은 실험을 제안하는 글(제안서)과 짧은 영상을 냅니다. 심사로 뽑힌 팀은 연구소(해에 따라 CERN 또는 독일 DESY 같은 협력 연구소)에 가서 과학자들의 도움을 받아 직접 실험을 합니다. 뽑히지 않아도 제안서를 준비하는 과정 자체가 좋은 연구 경험이 됩니다.</p>
+        <p class="small">준비 방법: 주제 4·5·6에서 배운 검출기와 빔의 성질로 "빔을 쓰면 무엇을 잴 수 있을까?"를 질문합니다. 참가 자격, 팀 구성, 마감일, 제출 형식은 해마다 달라질 수 있으니 반드시 공식 누리집에서 확인하세요.</p>
+        <p class="ext small"><a href="https://beamlineforschools.cern" target="_blank" rel="noopener">https://beamlineforschools.cern</a></p>
+      </div>
+      <div class="box">
+        <h3>International Masterclasses (국제 마스터클래스)</h3>
+        <p>국제 입자물리 홍보 그룹(IPPOG)이 운영하는 프로그램으로, 주로 해마다 봄철에 세계 여러 대학과 연구소에서 열립니다. 고등학생이 하루 동안 입자물리 강의를 듣고, LHC 실험(ATLAS, CMS, ALICE, LHCb)의 <strong>실제 데이터</strong>를 분석한 뒤, 다른 나라 참가자와 CERN 등의 연구자와 화상으로 결과를 비교하고 토론합니다. 주제 9의 사건 분류 활동이 바로 이 형식을 본뜬 것입니다.</p>
+        <p class="small">참여 기관과 일정은 해마다 공식 누리집에 공개됩니다. 가까운 기관이 없으면 공개된 마스터클래스 측정 자료로 학교에서 같은 활동을 해 볼 수 있습니다.</p>
+        <p class="ext small"><a href="https://physicsmasterclasses.org" target="_blank" rel="noopener">https://physicsmasterclasses.org</a></p>
+      </div>
+    </div>
+    <div class="box box--cern prose">
+      <p><strong>CERN Open Data Portal</strong>(opendata.cern.ch) — 이 수업의 CMS 데이터도 여기서 왔습니다. 더 큰 데이터, 다른 실험의 데이터, 분석 예제가 공개되어 있어 R&amp;E의 자료로 쓸 수 있습니다. 데이터셋마다 이용 조건과 인용 방법이 적혀 있습니다.</p>
+    </div>
+    <label class="answer-field"><span>P1. BL4S에 참가한다면 빔으로 재 보고 싶은 것은? (예: 어떤 물질에 빔을 쏘아 무엇을 측정할지 한두 문장)</span><textarea id="prog-p1"></textarea></label>
+  </section>
+
+  <section class="section" id="rubric">
+    <div class="section__head"><span class="section__tag">08</span><h2>보고서 루브릭 (자기·동료 평가용)</h2></div>
+    <div class="table-wrap"><table class="rubric">
+      <tr><th>평가 요소</th><th>우수 (3)</th><th>보통 (2)</th><th>노력 필요 (1)</th></tr>
+      <tr><td>연구 질문</td><td>구체적이고 측정 가능하며, 동기와 가설이 분명함</td><td>질문은 분명하나 가설·동기가 약함</td><td>질문이 막연하거나 답할 수 없음</td></tr>
+      <tr><td>방법 설계</td><td>자료·조건·절차가 재현 가능하게 기술됨, 변인 통제</td><td>절차는 있으나 일부 조건이 빠짐</td><td>방법이 불분명함</td></tr>
+      <tr><td>자료 분석</td><td>알맞은 그래프·계산, 축·단위 정확, 측정값 ± 불확도</td><td>분석은 맞으나 불확도·단위 일부 누락</td><td>분석이 질문과 맞지 않음</td></tr>
+      <tr><td>해석과 논의</td><td>기준값·가설과 비교, 오차 원인과 한계를 근거로 논의, 개선안 제시</td><td>비교는 있으나 한계 논의가 얕음</td><td>결과 나열에 그침</td></tr>
+      <tr><td>의사소통</td><td>구조가 논리적, 그림·표 번호와 설명, 출처 표기 완전</td><td>대체로 읽기 쉬우나 형식 일부 미흡</td><td>구조·출처가 미흡</td></tr>
+      <tr><td>연구 윤리·협업</td><td>데이터·도구·도움받은 내용을 모두 밝힘, 역할 기여가 분명</td><td>대부분 밝힘</td><td>출처나 기여 표시가 없음</td></tr>
+    </table></div>
+    <div class="table-wrap"><table class="data-table" id="tbl-selfrubric">
+      <tr><th>평가 요소</th><th>자기 평가 (1~3)</th><th>동료 평가 (1~3)</th><th>고칠 점</th></tr>
+      <tr><td>연구 질문</td><td><input type="number" min="1" max="3" id="rb-1s" aria-label="연구 질문 자기 평가"></td><td><input type="number" min="1" max="3" id="rb-1p" aria-label="연구 질문 동료 평가"></td><td><input type="text" id="rb-1n" aria-label="연구 질문 고칠 점"></td></tr>
+      <tr><td>방법 설계</td><td><input type="number" min="1" max="3" id="rb-2s" aria-label="방법 설계 자기 평가"></td><td><input type="number" min="1" max="3" id="rb-2p" aria-label="방법 설계 동료 평가"></td><td><input type="text" id="rb-2n" aria-label="방법 설계 고칠 점"></td></tr>
+      <tr><td>자료 분석</td><td><input type="number" min="1" max="3" id="rb-3s" aria-label="자료 분석 자기 평가"></td><td><input type="number" min="1" max="3" id="rb-3p" aria-label="자료 분석 동료 평가"></td><td><input type="text" id="rb-3n" aria-label="자료 분석 고칠 점"></td></tr>
+      <tr><td>해석과 논의</td><td><input type="number" min="1" max="3" id="rb-4s" aria-label="해석과 논의 자기 평가"></td><td><input type="number" min="1" max="3" id="rb-4p" aria-label="해석과 논의 동료 평가"></td><td><input type="text" id="rb-4n" aria-label="해석과 논의 고칠 점"></td></tr>
+      <tr><td>의사소통</td><td><input type="number" min="1" max="3" id="rb-5s" aria-label="의사소통 자기 평가"></td><td><input type="number" min="1" max="3" id="rb-5p" aria-label="의사소통 동료 평가"></td><td><input type="text" id="rb-5n" aria-label="의사소통 고칠 점"></td></tr>
+      <tr><td>연구 윤리·협업</td><td><input type="number" min="1" max="3" id="rb-6s" aria-label="연구 윤리 자기 평가"></td><td><input type="number" min="1" max="3" id="rb-6p" aria-label="연구 윤리 동료 평가"></td><td><input type="text" id="rb-6n" aria-label="연구 윤리 고칠 점"></td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="ethics">
+    <div class="section__head"><span class="section__tag">09</span><h2>연구 윤리와 제출 전 점검</h2></div>
+    <div class="grid-2">
+      <div class="box"><h4>연구 윤리</h4>
+        <ul>
+          <li><strong>데이터 출처</strong>: CMS Open Data는 CC0(누구나 자유롭게 사용)이지만, 과학의 예의로 데이터셋 이름과 출처(opendata.cern.ch)를 밝힙니다.</li>
+          <li><strong>조작 금지</strong>: 마음에 들지 않는 데이터를 빼거나 바꾸지 않습니다. 사건을 뺐다면 그 기준(컷)을 미리 정하고 보고서에 씁니다.</li>
+          <li><strong>표절 금지</strong>: 남의 글·그림·코드는 출처를 밝히고 인용합니다.</li>
+          <li><strong>도구 사용 공개</strong>: 생성형 AI, 번역기, 남이 만든 코드를 썼다면 어디에 어떻게 썼는지 밝힙니다.</li>
+          <li><strong>기여 표시</strong>: 모둠 연구는 누가 무엇을 했는지 적습니다.</li>
+        </ul>
+      </div>
+      <div class="box"><h4>제출 전 점검</h4>
+        <ul class="checklist">
+          <li><label><input type="checkbox" id="chk-1"> <span>초록에 핵심 결과 숫자가 있다.</span></label></li>
+          <li><label><input type="checkbox" id="chk-2"> <span>모든 그래프에 축 이름, 단위, 번호, 설명이 있다.</span></label></li>
+          <li><label><input type="checkbox" id="chk-3"> <span>측정값에 불확도(± 값)가 있고 그 근거를 썼다.</span></label></li>
+          <li><label><input type="checkbox" id="chk-4"> <span>방법만 읽고도 다른 사람이 따라 할 수 있다.</span></label></li>
+          <li><label><input type="checkbox" id="chk-5"> <span>한계와 개선 방향을 구체적으로 썼다.</span></label></li>
+          <li><label><input type="checkbox" id="chk-6"> <span>데이터·문헌·도구의 출처를 모두 밝혔다.</span></label></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <details class="teacher-part" id="teacher">
+    <summary>교사용 안내 (정답·운영 팁)</summary>
+    <h3>단계별 지도 포인트</h3>
+    <div class="table-wrap"><table>
+      <tr><th>단계</th><th>교사의 역할</th><th>흔한 어려움과 대응</th></tr>
+      <tr><td>질문 정하기</td><td>질문 15개를 "시작점"으로 제시하고, 학생의 관심(진로, 다른 과목)과 연결되도록 다듬기를 돕는다.</td><td>너무 넓은 질문 → "무엇을 재면 답이 나오나?"를 반복해서 묻는다.</td></tr>
+      <tr><td>계획서</td><td>계획서 7항목에 짧은 서면 피드백. 자료와 도구가 실제로 준비 가능한지 확인.</td><td>가설 없이 "해 보고 싶다" → 가설은 틀려도 되며, 근거가 중요함을 강조.</td></tr>
+      <tr><td>데이터·분석</td><td>주 1회 연구 노트 점검(5분 면담). 코드 오류는 오류 메시지 읽는 법부터 안내(U1 오류 표).</td><td>결과가 예상과 다름 → 실패가 아니라 논의할 거리. 원인 후보를 목록으로 만들게 한다.</td></tr>
+      <tr><td>중간 발표</td><td>3분 발표 + 동료 질문 2개. 질문을 기록해 보완 계획에 반영하게 한다.</td><td>발표 불안 → 그래프 하나만 설명하는 형식으로 부담을 줄인다.</td></tr>
+      <tr><td>보고서·발표</td><td>루브릭으로 동료 검토 후 최종 제출. 우수 보고서는 다음 해 예시로 활용(동의 받기).</td><td>분량 채우기 → 분량보다 "질문–증거–결론"의 연결을 평가.</td></tr>
+    </table></div>
+    <h3>연구 질문별 기대 결과(지도 참고)</h3>
+    <ul>
+      <li><strong>1</strong> 에너지가 큰 구간일수록 σ가 커지는 경향(운동량 분해능 저하). 구간마다 사건 수를 충분히(수천 개) 확보하도록 지도.</li>
+      <li><strong>4</strong> U1 노트북 2의 실행 결과: |η| &lt; 0.8에서 1.28 ± 0.04, 0.8~1.4에서 1.37 ± 0.06, 1.4~2.1에서 1.43 ± 0.06(MET &gt; 25, m<sub>T</sub> &gt; 50). 증가 경향이 오차 막대보다 큰지 판단하게 한다.</li>
+      <li><strong>5</strong> 고급 과제. 간단한 모의 생성(W 정지계에서 등방 붕괴 + 분해능 번짐)만으로도 에지 모양의 질량 의존성을 볼 수 있다. 횡운동량·배경 무시의 한계를 논의하게 한다.</li>
+      <li><strong>7</strong> 4렙톤 자료는 278건으로 작아 통계 해석의 좋은 연습이 된다. 단순 측면 구간 추정은 ZZ 배경 모양을 무시한다는 한계를 짚는다. "5σ"는 배경만으로 그만큼 큰 초과가 우연히 나올 확률이 약 350만분의 1인 것에 해당하는 발견 기준.</li>
+      <li><strong>10</strong> p<sub>T</sub> = 45 GeV이면 r = 45/(0.3 × 3.8) ≈ 39 m. 1.1 m 안에서 휘어진 거리(새그)는 약 L²/(8r) ≈ 4 mm 수준 → 트래커가 매우 정밀해야 하는 까닭.</li>
+      <li><strong>13</strong> 표준오차 ∝ 1/√N이면 로그–로그 기울기 −0.5.</li>
+      <li><strong>14</strong> NIST 공개 자료에서 물의 p는 대략 1.75~1.8. 물질마다 α가 크게 달라짐(밀도 영향).</li>
+    </ul>
+    <h3>운영 팁</h3>
+    <ul>
+      <li><strong>모둠 구성</strong>: 2~3인. 코딩·실험·글쓰기 역할을 나누되, 모두가 결과 그래프 하나는 직접 만들도록 한다.</li>
+      <li><strong>시간이 짧을 때(3~4차시)</strong>: 1차시 질문 다듬기와 계획서, 2~3차시 분석(★ 난이도 질문 권장), 4차시 포스터 발표. 보고서는 과제로.</li>
+      <li><strong>국제 프로그램</strong>: BL4S·마스터클래스의 일정과 참가 조건은 해마다 공식 누리집에서 확인한 뒤 안내합니다. 이 페이지에는 일정이나 시상 내용을 적지 않았습니다.</li>
+      <li><strong>학생부 기록</strong>: 교외 대회나 외부 기관 활동은 학교생활기록부 기재가 제한될 수 있으므로, 해당 학년도 기재요령을 확인하고 교내 활동(계획, 분석, 발표 과정) 중심으로 기록합니다. 예시 문장은 U6 참고.</li>
+      <li><strong>안전</strong>: 실물 실험(구름상자의 드라이아이스·알코올 등)을 연구로 확장할 때는 주제 5 안전 수칙을 다시 확인하고, 방과 후 실험은 교사 입회 아래 진행합니다.</li>
+    </ul>
+  </details>
+
+  <nav class="pager no-print" aria-label="모듈 이동">
+    <a class="prev" href="u4.html"><span>← 이전 모듈 U4</span>암흑물질과 남은 수수께끼</a>
+    <a class="next" href="u6.html"><span>다음 모듈 U6 →</span>차시 재구성과 평가 설계</a>
+  </nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

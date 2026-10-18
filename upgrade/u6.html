@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>U6 차시 재구성과 평가 · 업그레이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .teacher-part { margin-top: 2.5rem; border-color: var(--teacher); }
+  .teacher-part > summary { color: var(--teacher); font-size: var(--step-1); }
+  .plan-tabs { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .plan-tabs a { text-decoration: none; padding: .3rem .8rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); font-weight: 700; font-size: var(--step--1); }
+  .plan-tabs a:hover { border-color: var(--teacher); color: var(--teacher); }
+  .plan h3 { display: flex; gap: .6rem; align-items: baseline; flex-wrap: wrap; }
+  .tag-merge { font-size: .75rem; font-weight: 700; padding: .05rem .45rem; border-radius: 6px; background: var(--lv-int-soft); color: var(--lv-int); white-space: nowrap; }
+  .tag-split { font-size: .75rem; font-weight: 700; padding: .05rem .45rem; border-radius: 6px; background: var(--lv-adv-soft); color: var(--lv-adv); white-space: nowrap; }
+  .tag-up { font-size: .75rem; font-weight: 700; padding: .05rem .45rem; border-radius: 6px; background: var(--lv-up-soft); color: var(--lv-up); white-space: nowrap; }
+  .seteuk { list-style: none; padding: 0; display: grid; gap: .6rem; counter-reset: st; }
+  .seteuk li { counter-increment: st; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--teacher); border-radius: var(--radius); padding: .7rem 1rem; margin: 0; display: grid; gap: .25rem; }
+  .seteuk li::before { content: "예시 " counter(st); font-size: .75rem; font-weight: 700; color: var(--teacher); }
+  .seteuk .src { font-size: .78rem; color: var(--ink-3); }
+  .copy-row { display: flex; justify-content: flex-end; }
+  .pts { font-family: var(--font-mono); white-space: nowrap; }
+</style>
+</head>
+<body data-page="upgrade" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--teacher">교사용</span>
+      <span class="badge badge--up">업그레이드 U6</span>
+      <span class="badge badge--time">설계 자료</span>
+    </div>
+    <p class="eyebrow">업그레이드 U6 · 교사용 설계 자료</p>
+    <h1>차시 재구성과 평가 설계</h1>
+    <p class="lead">학교마다 쓸 수 있는 시간과 형태가 다릅니다. 기본 20시간을 10·15·30시간으로 줄이거나 늘리는 운영안, 블록타임과 동아리 운영법, 수행평가 과제와 루브릭, 과목별 세부능력 및 특기사항 기록 예시를 한곳에 모았습니다.</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="../teachers/index.html">주제별 교사용 지도서</a>
+      <button class="btn" type="button" data-copy-answers>내 설계 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>입력 지우기</button>
+    </div>
+    <p class="save-note">아래 "우리 학교 운영 설계" 칸에 입력한 내용은 이 기기의 브라우저에만 저장됩니다. [내 설계 복사]로 문서에 옮겨 쓰세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#principles">재구성 원칙</a><a href="#core">주제별 핵심</a><a href="#plans">운영안 4종</a>
+      <a href="#block">블록타임</a><a href="#club">동아리·자유학기</a><a href="#assess">수행평가</a>
+      <a href="#seteuk">세특 예시</a><a href="#design">우리 학교 설계</a><a href="#teacher">운영 팁</a>
+    </nav>
+  </header>
+
+  <section class="section" id="principles">
+    <div class="section__head"><span class="section__tag">01</span><h2>재구성의 원칙</h2></div>
+    <div class="grid-2">
+      <div class="box box--goal"><h3>줄일 때 지킬 것</h3>
+        <ol>
+          <li>주제마다 <strong>핵심 질문</strong> 하나는 반드시 다룬다.</li>
+          <li>실험 A(실물)와 실험 B(3D) 중 <strong>하나는 학생이 직접</strong> 한다. 다른 하나는 시연이나 과제로.</li>
+          <li>주제 10(실제 데이터)은 빼지 않는다. 이 프로젝트의 도착점이다.</li>
+          <li>계산은 줄여도 <strong>보존 법칙·불변질량</strong>(주제 7)의 아이디어는 남긴다.</li>
+        </ol>
+      </div>
+      <div class="box box--tip"><h3>늘릴 때 더할 것</h3>
+        <ol>
+          <li>실험 A를 제대로: 구름상자 제작, 충돌 영상 분석을 학생이 처음부터 끝까지.</li>
+          <li>3D 모의실험의 미션 전부 + 기록표 분석 + "업그레이드 도전".</li>
+          <li>업그레이드 모듈(U1~U5)과 학생 발표·보고서 시간.</li>
+          <li>모둠 프로젝트의 중간 피드백 시간(가장 효과가 큼).</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="core">
+    <div class="section__head"><span class="section__tag">02</span><h2>주제별 핵심·압축·확장</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>주제</th><th>빼면 안 되는 핵심</th><th>압축할 때(1차시)</th><th>확장할 때(3차시)</th></tr>
+      <tr><td>1 물질의 구성</td><td>물질의 계층, 표준모형 분류, 간접 관측</td><td>블랙박스 10분 + 3D 줌인·갤러리</td><td>쿼크 조합 퍼즐, 크기 규모 종이띠 제작</td></tr>
+      <tr><td>2 러더퍼드 산란</td><td>충돌로 내부 구조를 본다, b와 θ의 관계</td><td>3D 금박 산란실 중심, 구슬 실험은 시연</td><td>구슬 실험 시행 수–오차 분석</td></tr>
+      <tr><td>3 입자 가속</td><td>qV, eV, RF 가속과 튜브 길이</td><td>3D 선형가속기 위상 맞추기</td><td>경사로 모형 측정 + 상대론 속력</td></tr>
+      <tr><td>4 자기장</td><td>F = qvB, r = p/(qB), p = 0.3Br</td><td>전류 그네 시연 + 3D 궤적 측정</td><td>싱크로트론 B 램프 게임, 사이클로트론</td></tr>
+      <tr><td>5 검출기</td><td>층 구조와 입자별 신호 지문</td><td>3D CMS 탐험 + 구름상자 시연</td><td>모둠별 구름상자 제작·계수</td></tr>
+      <tr><td>6 상대성과 뮤온</td><td>γ, 시간 지연, 지수 붕괴</td><td>3D 뮤온 비행 실험실</td><td>주사위 붕괴 모형 + 계수 실험</td></tr>
+      <tr><td>7 불변질량</td><td>운동량 보존, M² = E² − p²</td><td>3D 붕괴 재구성(미지 입자)</td><td>충돌 영상 분석 본격 수행</td></tr>
+      <tr><td>8 LHC 설계</td><td>3·4·6의 종합, 공학적 절충</td><td>3D 운전실 + 설계는 과제</td><td>설계 제안 발표회</td></tr>
+      <tr><td>9 사건 분석</td><td>MET, W⁺/W⁻ 비, √N</td><td>3D 이벤트 디스플레이 50건</td><td>사건 카드 분류 + 3D 100건 비교</td></tr>
+      <tr><td>10 실제 데이터</td><td>불변질량 히스토그램과 피크</td><td>3D 분석실에서 J/ψ·Z 측정</td><td>보고서(발견 논문 형식) + U1 연계</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section plan" id="plans">
+    <div class="section__head"><span class="section__tag">03</span><h2>운영안 4종</h2></div>
+    <div class="plan-tabs no-print"><a href="#p10">10시간</a><a href="#p15">15시간</a><a href="#p20">20시간(기본)</a><a href="#p30">30시간</a></div>
+    <p class="prose small muted">1차시 = 50분 기준. <span class="tag-merge">합침</span> 두 주제를 묶음, <span class="tag-split">나눔</span> 한 주제를 늘림, <span class="tag-up">모듈</span> 업그레이드 모듈 추가.</p>
+
+    <h3 id="p10">10시간 운영안 <span class="muted small">(한 학기 동아리 격주, 진로 탐색 주간 등)</span></h3>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>주제·활동</th><th>자료</th><th>비고</th></tr>
+      <tr><td class="num">1</td><td>주제 1 물질의 구성: 블랙박스 추론 + 표준모형 갤러리</td><td>학생용 t01, 3D t01</td><td>1차시 압축</td></tr>
+      <tr><td class="num">2</td><td>주제 2 러더퍼드 산란: 3D 금박 산란실 미션</td><td>3D t02</td><td>구슬 실험은 교사 시연</td></tr>
+      <tr><td class="num">3~4</td><td>주제 3+4 가속과 휘기: qV와 선형가속기 → 로렌츠 힘 그네, r = p/(qB)</td><td>3D t03, t04, 전류 그네</td><td><span class="tag-merge">합침</span> 3의 계산 활동은 과제</td></tr>
+      <tr><td class="num">5</td><td>주제 5 검출기: CMS 3D 탐험, 신호 지문 표</td><td>3D t05, 구름상자 시연</td><td>1차시 압축</td></tr>
+      <tr><td class="num">6</td><td>주제 6 상대성과 뮤온: 고전 vs 상대론 도달 비율</td><td>3D t06</td><td>1차시 압축</td></tr>
+      <tr><td class="num">7</td><td>주제 7 불변질량: 붕괴 재구성, 미지 입자 3종</td><td>3D t07</td><td>1차시 압축</td></tr>
+      <tr><td class="num">8</td><td>주제 9 사건 분석: 50건 분류, W⁺/W⁻ 비</td><td>3D t09</td><td>1차시 압축</td></tr>
+      <tr><td class="num">9~10</td><td>주제 10 실제 데이터: 질량 스펙트럼, J/ψ·Z 측정, 결과 공유</td><td>3D t10, 학생용 t10</td><td>2차시 유지</td></tr>
+    </table></div>
+    <p class="small muted">주제 8은 "가속기 설계 제안서 1쪽" 과제로 돌리거나 생략. 주제 3·4를 이미 배운 학생이면 3~4차시를 주제 8로 바꿀 수 있음.</p>
+
+    <h3 id="p15">15시간 운영안 <span class="muted small">(방과후 8주, 학기 동아리 등)</span></h3>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>주제·활동</th><th>자료</th><th>비고</th></tr>
+      <tr><td class="num">1</td><td>주제 1 물질의 구성</td><td>t01</td><td>1차시 압축</td></tr>
+      <tr><td class="num">2~3</td><td>주제 2 러더퍼드 산란: 구슬 실험 + 3D</td><td>t02</td><td>기본 유지</td></tr>
+      <tr><td class="num">4</td><td>주제 3 입자 가속: 3D 위상 맞추기 중심</td><td>t03</td><td>1차시 압축</td></tr>
+      <tr><td class="num">5~6</td><td>주제 4 자기장: 전류 그네 + 3D 궤적, LHC 자석 계산</td><td>t04</td><td>기본 유지</td></tr>
+      <tr><td class="num">7~8</td><td>주제 5 검출기: 구름상자 실습 + CMS 3D</td><td>t05</td><td>기본 유지</td></tr>
+      <tr><td class="num">9</td><td>주제 6 상대성과 뮤온</td><td>t06</td><td>1차시 압축</td></tr>
+      <tr><td class="num">10~11</td><td>주제 7 불변질량: 충돌 실험 + 3D 재구성</td><td>t07</td><td>기본 유지</td></tr>
+      <tr><td class="num">12</td><td>주제 8 LHC 설계: 3D 운전실, 설계 제안서는 과제</td><td>t08</td><td>1차시 압축</td></tr>
+      <tr><td class="num">13</td><td>주제 9 사건 분석</td><td>t09</td><td>1차시 압축</td></tr>
+      <tr><td class="num">14~15</td><td>주제 10 실제 데이터</td><td>t10</td><td>기본 유지</td></tr>
+    </table></div>
+
+    <h3 id="p20">20시간 운영안(기본)</h3>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>주제</th><th>1차시 활동</th><th>2차시 활동</th></tr>
+      <tr><td class="num">1~2</td><td>1 물질의 구성 <span class="badge badge--basic">기본</span></td><td>블랙박스 탐구, 크기 규모</td><td>3D 줌인·표준모형 갤러리, 쿼크 퍼즐</td></tr>
+      <tr><td class="num">3~4</td><td>2 러더퍼드 산란 <span class="badge badge--basic">기본</span></td><td>구슬 산란 실험(확률로 크기 재기)</td><td>3D 금박 산란실, 러더퍼드 공식</td></tr>
+      <tr><td class="num">5~6</td><td>3 입자 가속 <span class="badge badge--basic">기본</span></td><td>정전기·경사로 모형, qV 계산</td><td>3D 선형가속기 위상 맞추기</td></tr>
+      <tr><td class="num">7~8</td><td>4 자기장 <span class="badge badge--basic">기본</span></td><td>로렌츠 힘 그네</td><td>3D 궤적·싱크로트론 링</td></tr>
+      <tr><td class="num">9~10</td><td>5 검출기 <span class="badge badge--basic">기본</span></td><td>구름상자 만들기·관찰</td><td>3D CMS 탐험, 수수께끼 입자</td></tr>
+      <tr><td class="num">11~12</td><td>6 상대성과 뮤온 <span class="badge badge--adv">심화</span></td><td>뮤온 계수·주사위 붕괴 모형</td><td>3D 뮤온 비행 실험실</td></tr>
+      <tr><td class="num">13~14</td><td>7 불변질량 <span class="badge badge--adv">심화</span></td><td>2차원 충돌 운동량 보존</td><td>3D 붕괴 재구성</td></tr>
+      <tr><td class="num">15~16</td><td>8 LHC 설계 <span class="badge badge--int">종합</span></td><td>팀 설계 프로젝트</td><td>3D 가상 운전실, 설계 발표</td></tr>
+      <tr><td class="num">17~18</td><td>9 사건 분석 <span class="badge badge--int">종합</span></td><td>사건 카드 분류(마스터클래스형)</td><td>3D 이벤트 디스플레이 분석</td></tr>
+      <tr><td class="num">19~20</td><td>10 실제 데이터 <span class="badge badge--int">종합</span></td><td>스프레드시트로 불변질량 계산</td><td>3D 분석실, 발견 보고서</td></tr>
+    </table></div>
+
+    <h3 id="p30">30시간 운영안 <span class="muted small">(연간 동아리, 영재반, 과제연구 연계)</span></h3>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>주제·활동</th><th>비고</th></tr>
+      <tr><td class="num">1~8</td><td>주제 1~4 (각 2차시, 기본안과 같음)</td><td>업그레이드 도전 상자를 과제로</td></tr>
+      <tr><td class="num">9~11</td><td>주제 5 검출기: 모둠별 구름상자 제작 → 흔적 종류·계수 → CMS 3D</td><td><span class="tag-split">나눔</span> 3차시</td></tr>
+      <tr><td class="num">12~13</td><td>주제 6 상대성과 뮤온</td><td>기본</td></tr>
+      <tr><td class="num">14~16</td><td>주제 7 불변질량: 충돌 영상 분석(Tracker 등) 본격 수행 → 3D 재구성</td><td><span class="tag-split">나눔</span> 3차시</td></tr>
+      <tr><td class="num">17~18</td><td>U2 반물질과 PET 또는 U3 하드론 치료 (택1)</td><td><span class="tag-up">모듈</span> 진로 관심에 따라</td></tr>
+      <tr><td class="num">19~20</td><td>주제 8 LHC 설계</td><td>기본</td></tr>
+      <tr><td class="num">21~22</td><td>주제 9 사건 분석</td><td>기본</td></tr>
+      <tr><td class="num">23~25</td><td>주제 10 실제 데이터: 분석 → 발견 보고서 작성 → 발표</td><td><span class="tag-split">나눔</span> 3차시</td></tr>
+      <tr><td class="num">26~27</td><td>U1 Python으로 오픈데이터 분석(노트북 2개)</td><td><span class="tag-up">모듈</span></td></tr>
+      <tr><td class="num">28~30</td><td>U5 미니 연구 프로젝트: 질문·계획(28) → 분석(29) → 포스터 발표(30)</td><td><span class="tag-up">모듈</span> 분석은 과제 병행</td></tr>
+    </table></div>
+    <p class="small muted">U4(암흑물질)는 주제 9 뒤에 2차시로 넣거나, 30시간 안에서 U2/U3 대신 고를 수 있습니다.</p>
+  </section>
+
+  <section class="section" id="block">
+    <div class="section__head"><span class="section__tag">04</span><h2>블록타임(100분) 운영</h2></div>
+    <div class="prose"><p>이 자료는 주제마다 2차시(실험 A + 실험 B)이므로 블록타임 1회 = 주제 1개로 운영하기 좋습니다. 실험 준비·정리 시간이 한 번만 들어 실물 실험에 특히 유리합니다. 20시간 = 블록 10회.</p></div>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>시간</th><th>단계</th><th>활동</th><th>유의점</th></tr>
+      <tr><td>0~10분</td><td><span class="phase">도입</span></td><td>핵심 질문 제시, 생각 열기 답 공유</td><td>질문을 칠판에 남겨 두고 마지막에 다시 묻기</td></tr>
+      <tr><td>10~45분</td><td><span class="phase">실험 A</span></td><td>실물 실험·측정·기록표 작성</td><td>준비물은 모둠 상자로 미리 배치</td></tr>
+      <tr><td>45~50분</td><td><span class="phase">전환</span></td><td>정리·환기, 결과 한 줄 요약</td><td>쉬는 시간이 없는 블록이면 꼭 확보</td></tr>
+      <tr><td>50~85분</td><td><span class="phase">실험 B</span></td><td>3D 모의실험 미션, 실험 A 결과와 비교</td><td>2인 1기기, 기록 담당 교대</td></tr>
+      <tr><td>85~100분</td><td><span class="phase">정리</span></td><td>CERN 연결, 확인 문제, 자기 평가</td><td>[내 답안 복사]로 제출하면 채점이 빠름</td></tr>
+    </table></div>
+    <p class="small muted">구름상자(주제 5)는 드라이아이스 준비 후 흔적이 보이기까지 10분 이상 걸리므로, 실험 B를 먼저 하고 실험 A를 뒤에 배치하는 것도 방법입니다.</p>
+  </section>
+
+  <section class="section" id="club">
+    <div class="section__head"><span class="section__tag">05</span><h2>동아리·자유학기·방과후 운영</h2></div>
+    <div class="grid-3">
+      <div class="box"><h3>창의적 체험활동 동아리</h3>
+        <ul>
+          <li><strong>월 1회 블록(2시간) × 10회</strong>: 20시간 기본안을 그대로 운영.</li>
+          <li><strong>학기 운영(8~10회)</strong>: 15시간안 + 학기 말 발표회.</li>
+          <li>연간 동아리는 30시간안의 U5 연구 프로젝트를 축제·발표회 결과물로 연결.</li>
+          <li>선배–후배 멘토링: 2년 차 학생이 구름상자 제작을 지도.</li>
+        </ul>
+      </div>
+      <div class="box"><h3>자유학기(중학교) · 진로 탐색</h3>
+        <ul>
+          <li>중학교 자유학기 주제선택 활동으로 쓸 때는 주제 1·2·5(관찰·추론 중심)와 3D 모의실험 위주로, 식 계산은 줄입니다.</li>
+          <li>U2·U3는 "물리학이 병원에서 하는 일"이라는 진로 탐색 주제로 개념만 다룹니다.</li>
+          <li>고등학교의 진로 연계 활동·교과 융합 수업에서는 10시간안을 바탕으로 학교 여건에 맞게 조정합니다.</li>
+        </ul>
+      </div>
+      <div class="box"><h3>방과후 · 영재반</h3>
+        <ul>
+          <li><strong>방과후 8주 × 2시간</strong>: 15시간안 + 마지막 1시간 결과 공유.</li>
+          <li><strong>영재반</strong>: 30시간안. 계산·코딩 비중을 높이고 U1·U5를 필수로.</li>
+          <li>과제연구·R&amp;E와 연계하면 U5의 연구 질문 15개에서 출발.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="assess">
+    <div class="section__head"><span class="section__tag">06</span><h2>수행평가 과제 설계</h2></div>
+    <div class="prose">
+      <p>네 과제는 모두 <strong>수업 시간 안에서</strong> 수행하고 결과물을 제출하도록 설계했습니다(교외 과제형 평가 지양). 배점과 반영 비율은 예시이며, 학교 학업성적관리규정과 시·도 교육청 지침에 맞게 조정합니다. 모둠 활동은 개인 결과물(보고서, 개인 기여 기록)로 평가합니다.</p>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>과제</th><th>연결</th><th>형태·시간</th><th>제출물</th><th>예시 배점</th></tr>
+      <tr><td>A. 실험 보고서</td><td>주제 5 또는 7</td><td>모둠 실험 → 개인 보고서, 수업 중 1차시</td><td>측정 기록, 그래프, 결론 1쪽</td><td class="pts">30점</td></tr>
+      <tr><td>B. 데이터 분석 보고서</td><td>주제 10, U1</td><td>개인, 수업 중 1~2차시</td><td>질량 스펙트럼, 피크 측정값 ± 불확도, 해석</td><td class="pts">30점</td></tr>
+      <tr><td>C. 가속기 설계 제안</td><td>주제 8</td><td>모둠 발표 + 개인 계산지, 1~2차시</td><td>계산지, 5분 발표, 동료 평가</td><td class="pts">20점</td></tr>
+      <tr><td>D. 과학 소통</td><td>U2, U3, CERN 연결</td><td>개인, 1차시</td><td>카드뉴스 4장 또는 3분 설명 영상·발표</td><td class="pts">20점</td></tr>
+    </table></div>
+
+    <h3>A. 실험 보고서 루브릭 (30점)</h3>
+    <div class="table-wrap"><table class="rubric">
+      <tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>측정과 기록 (10)</td><td>반복 측정, 단위·유효숫자 정확, 평균과 편차 제시 <span class="pts">10</span></td><td>측정은 바르나 반복·단위 일부 누락 <span class="pts">7</span></td><td>기록이 불완전 <span class="pts">4</span></td></tr>
+      <tr><td>자료 처리 (10)</td><td>알맞은 그래프와 계산(예: 운동량 합 비교, 1분당 흔적 수) <span class="pts">10</span></td><td>계산은 바르나 그래프 형식 미흡 <span class="pts">7</span></td><td>자료 처리 오류 <span class="pts">4</span></td></tr>
+      <tr><td>결론과 오차 논의 (10)</td><td>가설과 비교, 오차 원인을 구체적으로 구분하고 개선안 제시 <span class="pts">10</span></td><td>결론은 맞으나 오차 논의가 일반적 <span class="pts">7</span></td><td>결론이 자료와 맞지 않음 <span class="pts">4</span></td></tr>
+    </table></div>
+
+    <h3>B. 데이터 분석 보고서 루브릭 (30점)</h3>
+    <div class="table-wrap"><table class="rubric">
+      <tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>불변질량 계산 (10)</td><td>4-벡터로 직접 계산하고 검산(파일 값과 비교) <span class="pts">10</span></td><td>계산은 바르나 검산 없음 <span class="pts">7</span></td><td>계산 일부 오류 <span class="pts">4</span></td></tr>
+      <tr><td>피크 측정 (10)</td><td>2개 이상 공명의 질량 ± 불확도, 기준값과 비교 <span class="pts">10</span></td><td>1개 공명 측정·비교 <span class="pts">7</span></td><td>피크 위치만 읽음 <span class="pts">4</span></td></tr>
+      <tr><td>해석 (10)</td><td>피크 폭·차이의 원인을 분해능·통계와 연결 <span class="pts">10</span></td><td>차이를 서술하나 원인 설명이 약함 <span class="pts">7</span></td><td>결과 나열 <span class="pts">4</span></td></tr>
+    </table></div>
+
+    <h3>C. 가속기 설계 제안 루브릭 (20점)</h3>
+    <div class="table-wrap"><table class="rubric">
+      <tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>개인 계산지 (10)</td><td>p = 0.3Br, 둘레, 싱크로트론 복사 비교를 모두 바르게 <span class="pts">10</span></td><td>주요 계산 1~2개 오류 <span class="pts">7</span></td><td>계산 다수 오류 <span class="pts">4</span></td></tr>
+      <tr><td>설계 판단과 발표 (10)</td><td>비용·기술의 절충을 근거로 선택을 정당화, 질문에 답함 <span class="pts">10</span></td><td>선택 이유를 제시 <span class="pts">7</span></td><td>근거 없는 선택 <span class="pts">4</span></td></tr>
+    </table></div>
+
+    <h3>D. 과학 소통 루브릭 (20점)</h3>
+    <div class="table-wrap"><table class="rubric">
+      <tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>과학적 정확성 (10)</td><td>원리(예: 쌍소멸, 브래그 피크)를 정확한 용어로 설명, 출처 표기 <span class="pts">10</span></td><td>대체로 정확하나 일부 과장·오류 <span class="pts">7</span></td><td>오개념 포함 <span class="pts">4</span></td></tr>
+      <tr><td>전달력 (10)</td><td>대상(중학생 등)에 맞는 비유·그림, 핵심 메시지 분명 <span class="pts">10</span></td><td>내용은 맞으나 구성이 산만 <span class="pts">7</span></td><td>전달이 어려움 <span class="pts">4</span></td></tr>
+    </table></div>
+
+    <h3>수업 중 관찰 기록표(예)</h3>
+    <div class="table-wrap"><table>
+      <tr><th>관찰 요소</th><th>관찰 가능한 행동의 예</th></tr>
+      <tr><td>탐구 설계</td><td>변인을 정해 반복 측정을 제안함, 측정 방법의 문제를 찾아 고침</td></tr>
+      <tr><td>자료 해석</td><td>그래프에서 경향·이상값을 찾아 말함, 이론값과의 차이를 설명함</td></tr>
+      <tr><td>협업</td><td>역할을 교대함, 모둠원의 의견을 기록·정리함, 질문으로 토의를 이끔</td></tr>
+      <tr><td>소통</td><td>근거를 들어 주장함, 다른 모둠 발표에 구체적 질문을 함</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="seteuk">
+    <div class="section__head"><span class="section__tag">07</span><h2>과목별 세부능력 및 특기사항 예시 문장</h2></div>
+    <div class="box box--tip prose">
+      <p><strong>작성 원칙</strong> — ① 수업 중 <strong>관찰한 활동</strong>을 ② 구체적인 내용(무엇을, 어떻게)과 ③ 드러난 역량이나 결과로 씁니다. 아래 문장은 형식 예시입니다. 학생마다 실제 활동과 산출물에 맞게 고쳐 쓰고, 같은 문장을 여러 학생에게 복사하지 않습니다. 해당 학년도 학교생활기록부 기재요령(교외 대회·기관명 등 기재 제한 사항)을 확인하세요.</p>
+    </div>
+    <ol class="seteuk">
+      <li><span>확산형 구름상자 제작 실험에서 드라이아이스와 알코올 증기의 역할을 과포화 상태와 이온화 개념으로 설명하고, 흔적의 굵기와 길이를 기준으로 입자의 종류를 구분하여 1분당 흔적 수를 세 차례 측정한 평균과 편차를 기록함.</span><span class="src">주제 5 · 실험 A</span></li>
+      <li><span>2차원 충돌 영상 분석에서 충돌 전후 x, y 방향 운동량의 합을 각각 계산하여 비교하고, 차이의 원인을 마찰과 영상 프레임 간격에 따른 속도 측정 오차로 구분하여 제시함.</span><span class="src">주제 7 · 실험 A</span></li>
+      <li><span>가속기 설계 활동에서 운동량과 자기장, 궤도 반지름의 관계를 이용해 목표 에너지에 필요한 링의 크기를 자석 종류별로 계산하고, 터널 길이와 자석 기술 사이의 절충을 근거로 모둠 설계안을 선택한 이유를 발표함.</span><span class="src">주제 8 · 수행평가 C</span></li>
+      <li><span>사건 분류 활동에서 트랙이 휘는 방향과 누락 횡에너지를 근거로 W⁺와 W⁻ 사건을 구분하고, 모둠 결과를 합산한 전하 비율과 통계적 불확도를 계산하여 양성자의 쿼크 구성과 연결해 설명함.</span><span class="src">주제 9</span></li>
+      <li><span>공개된 충돌 실험 데이터를 Python으로 분석하여 두 뮤온의 에너지와 운동량으로 불변질량을 직접 계산하고, 질량 분포의 피크를 가우스 함수와 직선 배경으로 맞춰 얻은 값을 기준값과 비교하며 차이의 원인을 검출기 분해능과 관련지어 서술함.</span><span class="src">주제 10 · U1 · 수행평가 B</span></li>
+      <li><span>양성자 치료의 깊이–선량 곡선 활동에서 비정과 에너지의 관계를 이용해 종양 깊이에 맞는 입자 에너지를 계산하고, X선과 비교할 때 종양 뒤 조직의 선량이 줄어드는 이유를 속력에 따른 에너지 손실의 변화로 설명함.</span><span class="src">U3</span></li>
+      <li><span>은하 회전 곡선 자료로 반지름별 예상 궤도 속력과 관측값을 비교하여 보이지 않는 질량을 정량적으로 추정하고, 모둠 토론에서 서로 다른 가설을 가려낼 수 있는 관측 증거를 근거로 들어 의견을 제시함.</span><span class="src">U4</span></li>
+      <li><span>전하 비율이 검출 방향에 따라 달라지는지를 탐구 질문으로 정해 독립 변인과 선택 조건을 명시한 계획서를 작성하고, 중간 발표에서 받은 질문을 반영해 구간별 통계 오차를 추가로 분석한 뒤 결과의 한계를 보고서에 정리함.</span><span class="src">U5</span></li>
+    </ol>
+  </section>
+
+  <section class="section" id="design">
+    <div class="section__head"><span class="section__tag">08</span><h2>우리 학교 운영 설계</h2></div>
+    <div class="grid-2">
+      <label class="answer-field"><span>대상(학년·인원·선수 과목)</span><input type="text" id="d-target"></label>
+      <label class="answer-field"><span>운영 형태(정규 수업/동아리/방과후/영재반 등)</span><input type="text" id="d-form"></label>
+      <label class="answer-field"><span>총 시수와 1회 시간(50분/100분)</span><input type="text" id="d-hours"></label>
+      <label class="answer-field"><span>바탕 운영안</span>
+        <select id="d-base">
+          <option value="">고르세요</option>
+          <option>10시간 운영안</option>
+          <option>15시간 운영안</option>
+          <option>20시간 운영안(기본)</option>
+          <option>30시간 운영안</option>
+          <option>직접 구성</option>
+        </select>
+      </label>
+    </div>
+    <label class="answer-field"><span>합치거나 줄일 주제와 이유</span><textarea id="d-merge"></textarea></label>
+    <label class="answer-field"><span>늘리거나 더할 주제·모듈과 이유</span><textarea id="d-add"></textarea></label>
+    <div class="table-wrap"><table class="data-table" id="tbl-design">
+      <tr><th>회차</th><th>날짜</th><th>주제·활동</th><th>준비물·기기</th></tr>
+      <tr><td>1</td><td><input type="text" id="d-r1-date" aria-label="1회 날짜"></td><td><input type="text" id="d-r1-topic" aria-label="1회 주제"></td><td><input type="text" id="d-r1-prep" aria-label="1회 준비물"></td></tr>
+      <tr><td>2</td><td><input type="text" id="d-r2-date" aria-label="2회 날짜"></td><td><input type="text" id="d-r2-topic" aria-label="2회 주제"></td><td><input type="text" id="d-r2-prep" aria-label="2회 준비물"></td></tr>
+      <tr><td>3</td><td><input type="text" id="d-r3-date" aria-label="3회 날짜"></td><td><input type="text" id="d-r3-topic" aria-label="3회 주제"></td><td><input type="text" id="d-r3-prep" aria-label="3회 준비물"></td></tr>
+      <tr><td>4</td><td><input type="text" id="d-r4-date" aria-label="4회 날짜"></td><td><input type="text" id="d-r4-topic" aria-label="4회 주제"></td><td><input type="text" id="d-r4-prep" aria-label="4회 준비물"></td></tr>
+      <tr><td>5</td><td><input type="text" id="d-r5-date" aria-label="5회 날짜"></td><td><input type="text" id="d-r5-topic" aria-label="5회 주제"></td><td><input type="text" id="d-r5-prep" aria-label="5회 준비물"></td></tr>
+      <tr><td>6</td><td><input type="text" id="d-r6-date" aria-label="6회 날짜"></td><td><input type="text" id="d-r6-topic" aria-label="6회 주제"></td><td><input type="text" id="d-r6-prep" aria-label="6회 준비물"></td></tr>
+      <tr><td>7</td><td><input type="text" id="d-r7-date" aria-label="7회 날짜"></td><td><input type="text" id="d-r7-topic" aria-label="7회 주제"></td><td><input type="text" id="d-r7-prep" aria-label="7회 준비물"></td></tr>
+      <tr><td>8</td><td><input type="text" id="d-r8-date" aria-label="8회 날짜"></td><td><input type="text" id="d-r8-topic" aria-label="8회 주제"></td><td><input type="text" id="d-r8-prep" aria-label="8회 준비물"></td></tr>
+      <tr><td>9</td><td><input type="text" id="d-r9-date" aria-label="9회 날짜"></td><td><input type="text" id="d-r9-topic" aria-label="9회 주제"></td><td><input type="text" id="d-r9-prep" aria-label="9회 준비물"></td></tr>
+      <tr><td>10</td><td><input type="text" id="d-r10-date" aria-label="10회 날짜"></td><td><input type="text" id="d-r10-topic" aria-label="10회 주제"></td><td><input type="text" id="d-r10-prep" aria-label="10회 준비물"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-design">운영표 복사</button>
+    <label class="answer-field"><span>수행평가 과제와 반영 비율</span><textarea id="d-assess"></textarea></label>
+    <label class="answer-field"><span>협력 교과·교사(정보, 지구과학, 생명과학 등)와 협력 방법</span><textarea id="d-collab"></textarea></label>
+    <label class="answer-field"><span>준비물·예산·기기 점검 메모</span><textarea id="d-budget"></textarea></label>
+  </section>
+
+  <details class="teacher-part" id="teacher">
+    <summary>교사용 안내 (정답·운영 팁)</summary>
+    <h3>설계 작성 예시 (15시간 방과후, 2학년 12명)</h3>
+    <div class="box box--answer">
+      <ul>
+        <li><strong>대상·형태</strong>: 2학년 물리학 선택 학생 12명, 방과후 8주(주 1회 100분, 마지막 주 50분).</li>
+        <li><strong>합침·줄임</strong>: 주제 1·3·6·8·9를 1차시로 압축(3D 모의실험 중심). 주제 3의 계산 활동과 주제 8의 설계 제안서는 활동지 과제로 돌림.</li>
+        <li><strong>늘림</strong>: 주제 5 구름상자를 학생이 직접 제작(드라이아이스 확보가 쉬운 주로 배치).</li>
+        <li><strong>평가</strong>: 방과후이므로 성적 반영 없이 관찰 기록 + 최종 보고서(주제 10)로 활동 기록. 정규 수업이면 A(30)·B(30)·C(20)·D(20) 중 학교 계획에 맞게 선택.</li>
+        <li><strong>협력</strong>: 정보 교사와 U1 노트북 실행 환경(계정, 컴퓨터실) 협의.</li>
+      </ul>
+    </div>
+    <h3>운영 팁</h3>
+    <ul>
+      <li><strong>준비물 확보 순서</strong>: 오래 걸리는 것부터. 네오디뮴 자석·알루미늄 포일(주제 4), 99 % 이소프로필 알코올·펠트·투명 통(주제 5)은 학기 초에, 드라이아이스는 실험 전날 주문합니다.</li>
+      <li><strong>기기</strong>: 3D 모의실험은 크롬·엣지·사파리 최신판에서 WebGL로 동작합니다. 학교 태블릿이 느리면 2인 1기기로 하고 사건 수를 줄여 운영합니다. 인터넷이 없어도 파일을 복사해 두면 열립니다(U1 Colab은 인터넷 필요).</li>
+      <li><strong>모둠 평가의 공정성</strong>: 모둠 결과물은 공동 점수보다 개인 계산지·개인 보고서로 평가하고, 동료 평가는 점수보다 "구체적 기여 서술" 형태로 받아 관찰 기록에 참고합니다.</li>
+      <li><strong>세특 기록 시간 줄이기</strong>: 차시마다 관찰 기록표에 학생별로 한 줄(날짜, 활동, 관찰한 행동)을 남기면 학기 말에 위 예시 형식으로 쉽게 바꿀 수 있습니다. 활동지의 [내 답안 복사] 제출물도 근거 자료가 됩니다.</li>
+      <li><strong>기록할 때 주의</strong>: 학생이 실제로 하지 않은 활동을 쓰지 않습니다. 교외 대회 참가·수상, 외부 기관 프로그램(예: 국제 대회, 외부 마스터클래스)은 기재가 제한될 수 있으니 기재요령을 확인합니다. 수업 속 활동 서술에서도 특정 기관명·상호 표기는 기재요령에 맞춥니다.</li>
+      <li><strong>교육과정 연계 표기</strong>: 계획서에는 과목·단원 이름(예: 물리학 – 힘과 운동, 전자기와 양자 – 전자기장)으로만 적고, 성취기준 코드는 학교 교육과정 문서에서 직접 확인해 넣습니다.</li>
+      <li><strong>업그레이드</strong>: 새 주제·모듈을 만들면 <a href="index.html#policy">업그레이드 정책</a>을 따르고 이 페이지의 운영안 표도 함께 고칩니다.</li>
+    </ul>
+  </details>
+
+  <nav class="pager no-print" aria-label="모듈 이동">
+    <a class="prev" href="u5.html"><span>← 이전 모듈 U5</span>연구 프로젝트 가이드</a>
+    <a class="next" href="index.html"><span>업그레이드 트랙 →</span>모듈 목록으로</a>
+  </nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>
