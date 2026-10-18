@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>금박 산란실 모의실험</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/sim.css">
+<style>
+  .hud b { color: var(--s-track); font-weight: 600; }
+  .hud-line { display: block; white-space: nowrap; }
+  .warn-box { font-size: .82rem; color: var(--s-warn); border: 1px solid var(--s-warn); border-radius: 7px; padding: .4rem .6rem; }
+  .model-note { font-size: .82rem; color: var(--s-ink-2); }
+  @media (max-width: 560px) { .hud { font-size: .74rem; padding: .35rem .5rem; } .hud-line { white-space: normal; } }
+</style>
+</head>
+<body>
+<div class="sim">
+  <header class="sim-head">
+    <span class="tag">주제 02 · 3D</span>
+    <h1>금박 산란실: 알파 입자로 원자핵 찾기</h1>
+    <nav aria-label="관련 자료">
+      <a href="../students/t02.html">학생용 활동지</a>
+      <a href="../teachers/t02.html">교사용 지도서</a>
+      <a href="index.html">모의실험 목록</a>
+    </nav>
+  </header>
+  <div class="sim-body">
+    <div class="stage" id="stage">
+      <div class="stage-overlay" id="overlay">
+        <div class="hud" id="hud-main"></div>
+        <div class="hud" id="hud-scale"></div>
+      </div>
+      <div class="stage-hint">드래그: 회전 · 휠/두 손가락: 확대 · 오른쪽 드래그: 이동</div>
+    </div>
+    <aside class="panel" id="panel" aria-label="조작과 기록"></aside>
+  </div>
+</div>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/vendor/three/OrbitControls.js"></script>
+<script src="../assets/js/sim-kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var THREE = window.THREE, K = window.SimKit, ui = K.ui, COL = K.COLORS;
+
+  /* ---------- 단위와 상수 ----------
+     길이: fm(10⁻¹⁵ m), 에너지: MeV, 속력: c 단위, 시간: fm/c
+     쿨롱 상수 ke² = 1.44 MeV·fm, 알파 입자 질량 3727.4 MeV/c² */
+  var KE2 = 1.439964, M_A = 3727.379;
+  var SC = 20;             // 러더퍼드 모드 화면 축척: 1칸 = 20 fm
+  var R_DET = 14;          // 검출 스크린 반지름(화면 단위)
+  var R_VIS = 330;         // 궤적을 그리는 범위(fm)
+  var R_TH = 1.44e5;       // 톰슨 모형 원자 반지름(금 원자 약 144 pm = 1.44×10⁵ fm)
+  var SC_T = R_TH / 11;    // 톰슨 모드 화면 축척
+  var NBIN = 36;
+  var ELEM = { 6: "탄소", 13: "알루미늄", 26: "철", 29: "구리", 47: "은", 50: "주석", 78: "백금", 79: "금", 82: "납", 92: "우라늄" };
+  var A_OF = { 6: 12, 13: 27, 26: 56, 29: 64, 47: 108, 50: 119, 78: 195, 79: 197, 82: 207, 92: 238 };
+  function massNum(Z) { return A_OF[Z] || Math.round(Z * (2 + 0.0075 * Z)); }
+  function nucR(Z) { return 1.2 * Math.cbrt(massNum(Z)); }
+  function dHead(E, Z) { return KE2 * 2 * Z / E; }
+  function thetaTheory(b, E, Z) { return b <= 0 ? 180 : 2 * Math.atan(dHead(E, Z) / (2 * b)) * 180 / Math.PI; }
+  function rminTheory(b, E, Z) { var d = dHead(E, Z); return d / 2 * (1 + Math.sqrt(1 + 4 * b * b / (d * d))); }
+  function elemName(Z) { return ELEM[Z] ? ELEM[Z] : "원소"; }
+
+  /* ---------- 물리: 쿨롱 반발을 RK4로 수치 적분 ----------
+     러더퍼드: 점전하 핵(핵 반지름 안쪽은 고르게 대전된 공) · 톰슨: 반지름 R_TH 공에 양전하가 고르게 퍼짐(밖은 중성) */
+  function integrate(model, b, E, Z, wantPath) {
+    var Kc = KE2 * 2 * Z / M_A;
+    var Rn = model === "R" ? nucR(Z) : R_TH, Rn3 = Rn * Rn * Rn;
+    var r0, v0;
+    if (model === "R") { r0 = 1e5; v0 = Math.sqrt(2 * (E - KE2 * 2 * Z / r0) / M_A); }
+    else { r0 = 1.02 * R_TH; v0 = Math.sqrt(2 * E / M_A); }
+    var x = -Math.sqrt(r0 * r0 - b * b), y = b, vx = v0, vy = 0, t = 0;
+    var a = [0, 0], rmin = Infinity, steps = 0;
+    var scale = model === "R" ? SC : SC_T, visR = model === "R" ? R_VIS : 1.3 * R_TH, minStep = model === "R" ? 1.2 : R_TH / 150;
+    var pts = wantPath ? [] : null, ts = wantPath ? [] : null, lx = 1e99, ly = 1e99;
+    function acc(px, py, o) {
+      var r2 = px * px + py * py, r = Math.sqrt(r2), f;
+      if (model === "R") f = r > Rn ? Kc / (r2 * r) : Kc / Rn3;
+      else f = r < R_TH ? Kc / Rn3 : 0;
+      o[0] = f * px; o[1] = f * py;
+    }
+    while (steps++ < 400000) {
+      var r = Math.sqrt(x * x + y * y), v = Math.sqrt(vx * vx + vy * vy);
+      if (r < rmin) rmin = r;
+      if (wantPath && r < visR && ((x - lx) * (x - lx) + (y - ly) * (y - ly) > minStep * minStep)) { pts.push(x / scale, y / scale); ts.push(t); lx = x; ly = y; }
+      if (model === "R") { if (r > r0 && x * vx + y * vy > 0) break; }
+      else if (x > 0 && r > r0) break;
+      var h;
+      if (model === "R") { var re = Math.max(r, Rn); h = 0.004 * Math.min(r / v, Math.sqrt(re * re * re / Kc)); }
+      else h = R_TH / (v * 3000);
+      acc(x, y, a); var k1x = vx, k1y = vy, k1u = a[0], k1w = a[1];
+      acc(x + 0.5 * h * k1x, y + 0.5 * h * k1y, a); var k2x = vx + 0.5 * h * k1u, k2y = vy + 0.5 * h * k1w, k2u = a[0], k2w = a[1];
+      acc(x + 0.5 * h * k2x, y + 0.5 * h * k2y, a); var k3x = vx + 0.5 * h * k2u, k3y = vy + 0.5 * h * k2w, k3u = a[0], k3w = a[1];
+      acc(x + h * k3x, y + h * k3y, a); var k4x = vx + h * k3u, k4y = vy + h * k3w, k4u = a[0], k4w = a[1];
+      x += h / 6 * (k1x + 2 * k2x + 2 * k3x + k4x); y += h / 6 * (k1y + 2 * k2y + 2 * k3y + k4y);
+      vx += h / 6 * (k1u + 2 * k2u + 2 * k3u + k4u); vy += h / 6 * (k1w + 2 * k2w + 2 * k3w + k4w);
+      t += h;
+    }
+    return { theta: Math.abs(Math.atan2(vy, vx)) * 180 / Math.PI, rmin: rmin, pts: pts, ts: ts, b: b, E: E, Z: Z, model: model };
+  }
+
+  /* ---------- 장면 ---------- */
+  var stage = document.getElementById("stage");
+  var sim = K.create({ stage: stage, cameraPos: [3, 21, 18], target: [0, 0, 1], grid: { size: 30, divisions: 30 } });
+  sim.controls.maxDistance = 90; sim.controls.minDistance = 2;
+  var scene = sim.scene;
+  var panel = document.getElementById("panel");
+
+  function glowTexture() {
+    var cv = document.createElement("canvas"); cv.width = cv.height = 64;
+    var g = cv.getContext("2d"), grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    grd.addColorStop(0, "rgba(255,255,255,1)"); grd.addColorStop(0.3, "rgba(255,255,255,.5)"); grd.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = grd; g.fillRect(0, 0, 64, 64);
+    return new THREE.CanvasTexture(cv);
+  }
+  var GLOW = glowTexture();
+
+  // 러더퍼드 모형 장면: 원자핵 1개(실제 크기 축척)
+  var rGroup = new THREE.Group(); scene.add(rGroup);
+  var nucMesh = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 16), new THREE.MeshPhongMaterial({ color: COL.proton, emissive: 0x4a1010, shininess: 60 }));
+  rGroup.add(nucMesh);
+  var halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: GLOW, color: COL.proton, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+  halo.scale.set(1.8, 1.8, 1); rGroup.add(halo);
+  var nucLabel = null;
+  function setNucLabel() {
+    if (nucLabel) { rGroup.remove(nucLabel); nucLabel.material.map.dispose(); nucLabel.material.dispose(); }
+    nucLabel = K.label(elemName(state.Z) + " 원자핵 +" + state.Z + "e\n반지름 약 " + K.fmt(nucR(state.Z), 2) + " fm", { height: 0.9, size: 40 });
+    nucLabel.position.set(0, 1.9, -0.4); rGroup.add(nucLabel);
+  }
+  var dSphere = new THREE.Mesh(new THREE.SphereGeometry(1, 36, 18), new THREE.MeshBasicMaterial({ color: COL.field, wireframe: true, transparent: true, opacity: 0.16 }));
+  rGroup.add(dSphere);
+
+  // 톰슨 모형 장면: 양전하가 퍼진 공 + 박힌 전자
+  var tGroup = new THREE.Group(); tGroup.visible = false; scene.add(tGroup);
+  tGroup.add(new THREE.Mesh(new THREE.SphereGeometry(11, 48, 24), new THREE.MeshPhongMaterial({ color: 0xff8a8a, transparent: true, opacity: 0.13, depthWrite: false })));
+  tGroup.add(new THREE.Mesh(new THREE.SphereGeometry(11, 24, 12), new THREE.MeshBasicMaterial({ color: COL.proton, wireframe: true, transparent: true, opacity: 0.12 })));
+  (function () {
+    var n = 79, pos = new Float32Array(n * 3);
+    for (var i = 0; i < n; i++) {
+      var u = Math.random() * 2 - 1, ph = Math.random() * Math.PI * 2, rr = 10.5 * Math.cbrt(Math.random()), s = Math.sqrt(1 - u * u);
+      pos[3 * i] = rr * s * Math.cos(ph); pos[3 * i + 1] = rr * u; pos[3 * i + 2] = rr * s * Math.sin(ph);
+    }
+    var g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    tGroup.add(new THREE.Points(g, new THREE.PointsMaterial({ color: COL.electron, size: 0.32 })));
+  })();
+  var tLabel = K.label("톰슨 원자(푸딩 모형)\n+79e가 원자 전체에 퍼져 있음", { height: 1.1, size: 40 });
+  tLabel.position.set(0, 12.6, 0); tGroup.add(tLabel);
+
+  // 검출 스크린(원형 고리 + 구면)과 각도 눈금
+  var ring = new THREE.Mesh(new THREE.TorusGeometry(R_DET, 0.06, 8, 180), new THREE.MeshBasicMaterial({ color: COL.ok, transparent: true, opacity: 0.65 }));
+  ring.rotation.x = Math.PI / 2; scene.add(ring);
+  var shell = new THREE.Mesh(new THREE.SphereGeometry(R_DET, 36, 18), new THREE.MeshBasicMaterial({ color: COL.detector, wireframe: true, transparent: true, opacity: 0.13 }));
+  scene.add(shell);
+  [0, 30, 60, 90, 120, 150, 180].forEach(function (deg) {
+    var th = deg * Math.PI / 180, lb = K.label(deg + "°", { height: 0.6, color: "#bfe8cf" });
+    lb.position.set(Math.cos(th) * (R_DET + 1.1), 0.3, Math.sin(th) * (R_DET + 1.1)); scene.add(lb);
+    var tick = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.6), new THREE.MeshBasicMaterial({ color: COL.ok }));
+    tick.position.set(Math.cos(th) * R_DET, 0, Math.sin(th) * R_DET); tick.lookAt(0, 0, 0); scene.add(tick);
+  });
+  var detLabel = K.label("검출 스크린(황화아연)", { height: 0.6, color: "#bfe8cf" });
+  detLabel.position.set(0, 0.4, -R_DET - 1.2); scene.add(detLabel);
+
+  // 알파 선원과 빔 축
+  var src = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.1, 1.1), new THREE.MeshPhongMaterial({ color: 0x3a4670, emissive: 0x111a33 }));
+  src.position.set(-16.6, 0, 0); scene.add(src);
+  var srcLabel = K.label("알파 선원", { height: 0.6 }); srcLabel.position.set(-16.6, 1.3, 0); scene.add(srcLabel);
+  (function () {
+    var g = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-15.8, 0, 0), new THREE.Vector3(15.5, 0, 0)]);
+    var l = new THREE.Line(g, new THREE.LineDashedMaterial({ color: 0x7880a0, dashSize: 0.4, gapSize: 0.3, transparent: true, opacity: 0.5 }));
+    l.computeLineDistances(); scene.add(l);
+  })();
+
+  // 검출 스크린의 섬광 점
+  var MAXHIT = 8000, hitPos = new Float32Array(MAXHIT * 3), hitN = 0;
+  var hitGeo = new THREE.BufferGeometry(); hitGeo.setAttribute("position", new THREE.BufferAttribute(hitPos, 3)); hitGeo.setDrawRange(0, 0);
+  var hitPts = new THREE.Points(hitGeo, new THREE.PointsMaterial({ color: COL.photon, size: 0.28, transparent: true, opacity: 0.9 }));
+  hitPts.frustumCulled = false; scene.add(hitPts);
+  function addHit(theta, phi) {
+    var th = theta * Math.PI / 180, i = hitN % MAXHIT;
+    hitPos[3 * i] = R_DET * Math.cos(th); hitPos[3 * i + 1] = R_DET * Math.sin(th) * Math.sin(phi); hitPos[3 * i + 2] = R_DET * Math.sin(th) * Math.cos(phi);
+    hitN++; hitGeo.setDrawRange(0, Math.min(hitN, MAXHIT)); hitGeo.attributes.position.needsUpdate = true;
+  }
+  function clearHits() { hitN = 0; hitGeo.setDrawRange(0, 0); }
+
+  // 궤적 묶음(재사용)
+  var POOL = 90, PTS = 900, pool = [], poolIdx = 0;
+  var headGeo = new THREE.SphereGeometry(0.16, 12, 8);
+  for (var pi = 0; pi < POOL; pi++) {
+    var g = new THREE.BufferGeometry(), arr = new Float32Array(PTS * 3);
+    g.setAttribute("position", new THREE.BufferAttribute(arr, 3)); g.setDrawRange(0, 0);
+    var mat = new THREE.LineBasicMaterial({ color: COL.alpha, transparent: true, opacity: 0.8 });
+    var line = new THREE.Line(g, mat); line.frustumCulled = false; scene.add(line);
+    var head = new THREE.Mesh(headGeo, new THREE.MeshBasicMaterial({ color: COL.alpha })); head.visible = false; scene.add(head);
+    pool.push({ geo: g, arr: arr, mat: mat, line: line, head: head, n: 0, times: new Float32Array(PTS), active: false, fading: false });
+  }
+  function launch(res, phi, opt) {
+    var f = pool[poolIdx]; poolIdx = (poolIdx + 1) % POOL;
+    var raw = res.pts.length / 2, stepK = Math.max(1, Math.ceil(raw / PTS)), n = 0;
+    var t0 = res.ts[0], t1 = res.ts[res.ts.length - 1] - t0 || 1;
+    var sp = Math.sin(phi), cp = Math.cos(phi);
+    for (var i = 0; i < raw && n < PTS; i += stepK) {
+      var px = res.pts[2 * i], py = res.pts[2 * i + 1];
+      f.arr[3 * n] = px; f.arr[3 * n + 1] = py * sp; f.arr[3 * n + 2] = py * cp;
+      f.times[n] = (res.ts[i] - t0) / t1; n++;
+    }
+    f.n = n; f.idx = 0; f.elapsed = 0; f.dur = opt.dur; f.res = res; f.phi = phi; f.onDone = opt.onDone; f.single = !!opt.single;
+    f.mat.color.set(opt.single ? COL.alpha : 0xffc982); f.mat.opacity = opt.single ? 1 : 0.6;
+    f.geo.attributes.position.needsUpdate = true;
+    if (opt.instant) { f.geo.setDrawRange(0, n); f.active = false; f.fading = true; f.fadeT = 0; f.head.visible = false; if (opt.onDone) opt.onDone(res, phi); }
+    else { f.geo.setDrawRange(0, 0); f.active = true; f.fading = false; f.head.visible = true; f.head.material.color.set(COL.alpha); }
+  }
+  function clearTracks() { pool.forEach(function (f) { f.active = false; f.fading = false; f.geo.setDrawRange(0, 0); f.head.visible = false; }); queue.length = 0; }
+
+  /* ---------- 상태 ---------- */
+  var state = { model: "R", E: 5, Z: 79, b: 40, bmax: 300, slow: false, cont: false, demo: true };
+  var hist = { R: new Array(NBIN).fill(0), T: new Array(NBIN).fill(0), nR: 0, nT: 0, over90R: 0, maxT: 0, maxR: 0 };
+  var queue = [], lastShot = null, demoT = 0, demoI = 0, contT = 0, fastLeft = 0;
+
+  /* ---------- 패널 ---------- */
+  var mission = K.Mission(ui.section(panel, "미션"), { id: "t02", steps: [
+    "<b>b와 θ의 관계</b> — 같은 에너지·같은 표적에서 b를 4가지 이상 바꾸어 알파 입자 1개씩 쏘고 [기록]하기",
+    "<b>되튐 관찰</b> — 알파 입자 1개를 쏘아 산란각 170° 이상으로 되돌아오게 하기",
+    "<b>에너지 2배</b> — b = 0(정면 충돌)으로 에너지 E와 2E에서 각각 쏘고 [기록]하여 최근접 거리 비교하기",
+    "<b>러더퍼드 공식 비교</b> — 러더퍼드 모형에서 빔을 500개 이상 쏘아 히스토그램을 1/sin⁴(θ/2) 곡선과 비교하기",
+    "<b>톰슨 모형 검증</b> — 톰슨 모형으로 바꾸어 빔을 100개 이상 쏘고 큰 각도 산란이 생기는지 확인하기"
+  ] });
+
+  var ctl = ui.section(panel, "실험 조건");
+  var modelSel = ui.select(ctl, { id: "model", label: "원자 모형", value: "R", options: [
+    { value: "R", label: "러더퍼드 모형(작은 핵에 양전하 집중)" }, { value: "T", label: "톰슨 모형(양전하가 원자 전체에 퍼짐)" }
+  ], onChange: function (v) { setModel(v); } });
+  var modelNote = ui.html(ctl, "", "model-note");
+  var sE = ui.slider(ctl, { id: "energy", label: "알파 입자 운동 에너지 E<sub>k</sub>", min: 1, max: 10, step: 0.1, value: 5, unit: "MeV",
+    format: function (v) { return v.toFixed(1); }, onInput: function (v) { state.E = v; paramsChanged(); } });
+  var sZ = ui.slider(ctl, { id: "zed", label: "표적 원자번호 Z", min: 6, max: 92, step: 1, value: 79,
+    format: function (v) { return v + " (" + elemName(v) + ")"; }, onInput: function (v) { state.Z = v; paramsChanged(); } });
+  var sB = ui.slider(ctl, { id: "bparam", label: "충돌 매개변수 b", min: 0, max: 300, step: 0.5, value: 40, unit: "fm",
+    format: function (v) { return K.fmt(v, 4); }, onInput: function (v) { state.b = v; updateInfo(); } });
+  var sBmax = ui.slider(ctl, { id: "bmax", label: "빔 반지름 b<sub>max</sub>(빔 발사 때)", min: 50, max: 1000, step: 10, value: 300, unit: "fm",
+    format: function (v) { return K.fmt(v, 4); }, onInput: function (v) { state.bmax = v; paramsChanged(); } });
+  ui.toggle(ctl, { id: "show-d", label: "정면 충돌 최근접 거리 d를 구로 보이기", checked: true, onChange: function (on) { dSphere.visible = on && state.model === "R"; } });
+  ui.toggle(ctl, { id: "slow", label: "느린 동작", checked: false, onChange: function (on) { state.slow = on; } });
+
+  var fire = ui.section(panel, "발사");
+  var r1 = ui.buttonRow(fire);
+  ui.button(r1, { label: "알파 입자 1개 발사", kind: "primary", id: "btn-fire", onClick: function () { stopDemo(); fireSingle(state.b, false); } });
+  ui.button(r1, { label: "빔 100개", id: "btn-beam100", onClick: function () { stopDemo(); fireBeam(100); } });
+  ui.button(r1, { label: "빔 1000개(빠르게)", id: "btn-beam1000", onClick: function () { stopDemo(); fastLeft += 1000; } });
+  var contTg = ui.toggle(fire, { id: "cont", label: "연속 발사(빔이 계속 나옴)", checked: false, onChange: function (on) { stopDemo(); state.cont = on; } });
+  var r2 = ui.buttonRow(fire);
+  ui.button(r2, { label: "궤적·섬광 지우기", onClick: function () { clearTracks(); clearHits(); } });
+  ui.button(r2, { label: "일시정지/재생", onClick: function () { sim.toggle(); } });
+  ui.button(r2, { label: "시점 초기화", onClick: homeView });
+  ui.button(r2, { label: "위에서 보기", onClick: function () { sim.setView([0, 30, 0.01], [0, 0, 0]); } });
+
+  var mSec = ui.section(panel, "측정값", "1개 발사 결과는 검출 스크린에 닿은 뒤 표시됩니다.");
+  var ro = ui.readouts(mSec, [
+    { key: "th", label: "산란각 θ (측정)", unit: "°" },
+    { key: "thT", label: "θ 이론 = 2tan⁻¹(d/2b)", unit: "°" },
+    { key: "rmin", label: "최근접 거리 (측정)", unit: "fm" },
+    { key: "rminT", label: "최근접 거리 (이론)", unit: "fm" },
+    { key: "d", label: "d = kZ·2e²/E_k (정면)", unit: "fm" },
+    { key: "R", label: "핵 반지름 ≈ 1.2A^⅓", unit: "fm" }
+  ]);
+  var warnEl = ui.html(mSec, "", "warn-box"); warnEl.hidden = true;
+  var recRow = ui.buttonRow(mSec);
+  ui.button(recRow, { label: "기록", kind: "primary", id: "btn-record", onClick: record });
+
+  var bSec = ui.section(panel, "빔 통계와 그래프", "빔 발사(무작위 b) 결과만 히스토그램에 쌓입니다. 에너지·Z·빔 반지름을 바꾸면 새로 시작합니다.");
+  var ro2 = ui.readouts(bSec, [
+    { key: "N", label: "빔 발사 수", unit: "개" },
+    { key: "n90", label: "θ > 90° 개수", unit: "개" },
+    { key: "p90", label: "θ > 90° 비율 (측정)", unit: "" },
+    { key: "p90T", label: "θ > 90° 비율 (이론)", unit: "" },
+    { key: "maxT", label: "가장 큰 산란각", unit: "°" },
+    { key: "thmin", label: "b_max에서의 θ", unit: "°" }
+  ]);
+  var histMode = ui.select(bSec, { id: "histmode", label: "히스토그램 보기", value: "N", options: [
+    { value: "N", label: "각도별 개수 N(θ)" }, { value: "W", label: "같은 넓이 검출기 기준 개수(로그) ↔ 1/sin⁴(θ/2)" }
+  ], onChange: drawHist });
+  var cvH = document.createElement("canvas"); cvH.className = "plot plot--tall"; cvH.setAttribute("aria-label", "산란각 히스토그램"); bSec.appendChild(cvH);
+  ui.html(bSec, '<div class="legend"><span><i style="background:#7f9cff"></i>모의실험 결과</span><span><i style="background:#f0a35e"></i>러더퍼드 공식 예측</span></div>');
+  var cvB = document.createElement("canvas"); cvB.className = "plot"; cvB.setAttribute("aria-label", "충돌 매개변수와 산란각 그래프"); bSec.appendChild(cvB);
+  ui.html(bSec, '<p class="note">아래 그래프: 기록표에 담은 1개 발사 결과(점)와 지금 조건의 이론 곡선 θ = 2tan⁻¹(d/2b).</p>');
+
+  var recSec = ui.section(panel, "기록표", "알파 입자 1개를 쏜 뒤 [기록]을 누르면 그 결과가 담깁니다.");
+  var rec = K.Recorder(recSec, { id: "t02", columns: [
+    { key: "model", label: "모형" }, { key: "Z", label: "Z" }, { key: "E", label: "E", unit: "MeV" },
+    { key: "b", label: "b", unit: "fm" }, { key: "theta", label: "θ", unit: "°" }, { key: "thetaT", label: "θ 이론", unit: "°" },
+    { key: "rmin", label: "최근접", unit: "fm" }
+  ], onChange: function () { drawB(); } });
+
+  /* ---------- 동작 ---------- */
+  function stopDemo() { state.demo = false; }
+  panel.addEventListener("input", stopDemo, true);
+
+  function fireSingle(b, demo) {
+    var res = integrate(state.model, b, state.E, state.Z, true);
+    var dur = (state.model === "R" ? 2.6 : 2.2) * (state.slow ? 2.5 : 1);
+    launch(res, 0, { dur: dur, single: true, onDone: function (r) {
+      lastShot = { model: r.model, Z: r.Z, E: r.E, b: r.b, theta: r.theta, rmin: r.rmin, demo: demo };
+      showShot();
+      if (!demo && r.model === "R" && r.theta >= 170) mission.complete(1, "미션 2 완료! 산란각 " + K.fmt(r.theta, 4) + "° — 알파 입자가 거의 되돌아왔어요.");
+    } });
+  }
+  function randomShot() {
+    var bm = state.model === "R" ? state.bmax : R_TH;
+    return { b: bm * Math.sqrt(Math.random()), phi: Math.random() * Math.PI * 2 };
+  }
+  function addToHist(theta, model) {
+    var i = Math.min(NBIN - 1, Math.floor(theta / (180 / NBIN)));
+    if (model === "R") { hist.R[i]++; hist.nR++; if (theta > 90) hist.over90R++; if (theta > hist.maxR) hist.maxR = theta; }
+    else { hist.T[i]++; hist.nT++; if (theta > hist.maxT) hist.maxT = theta; }
+    if (hist.nR >= 500) mission.complete(3, "미션 4 완료! 히스토그램과 러더퍼드 곡선을 비교해 보세요.");
+    if (hist.nT >= 100) mission.complete(4, "미션 5 완료! 톰슨 모형에서는 큰 각도 산란이 없어요.");
+  }
+  var histDirty = true;
+  function fireBeam(n) {
+    var t = 0;
+    for (var i = 0; i < n; i++) { var s = randomShot(); queue.push({ b: s.b, phi: s.phi, at: t, model: state.model }); t += 0.055; }
+  }
+  function beamDone(r, phi) { addHit(r.theta, phi); addToHist(r.theta, r.model); histDirty = true; }
+
+  function record() {
+    if (!lastShot) { K.toast("먼저 [알파 입자 1개 발사]를 누르고, 검출 스크린에 닿을 때까지 기다리세요."); return; }
+    if (lastShot.recorded) { K.toast("이 결과는 이미 기록했어요. 새로 발사한 뒤 기록하세요."); return; }
+    lastShot.recorded = true;
+    var isR = lastShot.model === "R";
+    rec.add({ model: isR ? "러더퍼드" : "톰슨", Z: lastShot.Z, E: lastShot.E, b: lastShot.b,
+      theta: lastShot.theta, thetaT: isR ? thetaTheory(lastShot.b, lastShot.E, lastShot.Z) : "–", rmin: lastShot.rmin });
+    checkRecordMissions();
+  }
+  function checkRecordMissions() {
+    var rows = rec.rows.filter(function (r) { return r.model === "러더퍼드"; });
+    // 미션 1: 같은 E, Z에서 서로 다른 b 4개 이상
+    var groups = {};
+    rows.forEach(function (r) { var k = r.Z + "|" + Number(r.E).toFixed(1); groups[k] = groups[k] || {}; groups[k][Number(r.b).toFixed(1)] = 1; });
+    for (var k in groups) if (Object.keys(groups[k]).length >= 4) { mission.complete(0, "미션 1 완료! b가 작을수록 θ가 커지는지 그래프로 확인하세요."); break; }
+    // 미션 3: b ≈ 0, 같은 Z, 에너지 비 2배
+    var head = rows.filter(function (r) { return r.b <= 1; });
+    for (var i = 0; i < head.length; i++) for (var j = 0; j < head.length; j++) {
+      if (i === j || head[i].Z !== head[j].Z) continue;
+      var ratio = head[j].E / head[i].E;
+      if (Math.abs(ratio - 2) < 0.04) {
+        mission.complete(2, "미션 3 완료! 에너지 2배 → 최근접 거리 " + K.fmt(head[i].rmin, 3) + " fm → " + K.fmt(head[j].rmin, 3) + " fm (약 1/2)");
+        return;
+      }
+    }
+  }
+
+  function showShot() {
+    if (!lastShot) return;
+    var s = lastShot, isR = s.model === "R";
+    ro.set("th", s.theta, s.theta < 0.1 ? 2 : 4);
+    ro.set("thT", isR ? thetaTheory(s.b, s.E, s.Z) : "–", 4);
+    ro.set("rmin", s.rmin, 4);
+    ro.set("rminT", isR ? rminTheory(s.b, s.E, s.Z) : "–", 4);
+    var touch = isR && s.rmin < nucR(s.Z) + 1.7;
+    warnEl.hidden = !touch;
+    if (touch) warnEl.textContent = "주의: 알파 입자가 핵 표면(핵 반지름 + 알파 반지름 ≈ " + K.fmt(nucR(s.Z) + 1.7, 3) + " fm)까지 다가갔습니다. 여기서는 강한 핵력이 작용해 실제 결과가 러더퍼드 공식에서 벗어납니다. 이 모의실험은 쿨롱 힘만 계산합니다.";
+    updateHud();
+  }
+
+  function setModel(m) {
+    state.model = m; stopDemo(); clearTracks(); clearHits(); lastShot = null;
+    var isR = m === "R";
+    rGroup.visible = isR; tGroup.visible = !isR; dSphere.visible = isR && document.getElementById("show-d").checked;
+    sB.el.max = isR ? 300 : R_TH; sB.el.step = isR ? 0.5 : 500;
+    sB.set(isR ? 40 : 72000); state.b = sB.get();
+    sBmax.el.disabled = !isR;
+    modelNote.innerHTML = isR
+      ? "러더퍼드 모형: 양전하 +Ze와 질량이 반지름 몇 fm의 핵에 모여 있습니다. 화면 축척 1칸 = 20 fm."
+      : "톰슨 모형: +Ze가 반지름 1.44×10⁵ fm(=1.44×10⁻¹⁰ m)의 원자 전체에 고르게 퍼져 있습니다. 화면 축척 1칸 ≈ 1.3×10⁴ fm. 전자는 알파 입자보다 약 7300배 가벼워 거의 휘게 하지 못하므로 계산에서 뺐습니다.";
+    ["th", "thT", "rmin", "rminT"].forEach(function (k) { ro.set(k, "–"); });
+    warnEl.hidden = true;
+    updateInfo(); histDirty = true;
+  }
+
+  function paramsChanged() {
+    stopDemo();
+    queue.length = 0; fastLeft = 0;
+    if (hist.nR || hist.nT) {
+      hist.R.fill(0); hist.T.fill(0); hist.nR = hist.nT = hist.over90R = 0; hist.maxR = hist.maxT = 0;
+      clearHits();
+      K.toast("조건이 바뀌어 히스토그램을 새로 시작합니다.");
+    }
+    setNucLabel(); updateInfo(); histDirty = true; drawB();
+  }
+
+  function updateInfo() {
+    var d = dHead(state.E, state.Z), R = nucR(state.Z);
+    ro.set("d", d, 4); ro.set("R", R, 3);
+    nucMesh.scale.setScalar(R / SC);
+    dSphere.scale.setScalar(d / SC);
+    updateHud();
+  }
+
+  function updateHud() {
+    var d = dHead(state.E, state.Z), isR = state.model === "R";
+    var last = lastShot ? K.fmt(lastShot.theta, lastShot.theta < 0.1 ? 2 : 4) + "°" + (lastShot.demo ? " (시범)" : "") : "–";
+    document.getElementById("hud-main").innerHTML =
+      '<span class="hud-line"><span class="k">모형</span> <span class="v">' + (isR ? "러더퍼드(핵)" : "톰슨(푸딩)") + "</span></span>" +
+      '<span class="hud-line"><span class="k">E<sub>k</sub></span> <span class="v">' + state.E.toFixed(1) + ' MeV</span> · <span class="k">Z</span> <span class="v">' + state.Z + " (" + elemName(state.Z) + ")</span></span>" +
+      '<span class="hud-line"><span class="k">b</span> <span class="v">' + K.fmt(state.b, 4) + ' fm</span> · <span class="k">d</span> <span class="v">' + K.fmt(d, 4) + " fm</span></span>" +
+      '<span class="hud-line"><span class="k">마지막 θ</span> <b>' + last + "</b></span>";
+    document.getElementById("hud-scale").innerHTML = isR
+      ? '<span class="hud-line"><span class="k">화면 축척</span> <span class="v">1칸 = 20 fm</span></span><span class="hud-line"><span class="k">1 fm = 10⁻¹⁵ m · 핵은 실제 크기 비율</span></span><span class="hud-line"><span class="k">검출 스크린은 실제로는 수 cm 밖</span></span>'
+      : '<span class="hud-line"><span class="k">화면 축척</span> <span class="v">1칸 ≈ 1.3×10⁴ fm</span></span><span class="hud-line"><span class="k">원자 지름 ≈ 2.9×10⁻¹⁰ m</span></span>';
+  }
+
+  /* ---------- 그래프 ---------- */
+  function drawHist() {
+    histDirty = false;
+    var isR = state.model === "R", counts = isR ? hist.R : hist.T, N = isR ? hist.nR : hist.nT;
+    var d = dHead(state.E, state.Z), bm = state.bmax, dth = Math.PI / NBIN;
+    var thmin = 2 * Math.atan(d / (2 * bm)) * 180 / Math.PI;
+    var mode = histMode.get(), vals = counts, curve = null;
+    if (mode === "W") {
+      var w90 = Math.cos(Math.PI / 2 - dth / 2) - Math.cos(Math.PI / 2 + dth / 2);
+      vals = counts.map(function (c, i) { var lo = i * dth, hi = (i + 1) * dth; return c * w90 / (Math.cos(lo) - Math.cos(hi)); });
+    }
+    if (isR && N > 0) {
+      curve = function (x) {
+        if (x < thmin || x <= 0.01) return 0;
+        var h = x * Math.PI / 360, s = Math.sin(h);
+        return mode === "W" ? N * dth * d * d / (8 * bm * bm) / Math.pow(s, 4) : N * dth * d * d / (4 * bm * bm) * Math.cos(h) / (s * s * s);
+      };
+    }
+    var capCurve = curve;
+    if (curve && mode === "N") { var top = 0; vals.forEach(function (v) { if (v > top) top = v; }); capCurve = function (x) { return Math.min(curve(x), top * 1.3 + 1); }; }
+    K.plot.hist(cvH, { lo: 0, hi: 180, counts: vals, log: mode === "W", curve: capCurve, xlabel: "산란각 θ (°)", ylabel: mode === "W" ? "같은 넓이 기준 개수" : "개수",
+      marks: isR ? [{ x: 90, label: "90°", color: "#7880a0" }] : [] });
+    ro2.set("N", N, 5);
+    ro2.set("n90", isR ? hist.over90R : 0, 4);
+    ro2.set("p90", N ? (isR ? hist.over90R : 0) / N : "–", 3);
+    var p90T = isR ? Math.min(1, (d / 2) * (d / 2) / (bm * bm)) : 0;
+    ro2.set("p90T", p90T, 3);
+    ro2.set("maxT", N ? (isR ? hist.maxR : hist.maxT) : "–", isR ? 4 : 2);
+    ro2.set("thmin", isR ? thmin : "–", 3);
+  }
+  function drawB() {
+    var d = dHead(state.E, state.Z), bm = Math.max(40, state.model === "R" ? 300 : 300);
+    var theory = [];
+    for (var i = 1; i <= 200; i++) { var b = bm * i / 200; theory.push([b, thetaTheory(b, state.E, state.Z)]); }
+    theory.unshift([0, 180]);
+    var pts = rec.rows.filter(function (r) { return r.model === "러더퍼드" && r.Z === state.Z && Math.abs(r.E - state.E) < 0.05; }).map(function (r) { return [r.b, r.theta]; });
+    var other = rec.rows.filter(function (r) { return r.model === "러더퍼드" && !(r.Z === state.Z && Math.abs(r.E - state.E) < 0.05); }).map(function (r) { return [r.b, r.theta]; });
+    K.plot.xy(cvB, { xr: [0, bm], yr: [0, 185], xlabel: "충돌 매개변수 b (fm)", ylabel: "θ (°)", series: [
+      { points: theory, color: "#f0a35e", line: true, dots: false, label: "이론(지금 조건)" },
+      { points: other, color: "#7880a0", r: 2.5, label: other.length ? "다른 조건 기록" : "" },
+      { points: pts, color: "#7f9cff", r: 3.6, label: "내 기록(지금 조건)" }
+    ] });
+  }
+  window.addEventListener("resize", function () { histDirty = true; drawB(); });
+
+  /* ---------- 매 프레임 ---------- */
+  var histTimer = 0;
+  sim.onFrame(function (dt, t, real) {
+    halo.material.opacity = 0.65 + 0.25 * Math.sin(t * 3);
+    // 시범 발사(사용자가 조작하면 멈춤)
+    if (state.demo) {
+      demoT += dt;
+      if (demoT > 3.0) { demoT = 0; fireSingle([120, 60, 30, 15, 45, 90][demoI++ % 6], true); }
+    }
+    // 연속 발사
+    if (state.cont) { contT += dt; while (contT > 0.12) { contT -= 0.12; var s0 = randomShot(); queue.push({ b: s0.b, phi: s0.phi, at: 0, model: state.model }); } }
+    // 빔 대기열
+    if (queue.length && dt > 0) {
+      for (var q = 0; q < queue.length; q++) queue[q].at -= dt;
+      var launched = 0;
+      while (queue.length && queue[0].at <= 0 && launched < 6) {
+        var it = queue.shift(); launched++;
+        if (it.model !== state.model) continue;
+        var res = integrate(it.model, it.b, state.E, state.Z, true);
+        launch(res, it.phi, { dur: 1.5 * (state.slow ? 2.5 : 1), onDone: beamDone });
+      }
+    }
+    // 빠른 1000개: 프레임마다 나누어 계산
+    if (fastLeft > 0 && dt > 0) {
+      var nNow = Math.min(fastLeft, 120);
+      for (var k = 0; k < nNow; k++) {
+        var s1 = randomShot(), draw = (k % 15 === 0);
+        var r1 = integrate(state.model, s1.b, state.E, state.Z, draw);
+        if (draw) launch(r1, s1.phi, { instant: true, onDone: beamDone });
+        else beamDone(r1, s1.phi);
+      }
+      fastLeft -= nNow;
+    }
+    // 궤적 애니메이션
+    for (var i = 0; i < POOL; i++) {
+      var f = pool[i];
+      if (f.active) {
+        f.elapsed += dt;
+        var p = Math.min(1, f.elapsed / f.dur);
+        while (f.idx < f.n - 1 && f.times[f.idx + 1] <= p) f.idx++;
+        f.geo.setDrawRange(0, f.idx + 1);
+        var j = f.idx, j2 = Math.min(f.n - 1, j + 1), span = f.times[j2] - f.times[j], w = span > 0 ? (p - f.times[j]) / span : 0;
+        w = Math.max(0, Math.min(1, w));
+        f.head.position.set(f.arr[3 * j] + (f.arr[3 * j2] - f.arr[3 * j]) * w, f.arr[3 * j + 1] + (f.arr[3 * j2 + 1] - f.arr[3 * j + 1]) * w, f.arr[3 * j + 2] + (f.arr[3 * j2 + 2] - f.arr[3 * j + 2]) * w);
+        if (p >= 1) {
+          f.active = false; f.head.visible = false; f.fading = !f.single; f.fadeT = 0;
+          if (f.single) addHit(f.res.theta, f.phi);
+          if (f.onDone) f.onDone(f.res, f.phi);
+        }
+      } else if (f.fading && dt > 0) {
+        f.fadeT += dt; f.mat.opacity = Math.max(0.12, 0.6 - f.fadeT * 0.25);
+        if (f.mat.opacity <= 0.12) f.fading = false;
+      }
+    }
+    histTimer += real;
+    if (histDirty && histTimer > 0.25) { histTimer = 0; drawHist(); }
+  });
+
+  function homeView() {
+    var asp = (stage.clientWidth || 1) / (stage.clientHeight || 1), k = Math.max(1, Math.min(2.2, 1.3 / asp));
+    sim.setView([4 * k, 26 * k, 24 * k], [0, 0, 1]);
+  }
+
+  /* ---------- 시작 ---------- */
+  homeView();
+  setNucLabel(); setModel("R"); state.demo = true; drawB(); drawHist();
+  fireSingle(80, true);
+})();
+</script>
+</body>
+</html>

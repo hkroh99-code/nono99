@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 02 러더퍼드 산란 · 교사용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-page="teacher" data-topic="02" data-root="../">
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--teacher">교사용</span>
+      <span class="badge badge--basic">기본과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 02 · 지도서</p>
+    <h1>러더퍼드 산란: 보이지 않는 핵을 보는 법</h1>
+    <p class="lead">직접 볼 수 없는 원자핵의 크기를 과학자들은 어떻게 쟀을까? 그 방법은 오늘날 LHC와 어떻게 이어질까?</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="../students/t02.html">학생용 활동지</a>
+      <a class="btn btn--sim" href="../sims/t02.html">3D 모의실험</a>
+    </div>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#overview">개요</a><a href="#prep">준비</a><a href="#flow">수업 흐름</a><a href="#questions">핵심 발문</a>
+      <a href="#lab">실험 지도</a><a href="#sim">3D 운영</a><a href="#miscon">오개념</a><a href="#answers">정답·해설</a>
+      <a href="#assess">평가</a><a href="#flex">차시 조정</a><a href="#refs">참고 자료</a>
+    </nav>
+  </header>
+
+  <section class="section" id="overview">
+    <div class="section__head"><span class="section__tag">01</span><h2>개요</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>과정 단계</th><td>기본과정 두 번째 주제. 주제 1의 '간접 관측'을 정량적인 산란 실험으로 발전시키고, 주제 3~5(가속·휘기·검출)의 동기를 만든다.</td></tr>
+      <tr><th>교육과정 연계</th><td>물리학 – 전기와 자기(전기력, 쿨롱 법칙, 전기 퍼텐셜 에너지) / 물리학 – 빛과 물질(원자 모형의 변천) / 화학 – 원자의 구조(톰슨·러더퍼드 원자 모형) / 확률과 통계 – 확률과 통계적 추정</td></tr>
+      <tr><th>선수 학습</th><td>쿨롱 법칙 F = kq₁q₂/r², 운동 에너지와 퍼텐셜 에너지의 전환(역학적 에너지 보존), 전자볼트(1 eV = 1.60×10⁻¹⁹ J), 주제 1의 크기 사다리</td></tr>
+      <tr><th>핵심 개념</th><td>톰슨 모형과 러더퍼드 모형의 예측 차이, 충돌 매개변수 b와 산란각 θ(tan(θ/2) = d/2b), 정면 충돌 최근접 거리 d = kZ·2e²/E<sub>k</sub>, 명중률로 크기 추정(P = N·d/W, 유효 지름 = 표적 + 탐침), 단면적, 통계적 오차(1/√n), 충돌 실험으로 내부 구조를 보는 CERN의 방법</td></tr>
+      <tr><th>수업 형태</th><td>1차시: 모둠(4인) 구슬 산란 실험 + 반 전체 자료 합치기 / 2차시: 1인 1기기(또는 2인 1기기) 3D 모의실험 + 개별 계산 문제</td></tr>
+    </table></div>
+    <div class="box box--goal"><h3>학습 목표와 성취 판단 기준</h3><ol>
+      <li><b>두 모형의 예측 비교</b>: 톰슨 모형은 큰 각 산란을 설명하지 못하고 러더퍼드 모형은 설명함을 안다. <br><span class="muted">판단 기준: 확인 문제 1에서 "대부분 통과 → 빈 공간", "드문 되튐 → 작고 무거운 양전하 핵"을 모두 쓰고, 톰슨 모형의 한계를 전기력의 세기로 설명한다.</span></li>
+      <li><b>b–θ 관계와 최근접 거리</b>: b가 작을수록 θ가 커짐을 설명하고 d를 계산한다. <br><span class="muted">판단 기준: 표 B-1·B-2를 완성하고 E<sub>k</sub>×d가 일정함(227.5 MeV·fm)을 발견하며, 확인 문제 2·3을 바르게 계산한다.</span></li>
+      <li><b>확률로 크기 재기</b>: 명중률로 표적 지름을 추정하고 오차를 분석한다. <br><span class="muted">판단 기준: 유효 지름에서 구슬 지름을 빼서 표적 지름을 구하고, 시행 수가 늘수록 추정이 안정됨을 자료로 보인다(확인 문제 4).</span></li>
+      <li><b>CERN 연결</b>: "입자를 충돌시켜 속을 본다", "더 작은 구조에는 더 큰 에너지"를 설명한다. <br><span class="muted">판단 기준: 확인 문제 6에서 최근접 거리(또는 파장)와 에너지의 반비례를 근거로 쓴다.</span></li>
+    </ol></div>
+  </section>
+
+  <section class="section" id="prep">
+    <div class="section__head"><span class="section__tag">02</span><h2>준비물과 사전 준비</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>준비물</th><th>수량(4인 1모둠, 8모둠 기준)</th><th>구입·대체 방법</th></tr>
+      <tr><td>불투명한 판(약 60 cm × 45 cm)</td><td class="num">8장</td><td>우드락 5 mm, 골판지, 하드보드, 화이트보드 뒷면. 다이소·문구점</td></tr>
+      <tr><td>판 받침(높이 약 3 cm)</td><td class="num">32개</td><td>나무 블록, 지우개 묶음, 종이컵을 3 cm로 자른 것, 두꺼운 책</td></tr>
+      <tr><td>원판 표적(지름 4~5 cm, 두께 1 cm 이상)</td><td class="num">40개(모둠당 5)</td><td>10 mm 우드락을 원형으로 잘라 2장 겹침, 플라스틱 병뚜껑을 2단으로 붙임, 하키 퍽 모형. 모둠마다 크기를 다르게 하면 비교가 재미있음</td></tr>
+      <tr><td>유리구슬(지름 약 1.6 cm)</td><td class="num">24개(모둠당 3)</td><td>문구점·다이소. 쇠구슬(지름 1~2 cm)도 가능</td></tr>
+      <tr><td>구슬 경사로</td><td class="num">8개</td><td>L자 플라스틱 자, 반으로 자른 휴지심·종이 홈통, 책받침을 접은 것. 높이를 고정해 같은 속력으로 굴리게 함</td></tr>
+      <tr><td>1 m 자 또는 줄자, 마스킹테이프, 양면테이프</td><td class="num">모둠당 1세트</td><td>과학실 비품</td></tr>
+      <tr><td>난수 도구</td><td class="num">모둠당 1</td><td>스마트폰 난수 앱·검색창 난수 기능, 공학용 계산기 RAN#, 10면체 주사위 2개(00~99에서 1~60만 사용)</td></tr>
+      <tr><td>구슬 받이</td><td class="num">모둠당 2</td><td>상자 뚜껑, 수건(판의 출구 쪽과 옆쪽에 둠)</td></tr>
+      <tr><td>태블릿·크롬북·PC</td><td class="num">1인 1대(또는 2인 1대)</td><td>sims/t02.html. 인터넷 없이 실행 가능. 오래된 기기에서는 [빔 1000개] 계산에 몇 초 걸릴 수 있음</td></tr>
+    </table></div>
+    <div class="box box--tip prose">
+      <p><b>사전 준비(수업 전 20분)</b>: 모둠마다 '표적 배치 팀'과 '측정 팀'을 정해, 짝 모둠의 판을 서로 준비해 주도록 합니다. 표적은 책상이나 바닥에 깐 전지 위에 양면테이프로 붙이고(판 아래가 아니라 책상 위!), 그 위를 받침을 세운 판으로 덮습니다. 표적은 구슬 진행 방향으로 보아 서로 겹치지 않게, 출발선에서 10 cm 이상 떨어뜨려 놓습니다. 배치 팀은 표적의 실제 지름과 위치를 종이에 적어 교사에게 맡깁니다.</p>
+    </div>
+    <div class="box box--safety"><h4>안전 지도</h4><ul>
+      <li>구슬이 바닥에 떨어지면 즉시 줍게 하고, 수업이 끝나면 구슬 개수를 세어 회수합니다(밟고 미끄러지는 사고 예방).</li>
+      <li>구슬을 던지거나 입에 넣지 않도록 지도합니다(특히 쉬는 시간).</li>
+      <li>우드락·하드보드를 자르는 칼 작업은 교사가 미리 하고, 잘린 모서리는 테이프로 감쌉니다.</li>
+      <li>실제 방사성 선원(알파 선원)은 사용하지 않습니다. 알파 입자 실험은 모의실험으로만 다룹니다.</li>
+    </ul></div>
+  </section>
+
+  <section class="section" id="flow">
+    <div class="section__head"><span class="section__tag">03</span><h2>수업 흐름</h2></div>
+    <h3>1차시 (50분): 확률로 보이지 않는 표적의 크기 재기</h3>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>단계·시간</th><th>교사 활동</th><th>학생 활동</th><th>자료·유의점</th></tr>
+      <tr><td><span class="phase">도입</span><br>5분</td><td>가이거–마스든 실험 이야기(1909년, 8000개 중 1개 되튐)와 러더퍼드의 '대포알과 휴지' 말 소개. "톰슨 모형이 맞다면?" 질문</td><td>생각 열기 Q1·Q2 작성</td><td>활동지 01. 답을 바로 주지 않고 2차시 모의실험에서 검증하자고 예고</td></tr>
+      <tr><td><span class="phase">전개 1</span><br>8분</td><td>핵심 개념 1(두 모형)과 4(명중률로 크기 재기) 설명. P = N·d/W 유도(가리는 폭 ÷ 전체 폭), 구슬 크기 문제는 질문으로 던짐: "구슬이 표적 가장자리를 스치면?"</td><td>그림 1·3 보며 개념 정리, 유효 지름 개념 이해</td><td>단면적이라는 용어를 함께 소개</td></tr>
+      <tr><td><span class="phase">전개 2</span><br>25분</td><td>짝 모둠끼리 표적 배치(3분) → 측정 시작 안내. 순회하며 '곧게 굴리기', '판정 기준 통일', '20회마다 계산' 확인</td><td>W, N, 구슬 지름 측정 → 난수 위치에서 100회 이상 굴리기 → 기록표에 20회마다 P, 유효 지름, 표적 지름 추정</td><td>역할 4개(굴리기·판정·기록·난수)를 25회마다 교대. 빨리 끝난 모둠은 200회까지</td></tr>
+      <tr><td><span class="phase">전개 3</span><br>7분</td><td>판을 열어 실제 지름 측정. 칠판에 모둠별 추정값을 점으로 찍어 분포를 보여 주고, 같은 판을 쓴 모둠 결과 합치기</td><td>실제 값 기록, 반 전체 합 계산, A1·A2 작성</td><td>추정값 분포가 실제 값 주위에 퍼져 있음 → '통계적 오차'</td></tr>
+      <tr><td><span class="phase">정리</span><br>5분</td><td>"러더퍼드는 판을 열 수 없었다. 8000개 중 1개라는 명중률만으로 핵이 원자보다 훨씬 작다고 결론 내렸다" 정리. 다음 시간: 알파 입자가 핵 근처에서 어떻게 휘는지 3D로</td><td>A3~A5 작성(과제 가능)</td><td>구슬·판 회수</td></tr>
+    </table></div>
+    <h3>2차시 (50분): 3D 금박 산란실 — 쿨롱 힘과 최근접 거리</h3>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>단계·시간</th><th>교사 활동</th><th>학생 활동</th><th>자료·유의점</th></tr>
+      <tr><td><span class="phase">도입</span><br>5분</td><td>지난 시간 반 전체 결과 공유. "핵 근처에서 알파 입자는 어떤 길로 움직일까?" 칠판에 예상 경로 그리게 하기</td><td>예상 경로 그리기</td><td>'튕긴다(접촉)'는 오개념을 드러내는 데 좋음</td></tr>
+      <tr><td><span class="phase">전개 1</span><br>10분</td><td>핵심 개념 2·3 설명: 쿨롱 힘, b와 θ, 에너지 보존으로 d 유도(E<sub>k</sub> = k·2Ze²/d). 금·5 MeV 예제를 MeV·fm 방법과 SI 방법으로 함께 계산</td><td>공식 유도 따라가기, 예제 계산</td><td>ke² = 1.44 MeV·fm 요령을 강조하면 계산 부담이 줄어듦</td></tr>
+      <tr><td><span class="phase">전개 2</span><br>22분</td><td>3D 모의실험 운영(아래 06). 미션 1·2(8분) → 미션 3(5분) → 미션 4·5(7분) 순서 안내, 2분 남기고 B1~B3 작성 시간 확보</td><td>미션 수행, 표 B-1~B-3 기록, B1~B3 작성</td><td>표 B-1의 θ 이론값은 모의실험 측정값 칸에 함께 표시되므로 계산기로 하나만 직접 확인하게 함</td></tr>
+      <tr><td><span class="phase">전개 3</span><br>8분</td><td>"실제 CERN에서는" 함께 읽기. SLAC 쿼크 발견과 LHC를 '더 높은 에너지의 러더퍼드 실험'으로 연결</td><td>활동지 05 읽기, 확인 문제 1~3 풀이</td><td>4~6번은 과제로 돌려도 됨</td></tr>
+      <tr><td><span class="phase">정리</span><br>5분</td><td>핵심 정리: 산란 패턴 → 내부 구조, b↓ θ↑, d ∝ 1/E<sub>k</sub>, 확률 → 크기. 다음 주제(전기장으로 입자 가속하기) 예고: "더 높은 에너지를 어떻게 만들까?"</td><td>자기 평가, 답안 제출</td><td></td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="questions">
+    <div class="section__head"><span class="section__tag">04</span><h2>핵심 발문과 예상 답변</h2></div>
+    <details><summary>발문 1. 톰슨 모형이 옳았다면 알파 입자는 왜 크게 휘지 못할까요?</summary>
+      <p>예상 답변: 양전하가 원자 전체에 퍼져 있으면 알파 입자가 어느 위치에 있든 받는 전기력이 약하다. 원자 밖에서는 전자와 양전하가 상쇄되어 힘이 거의 없고, 원자 안에서도 가까이 있는 전하가 적다. 모의실험에서는 금 원자 하나를 지날 때 최대 약 0.01°.</p>
+      <p>후속 발문: 전자와 부딪혀서 크게 휠 수는 없을까? (전자는 알파 입자보다 약 7300배 가벼워, 볼링공이 탁구공을 치는 것처럼 알파 입자는 거의 방향이 바뀌지 않는다.)</p></details>
+    <details><summary>발문 2. 알파 입자가 원자핵에 '부딪혀서' 되돌아오는 걸까요?</summary>
+      <p>예상 답변: 부딪히지 않는다. 금 핵에 5 MeV로 정면으로 다가가도 약 45 fm에서 멈추는데, 금 핵의 반지름은 약 7 fm. 닿기 훨씬 전에 쿨롱 반발로 되돌아간다.</p>
+      <p>후속 발문: 그렇다면 핵의 크기에 대해 이 실험이 말해 주는 것은 무엇일까? (핵 반지름 &lt; 최근접 거리, 즉 상한만 알 수 있다.)</p></details>
+    <details><summary>발문 3. 같은 b로 쏘더라도 에너지를 키우면 산란각은 어떻게 될까요? 왜 그럴까요?</summary>
+      <p>예상 답변: 작아진다. 빠른 입자는 핵 근처에 머무는 시간이 짧아 반발력이 작용하는 시간(충격량)이 줄어들고, 운동량도 커서 방향을 바꾸기 어렵다. 식으로는 tan(θ/2) = d/2b이고 d ∝ 1/E<sub>k</sub>.</p>
+      <p>후속 발문: 그러면 핵 가까이 가서 '속'을 보려면 에너지를 키워야 할까, 줄여야 할까? (키워야 한다 — 최근접 거리가 줄어든다. 이것이 가속기가 필요한 이유)</p></details>
+    <details><summary>발문 4. 구슬 실험에서 명중률이 0.38이 나왔습니다. 표적이 가리는 폭은 전체 폭의 몇 %일까요? 왜 구슬 지름을 빼야 할까요?</summary>
+      <p>예상 답변: 38%. 구슬 중심이 표적 가장자리에서 구슬 반지름만큼 떨어져 지나가도 부딪히므로, 표적 하나가 실제로 가리는 폭은 '표적 지름 + 구슬 지름'이다.</p>
+      <p>후속 발문: 알파 입자와 금 핵의 경우, '맞는 넓이'는 무엇이 정할까? (기하학적 크기가 아니라 쿨롱 힘의 세기와 에너지 — 90°보다 크게 휘려면 b &lt; d/2. 그래서 단면적은 에너지에 따라 달라진다.)</p></details>
+    <details><summary>발문 5. 히스토그램에서 작은 각도가 압도적으로 많은 까닭은?</summary>
+      <p>예상 답변: 빔은 넓은 원판 위에 고르게 퍼져 있고, 큰 b(작은 θ)에 해당하는 고리의 넓이가 작은 b(큰 θ)의 넓이보다 훨씬 크기 때문. θ &gt; 90°가 되려면 b &lt; 22.75 fm여야 하는데, 이 원의 넓이는 빔 반지름 300 fm 원판의 약 0.6%.</p></details>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">05</span><h2>실험 A 지도 팁과 예시 결과</h2></div>
+    <div class="box box--tip prose">
+      <p><b>곧게 굴리기</b>: 경사로를 출발선에 수직으로 대고 같은 높이에서 놓게 합니다. 굴리는 방향이 비스듬하면 실제 '가리는 폭'이 달라져 오차가 커집니다. 판 양옆에 책을 세워 안내벽을 만들면 옆으로 새는 일이 줄어듭니다.</p>
+      <p><b>판정 기준 통일</b>: "반대편 출구에서 출발 위치와 같은 눈금 ±3 cm 안으로 나오면 빗나감, 그 밖이거나 옆·뒤로 나오면 명중"처럼 정량 기준을 미리 정하게 하세요. 판 밑에서 '딱' 소리가 나면 명중으로 보는 것도 보조 기준이 됩니다.</p>
+      <p><b>무작위성</b>: 학생이 마음대로 위치를 고르면 표적을 피하거나 노리는 경향이 생깁니다. 난수를 꼭 쓰게 하세요. 출발 위치를 1~60 cm에서 고르고 W = 60 cm로 둡니다.</p>
+      <p><b>예상되는 수준</b>: 100회면 표적 지름 추정의 오차는 대략 ±15~20%, 반 전체(800회)를 합치면 ±5~7%로 줄어듭니다. 이 차이를 칠판 그래프로 보여 주는 것이 1차시의 핵심 장면입니다.</p>
+    </div>
+    <h3>예시 결과: W = 60 cm, 표적 N = 4개(실제 지름 4.0 cm), 구슬 지름 1.6 cm</h3>
+    <p class="small muted">이론 명중률 = N·(d + d<sub>구슬</sub>)/W = 4 × 5.6 / 60 = 0.373</p>
+    <div class="table-wrap"><table>
+      <tr><th>구간</th><th class="num">누적 시행</th><th class="num">구간 명중</th><th class="num">누적 명중</th><th class="num">누적 P</th><th class="num">유효 지름 (cm)</th><th class="num">표적 지름 추정 (cm)</th></tr>
+      <tr><td>1~20회</td><td class="num">20</td><td class="num">8</td><td class="num">8</td><td class="num">0.400</td><td class="num">6.00</td><td class="num">4.40</td></tr>
+      <tr><td>21~40회</td><td class="num">40</td><td class="num">6</td><td class="num">14</td><td class="num">0.350</td><td class="num">5.25</td><td class="num">3.65</td></tr>
+      <tr><td>41~60회</td><td class="num">60</td><td class="num">9</td><td class="num">23</td><td class="num">0.383</td><td class="num">5.75</td><td class="num">4.15</td></tr>
+      <tr><td>61~80회</td><td class="num">80</td><td class="num">7</td><td class="num">30</td><td class="num">0.375</td><td class="num">5.63</td><td class="num">4.03</td></tr>
+      <tr><td>81~100회</td><td class="num">100</td><td class="num">8</td><td class="num">38</td><td class="num">0.380</td><td class="num">5.70</td><td class="num">4.10</td></tr>
+      <tr><td>반 전체(8모둠, 같은 배치)</td><td class="num">800</td><td class="num">–</td><td class="num">301</td><td class="num">0.376</td><td class="num">5.64</td><td class="num">4.04</td></tr>
+    </table></div>
+    <p class="small muted">100회: 상대 오차 |4.10 − 4.0|/4.0 = 2.5%. 통계적 불확도 σ<sub>P</sub> = √(P(1−P)/n) = √(0.38×0.62/100) ≈ 0.049 → 지름 불확도 ≈ 0.049 × 60/4 ≈ ±0.7 cm. 800회: σ<sub>P</sub> ≈ 0.017 → ±0.26 cm. 시행 수가 8배가 되면 불확도는 약 1/√8 ≈ 0.35배.</p>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">06</span><h2>3D 모의실험 운영 가이드</h2></div>
+    <div class="box box--tip prose">
+      <p><b>모의실험의 물리</b>: 알파 입자(질량 3727 MeV/c², 전하 +2e)가 고정된 원자핵(+Ze)의 쿨롱 반발을 받으며 움직이는 경로를 4차 룽게–쿠타(RK4) 방법으로 수치 적분합니다. 길이 단위는 fm, 에너지는 MeV, ke² = 1.44 MeV·fm. 시간 간격은 핵에 가까울수록 자동으로 작아지며, 측정 산란각은 이론값 2tan⁻¹(d/2b)와 0.02° 안에서 일치합니다. 핵은 고정(무거운 핵 근사)했고 전자의 가림 효과와 핵력은 넣지 않았습니다. 알파 입자가 핵 표면(핵 반지름 + 알파 반지름 1.7 fm)까지 다가가면 "러더퍼드 공식에서 벗어남" 경고가 뜹니다.</p>
+      <p><b>화면</b>: 러더퍼드 모드의 화면 축척은 1칸 = 20 fm이며 핵은 실제 크기 비율(금 반지름 약 7 fm)로 그려집니다. 파란 그물 구는 정면 충돌 최근접 거리 d입니다. 초록 고리와 그물 구면은 검출 스크린으로, 실제로는 수 cm 떨어져 있지만 화면에서는 가까이 그렸습니다. 톰슨 모드는 축척이 바뀌어(1칸 ≈ 1.3×10⁴ fm) 원자 전체(반지름 1.44×10⁻¹⁰ m)를 보여 줍니다.</p>
+      <p><b>열자마자</b> 시범 발사(b = 120, 60, 30, 15, 45, 90 fm 순환)가 자동으로 진행되어 화면이 움직입니다. 학생이 패널을 조작하면 시범은 멈추고, 시범 발사는 미션에 반영되지 않습니다. 기록표와 미션 진행은 기기의 브라우저에 저장되므로 공용 기기는 수업 전에 [기록 지우기]를 눌러 두세요.</p>
+    </div>
+    <ol class="steps">
+      <li>미션 1 (b와 θ) — 기대 결과(금, 5.0 MeV, d = 45.5 fm): b = 10 fm → θ ≈ 132.5°, 20 → 97.4°, 40 → 59.3°, 80 → 31.8°, 160 → 16.2°. 같은 E·Z에서 서로 다른 b 4개 이상을 기록하면 자동 완료. 패널 아래 θ–b 그래프에 기록 점이 이론 곡선 위에 놓입니다.</li>
+      <li>미션 2 (되튐) — 기대 결과: b ≤ 2 fm에서 θ ≥ 170°(b = 2 → 170.0°, b = 1 → 175.0°, b = 0 → 180°). 1개 발사로 170° 이상이 나오면 완료. "b가 2 fm면 핵 지름보다도 작은 거리 — 이렇게 정확히 겨냥되는 경우가 아주 드물다"를 연결하세요.</li>
+      <li>미션 3 (에너지 2배) — 기대 결과: b = 0에서 4.0 MeV → 56.9 fm, 8.0 MeV → 28.4 fm(5.0 → 45.5, 10.0 → 22.8). E<sub>k</sub> × d = 227.5 MeV·fm로 일정. b ≤ 1 fm인 두 기록의 에너지 비가 2이면 완료.</li>
+      <li>미션 4 (러더퍼드 공식) — 기대 결과: 빔 반지름 300 fm, 1000개 발사 시 θ &gt; 90°는 평균 약 6개(이론 비율 (d/2b<sub>max</sub>)² = 0.0058, 개수는 3~10개 정도로 흔들림). 히스토그램은 b<sub>max</sub>에 해당하는 최소각(8.7°) 근처에 몰리고, '같은 넓이 검출기 기준(로그)' 보기에서 막대가 1/sin⁴(θ/2) 곡선을 따라 내려갑니다. 러더퍼드 모드 빔 합계 500개 이상이면 완료.</li>
+      <li>미션 5 (톰슨 모형) — 기대 결과: 빔 100개 모두 0~5° 칸에 들어가고 가장 큰 산란각은 약 0.009°(금, 5 MeV). θ &gt; 90°는 0개. 톰슨 모드 빔 합계 100개 이상이면 완료. 러더퍼드 결과와 나란히 비교하게 하세요.</li>
+    </ol>
+    <p class="small muted">조건(E, Z, 빔 반지름)을 바꾸면 히스토그램은 자동으로 새로 시작됩니다. 저사양 기기에서는 [느린 동작]을 끄고 [빔 1000개(빠르게)]를 쓰면 애니메이션 없이 계산만 빠르게 합니다.</p>
+  </section>
+
+  <section class="section" id="miscon">
+    <div class="section__head"><span class="section__tag">07</span><h2>흔한 오개념과 대응</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>오개념</th><th>바른 개념</th><th>대응 활동</th></tr>
+      <tr><td>알파 입자가 핵에 '부딪혀' 당구공처럼 튕긴다.</td><td>핵에 닿지 않고 멀리서(수십 fm) 쿨롱 반발로 휜다. 경로는 매끄러운 곡선(쌍곡선)이다.</td><td>모의실험 d 구와 핵 크기 비교(45.5 fm vs 7 fm), 느린 동작으로 감속 관찰</td></tr>
+      <tr><td>큰 각 산란은 알파 입자가 전자와 부딪혀 생긴다.</td><td>전자는 알파 입자보다 약 7300배 가벼워 거의 방향을 바꾸지 못한다(최대 약 0.008°).</td><td>발문 1 후속, 톰슨 모드</td></tr>
+      <tr><td>러더퍼드는 핵의 크기를 정확히 쟀다.</td><td>공식이 맞는 범위에서는 최근접 거리보다 핵이 작다는 상한만 알 수 있었다. 정확한 크기는 더 높은 에너지 실험(전자 산란 등)으로 알게 되었다.</td><td>업그레이드 1·2</td></tr>
+      <tr><td>금박은 원자 한 겹이라 거의 다 통과한 것이다.</td><td>금박도 원자 수천 겹 두께다. 그런데도 대부분 통과한다는 것이 원자가 빈 공간이라는 강한 증거다.</td><td>금박 두께(약 10⁻⁷ m 규모) ÷ 원자 지름 계산</td></tr>
+      <tr><td>확률 실험은 우연이라 믿을 수 없다.</td><td>시행 수가 많을수록 통계적 오차가 1/√n로 줄어 예측 가능한 결과가 된다. 입자물리의 모든 측정이 이 원리를 쓴다.</td><td>모둠 100회 vs 반 전체 800회 비교</td></tr>
+      <tr><td>틀린 모형(톰슨)은 쓸모없다.</td><td>톰슨 모형은 당시 증거를 설명한 좋은 모형이었고, 분명한 예측을 했기 때문에 실험으로 검증·반박될 수 있었다.</td><td>과학의 본성 토론(주제 1 블랙박스와 연결)</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="answers">
+    <div class="section__head"><span class="section__tag">08</span><h2>활동지 정답과 해설</h2></div>
+    <div class="box box--answer"><h4>생각 열기 Q1·Q2</h4>
+      <p><b>Q1</b>: 양전하가 넓게 퍼져 있으므로 알파 입자가 받는 전기력이 약해, 거의 곧게 통과하고 아주 작은 각도(1° 미만)로만 휜다. 되돌아오는 일은 없을 것이다.</p>
+      <p><b>Q2</b>: 원자 속에 알파 입자를 되돌릴 만큼 강한 전기력을 만드는, 양전하가 집중된 무겁고 작은 부분(원자핵)이 있다. '드물게'는 그 부분이 원자 전체에 비해 매우 작아(맞는 넓이가 작아) 알파 입자가 가까이 지나가는 경우가 드물다는 뜻이다. 대부분 통과한다는 것은 원자의 대부분이 빈 공간이라는 뜻이다.</p></div>
+    <div class="box box--answer"><h4>실험 A: A1~A5</h4>
+      <p><b>A1</b>: 예시 자료: 추정 4.10 cm, 실제 4.0 cm → 상대 오차 |4.10 − 4.0| ÷ 4.0 × 100 = 2.5%. 모둠 자료에 따라 다르며 20% 안쪽이면 적절.</p>
+      <p><b>A2</b>: 20회에서는 4.40 → 3.65 → 4.15처럼 크게 흔들리다가 시행 수가 늘수록 실제 값 근처로 안정된다. 반 전체 800회(4.04 cm)는 모둠 100회보다 실제 값에 더 가깝다. 통계적 불확도는 √n에 반비례해 줄어든다.</p>
+      <p><b>A3</b>: 빼지 않으면 표적 지름을 크게 잡는다(유효 지름 = 표적 + 구슬). 구슬 중심이 표적에서 구슬 반지름만큼 떨어져도 부딪히기 때문이다. 모래알처럼 탐침이 아주 작으면 유효 지름이 실제 지름에 가까워진다 — 작은 탐침일수록 표적 크기를 정확히 잰다.</p>
+      <p><b>A4</b>: 오차 원인: 출발 위치가 완전히 무작위가 아님, 굴리는 방향이 비스듬함, 표적이 진행 방향으로 겹침(가리는 폭이 줄어 P가 작아짐), 표적 가장자리를 스칠 때의 판정 애매함, 구슬이 판 받침이나 벽에 맞음. 개선: 난수 사용, 경사로와 안내벽, 표적 배치 확인, 정량 판정 기준, 시행 수 늘리기.</p>
+      <p><b>A5</b>: 구슬 실험의 명중률(약 0.4)에 비해 1/8000 ≈ 1.25×10⁻⁴은 수천 배 작다. 금속박 속 원자층이 많은데도 이렇게 드물다는 것은, 알파 입자를 크게 휘게 하는 '표적'(핵)이 원자 전체에 비해 매우 작다는 뜻이다. 러더퍼드는 이런 산란 비율로 핵이 원자 지름의 약 1만분의 1 이하임을 추론했다.</p></div>
+    <div class="box box--answer"><h4>실험 B: 표 B-1~B-3</h4>
+      <div class="table-wrap"><table>
+        <tr><th class="num">b (fm)</th><th class="num">θ 측정 (°)</th><th class="num">θ 이론 (°)</th><th class="num">최근접 거리 (fm)</th></tr>
+        <tr><td class="num">10</td><td class="num">132.6</td><td class="num">132.5</td><td class="num">47.6</td></tr>
+        <tr><td class="num">20</td><td class="num">97.4</td><td class="num">97.4</td><td class="num">53.0</td></tr>
+        <tr><td class="num">40</td><td class="num">59.3</td><td class="num">59.3</td><td class="num">68.8</td></tr>
+        <tr><td class="num">80</td><td class="num">31.8</td><td class="num">31.8</td><td class="num">105.9</td></tr>
+        <tr><td class="num">160</td><td class="num">16.2</td><td class="num">16.2</td><td class="num">184.3</td></tr>
+        <tr><td class="num">되튐 예: 2</td><td class="num">170.0</td><td class="num">170.0</td><td class="num">45.6</td></tr>
+      </table></div>
+      <p>θ 이론 계산 예(b = 40 fm): tan(θ/2) = 45.5/(2×40) = 0.569 → θ/2 = 29.6° → θ = 59.3°. 최근접 거리 이론값 r<sub>min</sub> = (d/2)(1 + √(1 + (2b/d)²)) (예: b = 40 → 68.8 fm).</p>
+      <div class="table-wrap"><table>
+        <tr><th class="num">E<sub>k</sub> (MeV)</th><th class="num">최근접 거리 측정 (fm)</th><th class="num">d 계산 (fm)</th><th class="num">E<sub>k</sub>×d (MeV·fm)</th></tr>
+        <tr><td class="num">4.0</td><td class="num">56.88</td><td class="num">56.88</td><td class="num">227.5</td></tr>
+        <tr><td class="num">5.0</td><td class="num">45.50</td><td class="num">45.50</td><td class="num">227.5</td></tr>
+        <tr><td class="num">8.0</td><td class="num">28.44</td><td class="num">28.44</td><td class="num">227.5</td></tr>
+        <tr><td class="num">10.0</td><td class="num">22.75</td><td class="num">22.75</td><td class="num">227.5</td></tr>
+      </table></div>
+      <p>표 B-3 예시: 러더퍼드 1000개 → θ &gt; 90° 약 4~8개(측정 비율 약 0.004~0.008), 이론 0.0058, 가장 큰 산란각은 실행마다 다름(보통 100~170°). 톰슨 100개 → θ &gt; 90° 0개, 가장 큰 산란각 약 0.009°.</p></div>
+    <div class="box box--answer"><h4>B1~B3</h4>
+      <p><b>B1</b>: b가 작을수록 θ가 크다. b가 작으면 알파 입자가 핵에 더 가까이 지나가고, 쿨롱 힘은 거리의 제곱에 반비례하므로 훨씬 큰 반발력을 받아 크게 휜다. 측정값과 이론값은 0.1° 안에서 일치한다(모의실험이 쿨롱 법칙만으로 계산했기 때문에 러더퍼드 공식과 맞는다).</p>
+      <p><b>B2</b>: 정면 충돌에서 운동 에너지가 모두 전기 퍼텐셜 에너지 k(2e)(Ze)/d로 바뀌므로 E<sub>k</sub>·d = k·2Ze² = 1.44 × 158 = 227.5 MeV·fm로 일정하다. 에너지를 2배로 하면 최근접 거리는 1/2이 된다.</p>
+      <p><b>B3</b>: θ가 크려면 b가 작아야 하는데, 빔 단면에서 반지름 b 안쪽의 넓이는 πb²이라 작은 b일수록 넓이가 급격히 작아진다. 예: θ &gt; 90°는 b &lt; 22.75 fm인 원(빔 300 fm 원판의 0.58%). 톰슨 모형에서는 100개 중 어떤 것도 0.01°를 넘지 않으므로, 큰 각 산란이 관측되었다는 사실은 톰슨 모형을 반박하고 작은 핵의 존재를 뒷받침한다.</p></div>
+    <div class="box box--answer"><h4>확인 문제</h4>
+      <p><b>1</b>: 대부분 통과 → 원자의 대부분은 빈 공간(알파 입자를 휘게 할 것이 거의 없음). 드문 되튐 → 양전하와 질량이 아주 작은 영역(핵)에 집중되어 있어 가까이 지나가면 큰 반발력이 생김. 톰슨 모형은 양전하가 넓게 퍼져 있어 어디서나 전기력이 약하므로 큰 각 산란을 만들 수 없다.</p>
+      <p><b>2</b>: d = 1.44 × 2 × 79 / 7.7 = 227.5 / 7.7 ≈ 29.5 fm = 2.95×10⁻¹⁴ m (약 3×10⁻¹⁴ m).</p>
+      <p><b>3</b>: d = 1.44 × 2 × 29 / 5.0 = 83.5 / 5.0 ≈ 16.7 fm. 구리 핵의 전하(+29e)가 금(+79e)보다 작아 반발력과 퍼텐셜 에너지가 작으므로, 같은 에너지로 더 가까이 다가갈 수 있다(d ∝ Z).</p>
+      <p><b>4</b>: (가) P = 152/400 = 0.38. (나) 유효 지름 = P·W/N = 0.38 × 60 / 5 = 4.56 cm. (다) 표적 지름 = 4.56 − 1.6 ≈ 2.96 cm ≈ 3.0 cm.</p>
+      <p><b>5</b>: 작아진다. 10.0 MeV에서 d = 227.5/10 = 22.75 fm, tan(θ/2) = 22.75/(2×40) = 0.284 → θ/2 ≈ 15.9° → θ ≈ 31.8°. (5 MeV, b = 80 fm일 때와 같은 각도: d/b 비가 같기 때문)</p>
+      <p><b>6</b>: 최근접 거리 d = k·2Ze²/E<sub>k</sub>처럼 에너지가 클수록 탐침 입자가 더 가까이 다가가 더 작은 영역을 '건드릴' 수 있다. 또 입자의 파장 λ = h/p는 운동량이 클수록 짧아 더 작은 구조를 구별한다. 양성자 속 쿼크(10⁻¹⁸ m 수준)를 보려면 TeV 수준 에너지가 필요해, CERN은 둘레 26.7 km의 LHC에서 양성자를 빔당 6.8 TeV로 가속해 충돌시킨다.</p></div>
+    <div class="box box--answer"><h4>업그레이드 도전</h4>
+      <p><b>1</b>: 7.7 MeV에서 공식이 맞으면 R<sub>금</sub> &lt; 29.5 fm ≈ 3×10⁻¹⁴ m. 실제 R ≈ 1.2 × 197^(1/3) = 1.2 × 5.82 ≈ 7.0 fm로, 상한의 약 1/4이다. 러더퍼드의 결론(핵은 약 10⁻¹⁴ m 이하)은 옳았다.</p>
+      <p><b>2</b>: 정면 충돌로 7.0 fm까지 가려면 E<sub>k</sub> = 227.5 / 7.0 ≈ 32.5 MeV(알파 입자 반지름 약 1.7 fm까지 고려하면 227.5/8.7 ≈ 26 MeV). 천연 알파선(4~9 MeV)으로는 금 핵에 닿을 수 없다. 알루미늄(Z = 13), 10 MeV에서는 d = 1.44 × 26 / 10 ≈ 3.7 fm로 알루미늄 핵 반지름(약 3.6 fm) + 알파 반지름보다 작아 모의실험에 경고가 뜬다. 가벼운 핵에서 공식이 어긋난 것은 핵력의 첫 단서였다.</p>
+      <p><b>3</b>: 전자는 크기가 없는 점 입자(렙톤)이고 강한 핵력을 받지 않아 전자기력만으로 상호작용하므로, 결과를 해석하기 쉽고 핵·양성자 속 전하 분포를 깔끔하게 잴 수 있다. 또 가볍기 때문에 같은 에너지에서 쉽게 높은 운동량(짧은 파장)을 얻을 수 있다. 호프스태터는 스탠퍼드의 전자 가속기로 이 연구를 했다.</p></div>
+  </section>
+
+  <section class="section" id="assess">
+    <div class="section__head"><span class="section__tag">09</span><h2>평가 루브릭</h2></div>
+    <div class="table-wrap"><table class="rubric">
+      <tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>실험 수행과 자료 처리(실험 A)</td><td>난수로 100회 이상 시행하고 구간별 P·유효 지름·표적 지름을 정확히 계산하며, 구슬 지름 보정과 상대 오차를 바르게 구한다.</td><td>시행과 계산은 했으나 구슬 지름 보정이나 오차 계산 중 하나가 빠진다.</td><td>시행 수가 부족하거나 계산 과정이 틀린다.</td></tr>
+      <tr><td>통계적 해석(A2, A4)</td><td>시행 수와 오차의 관계를 모둠·반 자료로 비교하고 오차 원인과 개선책을 구체적으로 제시한다.</td><td>시행 수가 많을수록 좋다는 결론은 있으나 근거 자료가 부족하다.</td><td>오차에 대한 서술이 없다.</td></tr>
+      <tr><td>쿨롱 산란의 이해(B1~B3, 확인 1·5)</td><td>b–θ, E–d 관계를 쿨롱 힘과 에너지 보존으로 설명하고, 톰슨·러더퍼드 결과 차이로 원자 구조를 결론짓는다.</td><td>관계는 맞게 말하나 물리적 까닭 설명이 부족하다.</td><td>관계를 거꾸로 이해하거나 설명이 없다.</td></tr>
+      <tr><td>계산(확인 2~4)</td><td>최근접 거리와 명중률 계산을 단위까지 정확히 한다.</td><td>계산 과정은 맞으나 단위 환산이나 반올림에 실수가 있다.</td><td>공식을 잘못 쓰거나 계산하지 못한다.</td></tr>
+      <tr><td>CERN 연결(확인 6)</td><td>에너지와 분해능의 관계로 LHC가 필요한 까닭을 설명한다.</td><td>"더 작은 것을 보려고"처럼 근거 없이 설명한다.</td><td>연결 서술이 없다.</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="flex">
+    <div class="section__head"><span class="section__tag">10</span><h2>차시 조정과 수준별 지도</h2></div>
+    <div class="grid-3">
+      <div class="box"><h4>1차시 압축안 (50분)</h4><p>도입 5분 → 개념(두 모형, 명중률, 최근접 거리) 10분 → 구슬 실험 15분(모둠당 60회, 반 전체 합으로 분석) → 3D 미션 1·3·5 15분 → 정리 5분. 히스토그램(미션 4)과 확인 문제는 과제로 돌립니다.</p></div>
+      <div class="box"><h4>3차시 확장안 (150분)</h4><p>1차시: 구슬 실험 200회 + 반 전체 히스토그램(모둠 추정값 분포). 2차시: 3D 미션 1~5. 3차시: 표적 수 N과 크기를 바꾼 실험 설계(모둠별 가설 → 측정), Z를 바꾼 모의실험(구리·은·금에서 d ∝ Z 확인 그래프), 업그레이드(핵 반지름 상한, 호프스태터) 조사 발표.</p></div>
+      <div class="box"><h4>보충·심화</h4><p><b>보충</b>: MeV·fm 계산법만 쓰게 하고, 표 B-2의 E<sub>k</sub>×d가 일정하다는 규칙을 먼저 발견하게 한 뒤 식으로 정리합니다. <b>심화</b>: tan(θ/2) = d/2b와 b<sub>max</sub> 원판에서 θ &gt; θ₀인 비율 = (d/2b<sub>max</sub>)²·cot²(θ₀/2) 유도, 1/sin⁴(θ/2) 법칙이 단위 입체각당 개수임을 모의실험의 로그 그래프로 확인, 드브로이 파장 λ = h/p로 5 MeV 알파 입자(약 6 fm)와 LHC 양성자의 분해능 비교.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="refs">
+    <div class="section__head"><span class="section__tag">11</span><h2>참고 자료</h2></div>
+    <ul>
+      <li><a href="https://home.cern" target="_blank" rel="noopener">CERN 공식 누리집</a></li>
+      <li><a href="https://home.cern/science/physics/standard-model" target="_blank" rel="noopener">CERN: The Standard Model</a> — 양성자 속 쿼크와 기본 입자</li>
+      <li><a href="https://home.cern/science/accelerators/large-hadron-collider" target="_blank" rel="noopener">CERN: The Large Hadron Collider</a> — '더 높은 에너지의 산란 실험'으로서의 LHC</li>
+      <li><a href="https://www.nobelprize.org/prizes/chemistry/1908/rutherford/facts/" target="_blank" rel="noopener">노벨상: 어니스트 러더퍼드(1908년 화학상)</a></li>
+      <li><a href="https://www.nobelprize.org/prizes/physics/1961/hofstadter/facts/" target="_blank" rel="noopener">노벨상: 로버트 호프스태터(1961년 물리학상)</a> — 전자 산란으로 핵자 구조 측정</li>
+      <li><a href="https://www.nobelprize.org/prizes/physics/1990/summary/" target="_blank" rel="noopener">노벨상: 1990년 물리학상(프리드먼·켄들·테일러)</a> — SLAC 전자 산란과 쿼크의 증거</li>
+      <li><a href="https://phet.colorado.edu/en/simulations/rutherford-scattering" target="_blank" rel="noopener">PhET: 러더퍼드 산란 시뮬레이션</a> — 2D 보조 자료</li>
+      <li><a href="https://opendata.cern.ch" target="_blank" rel="noopener">CERN Open Data Portal</a> — 주제 10에서 쓰는 실제 충돌 데이터</li>
+    </ul>
+    <p class="small muted">역사 메모: 가이거·마스든의 1909년 논문은 금속박(백금 등)에서 약 8000개 중 1개가 90°보다 크게 반사됨을 보고했고, 러더퍼드는 1911년 핵 모형과 산란 공식을 발표했습니다. 1913년 가이거·마스든은 금박 등으로 공식의 각도·두께·전하·속력 의존성을 정밀하게 확인했습니다. 교과서에서는 흔히 '금박 실험'으로 통칭합니다.</p>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

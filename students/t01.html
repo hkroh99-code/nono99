@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 01 물질의 구성 · 학생용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .grid-map td { text-align: center; }
+  .grid-map input { text-align: center; }
+  .sm-table td, .sm-table th { text-align: center; vertical-align: middle; }
+  .sm-table .sym { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 600; display: block; }
+  .sm-table .q { background: var(--lv-adv-soft); }
+  .sm-table .l { background: var(--lv-basic-soft); }
+  .sm-table .b { background: var(--teacher-soft); }
+  .sm-table .h { background: var(--lv-up-soft); }
+  .sm-table small { color: var(--ink-3); display: block; line-height: 1.35; }
+</style>
+</head>
+<body data-page="student" data-topic="01" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--student">학생용</span>
+      <span class="badge badge--basic">기본과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 01</p>
+    <h1>CERN과 물질의 기본 구성</h1>
+    <p class="lead">세상을 이루는 가장 작은 조각은 무엇이고, 눈으로 볼 수 없는 것을 우리는 어떻게 알아낼까?</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--sim" href="../sims/t01.html">3D 모의실험 열기</a>
+      <button class="btn" type="button" data-copy-answers>내 답안 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>답안 지우기</button>
+    </div>
+    <p class="save-note">입력한 답은 이 기기의 브라우저에만 자동 저장됩니다. 제출할 때는 [내 답안 복사]를 눌러 붙여 넣으세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#goals">학습 목표</a><a href="#open">생각 열기</a><a href="#concept">핵심 개념</a>
+      <a href="#lab">실험 A</a><a href="#sim">실험 B: 3D</a><a href="#cern">CERN에서는</a>
+      <a href="#check">확인 문제</a><a href="#up">업그레이드</a><a href="#self">자기 평가</a>
+    </nav>
+  </header>
+
+  <section class="section" id="goals">
+    <div class="box box--goal">
+      <h2 class="box__title" style="font-size:var(--step-1)">학습 목표</h2>
+      <ol>
+        <li>물질의 계층(분자 → 원자 → 원자핵 → 양성자·중성자 → 쿼크)을 순서대로 말하고, 각 단계의 크기를 10의 거듭제곱(예: 10⁻¹⁵ m)으로 나타낼 수 있다.</li>
+        <li>표준모형의 기본 입자 17개를 페르미온(쿼크 6, 렙톤 6)과 보손(게이지 보손 4, 힉스 1)으로 분류하고, 쿼크 조합으로 양성자·중성자의 전하를 계산할 수 있다.</li>
+        <li>직접 볼 수 없는 대상의 내부 구조를 간접 증거로 추론하고, 증거에 따라 모형을 고치는 과학의 방법을 설명할 수 있다.</li>
+        <li>CERN이 어떤 곳인지(1954년 설립, 국제 협력, 월드 와이드 웹의 탄생지) 소개할 수 있다.</li>
+      </ol>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>활동</th></tr>
+      <tr><td>1차시 (50분)</td><td>생각 열기 → CERN 소개 → <b>실험 A: 블랙박스 탐구</b>(막대 찌르기·구슬 굴리기·흔들기로 숨은 모양 추론) → 모둠 모형 발표와 수정 → 간접 관측 정리</td></tr>
+      <tr><td>2차시 (50분)</td><td>핵심 개념(크기 사다리, 표준모형) → <b>실험 B: 3D 모의실험</b>(물질 속으로 줌인, 표준모형 갤러리, 쿼크 조합 퍼즐) → 실제 CERN에서는 → 확인 문제 → 자기 평가</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="open">
+    <div class="section__head"><span class="section__tag">01</span><h2>생각 열기</h2></div>
+    <div class="box box--think prose">
+      <p>친구가 포장된 선물 상자를 건네며 말합니다. "포장지를 뜯거나 상자를 열지 말고, 안에 무엇이 들었는지 맞혀 봐." 여러분은 상자를 흔들어 소리를 듣고, 무게를 가늠하고, 기울여서 안의 물건이 어느 쪽으로 쏠리는지 느껴 볼 것입니다.</p>
+      <p>과학자들이 원자 속을 연구할 때도 처지가 똑같습니다. 원자핵은 지름이 약 10⁻¹⁴ m보다 작아서 어떤 현미경으로도 직접 볼 수 없습니다. 그런데도 우리는 원자핵 안에 양성자와 중성자가 있고, 양성자 안에는 쿼크 3개가 있다는 것을 압니다. 어떻게 알아냈을까요?</p>
+    </div>
+    <label class="answer-field"><span>Q1. 상자를 열지 않고 안에 든 물건의 모양을 알아내는 방법을 세 가지 이상 써 보세요.</span><textarea id="open-q1"></textarea></label>
+    <label class="answer-field"><span>Q2. 지금까지 들어 본 '가장 작은 알갱이'는 무엇인가요? 그것은 더 작은 조각으로 쪼개질 수 있을까요? 그렇게 생각하는 까닭도 쓰세요.</span><textarea id="open-q2"></textarea></label>
+  </section>
+
+  <section class="section" id="concept">
+    <div class="section__head"><span class="section__tag">02</span><h2>핵심 개념</h2></div>
+    <div class="prose">
+      <h3>1. 물질의 계층과 크기 사다리</h3>
+      <p>물방울 하나(지름 약 1 mm)를 계속 확대하면 물 분자, 원자, 원자핵, 양성자·중성자, 쿼크가 차례로 나타납니다. 크기 차이가 너무 커서 보통의 자로는 비교할 수 없으므로 <b>10의 거듭제곱</b>을 씁니다. 10⁻³ m는 1 mm, 10⁻¹⁰ m는 0.1 nm, 10⁻¹⁵ m는 1 fm(펨토미터)입니다. 지수가 1 작아질 때마다 크기는 10분의 1이 됩니다.</p>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>단계</th><th>크기(지름)</th><th>10의 거듭제곱으로 어림</th><th>무엇으로 이루어졌나</th></tr>
+      <tr><td>물방울</td><td class="num">약 1×10⁻³ m</td><td class="num">10⁻³ m</td><td>물 분자 약 2×10¹⁹개</td></tr>
+      <tr><td>물 분자 H₂O</td><td class="num">약 2.8×10⁻¹⁰ m</td><td class="num">10⁻¹⁰ m</td><td>산소 원자 1 + 수소 원자 2</td></tr>
+      <tr><td>원자(산소)</td><td class="num">약 1×10⁻¹⁰ m</td><td class="num">10⁻¹⁰ m</td><td>원자핵 + 전자 8개</td></tr>
+      <tr><td>원자핵(산소-16)</td><td class="num">약 6×10⁻¹⁵ m</td><td class="num">10⁻¹⁵~10⁻¹⁴ m</td><td>양성자 8 + 중성자 8</td></tr>
+      <tr><td>양성자·중성자</td><td class="num">약 1.7×10⁻¹⁵ m</td><td class="num">10⁻¹⁵ m</td><td>쿼크 3개 + 글루온</td></tr>
+      <tr><td>쿼크·전자</td><td class="num">측정되지 않음</td><td class="num">10⁻¹⁸ m보다 작음</td><td>더 작은 구조가 발견되지 않음(기본 입자)</td></tr>
+    </table></div>
+    <figure class="diagram">
+      <svg viewBox="0 0 680 210" width="680" role="img" aria-labelledby="fig1-t">
+        <title id="fig1-t">10의 거듭제곱으로 나타낸 크기 사다리</title>
+        <line x1="30" y1="120" x2="650" y2="120" stroke="currentColor" stroke-width="2"/>
+        <g font-size="11" text-anchor="middle">
+          <g stroke="var(--ink-3)">
+            <line x1="40" y1="114" x2="40" y2="126"/><line x1="140" y1="114" x2="140" y2="126"/><line x1="240" y1="114" x2="240" y2="126"/>
+            <line x1="340" y1="114" x2="340" y2="126"/><line x1="440" y1="114" x2="440" y2="126"/><line x1="540" y1="114" x2="540" y2="126"/><line x1="640" y1="114" x2="640" y2="126"/>
+          </g>
+          <text x="40" y="142">10⁰ m</text><text x="140" y="142">10⁻³</text><text x="240" y="142">10⁻⁶</text><text x="340" y="142">10⁻⁹</text>
+          <text x="440" y="142">10⁻¹²</text><text x="540" y="142">10⁻¹⁵</text><text x="640" y="142">10⁻¹⁸</text>
+        </g>
+        <g font-size="12" text-anchor="middle">
+          <circle cx="40" cy="120" r="6" fill="var(--ink-3)"/><text x="40" y="96">사람 키</text>
+          <circle cx="140" cy="120" r="6" fill="var(--accent)"/><text x="140" y="96">물방울</text>
+          <circle cx="240" cy="120" r="6" fill="var(--ink-3)"/><text x="240" y="96">세균</text>
+          <circle cx="373" cy="120" r="6" fill="var(--accent)"/><text x="365" y="72">물 분자</text>
+          <line x1="373" y1="78" x2="373" y2="112" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
+          <circle cx="373" cy="120" r="3" fill="var(--track)"/><text x="400" y="96">원자</text>
+          <circle cx="522" cy="120" r="6" fill="var(--track)"/><text x="505" y="72">원자핵</text>
+          <line x1="522" y1="78" x2="522" y2="112" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
+          <circle cx="532" cy="120" r="4" fill="var(--danger)"/><text x="555" y="96">양성자</text>
+          <path d="M 600 120 L 650 120" stroke="var(--lv-basic)" stroke-width="4" stroke-dasharray="6 4"/><text x="630" y="96">쿼크·전자 →</text>
+        </g>
+        <g font-size="12">
+          <path d="M 373 165 L 522 165" stroke="var(--track)" stroke-width="2" marker-end="url(#arr1)" fill="none"/>
+          <text x="448" y="185" text-anchor="middle" fill="var(--track)">원자 → 원자핵: 약 10⁴~10⁵배 작아짐</text>
+          <path d="M 140 165 L 365 165" stroke="var(--accent)" stroke-width="2" marker-end="url(#arr2)" fill="none"/>
+          <text x="252" y="185" text-anchor="middle">물방울 → 분자: 약 10⁷배</text>
+        </g>
+        <defs>
+          <marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--track)"/></marker>
+          <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+        </defs>
+      </svg>
+      <figcaption>그림 1. 크기 사다리. 눈금 한 칸마다 1000배(10³배)씩 작아집니다. 원자와 원자핵 사이에는 10⁴~10⁵배라는 큰 '빈 공간'이 있습니다.</figcaption>
+    </figure>
+    <div class="formula">원자 크기 ÷ 원자핵 크기 ≈ <b>10⁻¹⁰ m ÷ 10⁻¹⁵ m = 10⁵</b></div>
+    <div class="prose">
+      <p>원자핵을 지름 1 cm인 구슬로 키우면, 원자는 지름 10⁵ cm = <b>1 km</b>인 공이 됩니다. 그 넓은 공간에 전자 몇 개가 '구름'처럼 퍼져 있을 뿐입니다. 그런데도 원자 질량의 99.9% 이상은 이 작은 원자핵에 모여 있습니다. 원자의 대부분은 텅 빈 공간입니다.</p>
+
+      <h3>2. 원자 속으로: 원자핵, 핵자, 쿼크</h3>
+      <p>원자핵은 <b>양성자</b>(전하 +e)와 <b>중성자</b>(전하 0)로 이루어집니다. 둘을 함께 <b>핵자</b>라고 부릅니다. 핵자는 다시 <b>쿼크</b> 3개로 이루어져 있습니다. 쿼크의 전하는 기본 전하 e의 분수입니다: 위 쿼크 u는 +2/3, 아래 쿼크 d는 −1/3.</p>
+    </div>
+    <div class="formula">양성자 uud: <b>(+2/3) + (+2/3) + (−1/3) = +1</b> &nbsp;&nbsp; 중성자 udd: <b>(+2/3) + (−1/3) + (−1/3) = 0</b></div>
+    <figure class="diagram">
+      <svg viewBox="0 0 640 230" width="640" role="img" aria-labelledby="fig2-t">
+        <title id="fig2-t">원자, 원자핵, 양성자, 쿼크의 포함 관계</title>
+        <g fill="none" stroke-width="2">
+          <circle cx="105" cy="110" r="85" stroke="var(--accent)" stroke-dasharray="4 4"/>
+          <circle cx="105" cy="110" r="4" fill="var(--track)" stroke="none"/>
+          <circle cx="60" cy="70" r="4" fill="var(--accent)" stroke="none"/><circle cx="160" cy="135" r="4" fill="var(--accent)" stroke="none"/><circle cx="85" cy="175" r="4" fill="var(--accent)" stroke="none"/>
+        </g>
+        <path d="M 112 108 L 245 70 M 112 112 L 245 150" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
+        <g>
+          <circle cx="290" cy="110" r="44" fill="none" stroke="var(--track)" stroke-width="2"/>
+          <circle cx="275" cy="98" r="15" fill="var(--danger)"/><circle cx="303" cy="96" r="15" fill="var(--ink-3)"/>
+          <circle cx="288" cy="124" r="15" fill="var(--danger)"/><circle cx="312" cy="122" r="15" fill="var(--ink-3)"/><circle cx="266" cy="124" r="15" fill="var(--ink-3)"/>
+        </g>
+        <path d="M 290 124 L 425 70 M 290 124 L 425 150" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
+        <g>
+          <circle cx="480" cy="110" r="55" fill="none" stroke="var(--danger)" stroke-width="2"/>
+          <path d="M 462 92 q 8 -6 16 0 t 16 0 M 495 95 q 2 10 -6 16 t -6 18 M 470 128 q -6 -10 -2 -20 t -6 -18" stroke="var(--lv-basic)" stroke-width="2" fill="none"/>
+          <circle cx="460" cy="92" r="11" fill="var(--danger)"/><circle cx="500" cy="92" r="11" fill="var(--danger)"/><circle cx="478" cy="130" r="11" fill="var(--accent)"/>
+        </g>
+        <g font-size="13" text-anchor="middle">
+          <text x="105" y="218">원자 (약 10⁻¹⁰ m)</text>
+          <text x="290" y="178">원자핵 (10⁻¹⁵~10⁻¹⁴ m)</text>
+          <text x="480" y="192">양성자 (약 1.7×10⁻¹⁵ m)</text>
+          <text x="460" y="74" font-size="12">u</text><text x="500" y="74" font-size="12">u</text><text x="478" y="155" font-size="12">d</text>
+          <text x="590" y="100" font-size="12" text-anchor="start" class="muted-fill">물결선:</text><text x="590" y="116" font-size="12" text-anchor="start" class="muted-fill">글루온</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 원자 → 원자핵 → 양성자 → 쿼크. 실제 크기 비율로 그리면 원자핵은 원자 그림에서 보이지 않을 만큼 작습니다(그림은 축척이 다름). 빨강은 양성자와 위 쿼크, 회색은 중성자, 파랑은 아래 쿼크입니다.</figcaption>
+    </figure>
+    <div class="prose">
+      <h3>3. 표준모형: 기본 입자 17개</h3>
+      <p>지금까지 알려진 가장 기본적인 입자는 표준모형으로 정리됩니다. 물질을 이루는 <b>페르미온</b>(스핀 1/2)은 쿼크 6개와 렙톤 6개이고, 힘을 전달하는 <b>게이지 보손</b>(스핀 1)은 글루온, 광자, Z, W입니다. 여기에 기본 입자에 질량을 주는 원리와 관련된 <b>힉스 보손</b>(스핀 0)이 더해집니다. 같은 줄의 입자는 세대(1·2·3세대)가 올라갈수록 무거워집니다. 일상 물질은 거의 모두 1세대(u, d, 전자)로 이루어져 있습니다.</p>
+    </div>
+    <div class="table-wrap"><table class="sm-table">
+      <tr><th></th><th>1세대</th><th>2세대</th><th>3세대</th><th>게이지 보손(힘 전달)</th><th>스칼라 보손</th></tr>
+      <tr><th rowspan="2">쿼크</th>
+        <td class="q"><span class="sym">u</span>위 쿼크<small>+2/3 · 2.2 MeV/c²</small></td>
+        <td class="q"><span class="sym">c</span>맵시 쿼크<small>+2/3 · 1.27 GeV/c²</small></td>
+        <td class="q"><span class="sym">t</span>꼭대기 쿼크<small>+2/3 · 172.6 GeV/c²</small></td>
+        <td class="b"><span class="sym">g</span>글루온<small>강한 상호작용</small></td>
+        <td class="h" rowspan="4"><span class="sym">H</span>힉스 보손<small>0 · 125.1 GeV/c²</small></td></tr>
+      <tr>
+        <td class="q"><span class="sym">d</span>아래 쿼크<small>−1/3 · 4.7 MeV/c²</small></td>
+        <td class="q"><span class="sym">s</span>기묘 쿼크<small>−1/3 · 93 MeV/c²</small></td>
+        <td class="q"><span class="sym">b</span>바닥 쿼크<small>−1/3 · 4.18 GeV/c²</small></td>
+        <td class="b"><span class="sym">γ</span>광자<small>전자기 상호작용</small></td></tr>
+      <tr><th rowspan="2">렙톤</th>
+        <td class="l"><span class="sym">e</span>전자<small>−1 · 0.511 MeV/c²</small></td>
+        <td class="l"><span class="sym">μ</span>뮤온<small>−1 · 105.66 MeV/c²</small></td>
+        <td class="l"><span class="sym">τ</span>타우<small>−1 · 1.777 GeV/c²</small></td>
+        <td class="b"><span class="sym">Z</span>Z 보손<small>약한 상호작용 · 91.19 GeV/c²</small></td></tr>
+      <tr>
+        <td class="l"><span class="sym">νₑ</span>전자 중성미자<small>0 · 아주 작음</small></td>
+        <td class="l"><span class="sym">νμ</span>뮤온 중성미자<small>0 · 아주 작음</small></td>
+        <td class="l"><span class="sym">ντ</span>타우 중성미자<small>0 · 아주 작음</small></td>
+        <td class="b"><span class="sym">W</span>W 보손<small>약한 상호작용 · 80.37 GeV/c²</small></td></tr>
+    </table></div>
+    <div class="prose">
+      <p class="small muted">칸 안의 숫자: 전하(기본 전하 e 단위) · 질량. 질량의 단위 MeV/c²는 에너지 단위로 나타낸 질량입니다(양성자 = 938.27 MeV/c²). 모든 입자에는 반입자가 있고, 중력을 전달하는 입자는 표준모형에 들어 있지 않습니다.</p>
+      <h3>4. 보이지 않는 것을 아는 방법: 간접 관측</h3>
+      <p>과학자는 볼 수 없는 대상에 무언가를 쏘거나 부딪히게 하고, 튕겨 나오는 것을 측정해서 속을 추론합니다. 러더퍼드는 알파 입자를 금박에 쏘아 원자핵을 발견했고(주제 2), CERN의 대형 강입자 충돌기(LHC)는 양성자를 빛의 속력에 가깝게 가속해 충돌시킨 뒤, 쏟아져 나오는 입자들을 검출기로 기록합니다. 증거가 쌓이면 모형을 세우고, 새 증거가 맞지 않으면 모형을 고칩니다. 오늘의 블랙박스 탐구가 바로 이 과정입니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">03</span><h2>실험 A: 블랙박스(미스터리 상자) 탐구</h2></div>
+    <p class="prose">뚜껑이 봉해진 상자 바닥에 무언가가 붙어 있습니다. 상자를 열지 않고 막대 찌르기, 구슬 굴리기, 흔들기 소리만으로 숨은 물체의 모양과 위치를 추론해 모형을 그려 봅시다.</p>
+    <div class="grid-2">
+      <div class="box"><h3>준비물(4인 1모둠)</h3><ul>
+        <li>미스터리 상자 1개(윗면에 4×4 = 16개 구멍, 번호 표시, 안에 구슬 1개)</li>
+        <li>탐침 막대 2개(끝을 뭉툭하게 자른 대나무 꼬치, 1 cm 눈금 표시)</li>
+        <li>30 cm 자, 네임펜, 모눈종이(또는 이 활동지)</li>
+        <li>스마트폰(선택: 소리 녹음, 상자 기울기 측정)</li>
+      </ul></div>
+      <div class="box box--safety"><h4>안전 수칙</h4><ul>
+        <li>막대는 구멍에 수직으로 천천히 넣고, 세게 찌르지 않습니다. 막대를 사람 쪽으로 향하게 하지 않습니다.</li>
+        <li>막대 끝이 뾰족하면 선생님께 바꿔 달라고 하세요.</li>
+        <li>상자를 던지거나 세게 내리치지 않습니다(안의 물체가 떨어지면 실험이 망가집니다).</li>
+        <li>구멍을 넓히거나 상자를 뜯어보지 않습니다. 진짜 과학자도 원자를 열어 볼 수 없습니다.</li>
+      </ul></div>
+    </div>
+    <h3>실험 방법</h3>
+    <ol class="steps">
+      <li><b>첫인상 기록</b>: 상자를 들어 무게를 느끼고 가볍게 흔들어 소리를 들은 뒤, 숨은 물체에 대한 첫 가설을 한 문장으로 씁니다(아래 A0).</li>
+      <li><b>상자 높이 재기</b>: 자로 상자의 안쪽 높이 H를 잽니다(겉높이에서 판 두께 약 0.3 cm를 뺍니다).</li>
+      <li><b>막대 탐침</b>: 구멍 16개에 차례로 막대를 수직으로 넣고, 막대가 멈출 때까지 들어간 깊이(cm)를 눈금으로 읽어 기록표에 씁니다. 깊이가 H와 같으면 바닥, H보다 작으면 물체에 닿은 것입니다.</li>
+      <li><b>구슬 굴리기</b>: 상자를 앞→뒤, 뒤→앞, 왼쪽→오른쪽, 오른쪽→왼쪽으로 천천히 기울이며 구슬이 굴러가다 멈추거나 '딱' 부딪히는 소리를 듣고, 걸리는 위치를 기록합니다.</li>
+      <li><b>높이 지도 만들기</b>: 물체 높이 h = H − 깊이를 계산해 칸마다 색칠(높을수록 진하게)하고, 숨은 물체의 모양을 위에서 본 그림과 옆에서 본 그림으로 그립니다.</li>
+      <li><b>모형 발표와 수정</b>: 다른 모둠과 증거를 비교하고, 모형이 증거와 어긋나는 곳을 찾아 고칩니다. 마지막에 선생님이 정답을 공개할 수도, 끝까지 공개하지 않을 수도 있습니다.</li>
+    </ol>
+    <label class="answer-field"><span>A0. 첫 가설(흔들기·무게만으로 추측한 숨은 물체)</span><textarea id="lab-a0"></textarea></label>
+    <div class="grid-2">
+      <label class="answer-field"><span>상자 번호</span><input type="text" id="lab-box" aria-label="상자 번호"></label>
+      <label class="answer-field"><span>상자 안쪽 높이 H (cm)</span><input type="number" step="0.1" id="lab-h" aria-label="상자 안쪽 높이 H (cm)"></label>
+    </div>
+    <h3>기록표 1. 막대가 들어간 깊이 (cm) — 상자 윗면을 위에서 본 배치</h3>
+    <div class="table-wrap"><table class="data-table grid-map" id="tbl-lab">
+      <tr><th>줄 \ 칸</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+      <tr><th>가(앞)</th><td><input type="number" step="0.1" id="lab-d11" aria-label="가줄 1칸 깊이(cm)"></td><td><input type="number" step="0.1" id="lab-d12" aria-label="가줄 2칸 깊이(cm)"></td><td><input type="number" step="0.1" id="lab-d13" aria-label="가줄 3칸 깊이(cm)"></td><td><input type="number" step="0.1" id="lab-d14" aria-label="가줄 4칸 깊이(cm)"></td></tr>
+      <tr><th>나</th><td><input type="number" step="0.1" id="lab-d21" aria-label="나줄 1칸 깊이(cm)"></td><td><input type="number" step="0.1" id="lab-d22" aria-label="나줄 2칸 깊이(cm)"></td><td><input type="number" step="0.1" id="lab-d23" aria-label="나줄 3칸 깊이(cm)"></td><td><input type="number" step="0.1" id="lab-d24" aria-label="나줄 4칸 깊이(cm)"></td></tr>
+      <tr><th>다</th><td><input type="number" step="0.1" id="lab-d31" aria-label="다줄 1칸 깊이(cm)"></td><td><input type="number" step="0.1" id="lab-d32" aria-label="다줄 2칸 깊이(cm)"></td><td><input type="number" step="0.1" id="lab-d33" aria-label="다줄 3칸 깊이(cm)"></td><td><input type="number" step="0.1" id="lab-d34" aria-label="다줄 4칸 깊이(cm)"></td></tr>
+      <tr><th>라(뒤)</th><td><input type="number" step="0.1" id="lab-d41" aria-label="라줄 1칸 깊이(cm)"></td><td><input type="number" step="0.1" id="lab-d42" aria-label="라줄 2칸 깊이(cm)"></td><td><input type="number" step="0.1" id="lab-d43" aria-label="라줄 3칸 깊이(cm)"></td><td><input type="number" step="0.1" id="lab-d44" aria-label="라줄 4칸 깊이(cm)"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-lab">기록표 복사</button>
+    <h3>기록표 2. 구슬 굴리기와 소리</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-lab2">
+      <tr><th>기울인 방향</th><th>구슬이 멈추거나 부딪힌 곳</th><th>소리·느낌(딱, 굴러감, 걸림 등)</th></tr>
+      <tr><td>앞 → 뒤</td><td><input type="text" id="lab-m1a" aria-label="앞에서 뒤로: 멈춘 곳"></td><td><input type="text" id="lab-m1b" aria-label="앞에서 뒤로: 소리와 느낌"></td></tr>
+      <tr><td>뒤 → 앞</td><td><input type="text" id="lab-m2a" aria-label="뒤에서 앞으로: 멈춘 곳"></td><td><input type="text" id="lab-m2b" aria-label="뒤에서 앞으로: 소리와 느낌"></td></tr>
+      <tr><td>왼쪽 → 오른쪽</td><td><input type="text" id="lab-m3a" aria-label="왼쪽에서 오른쪽으로: 멈춘 곳"></td><td><input type="text" id="lab-m3b" aria-label="왼쪽에서 오른쪽으로: 소리와 느낌"></td></tr>
+      <tr><td>오른쪽 → 왼쪽</td><td><input type="text" id="lab-m4a" aria-label="오른쪽에서 왼쪽으로: 멈춘 곳"></td><td><input type="text" id="lab-m4b" aria-label="오른쪽에서 왼쪽으로: 소리와 느낌"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-lab2">기록표 복사</button>
+    <h3>결과 분석</h3>
+    <label class="answer-field"><span>A1. 높이 지도와 구슬 관찰을 종합해, 숨은 물체의 모양·위치·높이를 말로 설명하세요(예: "가~나줄 1~2칸에 높이 약 6 cm인 직육면체").</span><textarea id="lab-a1"></textarea></label>
+    <label class="answer-field"><span>A2. 우리 모형에서 가장 확실한 부분과 가장 불확실한 부분은 어디인가요? 각각 어떤 증거 때문인가요?</span><textarea id="lab-a2"></textarea></label>
+    <label class="answer-field"><span>A3. 구멍이 16개가 아니라 100개라면 모형은 어떻게 달라질까요? 더 작은 구조를 알아내려면 탐침이 어떠해야 할지 생각해 보세요.</span><textarea id="lab-a3"></textarea></label>
+    <label class="answer-field"><span>A4. 상자를 열지 않고 우리 모형이 맞는지 확인할 수 있는 새로운 실험을 하나 제안하세요.</span><textarea id="lab-a4"></textarea></label>
+    <label class="answer-field"><span>A5. 블랙박스 탐구와 과학자들이 원자 속을 알아낸 방법은 어떤 점이 비슷하고 어떤 점이 다른가요?</span><textarea id="lab-a5"></textarea></label>
+    <details>
+      <summary>보충 활동: 10의 거듭제곱 종이띠 만들기</summary>
+      <ol class="steps">
+        <li>A4 종이를 세로로 길게 잘라 이어 붙여 약 1 m 띠를 만들고, 5 cm 간격으로 눈금 19개를 그어 10⁰ m부터 10⁻¹⁸ m까지 적습니다(한 칸 = 10배).</li>
+        <li>사람 키(10⁰), 개미(10⁻³), 머리카락 굵기(10⁻⁴), 세균(10⁻⁶), 바이러스(10⁻⁷), 원자(10⁻¹⁰), 원자핵(10⁻¹⁴~10⁻¹⁵), 양성자(10⁻¹⁵) 그림 카드를 알맞은 칸에 붙입니다.</li>
+        <li>원자와 원자핵 사이에 빈칸이 몇 개인지 세어 봅니다.</li>
+      </ol>
+      <label class="answer-field"><span>S1. 종이띠에서 원자와 원자핵 사이 빈칸은 몇 칸이었나요? 이것이 뜻하는 것은?</span><textarea id="lab-s1"></textarea></label>
+    </details>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">04</span><h2>실험 B: 3D 모의실험 — 물질 속으로 줌인 · 표준모형 갤러리</h2></div>
+    <p class="prose">물방울에서 양성자까지 약 10¹²배를 확대해 들어가며 각 단계의 크기를 기록합니다. 이어서 표준모형 17개 입자를 3D 갤러리에서 살펴보고, 쿼크를 조합해 양성자와 중성자를 직접 만들어 전하를 확인합니다. 모의실험의 패널에 있는 [기록] 버튼을 누르면 모의실험 기록표에도 저장됩니다.</p>
+    <a class="btn btn--sim no-print" href="../sims/t01.html">3D 모의실험 열기</a>
+    <h3>미션</h3>
+    <ol class="steps">
+      <li><b>물질 속으로</b>: [물질 속으로 줌인] 모드에서 단계 버튼(또는 마우스 휠)으로 물방울 → 물 분자 → 산소 원자 → 원자핵 → 양성자를 모두 방문하고, 각 단계의 크기를 표 B-1에 적으세요. 원자와 원자핵 사이에서 화면이 텅 비는 구간도 관찰하세요.</li>
+      <li><b>크기 비율</b>: 표 B-1의 값으로 원자 크기 ÷ 원자핵 크기를 계산해 모의실험의 [크기 비율 계산] 칸에 입력하세요.</li>
+      <li><b>표준모형 갤러리</b>: [표준모형 갤러리] 모드에서 입자를 눌러 정보를 보고, 쿼크·렙톤·게이지 보손·힉스를 하나 이상씩 포함해 6개 이상 살펴본 뒤 4개를 표 B-2에 적으세요.</li>
+      <li><b>양성자 만들기</b>: [쿼크 조합 퍼즐] 모드에서 쿼크를 넣어 전하가 +1인 양성자를 만드세요.</li>
+      <li><b>중성자 만들기</b>: 같은 방법으로 전하가 0인 중성자를 만들고, 표 B-3을 완성하세요.</li>
+    </ol>
+    <h3>표 B-1. 크기 사다리</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim">
+      <tr><th>단계</th><th>크기 (m)</th><th>10의 지수</th><th>바로 앞 단계 ÷ 이 단계 (배)</th></tr>
+      <tr><td>1. 물방울</td><td><input type="text" id="sim-s1" aria-label="물방울 크기(m)"></td><td><input type="number" id="sim-e1" aria-label="물방울 10의 지수"></td><td>–</td></tr>
+      <tr><td>2. 물 분자</td><td><input type="text" id="sim-s2" aria-label="물 분자 크기(m)"></td><td><input type="number" id="sim-e2" aria-label="물 분자 10의 지수"></td><td><input type="text" id="sim-r2" aria-label="물방울 ÷ 물 분자"></td></tr>
+      <tr><td>3. 산소 원자</td><td><input type="text" id="sim-s3" aria-label="산소 원자 크기(m)"></td><td><input type="number" id="sim-e3" aria-label="산소 원자 10의 지수"></td><td><input type="text" id="sim-r3" aria-label="물 분자 ÷ 산소 원자"></td></tr>
+      <tr><td>4. 원자핵</td><td><input type="text" id="sim-s4" aria-label="원자핵 크기(m)"></td><td><input type="number" id="sim-e4" aria-label="원자핵 10의 지수"></td><td><input type="text" id="sim-r4" aria-label="산소 원자 ÷ 원자핵"></td></tr>
+      <tr><td>5. 양성자</td><td><input type="text" id="sim-s5" aria-label="양성자 크기(m)"></td><td><input type="number" id="sim-e5" aria-label="양성자 10의 지수"></td><td><input type="text" id="sim-r5" aria-label="원자핵 ÷ 양성자"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-sim">기록표 복사</button>
+    <h3>표 B-2. 표준모형 입자 카드</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim2">
+      <tr><th>입자 이름(기호)</th><th>분류</th><th>질량</th><th>전하 (e)</th><th>스핀</th><th>발견 연도</th></tr>
+      <tr><td><input type="text" id="sim-p1n" aria-label="입자 1 이름"></td><td><input type="text" id="sim-p1c" aria-label="입자 1 분류"></td><td><input type="text" id="sim-p1m" aria-label="입자 1 질량"></td><td><input type="text" id="sim-p1q" aria-label="입자 1 전하"></td><td><input type="text" id="sim-p1s" aria-label="입자 1 스핀"></td><td><input type="text" id="sim-p1y" aria-label="입자 1 발견 연도"></td></tr>
+      <tr><td><input type="text" id="sim-p2n" aria-label="입자 2 이름"></td><td><input type="text" id="sim-p2c" aria-label="입자 2 분류"></td><td><input type="text" id="sim-p2m" aria-label="입자 2 질량"></td><td><input type="text" id="sim-p2q" aria-label="입자 2 전하"></td><td><input type="text" id="sim-p2s" aria-label="입자 2 스핀"></td><td><input type="text" id="sim-p2y" aria-label="입자 2 발견 연도"></td></tr>
+      <tr><td><input type="text" id="sim-p3n" aria-label="입자 3 이름"></td><td><input type="text" id="sim-p3c" aria-label="입자 3 분류"></td><td><input type="text" id="sim-p3m" aria-label="입자 3 질량"></td><td><input type="text" id="sim-p3q" aria-label="입자 3 전하"></td><td><input type="text" id="sim-p3s" aria-label="입자 3 스핀"></td><td><input type="text" id="sim-p3y" aria-label="입자 3 발견 연도"></td></tr>
+      <tr><td><input type="text" id="sim-p4n" aria-label="입자 4 이름"></td><td><input type="text" id="sim-p4c" aria-label="입자 4 분류"></td><td><input type="text" id="sim-p4m" aria-label="입자 4 질량"></td><td><input type="text" id="sim-p4q" aria-label="입자 4 전하"></td><td><input type="text" id="sim-p4s" aria-label="입자 4 스핀"></td><td><input type="text" id="sim-p4y" aria-label="입자 4 발견 연도"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-sim2">기록표 복사</button>
+    <h3>표 B-3. 쿼크 조합과 전하</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim3">
+      <tr><th>조합</th><th>전하 계산식</th><th>전하 합 (e)</th><th>입자 이름</th></tr>
+      <tr><td>u u d</td><td><input type="text" id="sim-c1x" aria-label="uud 전하 계산식"></td><td><input type="text" id="sim-c1q" aria-label="uud 전하 합"></td><td><input type="text" id="sim-c1n" aria-label="uud 입자 이름"></td></tr>
+      <tr><td>u d d</td><td><input type="text" id="sim-c2x" aria-label="udd 전하 계산식"></td><td><input type="text" id="sim-c2q" aria-label="udd 전하 합"></td><td><input type="text" id="sim-c2n" aria-label="udd 입자 이름"></td></tr>
+      <tr><td>u u u</td><td><input type="text" id="sim-c3x" aria-label="uuu 전하 계산식"></td><td><input type="text" id="sim-c3q" aria-label="uuu 전하 합"></td><td><input type="text" id="sim-c3n" aria-label="uuu 입자 이름"></td></tr>
+      <tr><td><input type="text" id="sim-c4k" aria-label="내가 만든 조합"></td><td><input type="text" id="sim-c4x" aria-label="내가 만든 조합 전하 계산식"></td><td><input type="text" id="sim-c4q" aria-label="내가 만든 조합 전하 합"></td><td><input type="text" id="sim-c4n" aria-label="내가 만든 조합 입자 이름"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-sim3">기록표 복사</button>
+    <label class="answer-field"><span>B1. 원자 단계에서 원자핵 단계로 확대할 때 화면이 오랫동안 텅 비어 있었습니다. 이것은 원자의 구조에 대해 무엇을 말해 주나요?</span><textarea id="sim-b1"></textarea></label>
+    <label class="answer-field"><span>B2. 갤러리에서 구의 크기는 질량을 나타냅니다. 가장 무거운 기본 입자와 가장 가벼운 축에 드는 입자를 하나씩 쓰고, 꼭대기 쿼크 질량은 양성자 질량의 몇 배인지 계산하세요(양성자 0.938 GeV/c²).</span><textarea id="sim-b2"></textarea></label>
+    <label class="answer-field"><span>B3. 쿼크 u와 d를 두 개만 넣거나 하나만 넣으면 모의실험은 "존재할 수 없는 조합"이라고 알려 줍니다. 쿼크를 홀로 관측할 수 없다는 사실과 연결해 설명해 보세요.</span><textarea id="sim-b3"></textarea></label>
+  </section>
+
+  <section class="section" id="cern">
+    <div class="section__head"><span class="section__tag">05</span><h2>실제 CERN에서는</h2></div>
+    <div class="box box--cern prose">
+      <p><b>CERN(유럽 입자물리 연구소)</b>은 1954년 스위스와 프랑스 국경의 제네바 근처에 세워졌습니다. 이름은 프랑스어 'Conseil Européen pour la Recherche Nucléaire(유럽 원자핵 연구 위원회)'의 머리글자에서 왔습니다. 제2차 세계 대전 뒤 유럽 나라들이 과학으로 협력하자는 뜻으로 만들었고, 지금은 20여 개 회원국과 전 세계 100여 개 나라의 과학자 1만여 명이 함께 연구합니다. 한국 연구자들도 CMS, ALICE 같은 실험에 참여하고 있습니다.</p>
+      <p>CERN의 가장 큰 장치는 둘레 26.7 km, 지하 약 100 m에 있는 <b>대형 강입자 충돌기(LHC)</b>입니다. 양성자를 빔당 6.8 TeV까지 가속해 13.6 TeV로 정면 충돌시키고, ATLAS·CMS·ALICE·LHCb 검출기가 충돌에서 나오는 입자를 기록합니다. 블랙박스를 막대로 찔러 보듯이, 양성자를 서로 부딪혀 그 속과 그 너머를 살펴보는 것입니다.</p>
+      <p>CERN에서 찾아낸 것들: 1983년 약한 상호작용을 전달하는 <b>W·Z 보손</b>(이듬해 노벨상), 2012년 7월 4일 <b>힉스 보손</b>(ATLAS·CMS 발표, 2013년 노벨상은 앙글레르와 힉스). 그리고 1989년 팀 버너스리가 CERN에서 과학자들이 정보를 나누는 방법으로 제안한 것이 오늘날의 <b>월드 와이드 웹(WWW)</b>입니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="check">
+    <div class="section__head"><span class="section__tag">06</span><h2>확인 문제</h2></div>
+    <label class="answer-field"><span>1. 다음을 크기가 큰 것부터 차례로 늘어놓으세요: 쿼크, 물 분자, 원자핵, 세균, 양성자, 원자.</span><textarea id="check-1"></textarea></label>
+    <label class="answer-field"><span>2. 금 원자의 지름은 약 3×10⁻¹⁰ m, 금 원자핵의 지름은 약 1.4×10⁻¹⁴ m입니다. (가) 금 원자는 원자핵보다 몇 배 큰가요? (나) 금 원자핵을 지름 1 cm 구슬로 키우면 금 원자의 지름은 몇 m가 될까요?</span><textarea id="check-2"></textarea></label>
+    <label class="answer-field"><span>3. 오메가 입자 Ω⁻는 기묘 쿼크(s, 전하 −1/3) 3개로, 델타 입자 Δ⁺⁺는 위 쿼크 3개로 이루어져 있습니다. 두 입자의 전하를 각각 계산하세요.</span><textarea id="check-3"></textarea></label>
+    <label class="answer-field"><span>4. 다음 입자를 페르미온과 보손으로 나누고, 페르미온은 다시 쿼크와 렙톤으로 나누세요: 전자, 광자, 위 쿼크, 힉스 보손, 뮤온 중성미자, 글루온, 바닥 쿼크, W 보손.</span><textarea id="check-4"></textarea></label>
+    <label class="answer-field"><span>5. 양성자(uud)의 질량은 938 MeV/c²인데, 쿼크 세 개의 질량을 더하면 2.2 + 2.2 + 4.7 = 약 9 MeV/c²밖에 되지 않습니다. (가) 쿼크 질량의 합은 양성자 질량의 몇 %인가요? (나) 나머지 질량은 어디에서 올까요?</span><textarea id="check-5"></textarea></label>
+    <label class="answer-field"><span>6. 블랙박스 탐구에서 모둠마다 모형이 조금씩 달랐습니다. 과학자들은 서로 다른 모형 가운데 어느 것이 더 나은지 어떻게 정할까요? 오늘 활동을 예로 들어 쓰세요.</span><textarea id="check-6"></textarea></label>
+  </section>
+
+  <section class="section" id="up">
+    <div class="box box--up">
+      <h3>업그레이드 도전: 반물질과 쿼크 조합</h3>
+      <p>모든 쿼크에는 전하의 부호가 반대인 반쿼크가 있습니다(ū: −2/3, d̄: +1/3, s̄: +1/3). 쿼크 3개는 바리온, 반쿼크 3개는 반바리온, 쿼크 1개와 반쿼크 1개는 중간자를 이룹니다. 모의실험의 쿼크 퍼즐에서 [업그레이드: 기묘 쿼크와 반쿼크도 쓰기]를 켜고 도전하세요.</p>
+      <ol>
+        <li>반양성자를 만드세요. 어떤 반쿼크 3개가 필요하고, 전하는 얼마인가요?</li>
+        <li>파이온 π⁺(u d̄)와 케이온 K⁻(s ū)의 전하를 계산하고 퍼즐로 확인하세요.</li>
+        <li>CERN은 반양성자와 양전자로 반수소 원자를 만들어 연구합니다. 반수소가 수소와 똑같이 행동하는지 알아보는 것이 왜 중요할지 써 보세요.</li>
+      </ol>
+      <label class="answer-field"><span>도전 기록</span><textarea id="up-1"></textarea></label>
+    </div>
+  </section>
+
+  <section class="section" id="self">
+    <div class="section__head"><span class="section__tag">07</span><h2>자기 평가</h2></div>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="self-1"> <span>분자 → 원자 → 원자핵 → 핵자 → 쿼크의 순서와 각 크기를 10의 거듭제곱으로 말할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-2"> <span>원자 크기 ÷ 원자핵 크기가 약 10⁴~10⁵임을 계산하고, 원자가 대부분 빈 공간이라는 뜻을 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-3"> <span>표준모형 17개 입자를 쿼크·렙톤·게이지 보손·힉스로 분류할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-4"> <span>uud와 udd의 전하를 계산해 양성자와 중성자를 구별할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-5"> <span>블랙박스 탐구에서 증거로 모형을 세우고 고치는 과정에 참여했다.</span></label></li>
+      <li><label><input type="checkbox" id="self-6"> <span>CERN이 어떤 곳이고 무엇을 발견했는지 친구에게 소개할 수 있다.</span></label></li>
+    </ul>
+    <label class="answer-field"><span>오늘 가장 궁금해진 것 한 가지</span><textarea id="self-q"></textarea></label>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

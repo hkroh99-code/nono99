@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>물질 속으로 줌인 모의실험</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/sim.css">
+<style>
+  .hud b { color: var(--s-track); font-weight: 600; }
+  .hud-line { display: block; }
+  #hud-main { max-width: 420px; }
+  .mode-row .sbtn { flex: 1 1 auto; }
+  .lv-row .sbtn { padding: .35rem .6rem; font-size: .8rem; }
+  .info-card { background: var(--s-panel-2); border: 1px solid var(--s-line); border-radius: 8px; padding: .7rem .8rem; display: grid; gap: .35rem; font-size: .86rem; }
+  .info-card h3 { margin: 0; font-size: 1rem; font-family: var(--font-display); font-weight: 600; }
+  .info-card dl { display: grid; grid-template-columns: auto 1fr; gap: .2rem .7rem; margin: 0; }
+  .info-card dt { color: var(--s-ink-3); }
+  .info-card dd { margin: 0; font-family: var(--font-mono); font-size: .84rem; }
+  .info-card p { margin: 0; color: var(--s-ink-2); }
+  .ratio-form { display: flex; gap: .4rem; align-items: center; flex-wrap: wrap; font-size: .86rem; }
+  .ratio-form input { font: inherit; font-size: .88rem; background: var(--s-panel-2); color: var(--s-ink); border: 1px solid var(--s-line); border-radius: 6px; padding: .35rem .5rem; width: 8.5rem; }
+  .feedback { font-size: .84rem; color: var(--s-ink-2); }
+  .q-row .sbtn { min-width: 2.8rem; font-family: var(--font-mono); font-size: .95rem; }
+  .q-u { border-color: #ff6b6b !important; color: #ffb0b0 !important; }
+  .q-d { border-color: #4dabf7 !important; color: #a8d8ff !important; }
+  .q-s { border-color: #c78bff !important; color: #e0c4ff !important; }
+  .verdict { font-size: .95rem; font-weight: 700; }
+  @media (max-width: 560px) { .hud { font-size: .74rem; padding: .35rem .5rem; } }
+</style>
+</head>
+<body>
+<div class="sim">
+  <header class="sim-head">
+    <span class="tag">주제 01 · 3D</span>
+    <h1>물질 속으로 줌인 · 표준모형 갤러리</h1>
+    <nav aria-label="관련 자료">
+      <a href="../students/t01.html">학생용 활동지</a>
+      <a href="../teachers/t01.html">교사용 지도서</a>
+      <a href="index.html">모의실험 목록</a>
+    </nav>
+  </header>
+  <div class="sim-body">
+    <div class="stage" id="stage">
+      <div class="stage-overlay" id="overlay">
+        <div class="hud" id="hud-main"></div>
+        <div class="hud" id="hud-scale"></div>
+      </div>
+      <div class="stage-hint" id="hint">드래그: 회전 · 휠/두 손가락: 확대(물질 속으로)</div>
+    </div>
+    <aside class="panel" id="panel" aria-label="조작과 기록"></aside>
+  </div>
+</div>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/vendor/three/OrbitControls.js"></script>
+<script src="../assets/js/sim-kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var THREE = window.THREE, K = window.SimKit, ui = K.ui, COL = K.COLORS;
+  var stage = document.getElementById("stage"), panel = document.getElementById("panel");
+  var sim = K.create({ stage: stage, cameraPos: [0, 1.2, 10], target: [0, 0, 0], grid: false });
+  var scene = sim.scene;
+  var COL_S = 0xc78bff, COL_TAU = 0xc78bff, COL_WZ = COL.field, COL_H = 0xf3e6ff;
+  function sup(n) { var m = { "-": "⁻", "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹" }; return String(n).split("").map(function (c) { return m[c] || c; }).join(""); }
+  function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
+  function ramp(x, a, b) { return clamp((x - a) / (b - a), 0, 1); }
+  function glowTexture() {
+    var cv = document.createElement("canvas"); cv.width = cv.height = 64;
+    var g = cv.getContext("2d"), grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    grd.addColorStop(0, "rgba(255,255,255,1)"); grd.addColorStop(0.35, "rgba(255,255,255,.45)"); grd.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = grd; g.fillRect(0, 0, 64, 64); return new THREE.CanvasTexture(cv);
+  }
+  var GLOW = glowTexture();
+  function fadeable(mat, base) { mat.transparent = true; mat.userData.base = base === undefined ? (mat.opacity === undefined ? 1 : mat.opacity) : base; return mat; }
+
+  /* =========================================================
+     1) 줌인 모드: 물방울 → 물 분자 → 산소 원자 → 원자핵 → 양성자
+     각 단계는 '특징 크기 1'로 만든 뒤, 보는 크기(10^viewLog m)에 맞춰 크기를 바꾼다.
+     ========================================================= */
+  var zoomRoot = new THREE.Group(); scene.add(zoomRoot);
+  var LV = [
+    { key: "drop", name: "물방울", L: 1e-3, size: "약 1×10⁻³ m (1 mm)", exp: -3, charge: "0", inA: 0, inB: 0, outA: 2, outB: 6,
+      desc: "물 분자 약 2×10¹⁹개가 모여 있습니다. 눈으로 볼 수 있는 가장 작은 크기에 가깝습니다." },
+    { key: "mol", name: "물 분자 H₂O", L: 2.8e-10, size: "약 2.8×10⁻¹⁰ m (0.28 nm)", exp: -10, charge: "0", inA: 0.04, inB: 0.15, outA: 1.6, outB: 3.2,
+      desc: "산소 원자 1개와 수소 원자 2개가 104.5°로 결합해 있습니다. 분자들은 끊임없이 흔들리고 움직입니다." },
+    { key: "atom", name: "산소 원자", L: 1e-10, size: "약 1×10⁻¹⁰ m (0.1 nm)", exp: -10, charge: "0 (중성)", inA: 0.35, inB: 0.75, outA: 3, outB: 9,
+      desc: "전자 8개가 '전자 구름'처럼 퍼져 있습니다. 원자핵은 원자 지름의 약 2만분의 1이라 이 화면에서는 보이지 않습니다." },
+    { key: "nuc", name: "산소 원자핵 (양성자 8 + 중성자 8)", L: 6e-15, size: "약 6×10⁻¹⁵ m (6 fm)", exp: -15, charge: "+8", inA: 0.02, inB: 0.08, outA: 1.8, outB: 3.2,
+      desc: "양성자(빨강)와 중성자(회색)가 강한 핵력으로 뭉쳐 있습니다. 원자 질량의 99.9% 이상이 여기에 있습니다." },
+    { key: "p", name: "양성자 (u u d + 글루온)", L: 1.7e-15, size: "약 1.7×10⁻¹⁵ m", exp: -15, charge: "+1", inA: 0.3, inB: 0.6, outA: 1e9, outB: 2e9,
+      desc: "위 쿼크 2개와 아래 쿼크 1개가 글루온으로 묶여 있습니다. 쿼크 질량의 합은 양성자 질량의 약 1%뿐이고, 나머지는 쿼크·글루온의 운동과 결합 에너지에서 나옵니다." }
+  ];
+  LV.forEach(function (lv) { lv.log = Math.log10(lv.L); lv.group = new THREE.Group(); lv.mats = []; zoomRoot.add(lv.group); });
+  function addMesh(lv, geo, mat, parent) { var m = new THREE.Mesh(geo, fadeable(mat)); (parent || lv.group).add(m); lv.mats.push(mat); return m; }
+
+  // 물방울
+  (function () {
+    var lv = LV[0];
+    lv.drop = addMesh(lv, new THREE.SphereGeometry(0.5, 64, 32), new THREE.MeshPhongMaterial({ color: 0x3d8bff, opacity: 0.7, shininess: 70, specular: 0x6f9fd8, emissive: 0x05162e }));
+    var hl = addMesh(lv, new THREE.SphereGeometry(0.08, 16, 8), new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.7 }));
+    hl.position.set(-0.17, 0.2, 0.38); hl.scale.set(1, 0.6, 0.4);
+  })();
+
+  // 물 분자들
+  (function () {
+    var lv = LV[1];
+    var oGeo = new THREE.SphereGeometry(0.17, 24, 16), hGeo = new THREE.SphereGeometry(0.105, 16, 12), bGeo = new THREE.CylinderGeometry(0.03, 0.03, 1, 8);
+    var oMat = fadeable(new THREE.MeshPhongMaterial({ color: 0xe0503c, shininess: 60 })), hMat = fadeable(new THREE.MeshPhongMaterial({ color: 0xf2f2f2 })), bMat = fadeable(new THREE.MeshPhongMaterial({ color: 0x9aa3bf }));
+    var oMatC = fadeable(new THREE.MeshPhongMaterial({ color: 0xe0503c, shininess: 60 }));
+    lv.mats.push(oMat, hMat, bMat);
+    lv.oMatC = oMatC;
+    var ang = 104.5 * Math.PI / 180, bl = 0.34;
+    function molecule(center) {
+      var g = new THREE.Group();
+      g.add(new THREE.Mesh(oGeo, center ? oMatC : oMat));
+      [-1, 1].forEach(function (sgn) {
+        var hx = Math.sin(ang / 2) * bl * sgn, hy = -Math.cos(ang / 2) * bl;
+        var h = new THREE.Mesh(hGeo, hMat); h.position.set(hx, hy, 0); g.add(h);
+        var b = new THREE.Mesh(bGeo, bMat); b.position.set(hx / 2, hy / 2, 0); b.scale.y = bl;
+        b.rotation.z = Math.atan2(hy, hx) - Math.PI / 2; g.add(b);
+      });
+      return g;
+    }
+    lv.center = molecule(true); lv.group.add(lv.center);
+    lv.others = [];
+    var seed = 7; function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    for (var i = 0, tries = 0; i < 20 && tries < 500; tries++) {
+      var r = 0.95 + 0.85 * rnd(), u = rnd() * 2 - 1, ph = rnd() * Math.PI * 2, s = Math.sqrt(1 - u * u);
+      var px = r * s * Math.cos(ph), py = r * u, pz = r * s * Math.sin(ph);
+      if (pz > 0 && Math.hypot(px, py) < 1.1) continue; // 가운데 분자를 가리지 않게
+      if (lv.others.some(function (o) { return o.userData.p0.distanceTo(new THREE.Vector3(px, py, pz)) < 0.75; })) continue;
+      i++;
+      var m = molecule(false); m.position.set(px, py, pz);
+      m.rotation.set(rnd() * 6.28, rnd() * 6.28, rnd() * 6.28);
+      m.userData = { p0: m.position.clone(), w: 0.6 + rnd(), ph: rnd() * 6.28, rs: [rnd() - 0.5, rnd() - 0.5, rnd() - 0.5] };
+      lv.group.add(m); lv.others.push(m);
+    }
+  })();
+
+  // 산소 원자: 전자 구름(확률 분포를 점으로)
+  (function () {
+    var lv = LV[2], N = 4200, pos = new Float32Array(N * 3);
+    function gamma3(a) { return -a * Math.log(Math.random() * Math.random() * Math.random() + 1e-12); }
+    function sample(i) {
+      var inner = i % 5 === 0, r = inner ? gamma3(0.018) : gamma3(0.075);
+      var x, y, z, u, ph, s;
+      if (!inner && i % 5 > 2) { // 2p 오비탈 느낌: 축 방향 아령 모양
+        var ax = i % 3; do { u = Math.random() * 2 - 1; ph = Math.random() * 6.283; s = Math.sqrt(1 - u * u); x = s * Math.cos(ph); y = u; z = s * Math.sin(ph); } while (Math.random() > [x, y, z][ax] * [x, y, z][ax]);
+      } else { u = Math.random() * 2 - 1; ph = Math.random() * 6.283; s = Math.sqrt(1 - u * u); x = s * Math.cos(ph); y = u; z = s * Math.sin(ph); }
+      r = Math.min(r, 0.6);
+      pos[3 * i] = r * x; pos[3 * i + 1] = r * y; pos[3 * i + 2] = r * z;
+    }
+    for (var i = 0; i < N; i++) sample(i);
+    var geo = new THREE.BufferGeometry(); geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    var mat = fadeable(new THREE.PointsMaterial({ color: COL.electron, size: 0.045, opacity: 0.8, depthWrite: false }));
+    lv.cloud = new THREE.Points(geo, mat); lv.group.add(lv.cloud); lv.mats.push(mat);
+    lv.resample = function (k) { for (var j = 0; j < k; j++) sample(Math.floor(Math.random() * N)); geo.attributes.position.needsUpdate = true; };
+    // 원자핵 위치 표시(크기를 맞추지 않은 표시점)
+    lv.marker = new THREE.Sprite(new THREE.SpriteMaterial({ map: GLOW, color: COL.proton, transparent: true, depthWrite: false, depthTest: false }));
+    lv.marker.scale.set(0.35, 0.35, 1); zoomRoot.add(lv.marker);
+    lv.markerLabel = K.label("원자핵 위치(실제 핵은 이 점보다 훨씬 작음)", { height: 0.32, size: 40 });
+    lv.markerLabel.position.set(0, -0.45, 0); zoomRoot.add(lv.markerLabel);
+  })();
+
+  // 원자핵: 양성자 8 + 중성자 8
+  (function () {
+    var lv = LV[3], rN = 0.15, shell = 0.34;
+    var pMat = fadeable(new THREE.MeshPhongMaterial({ color: COL.proton, shininess: 50, emissive: 0x220606 })), nMat = fadeable(new THREE.MeshPhongMaterial({ color: COL.neutron, shininess: 50 }));
+    var pMatC = fadeable(new THREE.MeshPhongMaterial({ color: COL.proton, shininess: 50, emissive: 0x220606 }));
+    lv.mats.push(pMat, nMat); lv.pMatC = pMatC;
+    var geo = new THREE.SphereGeometry(rN, 24, 16);
+    lv.nucleons = [];
+    var c = new THREE.Mesh(geo, pMatC); lv.group.add(c); lv.centerP = c;
+    var n = 15, gold = Math.PI * (3 - Math.sqrt(5)), protons = 7;
+    for (var i = 0; i < n; i++) {
+      var y = 1 - (i + 0.5) / n * 2, rr = Math.sqrt(1 - y * y), th = gold * i;
+      var isP = (i % 2 === 0) && protons-- > 0;
+      var m = new THREE.Mesh(geo, isP ? pMat : nMat);
+      m.position.set(Math.cos(th) * rr * shell, y * shell, Math.sin(th) * rr * shell);
+      m.userData = { p0: m.position.clone(), ph: Math.random() * 6.28, w: 2 + Math.random() * 2 };
+      lv.group.add(m); lv.nucleons.push(m);
+    }
+  })();
+
+  // 양성자: 쿼크 3개 + 글루온
+  (function () {
+    var lv = LV[4];
+    addMesh(lv, new THREE.SphereGeometry(0.5, 48, 24), new THREE.MeshPhongMaterial({ color: COL.proton, opacity: 0.16, depthWrite: false, side: THREE.DoubleSide }));
+    addMesh(lv, new THREE.SphereGeometry(0.5, 24, 12), new THREE.MeshBasicMaterial({ color: COL.proton, wireframe: true, opacity: 0.12 }));
+    var qGeo = new THREE.SphereGeometry(0.06, 20, 12);
+    lv.quarks = [["u", COL.quark_u], ["u", COL.quark_u], ["d", COL.quark_d]].map(function (q, i) {
+      var m = addMesh(lv, qGeo, new THREE.MeshPhongMaterial({ color: q[1], emissive: q[1], emissiveIntensity: 0.35 }));
+      var lb = K.label(q[0], { height: 0.09, size: 48, color: "#ffffff" }); lb.position.set(0, 0.1, 0); m.add(lb); lv.mats.push(lb.material); fadeable(lb.material, 1);
+      m.userData = { f: [0.9 + i * 0.23, 1.17 + i * 0.11, 0.73 + i * 0.31], ph: [i * 2.1, i * 1.3 + 0.5, i * 0.7 + 1.1] };
+      return m;
+    });
+    var gMat = fadeable(new THREE.LineBasicMaterial({ color: COL.gluon, opacity: 0.95 })); lv.mats.push(gMat);
+    lv.gluons = [[0, 1], [1, 2], [2, 0]].map(function (pr) {
+      var g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(80 * 3), 3));
+      var l = new THREE.Line(g, gMat); l.frustumCulled = false; lv.group.add(l); return { line: l, a: pr[0], b: pr[1] };
+    });
+    // 바다 쿼크(잠깐 생겼다 사라지는 쿼크–반쿼크 쌍)
+    var sMat = fadeable(new THREE.MeshBasicMaterial({ color: 0xffd7a8, opacity: 0.8 })); lv.mats.push(sMat);
+    lv.sea = [];
+    for (var i = 0; i < 4; i++) {
+      var a = new THREE.Mesh(new THREE.SphereGeometry(0.022, 8, 6), sMat), b = new THREE.Mesh(new THREE.SphereGeometry(0.022, 8, 6), sMat);
+      lv.group.add(a); lv.group.add(b); lv.sea.push({ a: a, b: b, life: Math.random(), c: new THREE.Vector3(), d: new THREE.Vector3() });
+    }
+  })();
+
+  var Z = { viewLog: -3, target: -3, min: -15.05, max: -2.7, visited: {}, tour: false, tourT: 0 };
+  function setLevelAlpha(lv, a) {
+    lv.group.visible = a > 0.003;
+    lv.mats.forEach(function (m) { m.opacity = m.userData.base * a; if (m.userData.base >= 1) m.depthWrite = a > 0.97; });
+  }
+  function nearestLevel() {
+    var best = 0, bd = 1e9;
+    LV.forEach(function (lv, i) { var dd = Math.abs(lv.log - Z.viewLog); if (dd < bd) { bd = dd; best = i; } });
+    return best;
+  }
+  function updateZoom(dt, t, real) {
+    if (Z.tour) {
+      Z.tourT += real;
+      if (Z.tourT > 4.2) { Z.tourT = 0; var nx = (nearestLevel() + 1) % LV.length; Z.target = LV[nx].log; }
+    }
+    Z.viewLog += (Z.target - Z.viewLog) * Math.min(1, real * 2.6);
+    if (Math.abs(Z.target - Z.viewLog) < 1e-4) Z.viewLog = Z.target;
+    LV.forEach(function (lv) {
+      var s = Math.pow(10, lv.log - Z.viewLog);
+      var a = (lv.inB > 0 ? ramp(s, lv.inA, lv.inB) : 1) * (1 - ramp(s, lv.outA, lv.outB));
+      lv.s = s; lv.alpha = a;
+      setLevelAlpha(lv, a);
+      if (a > 0.003) lv.group.scale.setScalar(4 * s);
+    });
+    // 단계별 세부 페이드
+    var m = LV[1]; m.oMatC.opacity = m.alpha * (1 - ramp(m.s, 0.9, 1.5)); m.oMatC.depthWrite = m.oMatC.opacity > 0.97; m.center.children[0].visible = m.oMatC.opacity > 0.01;
+    var nu = LV[3]; nu.pMatC.opacity = nu.alpha * (1 - ramp(LV[4].s, 0.3, 0.6)); nu.pMatC.depthWrite = nu.pMatC.opacity > 0.97; nu.centerP.visible = nu.pMatC.opacity > 0.01;
+    var at = LV[2], showMarker = ramp(at.s, 0.5, 0.9) * (1 - ramp(LV[3].s, 0.01, 0.03));
+    at.marker.visible = at.markerLabel.visible = showMarker > 0.05;
+    at.marker.material.opacity = showMarker; at.markerLabel.material.opacity = showMarker;
+    // 움직임
+    LV[0].group.rotation.y = t * 0.25; if (LV[0].drop) LV[0].drop.scale.set(1 + 0.025 * Math.sin(t * 2.2), 1 - 0.02 * Math.sin(t * 2.2), 1);
+    LV[1].center.rotation.y = t * 0.4;
+    LV[1].others.forEach(function (o) { var u = o.userData; o.position.set(u.p0.x + 0.06 * Math.sin(t * u.w + u.ph), u.p0.y + 0.06 * Math.cos(t * u.w * 1.3 + u.ph), u.p0.z + 0.06 * Math.sin(t * u.w * 0.7)); o.rotation.x += u.rs[0] * dt; o.rotation.y += u.rs[1] * dt; });
+    if (at.group.visible) { at.resample(90); at.group.rotation.y = t * 0.15; }
+    LV[3].group.rotation.y = t * 0.2;
+    LV[3].nucleons.forEach(function (o) { var u = o.userData; o.position.copy(u.p0).multiplyScalar(1 + 0.04 * Math.sin(t * u.w + u.ph)); });
+    var P = LV[4];
+    if (P.group.visible) {
+      P.quarks.forEach(function (q) { var u = q.userData; q.position.set(0.26 * Math.sin(t * u.f[0] + u.ph[0]), 0.26 * Math.sin(t * u.f[1] + u.ph[1]), 0.26 * Math.sin(t * u.f[2] + u.ph[2])); });
+      var tmp = new THREE.Vector3(), perp = new THREE.Vector3(), perp2 = new THREE.Vector3();
+      P.gluons.forEach(function (gl) {
+        var A = P.quarks[gl.a].position, B = P.quarks[gl.b].position, arr = gl.line.geometry.attributes.position.array;
+        tmp.subVectors(B, A); perp.set(-tmp.y, tmp.x, 0.3).normalize(); perp2.crossVectors(tmp, perp).normalize();
+        for (var i = 0; i < 80; i++) {
+          var f = i / 79, ph = f * Math.PI * 2 * 7 - t * 9, amp = 0.022 * Math.sin(Math.PI * f);
+          arr[3 * i] = A.x + tmp.x * f + amp * (perp.x * Math.cos(ph) + perp2.x * Math.sin(ph));
+          arr[3 * i + 1] = A.y + tmp.y * f + amp * (perp.y * Math.cos(ph) + perp2.y * Math.sin(ph));
+          arr[3 * i + 2] = A.z + tmp.z * f + amp * (perp.z * Math.cos(ph) + perp2.z * Math.sin(ph));
+        }
+        gl.line.geometry.attributes.position.needsUpdate = true;
+      });
+      P.sea.forEach(function (s) {
+        s.life += real * 1.4;
+        if (s.life > 1) { s.life = 0; s.c.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).multiplyScalar(0.6); s.d.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize(); }
+        var sep = 0.07 * Math.sin(Math.PI * s.life);
+        s.a.position.copy(s.c).addScaledVector(s.d, sep); s.b.position.copy(s.c).addScaledVector(s.d, -sep);
+        var on = s.life < 0.95; s.a.visible = s.b.visible = on;
+      });
+    }
+    // 방문 기록 → 미션 1
+    LV.forEach(function (lv, i) {
+      if (Math.abs(lv.log - Z.viewLog) < 0.12 && !Z.visited[i]) { Z.visited[i] = true; drawLadder(); if (Object.keys(Z.visited).length === LV.length) mission.complete(0, "미션 1 완료! 물방울에서 양성자까지 약 10¹²배를 확대했어요."); }
+    });
+  }
+
+  var MILESTONES = [ // 기준: 지금 보는 특징 크기의 지수(viewLog)
+    [-3.5, "물방울·모래알(약 10⁻³ m)"], [-4.5, "머리카락 굵기(약 10⁻⁴ m)"], [-5.5, "적혈구(약 8×10⁻⁶ m)"], [-6.5, "세균(약 1×10⁻⁶ m)"],
+    [-7.5, "바이러스(약 10⁻⁷ m)"], [-8.5, "단백질 분자(약 10⁻⁸ m)"], [-9.3, "DNA 이중나선 폭(약 2×10⁻⁹ m)"], [-9.8, "물 분자(약 3×10⁻¹⁰ m)"],
+    [-10.6, "원자(약 10⁻¹⁰ m)"], [-13.8, "원자 속의 텅 빈 공간 — 전자 구름만 있음"], [-14.6, "원자핵(10⁻¹⁵~10⁻¹⁴ m)"], [-99, "양성자·중성자(약 1.7×10⁻¹⁵ m)"]
+  ];
+  function milestone(screenLog) { for (var i = 0; i < MILESTONES.length; i++) if (screenLog > MILESTONES[i][0]) return MILESTONES[i][1]; return ""; }
+
+  /* =========================================================
+     2) 표준모형 3D 갤러리
+     ========================================================= */
+  var P17 = [
+    { s: "u", n: "위 쿼크", cat: "quark", gen: 1, x: 0, y: 0, col: COL.quark_u, m: "약 2.2 MeV/c²", ev: 2.2e6, q: "+2/3", spin: "1/2", year: "1968", where: "미국 SLAC 전자–양성자 산란 실험(쿼크 모형 제안 1964)", note: "양성자(uud)·중성자(udd)를 이루는 가장 가벼운 쿼크." },
+    { s: "c", n: "맵시 쿼크", cat: "quark", gen: 2, x: 1, y: 0, col: COL.quark_u, m: "약 1.27 GeV/c²", ev: 1.27e9, q: "+2/3", spin: "1/2", year: "1974", where: "미국 SLAC·브룩헤이븐 연구소(J/ψ 입자 발견)", note: "J/ψ(맵시–반맵시 쌍)의 발견으로 존재가 확인됨." },
+    { s: "t", n: "꼭대기 쿼크", cat: "quark", gen: 3, x: 2, y: 0, col: COL.quark_u, m: "약 172.6 GeV/c²", ev: 1.726e11, q: "+2/3", spin: "1/2", year: "1995", where: "미국 페르미 연구소 테바트론(CDF·D0)", note: "가장 무거운 기본 입자. 금 원자 하나만큼 무겁다." },
+    { s: "g", n: "글루온", cat: "gauge", gen: 0, x: 3, y: 0, col: COL.gluon, m: "0", ev: 0, q: "0", spin: "1", year: "1979", where: "독일 DESY 연구소 PETRA 가속기(3제트 사건)", note: "강한 상호작용을 전달. 쿼크를 양성자·중성자 안에 묶어 둔다." },
+    { s: "d", n: "아래 쿼크", cat: "quark", gen: 1, x: 0, y: 1, col: COL.quark_d, m: "약 4.7 MeV/c²", ev: 4.7e6, q: "−1/3", spin: "1/2", year: "1968", where: "미국 SLAC 전자–양성자 산란 실험", note: "양성자에 1개, 중성자에 2개 들어 있다." },
+    { s: "s", n: "기묘 쿼크", cat: "quark", gen: 2, x: 1, y: 1, col: COL_S, m: "약 93 MeV/c²", ev: 9.3e7, q: "−1/3", spin: "1/2", year: "1968", where: "SLAC 실험으로 쿼크 확인(기묘 입자 K 중간자는 1947년 우주선에서 발견)", note: "K 중간자, Λ 입자 등 '기묘한' 입자를 만든다." },
+    { s: "b", n: "바닥 쿼크", cat: "quark", gen: 3, x: 2, y: 1, col: COL.quark_d, m: "약 4.18 GeV/c²", ev: 4.18e9, q: "−1/3", spin: "1/2", year: "1977", where: "미국 페르미 연구소(Υ 입자 발견)", note: "CERN LHCb 실험이 바닥 쿼크로 물질–반물질 차이를 연구한다." },
+    { s: "γ", n: "광자", cat: "gauge", gen: 0, x: 3, y: 1, col: COL.photon, m: "0", ev: 0, q: "0", spin: "1", year: "1905·1923", where: "아인슈타인 광양자 가설(1905), 콤프턴 산란으로 확인(1923)", note: "전자기 상호작용을 전달. 빛의 알갱이." },
+    { s: "e", n: "전자", cat: "lepton", gen: 1, x: 0, y: 2, col: COL.electron, m: "0.511 MeV/c²", ev: 5.11e5, q: "−1", spin: "1/2", year: "1897", where: "영국 J. J. 톰슨(음극선 실험)", note: "처음 발견된 기본 입자. 원자의 바깥을 이룬다." },
+    { s: "μ", n: "뮤온", cat: "lepton", gen: 2, x: 1, y: 2, col: COL.muon, m: "105.66 MeV/c²", ev: 1.0566e8, q: "−1", spin: "1/2", year: "1936", where: "미국 앤더슨·네더마이어(우주선 관측)", note: "전자보다 약 207배 무거운 '사촌'. 수명 2.2 μs." },
+    { s: "τ", n: "타우", cat: "lepton", gen: 3, x: 2, y: 2, col: COL_TAU, m: "약 1.777 GeV/c²", ev: 1.777e9, q: "−1", spin: "1/2", year: "1975", where: "미국 SLAC(펄 연구진)", note: "가장 무거운 렙톤. 양성자보다 거의 2배 무겁다." },
+    { s: "Z", n: "Z 보손", cat: "gauge", gen: 0, x: 3, y: 2, col: COL_WZ, m: "91.19 GeV/c²", ev: 9.119e10, q: "0", spin: "1", year: "1983", where: "CERN SPS 양성자–반양성자 충돌기(UA1·UA2)", note: "약한 상호작용을 전달하는 중성 보손. CERN의 대표적 발견." },
+    { s: "νₑ", n: "전자 중성미자", cat: "lepton", gen: 1, x: 0, y: 3, col: COL.neutrino, nu: true, m: "1 eV/c² 미만(아주 작음)", ev: 0.3, q: "0", spin: "1/2", year: "1956", where: "미국 코완·라이너스(원자로 실험)", note: "전하가 없고 거의 반응하지 않아 지구도 그냥 통과한다." },
+    { s: "νμ", n: "뮤온 중성미자", cat: "lepton", gen: 2, x: 1, y: 3, col: COL.neutrino, nu: true, m: "아주 작음(정확한 값 모름)", ev: 0.3, q: "0", spin: "1/2", year: "1962", where: "미국 브룩헤이븐 연구소(레더먼·슈워츠·스타인버거)", note: "중성미자에 여러 종류가 있음을 처음 보여 주었다." },
+    { s: "ντ", n: "타우 중성미자", cat: "lepton", gen: 3, x: 2, y: 3, col: COL.neutrino, nu: true, m: "아주 작음(정확한 값 모름)", ev: 0.3, q: "0", spin: "1/2", year: "2000", where: "미국 페르미 연구소(DONUT 실험)", note: "17개 중 가장 늦게 직접 확인된 페르미온." },
+    { s: "W", n: "W 보손", cat: "gauge", gen: 0, x: 3, y: 3, col: COL_WZ, m: "80.37 GeV/c²", ev: 8.037e10, q: "±1", spin: "1", year: "1983", where: "CERN SPS 양성자–반양성자 충돌기(UA1·UA2)", note: "약한 상호작용(베타 붕괴 등)을 전달. W⁺와 W⁻가 있다." },
+    { s: "H", n: "힉스 보손", cat: "higgs", gen: 0, x: 4.3, y: 0, col: COL_H, m: "125.1 GeV/c²", ev: 1.251e11, q: "0", spin: "0", year: "2012", where: "CERN LHC(ATLAS·CMS), 2012년 7월 4일 발표", note: "힉스 장과 관련된 입자. 기본 입자가 질량을 갖는 원리를 설명한다." }
+  ];
+  var CAT = { quark: "페르미온 · 쿼크", lepton: "페르미온 · 렙톤", gauge: "보손 · 게이지 보손(힘 전달)", higgs: "보손 · 스칼라 보손" };
+  var galRoot = new THREE.Group(); galRoot.visible = false; scene.add(galRoot);
+  var GX0 = -4.4, GDX = 1.75, GY0 = 2.55, GDY = 1.7;
+  function gpos(p) { return new THREE.Vector3(GX0 + p.x * GDX + (p.x >= 3 ? 0.35 : 0) + (p.cat === "higgs" ? 0.2 : 0), GY0 - p.y * GDY, 0); }
+  (function () {
+    function panelBox(x0, x1, y0, y1, color, text) {
+      var w = x1 - x0, h = y1 - y0;
+      var m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0.22, depthWrite: false }));
+      m.position.set((x0 + x1) / 2, (y0 + y1) / 2, -0.8); galRoot.add(m);
+      var edge = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(w, h)), new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: 0.7 }));
+      edge.position.copy(m.position); galRoot.add(edge);
+      var lb = K.label(text, { height: 0.36, size: 40, bg: false, color: "#c9cfe6" }); lb.position.set(x0 + 0.15 + lb.scale.x / 2, y1 - 0.25, -0.7); galRoot.add(lb);
+    }
+    var qx0 = GX0 - 0.8, qx1 = GX0 + 2 * GDX + 0.8;
+    panelBox(qx0, qx1, GY0 - GDY - 0.8, GY0 + 0.95, 0x6a3fb5, "쿼크");
+    panelBox(qx0, qx1, GY0 - 3 * GDY - 0.8, GY0 - 2 * GDY + 0.95, 0x13806f, "렙톤");
+    var gx = GX0 + 3 * GDX + 0.35;
+    panelBox(gx - 0.8, gx + 0.8, GY0 - 3 * GDY - 0.8, GY0 + 0.95, 0x1f5f8b, "게이지 보손");
+    var hx = GX0 + 4.3 * GDX + 0.55;
+    panelBox(hx - 0.8, hx + 0.8, GY0 - 0.8, GY0 + 0.95, 0xb3245a, "힉스");
+    ["1세대", "2세대", "3세대"].forEach(function (t, i) { var lb = K.label(t, { height: 0.32, bg: false, color: "#a9b0c8" }); lb.position.set(GX0 + i * GDX, GY0 + 1.25, -0.5); galRoot.add(lb); });
+    var note = K.label("구의 크기 = 질량(로그 눈금). 실제 입자의 크기가 아닙니다.", { height: 0.3, bg: false, color: "#7880a0" });
+    note.position.set(-0.6, GY0 - 3 * GDY - 1.25, -0.5); galRoot.add(note);
+  })();
+  var pickables = [];
+  P17.forEach(function (p) {
+    var r = p.ev > 0 ? clamp(0.17 + 0.034 * (Math.log10(p.ev) + 1), 0.18, 0.62) : 0.3;
+    var mat = p.nu ? new THREE.MeshBasicMaterial({ color: p.col, wireframe: true, transparent: true, opacity: 0.85 })
+      : new THREE.MeshPhongMaterial({ color: p.col, emissive: p.col, emissiveIntensity: p.ev === 0 ? 0.55 : 0.18, shininess: 60, transparent: true, opacity: 1 });
+    var mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 16), mat);
+    mesh.position.copy(gpos(p)); mesh.userData = { p: p, base: mesh.position.clone(), r: r };
+    galRoot.add(mesh); pickables.push(mesh);
+    var sym = K.label(p.s, { height: 0.36, size: 52, color: "#ffffff", bg: "rgba(10,15,30,0.55)" }); sym.position.set(0, 0, r + 0.05); mesh.add(sym);
+    var nm = K.label(p.n, { height: 0.26, size: 40, bg: false, color: "#c9cfe6" }); nm.position.set(0, -(r + 0.2), 0.2); mesh.add(nm);
+    p.mesh = mesh; p.sym = sym; p.nm = nm;
+  });
+  var selRing = new THREE.Mesh(new THREE.TorusGeometry(0.75, 0.03, 8, 64), new THREE.MeshBasicMaterial({ color: COL.ok })); selRing.visible = false; galRoot.add(selRing);
+  var opened = {}, selected = null;
+
+  /* =========================================================
+     3) 쿼크 조합 퍼즐
+     ========================================================= */
+  var QK = {
+    u: { s: "u", q: 2, col: COL.quark_u, name: "위 쿼크" }, d: { s: "d", q: -1, col: COL.quark_d, name: "아래 쿼크" }, s: { s: "s", q: -1, col: COL_S, name: "기묘 쿼크" },
+    ub: { s: "ū", q: -2, col: COL.quark_u, anti: true, name: "반위 쿼크" }, db: { s: "d̄", q: 1, col: COL.quark_d, anti: true, name: "반아래 쿼크" }, sb: { s: "s̄", q: 1, col: COL_S, anti: true, name: "반기묘 쿼크" }
+  };
+  var HADRON = {
+    "d,u,u": "양성자 p", "d,d,u": "중성자 n", "u,u,u": "델타 입자 Δ⁺⁺", "d,d,d": "델타 입자 Δ⁻",
+    "d,s,u": "람다 입자 Λ⁰ (또는 Σ⁰)", "s,u,u": "시그마 입자 Σ⁺", "d,d,s": "시그마 입자 Σ⁻", "s,s,u": "크사이 입자 Ξ⁰", "d,s,s": "크사이 입자 Ξ⁻", "s,s,s": "오메가 입자 Ω⁻",
+    "db,ub,ub": "반양성자 p̄", "db,db,ub": "반중성자 n̄",
+    "db,u": "양의 파이온 π⁺", "d,ub": "음의 파이온 π⁻", "d,db": "중성 파이온 π⁰ (uū·dd̄의 섞임)", "u,ub": "중성 파이온 π⁰ (uū·dd̄의 섞임)",
+    "sb,u": "양의 케이온 K⁺", "s,ub": "음의 케이온 K⁻", "d,sb": "중성 케이온 K⁰", "db,s": "반중성 케이온 K̄⁰", "s,sb": "파이 중간자 φ"
+  };
+  var puzRoot = new THREE.Group(); puzRoot.visible = false; scene.add(puzRoot);
+  var bagMat = new THREE.MeshPhongMaterial({ color: 0x7f9cff, transparent: true, opacity: 0.12, depthWrite: false, side: THREE.DoubleSide });
+  var bag = new THREE.Mesh(new THREE.SphereGeometry(1.6, 48, 24), bagMat); puzRoot.add(bag);
+  var bagWire = new THREE.Mesh(new THREE.SphereGeometry(1.6, 24, 12), new THREE.MeshBasicMaterial({ color: 0x7f9cff, wireframe: true, transparent: true, opacity: 0.1 })); puzRoot.add(bagWire);
+  var tokens = [], puzGluons = [];
+  var gluMatP = new THREE.LineBasicMaterial({ color: COL.gluon });
+  for (var gi = 0; gi < 3; gi++) {
+    var gg = new THREE.BufferGeometry(); gg.setAttribute("position", new THREE.BufferAttribute(new Float32Array(90 * 3), 3));
+    var gl = new THREE.Line(gg, gluMatP); gl.frustumCulled = false; gl.visible = false; puzRoot.add(gl); puzGluons.push(gl);
+  }
+  function addToken(k) {
+    if (tokens.length >= 3) { K.toast("쿼크는 최대 3개까지 넣을 수 있어요. [비우기] 또는 [마지막 빼기]를 누르세요."); return; }
+    var d = QK[k];
+    var mat = d.anti ? new THREE.MeshPhongMaterial({ color: d.col, emissive: d.col, emissiveIntensity: 0.2, wireframe: true }) : new THREE.MeshPhongMaterial({ color: d.col, emissive: d.col, emissiveIntensity: 0.3, shininess: 80 });
+    var m = new THREE.Mesh(new THREE.SphereGeometry(0.34, 28, 16), mat);
+    var lb = K.label(d.s, { height: 0.42, size: 56, color: "#ffffff" }); lb.position.set(0, 0.55, 0); m.add(lb);
+    var i = tokens.length;
+    m.userData = { k: k, f: [0.7 + 0.21 * i, 0.93 + 0.17 * i, 0.61 + 0.27 * i], ph: [i * 2.1, 1 + i * 1.7, 0.4 + i * 2.6] };
+    puzRoot.add(m); tokens.push(m); evaluate();
+  }
+  function popToken() { var m = tokens.pop(); if (m) { puzRoot.remove(m); m.geometry.dispose(); } evaluate(); }
+  function clearTokens() { while (tokens.length) popToken(); }
+  function chargeText(n) { if (n === 0) return "0"; var sg = n > 0 ? "+" : "−", a = Math.abs(n); return a % 3 === 0 ? sg + (a / 3) : sg + a + "/3"; }
+  function termText(n) { return (n > 0 ? "+" : "−") + Math.abs(n) + "/3"; }
+  var puz = { key: "", name: "", charge: 0, valid: false, expr: "" };
+  function evaluate() {
+    var ks = tokens.map(function (m) { return m.userData.k; });
+    var key = ks.slice().sort().join(",");
+    var q = 0; ks.forEach(function (k) { q += QK[k].q; });
+    var nq = ks.filter(function (k) { return !QK[k].anti; }).length, na = ks.length - nq;
+    var name = HADRON[key] || "", valid = false, verdict;
+    if (!ks.length) verdict = "쿼크를 골라 넣으세요.";
+    else if (name) { valid = true; verdict = name; }
+    else if (nq === 3 || na === 3) { valid = true; verdict = na === 3 ? "반바리온(반쿼크 3개)" : "바리온(쿼크 3개)"; }
+    else if (nq === 1 && na === 1) { valid = true; verdict = "중간자(쿼크 1 + 반쿼크 1)"; }
+    else if (ks.length === 1) verdict = "쿼크 하나만으로는 홀로 존재할 수 없어요(쿼크 가둠).";
+    else verdict = "이 조합은 자연에서 안정한 입자를 이루지 못해요. 쿼크 3개, 반쿼크 3개, 또는 쿼크 1 + 반쿼크 1이어야 해요.";
+    puz.key = key; puz.name = name; puz.charge = q; puz.valid = valid;
+    puz.expr = ks.length ? ks.map(function (k) { return "(" + termText(QK[k].q) + ")"; }).join(" + ") + " = " + chargeText(q) : "–";
+    puz.verdict = verdict; puz.combo = ks.map(function (k) { return QK[k].s; }).join(" ");
+    bagMat.color.set(!ks.length ? 0x7f9cff : valid ? COL.ok : 0xff7a6b);
+    roP.set("combo", puz.combo || "–"); roP.set("charge", ks.length ? chargeText(q) + " e" : "–");
+    exprEl.innerHTML = "전하 계산: <b>" + puz.expr + "</b>";
+    verdictEl.textContent = verdict; verdictEl.className = "verdict " + (valid ? "result-ok" : ks.length ? "result-bad" : "");
+    if (key === "d,u,u") mission.complete(3, "미션 4 완료! 양성자 uud: +2/3 +2/3 −1/3 = +1");
+    if (key === "d,d,u") mission.complete(4, "미션 5 완료! 중성자 udd: +2/3 −1/3 −1/3 = 0");
+    if (key === "db,ub,ub" || key === "db,u" || key === "s,ub") K.toast("업그레이드 도전 성공: " + name);
+    updateHud();
+  }
+  function updatePuzzle(t) {
+    var n = tokens.length, R = n === 1 ? 0 : 0.75;
+    tokens.forEach(function (m, i) {
+      var u = m.userData, base = (i / Math.max(1, n)) * Math.PI * 2;
+      m.position.set(R * Math.cos(base + t * 0.5) + 0.22 * Math.sin(t * u.f[0] + u.ph[0]), 0.35 * Math.sin(t * u.f[1] + u.ph[1]), R * Math.sin(base + t * 0.5) + 0.22 * Math.sin(t * u.f[2] + u.ph[2]));
+    });
+    var pairs = n === 3 ? [[0, 1], [1, 2], [2, 0]] : n === 2 ? [[0, 1]] : [];
+    var tmp = new THREE.Vector3(), p1 = new THREE.Vector3(), p2 = new THREE.Vector3();
+    puzGluons.forEach(function (gl, k) {
+      if (!pairs[k]) { gl.visible = false; return; }
+      gl.visible = true;
+      var A = tokens[pairs[k][0]].position, B = tokens[pairs[k][1]].position, arr = gl.geometry.attributes.position.array;
+      tmp.subVectors(B, A); p1.set(-tmp.y, tmp.x, 0.4).normalize(); p2.crossVectors(tmp, p1).normalize();
+      for (var i = 0; i < 90; i++) {
+        var f = i / 89, ph = f * Math.PI * 2 * 6 - t * 8, amp = 0.09 * Math.sin(Math.PI * f);
+        arr[3 * i] = A.x + tmp.x * f + amp * (p1.x * Math.cos(ph) + p2.x * Math.sin(ph));
+        arr[3 * i + 1] = A.y + tmp.y * f + amp * (p1.y * Math.cos(ph) + p2.y * Math.sin(ph));
+        arr[3 * i + 2] = A.z + tmp.z * f + amp * (p1.z * Math.cos(ph) + p2.z * Math.sin(ph));
+      }
+      gl.geometry.attributes.position.needsUpdate = true;
+    });
+    bag.scale.setScalar(1 + 0.02 * Math.sin(t * 1.7));
+  }
+
+  /* =========================================================
+     패널
+     ========================================================= */
+  var mission = K.Mission(ui.section(panel, "미션"), { id: "t01", steps: [
+    "<b>물질 속으로</b> — 물방울 → 물 분자 → 산소 원자 → 원자핵 → 양성자, 다섯 단계를 모두 방문하기",
+    "<b>크기 비율</b> — 원자 크기 ÷ 원자핵 크기를 계산해 입력하기(10의 거듭제곱으로 어림)",
+    "<b>표준모형 갤러리</b> — 입자 6개 이상을 눌러 보되, 쿼크·렙톤·게이지 보손·힉스를 하나 이상씩 포함하기",
+    "<b>양성자 만들기</b> — 쿼크 퍼즐에서 양성자(전하 +1)를 만들기",
+    "<b>중성자 만들기</b> — 쿼크 퍼즐에서 중성자(전하 0)를 만들기"
+  ] });
+
+  var modeSec = ui.section(panel, "모드");
+  var modeRow = ui.buttonRow(modeSec); modeRow.classList.add("mode-row");
+  var modeBtns = {
+    zoom: ui.button(modeRow, { label: "물질 속으로 줌인", id: "mode-zoom", onClick: function () { setMode("zoom"); } }),
+    gallery: ui.button(modeRow, { label: "표준모형 갤러리", id: "mode-gallery", onClick: function () { setMode("gallery"); } }),
+    puzzle: ui.button(modeRow, { label: "쿼크 조합 퍼즐", id: "mode-puzzle", onClick: function () { setMode("puzzle"); } })
+  };
+  var commonRow = ui.buttonRow(modeSec);
+  ui.button(commonRow, { label: "일시정지/재생", onClick: function () { sim.toggle(); } });
+  ui.button(commonRow, { label: "시점 초기화", onClick: function () { homeView(); } });
+
+  // 줌인 조작
+  var zSec = ui.section(panel, "줌인 조작", "단계 버튼을 누르거나, 화면 위에서 마우스 휠(두 손가락)로 확대·축소하세요.");
+  var lvRow = ui.buttonRow(zSec); lvRow.classList.add("lv-row");
+  ["물방울", "물 분자", "산소 원자", "원자핵", "양성자"].forEach(function (t, i) {
+    ui.button(lvRow, { label: (i + 1) + ". " + t, id: "lv-" + i, onClick: function () { Z.tour = false; tourTg.set(false); Z.target = LV[i].log; } });
+  });
+  var zRow = ui.buttonRow(zSec);
+  ui.button(zRow, { label: "◀ 축소", id: "zoom-out", onClick: function () { stepLevel(-1); } });
+  ui.button(zRow, { label: "확대 ▶", id: "zoom-in", kind: "primary", onClick: function () { stepLevel(1); } });
+  var sZoom = ui.slider(zSec, { id: "zoomlog", label: "보는 크기(10의 거듭제곱)", min: 2.7, max: 15.05, step: 0.01, value: 3,
+    format: function (v) { return "10" + sup(-Math.round(v)) + " m"; }, onInput: function (v) { Z.tour = false; tourTg.set(false); Z.target = -v; } });
+  var tourTg = ui.toggle(zSec, { id: "tour", label: "자동 여행(단계를 차례로 확대)", checked: false, onChange: function (on) { Z.tour = on; Z.tourT = 3; } });
+  var roZ = ui.readouts(zSec, [
+    { key: "lv", label: "지금 단계", unit: "" }, { key: "size", label: "이 단계의 크기", unit: "" },
+    { key: "exp", label: "10의 지수", unit: "" }, { key: "ratio", label: "바로 앞 단계 ÷ 이 단계", unit: "배" }
+  ]);
+  var zDesc = ui.html(zSec, "", "note");
+  ui.button(ui.buttonRow(zSec), { label: "기록", kind: "primary", id: "rec-zoom", onClick: function () {
+    var i = nearestLevel(), lv = LV[i];
+    rec.add({ mode: "줌인", name: lv.name, val: lv.size, charge: lv.charge, note: "10의 지수 " + lv.exp });
+  } });
+  var cvL = document.createElement("canvas"); cvL.className = "plot"; cvL.setAttribute("aria-label", "크기 사다리 그래프"); zSec.appendChild(cvL);
+  ui.html(zSec, '<p class="note">크기 사다리: 세로축은 크기의 10의 지수(log₁₀ m). 방문한 단계는 초록 점, 주황 선은 지금 보는 크기.</p>');
+  var rSec = ui.section(panel, "크기 비율 계산(미션 2)", "원자 지름과 원자핵 지름을 위 측정값에서 읽고 원자 ÷ 원자핵을 계산하세요. 예: 100000, 1e5, 10^5, 2×10^4");
+  var rForm = ui.html(rSec, '<label for="ratio-in">원자 ÷ 원자핵 ≈</label><input id="ratio-in" type="text" inputmode="decimal" autocomplete="off"> <span>배</span>', "ratio-form");
+  ui.button(rForm, { label: "확인", id: "ratio-check", onClick: checkRatio });
+  var ratioFb = ui.html(rSec, "", "feedback");
+
+  // 갤러리 조작
+  var gSec = ui.section(panel, "표준모형 갤러리", "화면의 구를 눌러(터치해) 입자 정보를 보세요. 17개 기본 입자 = 쿼크 6 + 렙톤 6 + 게이지 보손 4 + 힉스 1.");
+  var filt = ui.select(gSec, { id: "filter", label: "강조해서 보기", value: "all", options: [
+    { value: "all", label: "전체" }, { value: "quark", label: "쿼크(6)" }, { value: "lepton", label: "렙톤(6)" }, { value: "boson", label: "보손(5)" },
+    { value: "cern", label: "CERN에서 발견된 입자" }, { value: "neutral", label: "전하가 0인 입자" }
+  ], onChange: applyFilter });
+  var gPick = ui.select(gSec, { id: "pick", label: "목록에서 고르기(화면을 누르기 어려울 때)", value: "", options: [{ value: "", label: "— 입자 선택 —" }].concat(P17.map(function (p, i) { return { value: String(i), label: p.n + " (" + p.s.replace("_", "") + ")" }; })),
+    onChange: function (v) { if (v !== "") selectParticle(P17[Number(v)]); } });
+  var card = ui.html(gSec, '<p class="note">아직 고른 입자가 없습니다.</p>', "info-card");
+  var openedEl = ui.html(gSec, "", "note");
+  ui.button(ui.buttonRow(gSec), { label: "기록", kind: "primary", id: "rec-gal", onClick: function () {
+    if (!selected) { K.toast("먼저 입자를 하나 고르세요."); return; }
+    rec.add({ mode: "갤러리", name: selected.n + " " + selected.s.replace("_", ""), val: selected.m, charge: selected.q, note: "스핀 " + selected.spin + " · 발견 " + selected.year });
+  } });
+
+  // 퍼즐 조작
+  var pSec = ui.section(panel, "쿼크 조합 퍼즐", "쿼크를 눌러 주머니에 넣으세요(최대 3개). 전하 합과 만들어진 입자를 확인합니다.");
+  var qRow = ui.buttonRow(pSec); qRow.classList.add("q-row");
+  var qbU = ui.button(qRow, { label: "u  +2/3", id: "q-u", onClick: function () { addToken("u"); } }); qbU.classList.add("q-u");
+  var qbD = ui.button(qRow, { label: "d  −1/3", id: "q-d", onClick: function () { addToken("d"); } }); qbD.classList.add("q-d");
+  var upRow = ui.buttonRow(pSec); upRow.classList.add("q-row"); upRow.hidden = true;
+  [["s", "s  −1/3", "q-s"], ["ub", "ū  −2/3", "q-u"], ["db", "d̄  +1/3", "q-d"], ["sb", "s̄  +1/3", "q-s"]].forEach(function (a) {
+    var b = ui.button(upRow, { label: a[1], id: "q-" + a[0], onClick: function () { addToken(a[0]); } }); b.classList.add(a[2]);
+  });
+  ui.toggle(pSec, { id: "upgrade", label: "업그레이드: 기묘 쿼크와 반쿼크도 쓰기", checked: false, onChange: function (on) { upRow.hidden = !on; } });
+  var pRow = ui.buttonRow(pSec);
+  ui.button(pRow, { label: "마지막 빼기", id: "q-pop", onClick: popToken });
+  ui.button(pRow, { label: "비우기", id: "q-clear", kind: "warn", onClick: clearTokens });
+  var roP = ui.readouts(pSec, [{ key: "combo", label: "조합", unit: "" }, { key: "charge", label: "전하 합", unit: "" }]);
+  var exprEl = ui.html(pSec, "", "feedback");
+  var verdictEl = ui.html(pSec, "", "verdict");
+  ui.button(ui.buttonRow(pSec), { label: "기록", kind: "primary", id: "rec-puz", onClick: function () {
+    if (!tokens.length) { K.toast("먼저 쿼크를 넣으세요."); return; }
+    rec.add({ mode: "퍼즐", name: puz.combo, val: puz.expr, charge: chargeText(puz.charge), note: puz.verdict });
+  } });
+
+  var recSec = ui.section(panel, "기록표", "각 모드에서 [기록]을 누르면 지금 보고 있는 것이 기록됩니다.");
+  var rec = K.Recorder(recSec, { id: "t01", columns: [
+    { key: "mode", label: "모드" }, { key: "name", label: "대상" }, { key: "val", label: "크기·질량·계산" }, { key: "charge", label: "전하(e)" }, { key: "note", label: "비고" }
+  ] });
+
+  /* ---------- 동작 ---------- */
+  var mode = "zoom", started = false;
+  function homeView() {
+    var asp = (stage.clientWidth || 1) / (stage.clientHeight || 1);
+    if (mode === "zoom") sim.setView([0, 1.2, 10], [0, 0, 0]);
+    else if (mode === "gallery") { var k = Math.max(1, Math.min(2.4, 1.2 / asp)); sim.setView([0.4, 0.2, 10.8 * k], [-0.6, -0.1, 0]); }
+    else { var k2 = Math.max(1, Math.min(2, 1.1 / asp)); sim.setView([0, 1.6, 6.4 * k2], [0, 0, 0]); }
+  }
+  function setMode(m) {
+    mode = m;
+    Object.keys(modeBtns).forEach(function (k) { modeBtns[k].className = "sbtn" + (k === m ? " sbtn--primary" : ""); });
+    zoomRoot.visible = m === "zoom"; galRoot.visible = m === "gallery"; puzRoot.visible = m === "puzzle";
+    zSec.hidden = rSec.hidden = m !== "zoom"; gSec.hidden = m !== "gallery"; pSec.hidden = m !== "puzzle";
+    sim.controls.enableZoom = m !== "zoom"; sim.controls.enablePan = m !== "zoom";
+    document.getElementById("hint").textContent = m === "zoom" ? "드래그: 회전 · 휠/두 손가락: 물질 속으로 확대·축소" : m === "gallery" ? "구를 누르면 정보 · 드래그: 회전 · 휠: 확대" : "드래그: 회전 · 휠/두 손가락: 확대";
+    homeView(); updateHud();
+    if (m === "zoom") setTimeout(drawLadder, 0);
+    if (started && window.innerWidth <= 860 && stage.getBoundingClientRect().bottom < 80) stage.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  function stepLevel(dir) {
+    Z.tour = false; tourTg.set(false);
+    var i = nearestLevel(), cur = LV[i].log;
+    if (dir > 0) { if (Z.target > cur + 0.05) Z.target = cur; else Z.target = LV[Math.min(LV.length - 1, i + 1)].log; }
+    else { if (Z.target < cur - 0.05) Z.target = cur; else Z.target = LV[Math.max(0, i - 1)].log; }
+  }
+  stage.addEventListener("wheel", function (e) {
+    if (mode !== "zoom") return;
+    e.preventDefault(); Z.tour = false; tourTg.set(false);
+    Z.target = clamp(Z.target - e.deltaY * 0.0025, Z.min, Z.max);
+  }, { passive: false });
+  // 두 손가락 벌리기(터치)로 줌인
+  var pinch = null;
+  stage.addEventListener("touchstart", function (e) { if (mode === "zoom" && e.touches.length === 2) pinch = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY); }, { passive: true });
+  stage.addEventListener("touchmove", function (e) {
+    if (mode !== "zoom" || !pinch || e.touches.length !== 2) return;
+    var d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+    Z.target = clamp(Z.target - Math.log10(d / pinch) * 2.5, Z.min, Z.max); pinch = d;
+  }, { passive: true });
+  stage.addEventListener("touchend", function () { pinch = null; }, { passive: true });
+
+  function parseNum(s) {
+    s = String(s).replace(/\s|,/g, "").replace(/[×xX*]/g, "x").replace(/−/g, "-");
+    var m = s.match(/^([\d.]+)x10\^?([-+]?\d+)$/); if (m) return parseFloat(m[1]) * Math.pow(10, parseInt(m[2], 10));
+    m = s.match(/^10\^([-+]?\d+)$/); if (m) return Math.pow(10, parseInt(m[1], 10));
+    var v = Number(s); return isNaN(v) ? NaN : v;
+  }
+  function checkRatio() {
+    var v = parseNum(document.getElementById("ratio-in").value);
+    if (!(v > 0)) { ratioFb.innerHTML = '<span class="result-bad">숫자로 입력하세요. 예: 1e5 또는 10^5</span>'; return; }
+    var exact = LV[2].L / LV[3].L;
+    if (v >= 1e4 && v <= 3e5) {
+      ratioFb.innerHTML = '<span class="result-ok">맞아요!</span> 산소: (1×10⁻¹⁰ m) ÷ (6×10⁻¹⁵ m) ≈ ' + K.fmt(exact, 2) + "배. 원자는 핵보다 대략 10⁴~10⁵배 큽니다(수소 원자 ÷ 양성자 ≈ 6×10⁴). 핵이 지름 1 cm 구슬이면 원자는 지름 100 m~1 km!";
+      mission.complete(1, "미션 2 완료! 원자는 원자핵보다 약 10⁴~10⁵배 커요.");
+      rec.add({ mode: "줌인", name: "원자 ÷ 원자핵", val: K.fmt(v, 3), charge: "", note: "계산 결과" });
+    } else if (v < 1e4) ratioFb.innerHTML = '<span class="result-bad">너무 작아요.</span> 원자(10⁻¹⁰ m)와 원자핵(약 10⁻¹⁵ m)의 지수 차이를 다시 보세요.';
+    else ratioFb.innerHTML = '<span class="result-bad">너무 커요.</span> 10⁻¹⁰ ÷ 10⁻¹⁵ = 10^(−10−(−15))를 계산해 보세요.';
+  }
+
+  function applyFilter() {
+    var f = filt.get();
+    P17.forEach(function (p) {
+      var on = f === "all" || (f === "quark" && p.cat === "quark") || (f === "lepton" && p.cat === "lepton") || (f === "boson" && (p.cat === "gauge" || p.cat === "higgs")) ||
+        (f === "cern" && (p.s === "W" || p.s === "Z" || p.s === "H")) || (f === "neutral" && p.q === "0");
+      p.mesh.material.opacity = on ? (p.nu ? 0.85 : 1) : 0.12;
+      p.sym.material.opacity = p.nm.material.opacity = on ? 1 : 0.25;
+    });
+  }
+  function selectParticle(p) {
+    selected = p; opened[p.s] = p.cat;
+    selRing.visible = true; selRing.position.copy(p.mesh.userData.base); selRing.scale.setScalar(p.mesh.userData.r / 0.5 + 0.25);
+    card.innerHTML = "<h3>" + p.n + " (" + p.s.replace("_", "") + ")</h3>" +
+      "<dl><dt>분류</dt><dd>" + CAT[p.cat] + (p.gen ? " · " + p.gen + "세대" : "") + "</dd>" +
+      "<dt>질량</dt><dd>" + p.m + "</dd><dt>전하</dt><dd>" + p.q + " e</dd><dt>스핀</dt><dd>" + p.spin + "</dd>" +
+      "<dt>발견</dt><dd>" + p.year + "</dd></dl><p>" + p.where + "</p><p>" + p.note + "</p>";
+    var cats = {}; Object.keys(opened).forEach(function (k) { cats[opened[k]] = 1; });
+    var n = Object.keys(opened).length;
+    openedEl.textContent = "살펴본 입자 " + n + "개 / 17 · 쿼크 " + (cats.quark ? "○" : "×") + " 렙톤 " + (cats.lepton ? "○" : "×") + " 게이지 보손 " + (cats.gauge ? "○" : "×") + " 힉스 " + (cats.higgs ? "○" : "×");
+    if (n >= 6 && cats.quark && cats.lepton && cats.gauge && cats.higgs) mission.complete(2, "미션 3 완료! 표준모형의 네 무리를 모두 살펴봤어요.");
+    gPick.set(String(P17.indexOf(p)));
+    updateHud();
+  }
+  var ray = new THREE.Raycaster(), ptr = new THREE.Vector2(), down = null;
+  sim.renderer.domElement.addEventListener("pointerdown", function (e) { down = [e.clientX, e.clientY]; });
+  sim.renderer.domElement.addEventListener("pointerup", function (e) {
+    if (!down || mode !== "gallery") return;
+    if (Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) return;
+    var rc = sim.renderer.domElement.getBoundingClientRect();
+    ptr.set(((e.clientX - rc.left) / rc.width) * 2 - 1, -((e.clientY - rc.top) / rc.height) * 2 + 1);
+    ray.setFromCamera(ptr, sim.camera);
+    var hit = ray.intersectObjects(pickables, false);
+    if (hit.length) selectParticle(hit[0].object.userData.p);
+  });
+  sim.renderer.domElement.addEventListener("pointermove", function (e) {
+    if (mode !== "gallery") { sim.renderer.domElement.style.cursor = ""; return; }
+    var rc = sim.renderer.domElement.getBoundingClientRect();
+    ptr.set(((e.clientX - rc.left) / rc.width) * 2 - 1, -((e.clientY - rc.top) / rc.height) * 2 + 1);
+    ray.setFromCamera(ptr, sim.camera);
+    sim.renderer.domElement.style.cursor = ray.intersectObjects(pickables, false).length ? "pointer" : "";
+  });
+
+  /* ---------- HUD와 그래프 ---------- */
+  var VIS_H = 2 * 10 * Math.tan(25 * Math.PI / 180); // 카메라 거리 10에서 화면 높이(장면 단위)
+  var lastHudLv = -1, hudTimer = 0;
+  function updateHud() {
+    var h1 = document.getElementById("hud-main"), h2 = document.getElementById("hud-scale");
+    if (mode === "zoom") {
+      var i = nearestLevel(), lv = LV[i], screenM = VIS_H / 4 * Math.pow(10, Z.viewLog);
+      var between = Math.abs(lv.log - Z.viewLog) > 0.45, j = Z.viewLog < lv.log ? Math.min(4, i + 1) : Math.max(0, i - 1);
+      h1.innerHTML = (between ? '<span class="hud-line"><span class="k">이동 중</span> <b>' + LV[Math.min(i, j)].name.split(" (")[0] + " → " + LV[Math.max(i, j)].name.split(" (")[0] + "</b></span>" :
+        '<span class="hud-line"><span class="k">단계 ' + (i + 1) + "/5</span> <b>" + lv.name + "</b></span>") +
+        '<span class="hud-line"><span class="k">크기</span> <span class="v">' + lv.size + "</span></span>" +
+        '<span class="hud-line"><span class="k">전하</span> <span class="v">' + lv.charge + "</span></span>";
+      h2.innerHTML = '<span class="hud-line"><span class="k">화면 축척</span> <span class="v">화면 높이 ≈ ' + K.fmt(screenM, 2) + " m</span></span>" +
+        '<span class="hud-line"><span class="k">이 크기의 예</span> <span class="v">' + milestone(Z.viewLog) + "</span></span>";
+      roZ.set("lv", (i + 1) + ". " + ["물방울", "물 분자", "산소 원자", "원자핵", "양성자"][i]);
+      roZ.set("size", lv.size.replace(/^약 /, "").replace(/ \(.*\)$/, ""));
+      roZ.set("exp", String(lv.exp));
+      roZ.set("ratio", i ? K.fmt(LV[i - 1].L / lv.L, 3) : "–");
+      zDesc.textContent = lv.desc;
+      sZoom.set(-Z.viewLog);
+    } else if (mode === "gallery") {
+      h1.innerHTML = selected
+        ? '<span class="hud-line"><b>' + selected.n + " " + selected.s.replace("_", "") + '</b></span><span class="hud-line"><span class="k">질량</span> <span class="v">' + selected.m + '</span></span><span class="hud-line"><span class="k">전하</span> <span class="v">' + selected.q + ' e</span> · <span class="k">스핀</span> <span class="v">' + selected.spin + "</span></span>"
+        : '<span class="hud-line"><b>표준모형의 기본 입자 17개</b></span><span class="hud-line"><span class="k">구를 눌러 정보를 보세요</span></span>';
+      h2.innerHTML = '<span class="hud-line"><span class="k">구의 크기 = 질량(로그 눈금)</span></span><span class="hud-line"><span class="k">기본 입자는 크기가 측정되지 않음(10⁻¹⁸ m 이하)</span></span>';
+    } else {
+      h1.innerHTML = '<span class="hud-line"><span class="k">조합</span> <b>' + (puz.combo || "–") + '</b></span><span class="hud-line"><span class="k">전하</span> <span class="v">' + (puz.expr || "–") + "</span></span>";
+      h2.innerHTML = '<span class="hud-line"><span class="k">색: 빨강 u · 파랑 d · 보라 s · 그물 무늬 = 반쿼크</span></span><span class="hud-line"><span class="k">초록 물결선 = 글루온</span></span>';
+    }
+  }
+  function drawLadder() {
+    if (mode !== "zoom" || zSec.hidden) return;
+    var all = LV.map(function (lv, i) { return [i + 1, lv.log]; });
+    var vis = LV.map(function (lv, i) { return Z.visited[i] ? [i + 1, lv.log] : null; }).filter(Boolean);
+    K.plot.xy(cvL, { xr: [0.6, 5.4], yr: [-16, -2], xlabel: "단계 (1 물방울 → 5 양성자)", ylabel: "log₁₀(크기/m)", series: [
+      { points: all, color: "#7880a0", line: true, dots: true, r: 3 },
+      { points: vis, color: "#5fd08a", r: 4.5 },
+      { points: [[0.6, Z.viewLog], [5.4, Z.viewLog]], color: "#f0a35e", line: true, dots: false, dash: [5, 4], width: 1.5 }
+    ] });
+  }
+  window.addEventListener("resize", function () { setTimeout(drawLadder, 50); });
+
+  /* ---------- 매 프레임 ---------- */
+  var ladderTimer = 0;
+  sim.onFrame(function (dt, t, real) {
+    if (mode === "zoom") {
+      updateZoom(dt, t, real);
+      hudTimer += real; ladderTimer += real;
+      if (hudTimer > 0.12) { hudTimer = 0; updateHud(); }
+      if (ladderTimer > 0.2 && Math.abs(Z.target - Z.viewLog) > 1e-3) { ladderTimer = 0; drawLadder(); }
+    } else if (mode === "gallery") {
+      P17.forEach(function (p, i) { var m = p.mesh; m.position.y = m.userData.base.y + 0.06 * Math.sin(t * 1.3 + i); });
+      if (selected) { selRing.position.y = selected.mesh.position.y; selRing.rotation.z = t; }
+    } else updatePuzzle(t);
+  });
+
+  /* ---------- 시작 ---------- */
+  setMode("zoom"); evaluate(); applyFilter(); drawLadder(); started = true;
+})();
+</script>
+</body>
+</html>
