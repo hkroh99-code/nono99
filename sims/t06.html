@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>뮤온 비행 실험실 모의실험</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/sim.css">
+<style>
+  /* 이 모의실험에서만 쓰는 보조 스타일 (sim.css 색 변수 사용) */
+  .hud b { color: var(--s-ink); font-weight: 600; }
+  .hud .row { display: block; }
+  .hud .mode-rel { color: #ff8fb0; }
+  .hud .mode-cls { color: var(--s-warn); }
+  .preset-row .sbtn { padding: .35rem .6rem; font-size: .8rem; }
+  .think { font-size: .84rem; color: var(--s-ink-2); line-height: 1.55; }
+  .think b { color: var(--s-ink); }
+  @media (max-width: 860px) { .hud { font-size: .7rem; padding: .3rem .5rem; line-height: 1.45; } .stage-overlay { gap: .3rem; } #h-rate { display: none; } }
+</style>
+</head>
+<body>
+<div class="sim">
+  <header class="sim-head">
+    <span class="tag">주제 06 · 3D</span>
+    <h1>뮤온 비행 실험실</h1>
+    <nav aria-label="관련 자료">
+      <a href="../students/t06.html">학생용 활동지</a>
+      <a href="../teachers/t06.html">교사용 지도서</a>
+      <a href="index.html">모의실험 목록</a>
+    </nav>
+  </header>
+  <div class="sim-body">
+    <div class="stage" id="stage">
+      <div class="stage-overlay" id="overlay">
+        <div class="hud"><b id="h-mode">상대론 · 지면 기준계</b><span class="row"><span class="k">β</span> <span class="v" id="h-beta">–</span> <span class="k">· γ</span> <span class="v" id="h-gamma">–</span></span></div>
+        <div class="hud"><span class="row"><span class="k">지면 시계 t</span> <span class="v" id="h-tg">–</span></span><span class="row"><span class="k">뮤온 시계 τ′</span> <span class="v" id="h-tm">–</span></span></div>
+        <div class="hud"><span class="row"><span class="k">남은 뮤온</span> <span class="v" id="h-alive">–</span></span><span class="row"><span class="k">지면 도달</span> <span class="v" id="h-land">–</span> <span class="k">(이론 <span id="h-th">–</span>)</span></span></div>
+        <div class="hud"><span class="row k" id="h-scale">화면 축척: 1칸 = 1 km</span><span class="row k" id="h-rate">재생: 1초 ≈ – μs</span></div>
+      </div>
+      <div class="stage-hint">드래그: 회전 · 휠/두 손가락: 확대 · 오른쪽 드래그: 이동</div>
+    </div>
+    <aside class="panel" id="panel" aria-label="조작과 기록"></aside>
+  </div>
+</div>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/vendor/three/OrbitControls.js"></script>
+<script src="../assets/js/sim-kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var THREE = window.THREE, K = window.SimKit, ui = K.ui, COL = K.COLORS;
+  var sim = K.create({ stage: document.getElementById("stage"), cameraPos: [14, 9, 21], target: [0, 7, 0], grid: false, far: 2000 });
+  var scene = sim.scene;
+  var panel = document.getElementById("panel");
+
+  /* ================= 상수 ================= */
+  var C_KM_US = 0.299792458;      // 빛의 속력 (km/μs)
+  var TAU = 2.197;                // 정지 상태 뮤온 평균 수명 (μs)
+  var MAXN = 2000, SPREAD = 1.4;  // 최대 뮤온 수, 다발 반지름(km)
+  var RUN_SECONDS = 6;            // 한 번 비행을 약 6초 동안 보여 줌
+
+  function gammaOf(b) { return 1 / Math.sqrt(1 - b * b); }
+  function betaFromU(u) { return 1 - 0.1 * Math.pow(10, -3 * u); }   // u: 0 → 0.90c, 1 → 0.9999c
+  function uFromBeta(b) { return -Math.log10((1 - b) / 0.1) / 3; }
+
+  /* ================= 장면 ================= */
+  function dotTexture(soft) {
+    var cv = document.createElement("canvas"); cv.width = cv.height = 64;
+    var g = cv.getContext("2d"), grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    grd.addColorStop(0, "rgba(255,255,255,1)"); grd.addColorStop(soft ? 0.25 : 0.55, "rgba(255,255,255,0.9)"); grd.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = grd; g.fillRect(0, 0, 64, 64);
+    return new THREE.CanvasTexture(cv);
+  }
+  var texDot = dotTexture(false), texGlow = dotTexture(true);
+
+  // 대기(공기) 무리: 지면 기준 고도 좌표를 그대로 쓰고, 뮤온 기준계에서는 세로로 1/γ 축소 + 위로 이동
+  var air = new THREE.Group(); scene.add(air);
+  var ringGroup = new THREE.Group(); air.add(ringGroup);
+  var atmo = new THREE.Mesh(new THREE.CylinderGeometry(3.2, 3.2, 1, 48, 1, true), new THREE.MeshBasicMaterial({ color: 0x3d6bff, transparent: true, opacity: 0.06, side: THREE.DoubleSide, depthWrite: false }));
+  scene.add(atmo);
+
+  function buildRings(H) {
+    while (ringGroup.children.length) { var o = ringGroup.children.pop(); o.geometry.dispose(); o.material.dispose(); }
+    for (var h = 0; h <= Math.ceil(H); h++) {
+      var major = h % 5 === 0, pts = [];
+      for (var i = 0; i <= 64; i++) { var a = i / 64 * Math.PI * 2; pts.push(new THREE.Vector3(3.2 * Math.cos(a), h, 3.2 * Math.sin(a))); }
+      ringGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: major ? 0x7f9cff : 0x3a4670, transparent: true, opacity: major ? 0.7 : 0.45 })));
+    }
+  }
+
+  // 지면: 격자 + 검출기
+  var ground = new THREE.Group(); scene.add(ground);
+  var grid = new THREE.GridHelper(16, 16, 0x2a3458, 0x161d33); ground.add(grid);
+  var detector = new THREE.Mesh(new THREE.BoxGeometry(3.2, 0.14, 3.2), new THREE.MeshLambertMaterial({ color: 0x2f8f6a, transparent: true, opacity: 0.85 }));
+  detector.position.y = -0.07; ground.add(detector);
+  var detFlash = 0;
+
+  // 이름표
+  var altLabels = [];
+  [0, 5, 10, 15, 20].forEach(function (h) {
+    var lb = K.label(h === 0 ? "0 km (지면)" : h + " km", { height: 0.85, color: "#a9b0c8" });
+    lb.userData.h = h; scene.add(lb); altLabels.push(lb);
+  });
+  var lblDet = K.label("지면 검출기", { height: 0.85, color: "#5fd08a" }); scene.add(lblDet);
+  var lblTop = K.label("뮤온 생성 고도", { height: 0.85, color: "#ff8fb0" }); scene.add(lblTop);
+  var lblEv = K.label("에베레스트 8.8 km", { height: 0.7, color: "#7880a0" }); scene.add(lblEv);
+  // 이름표 크기를 카메라 거리에 맞춰 일정하게 보이도록
+  var allLabels = altLabels.concat([lblDet, lblTop, lblEv]);
+  allLabels.forEach(function (lb) { lb.userData.base = lb.scale.clone(); });
+  function scaleLabels() {
+    var f = Math.min(1.4, Math.max(0.25, sim.camera.position.distanceTo(sim.controls.target) / 26));
+    allLabels.forEach(function (lb) { lb.scale.set(lb.userData.base.x * f, lb.userData.base.y * f, 1); });
+  }
+
+  // 뮤온 점
+  function makePoints(size, tex, parent) {
+    var geo = new THREE.BufferGeometry();
+    var pos = new Float32Array(MAXN * 3), col = new Float32Array(MAXN * 3);
+    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+    geo.setDrawRange(0, 0);
+    var mat = new THREE.PointsMaterial({ size: size, map: tex, vertexColors: true, transparent: true, depthWrite: false, sizeAttenuation: true });
+    var p = new THREE.Points(geo, mat); p.frustumCulled = false; parent.add(p);
+    return { pts: p, pos: pos, col: col, geo: geo };
+  }
+  var MU = makePoints(0.26, texDot, scene);
+  var DEC = makePoints(0.22, texGlow, air);
+  var muColor = new THREE.Color(COL.muon), eColor = new THREE.Color(COL.electron), flashColor = new THREE.Color(0xffffff);
+
+  var glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: texGlow, color: 0xffd23f, transparent: true, depthWrite: false }));
+  glow.scale.setScalar(0.01); scene.add(glow);
+
+  /* ================= 패널 ================= */
+  var mission = K.Mission(ui.section(panel, "미션"), { id: "t06", steps: [
+    "<b>고전 계산</b> — [고전] 모드, 고도 10 km 이상에서 한 다발을 끝까지 비행시키고 지면 도달 수를 본다.",
+    "<b>상대론</b> — 같은 조건을 [상대론] 모드(지면 기준계)로 비행시켜 도달 수를 비교한다.",
+    "<b>γ 측정</b> — 상대론 모드에서 속력을 3가지 이상 바꿔 [기록]하고, 지면 시계 ÷ 뮤온 시계 = γ 임을 확인한다.",
+    "<b>길이 수축</b> — [뮤온 기준계]로 바꿔 비행시키고, 대기 두께가 H/γ로 줄어도 도달 수가 같음을 확인한다.",
+    "<b>고도별 생존</b> — 상대론 모드에서 고도를 3곳 이상 바꿔 [기록]하고 그래프의 지수 곡선과 비교한다."
+  ] });
+
+  var ctl = ui.section(panel, "조작");
+  var sH = ui.slider(ctl, { id: "alt", label: "뮤온 생성 고도 H", min: 1, max: 20, step: 0.5, value: 15, unit: "km", format: function (v) { return v.toFixed(1); }, onInput: function () { touched(); } });
+  var sU = ui.slider(ctl, { id: "beta", label: "뮤온 속력 v", min: 0, max: 1, step: 0, value: uFromBeta(0.995),
+    format: function (u) { var b = betaFromU(u); return b.toFixed(4) + " c (γ = " + gammaOf(b).toFixed(2) + ")"; }, onInput: function () { touched(); } });
+  var pr = ui.buttonRow(ctl); pr.classList.add("preset-row");
+  [[0.98, "0.98c"], [0.995, "0.995c"], [0.9994, "0.9994c"], [0.9999, "0.9999c"]].forEach(function (q) {
+    ui.button(pr, { label: q[1], onClick: function () { sU.set(uFromBeta(q[0])); touched(); } });
+  });
+  var sN = ui.slider(ctl, { id: "n0", label: "한 다발의 뮤온 수 N₀", min: 100, max: 2000, step: 100, value: 1000, unit: "개", format: function (v) { return v.toFixed(0); }, onInput: function () { touched(); } });
+  var selMode = ui.select(ctl, { id: "mode", label: "물리 법칙", value: "rel", options: [
+    { value: "rel", label: "상대론 (시간 지연·길이 수축 있음)" }, { value: "cls", label: "고전 물리 (시간 지연 없음)" }], onChange: function () { touched(); } });
+  var selFrame = ui.select(ctl, { id: "frame", label: "보는 기준계", value: "ground", options: [
+    { value: "ground", label: "지면 기준계 (뮤온이 떨어짐)" }, { value: "muon", label: "뮤온 기준계 (대기가 다가옴)" }], onChange: function () { touched(); } });
+  var sSpeed = ui.slider(ctl, { id: "play", label: "재생 속도", min: 0.25, max: 2, step: 0.25, value: 1, unit: "×", format: function (v) { return v.toFixed(2); } });
+  var row = ui.buttonRow(ctl);
+  ui.button(row, { label: "뮤온 다발 발사", kind: "primary", id: "btn-launch", onClick: function () { userTouched = true; launch(); } });
+  ui.button(row, { label: "일시정지/재생", onClick: function () { sim.toggle(); } });
+  var row2 = ui.buttonRow(ctl);
+  ui.button(row2, { label: "전체 보기", onClick: function () { if (run) autoView(run.P, run.k); } });
+  ui.button(row2, { label: "지면 가까이", onClick: function () { sim.setView([5, 2.2, 8], [0, 0.8, 0]); } });
+  var autoTgl = ui.toggle(ctl, { id: "auto", label: "비행이 끝나면 자동으로 다시 발사", checked: true });
+
+  var RO = ui.readouts(ui.section(panel, "측정값 · 이론값"), [
+    { key: "beta", label: "속력 β = v/c" }, { key: "gamma", label: "로런츠 인자 γ" },
+    { key: "t", label: "비행 시간(지면) t = H/v", unit: "μs" }, { key: "life", label: "지면에서 본 수명 (γτ)", unit: "μs" },
+    { key: "tp", label: "뮤온 시계 경과 t/γ", unit: "μs" }, { key: "hc", label: "뮤온이 본 대기 두께 (H/γ)", unit: "km" },
+    { key: "n", label: "지면 도달 수 N", unit: "개" }, { key: "nrel", label: "이론(상대론) N₀e^(−t/γτ)", unit: "개" },
+    { key: "ncls", label: "이론(고전) N₀e^(−t/τ)", unit: "개" }, { key: "frac", label: "도달 비율 N/N₀", unit: "%" }
+  ]);
+
+  var recSec = ui.section(panel, "기록표", "비행이 끝나면 [기록]을 누르세요. 표는 [표 복사]로 엑셀에 붙여 넣을 수 있어요.");
+  var recRow = ui.buttonRow(recSec);
+  ui.button(recRow, { label: "기록", kind: "primary", id: "btn-rec", onClick: function () { recordRun(); } });
+  var rec = K.Recorder(recSec, { id: "t06", columns: [
+    { key: "mode", label: "모드" }, { key: "frame", label: "기준계" }, { key: "H", label: "H", unit: "km", digits: 3 },
+    { key: "beta", label: "β", digits: 5 }, { key: "gamma", label: "γ", digits: 4 }, { key: "t", label: "지면 시계", unit: "μs", digits: 4 },
+    { key: "tp", label: "뮤온 시계", unit: "μs", digits: 4 }, { key: "N0", label: "N₀" }, { key: "N", label: "도달 N" },
+    { key: "Nth", label: "이론 N", digits: 4 }, { key: "frac", label: "N/N₀", unit: "%", digits: 3 }
+  ], onChange: function () { checkRecMissions(); } });
+
+  var plotSec = ui.section(panel, "고도별 생존 그래프", "현재 다발이 각 고도(1 km 간격)를 지날 때 남은 비율(점)과 이론 곡선. 가로축 오른쪽 끝이 생성 고도 H, 왼쪽 끝이 지면입니다.");
+  var cv = document.createElement("canvas"); cv.className = "plot plot--tall"; cv.setAttribute("aria-label", "고도별 뮤온 생존 비율 그래프"); plotSec.appendChild(cv);
+  ui.html(plotSec, '<span><i style="background:#ff5d8f"></i>상대론 이론</span><span><i style="background:#b9bfd3"></i>고전 이론</span><span><i style="background:#f0a35e"></i>이번 다발 측정</span>', "legend");
+
+  ui.html(ui.section(panel, "생각해 보기"), "<b>지면 기준계</b>에서는 뮤온의 시계가 γ배 느리게 가서(시간 지연) 수명이 γτ로 늘어난다. <b>뮤온 기준계</b>에서는 뮤온의 시계는 정상이지만 다가오는 대기의 두께가 H/γ로 줄어든다(길이 수축). 두 설명은 같은 도달 수를 예측한다. 고전 물리로는 τ 동안 최대 cτ ≈ 0.66 km밖에 못 간다.", "think");
+
+  /* ================= 비행(한 다발) ================= */
+  var lastView = null;
+  function autoView(P, k) {
+    var narrow = sim.stage.clientWidth < 600;   // 좁은 화면: 위쪽 HUD에 가리지 않게 장면을 조금 아래로
+    var h = P.H * k, d = Math.max(12, h * 1.35 + 8) * (narrow ? 1.15 : 1);
+    sim.setView([d * 0.55, h * 0.6 + d * 0.3, d * 0.85], [0, h * (narrow ? 0.6 : 0.45), 0]);
+  }
+  var run = null, userTouched = false, waitT = 0, firstFrame = true;
+  var hMode = document.getElementById("h-mode"), hBeta = document.getElementById("h-beta"), hGamma = document.getElementById("h-gamma"),
+      hTg = document.getElementById("h-tg"), hTm = document.getElementById("h-tm"), hAlive = document.getElementById("h-alive"),
+      hLand = document.getElementById("h-land"), hTh = document.getElementById("h-th"), hScale = document.getElementById("h-scale"), hRate = document.getElementById("h-rate");
+
+  function params() {
+    var b = betaFromU(sU.get());
+    return { H: sH.get(), beta: b, gamma: gammaOf(b), rel: selMode.get() === "rel", frame: selFrame.get(), N0: Math.round(sN.get()) };
+  }
+  var restartTimer = null;
+  function touched() {
+    userTouched = true; updateStatic();
+    clearTimeout(restartTimer); restartTimer = setTimeout(launch, 120);
+  }
+
+  function launch() {
+    var P = params();
+    var T = P.H / (P.beta * C_KM_US);                                   // 지면 기준 비행 시간 (μs)
+    var k = (P.frame === "muon" && P.rel) ? 1 / P.gamma : 1;            // 뮤온 기준계 + 상대론 → 대기 길이 수축
+    var Uend = (P.frame === "muon" && P.rel) ? T / P.gamma : T;         // 이 기준계에서 비행에 걸리는 시간
+    var dil = (P.frame === "ground" && P.rel) ? P.gamma : 1;            // 지면 기준계 + 상대론 → 뮤온 시계 γ배 느림
+    run = { P: P, T: T, k: k, Uend: Uend, u: 0, done: false, N0: P.N0, alive: P.N0, landed: 0, ud: new Float64Array(P.N0),
+      x: new Float32Array(P.N0), z: new Float32Array(P.N0), dead: new Uint8Array(P.N0), flash: new Float32Array(P.N0), nDec: 0,
+      samples: [[P.H, 100]], nextAlt: Math.ceil(P.H) - 1, recorded: false, user: userTouched };
+    for (var i = 0; i < P.N0; i++) {
+      var r = SPREAD * Math.sqrt(Math.random()), a = Math.random() * Math.PI * 2;
+      run.x[i] = r * Math.cos(a); run.z[i] = r * Math.sin(a);
+      var tp = -TAU * Math.log(1 - Math.random());   // 뮤온 고유 시간으로 본 붕괴 시각 (지수 분포)
+      run.ud[i] = tp * dil;                           // 이 기준계 시계로 본 붕괴 시각
+      MU.col[i * 3] = muColor.r; MU.col[i * 3 + 1] = muColor.g; MU.col[i * 3 + 2] = muColor.b;
+    }
+    MU.geo.setDrawRange(0, P.N0); MU.geo.attributes.color.needsUpdate = true;
+    DEC.geo.setDrawRange(0, 0);
+    buildRings(P.H);
+    glow.userData.t = 1;
+    waitT = 0;
+    var viewKey = P.frame === "muon" ? "m" + Math.round(P.H * k * 4) : "g" + Math.round(P.H / 2.5);
+    if (viewKey !== lastView) autoView(P, k);
+    lastView = viewKey;
+    updateStatic();
+    placeAir(0);
+    updateMuons();
+  }
+
+  function airY() { return run.P.frame === "muon" ? run.P.H * run.k * (run.u / run.Uend) : 0; }
+  function placeAir() {
+    var P = run.P, y0 = airY(), k = run.k;
+    air.position.y = y0; air.scale.y = k;
+    ground.position.y = y0;
+    atmo.scale.y = P.H * k; atmo.position.y = y0 + P.H * k / 2;
+    var showMid = 5 * k >= 0.7;
+    altLabels.forEach(function (lb) {
+      var h = lb.userData.h;
+      lb.visible = h <= P.H + 1e-9 && (h === 0 || showMid);
+      lb.position.set(-5, y0 + h * k, 0);
+    });
+    lblDet.position.set(3.4, y0 + 0.5, 2.2);
+    lblEv.visible = P.H > 8.8 && 8.8 * k > 0.9;
+    lblEv.position.set(4.2, y0 + 8.8 * k, -1);
+    var top = P.frame === "muon" ? P.H * k : P.H;
+    lblTop.position.set(0, top + (P.frame === "muon" && k < 1 ? 0.35 + 0.5 * P.H * k : 0.9), 0);
+    glow.position.set(0, top, 0);
+  }
+
+  function updateMuons() {
+    var P = run.P, f = run.u / run.Uend, y = P.frame === "muon" ? P.H * run.k : P.H * (1 - f);
+    var groundY = airY();
+    for (var i = 0; i < run.N0; i++) {
+      var o = i * 3;
+      if (run.dead[i] === 1) { MU.pos[o + 1] = -1e4; continue; }
+      MU.pos[o] = run.x[i]; MU.pos[o + 2] = run.z[i];
+      MU.pos[o + 1] = run.dead[i] === 2 ? groundY + 0.08 : y;
+    }
+    MU.geo.attributes.position.needsUpdate = true;
+  }
+
+  function step(du) {
+    var P = run.P;
+    run.u = Math.min(run.Uend, run.u + du);
+    var u = run.u;
+    for (var i = 0; i < run.N0; i++) {
+      if (run.dead[i] === 0 && run.ud[i] <= u && run.ud[i] < run.Uend) {
+        run.dead[i] = 1; run.alive--;
+        var n = run.nDec++, o = n * 3;
+        DEC.pos[o] = run.x[i]; DEC.pos[o + 1] = P.H * (1 - run.ud[i] / run.Uend); DEC.pos[o + 2] = run.z[i];
+        DEC.col[o] = 1; DEC.col[o + 1] = 1; DEC.col[o + 2] = 1;
+        run.flash[n] = 1;
+      }
+    }
+    // 고도 표본 (1 km 간격)
+    var alt = P.H * (1 - u / run.Uend);
+    while (run.nextAlt >= 0 && alt <= run.nextAlt + 1e-9) { run.samples.push([run.nextAlt, 100 * run.alive / run.N0]); run.nextAlt--; }
+    if (u >= run.Uend) {
+      for (var j = 0; j < run.N0; j++) if (run.dead[j] === 0) { run.dead[j] = 2; run.landed++; }
+      run.done = true; detFlash = 1;
+      if (run.samples[run.samples.length - 1][0] !== 0) run.samples.push([0, 100 * run.landed / run.N0]);
+      onRunDone();
+    }
+    DEC.geo.setDrawRange(0, run.nDec);
+    DEC.geo.attributes.position.needsUpdate = true;
+    placeAir(); updateMuons();
+  }
+
+  function theory(P) {
+    var T = P.H / (P.beta * C_KM_US);
+    return { T: T, rel: P.N0 * Math.exp(-T / (P.gamma * TAU)), cls: P.N0 * Math.exp(-T / TAU) };
+  }
+  function properFlight(P) { var T = P.H / (P.beta * C_KM_US); return P.rel ? T / P.gamma : T; }
+
+  function updateStatic() {
+    var P = params(), th = theory(P);
+    RO.set("beta", P.beta.toFixed(5)); RO.set("gamma", P.gamma, 4);
+    RO.set("t", th.T, 4); RO.set("life", P.rel ? P.gamma * TAU : TAU, 4);
+    RO.set("tp", properFlight(P), 4); RO.set("hc", P.rel ? P.H / P.gamma : P.H, 4);
+    RO.set("nrel", th.rel, 3); RO.set("ncls", th.cls < 0.01 ? th.cls.toExponential(1) : th.cls.toFixed(2), 3);
+    hBeta.textContent = P.beta.toFixed(4) + " c"; hGamma.textContent = P.gamma.toFixed(3);
+    hMode.innerHTML = (P.rel ? '<span class="mode-rel">상대론</span>' : '<span class="mode-cls">고전 물리</span>') + " · " + (P.frame === "ground" ? "지면 기준계" : "뮤온 기준계" + (P.rel ? " (대기 길이 수축)" : " (수축 없음)"));
+    hTh.textContent = K.fmt(P.rel ? th.rel : th.cls, 3);
+    drawPlot();
+  }
+
+  function updateLive() {
+    if (!run) return;
+    var P = run.P, u = run.u, tg, tm;
+    if (P.frame === "ground") { tg = u; tm = P.rel ? u / P.gamma : u; }
+    else { tm = u; tg = null; }
+    hTg.textContent = tg === null ? "(뮤온 기준: 지면이 다가옴)" : tg.toFixed(2) + " μs";
+    hTm.textContent = tm.toFixed(2) + " μs";
+    hAlive.textContent = run.alive + " / " + run.N0;
+    hLand.textContent = run.done ? String(run.landed) : "비행 중";
+    RO.set("n", run.done ? String(run.landed) : "비행 중");
+    RO.set("frac", run.done ? 100 * run.landed / run.N0 : "–", 3);
+    hRate.textContent = "재생: 1초 ≈ " + K.fmt(run.Uend / RUN_SECONDS * sSpeed.get(), 3) + " μs (" + (P.frame === "ground" ? "지면 시계" : "뮤온 시계") + ")";
+    hScale.textContent = "화면 축척: 1칸 = 1 km (가로·세로 같음)" + (P.frame === "muon" && P.rel ? " · 대기는 1/γ로 수축" : "");
+  }
+
+  function drawPlot() {
+    var P = run ? run.P : params(), H = P.H, v = P.beta * C_KM_US;
+    var cls = [], rel = [];
+    for (var i = 0; i <= 120; i++) {
+      var h = H * i / 120, d = H - h;
+      cls.push([h, 100 * Math.exp(-d / (v * TAU))]);
+      rel.push([h, 100 * Math.exp(-d / (v * P.gamma * TAU))]);
+    }
+    var series = [
+      { points: cls, line: true, dots: false, color: "#b9bfd3", dash: [5, 4], label: "고전" },
+      { points: rel, line: true, dots: false, color: "#ff5d8f", label: "상대론" }
+    ];
+    if (run) series.push({ points: run.samples, color: "#f0a35e", r: 3.5 });
+    K.plot.xy(cv, { series: series, xr: [0, H], yr: [0, 105], xlabel: "고도 h (km)", ylabel: "남은 뮤온 비율 (%)" });
+  }
+  window.addEventListener("resize", drawPlot);
+
+  function onRunDone() {
+    updateLive(); drawPlot();
+    var P = run.P;
+    if (!run.user) return;
+    if (!P.rel && P.H >= 10) mission.complete(0, "미션 1 완료! 고전 물리로는 거의 하나도 도달하지 못해요.");
+    if (P.rel && P.frame === "ground" && P.H >= 10) mission.complete(1, "미션 2 완료! 시간 지연 덕분에 많은 뮤온이 지면에 도달해요.");
+    if (P.rel && P.frame === "muon") mission.complete(3, "미션 4 완료! 길이 수축으로 보아도 도달 수는 같아요.");
+  }
+
+  function recordRun() {
+    if (!run || !run.done) { K.toast("비행이 끝난 뒤 [기록]을 누르세요."); return; }
+    if (run.recorded) { K.toast("이번 비행은 이미 기록했어요."); return; }
+    var P = run.P, th = theory(P), tp = properFlight(P);
+    rec.add({ mode: P.rel ? "상대론" : "고전", frame: P.frame === "ground" ? "지면" : "뮤온", H: P.H, beta: P.beta, gamma: P.gamma,
+      t: P.frame === "ground" || !P.rel ? th.T : "–", tp: tp, N0: P.N0, N: run.landed, Nth: P.rel ? th.rel : th.cls, frac: 100 * run.landed / P.N0 });
+    run.recorded = true;
+  }
+  function checkRecMissions() {
+    var betas = [], hs = [];
+    rec.rows.forEach(function (r) {
+      if (r.mode !== "상대론") return;
+      if (!betas.some(function (b) { return Math.abs(b - r.beta) < 2e-4; })) betas.push(r.beta);
+      if (!hs.some(function (h) { return Math.abs(h - r.H) < 0.99; })) hs.push(r.H);
+    });
+    if (betas.length >= 3) mission.complete(2, "미션 3 완료! 지면 시계 ÷ 뮤온 시계 = γ 예요.");
+    if (hs.length >= 3) mission.complete(4, "미션 5 완료! 고도가 낮을수록 더 많이 살아남아요.");
+  }
+
+  /* ================= 매 프레임 ================= */
+  sim.onFrame(function (dt, t, real) {
+    if (firstFrame) { firstFrame = false; launch(); }
+    if (!run) return;
+    // 생성 섬광
+    if (glow.userData.t > 0) { glow.userData.t = Math.max(0, glow.userData.t - real * 1.2); var g = glow.userData.t; glow.scale.setScalar(0.3 + 3.2 * g); glow.material.opacity = g; }
+    // 붕괴 표시: 흰색 → 전자색으로 흐려짐
+    var changed = false;
+    for (var n = 0; n < run.nDec; n++) if (run.flash[n] > 0) {
+      run.flash[n] = Math.max(0, run.flash[n] - real * 2.5);
+      var f = run.flash[n], o = n * 3, a = 0.55 + 0.45 * f;
+      DEC.col[o] = (eColor.r + (flashColor.r - eColor.r) * f) * a; DEC.col[o + 1] = (eColor.g + (flashColor.g - eColor.g) * f) * a; DEC.col[o + 2] = (eColor.b + (flashColor.b - eColor.b) * f) * a;
+      changed = true;
+    }
+    if (changed) DEC.geo.attributes.color.needsUpdate = true;
+    if (detFlash > 0) { detFlash = Math.max(0, detFlash - real * 0.8); detector.material.color.setHex(0x2f8f6a).lerp(new THREE.Color(0xff5d8f), detFlash * 0.7); }
+    if (!run.done && dt > 0) step(run.Uend / RUN_SECONDS * sSpeed.get() * dt);
+    else if (run.done && autoTgl.get()) { waitT += real; if (waitT > 2.5) launch(); }
+    updateLive();
+    scaleLabels();
+  });
+  updateStatic();
+})();
+</script>
+</body>
+</html>

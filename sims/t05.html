@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CMS 검출기 탐험 모의실험</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/sim.css">
+<style>
+  /* 이 모의실험에서만 쓰는 보조 스타일 (sim.css 색 변수 사용) */
+  .fp { border-collapse: collapse; width: 100%; font-size: .78rem; }
+  .fp th, .fp td { border-bottom: 1px solid var(--s-line); padding: .28rem .3rem; text-align: center; white-space: nowrap; }
+  .fp th { background: var(--s-panel-2); color: var(--s-ink-2); font-weight: 700; }
+  .fp td:first-child, .fp th:first-child { text-align: left; }
+  .fp td { color: var(--s-ink-3); font-family: var(--font-mono); }
+  .fp td:first-child { font-family: var(--font-body); color: var(--s-ink-2); }
+  .fp td.on { color: var(--s-ok); font-weight: 700; }
+  .fp td.weak { color: var(--s-warn); }
+  .fp-wrap { overflow-x: auto; border: 1px solid var(--s-line); border-radius: 7px; }
+  .info-card { background: var(--s-panel-2); border-radius: 7px; padding: .55rem .7rem; font-size: .84rem; color: var(--s-ink-2); line-height: 1.55; }
+  .info-card b { color: var(--s-ink); }
+  .quiz-status { font-size: .86rem; color: var(--s-ink-2); }
+  .quiz-log { list-style: none; margin: 0; padding: 0; display: grid; gap: .2rem; font-size: .8rem; color: var(--s-ink-2); }
+  .hud b { color: var(--s-ink); font-weight: 600; }
+  .hud .msg { display: block; color: var(--s-ink-2); margin-top: .15rem; }
+  #hud-main { min-width: 13rem; }
+  @media (max-width: 860px) { .hud { font-size: .74rem; padding: .35rem .55rem; } #hud-main { min-width: 0; } }
+</style>
+</head>
+<body>
+<div class="sim">
+  <header class="sim-head">
+    <span class="tag">주제 05 · 3D</span>
+    <h1>CMS 검출기 탐험</h1>
+    <nav aria-label="관련 자료">
+      <a href="../students/t05.html">학생용 활동지</a>
+      <a href="../teachers/t05.html">교사용 지도서</a>
+      <a href="index.html">모의실험 목록</a>
+    </nav>
+  </header>
+  <div class="sim-body">
+    <div class="stage" id="stage">
+      <div class="stage-overlay" id="overlay">
+        <div class="hud" id="hud-main"><span class="k">입자</span> <b id="h-name">–</b> <span class="k">· p</span> <span class="v" id="h-p">–</span><span class="msg" id="h-msg">충돌점에서 입자를 발사합니다.</span></div>
+        <div class="hud"><span class="k">자기장</span> <span class="v">3.8 T</span> <span class="k">(솔레노이드 안, +z)</span> · <span class="v">약 −2 T</span> <span class="k">(철 요크)</span><span class="msg">정면(+z)에서 보면 양전하는 시계 방향으로 휨</span><span class="msg">화면 축척: 1칸 = 1 m · 실제보다 약 4천만 배 느리게</span></div>
+      </div>
+      <div class="stage-hint">드래그: 회전 · 휠/두 손가락: 확대 · 오른쪽 드래그: 이동</div>
+    </div>
+    <aside class="panel" id="panel" aria-label="조작과 기록"></aside>
+  </div>
+</div>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/vendor/three/OrbitControls.js"></script>
+<script src="../assets/js/sim-kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var THREE = window.THREE, K = window.SimKit, ui = K.ui, COL = K.COLORS;
+  var sim = K.create({ stage: document.getElementById("stage"), cameraPos: [8.5, 6.5, 17], target: [0, -0.3, -1.5], grid: { size: 24, divisions: 24, y: -7.9 } });
+  var scene = sim.scene;
+  var panel = document.getElementById("panel");
+
+  /* ================= 상수 ================= */
+  var B_IN = 3.8, B_YOKE = -1.8;       // T (솔레노이드 안 / 철 요크 안: 방향 반대)
+  var DS = 0.02;                       // 궤적 적분 간격 (m)
+  var BASE_SPEED = 8;                  // 화면 속 입자 속력 (m/s) → 실제보다 약 3.7×10⁷배 느림
+  var CUT_FROM = 0, CUT_TO = Math.PI / 2; // 절개 보기에서 잘라 내는 방위각 범위
+  var TRK_R = [0.044, 0.073, 0.102, 0.16, 0.25, 0.34, 0.43, 0.52, 0.61, 0.70, 0.80, 0.90, 1.0, 1.08];
+  var CH_R = [[4.0, 4.2], [4.85, 5.05], [5.95, 6.15], [7.0, 7.2]];
+  var IRON_R = [[4.3, 4.75], [5.2, 5.85], [6.3, 6.95]];
+  var R_ECAL = [1.29, 1.52], R_HCAL = [1.77, 2.95];
+
+  var LAYERS = [
+    { key: "tracker", short: "트래커", name: "실리콘 트래커", tubes: [[0.03, 1.1]], half: 2.9, color: 0x9fb6e8, op: 0.06,
+      info: "<b>실리콘 트래커</b> (반지름 약 3 cm ~ 1.1 m)<br>얇은 규소 픽셀·띠 센서 층. 하전 입자가 지나간 점(히트)을 이어 궤적을 그린다. 휘는 방향 → 전하 부호, 휘는 정도(반지름 r) → 운동량 p = 0.3·B·r. 전기적으로 중성인 입자는 흔적을 남기지 않는다." },
+    { key: "ecal", short: "ECAL", name: "전자기 칼로리미터", tubes: [R_ECAL], half: 3.0, color: 0x2fbf71, op: 0.2,
+      info: "<b>전자기 칼로리미터(ECAL)</b> (반지름 약 1.3 m ~)<br>텅스텐산납(PbWO₄) 투명 결정 약 7만 6천 개. 전자·광자는 여기서 전자기 소나기를 일으켜 에너지를 거의 다 내놓는다. 결정이 내는 빛의 양으로 에너지를 잰다." },
+    { key: "hcal", short: "HCAL", name: "강입자 칼로리미터", tubes: [R_HCAL], half: 4.3, color: 0x8a6fd6, op: 0.13,
+      info: "<b>강입자 칼로리미터(HCAL)</b> (반지름 약 1.8 ~ 2.9 m)<br>황동 판과 플라스틱 섬광체를 번갈아 쌓은 층. 양성자·파이온·중성자 같은 강입자가 원자핵과 부딪쳐 강입자 소나기를 만들고 에너지를 내놓는다." },
+    { key: "solenoid", short: "솔레노이드", name: "초전도 솔레노이드", tubes: [[2.97, 3.78]], half: 6.3, color: 0x9aa3bd, op: 0.09,
+      info: "<b>초전도 솔레노이드</b> (지름 약 6 m, 길이 약 12.5 m)<br>초전도 코일에 큰 전류가 흘러 안쪽에 빔 방향으로 3.8 T의 균일한 자기장을 만든다. 트래커·ECAL·HCAL이 모두 이 코일 안에 들어 있다." },
+    { key: "yoke", short: "요크·뮤온", name: "철 귀환 요크 + 뮤온 챔버", tubes: IRON_R, half: 6.6, color: 0xb03a52, op: 0.1, chambers: CH_R,
+      info: "<b>철 귀환 요크 + 뮤온 챔버</b> (반지름 약 4 ~ 7.4 m)<br>철(약 1만 t)이 자기력선이 되돌아오는 길이 되어, 여기서는 자기장이 <b>반대 방향</b>(약 2 T)이다. 철판 사이의 뮤온 챔버(흰 층)는 이곳까지 뚫고 나오는 입자, 즉 거의 뮤온만 기록한다." }
+  ];
+  var LAYER_BY = {}; LAYERS.forEach(function (L) { LAYER_BY[L.key] = L; L.visible = true; });
+
+  var PT = {
+    em:  { label: "전자 e⁻", q: -1, m: 0.000511, color: COL.electron, kind: "em", cat: "e" },
+    ep:  { label: "양전자 e⁺", q: 1, m: 0.000511, color: COL.positron, kind: "em", cat: "e" },
+    mum: { label: "뮤온 μ⁻", q: -1, m: 0.10566, color: COL.muon, kind: "mu", cat: "mu" },
+    mup: { label: "반뮤온 μ⁺", q: 1, m: 0.10566, color: COL.muon, kind: "mu", cat: "mu" },
+    pip: { label: "파이온 π⁺", q: 1, m: 0.13957, color: COL.hadron, kind: "had", cat: "ch" },
+    pim: { label: "파이온 π⁻", q: -1, m: 0.13957, color: COL.hadron, kind: "had", cat: "ch" },
+    p:   { label: "양성자 p", q: 1, m: 0.93827, color: COL.proton, kind: "had", cat: "ch" },
+    g:   { label: "광자 γ", q: 0, m: 0, color: COL.photon, kind: "em", cat: "g" },
+    n:   { label: "중성자 n", q: 0, m: 0.93957, color: COL.neutron, kind: "had", cat: "n" },
+    nu:  { label: "중성미자 ν", q: 0, m: 0, color: COL.neutrino, kind: "nu", cat: "nu" }
+  };
+  var CATS = [
+    { key: "e", label: "전자 (e⁻, e⁺)" }, { key: "g", label: "광자 γ" }, { key: "mu", label: "뮤온 (μ⁻, μ⁺)" },
+    { key: "ch", label: "하전 강입자 (π±, p)" }, { key: "n", label: "중성 강입자 (n)" }, { key: "nu", label: "중성미자 ν" }
+  ];
+
+  /* ================= 검출기 만들기 ================= */
+  var det = new THREE.Group(); scene.add(det);
+  var cutMode = "z", selectedKey = null;   // "z": 앞쪽 절반(z>0) 잘라 냄, "quarter": 앞쪽 1/4, "none": 잘라 내지 않음
+  var Z_CUT = -0.06;
+
+  function zRange(L) { return [-L.half, cutMode === "z" ? Z_CUT : L.half]; }
+  function tubeGeo(rin, rout, z0, z1) {
+    var pts = [new THREE.Vector2(rin, z0), new THREE.Vector2(rout, z0), new THREE.Vector2(rout, z1), new THREE.Vector2(rin, z1), new THREE.Vector2(rin, z0)];
+    // LatheGeometry의 각 φ는 회전(x축 +90°) 뒤 방위각 ψ = φ − 90° 에 해당
+    if (cutMode === "quarter") return new THREE.LatheGeometry(pts, 54, CUT_TO + Math.PI / 2, 2 * Math.PI - (CUT_TO - CUT_FROM));
+    return new THREE.LatheGeometry(pts, 72, 0, 2 * Math.PI);
+  }
+  function capGeo(psi, rin, rout, z0, z1) {
+    var c = Math.cos(psi), s = Math.sin(psi), g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(new Float32Array([
+      rin * c, rin * s, z0, rout * c, rout * s, z0, rout * c, rout * s, z1,
+      rin * c, rin * s, z0, rout * c, rout * s, z1, rin * c, rin * s, z1]), 3));
+    g.computeVertexNormals();
+    return g;
+  }
+  function arcLine(r, z, color, opacity) {
+    var q = cutMode === "quarter", a0 = q ? CUT_TO : 0, a1 = q ? CUT_FROM + 2 * Math.PI : 2 * Math.PI, n = 72, pts = [];
+    for (var i = 0; i <= n; i++) { var a = a0 + (a1 - a0) * i / n; pts.push(new THREE.Vector3(r * Math.cos(a), r * Math.sin(a), z)); }
+    return new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: opacity }));
+  }
+  function disposeGroup(g) {
+    g.traverse(function (o) {
+      if (o.geometry) o.geometry.dispose();
+      if (o.material) { if (o.material.map) o.material.map.dispose(); o.material.dispose(); }
+    });
+  }
+  function buildLayer(L, order) {
+    if (L.group) { disposeGroup(L.group); det.remove(L.group); }
+    var g = new THREE.Group(); L.group = g;
+    var sel = selectedKey === L.key, mul = sel ? 3 : 1, zr = zRange(L);
+    function addTube(rin, rout, color, op, lines) {
+      var mat = new THREE.MeshLambertMaterial({ color: color, transparent: true, opacity: Math.min(0.75, op * mul), side: THREE.DoubleSide, depthWrite: false });
+      var m = new THREE.Mesh(tubeGeo(rin, rout, zr[0], zr[1]), mat);
+      m.rotation.x = Math.PI / 2; m.renderOrder = order; g.add(m);
+      if (cutMode === "quarter") [CUT_TO, CUT_FROM].forEach(function (psi) { var cm = new THREE.Mesh(capGeo(psi, rin, rout, zr[0], zr[1]), mat); cm.renderOrder = order; g.add(cm); });
+      if (lines !== false) zr.forEach(function (z) {
+        g.add(arcLine(rin, z, color, sel ? 0.9 : 0.45));
+        g.add(arcLine(rout, z, color, sel ? 0.9 : 0.45));
+      });
+    }
+    L.tubes.forEach(function (t) { addTube(t[0], t[1], L.color, L.op, L.key !== "tracker"); });
+    if (L.key === "tracker") TRK_R.forEach(function (r) { zr.forEach(function (z) { g.add(arcLine(r, z, L.color, sel ? 0.8 : 0.32)); }); });
+    if (L.chambers) L.chambers.forEach(function (t) { addTube(t[0], t[1], 0xe9ecf5, 0.07); });
+    g.visible = L.visible;
+    det.add(g);
+  }
+  function buildAll() { LAYERS.forEach(function (L, i) { buildLayer(L, 5 - i); }); placeLabels(); }
+
+  // 빔관과 충돌점
+  var beam = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, -9), new THREE.Vector3(0, 0, 9)]), new THREE.LineBasicMaterial({ color: 0x7880a0 }));
+  scene.add(beam);
+  var beamLbl = K.label("빔 방향 (z)", { height: 0.42, color: "#a9b0c8" }); beamLbl.position.set(0, 0.45, 8.6); scene.add(beamLbl);
+  var vtx = new THREE.Mesh(new THREE.SphereGeometry(0.09, 16, 12), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 }));
+  scene.add(vtx);
+
+  // 이름표: 한 방위각(ψ ≈ 206°)을 따라 반지름 순서대로
+  var labelGroup = new THREE.Group(); scene.add(labelGroup);
+  LAYERS.forEach(function (L) {
+    var lb = K.label(L.short, { height: 0.42, color: "#" + new THREE.Color(L.color).offsetHSL(0, 0, 0.2).getHexString() });
+    lb.userData.L = L; labelGroup.add(lb);
+  });
+  function placeLabels() {
+    var psi = 4.45;
+    labelGroup.children.forEach(function (lb) {
+      var L = lb.userData.L, rr = L.key === "yoke" ? 6.6 : (L.tubes[0][0] + L.tubes[0][1]) / 2;
+      if (L.key === "tracker") rr = 0.75;
+      lb.position.set(rr * Math.cos(psi), rr * Math.sin(psi), zRange(L)[1] + 0.1);
+      lb.visible = L.visible;
+    });
+  }
+  buildAll();
+
+  // 자기장 방향 화살표
+  var fieldGroup = new THREE.Group(); fieldGroup.visible = false; scene.add(fieldGroup);
+  [0.6, 2.2, 3.8, 5.4].forEach(function (a) {
+    fieldGroup.add(K.arrow(new THREE.Vector3(2.3 * Math.cos(a), 2.3 * Math.sin(a), -1.6), new THREE.Vector3(0, 0, 1), 3.2, COL.field));
+    fieldGroup.add(K.arrow(new THREE.Vector3(5.5 * Math.cos(a + 0.4), 5.5 * Math.sin(a + 0.4), 1.6), new THREE.Vector3(0, 0, -1), 3.2, 0xff8a8a));
+  });
+  var fLbl1 = K.label("B = 3.8 T (+z)", { height: 0.4, color: "#7f9cff" }); fLbl1.position.set(0, 2.3, 2.2); fieldGroup.add(fLbl1);
+  var fLbl2 = K.label("요크 안 B ≈ 2 T (−z)", { height: 0.4, color: "#ff8a8a" }); fLbl2.position.set(0, 5.5, -2.2); fieldGroup.add(fLbl2);
+
+  /* ================= 물리: 궤적과 에너지 침착 ================= */
+  function Bz(r) {
+    if (r < 2.97) return B_IN;
+    for (var i = 0; i < IRON_R.length; i++) if (r >= IRON_R[i][0] && r < IRON_R[i][1]) return B_YOKE;
+    return 0;
+  }
+  function crossed(r0, r1, R) { return (r0 < R && r1 >= R) || (r0 >= R && r1 < R); }
+  function inIron(r) { for (var i = 0; i < IRON_R.length; i++) if (r >= IRON_R[i][0] && r < IRON_R[i][1]) return true; return false; }
+  function changeMom(mom, dp) { var m = mom.length(), nm = Math.max(1e-4, m + dp); mom.multiplyScalar(nm / m); }
+  function smearEcal(E) { var s = Math.sqrt(Math.pow(0.028 / Math.sqrt(E), 2) + Math.pow(0.12 / E, 2) + 0.003 * 0.003); return Math.max(0.01, E * (1 + K.gauss(0, s))); }
+  function smearHcal(E) { var s = Math.sqrt(1 / E + 0.05 * 0.05); return Math.max(0.05, E * (1 + K.gauss(0, s))); }
+
+  function simulate(type, p, thDeg, phDeg) {
+    var d = PT[type], th = thDeg * Math.PI / 180, ph = phDeg * Math.PI / 180;
+    var mom = new THREE.Vector3(Math.sin(th) * Math.cos(ph), Math.sin(th) * Math.sin(ph), Math.cos(th)).multiplyScalar(p);
+    var pos = new THREE.Vector3(), pts = [pos.clone()], evs = [];
+    var res = { pT: p * Math.sin(th), E: Math.sqrt(p * p + d.m * d.m), ecal: 0, hcal: 0, trk: 0, ch: 0, stop: "exit", looped: false };
+    res.rTrue = d.q !== 0 ? res.pT / (0.3 * B_IN) : 0;
+    res.rMeas = d.q !== 0 ? res.rTrue * (1 + K.gauss(0, 0.01)) : 0;
+    var hadStopR = 2.0 + Math.random() * 0.75;
+    var early = d.kind === "had" && Math.random() < 0.35;
+    var inEcal = false, inHcal = false, hcalMipDone = false, path = 0, r0 = 0, ecalHad = 0;
+    function Enow() { var m = mom.length(); return Math.sqrt(m * m + d.m * d.m); }
+    while (path < 40) {
+      var pm = mom.length();
+      if (d.q !== 0) {
+        var B = Bz(Math.hypot(pos.x, pos.y));
+        if (B !== 0) {
+          var w = -0.3 * d.q * B * DS / pm, cw = Math.cos(w), sw = Math.sin(w);
+          var nx = mom.x * cw - mom.y * sw, ny = mom.x * sw + mom.y * cw; mom.x = nx; mom.y = ny;
+        }
+      }
+      pos.addScaledVector(mom, DS / pm); path += DS;
+      var r1 = Math.hypot(pos.x, pos.y), i = pts.length;
+      pts.push(pos.clone());
+      if (d.q !== 0 && r1 < 1.1) {
+        changeMom(mom, -(d.kind === "em" ? 0.06 : 0.03) * DS);  // 트래커 물질에서 조금씩 에너지 손실
+        if (Math.abs(pos.z) < 2.9) for (var k = 0; k < TRK_R.length; k++) if (crossed(r0, r1, TRK_R[k])) { evs.push({ i: i, t: "hit", p: pos.clone() }); res.trk++; }
+        if (Math.abs(pos.z) > 2.9) { res.stop = "trkz"; break; }
+      }
+      if (!inEcal && r0 < R_ECAL[0] && r1 >= R_ECAL[0]) {
+        inEcal = true;
+        if (Math.abs(pos.z) > 3.0) { res.stop = "exit"; break; }
+        if (d.kind === "em") { var e1 = smearEcal(Enow()); res.ecal = e1; evs.push({ i: i, t: "ecal", p: pos.clone(), e: e1, full: true }); res.stop = "ecal"; break; }
+        if (d.kind === "mu") { var e2 = 0.25 * (0.8 + 0.4 * Math.random()); res.ecal += e2; evs.push({ i: i, t: "ecal", p: pos.clone(), e: e2, mip: true }); changeMom(mom, -0.25); }
+        if (d.kind === "had") {
+          if (early) { ecalHad = (0.1 + Math.random() * 0.25) * Enow(); res.ecal += ecalHad; evs.push({ i: i, t: "ecal", p: pos.clone(), e: ecalHad, had: true }); }
+          else if (d.q !== 0) { var e3 = 0.3 * (0.8 + 0.4 * Math.random()); ecalHad = e3; res.ecal += e3; evs.push({ i: i, t: "ecal", p: pos.clone(), e: e3, mip: true }); }
+        }
+      }
+      if (!inHcal && r0 < R_HCAL[0] && r1 >= R_HCAL[0]) inHcal = true;
+      if (d.kind === "had" && inHcal && r1 >= hadStopR) {
+        var e4 = smearHcal(Math.max(0.3, Enow() - ecalHad)); res.hcal = e4;
+        evs.push({ i: i, t: "hcal", p: pos.clone(), e: e4, full: true, rs: hadStopR }); res.stop = "hcal"; break;
+      }
+      if (d.kind === "mu" && !hcalMipDone && r0 < 2.36 && r1 >= 2.36) {
+        hcalMipDone = true; var e5 = 1.6 * (0.75 + 0.5 * Math.random()); res.hcal += e5;
+        evs.push({ i: i, t: "hcal", p: pos.clone(), e: e5, mip: true }); changeMom(mom, -1.6);
+      }
+      if (d.kind === "mu") {
+        if (inIron(r1)) changeMom(mom, -1.15 * DS);
+        for (var c = 0; c < CH_R.length; c++) { var cm = (CH_R[c][0] + CH_R[c][1]) / 2; if (crossed(r0, r1, cm)) { evs.push({ i: i, t: "ch", p: pos.clone() }); res.ch++; } }
+      }
+      if (mom.length() < 0.12) { res.stop = "absorbed"; break; }
+      if (r1 > 7.6 || Math.abs(pos.z) > 7.2) { res.stop = "exit"; break; }
+      r0 = r1;
+    }
+    if (path >= 40) { res.stop = "loop"; res.looped = true; }
+    if (res.stop === "absorbed" && r0 < 1.2) res.looped = true;
+    return { pts: pts, evs: evs, res: res };
+  }
+
+  /* ================= 사건 표시 ================= */
+  // 굵은 궤적: 작은 구슬을 촘촘히(하전 입자) 또는 띄엄띄엄(중성 입자 = 점선) 늘어놓음
+  var beadGeo = new THREE.SphereGeometry(1, 6, 4);
+  function BeadTrail(maxN, radius, color, opacity, spacing) {
+    var mat = new THREE.MeshBasicMaterial({ color: color, transparent: opacity < 1, opacity: opacity });
+    var im = new THREE.InstancedMesh(beadGeo, mat, maxN); im.count = 0; im.frustumCulled = false;
+    var m4 = new THREE.Matrix4(), sc = new THREE.Vector3(radius, radius, radius), q = new THREE.Quaternion(), last = null, acc = 0;
+    scene.add(im);
+    return {
+      push: function (v) {
+        if (last) acc += v.distanceTo(last);
+        if (!last || acc >= spacing) {
+          if (im.count < maxN) { m4.compose(v, q, sc); im.setMatrixAt(im.count, m4); im.count++; im.instanceMatrix.needsUpdate = true; }
+          acc = 0;
+        }
+        last = v;
+      },
+      dispose: function () { scene.remove(im); mat.dispose(); im.dispose(); }
+    };
+  }
+  var ev = null;
+  var hitGeo = new THREE.SphereGeometry(0.03, 8, 6);
+  var headGeo = new THREE.SphereGeometry(0.075, 12, 10);
+  var showInvisible = true, labelsOn = true;
+  var hName = document.getElementById("h-name"), hP = document.getElementById("h-p"), hMsg = document.getElementById("h-msg");
+
+  function addObj(o) { scene.add(o); ev.objs.push(o); return o; }
+  function clearEvent() {
+    if (!ev) return;
+    if (ev.trail) ev.trail.dispose();
+    if (ev.beads) ev.beads.dispose();
+    ev.objs.forEach(function (o) {
+      scene.remove(o);
+      if (o.geometry && o.geometry !== hitGeo && o.geometry !== headGeo) o.geometry.dispose();
+      if (o.material) { if (o.material.map) o.material.map.dispose(); o.material.dispose(); }
+    });
+    ev = null;
+  }
+
+  function cluster(pos, rin, rout, E, o) {
+    var rc0 = (rin + rout) / 2, phi0 = Math.atan2(pos.y, pos.x), z0 = pos.z;
+    var nT = o.n, h = (nT - 1) / 2, nR = o.nR || 1, cells = [], tot = 0, fmax = 0;
+    for (var a = -h; a <= h; a++) for (var b = -h; b <= h; b++) for (var k = 0; k < nR; k++) {
+      var w = Math.exp(-(a * a + b * b) / (2 * o.spread * o.spread)) * (nR > 1 ? (o.rw ? o.rw[k] : 1) : 1);
+      cells.push({ a: a, b: b, k: k, w: w }); tot += w;
+    }
+    cells.forEach(function (c) { c.f = c.w / tot; if (c.f > fmax) fmax = c.f; });
+    var dr = (rout - rin) / nR;
+    cells.forEach(function (c) {
+      if (c.f / fmax < 0.05) return;
+      var rc = rin + dr * (c.k + 0.5), phi = phi0 + c.a * o.size / rc0;
+      var geo = new THREE.BoxGeometry(dr * 0.9, o.size * 0.9, o.size * 0.9);
+      var rel = Math.pow(c.f / fmax, 0.6) * o.bright;
+      var mat = new THREE.MeshBasicMaterial({ color: o.color, transparent: true, opacity: 0.12 + 0.83 * rel, depthWrite: false });
+      var m = new THREE.Mesh(geo, mat);
+      m.position.set(rc * Math.cos(phi), rc * Math.sin(phi), z0 + c.b * o.size);
+      m.rotation.z = phi; m.renderOrder = 8;
+      m.userData.pulse = 1; m.userData.base = mat.opacity;
+      addObj(m);
+    });
+    if (labelsOn && o.text) {
+      var lb = K.label(o.text, { height: 0.36, color: o.textColor });
+      var rl = rout + 0.45;
+      lb.position.set(rl * Math.cos(phi0), rl * Math.sin(phi0), z0 + 0.35);
+      addObj(lb);
+    }
+  }
+  function spray(pos, dir, n, len, color, cone) {
+    var arr = new Float32Array(n * 6);
+    for (var i = 0; i < n; i++) {
+      var d = dir.clone().add(new THREE.Vector3(K.gauss(0, cone), K.gauss(0, cone), K.gauss(0, cone))).normalize();
+      var L1 = len * (0.3 + Math.random());
+      var s = pos.clone().addScaledVector(dir, Math.random() * len * 0.3), e = s.clone().addScaledVector(d, L1);
+      arr.set([s.x, s.y, s.z, e.x, e.y, e.z], i * 6);
+    }
+    var g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(arr, 3));
+    var ls = new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: 1 }));
+    ls.userData.fade = 1.2;
+    addObj(ls);
+  }
+
+  var ECAL_DEP = 0x4dffb5, HCAL_DEP = 0xc39bff, CH_HIT = 0xffc2d6;
+  function processEvent(e) {
+    var col = ev.quiz ? 0xe6e9f4 : ev.d.color;
+    if (e.t === "hit") {
+      var hm = new THREE.Mesh(hitGeo, new THREE.MeshBasicMaterial({ color: 0xffffff }));
+      hm.position.copy(e.p); addObj(hm);
+      ev.live.trk++;
+    } else if (e.t === "ecal") {
+      var full = !!e.full;
+      cluster(e.p, R_ECAL[0], R_ECAL[1], e.e, { n: full ? 3 : 1, size: 0.13, spread: full ? 0.55 : 1, color: ECAL_DEP, bright: full ? 1 : (e.had ? 0.8 : 0.35), text: "ECAL " + K.fmt(e.e, 3) + " GeV", textColor: "#7dffc8" });
+      if (full || e.had) spray(e.p, e.p.clone().normalize(), full ? 26 : 12, 0.22, full ? ECAL_DEP : COL.hadron, 0.35);
+      ev.live.ecal += e.e;
+      setMsg(full ? "ECAL에서 전자기 소나기 → 에너지를 모두 내놓고 멈춤" : (e.had ? "ECAL에서 강입자 소나기가 일찍 시작됨" : "ECAL을 지나며 에너지를 조금만 잃음"));
+    } else if (e.t === "hcal") {
+      if (e.full) {
+        cluster(e.p, R_HCAL[0], R_HCAL[1], e.e, { n: 3, nR: 3, rw: [0.6, 1, 0.5], size: 0.32, spread: 0.9, color: HCAL_DEP, bright: 1, text: "HCAL " + K.fmt(e.e, 3) + " GeV", textColor: "#d8c2ff" });
+        spray(e.p, e.p.clone().normalize(), 30, 0.55, COL.hadron, 0.6);
+        setMsg("HCAL에서 강입자 소나기 → 에너지를 내놓고 멈춤");
+      } else {
+        cluster(e.p, R_HCAL[0], R_HCAL[1], e.e, { n: 1, nR: 1, size: 0.3, spread: 1, color: HCAL_DEP, bright: 0.35, text: "HCAL " + K.fmt(e.e, 2) + " GeV", textColor: "#d8c2ff" });
+        setMsg("HCAL도 거의 그대로 통과 (에너지 조금 잃음)");
+      }
+      ev.live.hcal += e.e;
+    } else if (e.t === "ch") {
+      var phi = Math.atan2(e.p.y, e.p.x), r = Math.hypot(e.p.x, e.p.y);
+      var cm = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.42, 0.42), new THREE.MeshBasicMaterial({ color: CH_HIT, transparent: true, opacity: 0.95 }));
+      cm.position.set(r * Math.cos(phi), r * Math.sin(phi), e.p.z); cm.rotation.z = phi; cm.renderOrder = 9; cm.userData.pulse = 1; cm.userData.base = 0.95;
+      addObj(cm);
+      ev.live.ch++;
+      setMsg("뮤온 챔버 히트 " + ev.live.ch + "개 · 철 요크 안에서는 반대로 휨");
+    }
+    updateReadouts();
+  }
+  function setMsg(t) { hMsg.textContent = t; }
+
+  function fire(type, p, th, ph, opt) {
+    opt = opt || {};
+    clearEvent();
+    var s = simulate(type, p, th, ph);
+    var d = PT[type];
+    ev = { type: type, d: d, p: p, th: th, ph: ph, pts: s.pts, evs: s.evs, res: s.res, s: 0, idx: 0, ptr: 0, done: false,
+      manual: !!opt.manual, quiz: !!opt.quiz, objs: [], trail: null, live: { trk: 0, ecal: 0, hcal: 0, ch: 0 }, recorded: false };
+    var col = ev.quiz ? 0xe6e9f4 : d.color;
+    var charged = d.q !== 0;
+    if (charged || (showInvisible && !ev.quiz)) {
+      if (charged) { ev.trail = K.Trail(scene, { max: s.pts.length + 4, color: col }); ev.trail.push(s.pts[0]); }
+      var sp = charged ? 0.04 : 0.24, path = s.pts.length * DS;
+      ev.beads = BeadTrail(Math.ceil(path / sp) + 4, charged ? 0.04 : 0.045, col, charged ? 1 : 0.7, sp);
+      ev.beads.push(s.pts[0]);
+    }
+    if (charged || (showInvisible && !ev.quiz)) {
+      ev.head = addObj(new THREE.Mesh(headGeo, new THREE.MeshBasicMaterial({ color: col, transparent: !charged, opacity: charged ? 1 : 0.6 })));
+    }
+    vtx.scale.setScalar(3); vtx.material.opacity = 1;
+    hName.textContent = ev.quiz ? "? (수수께끼 " + (quiz.k + 1) + ")" : d.label;
+    hP.textContent = K.fmt(p, 3) + " GeV/c";
+    setMsg(ev.quiz ? "흔적을 잘 관찰하세요. [다시 보기]로 반복할 수 있어요." : (charged ? "하전 입자: 트래커에 흔적을 남기며 휩니다." : (d.kind === "nu" ? "중성 입자: 트래커에 흔적이 없습니다." : "중성 입자: 트래커에 흔적이 없습니다(점선은 실제 경로).")));
+    updateReadouts();
+  }
+
+  function finishEvent() {
+    ev.done = true;
+    if (ev.head) ev.head.visible = false;
+    var r = ev.res, d = ev.d;
+    var end = {
+      ecal: null, hcal: null,
+      exit: d.kind === "nu" ? (ev.quiz ? "사건 끝. 검출기에 남은 신호를 확인하세요." : "중성미자: 어떤 층에도 신호가 없음 → 다른 입자들의 운동량 합이 0이 아닌 것(누락 횡운동량)으로 존재를 추론") :
+        (d.kind === "mu" ? "모든 층을 뚫고 밖으로 나감 → 뮤온 챔버에만 남는 '뮤온 지문'" : "검출기 밖으로 빠져나감"),
+      loop: "운동량이 작아 트래커 안에서 나선을 그리며 맴돌다 멈춤 (p = 0.3·B·r 에서 r이 작음)",
+      absorbed: r.looped ? "운동량이 작아 트래커 안에서 맴돌다 멈춤" : "에너지를 모두 잃고 멈춤 (운동량이 작은 뮤온은 철을 다 뚫지 못함)",
+      trkz: "빔 방향(엔드캡 쪽)으로 빠져나감 — θ를 90°에 가깝게 해 보세요"
+    };
+    if (end[r.stop]) setMsg(end[r.stop]);
+    if (ev.manual && !ev.quiz) onManualDone();
+    if (ev.quiz) quizShotDone();
+    demoWait = 0;
+  }
+
+  var RO;
+  function updateReadouts() {
+    if (!ev) return;
+    var r = ev.res, L = ev.live, charged = ev.d.q !== 0;
+    RO.set("name", ev.quiz ? "?" : ev.d.label);
+    RO.set("pt", r.pT, 3);
+    RO.set("r", charged && L.trk >= 3 ? r.rMeas : (charged ? "측정 중" : "트랙 없음"), 3);
+    RO.set("pc", charged && L.trk >= 3 ? 0.3 * B_IN * r.rMeas : "–", 3);
+    RO.set("trk", String(L.trk));
+    RO.set("ecal", L.ecal > 0 ? L.ecal : "0", 3);
+    RO.set("hcal", L.hcal > 0 ? L.hcal : "0", 3);
+    RO.set("mu", String(L.ch));
+  }
+
+  /* ================= 패널 ================= */
+  // 1) 미션
+  var mission = K.Mission(ui.section(panel, "미션"), { id: "t05", steps: [
+    "<b>층 구조 살피기</b> — 층 보이기/숨기기나 설명 카드로 3개 이상의 층을 살펴보고, [정면 보기(+z)]로 동심원 단면을 본다.",
+    "<b>신호 지문 표</b> — 6가지 종류(전자·광자·뮤온·하전 강입자·중성자·중성미자)를 모두 직접 발사해 아래 지문 표를 완성한다.",
+    "<b>휘는 방향</b> — μ⁻와 μ⁺를 각각 쏘아 뮤온 챔버까지 도달시키고, 휘는 방향이 반대이며 요크에서 다시 반대로 휘는 것을 본다.",
+    "<b>운동량 재기</b> — 하전 입자를 서로 다른 운동량으로 3번 이상 쏘고 [기록]해 r–p<sub>T</sub> 그래프가 직선임을 확인한다.",
+    "<b>수수께끼 입자</b> — 퀴즈 5문제 중 4개 이상 맞힌다."
+  ] });
+
+  // 2) 입자 발사기
+  var ctl = ui.section(panel, "입자 발사기");
+  var selType = ui.select(ctl, { id: "ptype", label: "입자 종류", value: "mum", options: [
+    { value: "em", label: "전자 e⁻" }, { value: "ep", label: "양전자 e⁺" }, { value: "g", label: "광자 γ" },
+    { value: "mum", label: "뮤온 μ⁻" }, { value: "mup", label: "반뮤온 μ⁺" },
+    { value: "pip", label: "파이온 π⁺ (하전 강입자)" }, { value: "pim", label: "파이온 π⁻ (하전 강입자)" }, { value: "p", label: "양성자 p (하전 강입자)" },
+    { value: "n", label: "중성자 n (중성 강입자)" }, { value: "nu", label: "중성미자 ν" }
+  ] });
+  var sP = ui.slider(ctl, { id: "pmom", label: "운동량 p", min: 0.5, max: 100, step: 0.5, value: 20, unit: "GeV/c", format: function (v) { return v.toFixed(1); } });
+  var sTh = ui.slider(ctl, { id: "theta", label: "빔축과의 각 θ (90° = 빔에 수직)", min: 50, max: 130, step: 1, value: 90, unit: "°", format: function (v) { return v.toFixed(0); } });
+  var sPh = ui.slider(ctl, { id: "phi", label: "방위각 φ (정면에서 본 방향)", min: 0, max: 360, step: 1, value: 30, unit: "°", format: function (v) { return v.toFixed(0); } });
+  var row1 = ui.buttonRow(ctl);
+  ui.button(row1, { label: "발사", kind: "primary", id: "btn-fire", onClick: function () { manualFire(); } });
+  ui.button(row1, { label: "무작위 방향 발사", onClick: function () { sPh.set(Math.round(Math.random() * 360)); sTh.set(Math.round(70 + Math.random() * 40)); manualFire(); } });
+  var sSpeed = ui.slider(ctl, { id: "speed", label: "재생 속도", min: 0.25, max: 2, step: 0.25, value: 1, unit: "×", format: function (v) { return v.toFixed(2); } });
+  var row2 = ui.buttonRow(ctl);
+  ui.button(row2, { label: "일시정지/재생", onClick: function () { sim.toggle(); } });
+  ui.button(row2, { label: "정면 보기(+z)", onClick: function () { sim.setView([0, 0, 24], [0, 0, 0]); frontSeen = true; checkM0(); } });
+  ui.button(row2, { label: "비스듬히 보기", onClick: function () { sim.resetCamera(); } });
+  var demoTgl = ui.toggle(ctl, { id: "demo", label: "자동 시연(여러 입자를 차례로 발사)", checked: true, onChange: function (v) { demoOn = v; demoWait = 0; } });
+
+  function manualFire() {
+    if (demoOn) { demoOn = false; demoTgl.set(false); }
+    fire(selType.get(), sP.get(), sTh.get(), sPh.get(), { manual: true });
+  }
+
+  // 3) 측정값
+  RO = ui.readouts(ui.section(panel, "측정값"), [
+    { key: "name", label: "입자" }, { key: "pt", label: "횡운동량 p_T", unit: "GeV/c" },
+    { key: "r", label: "궤도 반지름 r", unit: "m" }, { key: "pc", label: "0.3·B·r", unit: "GeV/c" },
+    { key: "trk", label: "트래커 히트", unit: "개" }, { key: "ecal", label: "ECAL 에너지", unit: "GeV" },
+    { key: "hcal", label: "HCAL 에너지", unit: "GeV" }, { key: "mu", label: "뮤온 챔버 히트", unit: "개" }
+  ]);
+
+  // 4) 검출기 층
+  var layerSec = ui.section(panel, "검출기 층", "층을 켜고 끄거나 설명 카드를 골라 각 층이 무엇을 재는지 알아보세요.");
+  var inspected = {};
+  LAYERS.forEach(function (L) {
+    ui.toggle(layerSec, { id: "ly-" + L.key, label: L.name, checked: true, onChange: function (v) { L.visible = v; L.group.visible = v; placeLabels(); inspected[L.key] = 1; checkM0(); } });
+  });
+  ui.select(layerSec, { id: "cut", label: "절개 보기", value: "z", options: [
+    { value: "z", label: "앞쪽 절반 잘라 내기 (단면이 보임)" }, { value: "quarter", label: "앞쪽 1/4 잘라 내기" }, { value: "none", label: "잘라 내지 않기 (전체)" }
+  ], onChange: function (v) { cutMode = v; buildAll(); } });
+  ui.toggle(layerSec, { id: "lbl", label: "이름표·에너지 표시", checked: true, onChange: function (v) { labelsOn = v; labelGroup.visible = v; } });
+  ui.toggle(layerSec, { id: "fld", label: "자기장 방향 화살표", checked: false, onChange: function (v) { fieldGroup.visible = v; } });
+  ui.toggle(layerSec, { id: "inv", label: "중성 입자의 실제 경로(점선) 보이기", checked: true, onChange: function (v) { showInvisible = v; } });
+  var infoSel = ui.select(layerSec, { id: "info", label: "층 설명 카드", value: "", options: [{ value: "", label: "— 층을 고르세요 —" }].concat(LAYERS.map(function (L) { return { value: L.key, label: L.name }; })),
+    onChange: function (v) {
+      selectedKey = v || null; buildAll();
+      infoBox.innerHTML = v ? LAYER_BY[v].info : "층을 고르면 설명이 나오고 그 층이 밝게 강조됩니다.";
+      if (v) { inspected[v] = 1; checkM0(); }
+    } });
+  var infoBox = ui.html(layerSec, "층을 고르면 설명이 나오고 그 층이 밝게 강조됩니다.", "info-card");
+  var frontSeen = false;
+  function checkM0() { if (frontSeen && Object.keys(inspected).length >= 3) mission.complete(0, "미션 1 완료! 바깥으로 갈수록 무거운 층이 둘러싸고 있어요."); }
+
+  // 5) 신호 지문 표
+  var fpSec = ui.section(panel, "신호 지문 표", "직접 발사한 입자의 신호가 자동으로 채워집니다. (트래커 맴돌이 사건은 제외)");
+  var fpHtml = '<div class="fp-wrap"><table class="fp"><tr><th>입자</th><th>트랙</th><th>ECAL</th><th>HCAL</th><th>뮤온</th></tr>';
+  CATS.forEach(function (c) { fpHtml += '<tr id="fp-' + c.key + '"><td>' + c.label + "</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>"; });
+  ui.html(fpSec, fpHtml + "</table></div>");
+  var fpDone = {};
+  function fillFP(cat, res) {
+    var row = document.getElementById("fp-" + cat); if (!row) return;
+    var E = res.E;
+    var vals = [
+      res.trk >= 3 ? ["있음", "on"] : ["없음", ""],
+      res.ecal >= 0.5 * E ? ["대부분", "on"] : (res.ecal > 0 ? ["조금", "weak"] : ["없음", ""]),
+      res.hcal >= 0.5 * E ? ["대부분", "on"] : (res.hcal > 0 ? ["조금", "weak"] : ["없음", ""]),
+      res.ch > 0 ? ["히트", "on"] : ["없음", ""]
+    ];
+    for (var i = 0; i < 4; i++) { var td = row.cells[i + 1]; td.textContent = vals[i][0]; td.className = vals[i][1]; }
+    fpDone[cat] = 1;
+  }
+
+  // 6) 기록표
+  var recSec = ui.section(panel, "기록표", "사건이 끝나면 [기록]을 눌러 측정값을 저장하세요.");
+  var recRow = ui.buttonRow(recSec);
+  ui.button(recRow, { label: "기록", kind: "primary", id: "btn-rec", onClick: function () { recordCurrent(); } });
+  var rec = K.Recorder(recSec, { id: "t05", columns: [
+    { key: "name", label: "입자" }, { key: "pt", label: "p_T", unit: "GeV/c", digits: 3 }, { key: "r", label: "r", unit: "m", digits: 3 },
+    { key: "pc", label: "0.3·B·r", unit: "GeV/c", digits: 3 }, { key: "ecal", label: "ECAL", unit: "GeV", digits: 3 },
+    { key: "hcal", label: "HCAL", unit: "GeV", digits: 3 }, { key: "mu", label: "뮤온 히트" }
+  ], onChange: function () { drawPlot(); checkM3(); } });
+  function recordCurrent() {
+    if (!ev || !ev.done) { K.toast("사건이 끝난 뒤 [기록]을 누르세요."); return; }
+    if (ev.recorded) { K.toast("이 사건은 이미 기록했어요. 새로 발사하세요."); return; }
+    var r = ev.res, ch = ev.d.q !== 0;
+    rec.add({ name: ev.quiz ? "수수께끼 " + (quiz.k + 1) : ev.d.label, pt: r.pT, r: ch ? r.rMeas : "–", pc: ch ? 0.3 * B_IN * r.rMeas : "–",
+      ecal: ev.live.ecal, hcal: ev.live.hcal, mu: ev.live.ch, charged: ch ? 1 : 0 });
+    ev.recorded = true;
+  }
+  function checkM3() {
+    var ps = [];
+    rec.rows.forEach(function (row) { if (row.charged && typeof row.r === "number") { if (!ps.some(function (x) { return Math.abs(x - row.pt) < 0.5; })) ps.push(row.pt); } });
+    if (ps.length >= 3) mission.complete(3, "미션 4 완료! r은 p_T에 비례해요 (p = 0.3·B·r).");
+  }
+
+  // 7) 그래프
+  var plotSec = ui.section(panel, "r–p_T 그래프", "기록한 하전 입자의 궤도 반지름(점)과 이론선 r = p<sub>T</sub> / (0.3 × 3.8 T).");
+  var cv = document.createElement("canvas"); cv.className = "plot"; cv.setAttribute("aria-label", "궤도 반지름과 횡운동량 그래프"); plotSec.appendChild(cv);
+  function drawPlot() {
+    var pts = [];
+    rec.rows.forEach(function (row) { if (row.charged && typeof row.r === "number") pts.push([row.pt, row.r]); });
+    var xmax = 25; pts.forEach(function (p) { xmax = Math.max(xmax, p[0] * 1.1); });
+    var theory = [[0, 0], [xmax, xmax / (0.3 * B_IN)]];
+    K.plot.xy(cv, { series: [
+      { points: theory, line: true, dots: false, color: "#f0a35e", label: "이론 r = p_T/(0.3B)" },
+      { points: pts, color: "#ff5d8f", label: "측정(기록)", r: 4 }
+    ], xr: [0, xmax], yr: [0, xmax / (0.3 * B_IN) * 1.05], xlabel: "횡운동량 p_T (GeV/c)", ylabel: "r (m)" });
+  }
+  drawPlot();
+  window.addEventListener("resize", drawPlot);
+
+  // 8) 수수께끼 입자 퀴즈
+  var qSec = ui.section(panel, "수수께끼 입자 퀴즈", "입자 이름을 숨긴 채 5개를 발사합니다. 흔적(트랙·휘는 방향·ECAL·HCAL·뮤온 챔버)으로 정체를 맞혀 보세요. 휘는 방향을 보려면 [정면 보기]가 편해요.");
+  var qStatus = ui.html(qSec, "준비되면 [퀴즈 시작]을 누르세요.", "quiz-status");
+  var qRow = ui.buttonRow(qSec);
+  var bStart = ui.button(qRow, { label: "퀴즈 시작", kind: "primary", onClick: function () { startQuiz(); } });
+  var bReplay = ui.button(qRow, { label: "다시 보기", onClick: function () { if (quiz.active) fireQuiz(); } });
+  var ANS = [
+    { value: "", label: "— 정체를 고르세요 —" }, { value: "em", label: "전자 e⁻" }, { value: "ep", label: "양전자 e⁺" },
+    { value: "mum", label: "뮤온 μ⁻" }, { value: "mup", label: "반뮤온 μ⁺" }, { value: "chp", label: "양전하 강입자 (π⁺ 또는 p)" },
+    { value: "chm", label: "음전하 강입자 (π⁻)" }, { value: "g", label: "광자 γ" }, { value: "n", label: "중성 강입자 (중성자 n)" }, { value: "nu", label: "중성미자 ν" }
+  ];
+  var qSel = ui.select(qSec, { id: "qans", label: "내 판단", value: "", options: ANS });
+  var qRow2 = ui.buttonRow(qSec);
+  var bCheck = ui.button(qRow2, { label: "정답 확인", onClick: function () { checkQuiz(); } });
+  var bNext = ui.button(qRow2, { label: "다음 문제", onClick: function () { nextQuiz(); } });
+  var qLog = document.createElement("ol"); qLog.className = "quiz-log"; qSec.appendChild(qLog);
+  bReplay.disabled = bCheck.disabled = bNext.disabled = true;
+
+  var EXPLAIN = {
+    em: "트랙이 있고(하전), ECAL에서 에너지를 모두 내놓고 멈춤. 휘는 방향이 음전하 쪽(정면에서 반시계).",
+    ep: "트랙이 있고 ECAL에서 멈춤. 휘는 방향이 양전하 쪽(정면에서 시계 방향) → 양전자.",
+    mum: "트랙이 모든 층을 뚫고 뮤온 챔버에 히트. 정면에서 반시계 방향으로 휨 → 음전하 뮤온.",
+    mup: "트랙이 모든 층을 뚫고 뮤온 챔버에 히트. 정면에서 시계 방향으로 휨 → 양전하 반뮤온.",
+    chp: "트랙이 있고 HCAL에서 큰 에너지를 내놓고 멈춤(강입자). 시계 방향 → 양전하.",
+    chm: "트랙이 있고 HCAL에서 멈춤(강입자). 반시계 방향 → 음전하.",
+    g: "트랙이 없는데 ECAL에 큰 에너지 → 전기적으로 중성인 광자.",
+    n: "트랙이 없는데 HCAL에 에너지 → 중성 강입자(중성자).",
+    nu: "어떤 층에도 신호가 없음 → 중성미자. 실제 실험에서는 누락 횡운동량으로 추론."
+  };
+  var quiz = { active: false, items: [], k: 0, score: 0, answered: false, shotDone: false };
+  function startQuiz() {
+    var keys = ["em", "ep", "mum", "mup", "chp", "chm", "g", "n", "nu"];
+    for (var i = keys.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = keys[i]; keys[i] = keys[j]; keys[j] = t; }
+    quiz.items = keys.slice(0, 5).map(function (ans) {
+      var type = ans === "chp" ? (Math.random() < 0.5 ? "pip" : "p") : (ans === "chm" ? "pim" : ans);
+      return { ans: ans, type: type, p: Math.round(8 + Math.random() * 32), th: Math.round(75 + Math.random() * 30), ph: Math.round(Math.random() * 360) };
+    });
+    quiz.active = true; quiz.k = 0; quiz.score = 0; quiz.answered = false;
+    qLog.innerHTML = "";
+    if (demoOn) { demoOn = false; demoTgl.set(false); }
+    bStart.textContent = "처음부터 다시";
+    fireQuiz();
+  }
+  function fireQuiz() {
+    var it = quiz.items[quiz.k];
+    quiz.shotDone = false;
+    fire(it.type, it.p, it.th, it.ph, { quiz: true });
+    qStatus.innerHTML = "문제 <b>" + (quiz.k + 1) + " / 5</b> · 운동량 " + it.p + " GeV/c. 흔적을 관찰하세요.";
+    bReplay.disabled = false; bCheck.disabled = quiz.answered; bNext.disabled = !quiz.answered;
+  }
+  function quizShotDone() { quiz.shotDone = true; if (!quiz.answered) qStatus.innerHTML = "문제 <b>" + (quiz.k + 1) + " / 5</b> · 정체를 고르고 [정답 확인]을 누르세요."; }
+  function checkQuiz() {
+    if (!quiz.active || quiz.answered) return;
+    var v = qSel.get();
+    if (!v) { K.toast("먼저 정체를 고르세요."); return; }
+    var it = quiz.items[quiz.k], ok = v === it.ans;
+    if (ok) quiz.score++;
+    quiz.answered = true;
+    var li = document.createElement("li");
+    var ansLabel = ANS.filter(function (a) { return a.value === it.ans; })[0].label;
+    li.innerHTML = (quiz.k + 1) + ". " + (ok ? '<span class="result-ok">정답</span>' : '<span class="result-bad">오답</span>') + " — " + ansLabel + (it.type === "p" ? " (실제: 양성자)" : (it.type === "pip" ? " (실제: π⁺)" : ""));
+    qLog.appendChild(li);
+    qStatus.innerHTML = (ok ? '<span class="result-ok">정답!</span> ' : '<span class="result-bad">아쉬워요.</span> ') + EXPLAIN[it.ans];
+    hName.textContent = PT[it.type].label;
+    bCheck.disabled = true; bNext.disabled = false;
+    if (quiz.k === 4) bNext.textContent = "결과 보기";
+  }
+  function nextQuiz() {
+    if (!quiz.active || !quiz.answered) return;
+    if (quiz.k >= 4) {
+      quiz.active = false; bReplay.disabled = bCheck.disabled = bNext.disabled = true; bNext.textContent = "다음 문제";
+      qStatus.innerHTML = "퀴즈 끝! 점수 <b>" + quiz.score + " / 5</b>. " + (quiz.score >= 4 ? "훌륭해요." : "지문 표를 다시 보고 [처음부터 다시] 도전하세요.");
+      if (quiz.score >= 4) mission.complete(4, "미션 5 완료! 수수께끼 입자 " + quiz.score + "/5");
+      return;
+    }
+    quiz.k++; quiz.answered = false; qSel.set("");
+    fireQuiz();
+  }
+
+  /* ================= 미션 판정 ================= */
+  var firedMu = {};
+  function onManualDone() {
+    var r = ev.res;
+    if (!r.looped && r.stop !== "trkz") { fillFP(ev.d.cat, r); }
+    if (Object.keys(fpDone).length >= 6) mission.complete(1, "미션 2 완료! 신호 지문 표를 활동지에 옮겨 적으세요.");
+    if ((ev.type === "mum" || ev.type === "mup") && r.ch >= 2) firedMu[ev.type] = 1;
+    if (firedMu.mum && firedMu.mup) mission.complete(2, "미션 3 완료! 전하가 반대면 휘는 방향도 반대예요.");
+  }
+
+  /* ================= 자동 시연 ================= */
+  var demoOn = true, demoWait = 0, demoK = 0;
+  var DEMO = [["mum", 25, 30], ["em", 15, 150], ["g", 30, 250], ["pip", 20, 75], ["n", 25, 200], ["nu", 30, 320], ["mup", 12, 110], ["p", 18, 280]];
+  function demoFire() { var d = DEMO[demoK % DEMO.length]; demoK++; fire(d[0], d[1], 90, d[2], {}); }
+
+  /* ================= 매 프레임 ================= */
+  sim.onFrame(function (dt, t, real) {
+    // 충돌점 반짝임 줄이기
+    if (vtx.scale.x > 1) { vtx.scale.setScalar(Math.max(1, vtx.scale.x - real * 6)); }
+    if (!ev) { if (demoOn) demoFire(); return; }
+    // 침착 블록 맥동, 소나기 흐려짐
+    ev.objs.forEach(function (o) {
+      if (o.userData.fade !== undefined) { o.userData.fade -= dt; o.material.opacity = Math.max(0, o.userData.fade / 1.2); o.visible = o.userData.fade > 0; }
+      if (o.userData.pulse) { o.userData.pulse = Math.max(0, o.userData.pulse - dt * 1.5); o.material.opacity = Math.min(1, o.userData.base + o.userData.pulse * 0.5); }
+    });
+    if (!ev.done && dt > 0) {
+      ev.s += BASE_SPEED * sSpeed.get() * dt;
+      var target = Math.min(ev.pts.length - 1, Math.floor(ev.s / DS));
+      while (ev.idx < target) {
+        ev.idx++;
+        if (ev.trail) ev.trail.push(ev.pts[ev.idx]);
+        if (ev.beads) ev.beads.push(ev.pts[ev.idx]);
+        while (ev.ptr < ev.evs.length && ev.evs[ev.ptr].i <= ev.idx) { processEvent(ev.evs[ev.ptr]); ev.ptr++; }
+      }
+      if (ev.head) ev.head.position.copy(ev.pts[ev.idx]);
+      if (ev.idx >= ev.pts.length - 1) finishEvent();
+    } else if (ev.done && demoOn && !quiz.active) {
+      demoWait += real;
+      if (demoWait > 1.6) demoFire();
+    }
+  });
+})();
+</script>
+</body>
+</html>

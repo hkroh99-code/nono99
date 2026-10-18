@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 05 입자 검출기 · 학생용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-page="student" data-topic="5" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--student">학생용</span>
+      <span class="badge badge--basic">기본과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 05</p>
+    <h1>입자 검출기: 보이지 않는 흔적 찾기</h1>
+    <p class="lead">너무 작고 너무 빨라서 볼 수 없는 입자를, 검출기는 어떻게 "보고" 그 정체까지 알아낼까?</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--sim" href="../sims/t05.html">3D 모의실험 열기</a>
+      <button class="btn" type="button" data-copy-answers>내 답안 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>답안 지우기</button>
+    </div>
+    <p class="save-note">입력한 답은 이 기기의 브라우저에만 자동 저장됩니다. 제출할 때는 [내 답안 복사]를 눌러 붙여 넣으세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#goals">학습 목표</a><a href="#open">생각 열기</a><a href="#concept">핵심 개념</a>
+      <a href="#lab">실험 A</a><a href="#sim">실험 B: 3D</a><a href="#cern">CERN에서는</a>
+      <a href="#check">확인 문제</a><a href="#up">업그레이드</a><a href="#self">자기 평가</a>
+    </nav>
+  </header>
+
+  <section class="section" id="goals">
+    <div class="box box--goal">
+      <h2 class="box__title" style="font-size:var(--step-1)">학습 목표</h2>
+      <ol>
+        <li>구름상자에서 흔적이 생기는 원리(이온화, 과포화 증기, 응결)를 순서대로 설명할 수 있다.</li>
+        <li>흔적의 굵기·길이·휘어짐으로 알파 입자, 뮤온, 전자를 구별하고 그 이유를 말할 수 있다.</li>
+        <li>CMS 검출기의 층 구조(트래커, ECAL, HCAL, 솔레노이드, 뮤온 챔버)와 각 층에 남는 신호로 입자를 식별하고, 중성미자는 누락 운동량으로 추론함을 설명할 수 있다.</li>
+      </ol>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>활동</th></tr>
+      <tr><td>1차시 (50분)</td><td>생각 열기 → 핵심 개념 1(이온화와 구름상자) → <b>실험 A</b> 구름상자 만들기·관찰·흔적 세기(드라이아이스 위에서 안정되기를 기다리는 동안 흔적 모양 예측)</td></tr>
+      <tr><td>2차시 (50분)</td><td>실험 A 결과 분석·발표 → 핵심 개념 2(자기장 속 궤적, CMS 층 구조) → <b>실험 B</b> 3D CMS 검출기 탐험(신호 지문 표, 수수께끼 입자) → 확인 문제·자기 평가</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="open">
+    <div class="section__head"><span class="section__tag">01</span><h2>생각 열기</h2></div>
+    <div class="box box--think prose">
+      <p>맑은 날 하늘을 올려다보면 비행기는 너무 높아 점처럼 보이거나 아예 보이지 않는데, 하늘에 길게 그어진 <b>비행운</b>을 보고 "비행기가 저쪽으로 지나갔구나" 하고 압니다. 비행기의 뜨거운 배기가스 속 수증기와 작은 알갱이에 차가운 공기 속 수증기가 응결해 구름 줄이 생긴 것입니다.</p>
+      <p>지금 이 순간에도 우주에서 온 <b>뮤온</b>이 우리 몸을 지나가고 있습니다. 해수면에서는 수평면 1 cm²마다 1분에 약 1개가 지나가므로, 손바닥(약 100 cm²)만 해도 1분에 약 100개, 1초에 1~2개입니다. 하지만 우리는 아무것도 느끼지 못합니다.</p>
+    </div>
+    <label class="answer-field"><span>Q1. 비행기가 보이지 않아도 비행운을 보고 알 수 있는 것을 2가지 이상 써 보자. (예: 지나간 방향)</span><textarea id="open-q1"></textarea></label>
+    <label class="answer-field"><span>Q2. 입자 하나는 너무 작아서 현미경으로도 볼 수 없다. 그렇다면 입자 대신 무엇을 "보면" 입자가 지나갔다는 것을 알 수 있을까? 비행운에 빗대어 생각을 써 보자.</span><textarea id="open-q2"></textarea></label>
+  </section>
+
+  <section class="section" id="concept">
+    <div class="section__head"><span class="section__tag">02</span><h2>핵심 개념</h2></div>
+    <div class="prose">
+      <h3>1. 이온화: 입자가 남기는 발자국</h3>
+      <p>빠르게 움직이는 <b>하전 입자</b>(전자, 뮤온, 양성자, 알파 입자 등)가 기체나 고체 속을 지나가면, 그 전기력으로 주변 원자의 전자를 떼어 냅니다. 이렇게 생긴 (+)이온과 떨어져 나온 전자를 <b>이온 쌍</b>이라 하고, 이 과정을 <b>이온화</b>라고 합니다. 입자 하나는 볼 수 없지만, 지나간 길을 따라 늘어선 수많은 이온은 적당한 방법으로 "보이게" 만들 수 있습니다.</p>
+      <p>전하가 없는 <b>중성 입자</b>(광자, 중성자, 중성미자)는 지나가면서 직접 이온화하지 않으므로 흔적이 보이지 않습니다. 광자나 중성자는 물질과 부딪쳐 하전 입자를 만들어 낼 때에만 간접적으로 드러납니다.</p>
+
+      <h3>2. 구름상자: 이온을 구름 방울로 바꾸기</h3>
+      <p>공기가 머금을 수 있는 증기의 양은 온도가 낮을수록 줄어듭니다. 증기가 그 온도에서 머금을 수 있는 양보다 많은데도 아직 액체 방울이 되지 않은 불안정한 상태를 <b>과포화 상태</b>라고 합니다. 과포화 증기는 방울이 맺힐 "씨앗(응결핵)"만 있으면 곧바로 응결합니다. 하전 입자가 지나가며 만든 <b>이온이 바로 이 씨앗</b>이 되어, 입자가 지나간 길을 따라 작은 알코올 방울이 줄지어 맺힙니다. 이것이 구름상자의 흔적입니다.</p>
+      <p>확산형 구름상자에서는 위쪽 펠트의 알코올이 실온에서 증발해 아래로 퍼지고(확산), 드라이아이스(약 −78.5 °C)로 식힌 바닥판 바로 위 약 1 cm 두께에 과포화층이 생깁니다.</p>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 560 310" width="560" role="img" aria-labelledby="fig1-t">
+        <title id="fig1-t">확산형 구름상자의 단면 구조</title>
+        <polygon points="8,214 60,196 60,236" fill="var(--track-soft)" stroke="var(--track)" stroke-width="1"/>
+        <rect x="2" y="206" width="14" height="16" rx="2" fill="var(--ink-3)"/>
+        <rect x="70" y="34" width="360" height="206" rx="8" fill="none" stroke="var(--ink-3)" stroke-width="2"/>
+        <rect x="74" y="38" width="352" height="16" rx="3" fill="var(--track)" opacity=".55"/>
+        <g stroke="var(--ink-3)" stroke-width="1.4" stroke-dasharray="4 5" fill="none">
+          <path d="M120 62 v110"/><path d="M190 62 v110"/><path d="M260 62 v110"/><path d="M330 62 v110"/><path d="M400 62 v110"/>
+        </g>
+        <g fill="var(--ink-3)"><path d="M115 168 l5 9 l5 -9z"/><path d="M185 168 l5 9 l5 -9z"/><path d="M255 168 l5 9 l5 -9z"/><path d="M325 168 l5 9 l5 -9z"/><path d="M395 168 l5 9 l5 -9z"/></g>
+        <rect x="74" y="190" width="352" height="44" fill="var(--accent-soft)"/>
+        <line x1="96" y1="214" x2="140" y2="206" stroke="var(--track)" stroke-width="5" stroke-linecap="round"/>
+        <line x1="170" y1="228" x2="420" y2="196" stroke="var(--lv-adv)" stroke-width="1.8"/>
+        <path d="M300 226 q8 -12 16 -4 t14 -6 t12 4 t16 -10 t10 2" fill="none" stroke="var(--accent)" stroke-width="1.8"/>
+        <rect x="70" y="240" width="360" height="9" fill="currentColor"/>
+        <rect x="58" y="249" width="384" height="34" rx="4" fill="var(--surface-2)" stroke="var(--ink-3)"/>
+        <text x="250" y="271" text-anchor="middle" font-size="13">드라이아이스 (약 −78.5 °C) · 스티로폼 상자 위</text>
+        <text x="444" y="50" font-size="13">알코올 적신 펠트</text>
+        <text x="444" y="66" font-size="12" class="muted-fill">(실온 → 증발)</text>
+        <text x="444" y="120" font-size="13">알코올 증기가</text>
+        <text x="444" y="136" font-size="13">아래로 퍼짐</text>
+        <text x="444" y="206" font-size="13">과포화층(약 1 cm)</text>
+        <text x="444" y="222" font-size="12" class="muted-fill">흔적이 보이는 곳</text>
+        <text x="444" y="248" font-size="13">검은 금속판</text>
+        <text x="80" y="186" font-size="12">굵고 짧은 흔적</text>
+        <text x="196" y="186" font-size="12">가늘고 긴 흔적</text>
+        <text x="318" y="186" font-size="12" style="fill:var(--accent)">구불구불한 흔적</text>
+        <text x="4" y="300" font-size="12" class="muted-fill">손전등은 옆에서 낮은 각도로 비춘다</text>
+        <text x="300" y="300" font-size="12" class="muted-fill">위: 따뜻함(약 20 °C) · 아래: 차가움</text>
+      </svg>
+      <figcaption>그림 1. 확산형 구름상자의 단면. 위에서 증발한 알코올 증기가 차가운 바닥 근처에서 과포화되고, 하전 입자가 만든 이온을 씨앗으로 방울이 맺혀 흔적이 된다.</figcaption>
+    </figure>
+    <div class="prose">
+      <h3>3. 흔적의 모양으로 입자 알아맞히기</h3>
+      <p>입자가 단위 길이마다 만드는 이온의 수(이온화 정도)는 대략 <b>전하의 제곱에 비례</b>하고, <b>속력의 제곱에 반비례</b>합니다. 그래서 전하가 크고 느린 입자일수록 흔적이 굵습니다. 또 가벼운 입자일수록 원자와 부딪칠 때 방향이 잘 꺾입니다.</p>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>흔적 모양</th><th>추정 입자</th><th>까닭</th></tr>
+      <tr><td>굵고 짧으며 곧다 (수 cm 이하)</td><td>알파 입자(헬륨 원자핵, 전하 +2)</td><td>전하가 크고 비교적 느려 이온을 아주 많이 만들고, 그만큼 에너지를 빨리 잃어 공기 속에서 몇 cm 안에 멈춘다. 무거워서 잘 꺾이지 않는다.</td></tr>
+      <tr><td>가늘고 길며 곧다 (상자를 가로지름)</td><td>뮤온(우주선)</td><td>거의 빛의 속력으로 달려 이온을 적게 만든다(가늘다). 전자보다 약 207배 무거워 잘 꺾이지 않고 상자를 뚫고 지나간다.</td></tr>
+      <tr><td>가늘고 구불구불하다, 짧게 휘어진다</td><td>전자(베타선, 우주선의 2차 전자)</td><td>매우 가벼워 공기 분자와 부딪칠 때마다 방향이 쉽게 바뀐다(다중 산란).</td></tr>
+    </table></div>
+    <div class="prose">
+      <h3>4. 자기장으로 전하와 운동량 재기</h3>
+      <p>주제 4에서 배운 것처럼 자기장에 수직으로 움직이는 하전 입자는 로렌츠 힘을 받아 원을 그립니다. <b>휘는 방향</b>으로 전하의 부호를, <b>휘는 정도(반지름)</b>로 운동량을 알 수 있습니다. 입자물리에서 편리한 단위로 쓰면 다음과 같습니다.</p>
+    </div>
+    <div class="formula">p<sub>T</sub> [GeV/c] = <b>0.3</b> × B [T] × r [m]</div>
+    <div class="prose">
+      <p>여기서 p<sub>T</sub>는 자기장(빔 방향)에 수직인 운동량 성분(횡운동량)입니다. 예를 들어 B = 3.8 T인 CMS에서 p<sub>T</sub> = 10 GeV/c인 입자는 r = 10 ÷ (0.3 × 3.8) ≈ 8.8 m인 원호를 그립니다. 운동량이 클수록 거의 곧게 보입니다.</p>
+
+      <h3>5. CMS 검출기: 양파처럼 겹겹이 쌓은 층</h3>
+      <p>LHC의 충돌점은 여러 겹의 원통형 검출기로 둘러싸여 있습니다. 안쪽에서 바깥쪽으로 갈수록 더 무겁고 두꺼운 층이 있고, 각 층은 서로 다른 입자에 반응하도록 만들어졌습니다. 그래서 <b>어느 층에 신호가 남았는지의 조합</b>("신호 지문")을 보면 입자의 종류를 알 수 있습니다.</p>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 560 352" width="560" role="img" aria-labelledby="fig2-t">
+        <title id="fig2-t">CMS 검출기의 단면(빔 방향에서 본 모습)과 뮤온의 궤적</title>
+        <g fill="none">
+          <circle cx="165" cy="165" r="150" stroke="var(--danger)" stroke-width="16" opacity=".35"/>
+          <circle cx="165" cy="165" r="128" stroke="var(--danger)" stroke-width="14" opacity=".35"/>
+          <circle cx="165" cy="165" r="139" stroke="var(--ink-3)" stroke-width="2"/>
+          <circle cx="165" cy="165" r="117" stroke="var(--ink-3)" stroke-width="2"/>
+          <circle cx="165" cy="165" r="160" stroke="var(--ink-3)" stroke-width="2"/>
+          <circle cx="165" cy="165" r="100" stroke="var(--ink-3)" stroke-width="8" opacity=".45"/>
+          <circle cx="165" cy="165" r="78" stroke="var(--lv-adv)" stroke-width="28" opacity=".35"/>
+          <circle cx="165" cy="165" r="52" stroke="var(--lv-basic)" stroke-width="10" opacity=".55"/>
+          <circle cx="165" cy="165" r="36" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="2 3"/>
+          <circle cx="165" cy="165" r="26" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="2 3"/>
+          <circle cx="165" cy="165" r="16" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="2 3"/>
+          <path d="M165 165 Q 225 140 248 92 Q 262 50 310 18" stroke="var(--lv-up)" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <circle cx="165" cy="165" r="4" fill="currentColor"/>
+        <circle cx="14" cy="16" r="7" fill="none" stroke="var(--accent)" stroke-width="1.5"/><circle cx="14" cy="16" r="2" fill="var(--accent)"/>
+        <g stroke="var(--ink-3)" stroke-width="1">
+          <line x1="190" y1="155" x2="350" y2="96"/><line x1="214" y1="165" x2="350" y2="132"/><line x1="240" y1="180" x2="350" y2="168"/>
+          <line x1="265" y1="190" x2="350" y2="204"/><line x1="290" y1="200" x2="350" y2="240"/><line x1="300" y1="245" x2="350" y2="276"/>
+        </g>
+        <text x="356" y="100" font-size="13">실리콘 트래커 — 하전 입자의 궤적</text>
+        <text x="356" y="136" font-size="13">ECAL — 전자·광자의 에너지</text>
+        <text x="356" y="172" font-size="13">HCAL — 강입자의 에너지</text>
+        <text x="356" y="208" font-size="13">초전도 솔레노이드 (안쪽 3.8 T)</text>
+        <text x="356" y="244" font-size="13">철 귀환 요크 (자기장 반대 방향)</text>
+        <text x="356" y="280" font-size="13">뮤온 챔버 — 뚫고 나온 입자 기록</text>
+        <text x="28" y="21" font-size="12" style="fill:var(--accent)">솔레노이드 안 B: 지면 밖 방향</text>
+        <text x="318" y="22" font-size="12" style="fill:var(--lv-up)">뮤온 궤적</text>
+        <text x="4" y="346" font-size="12" class="muted-fill">축척은 실제와 다름 · 다른 입자의 신호는 3D 모의실험에서 직접 확인</text>
+      </svg>
+      <figcaption>그림 2. 빔 방향에서 본 CMS 검출기 단면(개념도). 뮤온은 모든 층을 뚫고 나가며, 솔레노이드 안과 철 요크 안에서 자기장 방향이 반대라 휘는 방향도 반대가 된다.</figcaption>
+    </figure>
+    <div class="prose">
+      <h3>6. 보이지 않는 입자는 "빠진 운동량"으로</h3>
+      <p>충돌하는 두 양성자는 빔 방향으로만 움직이므로, 충돌 전 빔에 수직인 방향의 운동량(횡운동량) 합은 0입니다. 운동량 보존에 따라 충돌 후에도 모든 입자의 횡운동량 벡터 합은 0이어야 합니다. 검출된 입자들의 합이 0이 아니라면, 어떤 층에도 신호를 남기지 않은 입자(중성미자 등)가 그만큼을 반대 방향으로 가져간 것입니다.</p>
+    </div>
+    <div class="formula">p⃗<sub>T</sub><sup>누락</sup> = <b>−</b> Σ p⃗<sub>T</sub> (검출된 모든 입자)</div>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">03</span><h2>실험 A: 확산형 구름상자 만들기</h2></div>
+    <div class="grid-2">
+      <div class="box"><h3>준비물 (모둠당)</h3><ul>
+        <li>뚜껑 없는 투명 플라스틱 통(수납함·어항 등, 바닥 20×30 cm 안팎, 높이 15 cm 안팎)</li>
+        <li>검은 금속판(통 입구보다 조금 큰 알루미늄 판, 무광 검정 칠 또는 검은 절연 테이프)</li>
+        <li>펠트 띠(또는 두꺼운 부직포)와 양면테이프·글루건</li>
+        <li>99% 이소프로필 알코올 약 15~20 mL, 스포이트</li>
+        <li>판형 드라이아이스 약 1.5~2 kg, 스티로폼 상자</li>
+        <li>밝은 LED 손전등, 암막 또는 검은 천</li>
+        <li>방한 장갑(두꺼운 면장갑 + 가죽장갑), 보안경</li>
+        <li>점토 또는 테이프(틈 막기), 자, 초시계, 스마트폰(촬영)</li>
+      </ul></div>
+      <div class="box box--safety"><h4>안전 수칙</h4><ul>
+        <li>드라이아이스는 약 −78.5 °C로 맨손으로 만지면 순식간에 동상을 입는다. 반드시 장갑과 집게를 쓴다.</li>
+        <li>드라이아이스를 뚜껑을 꽉 닫은 병·통에 넣지 않는다. 기체가 차서 터질 수 있다.</li>
+        <li>드라이아이스는 이산화 탄소로 승화한다. 창문을 열어 환기하고, 좁은 곳에 엎드려 냄새를 맡지 않는다.</li>
+        <li>이소프로필 알코올은 불이 잘 붙는다. 실험실 안에서 불꽃·라이터·전열기를 쓰지 않고, 손전등은 LED 제품을 쓴다.</li>
+        <li>알코올 증기를 직접 들이마시지 않고, 눈에 튀지 않게 보안경을 쓴다.</li>
+        <li>남은 드라이아이스는 환기되는 곳에 두어 저절로 승화시킨다(싱크대·쓰레기통·밀폐 봉투 금지).</li>
+      </ul></div>
+    </div>
+    <h3>실험 방법</h3>
+    <ol class="steps">
+      <li>투명 통의 바닥 안쪽(뒤집었을 때 위가 될 면)에 펠트 띠를 붙인다.</li>
+      <li>펠트에 이소프로필 알코올을 흠뻑 적신다(약 15 mL, 뚝뚝 떨어지지 않을 정도). 남은 알코올 몇 mL를 금속판 위에도 얇게 뿌린다.</li>
+      <li>통을 뒤집어 검은 금속판 위에 올리고, 틈을 점토나 테이프로 막아 공기가 드나들지 않게 한다.</li>
+      <li>스티로폼 상자 안에 드라이아이스 판을 평평하게 깔고, 금속판 전체가 닿도록 구름상자를 올린다.</li>
+      <li>방을 어둡게 하고 손전등을 옆에서 바닥과 거의 나란하게 비춘다. 5~10분쯤 지나면 바닥 위에 가는 안개비가 내리는 층이 생긴다.</li>
+      <li>흔적이 보이기 시작하면 역할을 나눈다(관찰 2명, 기록 1명, 시간 재기 1명). 1분 동안 보이는 흔적을 모양별로 센다. 이것을 3번 되풀이한다.</li>
+      <li>눈에 띄는 흔적 3개를 골라 바닥에 놓은 자와 견주어 길이를 어림하고, 굵기와 모양을 기록한다. 스마트폰 동영상으로 촬영해 두면 나중에 다시 볼 수 있다.</li>
+      <li>정리: 드라이아이스는 환기되는 곳에서 승화시키고, 알코올은 마개를 닫아 보관한다.</li>
+    </ol>
+    <div class="grid-2">
+      <label class="answer-field"><span>구름상자 바닥 넓이 (cm²)</span><input type="number" id="lab-area" aria-label="구름상자 바닥 넓이 (cm²)"></label>
+      <label class="answer-field"><span>관찰 조건 (실내 온도, 흔적이 보이기까지 걸린 시간 등)</span><input type="text" id="lab-cond" aria-label="관찰 조건"></label>
+    </div>
+    <h3>기록표 1. 1분 동안 보인 흔적 수</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-lab">
+      <tr><th>측정</th><th>굵고 짧은 곧은 흔적</th><th>가늘고 긴 곧은 흔적</th><th>가늘고 구불구불한 흔적</th><th>기타(점, 갈라짐 등)</th><th>합계</th></tr>
+      <tr><td>1회</td><td><input type="number" id="lab-r1c1" aria-label="1회 굵고 짧은 흔적 수"></td><td><input type="number" id="lab-r1c2" aria-label="1회 가늘고 긴 흔적 수"></td><td><input type="number" id="lab-r1c3" aria-label="1회 구불구불한 흔적 수"></td><td><input type="number" id="lab-r1c4" aria-label="1회 기타 흔적 수"></td><td><input type="number" id="lab-r1c5" aria-label="1회 합계"></td></tr>
+      <tr><td>2회</td><td><input type="number" id="lab-r2c1" aria-label="2회 굵고 짧은 흔적 수"></td><td><input type="number" id="lab-r2c2" aria-label="2회 가늘고 긴 흔적 수"></td><td><input type="number" id="lab-r2c3" aria-label="2회 구불구불한 흔적 수"></td><td><input type="number" id="lab-r2c4" aria-label="2회 기타 흔적 수"></td><td><input type="number" id="lab-r2c5" aria-label="2회 합계"></td></tr>
+      <tr><td>3회</td><td><input type="number" id="lab-r3c1" aria-label="3회 굵고 짧은 흔적 수"></td><td><input type="number" id="lab-r3c2" aria-label="3회 가늘고 긴 흔적 수"></td><td><input type="number" id="lab-r3c3" aria-label="3회 구불구불한 흔적 수"></td><td><input type="number" id="lab-r3c4" aria-label="3회 기타 흔적 수"></td><td><input type="number" id="lab-r3c5" aria-label="3회 합계"></td></tr>
+      <tr><td>평균</td><td><input type="number" id="lab-r4c1" aria-label="평균 굵고 짧은 흔적 수"></td><td><input type="number" id="lab-r4c2" aria-label="평균 가늘고 긴 흔적 수"></td><td><input type="number" id="lab-r4c3" aria-label="평균 구불구불한 흔적 수"></td><td><input type="number" id="lab-r4c4" aria-label="평균 기타 흔적 수"></td><td><input type="number" id="lab-r4c5" aria-label="평균 합계"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-lab">기록표 복사</button>
+    <h3>기록표 2. 대표 흔적 3개</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-lab2">
+      <tr><th>흔적</th><th>길이 (cm)</th><th>굵기</th><th>모양</th><th>추정 입자</th><th>판단 근거</th></tr>
+      <tr><td>가</td><td><input type="number" id="lab2-r1c1" aria-label="흔적 가 길이"></td><td><input type="text" id="lab2-r1c2" aria-label="흔적 가 굵기"></td><td><input type="text" id="lab2-r1c3" aria-label="흔적 가 모양"></td><td><input type="text" id="lab2-r1c4" aria-label="흔적 가 추정 입자"></td><td><input type="text" id="lab2-r1c5" aria-label="흔적 가 판단 근거"></td></tr>
+      <tr><td>나</td><td><input type="number" id="lab2-r2c1" aria-label="흔적 나 길이"></td><td><input type="text" id="lab2-r2c2" aria-label="흔적 나 굵기"></td><td><input type="text" id="lab2-r2c3" aria-label="흔적 나 모양"></td><td><input type="text" id="lab2-r2c4" aria-label="흔적 나 추정 입자"></td><td><input type="text" id="lab2-r2c5" aria-label="흔적 나 판단 근거"></td></tr>
+      <tr><td>다</td><td><input type="number" id="lab2-r3c1" aria-label="흔적 다 길이"></td><td><input type="text" id="lab2-r3c2" aria-label="흔적 다 굵기"></td><td><input type="text" id="lab2-r3c3" aria-label="흔적 다 모양"></td><td><input type="text" id="lab2-r3c4" aria-label="흔적 다 추정 입자"></td><td><input type="text" id="lab2-r3c5" aria-label="흔적 다 판단 근거"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-lab2">기록표 복사</button>
+    <h3>결과 분석</h3>
+    <label class="answer-field"><span>A1. 가장 많이 보인 흔적은 어떤 모양이었나? 그 흔적은 어떤 입자일 가능성이 크고, 왜 그렇게 많을까?</span><textarea id="lab-a1"></textarea></label>
+    <label class="answer-field"><span>A2. 평균 합계를 바닥 넓이로 나누어 1 cm²·1분당 흔적 수를 구하라. 해수면의 우주선 뮤온 약 1개/(cm²·분)과 비교하고, 차이가 나는 까닭을 2가지 이상 추측하라.</span><textarea id="lab-a2"></textarea></label>
+    <label class="answer-field"><span>A3. 굵고 짧은 흔적이 굵고 짧은 이유를 "이온화 정도"와 "에너지 손실"이라는 말을 써서 설명하라.</span><textarea id="lab-a3"></textarea></label>
+    <label class="answer-field"><span>A4. 흔적이 잘 보이지 않았거나 늦게 보였다면 그 까닭은 무엇이었을까? 다음에 무엇을 바꾸면 좋을까?</span><textarea id="lab-a4"></textarea></label>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">04</span><h2>실험 B: 3D 모의실험 — CMS 검출기 탐험</h2></div>
+    <p class="prose">실제 CMS 검출기와 비슷한 크기(1칸 = 1 m)의 3D 검출기 안에서 여러 입자를 쏘아 보고, 입자마다 어느 층에 어떤 신호를 남기는지 "신호 지문"을 찾습니다. 하전 입자는 3.8 T 자기장에서 휘고, 칼로리미터에 닿으면 블록이 빛나며 에너지가 표시됩니다. 운동량 p는 θ = 90°(빔에 수직)일 때 횡운동량 p<sub>T</sub>와 같습니다.</p>
+    <a class="btn btn--sim no-print" href="../sims/t05.html">3D 모의실험 열기</a>
+    <h3>미션</h3>
+    <ol class="steps">
+      <li><b>층 구조 살피기</b>: [층 설명 카드]와 층 보이기/숨기기로 각 층을 살펴보고, [정면 보기(+z)]로 동심원 단면을 본다. 아래 표 1을 채운다.</li>
+      <li><b>신호 지문 표</b>: 전자, 광자, 뮤온, 하전 강입자(π⁺·π⁻·양성자 중 하나), 중성자, 중성미자를 운동량 20 GeV/c 정도로 하나씩 쏘고 표 2를 채운다.</li>
+      <li><b>휘는 방향</b>: μ⁻와 μ⁺를 같은 방향·운동량으로 쏘아 휘는 방향을 비교한다. [자기장 방향 화살표]를 켜고, 운동량 3~5 GeV/c의 뮤온이 철 요크 안에서 어떻게 휘는지 본다.</li>
+      <li><b>운동량 재기</b>: θ = 90°에서 μ⁻를 5, 10, 20 GeV/c로 쏘고 사건이 끝날 때마다 [기록]을 누른다. 표 3을 채우고 r–p<sub>T</sub> 그래프를 확인한다.</li>
+      <li><b>수수께끼 입자</b>: [퀴즈 시작]을 눌러 이름을 숨긴 입자 5개를 판별하고 표 4에 적는다. 4개 이상 맞히면 성공.</li>
+    </ol>
+    <h3>표 1. 검출기 층</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim-layer">
+      <tr><th>층 (안 → 밖)</th><th>반지름 범위 (m)</th><th>무엇을 재는가 / 무엇으로 만들었나</th></tr>
+      <tr><td>실리콘 트래커</td><td><input type="text" id="sim-l1c1" aria-label="트래커 반지름 범위"></td><td><input type="text" id="sim-l1c2" aria-label="트래커가 재는 것"></td></tr>
+      <tr><td>전자기 칼로리미터(ECAL)</td><td><input type="text" id="sim-l2c1" aria-label="ECAL 반지름 범위"></td><td><input type="text" id="sim-l2c2" aria-label="ECAL이 재는 것"></td></tr>
+      <tr><td>강입자 칼로리미터(HCAL)</td><td><input type="text" id="sim-l3c1" aria-label="HCAL 반지름 범위"></td><td><input type="text" id="sim-l3c2" aria-label="HCAL이 재는 것"></td></tr>
+      <tr><td>초전도 솔레노이드</td><td><input type="text" id="sim-l4c1" aria-label="솔레노이드 반지름 범위"></td><td><input type="text" id="sim-l4c2" aria-label="솔레노이드의 역할"></td></tr>
+      <tr><td>철 귀환 요크 + 뮤온 챔버</td><td><input type="text" id="sim-l5c1" aria-label="요크와 뮤온 챔버 반지름 범위"></td><td><input type="text" id="sim-l5c2" aria-label="요크와 뮤온 챔버의 역할"></td></tr>
+    </table></div>
+    <h3>표 2. 신호 지문 (있음 / 조금 / 대부분 / 없음)</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim-fp">
+      <tr><th>입자</th><th>트래커 트랙</th><th>ECAL</th><th>HCAL</th><th>뮤온 챔버</th></tr>
+      <tr><td>전자</td><td><input type="text" id="sim-fp1c1" aria-label="전자 트랙"></td><td><input type="text" id="sim-fp1c2" aria-label="전자 ECAL"></td><td><input type="text" id="sim-fp1c3" aria-label="전자 HCAL"></td><td><input type="text" id="sim-fp1c4" aria-label="전자 뮤온 챔버"></td></tr>
+      <tr><td>광자</td><td><input type="text" id="sim-fp2c1" aria-label="광자 트랙"></td><td><input type="text" id="sim-fp2c2" aria-label="광자 ECAL"></td><td><input type="text" id="sim-fp2c3" aria-label="광자 HCAL"></td><td><input type="text" id="sim-fp2c4" aria-label="광자 뮤온 챔버"></td></tr>
+      <tr><td>뮤온</td><td><input type="text" id="sim-fp3c1" aria-label="뮤온 트랙"></td><td><input type="text" id="sim-fp3c2" aria-label="뮤온 ECAL"></td><td><input type="text" id="sim-fp3c3" aria-label="뮤온 HCAL"></td><td><input type="text" id="sim-fp3c4" aria-label="뮤온 뮤온 챔버"></td></tr>
+      <tr><td>하전 강입자 (π±, p)</td><td><input type="text" id="sim-fp4c1" aria-label="하전 강입자 트랙"></td><td><input type="text" id="sim-fp4c2" aria-label="하전 강입자 ECAL"></td><td><input type="text" id="sim-fp4c3" aria-label="하전 강입자 HCAL"></td><td><input type="text" id="sim-fp4c4" aria-label="하전 강입자 뮤온 챔버"></td></tr>
+      <tr><td>중성 강입자 (n)</td><td><input type="text" id="sim-fp5c1" aria-label="중성자 트랙"></td><td><input type="text" id="sim-fp5c2" aria-label="중성자 ECAL"></td><td><input type="text" id="sim-fp5c3" aria-label="중성자 HCAL"></td><td><input type="text" id="sim-fp5c4" aria-label="중성자 뮤온 챔버"></td></tr>
+      <tr><td>중성미자</td><td><input type="text" id="sim-fp6c1" aria-label="중성미자 트랙"></td><td><input type="text" id="sim-fp6c2" aria-label="중성미자 ECAL"></td><td><input type="text" id="sim-fp6c3" aria-label="중성미자 HCAL"></td><td><input type="text" id="sim-fp6c4" aria-label="중성미자 뮤온 챔버"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-sim-fp">표 복사</button>
+    <h3>표 3. 운동량과 궤도 반지름 (μ⁻, θ = 90°, B = 3.8 T)</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim-p">
+      <tr><th>설정 p<sub>T</sub> (GeV/c)</th><th>측정 반지름 r (m)</th><th>계산 0.3 × 3.8 × r (GeV/c)</th><th>정면에서 본 휘는 방향</th></tr>
+      <tr><td>5</td><td><input type="number" id="sim-p1c1" aria-label="5 GeV/c 반지름"></td><td><input type="number" id="sim-p1c2" aria-label="5 GeV/c 계산 운동량"></td><td><input type="text" id="sim-p1c3" aria-label="5 GeV/c 휘는 방향"></td></tr>
+      <tr><td>10</td><td><input type="number" id="sim-p2c1" aria-label="10 GeV/c 반지름"></td><td><input type="number" id="sim-p2c2" aria-label="10 GeV/c 계산 운동량"></td><td><input type="text" id="sim-p2c3" aria-label="10 GeV/c 휘는 방향"></td></tr>
+      <tr><td>20</td><td><input type="number" id="sim-p3c1" aria-label="20 GeV/c 반지름"></td><td><input type="number" id="sim-p3c2" aria-label="20 GeV/c 계산 운동량"></td><td><input type="text" id="sim-p3c3" aria-label="20 GeV/c 휘는 방향"></td></tr>
+    </table></div>
+    <h3>표 4. 수수께끼 입자</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim-q">
+      <tr><th>문제</th><th>관찰한 신호 (트랙·휘는 방향·ECAL·HCAL·뮤온)</th><th>내 판단</th><th>정답</th></tr>
+      <tr><td>1</td><td><input type="text" id="sim-q1c1" aria-label="문제 1 관찰한 신호"></td><td><input type="text" id="sim-q1c2" aria-label="문제 1 내 판단"></td><td><input type="text" id="sim-q1c3" aria-label="문제 1 정답"></td></tr>
+      <tr><td>2</td><td><input type="text" id="sim-q2c1" aria-label="문제 2 관찰한 신호"></td><td><input type="text" id="sim-q2c2" aria-label="문제 2 내 판단"></td><td><input type="text" id="sim-q2c3" aria-label="문제 2 정답"></td></tr>
+      <tr><td>3</td><td><input type="text" id="sim-q3c1" aria-label="문제 3 관찰한 신호"></td><td><input type="text" id="sim-q3c2" aria-label="문제 3 내 판단"></td><td><input type="text" id="sim-q3c3" aria-label="문제 3 정답"></td></tr>
+      <tr><td>4</td><td><input type="text" id="sim-q4c1" aria-label="문제 4 관찰한 신호"></td><td><input type="text" id="sim-q4c2" aria-label="문제 4 내 판단"></td><td><input type="text" id="sim-q4c3" aria-label="문제 4 정답"></td></tr>
+      <tr><td>5</td><td><input type="text" id="sim-q5c1" aria-label="문제 5 관찰한 신호"></td><td><input type="text" id="sim-q5c2" aria-label="문제 5 내 판단"></td><td><input type="text" id="sim-q5c3" aria-label="문제 5 정답"></td></tr>
+    </table></div>
+    <label class="answer-field"><span>B1. 중성미자는 왜 어떤 층에도 신호를 남기지 않을까? 실제 실험에서는 중성미자가 나왔다는 것을 어떻게 알아낼까?</span><textarea id="sim-b1"></textarea></label>
+    <label class="answer-field"><span>B2. 뮤온의 궤적이 철 요크 안에서 반대쪽으로 휘는 까닭은 무엇인가?</span><textarea id="sim-b2"></textarea></label>
+    <label class="answer-field"><span>B3. 운동량 0.5 GeV/c인 전자를 쏘면 ECAL에 닿지 못하고 트래커 안에서 맴돈다. 궤도 반지름을 계산해 그 까닭을 설명하라. (ECAL 안쪽 반지름 약 1.29 m)</span><textarea id="sim-b3"></textarea></label>
+    <label class="answer-field"><span>B4. 전자와 광자는 둘 다 ECAL에서 멈춘다. 두 입자를 무엇으로 구별할 수 있는가? 하전 강입자와 중성자는?</span><textarea id="sim-b4"></textarea></label>
+  </section>
+
+  <section class="section" id="cern">
+    <div class="section__head"><span class="section__tag">05</span><h2>실제 CERN에서는</h2></div>
+    <div class="box box--cern prose">
+      <p><b>CMS(Compact Muon Solenoid)</b>는 LHC의 두 범용 검출기 가운데 하나입니다. 길이 약 21 m, 지름 약 15 m, 무게 약 14,000 t으로, 에펠탑 철 구조물(약 7,300 t)의 두 배 가까이 됩니다. 이름 그대로 "작게(compact)" 뭉친 몸체 안에 3.8 T의 초전도 <b>솔레노이드</b>가 들어 있고, 바깥의 철 귀환 요크와 그 사이 뮤온 챔버가 뮤온을 정밀하게 잡아냅니다.</p>
+      <p>가장 안쪽 <b>실리콘 트래커</b>는 하전 입자가 지나간 위치를 수십 μm 정밀도로 기록합니다. <b>ECAL</b>은 텅스텐산납(PbWO₄) 결정 약 7만 6천 개로 만들어졌는데, 이 결정은 납만큼 무겁지만 유리처럼 투명해서 전자기 소나기가 내는 빛을 그대로 전달합니다. <b>HCAL</b>의 흡수체 황동 일부는 퇴역한 러시아 해군의 포탄 탄피를 녹여 만든 것으로 알려져 있습니다.</p>
+      <p>LHC에서는 25 ns마다 양성자 묶음이 교차하고, 1초에 최대 약 10억 번의 양성자 충돌이 일어납니다. 모두 저장할 수 없으므로 "트리거"라는 빠른 판별 장치가 흥미로운 사건만 골라 1초에 수천 건 이하로 줄여 저장합니다. 2012년 힉스 보손 발견에서는 <b>두 광자(γγ)</b> 사건을 ECAL로, <b>네 렙톤</b>(전자·뮤온 4개) 사건을 트래커·ECAL·뮤온 챔버로 찾아냈습니다. 우리나라의 여러 대학 연구진도 CMS 실험에 참여하고 있습니다.</p>
+      <p>구름상자의 역사도 CERN과 이어집니다. 윌슨이 구름상자를 발명했고(1927년 노벨상), 앤더슨은 구름상자 사진에서 양전자(1932년)와 뮤온(1936년, 네더마이어와 함께)을 발견했습니다. 1973년 CERN의 거품상자 <b>가가멜</b>은 중성미자가 남긴 흔적에서 "중성 흐름"을 발견해 약한 상호작용 이론을 확인했습니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="check">
+    <div class="section__head"><span class="section__tag">06</span><h2>확인 문제</h2></div>
+    <label class="answer-field"><span>1. (개념) 구름상자에서 흔적이 생기는 과정을 "하전 입자 → 이온화 → 과포화 증기 → 응결" 순서로 설명하라. 중성자가 지나갈 때는 왜 흔적이 보이지 않는가?</span><textarea id="check-1"></textarea></label>
+    <label class="answer-field"><span>2. (판별) 구름상자에서 다음 흔적이 보였다. (가) 굵고 길이 약 4 cm의 곧은 흔적 (나) 가늘고 상자 전체를 곧게 가로지르는 흔적 (다) 가늘고 짧게 구불구불한 흔적. 각각 어떤 입자인지 쓰고 근거를 들라.</span><textarea id="check-2"></textarea></label>
+    <label class="answer-field"><span>3. (계산) B = 3.8 T인 CMS 트래커에서 어떤 트랙의 곡률 반지름이 8.77 m로 측정되었다. ① 이 입자의 횡운동량은? ② 횡운동량 50 GeV/c인 뮤온의 곡률 반지름은?</span><textarea id="check-3"></textarea></label>
+    <label class="answer-field"><span>4. (판별) 다음 신호 조합을 남긴 입자를 쓰라. (가) 트랙 없음, ECAL에 큰 에너지 (나) 트랙 있음, ECAL에 큰 에너지 (다) 트랙 있음, 모든 층을 지나 뮤온 챔버에 히트 (라) 트랙 없음, HCAL에 큰 에너지 (마) 트랙 있음, HCAL에 큰 에너지</span><textarea id="check-4"></textarea></label>
+    <label class="answer-field"><span>5. (계산) 어떤 충돌 사건에서 검출된 입자들의 횡운동량 합이 (p<sub>x</sub>, p<sub>y</sub>) = (30 GeV/c, −15 GeV/c)였다. 누락 횡운동량 벡터의 성분과 크기를 구하고, 무엇을 뜻하는지 설명하라.</span><textarea id="check-5"></textarea></label>
+    <label class="answer-field"><span>6. (설계) CMS에서 ECAL이 HCAL보다 안쪽에 있고, 뮤온 챔버가 가장 바깥에 있는 까닭을 설명하라. 순서를 거꾸로 하면 어떤 문제가 생기는가?</span><textarea id="check-6"></textarea></label>
+  </section>
+
+  <section class="section" id="up">
+    <div class="box box--up">
+      <h3>업그레이드 도전</h3>
+      <p><b>도전 1. 스마트폰 카메라로 방사선 잡기</b> — 스마트폰 카메라의 이미지 센서(CMOS)도 실리콘 트래커와 같은 원리로 작동한다. 렌즈를 검은 테이프로 완전히 가리고 오래 노출하면, 하전 입자가 센서를 지날 때 생긴 전하 때문에 밝은 점이나 짧은 선이 찍힐 수 있다. ① 센서의 화소에서 빛 대신 입자가 신호를 만드는 원리를 조사하고, ② 이런 원리를 쓰는 시민 과학 프로젝트(예: CREDO)를 찾아 어떻게 우주선을 연구하는지 정리해 보자.</p>
+      <p><b>도전 2. 거품상자 사진 해석</b> — CERN 문서 서버나 교과서에서 거품상자 사진을 찾아보자. 자기장 속에서 전자의 흔적이 점점 작아지는 나선(소용돌이) 모양이 되는 까닭을 p = 0.3·B·r로 설명하고, 한 점에서 V자로 갈라지는 흔적이 무엇을 뜻하는지 추론해 보자(힌트: 보이지 않는 중성 입자의 붕괴, 감마선의 쌍생성).</p>
+      <label class="answer-field"><span>도전 기록</span><textarea id="up-1"></textarea></label>
+    </div>
+  </section>
+
+  <section class="section" id="self">
+    <div class="section__head"><span class="section__tag">07</span><h2>자기 평가</h2></div>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="self-1"> <span>이온화와 과포화 증기로 구름상자의 원리를 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-2"> <span>흔적의 모양으로 알파 입자, 뮤온, 전자를 구별하고 이유를 말할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-3"> <span>p = 0.3·B·r로 트랙의 반지름과 운동량을 서로 계산할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-4"> <span>CMS 각 층의 역할과 입자별 신호 지문을 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-5"> <span>누락 횡운동량으로 중성미자를 추론하는 방법을 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-6"> <span>드라이아이스와 알코올을 안전하게 다루었다.</span></label></li>
+    </ul>
+    <label class="answer-field"><span>오늘 가장 궁금해진 것 한 가지</span><textarea id="self-q"></textarea></label>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

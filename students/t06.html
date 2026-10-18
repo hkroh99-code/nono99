@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 06 상대성과 뮤온 · 학생용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-page="student" data-topic="6" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--student">학생용</span>
+      <span class="badge badge--adv">심화과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 06</p>
+    <h1>특수 상대성이론과 우주선 뮤온</h1>
+    <p class="lead">수명이 2.2 μs뿐인 뮤온이 어떻게 15 km 상공에서 지면까지 도달할 수 있을까?</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--sim" href="../sims/t06.html">3D 모의실험 열기</a>
+      <button class="btn" type="button" data-copy-answers>내 답안 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>답안 지우기</button>
+    </div>
+    <p class="save-note">입력한 답은 이 기기의 브라우저에만 자동 저장됩니다. 제출할 때는 [내 답안 복사]를 눌러 붙여 넣으세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#goals">학습 목표</a><a href="#open">생각 열기</a><a href="#concept">핵심 개념</a>
+      <a href="#lab">실험 A</a><a href="#sim">실험 B: 3D</a><a href="#cern">CERN에서는</a>
+      <a href="#check">확인 문제</a><a href="#up">업그레이드</a><a href="#self">자기 평가</a>
+    </nav>
+  </header>
+
+  <section class="section" id="goals">
+    <div class="box box--goal">
+      <h2 class="box__title" style="font-size:var(--step-1)">학습 목표</h2>
+      <ol>
+        <li>로런츠 인자 γ를 계산하고, 시간 지연과 길이 수축으로 우주선 뮤온이 지면에 도달하는 까닭을 두 기준계에서 각각 설명할 수 있다.</li>
+        <li>지수 붕괴 N = N₀e<sup>−t/τ</sup>를 모형 실험으로 확인하고, 평균 수명 τ와 반감기 t<sub>½</sub> = τ ln 2의 관계를 설명할 수 있다.</li>
+        <li>상대론적 에너지 E = γmc²와 운동량 p = γmv를 이용해 LHC 양성자의 γ(약 7250)를 계산할 수 있다.</li>
+      </ol>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>활동</th></tr>
+      <tr><td>1차시 (50분)</td><td>생각 열기(고전 물리의 모순) → 핵심 개념 1~4(광속 불변, 빛 시계와 시간 지연, 길이 수축, 지수 붕괴) → <b>실험 A</b> 주사위 붕괴 모형으로 수명 재기, (가능하면) 우주선 뮤온 계수</td></tr>
+      <tr><td>2차시 (50분)</td><td>실험 A 계산(γ = 1, 10, 30일 때 도달 비율) → <b>실험 B</b> 3D 뮤온 비행 실험실(고전 vs 상대론, 뮤온 기준계) → 핵심 개념 5(E = γmc², LHC의 γ) → 확인 문제·자기 평가</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="open">
+    <div class="section__head"><span class="section__tag">01</span><h2>생각 열기</h2></div>
+    <div class="box box--think prose">
+      <p>우주에서 날아온 양성자(우주선)가 지상 약 10~15 km 높이에서 공기 원자핵과 부딪치면, 수많은 입자가 소나기처럼 쏟아집니다. 그중 <b>뮤온</b>은 전자와 성질이 비슷하지만 약 207배 무거운 입자로, 정지해 있을 때 평균 <b>2.197 μs</b>(약 2.2 백만분의 1초) 만에 전자와 중성미자 둘로 붕괴합니다.</p>
+      <p>빛의 속력(3.0 × 10⁸ m/s)으로 달린다 해도 2.2 μs 동안 갈 수 있는 거리는 약 660 m입니다. 그런데 주제 5에서 보았듯이, 해수면에서는 지금도 1 cm²마다 1분에 약 1개의 뮤온이 지나가고 있습니다.</p>
+    </div>
+    <label class="answer-field"><span>Q1. 뮤온이 빛의 속력의 99.5%로 달린다고 하자. 고전 물리로 계산하면 15 km를 내려오는 데 몇 μs가 걸리나? 이 시간은 뮤온 수명의 몇 배인가?</span><textarea id="open-q1"></textarea></label>
+    <label class="answer-field"><span>Q2. 계산대로라면 거의 모든 뮤온이 도중에 붕괴해야 한다. 그런데도 지면에서 많은 뮤온이 관측되는 까닭에 대해 내 가설을 세워 보자.</span><textarea id="open-q2"></textarea></label>
+  </section>
+
+  <section class="section" id="concept">
+    <div class="section__head"><span class="section__tag">02</span><h2>핵심 개념</h2></div>
+    <div class="prose">
+      <h3>1. 특수 상대성이론의 두 가지 기본 가정</h3>
+      <p>① <b>상대성 원리</b>: 서로 등속도로 움직이는 모든 관성 기준계에서 물리 법칙은 똑같다. ② <b>광속 불변 원리</b>: 진공에서 빛의 속력 c는 광원이나 관찰자의 운동과 관계없이 모든 관성 기준계에서 같다. 이 두 가정을 받아들이면, 시간과 길이가 관찰자에 따라 달라진다는 놀라운 결론이 나옵니다.</p>
+
+      <h3>2. 빛 시계와 시간 지연</h3>
+      <p>거울 두 장을 거리 L만큼 떼어 놓고 빛이 오가게 한 "빛 시계"를 생각합니다. 시계와 함께 정지한 사람에게 빛이 한 번 왕복하는 시간은 Δt₀ = 2L/c입니다. 그런데 이 시계가 속력 v로 움직이는 것을 지면에서 보면, 빛은 비스듬한 더 긴 길을 갑니다. 빛의 속력은 누구에게나 c이므로 지면에서 잰 한 번 왕복 시간 Δt는 더 깁니다(그림 1).</p>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 580 270" width="580" role="img" aria-labelledby="fig1-t">
+        <title id="fig1-t">정지한 빛 시계와 움직이는 빛 시계</title>
+        <text x="20" y="22" font-size="14" font-weight="700">(가) 시계와 함께 정지한 관찰자</text>
+        <g stroke="currentColor" stroke-width="4" stroke-linecap="round"><line x1="60" y1="60" x2="140" y2="60"/><line x1="60" y1="210" x2="140" y2="210"/></g>
+        <line x1="100" y1="204" x2="100" y2="68" stroke="var(--track)" stroke-width="2.5"/>
+        <path d="M94 78 l6 -12 l6 12z" fill="var(--track)"/>
+        <line x1="112" y1="66" x2="112" y2="204" stroke="var(--track)" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <text x="152" y="140" font-size="14">L</text>
+        <text x="30" y="242" font-size="13">한 번 왕복: Δt₀ = 2L / c</text>
+        <text x="300" y="22" font-size="14" font-weight="700">(나) 시계가 v로 움직이는 것을 본 관찰자</text>
+        <g stroke="currentColor" stroke-width="4" stroke-linecap="round">
+          <line x1="280" y1="210" x2="330" y2="210"/><line x1="280" y1="60" x2="330" y2="60"/>
+          <line x1="390" y1="210" x2="440" y2="210"/><line x1="390" y1="60" x2="440" y2="60"/>
+          <line x1="500" y1="210" x2="550" y2="210"/><line x1="500" y1="60" x2="550" y2="60"/>
+        </g>
+        <polyline points="305,206 415,64 525,206" fill="none" stroke="var(--track)" stroke-width="2.5"/>
+        <line x1="305" y1="206" x2="415" y2="206" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <line x1="415" y1="206" x2="415" y2="64" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <text x="318" y="128" font-size="13" style="fill:var(--track)">cΔt/2</text>
+        <text x="336" y="226" font-size="13">vΔt/2</text>
+        <text x="422" y="150" font-size="13">L</text>
+        <line x1="440" y1="244" x2="540" y2="244" stroke="var(--accent)" stroke-width="2.5"/>
+        <path d="M540 238 l12 6 l-12 6z" fill="var(--accent)"/>
+        <text x="408" y="249" font-size="13" style="fill:var(--accent)">v</text>
+        <text x="282" y="266" font-size="13">(cΔt/2)² = L² + (vΔt/2)²</text>
+      </svg>
+      <figcaption>그림 1. 빛 시계. (나)에서 빛은 비스듬한 더 긴 길을 같은 속력 c로 가므로, 움직이는 시계의 한 번 "똑딱"이 지면 관찰자에게는 더 오래 걸린다.</figcaption>
+    </figure>
+    <div class="prose"><p>그림 1 (나)의 직각삼각형에서 피타고라스 정리를 풀면 다음을 얻습니다.</p></div>
+    <div class="formula">Δt = <b>γ</b> Δt₀,   γ = 1 / √(1 − v²/c²) = 1 / √(1 − β²),   β = v/c</div>
+    <div class="prose">
+      <p><b>γ(로런츠 인자)</b>는 항상 1 이상입니다. 움직이는 시계는 정지한 시계보다 γ배 느리게 가는 것으로 관측됩니다. 이를 <b>시간 지연</b>이라 합니다. 시계와 함께 움직이는 사람이 잰 시간 Δt₀을 <b>고유 시간</b>이라 하며, 뮤온의 수명 τ = 2.197 μs는 뮤온 자신의 고유 시간으로 잰 값입니다. 따라서 지면에서 보면 빠르게 움직이는 뮤온의 수명은 <b>γτ</b>로 늘어납니다.</p>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>β = v/c</th><td class="num">0.6</td><td class="num">0.8</td><td class="num">0.9</td><td class="num">0.98</td><td class="num">0.995</td><td class="num">0.9994</td><td class="num">0.9999</td></tr>
+      <tr><th>γ</th><td class="num">1.25</td><td class="num">1.67</td><td class="num">2.29</td><td class="num">5.03</td><td class="num">10.0</td><td class="num">28.9</td><td class="num">70.7</td></tr>
+      <tr><th>지면에서 본 뮤온 수명 γτ (μs)</th><td class="num">2.75</td><td class="num">3.66</td><td class="num">5.04</td><td class="num">11.0</td><td class="num">22.0</td><td class="num">63.4</td><td class="num">155</td></tr>
+    </table></div>
+    <div class="prose">
+      <h3>3. 길이 수축: 뮤온이 본 대기</h3>
+      <p>이번에는 뮤온과 함께 움직이는 기준계에서 봅시다. 뮤온에게는 자기 시계가 정상으로 가고 수명은 그대로 2.197 μs입니다. 대신 대기와 지면이 속력 v로 다가오며, 움직이는 방향의 길이가 짧아져 보입니다. 이를 <b>길이 수축</b>이라 합니다. 정지한 상태에서 잰 길이(고유 길이) L₀은 다음과 같이 줄어듭니다.</p>
+    </div>
+    <div class="formula">L = L₀ / <b>γ</b>   (예: γ = 10이면 15 km의 대기가 뮤온에게는 1.5 km)</div>
+    <figure class="diagram">
+      <svg viewBox="0 0 580 310" width="580" role="img" aria-labelledby="fig2-t">
+        <title id="fig2-t">지면 기준계와 뮤온 기준계에서 본 뮤온의 비행</title>
+        <text x="40" y="20" font-size="14" font-weight="700">(가) 지면 기준계</text>
+        <rect x="60" y="34" width="150" height="226" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/>
+        <line x1="40" y1="260" x2="230" y2="260" stroke="currentColor" stroke-width="3"/>
+        <circle cx="135" cy="48" r="7" fill="var(--lv-up)"/>
+        <line x1="135" y1="60" x2="135" y2="120" stroke="var(--lv-up)" stroke-width="2.5"/>
+        <path d="M129 116 l6 12 l6 -12z" fill="var(--lv-up)"/>
+        <text x="146" y="96" font-size="13">v = 0.995c</text>
+        <text x="66" y="160" font-size="13">대기 두께</text>
+        <text x="66" y="178" font-size="13">15 km</text>
+        <text x="40" y="282" font-size="13">뮤온의 시계가 γ배 느림</text>
+        <text x="40" y="298" font-size="13">→ 수명 γτ ≈ 22 μs, 비행 50 μs</text>
+        <text x="330" y="20" font-size="14" font-weight="700">(나) 뮤온 기준계</text>
+        <rect x="350" y="34" width="150" height="226" fill="none" stroke="var(--ink-3)" stroke-width="1" stroke-dasharray="5 4"/>
+        <text x="510" y="52" font-size="12" class="muted-fill">(수축 전</text>
+        <text x="510" y="68" font-size="12" class="muted-fill">15 km)</text>
+        <rect x="350" y="237" width="150" height="23" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/>
+        <line x1="330" y1="260" x2="520" y2="260" stroke="currentColor" stroke-width="3"/>
+        <circle cx="425" cy="226" r="7" fill="var(--lv-up)"/>
+        <text x="438" y="222" font-size="13">뮤온(정지)</text>
+        <line x1="520" y1="250" x2="520" y2="190" stroke="var(--accent)" stroke-width="2.5"/>
+        <path d="M514 194 l6 -12 l6 12z" fill="var(--accent)"/>
+        <text x="390" y="150" font-size="13" style="fill:var(--accent)">대기·지면이</text>
+        <text x="390" y="166" font-size="13" style="fill:var(--accent)">0.995c로 다가옴</text>
+        <text x="330" y="282" font-size="13">대기 두께 15 km/γ ≈ 1.5 km</text>
+        <text x="330" y="298" font-size="13">→ 수명 τ = 2.2 μs, 비행 5.0 μs</text>
+      </svg>
+      <figcaption>그림 2. 같은 사건을 두 기준계에서 본 모습(β = 0.995, γ ≈ 10). 두 기준계 모두 "비행 시간 ÷ 그 기준계의 수명 ≈ 2.3"으로 같아, 도달하는 뮤온의 비율도 같다.</figcaption>
+    </figure>
+    <div class="prose">
+      <h3>4. 지수 붕괴: 언제 붕괴할지는 확률</h3>
+      <p>뮤온 하나가 언제 붕괴할지는 정해져 있지 않고, 매 순간 같은 확률로 붕괴합니다. 그래서 많은 뮤온이 남은 수는 시간에 따라 지수 함수로 줄어듭니다.</p>
+    </div>
+    <div class="formula">N(t) = N₀ e<sup>−t/τ</sup>,   반감기 t<sub>½</sub> = τ ln 2 ≈ 0.693 τ  (뮤온: 약 1.52 μs)</div>
+    <div class="prose">
+      <p>τ는 <b>평균 수명</b>으로, 시간이 τ만큼 지나면 처음의 e⁻¹ ≈ 37%가 남습니다. 지면에서 움직이는 뮤온을 볼 때는 τ 대신 γτ를 넣어 N = N₀e<sup>−t/(γτ)</sup>로 계산합니다. 양변에 자연로그를 취하면 ln N = ln N₀ − t/τ 이므로, ln N–t 그래프는 기울기가 −1/τ인 직선이 됩니다.</p>
+
+      <h3>5. 상대론적 에너지와 운동량</h3>
+      <p>빠르게 움직이는 입자의 에너지와 운동량도 γ로 표현됩니다. 정지 에너지 mc²(뮤온 105.66 MeV, 양성자 938.27 MeV)에 γ를 곱하면 전체 에너지가 됩니다.</p>
+    </div>
+    <div class="formula">E = <b>γ</b>mc²,   p = <b>γ</b>mv,   E² = (pc)² + (mc²)²,   운동 에너지 K = (γ − 1)mc²</div>
+    <div class="prose">
+      <p>예: LHC Run 3에서 양성자 하나의 에너지는 6.8 TeV이므로 γ = E/(mc²) = 6800 GeV ÷ 0.93827 GeV ≈ 7250입니다. 이때 β는 0.99999999보다 크고, 빛보다 초속 약 3 m 느릴 뿐입니다. 아무리 에너지를 더해도 γ만 커질 뿐 속력은 c를 넘지 못합니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">03</span><h2>실험 A: 우주선 뮤온 계수와 붕괴 통계</h2></div>
+    <div class="grid-2">
+      <div class="box"><h3>준비물 (모둠당)</h3><ul>
+        <li>주사위 60개(정육면체), 넓은 상자 뚜껑이나 쟁반(주사위가 튀지 않게)</li>
+        <li>기록용 계산기 또는 스프레드시트, 그래프 용지</li>
+        <li>(선택 1) 주제 5에서 만든 확산형 구름상자 세트</li>
+        <li>(선택 2) 학교에 있으면 가이거–뮐러(GM) 계수기 또는 CosmicWatch 같은 섬광 검출기</li>
+        <li>초시계</li>
+      </ul></div>
+      <div class="box box--safety"><h4>안전 수칙</h4><ul>
+        <li>주사위는 상자 안에서만 굴려 바닥에 떨어져 미끄러지는 일이 없게 한다.</li>
+        <li>구름상자를 다시 쓸 때는 주제 5의 드라이아이스(동상·밀폐 금지·환기)와 알코올(화기 엄금) 안전 수칙을 그대로 지킨다.</li>
+        <li>GM 계수기는 자연 방사선만 잰다. 방사성 선원은 교사의 허가 없이 쓰지 않는다. 고전압 단자를 만지지 않는다.</li>
+      </ul></div>
+    </div>
+    <h3>실험 방법</h3>
+    <ol class="steps">
+      <li><b>(주사위 붕괴 모형)</b> 주사위 60개를 모두 상자에 넣고 한꺼번에 굴린다. 주사위 하나가 뮤온 하나, 한 번 굴리기가 같은 시간 간격 한 칸이다.</li>
+      <li>"1" 눈이 나온 주사위는 "붕괴"한 것으로 보고 빼낸다. 남은 수 N과 붕괴한 수를 기록표 1에 적는다.</li>
+      <li>남은 주사위만 다시 굴려 2를 되풀이한다. 남은 주사위가 3개 이하가 되거나 12회가 될 때까지 계속한다.</li>
+      <li>각 회의 ln N을 계산기로 구하고, 이론값 N₀(5/6)ⁿ도 계산해 적는다. 모둠 결과를 반 전체와 합치면 통계 오차가 줄어든다.</li>
+      <li>N–n 그래프와 ln N–n 그래프를 그린다(그래프 용지 또는 스프레드시트).</li>
+      <li><b>(우주선 뮤온 계수, 장비가 있을 때)</b> 구름상자로 1분 동안 보이는 가늘고 긴 곧은 흔적을 3번 센다. GM 계수기가 있으면 관을 수직·수평으로 놓고 각각 5분씩 계수해 기록표 2에 적는다.</li>
+      <li><b>(계산)</b> 기록표 3에서 γ = 1(시간 지연이 없다고 가정), 10, 30일 때 15 km를 내려온 뮤온의 도달 비율을 계산한다.</li>
+    </ol>
+    <h3>기록표 1. 주사위 붕괴 모형 (N₀ = 60, 붕괴 확률 1/6)</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-lab">
+      <tr><th>굴린 횟수 n</th><th>남은 수 N</th><th>이번에 붕괴한 수</th><th>ln N</th><th>이론 60 × (5/6)ⁿ</th></tr>
+      <tr><td>0</td><td>60</td><td>–</td><td>4.09</td><td>60</td></tr>
+      <tr><td>1</td><td><input type="number" id="lab-d1c1" aria-label="1회 남은 수"></td><td><input type="number" id="lab-d1c2" aria-label="1회 붕괴한 수"></td><td><input type="number" id="lab-d1c3" aria-label="1회 ln N"></td><td><input type="number" id="lab-d1c4" aria-label="1회 이론값"></td></tr>
+      <tr><td>2</td><td><input type="number" id="lab-d2c1" aria-label="2회 남은 수"></td><td><input type="number" id="lab-d2c2" aria-label="2회 붕괴한 수"></td><td><input type="number" id="lab-d2c3" aria-label="2회 ln N"></td><td><input type="number" id="lab-d2c4" aria-label="2회 이론값"></td></tr>
+      <tr><td>3</td><td><input type="number" id="lab-d3c1" aria-label="3회 남은 수"></td><td><input type="number" id="lab-d3c2" aria-label="3회 붕괴한 수"></td><td><input type="number" id="lab-d3c3" aria-label="3회 ln N"></td><td><input type="number" id="lab-d3c4" aria-label="3회 이론값"></td></tr>
+      <tr><td>4</td><td><input type="number" id="lab-d4c1" aria-label="4회 남은 수"></td><td><input type="number" id="lab-d4c2" aria-label="4회 붕괴한 수"></td><td><input type="number" id="lab-d4c3" aria-label="4회 ln N"></td><td><input type="number" id="lab-d4c4" aria-label="4회 이론값"></td></tr>
+      <tr><td>5</td><td><input type="number" id="lab-d5c1" aria-label="5회 남은 수"></td><td><input type="number" id="lab-d5c2" aria-label="5회 붕괴한 수"></td><td><input type="number" id="lab-d5c3" aria-label="5회 ln N"></td><td><input type="number" id="lab-d5c4" aria-label="5회 이론값"></td></tr>
+      <tr><td>6</td><td><input type="number" id="lab-d6c1" aria-label="6회 남은 수"></td><td><input type="number" id="lab-d6c2" aria-label="6회 붕괴한 수"></td><td><input type="number" id="lab-d6c3" aria-label="6회 ln N"></td><td><input type="number" id="lab-d6c4" aria-label="6회 이론값"></td></tr>
+      <tr><td>7</td><td><input type="number" id="lab-d7c1" aria-label="7회 남은 수"></td><td><input type="number" id="lab-d7c2" aria-label="7회 붕괴한 수"></td><td><input type="number" id="lab-d7c3" aria-label="7회 ln N"></td><td><input type="number" id="lab-d7c4" aria-label="7회 이론값"></td></tr>
+      <tr><td>8</td><td><input type="number" id="lab-d8c1" aria-label="8회 남은 수"></td><td><input type="number" id="lab-d8c2" aria-label="8회 붕괴한 수"></td><td><input type="number" id="lab-d8c3" aria-label="8회 ln N"></td><td><input type="number" id="lab-d8c4" aria-label="8회 이론값"></td></tr>
+      <tr><td>9</td><td><input type="number" id="lab-d9c1" aria-label="9회 남은 수"></td><td><input type="number" id="lab-d9c2" aria-label="9회 붕괴한 수"></td><td><input type="number" id="lab-d9c3" aria-label="9회 ln N"></td><td><input type="number" id="lab-d9c4" aria-label="9회 이론값"></td></tr>
+      <tr><td>10</td><td><input type="number" id="lab-d10c1" aria-label="10회 남은 수"></td><td><input type="number" id="lab-d10c2" aria-label="10회 붕괴한 수"></td><td><input type="number" id="lab-d10c3" aria-label="10회 ln N"></td><td><input type="number" id="lab-d10c4" aria-label="10회 이론값"></td></tr>
+      <tr><td>11</td><td><input type="number" id="lab-d11c1" aria-label="11회 남은 수"></td><td><input type="number" id="lab-d11c2" aria-label="11회 붕괴한 수"></td><td><input type="number" id="lab-d11c3" aria-label="11회 ln N"></td><td><input type="number" id="lab-d11c4" aria-label="11회 이론값"></td></tr>
+      <tr><td>12</td><td><input type="number" id="lab-d12c1" aria-label="12회 남은 수"></td><td><input type="number" id="lab-d12c2" aria-label="12회 붕괴한 수"></td><td><input type="number" id="lab-d12c3" aria-label="12회 ln N"></td><td><input type="number" id="lab-d12c4" aria-label="12회 이론값"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-lab">기록표 복사</button>
+    <h3>기록표 2. 우주선 뮤온 계수 (장비가 있는 경우)</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-lab2">
+      <tr><th>측정 방법·방향</th><th>측정 시간 (분)</th><th>계수</th><th>1분당 계수율</th><th>비고</th></tr>
+      <tr><td><input type="text" id="lab-c1c1" aria-label="측정 1 방법"></td><td><input type="number" id="lab-c1c2" aria-label="측정 1 시간"></td><td><input type="number" id="lab-c1c3" aria-label="측정 1 계수"></td><td><input type="number" id="lab-c1c4" aria-label="측정 1 계수율"></td><td><input type="text" id="lab-c1c5" aria-label="측정 1 비고"></td></tr>
+      <tr><td><input type="text" id="lab-c2c1" aria-label="측정 2 방법"></td><td><input type="number" id="lab-c2c2" aria-label="측정 2 시간"></td><td><input type="number" id="lab-c2c3" aria-label="측정 2 계수"></td><td><input type="number" id="lab-c2c4" aria-label="측정 2 계수율"></td><td><input type="text" id="lab-c2c5" aria-label="측정 2 비고"></td></tr>
+      <tr><td><input type="text" id="lab-c3c1" aria-label="측정 3 방법"></td><td><input type="number" id="lab-c3c2" aria-label="측정 3 시간"></td><td><input type="number" id="lab-c3c3" aria-label="측정 3 계수"></td><td><input type="number" id="lab-c3c4" aria-label="측정 3 계수율"></td><td><input type="text" id="lab-c3c5" aria-label="측정 3 비고"></td></tr>
+    </table></div>
+    <h3>기록표 3. 15 km를 내려온 뮤온의 도달 비율 (τ = 2.197 μs, c = 3.00 × 10⁸ m/s)</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-lab3">
+      <tr><th>γ</th><th>β (소수 넷째 자리)</th><th>비행 시간 t = H/v (μs)</th><th>지면에서 본 수명 γτ (μs)</th><th>도달 비율 e<sup>−t/(γτ)</sup></th></tr>
+      <tr><td>1 (시간 지연 없음, v ≈ c로 가정)</td><td>≈ 1</td><td><input type="number" id="lab-g1c1" aria-label="γ=1 비행 시간"></td><td><input type="number" id="lab-g1c2" aria-label="γ=1 수명"></td><td><input type="text" id="lab-g1c3" aria-label="γ=1 도달 비율"></td></tr>
+      <tr><td>10</td><td><input type="number" id="lab-g2c0" aria-label="γ=10 β"></td><td><input type="number" id="lab-g2c1" aria-label="γ=10 비행 시간"></td><td><input type="number" id="lab-g2c2" aria-label="γ=10 수명"></td><td><input type="text" id="lab-g2c3" aria-label="γ=10 도달 비율"></td></tr>
+      <tr><td>30</td><td><input type="number" id="lab-g3c0" aria-label="γ=30 β"></td><td><input type="number" id="lab-g3c1" aria-label="γ=30 비행 시간"></td><td><input type="number" id="lab-g3c2" aria-label="γ=30 수명"></td><td><input type="text" id="lab-g3c3" aria-label="γ=30 도달 비율"></td></tr>
+    </table></div>
+    <h3>결과 분석</h3>
+    <label class="answer-field"><span>A1. 남은 주사위가 처음의 절반(30개)이 된 것은 몇 번째 굴렸을 때인가? 이것이 주사위 모형의 반감기이다. 이론값 ln 2 ÷ ln(6/5) ≈ 3.8회와 비교하라.</span><textarea id="lab-a1"></textarea></label>
+    <label class="answer-field"><span>A2. ln N–n 그래프가 직선에 가까운가? 기울기를 구하고, 평균 수명 τ = −1/기울기(단위: 회)를 계산하라. 이론값 1 ÷ ln(6/5) ≈ 5.5회와 비교하라.</span><textarea id="lab-a2"></textarea></label>
+    <label class="answer-field"><span>A3. 주사위 하나가 언제 "붕괴"할지 미리 알 수 있었나? 그런데도 전체 수는 예측대로 줄어드는 까닭은 무엇인가? 측정값이 이론값에서 벗어나는 정도는 N이 클 때와 작을 때 어떻게 다른가?</span><textarea id="lab-a3"></textarea></label>
+    <label class="answer-field"><span>A4. 기록표 3의 결과로 볼 때, 지면에서 뮤온이 많이 관측된다는 사실은 무엇을 뜻하는가? (장비로 뮤온을 셌다면 그 결과도 근거로 쓰라.)</span><textarea id="lab-a4"></textarea></label>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">04</span><h2>실험 B: 3D 모의실험 — 뮤온 비행 실험실</h2></div>
+    <p class="prose">대기 상층에서 만들어진 뮤온 다발(기본 1000개)이 지면 검출기까지 날아오는 동안, 각 뮤온은 지수 분포를 따르는 무작위 시각에 붕괴합니다. 고전 물리와 상대론, 지면 기준계와 뮤온 기준계를 바꿔 가며 지면 도달 수를 이론값과 비교합니다. 화면은 1칸 = 1 km이고, 비행 한 번을 약 6초 동안 보여 줍니다.</p>
+    <a class="btn btn--sim no-print" href="../sims/t06.html">3D 모의실험 열기</a>
+    <h3>미션</h3>
+    <ol class="steps">
+      <li><b>고전 계산</b>: [물리 법칙]을 고전 물리로, 고도 15 km, 속력 0.995c로 놓고 [뮤온 다발 발사]. 비행이 끝나면 [기록]. (아래 표 1행)</li>
+      <li><b>상대론</b>: 같은 조건에서 [물리 법칙]만 상대론으로 바꿔 비행시키고 [기록]. 지면 시계와 뮤온 시계를 비교한다. (2행)</li>
+      <li><b>γ 측정</b>: 상대론, 지면 기준계에서 속력 버튼 0.98c, 0.9994c로 각각 비행시키고 [기록]. 지면 시계 ÷ 뮤온 시계를 계산해 γ와 비교한다. (3·4행)</li>
+      <li><b>길이 수축</b>: 0.9994c에서 [보는 기준계]를 뮤온 기준계로 바꾸어 비행시키고 [기록]. 대기 두께와 도달 수를 확인한다. (5행)</li>
+      <li><b>고도별 생존</b>: 지면 기준계, 0.9994c에서 고도를 10 km, 5 km로 바꿔 [기록]하고 그래프의 곡선을 관찰한다. (6·7행)</li>
+    </ol>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim">
+      <tr><th>행</th><th>조건</th><th>γ</th><th>지면 시계 t (μs)</th><th>뮤온 시계 τ′ (μs)</th><th>도달 수 N / N₀</th><th>이론 N</th></tr>
+      <tr><td>1</td><td>고전 · 지면 · 15 km · 0.995c</td><td><input type="number" id="sim-r1c1" aria-label="1행 γ"></td><td><input type="number" id="sim-r1c2" aria-label="1행 지면 시계"></td><td><input type="number" id="sim-r1c3" aria-label="1행 뮤온 시계"></td><td><input type="text" id="sim-r1c4" aria-label="1행 도달 수"></td><td><input type="text" id="sim-r1c5" aria-label="1행 이론값"></td></tr>
+      <tr><td>2</td><td>상대론 · 지면 · 15 km · 0.995c</td><td><input type="number" id="sim-r2c1" aria-label="2행 γ"></td><td><input type="number" id="sim-r2c2" aria-label="2행 지면 시계"></td><td><input type="number" id="sim-r2c3" aria-label="2행 뮤온 시계"></td><td><input type="text" id="sim-r2c4" aria-label="2행 도달 수"></td><td><input type="text" id="sim-r2c5" aria-label="2행 이론값"></td></tr>
+      <tr><td>3</td><td>상대론 · 지면 · 15 km · 0.98c</td><td><input type="number" id="sim-r3c1" aria-label="3행 γ"></td><td><input type="number" id="sim-r3c2" aria-label="3행 지면 시계"></td><td><input type="number" id="sim-r3c3" aria-label="3행 뮤온 시계"></td><td><input type="text" id="sim-r3c4" aria-label="3행 도달 수"></td><td><input type="text" id="sim-r3c5" aria-label="3행 이론값"></td></tr>
+      <tr><td>4</td><td>상대론 · 지면 · 15 km · 0.9994c</td><td><input type="number" id="sim-r4c1" aria-label="4행 γ"></td><td><input type="number" id="sim-r4c2" aria-label="4행 지면 시계"></td><td><input type="number" id="sim-r4c3" aria-label="4행 뮤온 시계"></td><td><input type="text" id="sim-r4c4" aria-label="4행 도달 수"></td><td><input type="text" id="sim-r4c5" aria-label="4행 이론값"></td></tr>
+      <tr><td>5</td><td>상대론 · <b>뮤온</b> · 15 km · 0.9994c</td><td><input type="number" id="sim-r5c1" aria-label="5행 γ"></td><td>–</td><td><input type="number" id="sim-r5c3" aria-label="5행 뮤온 시계"></td><td><input type="text" id="sim-r5c4" aria-label="5행 도달 수"></td><td><input type="text" id="sim-r5c5" aria-label="5행 이론값"></td></tr>
+      <tr><td>6</td><td>상대론 · 지면 · 10 km · 0.9994c</td><td><input type="number" id="sim-r6c1" aria-label="6행 γ"></td><td><input type="number" id="sim-r6c2" aria-label="6행 지면 시계"></td><td><input type="number" id="sim-r6c3" aria-label="6행 뮤온 시계"></td><td><input type="text" id="sim-r6c4" aria-label="6행 도달 수"></td><td><input type="text" id="sim-r6c5" aria-label="6행 이론값"></td></tr>
+      <tr><td>7</td><td>상대론 · 지면 · 5 km · 0.9994c</td><td><input type="number" id="sim-r7c1" aria-label="7행 γ"></td><td><input type="number" id="sim-r7c2" aria-label="7행 지면 시계"></td><td><input type="number" id="sim-r7c3" aria-label="7행 뮤온 시계"></td><td><input type="text" id="sim-r7c4" aria-label="7행 도달 수"></td><td><input type="text" id="sim-r7c5" aria-label="7행 이론값"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-sim">표 복사</button>
+    <label class="answer-field"><span>B1. 1행과 2행의 도달 수를 비교하고, 상대론에서 더 많이 도달하는 까닭을 "고유 시간"이라는 말을 써서 설명하라.</span><textarea id="sim-b1"></textarea></label>
+    <label class="answer-field"><span>B2. 2~4행에서 지면 시계 ÷ 뮤온 시계를 계산해 γ와 비교하라. 속력이 빛에 가까워질수록 도달 비율은 어떻게 변하는가?</span><textarea id="sim-b2"></textarea></label>
+    <label class="answer-field"><span>B3. 4행과 5행은 같은 결과(오차 범위 안)를 준다. 뮤온 기준계에서는 시간 지연 대신 무엇이 일어나는가? 대기 두께를 계산해 보라.</span><textarea id="sim-b3"></textarea></label>
+    <label class="answer-field"><span>B4. 같은 조건으로 여러 번 비행시키면 도달 수가 조금씩 다르다. 그 까닭은? 이론값과 얼마쯤 차이 나는 것이 자연스러울까? (힌트: √N)</span><textarea id="sim-b4"></textarea></label>
+  </section>
+
+  <section class="section" id="cern">
+    <div class="section__head"><span class="section__tag">05</span><h2>실제 CERN에서는</h2></div>
+    <div class="box box--cern prose">
+      <p><b>시간 지연의 정밀 검증(1977년)</b>: CERN의 뮤온 저장 고리 실험(g−2 실험)에서는 γ ≈ 29.3인 뮤온을 원형 고리 안에서 돌게 하며 붕괴를 관찰했습니다. 측정한 수명은 약 64.4 μs로, 정지 수명 2.197 μs × 29.3 ≈ 64.4 μs와 약 0.1% 정밀도로 일치했습니다. 원운동하면서 큰 가속도를 받는 뮤온도 특수 상대성이론의 예측을 그대로 따른다는 것을 보여 준 실험입니다.</p>
+      <p><b>LHC는 거대한 상대론 실험실</b>: 6.8 TeV 양성자의 γ는 약 7250입니다. 양성자는 26.7 km 둘레를 1초에 약 11,245바퀴 돕니다. 양성자의 기준계에서 보면 LHC 둘레는 26.7 km ÷ 7250 ≈ 3.7 m로 줄어듭니다. 가속기 설계(주제 8)는 상대론 없이 불가능합니다.</p>
+      <p><b>짧게 사는 입자를 재는 법</b>: LHCb 실험이 연구하는 B 중간자는 수명이 약 1.5 ps(조 분의 1초)로, 빛의 속력으로도 약 0.45 mm밖에 못 가지만, 시간 지연 덕분에 충돌점에서 약 1 cm 정도 날아간 뒤 붕괴합니다. 검출기는 이 "떨어진 붕괴점"을 찾아 B 중간자를 골라냅니다.</p>
+      <p><b>우주선 뮤온으로 검출기 보정</b>: CMS와 ATLAS는 LHC 가동 전에, 그리고 지금도 빔이 없는 기간에 지하 100 m까지 뚫고 내려오는 우주선 뮤온으로 검출기를 시험하고 정렬합니다. 우리가 주제 5·6에서 센 그 뮤온입니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="check">
+    <div class="section__head"><span class="section__tag">06</span><h2>확인 문제</h2></div>
+    <label class="answer-field"><span>1. (계산) 뮤온이 0.8c로 움직인다. ① γ는? ② 지면에서 잰 이 뮤온의 평균 수명은?</span><textarea id="check-1"></textarea></label>
+    <label class="answer-field"><span>2. (계산) 고도 15 km에서 0.995c로 출발한 뮤온 1000개 중 지면에 도달하는 수를 ① 고전 물리 ② 상대론으로 각각 구하라. (c = 3.00 × 10⁸ m/s, τ = 2.197 μs, γ = 10.0)</span><textarea id="check-2"></textarea></label>
+    <label class="answer-field"><span>3. (계산) 2번 문제를 뮤온 기준계에서 다시 풀어라. 뮤온이 본 대기 두께와 지면이 다가오는 데 걸리는 시간을 구하고, 2번 ②와 같은 답이 나옴을 보여라.</span><textarea id="check-3"></textarea></label>
+    <label class="answer-field"><span>4. (개념) 친구가 "뮤온 기준계에서는 뮤온의 시계가 느리게 가서 오래 사는 것"이라고 말했다. 이 말의 틀린 점을 바로잡아라.</span><textarea id="check-4"></textarea></label>
+    <label class="answer-field"><span>5. (계산) LHC 양성자의 에너지가 6.8 TeV일 때 ① γ를 구하라(양성자 정지 에너지 938.27 MeV). ② 양성자의 기준계에서 LHC 둘레(26.7 km)는 얼마로 보이는가?</span><textarea id="check-5"></textarea></label>
+    <label class="answer-field"><span>6. (계산) 정지한 뮤온 1000개가 있다. ① 6.6 μs(약 3τ) 뒤 남은 수는? ② 반감기는 몇 μs인가? ③ 처음의 1/16이 남는 데 걸리는 시간은?</span><textarea id="check-6"></textarea></label>
+  </section>
+
+  <section class="section" id="up">
+    <div class="box box--up">
+      <h3>업그레이드 도전</h3>
+      <p><b>도전 1. 프리시–스미스 실험(1963년) 재현 계산</b> — 미국의 프리시와 스미스는 워싱턴산 꼭대기(해발 약 1900 m)와 해수면 근처에서, 속력이 약 0.995c인 뮤온만 골라 1시간 동안 센 수를 비교했다. 꼭대기에서 시간당 약 563개, 해수면에서 약 408개가 관측되었다. ① 산꼭대기에서 해수면까지 걸리는 지면 시간 t를 구하라. ② 시간 지연이 없다면 해수면에서 몇 개가 예상되는가? ③ 관측된 비율 408/563로부터 뮤온이 실제로 겪은 고유 시간을 구하고, t ÷ (고유 시간)으로 시간 지연 배율을 추정하라. (실제 실험에서는 대기 중 에너지 손실로 속력이 변하는 것까지 보정했다.)</p>
+      <p><b>도전 2. g−2 고리의 뮤온</b> — γ = 29.3인 뮤온의 수명을 계산하고(실측 약 64.4 μs), 이 뮤온이 수명 동안 빛의 속력으로 가는 거리를 구하라. 반지름 약 7 m인 고리를 몇 바퀴 돌 수 있을까?</p>
+      <label class="answer-field"><span>도전 기록</span><textarea id="up-1"></textarea></label>
+    </div>
+  </section>
+
+  <section class="section" id="self">
+    <div class="section__head"><span class="section__tag">07</span><h2>자기 평가</h2></div>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="self-1"> <span>β가 주어지면 γ를 계산하고 시간 지연·길이 수축에 적용할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-2"> <span>뮤온 도달 문제를 지면 기준계와 뮤온 기준계에서 각각 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-3"> <span>지수 붕괴 식으로 남은 수, 반감기, 평균 수명을 계산할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-4"> <span>주사위 모형의 결과가 통계적으로 흔들리는 까닭을 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-5"> <span>E = γmc²로 LHC 양성자의 γ를 계산할 수 있다.</span></label></li>
+    </ul>
+    <label class="answer-field"><span>오늘 가장 궁금해진 것 한 가지</span><textarea id="self-q"></textarea></label>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

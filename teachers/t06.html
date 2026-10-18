@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 06 상대성과 뮤온 · 교사용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-page="teacher" data-topic="6" data-root="../">
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--teacher">교사용</span>
+      <span class="badge badge--adv">심화과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 06 · 지도서</p>
+    <h1>특수 상대성이론과 우주선 뮤온</h1>
+    <p class="lead">수명이 2.2 μs뿐인 뮤온이 어떻게 15 km 상공에서 지면까지 도달할 수 있을까?</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="../students/t06.html">학생용 활동지</a>
+      <a class="btn btn--sim" href="../sims/t06.html">3D 모의실험</a>
+    </div>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#overview">개요</a><a href="#prep">준비</a><a href="#flow">수업 흐름</a><a href="#questions">핵심 발문</a>
+      <a href="#lab">실험 지도</a><a href="#sim">3D 운영</a><a href="#miscon">오개념</a><a href="#answers">정답·해설</a>
+      <a href="#assess">평가</a><a href="#flex">차시 조정</a><a href="#refs">참고 자료</a>
+    </nav>
+  </header>
+
+  <section class="section" id="overview">
+    <div class="section__head"><span class="section__tag">01</span><h2>개요</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>과정 단계</th><td>심화과정 첫 주제. 주제 5(우주선 뮤온 관찰)와 주제 3(γ, 상대론적 속력)을 이어받고, 주제 7(불변질량)·8(가속기 설계)의 기초가 된다.</td></tr>
+      <tr><th>교육과정 연계</th><td>물리학 – 시간과 공간(특수 상대성이론: 시간 지연, 길이 수축, 질량–에너지 등가) · 물리학 – 원자와 원자핵(방사성 붕괴, 반감기) · 수학 – 지수함수와 로그함수 · 확률과 통계 – 확률과 통계적 추정</td></tr>
+      <tr><th>선수 학습</th><td>속력·거리·시간, 피타고라스 정리, 지수·로그 계산(계산기 사용), 반감기 개념, 주제 5의 우주선 뮤온과 구름상자</td></tr>
+      <tr><th>핵심 개념</th><td>광속 불변, 로런츠 인자 γ, 고유 시간과 시간 지연, 고유 길이와 길이 수축, 기준계에 따른 서로 다른(그러나 일관된) 설명, 지수 붕괴와 평균 수명·반감기, 통계적 요동(√N), E = γmc², p = γmv</td></tr>
+      <tr><th>수업 형태</th><td>1차시: 개념 강의(빛 시계 유도) + 4인 모둠 주사위 모형 실험 · 2차시: 1~2인 1기기 3D 모의실험 + 기준계 토론</td></tr>
+    </table></div>
+    <div class="box box--goal"><h3>학습 목표와 성취 판단 기준</h3><ol>
+      <li><b>γ와 두 기준계 설명</b> — 판단 기준: β로부터 γ를 계산하고, 지면 기준계(뮤온 시계가 느려 수명 γτ)와 뮤온 기준계(대기가 H/γ로 수축) 각각에서 도달 비율 e<sup>−t/(γτ)</sup>를 구해 같은 값임을 보인다. 두 설명을 섞지 않고 구분하면 '상'.</li>
+      <li><b>지수 붕괴</b> — 판단 기준: 주사위 모형 자료로 반감기와 평균 수명을 구하고(ln N 그래프의 기울기 이용), 개별 붕괴는 확률적이지만 전체는 예측 가능함과 요동 크기(√N)를 설명한다.</li>
+      <li><b>상대론적 에너지</b> — 판단 기준: E = γmc²로 LHC 양성자의 γ ≈ 7250을 계산하고, 에너지가 커져도 속력은 c를 넘지 않음을 설명한다.</li>
+    </ol></div>
+  </section>
+
+  <section class="section" id="prep">
+    <div class="section__head"><span class="section__tag">02</span><h2>준비물과 사전 준비</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>준비물</th><th>수량(4인 1모둠 기준)</th><th>구입·대체 방법</th></tr>
+      <tr><td>주사위</td><td class="num">60개</td><td>교구 판매처·온라인에서 대량 묶음(100개 단위)으로 저렴하게 구입. 대체: 동전 60~100개(앞면이 나오면 붕괴, 확률 1/2 → 반감기 1회), 한 면에 표시한 각설탕·정육면체 블록, M&amp;M's 같은 한 면 표시 초콜릿(표시 면이 위면 붕괴).</td></tr>
+      <tr><td>상자 뚜껑·쟁반</td><td class="num">1개</td><td>A4 용지 상자 뚜껑 등 테두리가 있는 것. 주사위가 튀어 나가 시간을 빼앗기지 않게 한다.</td></tr>
+      <tr><td>계산기·스프레드시트</td><td class="num">1인 1대 또는 모둠 1대</td><td>공학용 계산기(ln, eˣ), 또는 스마트폰·크롬북의 스프레드시트. 그래프 용지 대체 가능.</td></tr>
+      <tr><td>(선택) 확산형 구름상자</td><td class="num">학급 1~2대</td><td>주제 5 준비물 그대로(99% 이소프로필 알코올, 판형 드라이아이스 1.5~2 kg). 교사 시연용으로 수업 시작 10분 전에 가동해 둔다.</td></tr>
+      <tr><td>(선택) GM 계수기·섬광 검출기</td><td class="num">1~2대</td><td>학교 과학실 보유 GM 계수기. 두 개가 있으면 위아래로 겹쳐 동시 계수(코인시던스)로 뮤온만 고를 수 있다. MIT에서 공개한 CosmicWatch 같은 소형 섬광 검출기를 동아리에서 제작해 쓰는 사례도 있다.</td></tr>
+      <tr><td>3D 모의실험 기기</td><td class="num">1~2인 1대</td><td>크롬·엣지·사파리 최신판. 인터넷 없이 파일로 열어도 동작한다.</td></tr>
+    </table></div>
+    <div class="box box--tip prose">
+      <p><b>사전 준비 체크</b>: (1) 빛 시계 유도 판서를 미리 준비(그림 1). (2) 주사위를 모둠별 지퍼백에 60개씩 나눠 둔다. (3) 반 전체 결과를 합칠 공유 스프레드시트(열: 모둠, n, N)를 만들어 두면 2차시 도입에서 큰 N의 매끈한 지수 곡선을 보여 줄 수 있다. (4) 모의실험 <code>sims/t06.html</code>이 기기에서 열리는지 확인한다.</p>
+    </div>
+    <div class="box box--safety"><h4>안전 지도</h4><ul>
+      <li>주사위는 상자 안에서만 굴리게 해 바닥에 떨어진 주사위를 밟고 미끄러지는 일이 없게 한다.</li>
+      <li>구름상자를 함께 쓰는 경우: 드라이아이스(약 −78.5 °C) 동상 주의(장갑·집게), 밀폐 용기 금지, CO₂ 환기, 이소프로필 알코올 화기 엄금 — 주제 5 지도서의 안전 지도를 그대로 따른다. 시연은 교사가 맡는 것을 권장한다.</li>
+      <li>GM 계수기는 자연 방사선만 측정하며 별도 선원이 필요 없다. 학교에 교육용 선원이 있어도 이 수업에서는 쓰지 않는다. 계수관 창(얇은 막)을 손가락이나 연필로 누르지 않게 한다.</li>
+    </ul></div>
+  </section>
+
+  <section class="section" id="flow">
+    <div class="section__head"><span class="section__tag">03</span><h2>수업 흐름</h2></div>
+    <h3>1차시 (50분) — 시간이 느려지는 시계와 확률로 붕괴하는 입자</h3>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>단계·시간</th><th>교사 활동</th><th>학생 활동</th><th>자료·유의점</th></tr>
+      <tr><td><span class="phase">도입</span><br>5분</td><td>주제 5의 구름상자 영상(또는 시연)으로 "지금 이 뮤온들은 어디서 왔나?" 발문 → 생각 열기 Q1 계산 안내.</td><td>Q1 계산(50.3 μs ≈ 23τ), Q2 가설 세우기.</td><td>"계산상 거의 다 붕괴해야 한다"는 모순을 분명히 인식시킨다.</td></tr>
+      <tr><td><span class="phase">전개 ①</span><br>15분</td><td>두 가정 → 빛 시계 판서로 Δt = γΔt₀ 유도 → γ 표 함께 계산 → 길이 수축 L = L₀/γ와 그림 2 → 지수 붕괴 식과 반감기.</td><td>유도를 따라 쓰고, β = 0.995일 때 γ 직접 계산.</td><td>피타고라스 정리에서 Δt를 정리하는 과정을 학생이 한 줄씩 하도록 유도.</td></tr>
+      <tr><td><span class="phase">전개 ②</span><br>20분</td><td>주사위 붕괴 모형 안내(규칙: "1"이 나오면 붕괴). 순회하며 기록·ln 계산 확인, 반 전체 공유 시트에 입력 안내.</td><td>60개 굴리기 12회, 기록표 1 작성, N–n·ln N–n 그래프 그리기.</td><td>굴리기 1회당 1분이 넘지 않게 역할 분담(굴리기·세기·기록·계산).</td></tr>
+      <tr><td><span class="phase">전개 ③</span><br>5분</td><td>(장비가 있으면) 구름상자·GM 계수기로 1분 계수 시연. 없으면 주제 5의 1분당 흔적 수 자료를 다시 제시.</td><td>기록표 2 작성.</td><td>GM 계수기 단독은 감마선 배경이 섞인다는 점을 짚어 준다.</td></tr>
+      <tr><td><span class="phase">정리</span><br>5분</td><td>"주사위 하나가 언제 붕괴할지 아는가?" → 확률적 붕괴와 지수 법칙 정리. A1~A3은 과제.</td><td>오늘 배운 식 3개(γ, Δt = γΔt₀, N = N₀e<sup>−t/τ</sup>) 정리.</td><td>다음 차시 예고: "15 km 뮤온 문제를 직접 풀어 본다."</td></tr>
+    </table></div>
+    <h3>2차시 (50분) — 뮤온 비행 실험실과 LHC의 γ</h3>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>단계·시간</th><th>교사 활동</th><th>학생 활동</th><th>자료·유의점</th></tr>
+      <tr><td><span class="phase">도입</span><br>5분</td><td>반 전체 주사위 합산 그래프 제시(매끈한 지수 곡선, ln N 직선). 모둠별 결과와의 차이 → 통계 요동.</td><td>A1·A2 결과 발표.</td><td>공유 시트 그래프 화면.</td></tr>
+      <tr><td><span class="phase">전개 ①</span><br>8분</td><td>기록표 3 계산 안내(γ = 1, 10, 30). 계산기 사용법(eˣ) 점검.</td><td>도달 비율 계산, A4 작성.</td><td>γ = 1 열은 "시간 지연이 없다면"의 뜻임을 분명히.</td></tr>
+      <tr><td><span class="phase">전개 ②</span><br>20분</td><td>3D 모의실험 미션 1~5 안내 후 순회. 미션 4에서 "왜 뮤온 기준계에서는 화면이 작아졌나?" 개별 발문.</td><td>미션 수행, 기록표 7행 작성, B1~B4 답하기.</td><td>재생 속도·자동 반복 기능 안내. 같은 조건에서도 도달 수가 매번 다름을 짚기.</td></tr>
+      <tr><td><span class="phase">전개 ③</span><br>7분</td><td>핵심 개념 5: E = γmc², p = γmv, LHC 양성자 γ 계산 시범, 양성자 기준계의 LHC 둘레 3.7 m.</td><td>확인 문제 5 풀이.</td><td>주제 3의 Linac4 속력 계산과 연결.</td></tr>
+      <tr><td><span class="phase">정리</span><br>10분</td><td>토론: "시간 지연과 길이 수축 중 무엇이 진짜인가?" → 둘 다 같은 사건의 서로 다른 기준계 설명임을 정리. 확인 문제는 과제.</td><td>짝 토론 후 발표, 자기 평가.</td><td>다음 주제 7(보존 법칙과 불변질량) 예고: "E² = (pc)² + (mc²)²를 쓴다."</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="questions">
+    <div class="section__head"><span class="section__tag">04</span><h2>핵심 발문과 예상 답변</h2></div>
+    <details><summary>발문 1. 고전 물리로 계산하면 뮤온 1000개 중 몇 개가 지면에 닿을까?</summary><p>예상 답변: "수백 개"(지수 감소를 선형으로 오해), "0개"(정답에 가까움). 바른 답: t ≈ 50 μs ≈ 23τ이므로 1000 × e<sup>−23</sup> ≈ 10⁻⁷개, 사실상 0개.</p><p>후속 발문: "그렇다면 실제로 지면에 오는 뮤온은 어떻게 설명할까? 더 낮은 곳에서 생겼을까?" → 생성 고도를 낮춰도 수 km 이상이어야 하고, 고도별 계수 실험(프리시–스미스)이 고전 예측과 맞지 않음을 소개.</p></details>
+    <details><summary>발문 2. 움직이는 시계가 느리게 간다는 것은 시계가 고장 난다는 뜻인가?</summary><p>예상 답변: "그렇게 보일 뿐이다", "기계가 영향을 받는다". 바른 답: 시계의 종류와 관계없이(빛 시계, 원자시계, 뮤온의 붕괴, 심장 박동) 모든 과정이 같은 비율로 느려진다. 시계와 함께 움직이는 사람은 아무 변화도 느끼지 못한다.</p><p>후속 발문: "뮤온 입장에서는 무엇이 다를까?" → 뮤온에게는 자기 시계가 정상이고 대신 대기가 짧아진다.</p></details>
+    <details><summary>발문 3. 지면 기준계와 뮤온 기준계의 설명이 다르면, 둘 중 하나는 틀린 것 아닌가?</summary><p>예상 답변: "지면이 진짜다", "뮤온이 진짜다". 바른 답: 둘 다 옳다. 시간 간격과 길이는 기준계마다 다르지만, "뮤온이 지면 검출기에 도달했다/안 했다" 같은 사건과 그 수는 모든 기준계에서 같다. 두 계산 모두 비행 시간 ÷ 그 기준계 수명 ≈ 2.29로 같다.</p><p>후속 발문: "뮤온 기준계에서 고전적으로 생각하면(수축 없음) 어떻게 될까?" → 모의실험에서 고전 + 뮤온 기준계로 확인: 거의 모두 붕괴.</p></details>
+    <details><summary>발문 4. 주사위 하나는 언제 붕괴할지 모르는데, 왜 60개 전체는 예측대로 줄어들까?</summary><p>예상 답변: "많으면 평균이 맞으니까". 바른 답: 각 주사위가 매번 독립적으로 1/6 확률로 붕괴하므로, 남은 수의 1/6씩 줄어드는 경향이 생긴다(감소량이 남은 양에 비례 → 지수 함수). 개수가 많을수록 상대 요동(약 1/√N)이 작아진다.</p><p>후속 발문: "뮤온 하나가 2.197 μs를 '살다가' 죽는 것인가?" → 아니다. 2.197 μs는 평균이며, 어떤 뮤온은 곧바로, 어떤 뮤온은 10 μs 뒤에 붕괴한다.</p></details>
+    <details><summary>발문 5. LHC에서 에너지를 2배로 올리면 양성자의 속력도 2배가 될까?</summary><p>예상 답변: "그렇다"(고전적 사고). 바른 답: γ가 2배가 될 뿐, 속력은 0.99999999c에서 0.999999998c 정도로 거의 변하지 않는다. 에너지와 운동량은 늘지만 속력은 c에 다가갈 뿐이다.</p><p>후속 발문: "그렇다면 LHC는 왜 에너지를 높이려 할까?" → E = mc²에 따라 더 무거운 새 입자를 만들 수 있는 에너지가 커진다.</p></details>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">05</span><h2>실험 A 지도 팁과 예시 결과</h2></div>
+    <div class="box box--tip prose">
+      <p><b>주사위 모형 운영</b>: 한 번 굴리기를 "같은 시간 간격 Δt"로 생각하게 한다. 붕괴 확률 p = 1/6이면 매회 남는 비율은 5/6이고, N = N₀(5/6)ⁿ = N₀e<sup>−n/τ</sup>에서 τ = 1/ln(6/5) ≈ 5.48회, 반감기 = ln2/ln(6/5) ≈ 3.80회이다. 작은 확률일수록 τ ≈ 1/p(=6회)에 가까워진다. 모둠 결과는 요동이 크므로 반 전체 합산이 중요하다.</p>
+      <p><b>흔한 실수</b>: 붕괴한 주사위를 빼지 않고 다시 굴리기, "1"뿐 아니라 여러 눈을 붕괴로 세기, ln 대신 log(상용로그) 사용(그래도 직선이지만 기울기에 ln10을 곱해야 함). 마지막 몇 회에 N이 아주 작아 ln N이 크게 흔들리는 것은 자연스럽다고 알려 준다.</p>
+      <p><b>우주선 계수</b>: GM 계수기 하나는 땅·건물에서 오는 감마선도 함께 세므로 1분에 수십 회가 나와도 대부분이 뮤온은 아니다. 관 두 개를 위아래로 겹쳐 동시에 울리는 경우만 세면 위에서 내려오는 하전 입자(주로 뮤온)를 고를 수 있고, 장치를 기울이면 뮤온 수가 천정각 θ에 대해 대략 cos²θ로 줄어드는 것을 볼 수 있다(심화). 장비가 없으면 주제 5 구름상자 자료로 충분하다.</p>
+    </div>
+    <h3>예시 결과 1. 주사위 붕괴 모형 (N₀ = 60)</h3>
+    <div class="table-wrap"><table>
+      <tr><th>n</th><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">6</td><td class="num">7</td><td class="num">8</td><td class="num">9</td><td class="num">10</td><td class="num">11</td><td class="num">12</td></tr>
+      <tr><th>측정 N</th><td class="num">60</td><td class="num">49</td><td class="num">41</td><td class="num">35</td><td class="num">28</td><td class="num">24</td><td class="num">21</td><td class="num">17</td><td class="num">15</td><td class="num">12</td><td class="num">10</td><td class="num">9</td><td class="num">7</td></tr>
+      <tr><th>붕괴 수</th><td class="num">–</td><td class="num">11</td><td class="num">8</td><td class="num">6</td><td class="num">7</td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td class="num">2</td><td class="num">3</td><td class="num">2</td><td class="num">1</td><td class="num">2</td></tr>
+      <tr><th>ln N</th><td class="num">4.09</td><td class="num">3.89</td><td class="num">3.71</td><td class="num">3.56</td><td class="num">3.33</td><td class="num">3.18</td><td class="num">3.04</td><td class="num">2.83</td><td class="num">2.71</td><td class="num">2.48</td><td class="num">2.30</td><td class="num">2.20</td><td class="num">1.95</td></tr>
+      <tr><th>이론 60(5/6)ⁿ</th><td class="num">60</td><td class="num">50.0</td><td class="num">41.7</td><td class="num">34.7</td><td class="num">28.9</td><td class="num">24.1</td><td class="num">20.1</td><td class="num">16.7</td><td class="num">14.0</td><td class="num">11.6</td><td class="num">9.7</td><td class="num">8.1</td><td class="num">6.7</td></tr>
+    </table></div>
+    <p class="prose small muted">해석: N이 30 아래로 처음 내려간 것은 4회(28개) → 반감기는 3~4회 사이(보간하면 약 3.8회). ln N–n 직선의 기울기 ≈ (1.95 − 4.09) ÷ 12 ≈ −0.178 → τ ≈ 5.6회(이론 5.48회). 개별 모둠의 결과는 이론에서 ±√N 정도 벗어나는 것이 정상이다(예: n = 4에서 √29 ≈ 5).</p>
+    <h3>예시 결과 2. 기록표 3 (c = 3.00 × 10⁸ m/s, H = 15 km)</h3>
+    <div class="table-wrap"><table>
+      <tr><th>γ</th><th class="num">β</th><th class="num">t = H/v (μs)</th><th class="num">γτ (μs)</th><th class="num">도달 비율</th></tr>
+      <tr><td>1 (시간 지연 없음, v ≈ c)</td><td class="num">≈ 1</td><td class="num">50.0</td><td class="num">2.197</td><td class="num">1.3 × 10⁻¹⁰</td></tr>
+      <tr><td>10</td><td class="num">0.9950</td><td class="num">50.25</td><td class="num">21.97</td><td class="num">0.10 (약 10%)</td></tr>
+      <tr><td>30</td><td class="num">0.9994</td><td class="num">50.03</td><td class="num">65.91</td><td class="num">0.47 (약 47%)</td></tr>
+    </table></div>
+    <p class="prose small muted">β = √(1 − 1/γ²): γ = 10 → 0.99499, γ = 30 → 0.99944. 실제 우주선 뮤온은 해수면에서 평균 에너지가 약 4 GeV(γ ≈ 40)로, 대기 중에서 에너지를 잃어 속력이 바뀌고 생성 고도도 제각각이라 실제 도달 비율 계산은 더 복잡하다.</p>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">06</span><h2>3D 모의실험 운영 가이드</h2></div>
+    <div class="box box--tip prose">
+      <p><b>화면 구성</b>: 1칸 = 1 km(가로·세로 같은 축척). 처음 열면 상대론·지면 기준계·15 km·0.995c로 뮤온 1000개가 자동으로 날아온다. 분홍 점은 살아 있는 뮤온, 하얗게 번쩍인 뒤 파랗게 남는 점은 붕괴한 위치(전자와 중성미자로 붕괴)이다. 한 번의 비행을 항상 약 6초로 보여 주므로, HUD의 "재생: 1초 ≈ … μs"와 두 시계(지면 시계, 뮤온 시계)를 꼭 읽게 한다. 조건을 바꾸면 새 다발이 바로 발사된다.</p>
+      <p><b>모형의 계산 방법</b>: 각 뮤온의 붕괴 시각을 뮤온의 고유 시간에서 지수 분포(평균 τ = 2.197 μs)로 무작위로 뽑는다. 지면 기준계 + 상대론이면 그 시각에 γ를 곱하고, 뮤온 기준계 + 상대론이면 대기 두께를 H/γ로 줄여 지면이 βc로 다가오게 한다. 고전 모드는 γ를 쓰지 않는다. 모든 뮤온은 같은 속력으로 수직으로 내려오며 대기 중 에너지 손실은 무시했다. 빛의 속력은 2.998 × 10⁸ m/s를 써서 활동지(3.00 × 10⁸)와 끝자리가 조금 다를 수 있다.</p>
+      <p><b>미션 판정</b>: 학생이 조건을 바꾸거나 [발사]를 누른 뒤의 비행만 인정된다(처음 자동 비행은 세지 않음). 미션 3·5는 기록표에 저장된 상대론 행으로 판정한다.</p>
+    </div>
+    <ol class="steps">
+      <li><b>미션 1 고전 계산</b> — 기대 결과(15 km, 0.995c): 지면 시계 = 뮤온 시계 = 50.29 μs, 도달 0개, 이론 1000e<sup>−22.9</sup> ≈ 1 × 10⁻⁷개. 붕괴 표시가 생성 고도 바로 아래 1~2 km에 몰린다(고전 평균 비행 거리 βcτ ≈ 0.66 km).</li>
+      <li><b>미션 2 상대론</b> — 기대 결과: γ = 10.01, 지면 시계 50.29 μs, 뮤온 시계 5.02 μs, 도달 약 102 ± 10개(이론 101.7). 붕괴 표시가 대기 전체에 퍼진다.</li>
+      <li><b>미션 3 γ 측정</b> — 기대 결과: 0.98c → γ = 5.03, t = 51.06 μs, τ′ = 10.16 μs, 도달 약 10 ± 3개(이론 9.8) / 0.995c → 위와 같음 / 0.9994c → γ = 28.87, t = 50.06 μs, τ′ = 1.73 μs, 도달 약 454 ± 16개(이론 454). 어느 경우든 t ÷ τ′ = γ.</li>
+      <li><b>미션 4 길이 수축</b> — 기대 결과(0.9994c): 뮤온 기준계로 바꾸면 화면이 자동으로 확대되고, 대기 두께 15 km/28.87 ≈ 0.52 km, 뮤온 시계 1.73 μs, 도달 약 454개로 지면 기준계와 같다. 고전 + 뮤온 기준계에서는 수축이 없어 거의 모두 붕괴한다.</li>
+      <li><b>미션 5 고도별 생존</b> — 기대 결과(0.9994c, 지면 기준계): 15 km → 약 454개, 10 km → t = 33.38 μs, 약 591개, 5 km → t = 16.69 μs, 약 769개. 그래프의 주황 점(이번 다발의 고도별 생존 비율)이 분홍 상대론 곡선을 따라가고, 회색 점선(고전)은 생성 고도 바로 아래에서 0으로 떨어진다.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="miscon">
+    <div class="section__head"><span class="section__tag">07</span><h2>흔한 오개념과 대응</h2></div>
+    <div class="table-wrap"><table><tr><th>오개념</th><th>바른 개념</th><th>대응 활동</th></tr>
+      <tr><td>시간 지연은 착시일 뿐 실제로 일어나는 일이 아니다.</td><td>측정 가능한 물리적 결과(지면에 도달하는 뮤온 수, 저장 고리 속 뮤온의 수명 64.4 μs)를 만든다.</td><td>모의실험 미션 1·2 비교, CERN 1977년 실험 소개.</td></tr>
+      <tr><td>뮤온은 자기 시계가 느려진 것을 느낀다.</td><td>뮤온 기준계에서 뮤온의 시계는 정상이다. 뮤온 기준계에서는 대기가 수축한다.</td><td>확인 문제 4, 발문 2·3.</td></tr>
+      <tr><td>모든 뮤온은 정확히 2.2 μs를 살고 붕괴한다.</td><td>2.197 μs는 평균 수명이다. 개별 붕괴 시각은 확률적이며 지수 분포를 따른다.</td><td>주사위 모형, 모의실험의 붕괴 위치 분포 관찰.</td></tr>
+      <tr><td>반감기와 평균 수명은 같다.</td><td>t<sub>½</sub> = τ ln 2 ≈ 0.693τ. 뮤온은 반감기 약 1.52 μs, 평균 수명 2.197 μs.</td><td>주사위 결과에서 두 값을 각각 구해 비교.</td></tr>
+      <tr><td>에너지를 계속 주면 빛보다 빨라질 수 있다.</td><td>E = γmc²에서 에너지가 커지면 γ가 커질 뿐 β는 1에 다가가기만 한다.</td><td>LHC γ 계산, β = 1 − 1/(2γ²) 근사로 빛과의 속력 차 계산(약 3 m/s).</td></tr>
+      <tr><td>길이 수축은 물체가 실제로 눌려 찌그러지는 것이다.</td><td>힘이 작용해 눌리는 것이 아니라, 운동 방향의 길이를 재는 결과가 기준계에 따라 다른 것이다. 운동 방향에 수직인 길이는 변하지 않는다.</td><td>모의실험에서 대기의 높이만 줄고 폭(3.2 km)은 그대로임을 관찰.</td></tr>
+      <tr><td>지수 감소는 매 시간 같은 개수씩 줄어드는 것이다.</td><td>매 시간 남은 양의 같은 비율씩 줄어든다.</td><td>주사위 표의 "붕괴 수"가 점점 줄어드는 것 확인.</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="answers">
+    <div class="section__head"><span class="section__tag">08</span><h2>활동지 정답과 해설</h2></div>
+    <div class="box box--answer"><h4>생각 열기 Q1</h4><p>t = H/v = 15,000 m ÷ (0.995 × 3.00 × 10⁸ m/s) ≈ 5.03 × 10⁻⁵ s = 50.3 μs. 50.3 ÷ 2.197 ≈ 22.9배. 고전적으로는 평균 수명의 약 23배 동안 날아야 하므로 1000개 중 1000 × e<sup>−22.9</sup> ≈ 10⁻⁷개, 사실상 하나도 도달하지 못한다.</p></div>
+    <div class="box box--answer"><h4>생각 열기 Q2</h4><p>예상 가설: 뮤온이 더 낮은 곳에서 생긴다, 빛보다 빠르다, 수명이 측정보다 길다, 빠르게 움직이면 시간이 다르게 흐른다 등. 가설의 옳고 그름보다 "검증 방법"(예: 높이에 따라 뮤온 수를 세어 본다)을 함께 제시했는지를 칭찬한다. 정답은 수업에서 시간 지연(지면 기준계)·길이 수축(뮤온 기준계)으로 확인한다.</p></div>
+    <div class="box box--answer"><h4>실험 A — 기록표 3</h4><p>γ = 1: t = 15,000 ÷ (3.00 × 10⁸) = 50.0 μs, γτ = 2.197 μs, 도달 비율 e<sup>−22.8</sup> ≈ 1.3 × 10⁻¹⁰. γ = 10: β = √(1 − 1/100) = 0.9950, t = 50.25 μs, γτ = 21.97 μs, 도달 비율 e<sup>−2.287</sup> ≈ 0.10. γ = 30: β = √(1 − 1/900) = 0.9994, t = 50.03 μs, γτ = 65.91 μs, 도달 비율 e<sup>−0.759</sup> ≈ 0.47.</p></div>
+    <div class="box box--answer"><h4>실험 A — A1</h4><p>예시 자료에서는 4회째 28개로 처음 30개 아래가 되었다. 3회(35개)와 4회(28개) 사이를 보간하면 약 3.7회로, 이론 반감기 ln 2 ÷ ln(6/5) ≈ 3.80회와 비슷하다. 모둠별로 3~5회 범위가 나오는 것이 자연스럽다.</p></div>
+    <div class="box box--answer"><h4>실험 A — A2</h4><p>ln N–n 그래프는 직선에 가깝다(지수 감소의 증거). 예시 자료의 기울기 ≈ (1.95 − 4.09) ÷ 12 ≈ −0.178/회 → τ = −1/기울기 ≈ 5.6회. 이론 τ = 1/ln(6/5) ≈ 5.48회(매회 남는 비율 5/6 = e<sup>−1/τ</sup>에서). 반감기/평균 수명 ≈ 3.8/5.5 ≈ 0.69 ≈ ln 2임도 확인할 수 있다.</p></div>
+    <div class="box box--answer"><h4>실험 A — A3</h4><p>개별 주사위가 언제 "1"이 나올지는 알 수 없다(확률적). 그러나 각 주사위가 매번 같은 확률(1/6)로 독립적으로 붕괴하므로, 남은 수가 많으면 그중 약 1/6이 붕괴하는 경향이 뚜렷하게 나타나 전체는 지수 함수로 예측 가능하게 줄어든다. 측정값은 이론값에서 대략 ±√N만큼 흔들리는데, 상대 오차 √N/N = 1/√N은 N이 작을수록 커진다(N = 49일 때 약 14%, N = 9일 때 약 33%). 그래서 마지막 몇 회의 ln N이 직선에서 크게 벗어난다.</p></div>
+    <div class="box box--answer"><h4>실험 A — A4</h4><p>시간 지연이 없다면(γ = 1) 15 km를 내려오는 뮤온의 도달 비율은 10⁻¹⁰ 수준으로 사실상 0이어야 한다. 그런데 지면에서 1 cm²당 1분에 약 1개씩(구름상자에서도 흔적이 끊임없이) 관측된다는 것은, 빠르게 움직이는 뮤온의 수명이 지면에서 볼 때 γ배 늘어난다(γ ≈ 10~30이면 10~47% 도달)는 특수 상대성이론의 예측을 뒷받침한다.</p></div>
+    <div class="box box--answer"><h4>실험 B — 기록표 (모의실험 기대값)</h4><p>1행: γ 10.01, t 50.29, τ′ 50.29(고전에서는 두 시계가 같음), N ≈ 0, 이론 ≈ 1 × 10⁻⁷. 2행: γ 10.01, t 50.29, τ′ 5.02, N ≈ 102 ± 10, 이론 102. 3행: γ 5.03, t 51.06, τ′ 10.16, N ≈ 10 ± 3, 이론 9.8. 4행: γ 28.87, t 50.06, τ′ 1.73, N ≈ 454 ± 16, 이론 454. 5행: γ 28.87, τ′ 1.73, N ≈ 454 ± 16, 이론 454. 6행: γ 28.87, t 33.38, τ′ 1.16, N ≈ 591 ± 16, 이론 591. 7행: γ 28.87, t 16.69, τ′ 0.578, N ≈ 769 ± 13, 이론 769. (N은 무작위라 매번 조금씩 다름)</p></div>
+    <div class="box box--answer"><h4>실험 B — B1</h4><p>고전(1행)은 0개, 상대론(2행)은 약 100개가 도달한다. 뮤온의 붕괴는 뮤온 자신의 시계, 즉 고유 시간으로 정해진다. 지면에서 50.3 μs가 흐르는 동안 빠르게 움직이는 뮤온의 고유 시간은 50.3 ÷ γ ≈ 5.0 μs만 흐른다(시간 지연). 고유 시간으로는 수명의 약 2.3배만 지났으므로 e<sup>−2.29</sup> ≈ 10%가 살아남는다.</p></div>
+    <div class="box box--answer"><h4>실험 B — B2</h4><p>50.29 ÷ 5.02 ≈ 10.0, 51.06 ÷ 10.16 ≈ 5.03, 50.06 ÷ 1.73 ≈ 28.9로 각각 γ와 같다. 속력이 빛에 가까워질수록 비행 시간 t는 거의 그대로(약 50 μs)인데 γ가 급격히 커져 뮤온 시계 경과 시간이 짧아지므로, 도달 비율이 1%(0.98c) → 10%(0.995c) → 45%(0.9994c)로 크게 늘어난다.</p></div>
+    <div class="box box--answer"><h4>실험 B — B3</h4><p>뮤온 기준계에서는 뮤온이 정지해 있고 시계도 정상이다. 대신 다가오는 대기의 두께가 길이 수축으로 15 km ÷ 28.87 ≈ 0.52 km가 된다. 지면이 0.9994c로 다가오는 데 걸리는 시간은 0.52 km ÷ (0.9994c) ≈ 1.73 μs로, 지면 기준계에서 계산한 뮤온 시계 경과와 같다. 따라서 도달 비율 e<sup>−1.73/2.197</sup> ≈ 0.45도 같다.</p></div>
+    <div class="box box--answer"><h4>실험 B — B4</h4><p>각 뮤온의 붕괴 시각이 확률적으로(무작위로) 정해지기 때문이다. 이론값이 N이면 측정값은 대략 ±√N만큼 흔들리는 것이 자연스럽다(N ≈ 100이면 ±10, 즉 90~110개가 흔함; N ≈ 450이면 이항 분포의 표준편차 √(N₀p(1−p)) ≈ 16). 여러 번 측정해 평균을 내면 이론값에 가까워진다.</p></div>
+    <div class="box box--answer"><h4>확인 문제 1</h4><p>① γ = 1/√(1 − 0.8²) = 1/√0.36 = 1/0.6 ≈ 1.67. ② γτ = 1.67 × 2.197 μs ≈ 3.66 μs.</p></div>
+    <div class="box box--answer"><h4>확인 문제 2</h4><p>t = 15,000 ÷ (0.995 × 3.00 × 10⁸) ≈ 50.25 μs. ① 고전: N = 1000 × e<sup>−50.25/2.197</sup> = 1000 × e<sup>−22.87</sup> ≈ 1.2 × 10⁻⁷ → 사실상 0개. ② 상대론: γτ = 10.0 × 2.197 = 21.97 μs, N = 1000 × e<sup>−50.25/21.97</sup> = 1000 × e<sup>−2.287</sup> ≈ 102개(약 10%).</p></div>
+    <div class="box box--answer"><h4>확인 문제 3</h4><p>뮤온이 본 대기 두께 L = 15 km ÷ 10.0 = 1.5 km. 지면이 다가오는 데 걸리는 시간 t′ = 1500 m ÷ (0.995 × 3.00 × 10⁸ m/s) ≈ 5.03 μs. 뮤온의 수명은 그대로 2.197 μs이므로 N = 1000 × e<sup>−5.03/2.197</sup> = 1000 × e<sup>−2.287</sup> ≈ 102개. 2번 ②와 같다(t′ = t/γ이므로 지수가 정확히 같다).</p></div>
+    <div class="box box--answer"><h4>확인 문제 4</h4><p>뮤온 기준계에서 뮤온은 정지해 있으므로 뮤온의 시계는 정상으로 가고 수명은 2.197 μs 그대로다. "뮤온의 시계가 느리게 간다"는 것은 뮤온이 움직이는 것으로 보는 지면 기준계의 설명이다. 뮤온 기준계에서는 대기와 지면이 움직이므로 대기 두께가 H/γ로 수축해, 짧은 수명 안에 지면이 도착한다. 같은 결과를 기준계마다 다르게 설명하는 것이며, 두 설명을 섞으면 안 된다.</p></div>
+    <div class="box box--answer"><h4>확인 문제 5</h4><p>① γ = E/(mc²) = 6800 GeV ÷ 0.93827 GeV ≈ 7247 ≈ 7250. (운동 에너지로 계산해도 γ − 1 ≈ 7246으로 사실상 같다.) ② 양성자 기준계에서 LHC 둘레는 26.7 km ÷ 7247 ≈ 3.68 m, 약 3.7 m로 수축되어 보인다.</p></div>
+    <div class="box box--answer"><h4>확인 문제 6</h4><p>① N = 1000 × e<sup>−6.6/2.197</sup> ≈ 1000 × e<sup>−3.0</sup> ≈ 50개. ② t<sub>½</sub> = τ ln 2 = 2.197 × 0.693 ≈ 1.52 μs. ③ 1/16 = (1/2)⁴ → 반감기 4번 = 4 × 1.52 ≈ 6.09 μs (또는 τ ln 16 = 2.197 × 2.773 ≈ 6.09 μs).</p></div>
+    <div class="box box--answer"><h4>업그레이드 도전 (지도 요점)</h4><p>도전 1: ① t = 1900 m ÷ (0.995 × 3.00 × 10⁸ m/s) ≈ 6.37 μs. ② 시간 지연이 없으면 563 × e<sup>−6.37/2.197</sup> ≈ 563 × 0.055 ≈ 31개/시간. ③ 관측 비율 408/563 ≈ 0.725 → 고유 시간 = −τ ln(0.725) ≈ 2.197 × 0.322 ≈ 0.71 μs → 시간 지연 배율 ≈ 6.37 ÷ 0.71 ≈ 9. 실제 실험도 약 9배 안팎의 시간 지연을 확인했다(0.995c의 γ ≈ 10과 차이는 대기 중 감속 등 보정 때문). 도전 2: γτ = 29.3 × 2.197 ≈ 64.4 μs, 이 동안 빛의 속력으로 약 3.0 × 10⁸ × 64.4 × 10⁻⁶ ≈ 19.3 km. 둘레 2π × 7 m ≈ 44 m이므로 평균 수명 동안 약 440바퀴를 돈다.</p></div>
+  </section>
+
+  <section class="section" id="assess">
+    <div class="section__head"><span class="section__tag">09</span><h2>평가 루브릭</h2></div>
+    <div class="table-wrap"><table class="rubric"><tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>γ와 시간 지연 계산</td><td>β에서 γ, γτ, 도달 비율을 단위와 함께 정확히 계산하고 결과의 크기를 해석한다.</td><td>γ와 γτ는 정확하나 지수 계산이나 해석에 작은 오류가 있다.</td><td>γ 계산이나 식 적용에 오류가 있다.</td></tr>
+      <tr><td>두 기준계 설명</td><td>지면 기준계(시간 지연)와 뮤온 기준계(길이 수축)를 구분해 설명하고 같은 도달 수를 계산으로 보인다.</td><td>한 기준계로는 바르게 설명하나 다른 기준계 설명이 불완전하다.</td><td>두 설명을 섞거나 "뮤온이 느려진 시계를 느낀다"는 식으로 설명한다.</td></tr>
+      <tr><td>지수 붕괴 실험</td><td>기록·그래프를 완성하고 반감기와 τ를 그래프 기울기로 구해 이론과 비교하며, 요동을 √N으로 설명한다.</td><td>기록·그래프를 완성하고 반감기를 구한다.</td><td>기록이 불완전하거나 그래프를 그리지 못한다.</td></tr>
+      <tr><td>모의실험 탐구</td><td>미션 5개를 모두 수행하고 기록표로 t/τ′ = γ, 고도별 생존 경향을 근거와 함께 말한다.</td><td>미션 3~4개를 수행하고 기록표를 대부분 채운다.</td><td>미션 2개 이하 수행.</td></tr>
+      <tr><td>상대론적 에너지</td><td>LHC 양성자의 γ와 수축된 둘레를 계산하고 속력이 c를 넘지 못하는 까닭을 설명한다.</td><td>γ를 바르게 계산한다.</td><td>계산에 오류가 있다.</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="flex">
+    <div class="section__head"><span class="section__tag">10</span><h2>차시 조정과 수준별 지도</h2></div>
+    <div class="grid-3">
+      <div class="box"><h4>1차시 압축안 (50분)</h4><p>도입(생각 열기 Q1, 5분) → 빛 시계와 γ, 길이 수축 핵심만 설명(12분) → 주사위 모형을 반 전체가 동시에 하되 6회까지만(10분) → 3D 모의실험 미션 1·2·4(15분) → 확인 문제 2·3으로 정리(8분). 지수 붕괴 그래프 분석과 LHC γ는 과제로 돌린다.</p></div>
+      <div class="box"><h4>3차시 확장안 (150분)</h4><p>3차시에 ① 업그레이드 도전 1(프리시–스미스 자료 재현)을 모둠 탐구로 수행하고, 1962년 기록 영화 "Time Dilation: An Experiment with Mu-Mesons"의 일부를 함께 본다(자료가 있는 경우). ② GM 계수기 두 대로 동시 계수 장치를 만들어 천정각에 따른 계수율 측정(cos²θ 경향). ③ 반 전체 주사위 자료로 스프레드시트 지수 맞춤(LN, SLOPE 함수)과 오차 분석.</p></div>
+      <div class="box"><h4>보충·심화</h4><p><b>보충</b>: γ 표를 미리 주고 시간 지연 계산만 연습, 지수 계산은 반감기 단위(1/2, 1/4, 1/8…)로 어림. 동전 모형(반감기 1회)으로 바꾸면 계산이 쉽다. <b>심화</b>: 로런츠 변환으로 시간 지연·길이 수축 유도, 동시성의 상대성, β = 1 − 1/(2γ²) 근사로 LHC 양성자와 빛의 속력 차(약 2.9 m/s) 계산, 쌍둥이 역설 토론.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="refs">
+    <div class="section__head"><span class="section__tag">11</span><h2>참고 자료</h2></div>
+    <ul>
+      <li><a href="https://home.cern" target="_blank" rel="noopener">CERN 공식 누리집</a> — LHC, 가속기 사슬, 실험 소개</li>
+      <li><a href="https://home.cern/science/accelerators/large-hadron-collider" target="_blank" rel="noopener">CERN: 대형 강입자 충돌기(LHC)</a> — 빔 에너지, 둘레 등 기본 수치</li>
+      <li><a href="https://cms.cern/detector" target="_blank" rel="noopener">CMS 검출기 구조</a> — 우주선 뮤온으로 검출기를 시험한 배경</li>
+      <li><a href="http://www.cosmicwatch.lns.mit.edu" target="_blank" rel="noopener">CosmicWatch (MIT)</a> — 학교에서 만들 수 있는 소형 뮤온 검출기 설계 공개</li>
+      <li>D. H. Frisch, J. H. Smith, "Measurement of the Relativistic Time Dilation Using μ-Mesons", American Journal of Physics 31, 342 (1963) — 도전 1의 원 논문</li>
+      <li>J. Bailey 외, "Measurements of relativistic time dilatation for positive and negative muons in a circular orbit", Nature 268, 301 (1977) — CERN 뮤온 저장 고리 실험</li>
+    </ul>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>
