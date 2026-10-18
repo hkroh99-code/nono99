@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 08 LHC 설계 · 교사용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-page="teacher" data-topic="08" data-root="../">
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--teacher">교사용</span>
+      <span class="badge badge--int">종합과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 08 · 지도서</p>
+    <h1>나만의 LHC 설계하기</h1>
+    <p class="lead">주어진 예산과 기술로, 목표 에너지에 도달하는 원형 가속기를 어떻게 설계할까?</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="../students/t08.html">학생용 활동지</a>
+      <a class="btn btn--sim" href="../sims/t08.html">3D 모의실험</a>
+    </div>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#overview">개요</a><a href="#prep">준비</a><a href="#flow">수업 흐름</a><a href="#questions">핵심 발문</a>
+      <a href="#lab">실험 지도</a><a href="#sim">3D 운영</a><a href="#miscon">오개념</a><a href="#answers">정답·해설</a>
+      <a href="#assess">평가</a><a href="#flex">차시 조정</a><a href="#refs">참고 자료</a>
+    </nav>
+  </header>
+
+  <section class="section" id="overview">
+    <div class="section__head"><span class="section__tag">01</span><h2>개요</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>과정 단계</th><td>종합과정 — 주제 3(전기장 가속), 주제 4(자기장 휘기), 주제 6(상대론)을 하나의 설계 과제로 통합</td></tr>
+      <tr><th>교육과정 연계</th><td>물리학 – 전기와 자기(전기장과 전위차, 자기장 속 하전 입자의 운동) / 물리학 – 특수 상대성 이론 / 전자기와 양자 – 전자기장과 전자기파 / 역학과 에너지 – 원운동 / 과학탐구실험 – 탐구 설계와 발표</td></tr>
+      <tr><th>선수 학습</th><td>qV와 eV(주제 3), r = p/(qB)와 p = 0.3Bρ(주제 4), γ와 E = γmc²(주제 6), 불변질량과 4-벡터(주제 7, 선택)</td></tr>
+      <tr><th>핵심 개념</th><td>가속 사슬, 운동 에너지와 γ·β, 회전 주파수, 휘는 반지름 ρ와 쌍극자석 채움 비율, 싱크로트론 복사 손실 U₀ ∝ γ⁴/ρ, 자석 기술과 비용의 절충</td></tr>
+      <tr><th>수업 형태</th><td>1차시: 2인 1대 3D 모의실험 + 개념 강의 / 2차시: 4인 모둠 설계 프로젝트(역할: 계산 담당 2, 모형 측정 1, 발표·기록 1) + 모형 시연 + 발표</td></tr>
+    </table></div>
+    <div class="box box--goal"><h3>학습 목표와 성취 판단 기준</h3><ol>
+      <li><b>가속 사슬의 상대론적 해석</b> — 판단 기준: 5단계의 K로 γ·β를 계산하고(γ는 3자리, β는 1 − β 형태 허용), "에너지는 4만 배 커져도 속력은 2배도 안 된다"는 결론을 근거와 함께 쓴다.</li>
+      <li><b>p = 0.3Bρ 설계</b> — 판단 기준: 목표 에너지와 자석 세기로 ρ, R, 둘레, 자석 수를 계산하고 R과 ρ의 차이를 설명한다.</li>
+      <li><b>싱크로트론 복사 비교</b> — 판단 기준: 같은 E·ρ에서 전자/양성자 손실비 ≈ 10¹³을 구하고, LEP의 한계와 LHC가 양성자를 쓰는 까닭을 설명한다.</li>
+      <li><b>설계 제안과 발표</b> — 판단 기준: 비용·크기·기술 위험을 수치로 비교해 선택 근거를 제시하고, 모둠원 모두가 역할을 맡아 발표한다.</li>
+    </ol></div>
+  </section>
+
+  <section class="section" id="prep">
+    <div class="section__head"><span class="section__tag">02</span><h2>준비물과 사전 준비</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>준비물</th><th>수량(4인 1모둠 기준)</th><th>구입·대체 방법</th></tr>
+      <tr><td>컴퓨터·태블릿(1차시)</td><td class="num">2인 1대</td><td>크롬·엣지·사파리 최신판. 인터넷 없이 파일로 열어도 동작</td></tr>
+      <tr><td>공학용 계산기 또는 스프레드시트</td><td class="num">1인 1개</td><td>휴대폰 계산기(가로 모드 공학용), 구글 시트·엑셀</td></tr>
+      <tr><td>네오디뮴 원통 자석(지름 10~12 mm, 두께 10 mm 내외)</td><td class="num">3개</td><td>과학교구 업체, 온라인 쇼핑몰('네오디뮴 원형 자석'). 개당 수백~천 원대</td></tr>
+      <tr><td>강철 구슬(지름 12~16 mm)</td><td class="num">10개</td><td>베어링 볼(공구상·온라인), 과학실 쇠구슬. 자석에 붙는지 반드시 확인(스테인리스 일부는 안 붙음)</td></tr>
+      <tr><td>알루미늄 ㄱ자 앵글(1 m)</td><td class="num">1개</td><td>철물점·생활용품점. 대체: 홈 파인 나무자 2개를 V자로 붙이기, 커튼 레일</td></tr>
+      <tr><td>수영장 누들(원형 트랙, 선택)</td><td class="num">1개</td><td>생활용품점·스포츠용품점. 칼로 길게 반으로 갈라 홈을 만들고 바닥에 원형으로 테이프 고정(교사가 미리 준비)</td></tr>
+      <tr><td>보안경</td><td class="num">4개</td><td>과학실 비품</td></tr>
+      <tr><td>스마트폰(슬로모션), 줄자, 마스킹테이프, 전자저울</td><td class="num">1세트</td><td>학생 기기, 교실·과학실 비품</td></tr>
+      <tr><td>발표용 큰 종이(전지) 또는 공유 슬라이드</td><td class="num">1장</td><td>문구점. 설계 제안서 요약 포스터용</td></tr>
+    </table></div>
+    <div class="box box--tip prose"><p><b>사전 준비:</b> ① 가우스 가속기는 교사가 미리 1~3단을 만들어 보고, 자석 간격(10~15 cm)과 구슬 크기 조합을 정해 두세요. 자석 세기에 따라 2개가 아니라 3개 구슬을 붙여야 잘 될 때도 있습니다. ② 설계 제안서의 가상 단가표는 학생 활동지에 있습니다. 목표 에너지를 모둠마다 다르게(20·50·100 TeV) 주면 발표 비교가 풍부해집니다. ③ 모의실험 미션과 기록은 브라우저에 저장되므로 공용 컴퓨터는 수업 전에 기록을 지우게 하세요.</p></div>
+    <div class="box box--safety"><h4>안전 지도</h4><ul>
+      <li>네오디뮴 자석끼리 부딪치면 깨져 날카로운 파편이 튈 수 있고, 손가락·피부가 끼어 다칠 수 있다. 자석은 하나씩 떨어뜨려 보관한다.</li>
+      <li>가우스 가속기 발사 구슬은 수 m/s로 날아간다. <b>보안경 착용을 의무화</b>하고, 발사 방향에 사람이 없게 하며, 끝에 수건·상자를 둔다.</li>
+      <li>자석을 휴대폰·노트북·신용카드에서 떨어뜨리고, 심장 박동기 등 의료기기 사용 학생은 자석 활동에서 거리를 두게 한다.</li>
+      <li>작은 자석·구슬은 삼키면 장 손상이 생길 수 있다. 활동 후 개수를 세어 회수한다.</li>
+      <li>수영장 누들을 칼로 자르는 작업은 교사가 미리 한다.</li>
+    </ul></div>
+  </section>
+
+  <section class="section" id="flow">
+    <div class="section__head"><span class="section__tag">03</span><h2>수업 흐름</h2></div>
+    <h3>1차시 (50분) — 개념 통합과 LHC 가상 운전실</h3>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>단계·시간</th><th>교사 활동</th><th>학생 활동</th><th>자료·유의점</th></tr>
+      <tr><td><span class="phase">도입</span><br>5분</td><td>LHC 사진·수치 제시(26.7 km, 1232개, 8.3 T, 1.9 K). "철심 자석(2 T)만 있었다면?" 발문</td><td>생각 열기 Q1·Q2 예상 쓰기</td><td>정답은 확인 문제 1에서 확인하게 보류</td></tr>
+      <tr><td><span class="phase">전개 1</span><br>12분</td><td>주제 3·4·6 연결 상자 설명. 가속 사슬 그림, γ·β·f 공식. R과 ρ의 차이(그림 2). 싱크로트론 복사 공식과 LHC/LEP 비교표</td><td>핵심 개념 ①~④ 읽기, 공식 정리, PS 부스터의 γ·β 함께 계산</td><td>"자석은 휘기만 하고 가속은 전기장"을 반드시 짚기</td></tr>
+      <tr><td><span class="phase">전개 2</span><br>28분</td><td>모의실험 시연(가속 사슬 → 단계 표 → 설계 모드 슬라이더). 미션 1~5 진행 안내, 순회하며 R/ρ 혼동·단위 실수 교정</td><td>미션 1~5, 기록표 1(γ·β 직접 계산 후 비교)·기록표 2 작성, B1~B4 작성</td><td>속도가 빠른 짝은 업그레이드(광도 계산)로</td></tr>
+      <tr><td><span class="phase">정리</span><br>5분</td><td>세 가지 결론 정리: ① β는 1에 붙는다 ② E ∝ Bρ ③ 전자는 원형에서 복사 손실이 압도적. 다음 시간 설계 과제·역할 분담 예고</td><td>모둠 역할 정하기, 목표 에너지 배정 받기</td><td>모둠별 목표 에너지(20/50/100 TeV) 쪽지 배부</td></tr>
+    </table></div>
+    <h3>2차시 (50분) — 팀 설계 프로젝트와 모형 가속기</h3>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>단계·시간</th><th>교사 활동</th><th>학생 활동</th><th>자료·유의점</th></tr>
+      <tr><td><span class="phase">도입</span><br>3분</td><td>과제 제시: "예산 위원회에 제출할 설계 제안서." 평가 기준(루브릭) 공개</td><td>역할 확인(계산 2, 모형 1, 발표·기록 1)</td><td>루브릭을 화면에 띄워 둠</td></tr>
+      <tr><td><span class="phase">전개 1</span><br>20분</td><td>계산표 첫 줄(2 T)을 함께 계산해 시범. 순회하며 단위(km, 조 원) 점검. 16 T의 '기술 위험'을 비용 외 요소로 고려하도록 질문</td><td>설계 계산표(3종 자석), 자석 선택, D1~D5 작성. 모형 담당은 가우스 가속기 조립</td><td>스프레드시트 사용 허용. 모의실험 설계 모드로 검산 가능</td></tr>
+      <tr><td><span class="phase">전개 2</span><br>10분</td><td>가우스 가속기 1단 시연 후 모둠 측정 지도. "한 단에서 얻는 에너지"에 주목하게 함</td><td>1~3단 발사 속력 측정, 기록표 작성, A1~A3 토의</td><td>보안경 착용 확인. 시간이 없으면 교사 시연 + 예시 데이터로 대체</td></tr>
+      <tr><td><span class="phase">전개 3</span><br>12분</td><td>발표 진행(모둠당 2분 + 질의 1분, 4모둠). 질문 유도: "왜 16 T가 아니라 8 T인가?", "전기 요금은?"</td><td>D6 요약으로 발표, 다른 모둠 상호 평가</td><td>모둠이 많으면 갤러리 워크(포스터 순회)로 전환</td></tr>
+      <tr><td><span class="phase">정리</span><br>5분</td><td>실제 FCC 구상(91 km, 14~20 T)과 학생 설계 비교. 과학·비용·사회적 결정의 관계 언급, 주제 9 예고</td><td>확인 문제(과제), 자기 평가, [내 답안 복사] 제출</td><td>업그레이드 토론은 선택 과제로</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="questions">
+    <div class="section__head"><span class="section__tag">04</span><h2>핵심 발문과 예상 답변</h2></div>
+    <details><summary>발문 1. LHC의 자석은 양성자를 빠르게 만드나요?</summary><p>예상 답변: "네, 자석이 밀어 줘요."(오개념) → "아니요. 로런츠 힘은 속도에 수직이라 일을 하지 않으므로 방향만 바꿔요. 에너지는 RF 공동의 전기장이 줘요."</p><p>후속 발문: 그렇다면 에너지를 올릴 때 자석은 왜 함께 세져야 할까? → p가 커지면 같은 ρ를 유지하려면 B ∝ p.</p></details>
+    <details><summary>발문 2. 에너지가 4만 배 커지는 동안 양성자의 속력은 몇 배가 될까요?</summary><p>예상 답변: "200배?"(√ 관계를 떠올림) → 표를 보고 "PS 부스터 0.95c에서 LHC 0.99999999c로 겨우 5 % 늘어요."</p><p>후속 발문: 속력이 거의 그대로인데 무엇이 커지나? → 에너지와 운동량(γ). 그래서 회전 주파수가 거의 일정하고, 링 크기는 에너지(운동량)로 정해진다.</p></details>
+    <details><summary>발문 3. 같은 터널인데 왜 LEP(전자)는 0.1 TeV, LHC(양성자)는 6.8 TeV일까요?</summary><p>예상 답변: "전자는 가벼워서 빛을 많이 내며 에너지를 잃어요(싱크로트론 복사)."</p><p>후속 발문: 그렇다면 전자는 어떤 가속기에 적합할까? → 선형 가속기(복사 손실 거의 없음) 또는 아주 큰 원형(FCC-ee). 복사광 자체를 쓰는 방사광 가속기(포항가속기연구소)도 있음.</p></details>
+    <details><summary>발문 4. 16 T 자석이 가장 싸다면 무조건 16 T를 골라야 할까요?</summary><p>예상 답변: "아직 개발 중이라 실패하면 일정이 늦어지고 비용이 더 들어요." "8 T는 이미 LHC에서 검증됐어요."</p><p>후속 발문: 비용·성능·위험 중 무엇을 우선할지는 누가, 어떻게 정해야 할까? → 과학 공동체의 합의, 회원국 정부의 결정.</p></details>
+    <details><summary>발문 5. 가우스 가속기에서 단을 하나 늘리면 속력도 같은 만큼 늘까요?</summary><p>예상 답변: "아니요. 한 단마다 얻는 '에너지'가 비슷하니 속력은 √n처럼 늘어요."</p><p>후속 발문: 실제 가속기에서도 한 번 지날 때 얻는 에너지(qV)가 일정한데, 상대론 영역에서 속력은 어떻게 될까?</p></details>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">05</span><h2>실험 A 지도 팁과 예시 결과</h2></div>
+    <div class="box box--tip prose">
+      <p><b>설계 제안서 지도 요령</b></p>
+      <ul>
+        <li>고에너지(수 TeV 이상)에서는 p [GeV/c] ≈ E [GeV]로 두어도 오차가 0.01 % 미만임을 알려 줍니다.</li>
+        <li>단위가 가장 큰 걸림돌입니다: ρ [m] = E [GeV] / (0.3 × B) → km로 바꾸기, 억 원 → 조 원(1조 = 10,000억).</li>
+        <li>계산표를 보면 16 T가 8 T보다 약간 싸고 터널이 절반이지만 기술 위험이 큽니다. 비용 외 요소(전력, 위험, 부지, 일정)를 근거로 쓰게 하면 토론이 깊어집니다.</li>
+        <li>2 T 설계(둘레 약 800 km)는 "한반도를 가로지르는 고리"처럼 비현실적임을 지도에 그려 보게 하면 인상적입니다(서울–부산 직선거리 약 325 km).</li>
+      </ul>
+      <p><b>가우스 가속기 요령</b></p>
+      <ul>
+        <li>입사 구슬은 굴리지 않고 자석 앞 5 cm 정도에 '놓기만' 해도 끌려가 부딪칩니다. 입사 속력이 작을수록 '얻은 에너지'가 잘 드러납니다.</li>
+        <li>원리: 입사 구슬은 자석에 가까울수록 강하게 끌려 큰 운동 에너지로 부딪치고, 발사 구슬은 자석에서 두 구슬 떨어진 약한 위치에서 출발하므로 탈출할 때 잃는 에너지가 적습니다. 그 차이(자기 퍼텐셜 에너지 차)가 한 단에서 얻는 에너지입니다.</li>
+        <li>속력 측정: 20 cm 구간을 지나는 프레임 수(240 fps면 1프레임 = 1/240초)로 구합니다.</li>
+      </ul>
+    </div>
+    <h3>예시 결과 — 설계 계산표 (목표 50 TeV, 채움 비율 0.66, 자석 15 m)</h3>
+    <div class="table-wrap"><table>
+      <tr><th>자석</th><th class="num">ρ (km)</th><th class="num">R (km)</th><th class="num">C (km)</th><th class="num">자석 수</th><th class="num">터널</th><th class="num">자석</th><th class="num">냉각</th><th class="num">합계 (조 원)</th></tr>
+      <tr><td>2 T</td><td class="num">83.3</td><td class="num">126</td><td class="num">793</td><td class="num">34,907</td><td class="num">39.7</td><td class="num">17.5</td><td class="num">0</td><td class="num">57.1</td></tr>
+      <tr><td>8 T</td><td class="num">20.8</td><td class="num">31.6</td><td class="num">198</td><td class="num">8,727</td><td class="num">9.9</td><td class="num">13.1</td><td class="num">5.9</td><td class="num">29.0</td></tr>
+      <tr><td>16 T</td><td class="num">10.4</td><td class="num">15.8</td><td class="num">99.2</td><td class="num">4,363</td><td class="num">5.0</td><td class="num">17.5</td><td class="num">3.0</td><td class="num">25.4</td></tr>
+    </table></div>
+    <p class="small muted">계산 예(8 T): ρ = 50,000 / (0.3 × 8) = 20,833 m; R = 20.833 / 0.66 = 31.6 km; C = 2π × 31.6 = 198 km; 자석 수 = 2π × 20,833 / 15 = 8,727; 터널 198 × 500억 = 9.9조; 자석 8,727 × 15억 = 13.1조; 냉각 198 × 300억 = 5.9조. 20 TeV 목표라면 모든 길이·개수가 0.4배, 100 TeV는 2배가 됩니다.</p>
+    <h3>예시 결과 — 가우스 가속기 (강철 구슬 16 mm, 16.8 g, 네오디뮴 자석 12 mm)</h3>
+    <div class="table-wrap"><table>
+      <tr><th>단수</th><th class="num">입사 속력 (m/s)</th><th class="num">발사 속력 (m/s)</th><th class="num">발사 E<sub>k</sub> (mJ)</th><th class="num">한 단에서 얻은 에너지 (mJ)</th></tr>
+      <tr><td>1단</td><td class="num">0.20</td><td class="num">1.32</td><td class="num">14.6</td><td class="num">14.3</td></tr>
+      <tr><td>2단</td><td class="num">1.32</td><td class="num">1.86</td><td class="num">29.1</td><td class="num">14.5</td></tr>
+      <tr><td>3단</td><td class="num">1.86</td><td class="num">2.24</td><td class="num">42.2</td><td class="num">13.1</td></tr>
+    </table></div>
+    <p class="small muted">E<sub>k</sub> = ½ × 0.0168 kg × v². 1단의 얻은 에너지는 입사 구슬 에너지(0.3 mJ)를 뺀 값. 자석 세기·구슬 크기에 따라 값은 크게 달라지지만 '한 단당 에너지가 거의 일정 → 속력은 √n에 비례'하는 경향은 대부분 재현됩니다(1.32 × √2 = 1.87, 1.32 × √3 = 2.29).</p>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">06</span><h2>3D 모의실험 운영 가이드</h2></div>
+    <div class="box box--tip prose">
+      <p><b>가속 사슬 화면:</b> 처음 열면 시연용 빔이 Linac4에서 출발합니다(카메라가 빔을 따라감). [빔 주입 시작]을 눌러야 미션 1이 인정됩니다. 화면 축척 '압축'은 크기를 (실제 크기)<sup>0.4</sup>에 비례하게 줄인 것이고, '실제 비율'은 격자 1칸 = 1 km로 LHC가 PS 부스터보다 약 170배 큰 것을 그대로 보여 줍니다(배치는 개념도). 단계 표의 줄을 누르면 그 단계로 이동하며 기록됩니다. 애니메이션 속도·회전 속도는 실제와 다릅니다(LHC는 실제로 1초에 11,245바퀴).</p>
+      <p><b>설계 모드:</b> p = 0.3·B·ρ, ρ = 채움 비율 × R, E = √(p² + m²), f = βc / (2πR), U₀ = 88.5·E⁴/ρ keV(전자) × (m<sub>e</sub>/m<sub>p</sub>)⁴(양성자). 복사 전력은 LHC 설계 빔 전류 0.58 A를 가정한 값이고(LEP의 실제 빔 전류는 수 mA 수준), RF 보충 한계 3.5 GeV/회전은 LEP2 수준을 가정한 교육용 기준입니다. 노란 빛점(싱크로트론 복사 광자)의 양은 회전당 손실 비율 U₀/E의 로그에 비례합니다.</p>
+      <p><b>에너지 기준:</b> 단계 표는 모든 단계를 운동 에너지 K로 계산했습니다. PS(26 GeV)와 SPS(450 GeV)는 운동량(GeV/c)으로 표기하기도 하는데, 이 에너지에서는 K, 전체 에너지, pc의 차이가 1 GeV 이하라 결론은 같습니다.</p>
+    </div>
+    <ol class="steps">
+      <li><span class="st">미션 1 (가속 사슬) — 기대 결과: 빔이 Linac4(H⁻ 이온) → PS 부스터(입사 때 전자 2개를 벗겨 양성자) → PS → SPS → LHC로 이동, LHC에서 두 빔이 반대 방향으로 돎. 실제 비율 화면에서 PS 부스터는 LHC 옆의 점처럼 보임.</span></li>
+      <li><span class="st">미션 2 (단계별 γ·β) — 기대 결과(운동 에너지 기준): Linac4 160 MeV: γ = 1.171, β = 0.520 / PS 부스터 2 GeV: γ = 3.132, β = 0.948, f = 1.81 MHz / PS 26 GeV: γ = 28.71, β = 0.99939, f = 477 kHz / SPS 450 GeV: γ = 480.6, β = 0.9999978, f = 43.4 kHz / LHC 6.8 TeV: γ = 7248, β = 0.9999999905(1 − β = 9.5×10⁻⁹, 빛보다 약 2.9 m/s 느림), f = 11,245 Hz. 5단계 모두 기록하면 완료.</span></li>
+      <li><span class="st">미션 3 (LHC 재현) — 기대 결과: R = 4.243 km, 채움 0.661 → ρ = 2.805 km, B = 8.33 T → 최대 빔 에너지 7.01 TeV(충돌 14.0 TeV), f = 11,245 Hz, U₀ ≈ 6.7 keV/회전, 복사 전력 약 3.9 kW, 쌍극자석(14.3 m 자기 길이) 1,232개. ρ가 2.70~2.90 km, B가 8.18~8.48 T이면 완료.</span></li>
+      <li><span class="st">미션 4 (FCC-hh) — 기대 결과: R = 14.45 km(둘레 90.8 km), 채움 0.66 → ρ ≈ 9.54 km. 14 T → 약 40 TeV, 16 T → 약 46 TeV, 20 T → 약 57 TeV(빔당). f ≈ 3,300 Hz, 16 T에서 U₀ ≈ 3.6 MeV/회전(LHC보다 500배 이상 큼 — FCC-hh에서는 복사열 제거가 공학적 과제). 둘레 86~96 km, B 14~20 T, 양성자이면 완료.</span></li>
+      <li><span class="st">미션 5 (전자의 한계) — 기대 결과: [LEP 값(전자)] → R = 4.243, 채움 0.713(ρ ≈ 3.03 km), B = 0.115 T → 104.4 GeV, U₀ ≈ 3.47 GeV(빔 에너지의 3.3 %). B를 0.12 T로 올리면 U₀ ≈ 4.1 GeV로 3.5 GeV 초과. LHC 설정(8.33 T)을 전자로 바꾸면 U₀ ≈ 7.6×10⁷ GeV/회전 — 빔 에너지의 1만 배로 물리적으로 불가능. ρ 2.6~3.1 km, 전자, U₀ > 3.5 GeV에서 [설계 기록]하면 완료.</span></li>
+    </ol>
+  </section>
+
+  <section class="section" id="miscon">
+    <div class="section__head"><span class="section__tag">07</span><h2>흔한 오개념과 대응</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>오개념</th><th>바른 개념</th><th>대응 활동</th></tr>
+      <tr><td>자석이 입자를 가속한다</td><td>자기력은 속도에 수직이라 일을 하지 않는다. 에너지는 RF 공동의 전기장이 준다(주제 3)</td><td>발문 1, 핵심 개념 연결 상자</td></tr>
+      <tr><td>에너지가 커지면 속력도 그만큼 커진다</td><td>β는 1에 다가갈 뿐, 커지는 것은 γ(에너지·운동량)</td><td>미션 2 표: K 4만 배, β 1.06배</td></tr>
+      <tr><td>p = 0.3BR에 터널 반지름 R을 넣는다</td><td>쌍극자석이 만드는 휘는 반지름 ρ(LHC 2.80 km)를 넣어야 한다</td><td>그림 2, B2, 자석 수 1232 vs 1864 비교</td></tr>
+      <tr><td>전자는 가벼우니 같은 에너지로 가속하기 쉽다</td><td>원형 가속기에서는 γ가 커서 복사 손실이 (m<sub>p</sub>/m<sub>e</sub>)⁴ ≈ 10¹³배</td><td>미션 5, 확인 문제 4·5</td></tr>
+      <tr><td>더 큰 가속기를 만들면 무조건 좋다</td><td>터널 비용·부지·운영비·기술 위험의 절충이 필요하다</td><td>설계 계산표, 발문 4</td></tr>
+      <tr><td>초전도 자석은 저항이 0이라 전기가 들지 않는다</td><td>자석 자체 손실은 거의 없지만 1.9 K를 유지하는 냉동 설비에 큰 전력이 든다</td><td>가상 단가표의 냉각 설비 항목</td></tr>
+      <tr><td>LHC에서 양성자 1개의 에너지(6.8 TeV)는 엄청나게 크다</td><td>6.8 TeV ≈ 1.1×10⁻⁶ J로 모기 한 마리의 운동 에너지 수준. 빔 하나 전체(약 3×10¹⁴개)는 300 MJ 이상으로 매우 크다</td><td>단위 환산 활동(eV → J)</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="answers">
+    <div class="section__head"><span class="section__tag">08</span><h2>활동지 정답과 해설</h2></div>
+    <div class="box box--answer"><h4>생각 열기 Q1</h4><p>같은 터널(같은 ρ)이라면 p = 0.3Bρ에서 p ∝ B이므로 최대 에너지도 2/8.33 ≈ 1/4로 줄어 약 1.7 TeV가 된다. 6.8 TeV를 얻으려면 ρ를 약 4배로 키워야 하므로 터널 둘레도 약 4배(100 km 이상)가 필요하다.</p></div>
+    <div class="box box--answer"><h4>생각 열기 Q2</h4><p>좋은 점: 같은 자석으로 더 높은 에너지, 싱크로트론 복사 손실 감소(∝ 1/ρ), 자석을 덜 세게 만들어도 됨. 곤란한 점: 터널 공사비·기간 증가, 부지 확보(국경·지질), 자석·진공관·냉각 설비 수량 증가, 운영·유지 비용 증가.</p></div>
+    <div class="box box--answer"><h4>D1~D6 (예시 답안, 목표 50 TeV)</h4><p><b>D1</b> 8 T 선택 예: "총비용은 16 T(25.4조)가 8 T(29.0조)보다 3.6조 싸지만, 16 T Nb₃Sn 자석은 개발 단계라 4,363개 대량 생산에 실패하면 일정과 비용이 크게 늘 위험이 있다. 8 T는 LHC에서 1232개를 이미 성공적으로 운영한 기술이라 위험이 작다." 16 T 선택 예: "터널이 99 km로 8 T(198 km)의 절반이라 부지 확보가 현실적이고 총비용도 가장 싸다. 위험을 줄이려 시제품 개발 기간을 따로 둔다." 근거에 수치가 있으면 어느 쪽도 정답.<br><b>D2·D3</b> 선택에 따른 장단점·위험(기술 성숙도, 냉각 전력, 터널 길이와 부지, 국제 협력 필요성)을 구체적으로.<br><b>D4</b> 주제 3: RF 공동 전기장이 한 바퀴마다 에너지를 주어 목표 에너지까지 가속 / 주제 4: p = 0.3Bρ로 자석 세기에 따른 링 크기 결정 / 주제 6: 빔 속력이 거의 c라 회전 주파수 f ≈ c/C가 일정하고, γ가 커서 복사 손실을 고려해야 함.<br><b>D5</b> 같은 ρ·E에서 전자의 복사 손실은 약 10¹³배. 50 TeV 전자는 한 바퀴에 빔 에너지보다 훨씬 많은 에너지를 잃으므로 도달 불가능(미션 5 근거).<br><b>D6</b> 목표·선택·핵심 수치 근거가 3문장에 들어 있으면 상.</p></div>
+    <div class="box box--answer"><h4>A1</h4><p>예시 결과: 발사 속력 1.32 → 1.86 → 2.24 m/s, 운동 에너지 14.6 → 29.1 → 42.2 mJ. 에너지는 한 단마다 약 14 mJ씩 거의 일정하게 늘었고, 속력은 그보다 천천히 늘었다. E<sub>k</sub> = nΔE = ½mv²이므로 v ∝ √n.</p></div>
+    <div class="box box--answer"><h4>A2</h4><p>각 단은 가속 간극(선형 가속기의 드리프트 튜브 사이 간극, 원형 가속기의 RF 공동)에 해당한다. 한 번 지날 때 얻는 에너지는 정해져 있으므로 높은 에너지를 얻으려면 여러 번 지나야 한다. 선형 가속기는 단을 계속 새로 만들어야 하지만, 원형 가속기는 빔을 자석으로 휘어 같은 가속 장치를 수백만 번 다시 지나게 하므로 훨씬 작고 경제적이다.</p></div>
+    <div class="box box--answer"><h4>A3</h4><p>① 모형은 자기력(자기 퍼텐셜 에너지)으로 가속하지만 실제는 전기장(qV)으로 가속한다(자기장은 휘기만 함). ② 모형의 구슬은 고전 역학(v ∝ √n)이지만 실제 입자는 상대론적이라 속력이 c에 다가가며 거의 늘지 않는다. ③ 실제는 진공관 속에서 마찰·공기 저항이 거의 없다. ④ 실제 가속은 입자가 오는 순간에 맞춰 전압이 바뀌는(RF 위상) 동기화가 필요하다. ⑤ 원형 트랙에서 모형은 벽의 수직항력, 실제는 로런츠 힘이 구심력이다.</p></div>
+    <div class="box box--answer"><h4>B1</h4><p>γ: 3.13 → 7248로 약 2300배. β: 0.948 → 0.99999999로 약 1.06배(6 % 증가). 특수 상대성 이론에 따라 물체는 c를 넘을 수 없으므로, 에너지를 넣으면 속력은 c에 점점 다가갈 뿐이고 늘어나는 것은 에너지 E = γmc²와 운동량 γmv이다.</p></div>
+    <div class="box box--answer"><h4>B2</h4><p>약 1,232개(모의실험: 2π × 2805 m / 14.3 m). 실제 LHC의 쌍극자석 1232개와 같다. R(4243 m)을 쓰면 1,864개가 되어 틀린다. 빔은 쌍극자석 안에서만 휘고 직선 구간에서는 휘지 않으므로, 운동량을 결정하는 반지름은 쌍극자석만 이어 붙인 원의 반지름 ρ이다.</p></div>
+    <div class="box box--answer"><h4>B3</h4><p>E ∝ B이므로 20/14 ≈ 1.43배(약 40 TeV → 약 57 TeV). 현실성: 둘레를 키우면 터널 비용·부지·지질 문제가 커지고(제네바 주변은 쥐라 산맥과 레만 호수로 제약), 자기장을 키우면 Nb₃Sn·HTS 같은 미검증 기술의 위험과 자석 단가가 커진다. FCC는 이미 91 km로 지형이 허락하는 한계에 가까워, 앞으로의 에너지 향상은 자석 기술에 더 의존한다는 결론이 자연스럽다. (근거가 있으면 다른 결론도 인정)</p></div>
+    <div class="box box--answer"><h4>B4</h4><p>U₀ ≈ 7.6×10⁷ GeV/회전 — 빔 에너지(7000 GeV)의 약 1만 배. 한 바퀴도 못 돌고 모든 에너지를 잃는다는 뜻으로, 그 에너지에 도달하는 것 자체가 불가능하다. 실제 한계는 RF 공동이 회전당 보충할 수 있는 에너지로 정해지며, LEP는 104.5 GeV에서 회전당 약 3.5 GeV(빔 에너지의 3 % 이상)를 잃어 RF 전압과 전력의 한계에 도달했다. U₀ ∝ E⁴이므로 에너지를 10 % 올리면 손실이 46 % 늘어난다.</p></div>
+    <div class="box box--answer"><h4>확인 문제 1</h4><p>p = 0.3 × 2.0 × 2804 = 1682 GeV/c ≈ <b>1.7 TeV/c</b>. 8.33 T일 때(약 7.0 TeV)의 약 1/4이다.</p></div>
+    <div class="box box--answer"><h4>확인 문제 2</h4><p>속력 ≈ c이므로 f = c / C = 2.998×10⁸ m/s ÷ 26,659 m ≈ <b>11,245회/초</b>. 10시간 = 36,000초 → 11,245 × 36,000 ≈ <b>4.0×10⁸바퀴</b>(약 4억 바퀴, 이동 거리 약 1.1×10¹⁰ km로 지구–태양 거리의 약 70배).</p></div>
+    <div class="box box--answer"><h4>확인 문제 3</h4><p>γ = 1 + K/(mc²) = 1 + 450/0.938 = <b>480.6</b>. 1 − β ≈ 1/(2γ²) = 1/(2 × 480.6²) = <b>2.2×10⁻⁶</b>. p = √(E² − m²), E = 450.94 GeV → p ≈ 450.9 GeV/c. B = p / (0.3ρ) = 450.9 / (0.3 × 2804) ≈ <b>0.54 T</b>. (LHC 쌍극자석의 주입 자기장 약 0.54 T와 일치)</p></div>
+    <div class="box box--answer"><h4>확인 문제 4</h4><p>U₀ ∝ γ⁴ = (E/mc²)⁴이므로 같은 E에서 비는 (m<sub>p</sub>/m<sub>e</sub>)⁴ = 1836⁴ ≈ <b>1.1×10¹³배</b>.</p></div>
+    <div class="box box--answer"><h4>확인 문제 5</h4><p>U₀ = 88.5 × 104.5⁴ / 3000 keV = 88.5 × 1.193×10⁸ / 3000 ≈ 3.5×10⁶ keV = <b>약 3.5 GeV</b>. 비율 = 3.5 / 104.5 ≈ <b>3.4 %</b>. 한 바퀴마다 빔 에너지의 3 % 넘게 잃어 RF 공동이 계속 보충해야 했다.</p></div>
+    <div class="box box--answer"><h4>확인 문제 6</h4><p>① 자석의 조절 범위: LHC 쌍극자석은 450 GeV(약 0.54 T)~6.8 TeV(약 8 T)에서 자기장 품질이 보장된다. 0에 가까운 에너지는 자기장이 너무 약해 오차가 지배하고 빔을 잡아 둘 수 없다. ② RF 동기화: 저에너지에서는 속력(β)이 크게 변해 RF 주파수를 크게 바꿔야 하는데, 각 가속기는 일정 범위에서만 가능하다. ③ 빔의 크기·품질: 저에너지 빔은 퍼져 있어 작은 가속기에서 모으고 다듬은 뒤(묶음 간격 25 ns 등) 넘겨야 한다. ④ 효율: 큰 링을 저에너지에서 오래 돌리는 것은 비효율적이고, 작은 가속기들은 다른 실험(ISOLDE, 반물질 공장 등)에도 빔을 공급한다.</p></div>
+    <div class="box box--answer"><h4>업그레이드 도전</h4><p>① σ = 16.7 μm = 1.67×10⁻³ cm, σ² = 2.79×10⁻⁶ cm². L = 11,245 × 2800 × (1.1×10¹¹)² / (4π × 2.79×10⁻⁶) = 3.81×10²⁹ / 3.50×10⁻⁵ ≈ <b>1.1×10³⁴ cm⁻²s⁻¹</b> (교차각 효과를 넣은 LHC 설계값 1.0×10³⁴과 비슷). 충돌 횟수 = L × 8×10⁻²⁶ cm² ≈ <b>9×10⁸회/초</b>(약 10억 번). ② 토론 근거 예 — 찬성: 힉스 자기 결합·암흑물질 등 미해결 문제 탐색, 초전도·극저온·컴퓨팅 기술 파급(WWW 사례), 국제 협력과 인재 양성. 반대: 막대한 비용과 기회비용, 새 입자 발견이 보장되지 않음, 건설·운영의 에너지 소비와 환경 영향.</p></div>
+  </section>
+
+  <section class="section" id="assess">
+    <div class="section__head"><span class="section__tag">09</span><h2>평가 루브릭</h2></div>
+    <h3>내용 평가</h3>
+    <div class="table-wrap"><table class="rubric">
+      <tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>상대론적 계산</td><td>5단계의 γ·β를 정확히 계산하고 β 포화와 회전 주파수 일정의 의미를 설명함</td><td>γ·β 계산은 맞으나 의미 해석이 부족함</td><td>고전 공식(½mv²)으로 계산해 c보다 빠른 값이 나옴</td></tr>
+      <tr><td>p = 0.3Bρ 설계</td><td>3종 자석의 ρ·R·C·자석 수를 단위까지 정확히 계산하고 R과 ρ를 구별함</td><td>계산 과정에 단위 실수 1~2개, R·ρ 구별은 함</td><td>공식 적용이나 단위 환산을 하지 못함</td></tr>
+      <tr><td>싱크로트론 복사</td><td>전자/양성자 손실비를 계산하고 LEP 한계·LHC 선택 이유를 수치로 설명함</td><td>정성적으로 '전자가 더 많이 잃는다'고만 설명함</td><td>복사 손실 개념이 없음</td></tr>
+      <tr><td>설계 판단</td><td>비용·크기·기술 위험을 수치로 비교해 선택하고 대안의 단점까지 논함</td><td>비용만으로 선택하거나 근거가 일부 정성적임</td><td>근거 없이 선택함</td></tr>
+      <tr><td>모형 실험 해석</td><td>한 단당 에너지 일정 → v ∝ √n을 자료로 보이고 실제 가속기와의 차이 2가지 이상 설명</td><td>측정은 했으나 해석이 부분적임</td><td>측정·해석이 불완전함</td></tr>
+    </table></div>
+    <h3>발표·협업 평가</h3>
+    <div class="table-wrap"><table class="rubric">
+      <tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>발표 구성</td><td>목표–선택–근거–한계 순서가 분명하고 핵심 수치를 시각 자료(표·지도)로 제시함</td><td>내용은 있으나 순서가 흐리거나 수치 제시가 부족함</td><td>결론만 말하거나 준비가 부족함</td></tr>
+      <tr><td>질의응답</td><td>다른 모둠의 질문에 수치와 물리 개념으로 정확히 답함</td><td>답변이 부분적으로 정확함</td><td>답하지 못함</td></tr>
+      <tr><td>역할 수행과 협업</td><td>모든 모둠원이 역할(계산·측정·발표·기록)을 맡아 책임 있게 수행하고 서로의 계산을 검산함</td><td>대부분 참여했으나 역할 분담이 고르지 않음</td><td>일부 학생에게 활동이 몰림</td></tr>
+      <tr><td>상호 평가 참여</td><td>다른 모둠 설계의 장점과 개선점을 구체적으로 제시함</td><td>평가는 했으나 피드백이 막연함</td><td>참여하지 않음</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="flex">
+    <div class="section__head"><span class="section__tag">10</span><h2>차시 조정과 수준별 지도</h2></div>
+    <div class="grid-3">
+      <div class="box"><h4>1차시 압축안 (50분)</h4><p>도입 3분 → 개념 연결과 공식 10분 → 3D 모의실험 미션 1·3·5(15분) → 설계 계산표를 8 T·16 T 두 줄만 모둠별 계산(15분, 목표 50 TeV 고정) → 1분 발표 2모둠 + 정리(7분). 가우스 가속기는 교사 시연 2분으로 대체하고 예시 데이터를 제공.</p></div>
+      <div class="box"><h4>3차시 확장안 (150분)</h4><p>1차시: 개념 + 3D 미션 1~5. 2차시: 설계 제안서 + 가우스 가속기(원형 트랙까지) 측정. 3차시: 발표·질의응답(모둠당 4분), 업그레이드의 광도 계산과 "FCC를 지어야 하는가" 찬반 토론, 교사의 실제 FCC 구상 비교 정리.</p></div>
+      <div class="box"><h4>보충·심화</h4><p><b>보충:</b> γ·β 대신 표에서 읽기만 하고, p = 0.3Bρ는 ρ만 계산(R·비용 생략). 계산표는 1줄 함께 풀기. <b>심화:</b> p = qBr에서 0.3이 나오는 단위 환산 유도(1 GeV/c = 5.34×10⁻¹⁹ kg·m/s), U₀ ∝ γ⁴/ρ의 γ⁴가 어디서 오는지(라모어 공식) 조사, 회전당 RF 에너지 이득으로 LHC 가속 시간(약 20분) 추정, 방사광 가속기(포항가속기연구소)와 싱크로트론 복사의 활용 조사.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="refs">
+    <div class="section__head"><span class="section__tag">11</span><h2>참고 자료</h2></div>
+    <ul>
+      <li><a href="https://home.cern/science/accelerators/large-hadron-collider" target="_blank" rel="noopener">CERN — 대형 강입자 충돌기(LHC)</a></li>
+      <li><a href="https://home.cern/science/accelerators/accelerator-complex" target="_blank" rel="noopener">CERN — 가속기 복합 단지(가속 사슬)</a></li>
+      <li><a href="https://home.cern/science/accelerators/future-circular-collider" target="_blank" rel="noopener">CERN — 미래 원형 충돌기(FCC)</a></li>
+      <li><a href="https://home.cern/science/accelerators/large-electron-positron-collider" target="_blank" rel="noopener">CERN — 대형 전자–양전자 충돌기(LEP)</a></li>
+      <li><a href="https://home.cern/science/accelerators/high-luminosity-lhc" target="_blank" rel="noopener">CERN — 고광도 LHC(HL-LHC)</a></li>
+      <li><a href="https://home.cern" target="_blank" rel="noopener">CERN 공식 누리집</a></li>
+    </ul>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

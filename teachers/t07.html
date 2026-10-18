@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 07 불변질량 · 교사용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-page="teacher" data-topic="07" data-root="../">
+<main class="page">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--teacher">교사용</span>
+      <span class="badge badge--adv">심화과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 07 · 지도서</p>
+    <h1>보존 법칙과 불변질량</h1>
+    <p class="lead">충돌 뒤에 남은 조각들만 측정해서, 이미 사라져 버린 입자의 질량을 어떻게 알아낼 수 있을까?</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--primary" href="../students/t07.html">학생용 활동지</a>
+      <a class="btn btn--sim" href="../sims/t07.html">3D 모의실험</a>
+    </div>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#overview">개요</a><a href="#prep">준비</a><a href="#flow">수업 흐름</a><a href="#questions">핵심 발문</a>
+      <a href="#lab">실험 지도</a><a href="#sim">3D 운영</a><a href="#miscon">오개념</a><a href="#answers">정답·해설</a>
+      <a href="#assess">평가</a><a href="#flex">차시 조정</a><a href="#refs">참고 자료</a>
+    </nav>
+  </header>
+
+  <section class="section" id="overview">
+    <div class="section__head"><span class="section__tag">01</span><h2>개요</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>과정 단계</th><td>심화과정 (주제 6 상대론에 이어 주제 9·10 사건 분석의 계산 기반이 됨)</td></tr>
+      <tr><th>교육과정 연계</th><td>물리학 – 힘과 운동(운동량과 충격량, 운동량 보존) / 물리학 – 특수 상대성 이론(질량–에너지 동등성) / 역학과 에너지 – 운동량과 충돌 / 전자기와 양자 – 미시 세계와 입자(심화 연계)</td></tr>
+      <tr><th>선수 학습</th><td>벡터의 성분 분해와 합, 1차원 운동량 보존, 로런츠 인자 γ와 E = γmc²(주제 6), eV 단위(주제 3)</td></tr>
+      <tr><th>핵심 개념</th><td>운동량의 성분별 보존, 탄성·비탄성 충돌, 상대론적 에너지–운동량 관계 E² = (pc)² + (mc²)², 4-벡터, 불변질량, 2체 붕괴, 검출기 분해능</td></tr>
+      <tr><th>수업 형태</th><td>1차시: 4인 모둠 실물 실험(촬영·영상 분석) / 2차시: 2인 1대 컴퓨터(또는 태블릿) 3D 모의실험 + 개인 계산</td></tr>
+    </table></div>
+    <div class="box box--goal"><h3>학습 목표와 성취 판단 기준</h3><ol>
+      <li><b>2차원 운동량 보존 확인</b> — 판단 기준: 영상 분석으로 충돌 전후 속도 성분을 구하고, Σp<sub>x</sub>·Σp<sub>y</sub>를 비교해 ±10 % 이내 보존 여부를 근거와 함께 판단한다.</li>
+      <li><b>에너지–운동량 관계 활용</b> — 판단 기준: E, p, m 중 두 값이 주어지면 나머지와 γ를 c = 1 단위로 정확히 계산한다.</li>
+      <li><b>불변질량 재구성</b> — 판단 기준: 4-벡터 표로 두 입자의 불변질량을 1 % 이내로 계산하고, 기준 질량과 비교해 입자를 식별한다(모의실험 미션 2·4).</li>
+      <li><b>불변성과 분해능 해석</b> — 판단 기준: 부모 운동량이 바뀌어도 M이 일정함을 자료(기록표·그래프)로 보이고, 분해능이 나쁠수록 질량 분포가 넓어지는 이유를 설명한다.</li>
+    </ol></div>
+  </section>
+
+  <section class="section" id="prep">
+    <div class="section__head"><span class="section__tag">02</span><h2>준비물과 사전 준비</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>준비물</th><th>수량(4인 1모둠 기준)</th><th>구입·대체 방법</th></tr>
+      <tr><td>500원 동전, 100원 동전</td><td class="num">각 2개, 1개</td><td>학생 지참. 에어하키 퍽(완구점·온라인 몇 천 원)을 쓰면 마찰이 적어 결과가 더 좋음. 같은 크기 와셔·병뚜껑도 가능(질량 측정)</td></tr>
+      <tr><td>매끄러운 판</td><td class="num">1장(60×45 cm 이상)</td><td>아크릴판(문구·생활용품점), 코팅된 실험대, 유리 진열판. 표면에 베이비파우더를 아주 얇게 뿌리면 마찰이 줄어듦</td></tr>
+      <tr><td>스마트폰 + 거치대</td><td class="num">1세트</td><td>학생 기기 활용(슬로모션 120~240 fps). 거치대가 없으면 의자 2개 위에 막대를 걸쳐 고정</td></tr>
+      <tr><td>30 cm 자, 모눈종이, 마스킹테이프, 원형 스티커</td><td class="num">1세트</td><td>교실 비품·문구점</td></tr>
+      <tr><td>전자저울(0.01 g)</td><td class="num">학급 2~3대</td><td>과학실 비품. 없으면 동전 공칭 질량 사용(500원 7.70 g, 100원 5.42 g)</td></tr>
+      <tr><td>영상 분석 프로그램 Tracker</td><td class="num">모둠당 컴퓨터 1대</td><td>physlets.org/tracker 무료(윈도·맥·리눅스, 웹 버전도 있음). 미리 설치해 둘 것. 대체: 프레임 단위 재생 앱 + 모눈종이 위 위치 읽기</td></tr>
+      <tr><td>역학 수레 + 플런저(용수철)</td><td class="num">학급 2~3세트(보충 실험)</td><td>과학실 비품 또는 과학교구 업체. 대체: 두 장난감 자동차 사이에 고무줄을 건 나무젓가락을 끼워 실로 묶었다가 실을 끊기</td></tr>
+      <tr><td>추(500 g)</td><td class="num">2개</td><td>과학실 비품</td></tr>
+      <tr><td>컴퓨터·태블릿(2차시)</td><td class="num">2인 1대</td><td>크롬·엣지·사파리 최신판. 인터넷 없이 파일로 열어도 동작. 공학용 계산기 또는 휴대폰 계산기 필요</td></tr>
+    </table></div>
+    <div class="box box--tip prose"><p><b>사전 준비:</b> ① 교사가 미리 한 번 촬영·분석해 보정 막대 설정과 축 설정을 화면 캡처로 준비하면 1차시 시간이 크게 줄어듭니다. ② 촬영만 수업 중에 하고 분석은 과제로 돌리거나, 교사가 미리 찍은 영상 파일을 배포하는 방법도 있습니다. ③ 모의실험의 미션·기록은 브라우저에 저장되므로, 공용 컴퓨터라면 수업 시작 전에 이전 반의 기록을 지우게 하세요([기록 지우기]를 두 번 누름).</p></div>
+    <div class="box box--safety"><h4>안전 지도</h4><ul>
+      <li>동전은 손가락으로 가볍게 튕기게 하고, 사람 쪽으로 튕기지 않게 방향을 정해 준다. 판 가장자리에 책을 세워 동전이 바닥으로 날아가지 않게 한다.</li>
+      <li>거치대·삼각대 넘어짐에 주의한다. 스마트폰은 끈으로 묶거나 테이프로 고정한다.</li>
+      <li>유리판은 모서리에 테이프를 붙이고, 금이 간 판은 쓰지 않는다.</li>
+      <li>용수철 수레: 압축 상태에서 손가락을 수레 사이에 넣지 않는다. 책상 끝에 멈춤 장치(책)를 둔다.</li>
+      <li>베이비파우더를 쓸 경우 소량만 쓰고, 흡입하지 않게 환기한다.</li>
+    </ul></div>
+  </section>
+
+  <section class="section" id="flow">
+    <div class="section__head"><span class="section__tag">03</span><h2>수업 흐름</h2></div>
+    <h3>1차시 (50분) — 2차원 충돌과 운동량 보존</h3>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>단계·시간</th><th>교사 활동</th><th>학생 활동</th><th>자료·유의점</th></tr>
+      <tr><td><span class="phase">도입</span><br>5분</td><td>교통사고 조사관 장면 제시. "남은 것은 미끄럼 자국뿐, 충돌 전 속력을 어떻게 알까?" Z 보손은 3×10⁻²⁵초 만에 사라짐을 소개</td><td>생각 열기 Q1·Q2 작성, 짝과 의견 교환</td><td>활동지 01. 정답보다 '방향'이 필요하다는 생각을 끌어낼 것</td></tr>
+      <tr><td><span class="phase">전개 1</span><br>10분</td><td>운동량이 벡터임을 강조, 성분별 보존 설명. 그림 1로 벡터 합 삼각형 그리기 시범. 정지 입자의 붕괴 = 폭발 비유</td><td>핵심 개념 ①② 읽기, 그림 1 해석</td><td>칠판에 x·y 성분표를 그려 기록표 2와 연결</td></tr>
+      <tr><td><span class="phase">전개 2</span><br>15분</td><td>촬영 요령 시범(카메라 수평, 자를 같은 높이에, 비스듬한 충돌). 모둠 순회하며 축척·조명 점검</td><td>질량 측정, 카메라 설치, 3종류 충돌 촬영(연습 1~2회 후 본 촬영)</td><td>정면충돌이 되면 y성분 확인이 안 되므로 '살짝 비켜 맞히기' 강조</td></tr>
+      <tr><td><span class="phase">전개 3</span><br>13분</td><td>Tracker 사용법 안내(보정 막대 → 좌표축 → 점 찍기). 충돌 직전·직후 3프레임 평균 속도를 쓰게 지도. 폭발형 분리 시연(교사 1세트)</td><td>영상 분석으로 기록표 1·2 작성, 폭발형 분리 측정(기록표 3)</td><td>시간이 부족한 모둠은 1회분만 분석하고 나머지는 과제로</td></tr>
+      <tr><td><span class="phase">정리</span><br>7분</td><td>모둠별 Σp<sub>x</sub> 차이(%)를 칠판에 모아 비교. 마찰·회전·프레임 오차 토의. 운동 에너지는 줄었는데 운동량은 보존된 이유 질문</td><td>결과 분석 A1~A5 작성(일부 과제)</td><td>"질량이 다른 두 수레가 같은 크기 운동량" → 다음 차시 '붕괴'로 연결</td></tr>
+    </table></div>
+    <h3>2차시 (50분) — 불변질량으로 사라진 입자 찾기</h3>
+    <div class="table-wrap"><table class="flow">
+      <tr><th>단계·시간</th><th>교사 활동</th><th>학생 활동</th><th>자료·유의점</th></tr>
+      <tr><td><span class="phase">도입</span><br>5분</td><td>지난 시간 폭발형 분리 결과 상기. "입자가 빛의 속력에 가까우면 p = mv가 맞을까?" 주제 6의 γ 복습</td><td>γ = 1/√(1 − v²/c²) 떠올리기</td><td>v = 0.6c → γ = 1.25 같은 쉬운 값으로 감 잡기</td></tr>
+      <tr><td><span class="phase">전개 1</span><br>12분</td><td>E = γmc², p = γmv → E² = p² + m² 유도(γ² − γ²v² = 1 이용). c = 1 단위 설명. 불변질량 정의와 풀이 예제(Z → μ⁺μ⁻) 함께 계산</td><td>핵심 개념 ③④, 그림 2 해석, 풀이 예제 계산기로 따라 하기</td><td>"성분을 먼저 더하고 제곱"을 반드시 강조(가장 흔한 실수)</td></tr>
+      <tr><td><span class="phase">전개 2</span><br>23분</td><td>모의실험 시연 1분(모드·표·판정 위치). 미션 1~3은 모두, 4~5는 짝별로 진행하도록 안내. 순회하며 계산 실수 교정</td><td>미션 1~5 수행, 기록표 4·5 작성, B1~B4 작성</td><td>미션 3에서 그래프의 ΣE(올라감)와 M(수평)을 짝과 비교하게 함</td></tr>
+      <tr><td><span class="phase">전개 3</span><br>6분</td><td>실제 CERN 사례(J/ψ, W·Z 1983, 힉스 2012 H→γγ) 소개. 확인 문제 4번을 함께 풀며 H→γγ 재현</td><td>CERN 읽기, 확인 문제 1~6 중 4번 이상 풀이</td><td>나머지 문제는 과제</td></tr>
+      <tr><td><span class="phase">정리</span><br>4분</td><td>핵심 정리: "질량은 더해지지 않는다, 4-벡터가 더해진다." 주제 9·10 예고</td><td>자기 평가, [내 답안 복사]로 제출</td><td>온라인 제출란 안내</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="questions">
+    <div class="section__head"><span class="section__tag">04</span><h2>핵심 발문과 예상 답변</h2></div>
+    <details><summary>발문 1. 충돌 후 두 동전이 서로 다른 방향으로 갈라졌는데, 어떻게 운동량이 '같다'고 말할 수 있나요?</summary><p>예상 답변: "속력을 더하면 같아요"(오개념), "방향까지 생각해서 벡터로 더하면 처음 운동량이 돼요."</p><p>후속 발문: 충돌 전 y방향 운동량은 0이었는데, 충돌 후 한 동전이 위로 갔다면 다른 동전은? → 아래쪽 성분이 같은 크기로 생겨야 함.</p></details>
+    <details><summary>발문 2. 운동 에너지는 줄었는데 운동량은 왜 보존되나요?</summary><p>예상 답변: "소리·열·회전으로 에너지가 빠져나갔어요. 그래도 충돌하는 동안 두 동전이 주고받은 힘은 작용·반작용이라 운동량은 그대로예요."</p><p>후속 발문: 그렇다면 운동량이 보존되지 않는 상황은? → 마찰처럼 외부 힘이 오래 작용할 때. 그래서 '충돌 직전·직후'만 쓴다.</p></details>
+    <details><summary>발문 3. 뮤온 두 개의 질량을 더하면 0.21 GeV/c²인데, 어떻게 91 GeV/c² 입자에서 나올 수 있나요?</summary><p>예상 답변: "나머지 질량이 운동 에너지로 바뀌었어요(E = mc²)."</p><p>후속 발문: 그 운동 에너지까지 다 모으면 다시 원래 질량을 알 수 있을까? → 불변질량 공식으로 연결.</p></details>
+    <details><summary>발문 4. Z가 빠르게 날아가면서 붕괴하면 ΣE가 더 커지는데, 왜 M은 그대로인가요?</summary><p>예상 답변: "|Σp|도 같이 커져서 빼면 그대로예요."</p><p>후속 발문: 누가 측정하든 같은 값이 나오는 것이 실험에서 왜 편리할까? → LHC에서는 충돌하는 쿼크의 운동량을 모르므로 생성된 입자의 속도도 모름. 그래도 M은 바로 구할 수 있다.</p></details>
+    <details><summary>발문 5. 실제 측정에서는 왜 질량 히스토그램이 한 값에 모이지 않고 퍼질까요?</summary><p>예상 답변: "측정 오차(분해능) 때문이에요." 심화: "입자 자체도 수명이 짧아 질량이 조금씩 달라요(자연 폭). Z는 약 2.5 GeV."</p><p>후속 발문: 비슷한 질량의 두 입자를 구별하려면 검출기가 어때야 할까?</p></details>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">05</span><h2>실험 A 지도 팁과 예시 결과</h2></div>
+    <div class="box box--tip prose">
+      <p><b>잘 되게 하는 요령</b></p>
+      <ul>
+        <li><b>정면충돌은 실패:</b> A가 B 중심에서 동전 반지름의 절반쯤 비켜 맞아야 두 동전이 30~60° 갈라져 y성분 비교가 됩니다.</li>
+        <li><b>속도 구간:</b> 동전은 마찰로 금방 느려집니다. 충돌 직전·직후 2~3프레임(240 fps면 약 0.01초 간격)만 쓰면 마찰 영향이 줄어듭니다. 60 fps라면 직전·직후 2프레임.</li>
+        <li><b>원근 오차:</b> 카메라가 판과 수평이 아니면 길이가 찌그러집니다. 판 네 귀퉁이를 화면 귀퉁이에 맞추고, 자를 동전과 같은 높이에 둡니다.</li>
+        <li><b>회전:</b> 비스듬한 충돌에서는 동전이 돌기 시작해 운동 에너지 일부가 회전 에너지로 갑니다. 운동량 보존에는 영향이 작지만, 운동 에너지 비가 1보다 작아지는 원인입니다.</li>
+        <li><b>판정 기준:</b> 학교 실험에서 Σp<sub>x</sub> 차이가 10 % 이내면 "보존된다고 볼 수 있다"로 지도하고, 차이는 대부분 '감소' 방향(마찰)임을 짚어 줍니다.</li>
+        <li><b>폭발형 분리:</b> 두 수레 질량비를 1:2로 하면 속력비가 2:1로 깔끔하게 나와 "운동량 크기는 같고 방향은 반대"를 보여 주기 좋습니다.</li>
+      </ul>
+    </div>
+    <h3>예시 결과 — 기록표 1·2 (240 fps, 아크릴판, x축 = 충돌 전 A 진행 방향)</h3>
+    <div class="table-wrap"><table>
+      <tr><th>회</th><th>충돌</th><th class="num">m<sub>A</sub>, m<sub>B</sub> (g)</th><th class="num">A 전 v<sub>x</sub></th><th class="num">A 후 (v<sub>x</sub>, v<sub>y</sub>)</th><th class="num">B 후 (v<sub>x</sub>, v<sub>y</sub>) (cm/s)</th><th class="num">Σp<sub>x</sub> 전 → 후</th><th class="num">x 차이</th><th class="num">Σp<sub>y</sub> 후</th><th class="num">KE 비</th></tr>
+      <tr><td>1</td><td>500원→500원</td><td class="num">7.70, 7.70</td><td class="num">62.4</td><td class="num">(28.1, 27.6)</td><td class="num">(31.0, −25.9)</td><td class="num">480.5 → 455.1</td><td class="num">−5.3 %</td><td class="num">13.1</td><td class="num">0.82</td></tr>
+      <tr><td>2</td><td>500원→100원</td><td class="num">7.70, 5.42</td><td class="num">55.0</td><td class="num">(21.5, −12.0)</td><td class="num">(44.6, 16.0)</td><td class="num">423.5 → 407.3</td><td class="num">−3.8 %</td><td class="num">−5.7</td><td class="num">0.72</td></tr>
+      <tr><td>3</td><td>100원→500원</td><td class="num">5.42, 7.70</td><td class="num">70.2</td><td class="num">(9.6, 21.4)</td><td class="num">(40.0, −14.0)</td><td class="num">380.5 → 360.0</td><td class="num">−5.4 %</td><td class="num">8.2</td><td class="num">0.63</td></tr>
+    </table></div>
+    <p class="small muted">운동량 단위: g·cm/s. Σp<sub>y</sub> 후는 충돌 전 값 0과 비교(Σp<sub>x</sub>의 1~3 % 수준이면 양호). 예: 1회 Σp<sub>y</sub> = 7.70×(27.6 − 25.9) = 13.1.</p>
+    <h3>예시 결과 — 기록표 3 (폭발형 분리, 오른쪽 = +)</h3>
+    <div class="table-wrap"><table>
+      <tr><th>회</th><th class="num">m₁ (kg)</th><th class="num">v₁ (m/s)</th><th class="num">m₂ (kg)</th><th class="num">v₂ (m/s)</th><th class="num">p₁</th><th class="num">p₂</th><th class="num">p₁ + p₂ (kg·m/s)</th></tr>
+      <tr><td>1</td><td class="num">0.50</td><td class="num">−0.62</td><td class="num">1.00</td><td class="num">0.30</td><td class="num">−0.310</td><td class="num">0.300</td><td class="num">−0.010</td></tr>
+      <tr><td>2</td><td class="num">0.50</td><td class="num">−0.44</td><td class="num">0.50</td><td class="num">0.45</td><td class="num">−0.220</td><td class="num">0.225</td><td class="num">0.005</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">06</span><h2>3D 모의실험 운영 가이드</h2></div>
+    <div class="box box--tip prose">
+      <p><b>화면 구성:</b> 왼쪽 3D 무대에서 흰 공(모입자)이 붕괴하면 색깔 공(딸 입자)과 운동량 화살표가 나타납니다(뮤온 분홍, 전자 파랑, 광자 노랑, 파이온 주황, 초록 화살표 = 운동량 합 Σp). 화살표 축척은 HUD에 "격자 1칸 = ○ GeV/c"로 표시됩니다. 오른쪽 패널에 4-벡터 표(소수 4자리, 가벼운 입자가 빠를 때는 6자리), [내 계산] 입력·판정(허용 오차 ±1 %), 측정값, 그래프, 기록표가 있습니다.</p>
+      <p><b>물리 모형:</b> 정지계에서 등방적인 2체 붕괴(딸 입자 운동량 p* = √[(M² − (m₁+m₂)²)(M² − (m₁−m₂)²)] / 2M, 딸 입자 질량 반영) 후 부모 운동량 P 방향으로 로런츠 변환합니다. 미지 입자는 P = 5~60 GeV/c, 무작위 방향이며, 분해능 σ는 각 딸 입자 운동량 크기에 (1 + σ·z)를 곱하는 가우스 번짐입니다(z는 사건마다 고정된 표준 정규 난수라서 σ를 바꾸면 분포가 연속적으로 넓어짐).</p>
+      <p><b>정답 노출 방지:</b> 미지 입자 모드에서는 β, γ, p*를 '?'로 숨깁니다. [불변질량 정답 보기]는 계산 후 확인용으로만 쓰게 하세요.</p>
+    </div>
+    <ol class="steps">
+      <li><span class="st">미션 1 (정지 붕괴) — 기대 결과: 합 Σ 줄의 p<sub>x</sub>, p<sub>y</sub>, p<sub>z</sub>가 모두 0.0000, 두 화살표 길이 같고 정반대. Z → μ⁺μ⁻에서 각 뮤온 |p| = 45.595 GeV/c, E = 45.595 GeV, ΣE = 91.19 GeV = M. 정지 모드 기록 2개면 자동 완료.</span></li>
+      <li><span class="st">미션 2 (불변질량 계산) — 기대 결과: 정지 붕괴라면 M = ΣE로 바로 91.19. 판정 '정확'(±1 %)이면 완료. 흔한 오답: 성분별로 제곱한 뒤 더함(→ 값이 작게 나옴), 제곱근을 빠뜨림(→ 8315 같은 큰 값). 판정 문구가 원인을 알려 줍니다.</span></li>
+      <li><span class="st">미션 3 (움직이는 붕괴) — 기대 결과(Z, P = 0, 30, 80 GeV/c): ΣE = 91.19, 96.00, 121.31 GeV(= √(P² + M²)), |Σp| = 0, 30, 80, M = 91.19 모두 같음. 그래프에서 주황 점(ΣE)은 올라가고 파란 점(내 M)은 수평. 같은 입자로 '정확' 판정 기록 3개(P 서로 다르고 최대–최소 ≥ 20)면 완료.</span></li>
+      <li><span class="st">미션 4 (미지 입자) — 기대 결과: 평균 질량이 3.097(J/ψ, 뮤온 쌍), 9.460(Υ, 뮤온 쌍), 91.19(Z, 뮤온 쌍), 125.1(H, 광자 쌍) 근처. 광자 쌍이면 바로 힉스임을 눈치채는 학생도 있는데, "Z는 광자 두 개로 붕괴할 수 없다(란다우–양 정리)"는 심화 이야기로 연결할 수 있습니다. 한 표본에 두 번 틀리면 정답이 공개됩니다. 서로 다른 3종 맞히면 완료.</span></li>
+      <li><span class="st">미션 5 (분해능) — 기대 결과: σ = 0이면 모든 사건이 정확히 같은 질량(폭 0). σ를 키우면 상대 폭 ≈ σ/√2 (σ = 3 % → 약 2.1 %, 5 % → 약 3.5 %, 10 % → 약 7 %). 사건 110개 기준 Z라면 σ = 5 %에서 표준편차 약 3.2 GeV. σ = 0과 3 % 이상을 모두 보면 완료.</span></li>
+    </ol>
+    <div class="box prose"><p><b>B5(선택) 기대 결과:</b> K⁰ₛ → π⁺π⁻ 정지 붕괴에서 p* = 0.2060 GeV/c, E = 0.2488 GeV. 딸 질량을 무시하고 E = |p|로 계산하면 M = 2p* = 0.412 GeV/c²로 약 17 % 작게 나옵니다. Z → μ⁺μ⁻는 p*(45.6)에 비해 m<sub>μ</sub>(0.106)가 아주 작아 차이가 10⁻⁶ 수준입니다.</p></div>
+  </section>
+
+  <section class="section" id="miscon">
+    <div class="section__head"><span class="section__tag">07</span><h2>흔한 오개념과 대응</h2></div>
+    <div class="table-wrap"><table>
+      <tr><th>오개념</th><th>바른 개념</th><th>대응 활동</th></tr>
+      <tr><td>운동량 보존 = 속력의 합이 보존된다</td><td>벡터 합이 보존된다. 성분별로 따로 보존</td><td>그림 1의 벡터 삼각형을 직접 그리기, 기록표 2에서 Σp<sub>y</sub> 확인</td></tr>
+      <tr><td>운동량이 보존되면 운동 에너지도 항상 보존된다</td><td>운동 에너지는 비탄성 충돌에서 열·소리·변형·회전으로 줄어든다</td><td>예시 결과의 KE 비 0.6~0.8 제시, 탄성 충돌(확인 문제 2)과 비교</td></tr>
+      <tr><td>붕괴하면 딸 입자 질량의 합 = 부모 질량</td><td>질량은 더해지지 않는다. 남는 질량은 운동 에너지가 되고, 4-벡터의 합으로 불변질량을 구한다</td><td>발문 3, Z → μ⁺μ⁻의 0.21 vs 91.19 비교</td></tr>
+      <tr><td>M² = ΣE² − Σ|p|² (각 입자의 |p|²를 더함)</td><td>운동량 '벡터'를 먼저 더한 뒤 그 크기를 제곱해야 한다</td><td>모의실험 판정 힌트, 정지 붕괴에서 잘못된 방법이 0을 주는 것 확인</td></tr>
+      <tr><td>질량이 0인 광자 두 개는 질량이 있는 입자를 만들 수 없다</td><td>두 광자 계의 불변질량은 2E₁E₂(1 − cosθ)의 제곱근으로 0이 아닐 수 있다</td><td>미지 입자 H → γγ, 확인 문제 4</td></tr>
+      <tr><td>움직이는 입자는 질량이 커진다('상대론적 질량')</td><td>현대 물리에서 질량은 불변질량 하나뿐이고, 커지는 것은 에너지와 운동량(γ배)이다</td><td>미션 3 그래프: ΣE는 증가, M은 일정</td></tr>
+      <tr><td>히스토그램이 넓으면 입자 질량이 정해져 있지 않다</td><td>넓이는 주로 측정 분해능 때문이며, 일부는 짧은 수명에 따른 자연 폭이다</td><td>미션 5 σ 조절, 확인 문제 6</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="answers">
+    <div class="section__head"><span class="section__tag">08</span><h2>활동지 정답과 해설</h2></div>
+    <div class="box box--answer"><h4>생각 열기 Q1</h4><p>두 차의 질량, 충돌 직후 각 차의 속력(미끄럼 자국 길이와 마찰로 계산)과 <b>진행 방향</b>이 필요하다. 운동량은 벡터이므로 방향을 알아야 x, y 성분으로 나눠 더할 수 있고, 성분별 보존식 두 개로 충돌 전 두 차의 속도를 구할 수 있다.</p></div>
+    <div class="box box--answer"><h4>생각 열기 Q2</h4><p>서쪽(정반대). 처음 운동량이 0이므로 두 조각 운동량의 벡터 합도 0이어야 한다. 가벼운 조각일수록 더 빠르다(m₁v₁ = m₂v₂).</p></div>
+    <div class="box box--answer"><h4>A1</h4><p>예시 결과 기준 −3.8 ~ −5.4 %. 10 % 이내이고 차이가 일정하게 '감소' 방향이므로(마찰 등 계통 오차) 운동량은 보존된다고 판단할 수 있다. 판단 근거로 차이 % 값과 오차 원인을 함께 써야 상 수준.</p></div>
+    <div class="box box--answer"><h4>A2</h4><p>두 동전의 p<sub>y</sub>는 부호가 반대이고 크기가 거의 같다(예: 1회 7.70×27.6 = 212.5와 7.70×(−25.9) = −199.4). 합은 13.1로 0에 가깝다. 그림 1처럼 위쪽 성분과 아래쪽 성분이 상쇄되어 충돌 전 Σp<sub>y</sub> = 0이 유지된다.</p></div>
+    <div class="box box--answer"><h4>A3</h4><p>① 판과의 마찰(외부 힘) → 충돌 직전·직후 프레임만 사용, 퍽·파우더로 마찰 감소. ② 프레임 시간 간격과 점 찍기 오차 → 고속 촬영, 동전 중심 스티커, 여러 프레임 평균. ③ 원근·렌즈 왜곡 → 카메라를 판과 수평·중앙에, 자를 같은 높이에. ④ 동전 회전, 충돌 중 판에 닿는 힘 → 퍽 사용.</p></div>
+    <div class="box box--answer"><h4>A4</h4><p>예시 결과 0.63~0.82로 1보다 작다(비탄성 충돌). 충돌하는 동안 두 물체가 주고받는 힘은 작용·반작용으로 크기가 같고 방향이 반대라 운동량 변화가 상쇄되지만, 에너지 일부는 소리·열·변형·회전 에너지로 바뀌므로 운동 에너지는 줄 수 있다.</p></div>
+    <div class="box box--answer"><h4>A5</h4><p>예시 1회: 질량 1.00 kg 수레는 0.30 m/s, 0.50 kg 수레는 0.62 m/s로 질량이 작은 쪽이 약 2배 빠르다. 운동량 크기는 0.30, 0.31 kg·m/s로 같고 방향은 반대, 합은 약 0이다. 정지한 입자가 두 입자로 붕괴할 때도 <b>p</b>₁ = −<b>p</b>₂이다. 다만 입자 붕괴에서는 상대론적 운동량(γmv)을 써야 하고, 내부 에너지(질량 에너지)가 운동 에너지로 바뀐다는 점이 용수철 에너지가 바뀌는 것과 같다.</p></div>
+    <div class="box box--answer"><h4>B1</h4><p>ΣE는 모입자의 질량 M(= Mc²)과 같다(Z: 91.19 GeV). 정지한 모입자는 p = 0이므로 E² = p² + M²에서 E = M이고, 에너지 보존으로 ΣE = E = M. 이때 |Σp| = 0이라 불변질량 공식도 M = ΣE가 된다.</p></div>
+    <div class="box box--answer"><h4>B2</h4><p>P가 커지면 ΣE = √(P² + M²)와 |Σp| = P는 커지지만 M = √(ΣE² − |Σp|²)는 변하지 않는다(예: P = 80일 때 ΣE = 121.31, √(121.31² − 80²) = 91.19). 관찰자(기준계)나 입자의 운동 상태에 관계없이 같은 값이므로 '불변'질량이다.</p></div>
+    <div class="box box--answer"><h4>B3</h4><p>힉스 보손(125.1 GeV/c²). 두 광자의 불변질량 M² = (E₁+E₂)² − |<b>p</b>₁+<b>p</b>₂|² = 2E₁E₂(1 − cosθ)이므로, 각 광자의 질량은 0이어도 두 광자가 서로 다른 방향으로 에너지를 가지고 날아가면 계 전체의 불변질량은 0이 아니다. 정지 붕괴라면 θ = 180°, E₁ = E₂ = 62.55 GeV.</p></div>
+    <div class="box box--answer"><h4>B4</h4><p>σ를 키우면 히스토그램 봉우리의 위치(평균)는 거의 그대로이고 폭이 넓어진다. 상대 폭 ≈ σ/√2 (두 딸 입자의 오차가 독립적으로 섞이고, M ∝ √(p₁p₂)에 가까우므로). 분해능이 좋아야 봉우리가 좁고 높아져 배경 사건 위로 잘 드러나고, 질량이 비슷한 입자들(예: Υ(1S), Υ(2S), Υ(3S))을 구별할 수 있다.</p></div>
+    <div class="box box--answer"><h4>B5 (선택)</h4><p>위 운영 가이드 참고: 무시하면 0.412 GeV/c²로 약 17 % 작다. Z 붕괴에서 뮤온의 질량은 운동량의 약 1/430이라 E ≈ |p| 근사가 매우 정확하다. 가벼운 모입자일수록 딸 입자 질량을 반드시 넣어야 한다.</p></div>
+    <div class="box box--answer"><h4>확인 문제 1</h4><p>정지 입자의 운동량은 0이므로 붕괴 후 두 딸 입자의 운동량 벡터 합도 0이어야 한다. 따라서 <b>p</b>₁ = −<b>p</b>₂로 정반대 방향이다. 두 조각이 같은 방향으로 날아갔다면 ① 부모 입자가 그 방향으로 움직이고 있었거나 ② 보이지 않는 제3의 입자(예: 중성미자)가 반대 방향으로 운동량을 가져갔다고 추론할 수 있다.</p></div>
+    <div class="box box--answer"><h4>확인 문제 2</h4><p>충돌 전 운동량: (2.0×4.0, 0) = (8.0, 0) kg·m/s. 충돌 후 A: (4.0, 4.0). B = (8.0 − 4.0, 0 − 4.0) = (4.0, −4.0) kg·m/s → <b>v<sub>B</sub> = (2.0, −2.0) m/s</b>(속력 2.8 m/s, x축 아래 45°). 운동 에너지: 전 ½×2.0×4.0² = 16 J, 후 ½×2.0×(2²+2²) + ½×2.0×(2²+2²) = 8 + 8 = 16 J → <b>탄성 충돌</b>. (같은 질량의 탄성 충돌에서 두 물체는 90°로 갈라진다.)</p></div>
+    <div class="box box--answer"><h4>확인 문제 3</h4><p>E = √(p² + m²) = √(3.0² + 4.0²) = <b>5.0 GeV</b>. γ = E/m = 5.0/4.0 = <b>1.25</b>. (속력 β = p/E = 0.60, 즉 0.6c.)</p></div>
+    <div class="box box--answer"><h4>확인 문제 4</h4><p>ΣE = 80.0 + 50.0 = 130.0 GeV. Σ<b>p</b> = (80.0 − 47.8, 0 + 14.6, 0) = (32.2, 14.6, 0) GeV/c, |Σ<b>p</b>|² = 1036.8 + 213.2 = 1250.0.<br>M² = 130.0² − 1250.0 = 16900 − 1250 = 15650 → <b>M ≈ 125.1 GeV/c²</b> → <b>힉스 보손</b>. 운동량 크기 |Σ<b>p</b>| = √1250 ≈ <b>35.4 GeV/c</b>. (확인: γ₂의 |p| = √(47.8² + 14.6²) = 49.98 ≈ 50.0으로 광자의 E = |p|를 만족.)</p></div>
+    <div class="box box--answer"><h4>확인 문제 5</h4><p>불변질량 M만 같다. ΣE와 |Σp|는 관찰자의 운동 상태에 따라 달라진다. LHC에서는 충돌하는 쿼크·글루온의 운동량을 모르므로 만들어진 입자가 얼마나 빠르게 움직였는지 알 수 없지만, M은 기준계와 무관하므로 딸 입자 측정값만으로 바로 입자를 식별할 수 있다.</p></div>
+    <div class="box box--answer"><h4>확인 문제 6</h4><p>상대 폭 ≈ σ/√2이므로 J/ψ(3.10)에서 X는 폭 약 0.02 GeV/c², Y는 약 0.11 GeV/c². X의 봉우리가 좁고 높게, Y는 넓고 낮게 나온다. 두 입자 간격은 0.59 GeV/c²이므로 둘 다 구별은 되지만 X가 훨씬 뚜렷하고 배경과의 대비도 좋다. 간격이 더 좁은 Υ(1S, 2S, 3S: 9.46, 10.02, 10.36)에서는 Y(폭 약 0.33)로는 봉우리가 겹쳐 구별이 어렵다 → X가 유리.</p></div>
+    <div class="box box--answer"><h4>업그레이드 도전</h4><p>① M² − m<sub>p</sub>² = (M − m<sub>p</sub>)(M + m<sub>p</sub>) = 1.293 × 1877.837 = 2428.04 MeV². 여기에 m<sub>e</sub>² = 0.261을 더하면 2428.30, 2M = 1879.13으로 나누면 E<sub>e</sub> = 1.292 MeV. 운동 에너지 = 1.292 − 0.511 = <b>약 0.78 MeV</b>(정확히 0.781 MeV; 양성자 반동 에너지는 1 keV 미만). 2체 붕괴라면 모든 전자가 이 에너지를 가져야 한다.<br>② 세 입자로 붕괴하면 운동량 보존 조건(세 벡터의 합 = 0)을 만족하는 방법이 무수히 많아, 세 입자가 에너지를 나눠 갖는 비율이 사건마다 달라진다. 그래서 전자 에너지는 0부터 약 0.78 MeV까지 연속 분포가 된다. 반중성미자는 1956년 라이너스·코완 실험으로 직접 검출되었다.</p></div>
+  </section>
+
+  <section class="section" id="assess">
+    <div class="section__head"><span class="section__tag">09</span><h2>평가 루브릭</h2></div>
+    <div class="table-wrap"><table class="rubric">
+      <tr><th>평가 요소</th><th>상</th><th>중</th><th>하</th></tr>
+      <tr><td>실험 수행과 측정</td><td>축척·좌표축을 바르게 설정하고 3회 충돌의 속도 성분을 모두 측정, 프레임 선택 이유를 설명함</td><td>측정은 완료했으나 축 설정·프레임 선택에 일부 오류가 있음</td><td>측정이 불완전하거나 속도를 성분으로 나누지 못함</td></tr>
+      <tr><td>운동량 보존 해석</td><td>Σp<sub>x</sub>·Σp<sub>y</sub>를 계산해 차이(%)로 보존 여부를 판단하고, 오차 원인과 개선책을 구체적으로 제시함</td><td>보존 여부를 판단했으나 근거나 오차 분석이 부족함</td><td>속력의 합으로 비교하는 등 벡터 개념이 없음</td></tr>
+      <tr><td>불변질량 계산</td><td>4-벡터로 M을 1 % 이내로 계산하고, 움직이는 붕괴에서도 M이 일정함을 기록표·그래프로 제시함</td><td>정지 붕괴에서는 정확하나 움직이는 붕괴 계산에서 실수가 있음</td><td>성분 합과 제곱 순서를 혼동해 M을 구하지 못함</td></tr>
+      <tr><td>입자 식별과 분해능</td><td>미지 입자 3종을 근거(평균 질량, 딸 입자 종류)와 함께 판별하고, 분해능과 분포 폭의 관계(≈ σ/√2)를 설명함</td><td>입자를 판별했으나 분해능 효과 설명이 정성적 수준임</td><td>입자 판별 근거를 제시하지 못함</td></tr>
+      <tr><td>과학적 소통</td><td>계산 과정을 단위와 함께 단계별로 쓰고 결론을 명확히 함</td><td>과정은 있으나 단위·유효숫자 누락이 있음</td><td>답만 쓰거나 과정이 없음</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="flex">
+    <div class="section__head"><span class="section__tag">10</span><h2>차시 조정과 수준별 지도</h2></div>
+    <div class="grid-3">
+      <div class="box"><h4>1차시 압축안 (50분)</h4><p>도입 3분 → 운동량 보존·불변질량 개념 12분(그림 1·2, 풀이 예제) → 실험 A 대신 교사가 미리 찍은 충돌 영상 1개를 함께 분석(10분, 교사 시연) → 3D 모의실험 미션 1·2·3(20분) → 정리 5분. 미션 4·5와 확인 문제는 과제.</p></div>
+      <div class="box"><h4>3차시 확장안 (150분)</h4><p>1차시: 실험 A 촬영·분석 전체(3회 + 폭발형). 2차시: 에너지–운동량 관계 유도, 불변질량, 모의실험 미션 1~5. 3차시: 주제 10 미리 보기 — <code>data/cms_dimuon_2011_events.csv</code>에서 사건 20개를 스프레드시트로 불러와 불변질량을 계산하고 히스토그램 그리기, 업그레이드 도전(β 붕괴) 발표.</p></div>
+      <div class="box"><h4>보충·심화</h4><p><b>보충:</b> 1차원 충돌(수레)부터 시작, 벡터 합은 모눈종이 작도로. 불변질량은 정지 붕괴(M = ΣE)만 계산. <b>심화:</b> E² − p² = m²을 γ로 유도, 두 광자 공식 M² = 2E₁E₂(1 − cosθ) 유도, 2체 붕괴 p* 공식 유도, 로런츠 변환으로 ΣE·Σp가 바뀌어도 E² − p²가 불변임을 증명.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="refs">
+    <div class="section__head"><span class="section__tag">11</span><h2>참고 자료</h2></div>
+    <ul>
+      <li><a href="https://physlets.org/tracker/" target="_blank" rel="noopener">Tracker 영상 분석·모델링 도구 (무료)</a></li>
+      <li><a href="https://home.cern/science/physics/higgs-boson" target="_blank" rel="noopener">CERN — 힉스 보손</a></li>
+      <li><a href="https://home.cern/science/accelerators/large-hadron-collider" target="_blank" rel="noopener">CERN — 대형 강입자 충돌기(LHC)</a></li>
+      <li><a href="https://cms.cern" target="_blank" rel="noopener">CMS 실험 공식 누리집</a></li>
+      <li><a href="https://opendata.cern.ch" target="_blank" rel="noopener">CERN Open Data Portal (주제 10 데이터 출처)</a></li>
+      <li><a href="https://www.nobelprize.org/prizes/physics/1984/summary/" target="_blank" rel="noopener">1984년 노벨 물리학상 (루비아, 반 데르 메르: W·Z 발견)</a></li>
+      <li><a href="https://pdg.lbl.gov" target="_blank" rel="noopener">Particle Data Group — 입자 질량·폭 기준값</a></li>
+      <li><a href="https://physicsmasterclasses.org" target="_blank" rel="noopener">International Masterclasses — 학생용 실제 데이터 분석 프로그램</a></li>
+    </ul>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

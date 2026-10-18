@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LHC 가상 운전실 모의실험</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/sim.css">
+<style>
+  /* 이 모의실험 전용 보조 스타일 (sim.css 변수만 사용) */
+  .st-wrap { overflow-x: auto; border: 1px solid var(--s-line); border-radius: 7px; }
+  .st { border-collapse: collapse; width: 100%; font-size: .7rem; }
+  .st th, .st td { padding: .3rem .2rem; border-bottom: 1px solid var(--s-line); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .st th { background: var(--s-panel-2); color: var(--s-ink-2); font-weight: 700; }
+  .st td { font-family: var(--font-mono); }
+  .st td:first-child, .st th:first-child { text-align: left; font-family: var(--font-body); font-weight: 600; white-space: normal; }
+  .st td .note { font-size: .7rem; font-weight: 400; white-space: nowrap; }
+  .st tr:last-child td { border-bottom: 0; }
+  .st tbody tr { cursor: pointer; }
+  .st tbody tr:hover td { background: rgba(127, 156, 255, .08); }
+  .st tr.cur td { background: rgba(240, 163, 94, .16); color: var(--s-ink); }
+  .hud b { color: var(--s-track); font-weight: 600; }
+  .tech { font-size: .84rem; color: var(--s-ink-2); background: var(--s-panel-2); border-radius: 7px; padding: .45rem .6rem; }
+  .tech b { color: var(--s-track); }
+  .readout .v { font-size: .95rem; }
+  @media (max-width: 860px) { .wide-only { display: none; } }
+</style>
+</head>
+<body>
+<div class="sim">
+  <header class="sim-head">
+    <span class="tag">주제 08 · 3D</span>
+    <h1>LHC 가상 운전실</h1>
+    <nav aria-label="관련 자료">
+      <a href="../students/t08.html">학생용 활동지</a>
+      <a href="../teachers/t08.html">교사용 지도서</a>
+      <a href="index.html">모의실험 목록</a>
+    </nav>
+  </header>
+  <div class="sim-body">
+    <div class="stage" id="stage">
+      <div class="stage-overlay" id="overlay">
+        <div class="hud" id="hud-main"></div>
+        <div class="hud" id="hud-val"></div>
+        <div class="hud" id="hud-scale"></div>
+      </div>
+      <div class="stage-hint">드래그: 회전 · 휠/두 손가락: 확대 · 오른쪽 드래그: 이동</div>
+    </div>
+    <aside class="panel" id="panel" aria-label="조작과 기록"></aside>
+  </div>
+</div>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/vendor/three/OrbitControls.js"></script>
+<script src="../assets/js/sim-kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var THREE = window.THREE, K = window.SimKit, ui = K.ui, COL = K.COLORS;
+  var sim = K.create({ stage: document.getElementById("stage"), cameraPos: [0, 14, 22], target: [0, 0, -4], grid: false, far: 20000 });
+  var scene = sim.scene, panel = document.getElementById("panel");
+  var c = K.C.c;
+  var MP = K.C.mp_MeV / 1000, ME = K.C.me_MeV / 1000;    // GeV/c²
+  var BEAM_I = 0.58;                                        // LHC 설계 빔 전류(A) — 복사 전력 계산용 가정
+  var RF_LIMIT = 3.5;                                       // 회전당 보충 가능한 에너지(GeV) — LEP2 수준 가정
+
+  /* ---------- 가속 사슬 자료 (K: 운동 에너지 GeV, 크기 m) ---------- */
+  var STAGES = [
+    { key: "linac", name: "Linac4", size: 86, K: 0.160, linear: true, note: "H⁻ 이온을 160 MeV까지 가속하는 선형가속기(길이 약 86 m)" },
+    { key: "psb", name: "PS 부스터", size: 157, R: 25, K: 2, note: "입사 때 H⁻의 전자 2개를 벗겨 양성자로 만들고 2 GeV까지 가속(둘레 157 m, 고리 4개가 층층이)" },
+    { key: "ps", name: "PS", size: 628, R: 100, K: 26, note: "양성자 싱크로트론(1959년 가동, 둘레 628 m). 26 GeV까지 가속하고 LHC용 묶음 간격(25 ns)을 만듦" },
+    { key: "sps", name: "SPS", size: 6912, R: 1100, K: 450, note: "슈퍼 양성자 싱크로트론(둘레 6.9 km). 450 GeV까지 가속해 LHC 두 고리에 나눠 넣음" },
+    { key: "lhc", name: "LHC", size: 26659, R: 4243, K: 6800, note: "대형 강입자 충돌기(둘레 26.7 km). 1232개 초전도 쌍극자석(8.3 T)으로 빔당 6.8 TeV까지 가속 후 충돌" }
+  ];
+  var KLAB = ["160 MeV", "2 GeV", "26 GeV", "450 GeV", "6.8 TeV"];
+  STAGES.forEach(function (s, i) {
+    s.Klabel = KLAB[i];
+    s.gam = 1 + s.K / MP;
+    s.beta = Math.sqrt(1 - 1 / (s.gam * s.gam));
+    s.f = s.linear ? null : s.beta * c / s.size;
+  });
+  function gamOf(Kgev, m) { return 1 + Kgev / m; }
+  function betaOf(g) { return Math.sqrt(Math.max(0, 1 - 1 / (g * g))); }
+  function fmtE(gev) {
+    if (gev >= 1000) return (gev / 1000).toFixed(gev >= 1e5 ? 0 : 2) + " TeV";
+    if (gev >= 1) return gev.toFixed(gev >= 100 ? 1 : 2) + " GeV";
+    return (gev * 1000).toFixed(gev * 1000 >= 100 ? 0 : 1) + " MeV";
+  }
+  function fmtBeta(b, extra) {
+    if (b < 0.999) return b.toFixed(4);
+    var n = Math.min(12, Math.ceil(-Math.log10(1 - b)) + (extra === undefined ? 2 : extra));
+    return b.toFixed(n);
+  }
+  function fmtEV(ev) {   // 에너지(eV) → 알맞은 단위
+    var u = [["TeV", 1e12], ["GeV", 1e9], ["MeV", 1e6], ["keV", 1e3], ["eV", 1]];
+    if (ev >= 1e15) return K.fmt(ev / 1e9, 3) + " GeV";
+    for (var i = 0; i < u.length; i++) if (ev >= u[i][1]) return K.fmt(ev / u[i][1], 3) + " " + u[i][0];
+    return K.fmt(ev, 3) + " eV";
+  }
+  function fmtW(w) {
+    var u = [["TW", 1e12], ["GW", 1e9], ["MW", 1e6], ["kW", 1e3], ["W", 1]];
+    if (w >= 1e15) return K.fmt(w, 3) + " W";
+    for (var i = 0; i < u.length; i++) if (w >= u[i][1]) return K.fmt(w / u[i][1], 3) + " " + u[i][0];
+    return K.fmt(w, 3) + " W";
+  }
+  function fmtHz(f) { return f >= 1e6 ? (f / 1e6).toFixed(3) + " MHz" : (f >= 1e3 ? Math.round(f).toLocaleString("ko-KR") + " Hz" : f.toFixed(1) + " Hz"); }
+  function fmtHzShort(f) { return f >= 1e6 ? (f / 1e6).toFixed(2) + " MHz" : (f / 1e3).toFixed(f >= 1e5 ? 0 : 1) + " kHz"; }
+
+  /* ---------- 패널: 미션 ---------- */
+  var mission = K.Mission(ui.section(panel, "미션"), { id: "t08", steps: [
+    "<b>가속 사슬 따라가기</b> — [빔 주입 시작]을 눌러 양성자가 Linac4 → PS 부스터 → PS → SPS → LHC로 옮겨 가는 과정을 끝까지 지켜보기",
+    "<b>단계별 γ·β</b> — 단계 표의 줄을 누르거나 애니메이션 중에 [단계 기록]을 눌러 5단계 모두의 에너지·γ·β를 기록하기",
+    "<b>LHC 재현</b> — [설계 모드]에서 양성자, 휘는 반지름 ρ ≈ 2.8 km, B = 8.33 T로 맞춰 최대 빔 에너지 약 7 TeV 확인하기",
+    "<b>FCC-hh 추정</b> — 둘레 약 91 km(반지름 약 14.5 km), B = 14~20 T인 양성자 가속기를 설계해 빔 에너지 추정하기",
+    "<b>전자의 한계</b> — 같은 LHC 터널(ρ ≈ 2.8 km)에서 입자를 전자로 바꾸고, 회전당 복사 손실이 RF 보충 한계(3.5 GeV)를 넘는 설정을 찾아 [설계 기록]하기"
+  ] });
+
+  /* ---------- 패널: 모드 ---------- */
+  var modeSec = ui.section(panel, "모드");
+  var modeSel = ui.select(modeSec, { id: "mode", label: "운전실 화면", value: "chain", options: [
+    { value: "chain", label: "가속 사슬 (Linac4 → LHC 빔 주입)" }, { value: "design", label: "설계 모드 (나만의 원형 가속기)" }
+  ], onChange: function (v) { setMode(v); } });
+
+  /* ---------- 패널: 가속 사슬 ---------- */
+  var chainSec = ui.section(panel, "가속 사슬 조작");
+  var scaleSel = ui.select(chainSec, { id: "scale", label: "화면 축척", value: "comp", options: [
+    { value: "comp", label: "압축 축척 (화면 크기 ∝ 실제 크기^0.4)" }, { value: "real", label: "실제 비율 (격자 1칸 = 1 km)" }
+  ], onChange: function () { buildChain(); restartBeam(false); } });
+  var cr = ui.buttonRow(chainSec);
+  ui.button(cr, { label: "빔 주입 시작", kind: "primary", onClick: function () { restartBeam(true); } });
+  ui.button(cr, { label: "일시정지/재생", onClick: function () { sim.toggle(); } });
+  ui.button(cr, { label: "전체 보기", onClick: function () { followTg.set(false); frameChain(); } });
+  var followTg = ui.toggle(chainSec, { id: "follow", label: "카메라가 빔 따라가기", checked: true });
+  var speedSl = ui.slider(chainSec, { id: "spd", label: "애니메이션 속도", min: 0.25, max: 3, step: 0.25, value: 1, unit: "배", format: function (v) { return v.toFixed(2); }, onInput: function (v) { sim.timeScale = v; } });
+  var stageBox = ui.html(chainSec, "", "st-wrap");
+  var stageNote = ui.html(chainSec, "", "note");
+  ui.html(chainSec, '<p class="note">표의 줄을 누르면 그 단계로 바로 갑니다. 운동 에너지 K 기준: γ = 1 + K/(m<sub>p</sub>c²), β = √(1 − 1/γ²), 회전 주파수 f = βc / 둘레.</p>');
+  var chainRo = ui.readouts(chainSec, [
+    { key: "st", label: "현재 단계", unit: "" }, { key: "K", label: "운동 에너지 K", unit: "" },
+    { key: "g", label: "로런츠 인자 γ", unit: "" }, { key: "b", label: "속력 β = v/c", unit: "" },
+    { key: "omb", label: "1 − β", unit: "" }, { key: "dv", label: "빛보다 느린 정도 c − v", unit: "m/s" }
+  ]);
+  ui.button(chainSec, { label: "단계 기록", kind: "primary", onClick: recordStage });
+  var recChain = K.Recorder(chainSec, { id: "t08-chain", columns: [
+    { key: "st", label: "단계" }, { key: "K", label: "K", unit: "GeV", digits: 4 }, { key: "g", label: "γ", digits: 5 },
+    { key: "b", label: "β" }, { key: "f", label: "회전 주파수", unit: "Hz", digits: 5 }
+  ], onChange: checkChainMission });
+
+  /* ---------- 패널: 설계 모드 ---------- */
+  var desSec = ui.section(panel, "설계 모드 조작", "p [GeV/c] = 0.3 · B [T] · ρ [m] — 쌍극자석이 만드는 원의 반지름 ρ가 기준입니다.");
+  var partSel = ui.select(desSec, { id: "part", label: "가속할 입자", value: "p", options: [
+    { value: "p", label: "양성자 (938.3 MeV/c²)" }, { value: "e", label: "전자 (0.511 MeV/c²)" }
+  ], onChange: function () { updateDesign(); } });
+  var RSl = ui.slider(desSec, { id: "R", label: "링 반지름 R (기하학적)", min: 0.5, max: 16, step: 0.001, value: 4.243, unit: "km", format: function (v) { return v.toFixed(3); }, onInput: function () { rebuildRing(); updateDesign(); } });
+  var fillSl = ui.slider(desSec, { id: "fill", label: "쌍극자석 채움 비율 ρ/R", min: 0.4, max: 1, step: 0.001, value: 0.661, unit: "", format: function (v) { return v.toFixed(3); }, onInput: function () { rebuildRing(); updateDesign(); } });
+  var BSl = ui.slider(desSec, { id: "B", label: "쌍극자 자기장 B", min: 0.1, max: 20, step: 0.005, value: 2, unit: "T", format: function (v) { return v < 1 ? v.toFixed(3) : v.toFixed(2); }, onInput: function () { updateDesign(); } });
+  var techBox = ui.html(desSec, "", "tech");
+  ui.html(desSec, '<p class="note">채움 비율: LHC 둘레는 26.7 km(R ≈ 4.24 km)이지만 쌍극자석은 그중 약 2/3에만 있습니다. 나머지는 직선 구간(실험 장치, 가속 공동, 빔 버림 장치)과 빔을 모으는 사극자석입니다. 그래서 실제로 휘는 반지름은 ρ ≈ 2.80 km입니다.</p>');
+  var pr = ui.buttonRow(desSec);
+  ui.button(pr, { label: "SPS 값", onClick: function () { preset("p", 1.1, 0.674, 2.02); } });
+  ui.button(pr, { label: "LEP 값 (전자)", onClick: function () { preset("e", 4.243, 0.713, 0.115); } });
+  ui.button(pr, { label: "링에 맞춰 보기", onClick: function () { frameDesign(); } });
+  var refTg = ui.toggle(desSec, { id: "ref", label: "기준 링 보기 (LHC 26.7 km, FCC 90.7 km)", checked: true, onChange: function (v) { refGroup.visible = v; } });
+  var desRo = ui.readouts(desSec, [
+    { key: "rho", label: "휘는 반지름 ρ", unit: "km" }, { key: "C", label: "둘레 C = 2πR", unit: "km" },
+    { key: "E", label: "최대 빔 에너지 E", unit: "" }, { key: "Ecm", label: "충돌 에너지 (2E)", unit: "" },
+    { key: "g", label: "로런츠 인자 γ", unit: "" }, { key: "f", label: "회전 주파수 f", unit: "" },
+    { key: "U0", label: "회전당 복사 손실 U₀", unit: "" }, { key: "frac", label: "U₀ / E (한 바퀴 손실 비율)", unit: "" },
+    { key: "Pw", label: "복사 전력 (빔 전류 0.58 A)", unit: "" }, { key: "nd", label: "쌍극자석 수 (14.3 m짜리)", unit: "개" }
+  ]);
+  var warnBox = ui.html(desSec, "", "note");
+  var dPlot = document.createElement("canvas"); dPlot.className = "plot"; dPlot.setAttribute("aria-label", "빔 에너지에 따른 회전당 복사 손실 그래프"); desSec.appendChild(dPlot);
+  ui.html(desSec, '<div class="legend"><span><i style="background:#ff6b6b"></i>양성자</span><span><i style="background:#3fb6ff"></i>전자</span><span><i style="background:#f0c060"></i>RF 보충 한계 3.5 GeV</span><span><i style="background:#5fd08a"></i>현재 설계</span></div><p class="note">세로축은 log₁₀(U₀ / eV): 눈금 1칸이 10배입니다. 같은 ρ에서 U₀ ∝ E⁴/m⁴.</p>');
+  ui.button(desSec, { label: "설계 기록", kind: "primary", onClick: recordDesign });
+  var recDes = K.Recorder(desSec, { id: "t08-design", columns: [
+    { key: "part", label: "입자" }, { key: "R", label: "R", unit: "km", digits: 4 }, { key: "rho", label: "ρ", unit: "km", digits: 4 },
+    { key: "B", label: "B", unit: "T", digits: 4 }, { key: "E", label: "E", unit: "TeV", digits: 4 }, { key: "U0", label: "U₀", unit: "keV", digits: 3 },
+    { key: "f", label: "f", unit: "Hz", digits: 5 }
+  ] });
+
+  /* ---------- 3D: 가속 사슬 ---------- */
+  var chainGroup = new THREE.Group(); scene.add(chainGroup);
+  var layout = null;
+  var gridReal = new THREE.GridHelper(200, 20, 0x2a3458, 0x161d33); gridReal.position.y = -0.05; scene.add(gridReal);
+  function makeLabel(text, color, h) {
+    var sp = K.label(text, { size: 40, color: color || "#e6e9f4" });
+    sp.material.sizeAttenuation = false;
+    var asp = sp.scale.x / sp.scale.y; h = h || 0.05;
+    sp.scale.set(h * asp, h, 1);
+    return sp;
+  }
+  function clearGroup(g) {
+    while (g.children.length) {
+      var o = g.children.pop();
+      o.traverse(function (n) { if (n.geometry) n.geometry.dispose(); if (n.material) { if (n.material.map) n.material.map.dispose(); n.material.dispose(); } });
+    }
+  }
+  function buildChain() {
+    clearGroup(chainGroup);
+    var real = scaleSel.get() === "real";
+    var disp = function (m) { return real ? m / 100 : 0.42 * Math.pow(m, 0.4); };
+    var gap = real ? 0.6 : 0.9;
+    var L = {};
+    STAGES.forEach(function (s) { s.Rd = s.linear ? 0 : disp(s.R); });
+    var linLen = disp(STAGES[0].size);
+    var x = 0;                                    // PSB 접점
+    L.linac = [-gap - linLen, -gap];
+    L.cx = [];
+    L.cx[1] = 0;
+    L.cx[2] = L.cx[1] + STAGES[1].Rd + gap + STAGES[2].Rd;
+    L.cx[3] = L.cx[2] + STAGES[2].Rd + gap + STAGES[3].Rd;
+    L.cx[4] = L.cx[3] + STAGES[3].Rd + gap + STAGES[4].Rd;
+    var minX = L.linac[0], maxX = L.cx[4] + STAGES[4].Rd, off = -(minX + maxX) / 2;
+    L.linac = [L.linac[0] + off, L.linac[1] + off];
+    for (var i = 1; i < 5; i++) L.cx[i] += off;
+    L.width = maxX - minX; L.real = real;
+    // 선형가속기
+    var linMat = new THREE.MeshStandardMaterial({ color: 0x9aa6c8, emissive: 0x223055, metalness: 0.3, roughness: 0.5, transparent: true, opacity: 0.35, depthWrite: false });
+    var lin = new THREE.Mesh(new THREE.CylinderGeometry(real ? 0.05 : 0.12, real ? 0.05 : 0.12, linLen, 16), linMat);
+    lin.rotation.z = Math.PI / 2; lin.position.set((L.linac[0] + L.linac[1]) / 2, 0, 0); chainGroup.add(lin);
+    // 고리들
+    var ringColors = [0, 0x5f7bd6, 0x6fb3d9, 0x7fd1b0, 0xf0a35e];
+    for (var k = 1; k < 5; k++) {
+      var s = STAGES[k], Rd = s.Rd;
+      var tube = real ? Math.max(0.03, Rd * 0.012) : 0.05 + Rd * 0.02;
+      var ring = new THREE.Mesh(new THREE.TorusGeometry(Rd, tube, 10, Math.max(48, Math.round(Rd * 24))),
+        new THREE.MeshStandardMaterial({ color: ringColors[k], emissive: ringColors[k], emissiveIntensity: 0.25, roughness: 0.6 }));
+      ring.rotation.x = Math.PI / 2; ring.position.set(L.cx[k], 0, -Rd); chainGroup.add(ring);
+    }
+    // 전송선(직선)
+    var pts = [new THREE.Vector3(L.linac[1], 0, 0), new THREE.Vector3(L.cx[4], 0, 0)];
+    chainGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: 0x4a5578 })));
+    // LHC 실험 지점
+    var R4 = STAGES[4].Rd, cx4 = L.cx[4];
+    [["ATLAS", 0], ["ALICE", Math.PI / 4], ["CMS", Math.PI], ["LHCb", -Math.PI / 4]].forEach(function (e) {
+      var ph = e[1], p = new THREE.Vector3(cx4 + R4 * Math.sin(ph), 0, -(R4 - R4 * Math.cos(ph)));
+      var box = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshStandardMaterial({ color: 0xe6e9f4, emissive: 0x444c66 }));
+      var bs = real ? 0.9 : 0.45; box.scale.set(bs, bs, bs); box.position.copy(p); chainGroup.add(box);
+      var lb = makeLabel(e[0], "#a9b0c8", 0.036); lb.position.set(p.x, bs * 1.6, p.z); chainGroup.add(lb);
+    });
+    // 이름표 (높이를 달리해 겹침 방지)
+    var hs = real ? [3, 9, 15, 21, 12] : [1.0, 1.4, 1.9, 3.0, 4.6];
+    STAGES.forEach(function (s, k) {
+      var px = k === 0 ? (L.linac[0] + L.linac[1]) / 2 : L.cx[k];
+      var pz = k === 0 ? 0 : (k === 4 ? -2 * s.Rd : -s.Rd);
+      var py = hs[k];
+      var lb = makeLabel(s.name + "  " + s.Klabel, k === 4 ? "#f0a35e" : "#e6e9f4", 0.036);
+      lb.position.set(px, py, pz); chainGroup.add(lb);
+      var ln = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(px, 0, pz), new THREE.Vector3(px, py * 0.92, pz)]), new THREE.LineBasicMaterial({ color: 0x3a4670 }));
+      chainGroup.add(ln);
+    });
+    gridReal.visible = real && mode === "chain";
+    layout = L;
+    buildSegments();
+    document.getElementById("hud-scale").innerHTML = real
+      ? '<span class="k">화면 축척</span> <b>실제 비율</b> · 격자 1칸 = 1 km<span class="wide-only"> · 배치는 개념도(실제 지도 아님)</span>'
+      : '<span class="k">화면 축척</span> <b>압축</b> · 크기 ∝ (실제 크기)<sup>0.4</sup> — 실제 비율 아님<span class="wide-only"> · LHC는 PS 부스터보다 약 170배 큼</span>';
+  }
+
+  /* 빔 경로 조각: line / ring */
+  var segs = [], segIdx = 0, segT = 0, userStarted = false;
+  function buildSegments() {
+    var L = layout, S = STAGES;
+    segs = [
+      { type: "line", a: L.linac[0], b: L.linac[1], dur: 2.2, st: 0, k0: 0.003, k1: 0.160 },
+      { type: "line", a: L.linac[1], b: L.cx[1], dur: 0.5, st: 0, k0: 0.160, k1: 0.160 },
+      { type: "ring", st: 1, laps: 4, dur: 3.0, k0: 0.160, k1: S[1].K },
+      { type: "line", a: L.cx[1], b: L.cx[2], dur: 0.7, st: 1, k0: S[1].K, k1: S[1].K },
+      { type: "ring", st: 2, laps: 3, dur: 3.2, k0: S[1].K, k1: S[2].K },
+      { type: "line", a: L.cx[2], b: L.cx[3], dur: 0.9, st: 2, k0: S[2].K, k1: S[2].K },
+      { type: "ring", st: 3, laps: 2, dur: 3.6, k0: S[2].K, k1: S[3].K },
+      { type: "line", a: L.cx[3], b: L.cx[4], dur: 1.2, st: 3, k0: S[3].K, k1: S[3].K },
+      { type: "ring", st: 4, laps: Infinity, dur: 8, k0: S[3].K, k1: S[4].K }
+    ];
+  }
+  var STAGE_SEG = [0, 2, 4, 6, 8];
+
+  // 빔 묶음
+  var beamMat = new THREE.MeshStandardMaterial({ color: COL.proton, emissive: COL.proton, emissiveIntensity: 0.9 });
+  var beam = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), beamMat); scene.add(beam);
+  var beam2 = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), beamMat); scene.add(beam2);
+  var trail = K.Trail(scene, { max: 90, color: COL.proton, opacity: 0.8 });
+  var trail2 = K.Trail(scene, { max: 90, color: COL.proton, opacity: 0.8 });
+
+  function ringPos(k, phi, out) {
+    var Rd = STAGES[k].Rd, cx = layout.cx[k];
+    return out.set(cx + Rd * Math.sin(phi), 0, -(Rd - Rd * Math.cos(phi)));
+  }
+  function restartBeam(user) {
+    segIdx = 0; segT = 0; userStarted = !!user; trail.clear(); trail2.clear(); sim.start();
+    if (user) followTg.set(true);
+  }
+  function jumpStage(k) {
+    segIdx = STAGE_SEG[k]; segT = 0; trail.clear(); trail2.clear(); userStarted = false; sim.start();
+    if (k > 0) segT = segs[segIdx].dur * 0.85;       // 그 단계의 가속이 거의 끝난 상태
+    if (k === 4) segT = segs[segIdx].dur;
+  }
+  var curK = 0.003, curStage = 0, tmpV = new THREE.Vector3(), tmpV2 = new THREE.Vector3();
+  function stepChain(dt) {
+    if (!layout) return;
+    segT += dt;
+    var sg = segs[segIdx];
+    while (sg.type !== "ring" || sg.laps !== Infinity) {
+      if (segT < sg.dur) break;
+      segT -= sg.dur; segIdx++; sg = segs[segIdx];
+      trail.clear();
+      if (segIdx === 8 && userStarted) mission.complete(0, "미션 1 완료! 양성자가 4단계를 거쳐 LHC에 들어왔습니다.");
+    }
+    var u = Math.min(1, segT / sg.dur);
+    curStage = sg.st;
+    // 에너지: 고리에서는 처음 85 % 동안 로그 비율로 증가
+    var ru = sg.type === "ring" ? Math.min(1, u / 0.85) : u;
+    curK = sg.k0 === sg.k1 ? sg.k1 : (sg.type === "ring" ? sg.k0 * Math.pow(sg.k1 / sg.k0, ru) : sg.k0 + (sg.k1 - sg.k0) * ru);
+    var Rd = sg.type === "ring" ? STAGES[sg.st].Rd : 0;
+    var bsz = layout.real ? Math.max(0.06, Math.min(0.6, 0.05 + Rd * 0.012)) : 0.14 + Rd * 0.012;
+    beam.scale.set(bsz, bsz, bsz); beam2.scale.set(bsz, bsz, bsz);
+    if (sg.type === "line") {
+      beam.position.set(sg.a + (sg.b - sg.a) * u, 0, 0);
+      beam2.visible = false;
+    } else {
+      var phi;
+      if (sg.laps === Infinity) phi = 2 * Math.PI * (segT / 6);          // LHC: 6초에 한 바퀴(화면용)
+      else phi = 2 * Math.PI * sg.laps * u;
+      ringPos(sg.st, phi, beam.position);
+      beam2.visible = sg.st === 4;
+      if (beam2.visible) { ringPos(4, -phi, beam2.position); trail2.push(beam2.position); }
+    }
+    trail.push(beam.position);
+    if (!beam2.visible) trail2.clear();
+    // 카메라 따라가기
+    if (followTg.get()) {
+      var tx, tz, dist;
+      if (sg.type === "line") { tx = beam.position.x; tz = 0; dist = layout.real ? 6 : 6; if (sg.st === 3) dist = layout.real ? 40 : 14; }
+      else { tx = layout.cx[sg.st]; tz = -Rd; dist = Rd * 2.8 + (layout.real ? 0.8 : 2.5); }
+      var k = 1 - Math.exp(-2.5 * dt / Math.max(0.25, sim.timeScale));
+      tmpV.set(tx, 0, tz);
+      sim.controls.target.lerp(tmpV, k);
+      tmpV2.set(tx, dist * 0.75, tz + dist * 0.95);
+      sim.camera.position.lerp(tmpV2, k);
+    }
+  }
+  function frameChain() {
+    var w = layout.width;
+    sim.setView([0, w * 0.72, w * 0.92], [0, 0, -STAGES[4].Rd * 0.8]);
+  }
+
+  /* 단계 표 */
+  function buildStageTable() {
+    var h = "<table class='st'><thead><tr><th>단계 (크기)</th><th>K</th><th>γ</th><th>β</th><th>f</th></tr></thead><tbody>";
+    STAGES.forEach(function (s, k) {
+      h += "<tr data-k='" + k + "'><td>" + s.name + "<br><span class='note'>" + (s.linear ? "길이 86 m" : "둘레 " + (s.size >= 1000 ? (s.size / 1000).toFixed(1) + " km" : s.size + " m")) + "</span></td><td>" + s.Klabel + "</td><td>" + (s.gam < 100 ? s.gam.toPrecision(4) : Math.round(s.gam).toLocaleString("ko-KR")) + "</td><td>" + fmtBeta(s.beta, 1) + "</td><td>" + (s.f ? fmtHzShort(s.f) : "–") + "</td></tr>";
+    });
+    stageBox.innerHTML = h + "</tbody></table>";
+    Array.prototype.forEach.call(stageBox.querySelectorAll("tbody tr"), function (tr) {
+      tr.addEventListener("click", function () { var k = +tr.getAttribute("data-k"); jumpStage(k); recordStage(k); });
+    });
+  }
+  var lastStageShown = -1;
+  function updateChainUI() {
+    var g = gamOf(curK, MP), b = betaOf(g);
+    chainRo.set("st", STAGES[curStage].name);
+    chainRo.set("K", fmtE(curK));
+    chainRo.set("g", g < 100 ? g.toFixed(4) : Math.round(g).toLocaleString("ko-KR"));
+    chainRo.set("b", fmtBeta(b));
+    chainRo.set("omb", K.fmt(1 - b, 3));
+    chainRo.set("dv", K.fmt((1 - b) * c, 3));
+    if (lastStageShown !== curStage) {
+      lastStageShown = curStage;
+      Array.prototype.forEach.call(stageBox.querySelectorAll("tbody tr"), function (tr, k) { tr.className = k === curStage ? "cur" : ""; });
+      stageNote.innerHTML = "<b>" + STAGES[curStage].name + "</b>: " + STAGES[curStage].note;
+    }
+    document.getElementById("hud-main").innerHTML = '<span class="k">단계</span> <span class="v">' + STAGES[curStage].name + '</span> · <span class="k">' + (curStage === 0 ? "H⁻ 이온" : "양성자") + "</span>";
+    document.getElementById("hud-val").innerHTML = '<span class="k">K</span> <span class="v">' + fmtE(curK) + '</span> · <span class="k">γ</span> <span class="v">' + (g < 100 ? g.toFixed(2) : Math.round(g).toLocaleString("ko-KR")) + '</span> · <span class="k">β</span> <span class="v">' + fmtBeta(b) + "</span>";
+  }
+  function recordStage(k) {
+    if (typeof k !== "number") k = curStage;
+    var s = STAGES[k];
+    recChain.add({ st: s.name, K: s.K, g: s.gam, b: fmtBeta(s.beta), f: s.f ? s.f : "–" });
+  }
+  function checkChainMission(rows) {
+    var have = {}; rows.forEach(function (r) { have[r.st] = true; });
+    if (STAGES.every(function (s) { return have[s.name]; })) mission.complete(1, "미션 2 완료! 에너지가 커질수록 γ는 계속 커지지만 β는 1에 붙어 거의 변하지 않습니다.");
+  }
+
+  /* ---------- 3D: 설계 모드 ---------- */
+  var desGroup = new THREE.Group(); scene.add(desGroup);
+  var ringGroup = new THREE.Group(); desGroup.add(ringGroup);
+  var refGroup = new THREE.Group(); desGroup.add(refGroup);
+  var gridDes = new THREE.GridHelper(40, 40, 0x2a3458, 0x161d33); gridDes.position.y = -0.05; desGroup.add(gridDes);
+  function dashedCircle(R, color) {
+    var pts = []; for (var i = 0; i <= 256; i++) { var a = 2 * Math.PI * i / 256; pts.push(new THREE.Vector3(R * Math.cos(a), 0, R * Math.sin(a))); }
+    var ln = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineDashedMaterial({ color: color, dashSize: 0.35, gapSize: 0.25 }));
+    ln.computeLineDistances(); return ln;
+  }
+  [[4.243, "LHC (26.7 km)", 0x9aa6c8], [14.435, "FCC (90.7 km)", 0x7fd1b0]].forEach(function (r) {
+    refGroup.add(dashedCircle(r[0], r[2]));
+    var lb = makeLabel(r[1], "#a9b0c8", 0.036); lb.position.set(0, 0.4, r[0]); refGroup.add(lb);
+  });
+  var desBeam = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), new THREE.MeshStandardMaterial({ color: COL.proton, emissive: COL.proton, emissiveIntensity: 0.9 }));
+  desGroup.add(desBeam);
+  var desTrail = K.Trail(scene, { max: 60, color: COL.proton, opacity: 0.85 });
+  // 싱크로트론 복사 광자(점 구름)
+  var NPH = 260, phPos = new Float32Array(NPH * 3), phVel = new Float32Array(NPH * 3), phAge = new Float32Array(NPH);
+  for (var pi = 0; pi < NPH; pi++) { phAge[pi] = 99; phPos[pi * 3 + 1] = -999; }
+  var phGeo = new THREE.BufferGeometry(); phGeo.setAttribute("position", new THREE.BufferAttribute(phPos, 3));
+  var phTex = (function () {     // 둥근 빛점 무늬
+    var cv = document.createElement("canvas"); cv.width = cv.height = 64; var g = cv.getContext("2d");
+    var gr = g.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(0.35, "rgba(255,255,255,.8)"); gr.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return new THREE.CanvasTexture(cv);
+  })();
+  var phMat = new THREE.PointsMaterial({ color: COL.photon, size: 0.18, map: phTex, transparent: true, opacity: 0.95, depthWrite: false, blending: THREE.AdditiveBlending });
+  var phPts = new THREE.Points(phGeo, phMat); phPts.frustumCulled = false; desGroup.add(phPts);
+  var phNext = 0, phAcc = 0;
+
+  function rebuildRing() {
+    clearGroup(ringGroup);
+    var R = RSl.get(), fill = fillSl.get();
+    var thin = new THREE.Mesh(new THREE.TorusGeometry(R, 0.03 + R * 0.004, 6, 256), new THREE.MeshBasicMaterial({ color: 0x4a5578 }));
+    thin.rotation.x = Math.PI / 2; ringGroup.add(thin);
+    var arc = 2 * Math.PI * fill / 8, tube = 0.07 + R * 0.012;
+    var mat = new THREE.MeshStandardMaterial({ color: 0x7f9cff, emissive: 0x2a3d8a, emissiveIntensity: 0.6, roughness: 0.4 });
+    for (var k = 0; k < 8; k++) {
+      var t = new THREE.Mesh(new THREE.TorusGeometry(R, tube, 8, 48, arc), mat);
+      t.rotation.x = Math.PI / 2;
+      t.rotation.z = (k + 0.5) * Math.PI / 4 - arc / 2;
+      ringGroup.add(t);
+    }
+    var lb = makeLabel("굵은 부분: 쌍극자석 (" + Math.round(fill * 100) + " %) · 가는 부분: 직선 구간", "#a9b0c8", 0.032);
+    lb.position.set(0, 0.6 + R * 0.08, -R); ringGroup.add(lb);
+  }
+  var D = {};   // 현재 설계 계산값
+  function computeDesign() {
+    var isE = partSel.get() === "e", m = isE ? ME : MP;
+    var R = RSl.get(), fill = fillSl.get(), B = BSl.get();
+    var rho = R * fill * 1000;                       // m
+    var p = 0.3 * B * rho;                           // GeV/c
+    var E = Math.sqrt(p * p + m * m), g = E / m, b = p / E;
+    var Ckm = 2 * Math.PI * R;
+    var f = b * c / (Ckm * 1000);
+    var U0keV = 88.5 * Math.pow(E, 4) / rho * (isE ? 1 : Math.pow(ME / MP, 4));
+    D = { isE: isE, m: m, R: R, fill: fill, B: B, rho: rho, p: p, E: E, g: g, b: b, C: Ckm, f: f, U0keV: U0keV,
+      U0GeV: U0keV / 1e6, frac: U0keV / 1e6 / E, P: U0keV * 1e3 * BEAM_I, nd: 2 * Math.PI * rho / 14.3 };
+    return D;
+  }
+  function updateDesign() {
+    var d = computeDesign();
+    desRo.set("rho", (d.rho / 1000).toFixed(3));
+    desRo.set("C", d.C.toFixed(2));
+    desRo.set("E", fmtE(d.E));
+    desRo.set("Ecm", fmtE(2 * d.E));
+    desRo.set("g", K.fmt(d.g, 4));
+    desRo.set("f", fmtHz(d.f));
+    desRo.set("U0", fmtEV(d.U0keV * 1e3));
+    desRo.set("frac", d.frac >= 1 ? "100 % 초과!" : K.fmt(d.frac * 100, 3) + " %");
+    desRo.set("Pw", fmtW(d.P));
+    desRo.set("nd", Math.round(d.nd).toLocaleString("ko-KR"));
+    var B = d.B, tech;
+    if (B <= 2.05) tech = "<b>상온 철심 전자석</b> — 철이 포화되어 약 2 T가 한계. 냉각 장치는 필요 없지만 전기 저항으로 전력 소모가 큼.";
+    else if (B <= 9) tech = "<b>Nb-Ti 초전도 자석</b> — LHC 방식(8.3 T, 1.9 K 초유체 헬륨). 검증된 기술.";
+    else if (B <= 16) tech = "<b>Nb₃Sn 초전도 자석</b> — 차세대 기술(FCC 목표 14~16 T). 개발·시험 단계, 비싸고 다루기 어려움.";
+    else tech = "<b>고온 초전도체(HTS) 자석</b> — 약 20 T를 목표로 연구 중. 아직 가속기용으로 대량 생산된 적 없음.";
+    techBox.innerHTML = tech;
+    var warn = "";
+    if (d.U0GeV > RF_LIMIT) warn = '<span class="result-bad">경고: 한 바퀴에 ' + fmtEV(d.U0keV * 1e3) + "를 잃습니다. 가속 공동이 회전당 약 " + RF_LIMIT + " GeV만 보충할 수 있다면 이 에너지에 도달할 수 없습니다.</span>";
+    if (d.frac >= 1) warn += ' <span class="result-bad">한 바퀴 손실이 빔 에너지보다 큽니다: 물리적으로 불가능한 설계!</span>';
+    if (d.isE && d.U0GeV <= RF_LIMIT) {
+      var Elim = Math.pow(RF_LIMIT * 1e6 * d.rho / 88.5, 0.25);
+      warn = "이 링에서 전자의 실용 한계 에너지(회전당 " + RF_LIMIT + " GeV 보충 가정) ≈ " + fmtE(Elim);
+    }
+    warnBox.innerHTML = warn;
+    document.getElementById("hud-main").innerHTML = '<span class="k">설계</span> <span class="v">' + (d.isE ? "전자" : "양성자") + " · R " + d.R.toFixed(2) + " km · ρ " + (d.rho / 1000).toFixed(2) + " km · B " + d.B.toFixed(2) + " T</span>";
+    document.getElementById("hud-val").innerHTML = '<span class="k">빔 에너지</span> <b>' + fmtE(d.E) + '</b> · <span class="k">U₀</span> <span class="v">' + fmtEV(d.U0keV * 1e3) + "/회전</span>";
+    desBeam.material.color.setHex(d.isE ? COL.electron : COL.proton); desBeam.material.emissive.setHex(d.isE ? COL.electron : COL.proton);
+    desTrail.setColor(d.isE ? COL.electron : COL.proton);
+    drawDesignPlot();
+    checkDesignMissions(false);
+  }
+  function drawDesignPlot() {
+    var d = D, rho = d.rho;
+    var xmax = Math.max(1, d.E / 1000 * 1.6);
+    var pp = [], ee = [];
+    for (var i = 1; i <= 80; i++) {
+      var Et = xmax * i / 80, E = Et * 1000;
+      var u = 88.5e3 * Math.pow(E, 4) / rho;                   // eV (전자)
+      ee.push([Et, Math.log10(u)]);
+      pp.push([Et, Math.log10(u * Math.pow(ME / MP, 4))]);
+    }
+    var cur = [[d.E / 1000, Math.log10(d.U0keV * 1e3)]];
+    var lim = Math.log10(RF_LIMIT * 1e9);
+    K.plot.xy(dPlot, { series: [
+      { points: pp, color: "#ff6b6b", line: true, dots: false },
+      { points: ee, color: "#3fb6ff", line: true, dots: false },
+      { points: [[0, lim], [xmax, lim]], color: "#f0c060", line: true, dots: false, dash: [5, 4], width: 1.5 },
+      { points: cur, color: "#5fd08a", r: 5 }
+    ], xr: [0, xmax], yr: [-2, 22], xlabel: "빔 에너지 E (TeV)", ylabel: "log₁₀(U₀/eV)" });
+  }
+  function checkDesignMissions(recorded) {
+    var d = D, rhoKm = d.rho / 1000;
+    if (!d.isE && Math.abs(rhoKm - 2.804) <= 0.1 && Math.abs(d.B - 8.33) <= 0.15)
+      mission.complete(2, "미션 3 완료! ρ = 2.8 km, B = 8.33 T → 약 7 TeV: LHC 설계값입니다.");
+    if (!d.isE && d.C >= 86 && d.C <= 96 && d.B >= 14 && d.B <= 20)
+      mission.complete(3, "미션 4 완료! FCC-hh 규모: 빔당 약 " + fmtE(d.E) + ".");
+    if (recorded && d.isE && rhoKm >= 2.6 && rhoKm <= 3.1 && d.U0GeV > RF_LIMIT)
+      mission.complete(4, "미션 5 완료! 전자는 질량이 작아 γ가 매우 커서 복사로 에너지를 잃습니다(∝ γ⁴/ρ).");
+  }
+  function recordDesign() {
+    var d = computeDesign();
+    recDes.add({ part: d.isE ? "전자" : "양성자", R: d.R, rho: d.rho / 1000, B: d.B, E: d.E / 1000, U0: d.U0keV, f: d.f });
+    checkDesignMissions(true);
+  }
+  function preset(part, R, fill, B) {
+    partSel.set(part); RSl.set(R); fillSl.set(fill); BSl.set(B);
+    rebuildRing(); updateDesign(); frameDesign();
+  }
+  function frameDesign() {
+    var R = Math.max(RSl.get(), refTg.get() ? 4.3 : 0);
+    sim.setView([R * 0.2, R * 1.1 + 2, R * 1.55 + 3], [0, 0, 0]);
+  }
+  var desPhi = 0;
+  function stepDesign(dt, real) {
+    var R = RSl.get();
+    desPhi += dt * 2 * Math.PI / 3;                       // 화면용: 3초에 한 바퀴
+    var bs = 0.12 + R * 0.012; desBeam.scale.set(bs, bs, bs);
+    desBeam.position.set(R * Math.cos(desPhi), 0, -R * Math.sin(desPhi));
+    desTrail.push(desBeam.position);
+    // 광자 방출량: 한 바퀴 손실 비율(U₀/E)의 로그에 비례
+    var x = Math.log10(Math.max(1e-30, D.frac || 1e-30));
+    var rate = Math.max(0, Math.min(1, (x + 9) / 7)) * 260;  // 초당 개수
+    phAcc += rate * dt;
+    var tx = -Math.sin(desPhi), tz = -Math.cos(desPhi);      // 진행 방향(접선)
+    while (phAcc >= 1) {
+      phAcc -= 1;
+      var i = phNext; phNext = (phNext + 1) % NPH;
+      phPos[i * 3] = desBeam.position.x; phPos[i * 3 + 1] = (Math.random() - 0.5) * 0.05; phPos[i * 3 + 2] = desBeam.position.z;
+      var sp = 2 + R * 0.4, jit = (Math.random() - 0.5) * 0.12;
+      phVel[i * 3] = (tx + jit * tz) * sp; phVel[i * 3 + 1] = (Math.random() - 0.5) * 0.1; phVel[i * 3 + 2] = (tz - jit * tx) * sp;
+      phAge[i] = 0;
+    }
+    for (var j = 0; j < NPH; j++) {
+      if (phAge[j] > 0.9) { phPos[j * 3 + 1] = -999; continue; }
+      phAge[j] += dt;
+      phPos[j * 3] += phVel[j * 3] * dt; phPos[j * 3 + 1] += phVel[j * 3 + 1] * dt; phPos[j * 3 + 2] += phVel[j * 3 + 2] * dt;
+    }
+    phGeo.attributes.position.needsUpdate = true;
+    phMat.size = 0.1 + R * 0.012;
+  }
+
+  /* ---------- 모드 전환 ---------- */
+  var mode = "chain";
+  function setMode(v) {
+    mode = v;
+    var ch = v === "chain";
+    chainGroup.visible = ch; beam.visible = ch; beam2.visible = ch; trail.line.visible = ch; trail2.line.visible = ch;
+    desGroup.visible = !ch; desTrail.line.visible = !ch;
+    gridReal.visible = ch && scaleSel.get() === "real";
+    chainSec.hidden = !ch; desSec.hidden = ch;
+    if (ch) { lastStageShown = -1; frameChainFollow(); buildChain(); }
+    else {
+      rebuildRing(); updateDesign(); frameDesign();
+      document.getElementById("hud-scale").innerHTML = '<span class="k">화면 축척</span> 격자 1칸 = <b>1 km</b><span class="wide-only"> · 빔 회전·복사 광자는 매우 느리게 표현</span>';
+    }
+  }
+  function frameChainFollow() { /* 따라가기 켜져 있으면 다음 프레임부터 카메라가 이동 */ }
+
+  sim.onFrame(function (dt, t, real) {
+    if (mode === "chain") { stepChain(dt); updateChainUI(); }
+    else stepDesign(dt, real);
+  });
+  sim.controls.addEventListener("start", function () { if (mode === "chain") followTg.set(false); });
+
+  buildStageTable();
+  buildChain();
+  restartBeam(false);
+  setMode("chain");
+  sim.setView([layout.cx[1] - 2, 3, 5], [layout.cx[1] - 2, 0, -1]);
+  window.addEventListener("resize", function () { if (mode === "design") drawDesignPlot(); });
+})();
+</script>
+</body>
+</html>

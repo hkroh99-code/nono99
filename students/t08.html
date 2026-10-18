@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 08 LHC 설계 · 학생용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-page="student" data-topic="08" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--student">학생용</span>
+      <span class="badge badge--int">종합과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 08</p>
+    <h1>나만의 LHC 설계하기</h1>
+    <p class="lead">주어진 예산과 기술로, 목표 에너지에 도달하는 원형 가속기를 어떻게 설계할까?</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--sim" href="../sims/t08.html">3D 모의실험 열기</a>
+      <button class="btn" type="button" data-copy-answers>내 답안 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>답안 지우기</button>
+    </div>
+    <p class="save-note">입력한 답은 이 기기의 브라우저에만 자동 저장됩니다. 제출할 때는 [내 답안 복사]를 눌러 붙여 넣으세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#goals">학습 목표</a><a href="#open">생각 열기</a><a href="#concept">핵심 개념</a>
+      <a href="#lab">실험 A</a><a href="#sim">실험 B: 3D</a><a href="#cern">CERN에서는</a>
+      <a href="#check">확인 문제</a><a href="#up">업그레이드</a><a href="#self">자기 평가</a>
+    </nav>
+  </header>
+
+  <section class="section" id="goals">
+    <div class="box box--goal">
+      <h2 class="box__title" style="font-size:var(--step-1)">학습 목표</h2>
+      <ol>
+        <li>CERN 가속 사슬의 각 단계에서 운동 에너지로 γ, β, 회전 주파수를 계산하고, 에너지가 커져도 속력은 c에 다가갈 뿐임을 설명할 수 있다. <span class="muted">(주제 3·6 종합)</span></li>
+        <li>p [GeV/c] = 0.3 · B [T] · ρ [m]를 이용해 목표 에너지에 필요한 자기장 세기와 링 크기를 설계할 수 있다. <span class="muted">(주제 4 종합)</span></li>
+        <li>싱크로트론 복사 손실 U₀ ∝ γ⁴/ρ로 전자와 양성자 원형 가속기를 비교하고, LHC가 양성자를 쓰는 까닭을 설명할 수 있다.</li>
+        <li>비용·기술 수준·위험을 고려한 가속기 설계 제안서를 모둠별로 작성하고 근거를 들어 발표할 수 있다.</li>
+      </ol>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>활동</th></tr>
+      <tr><td>1차시 (50분)</td><td>생각 열기(일반 자석으로 LHC를 만든다면?) → 핵심 개념: 주제 3·4·6을 하나로 엮기, 싱크로트론 복사 → <b>실험 B</b> 3D LHC 가상 운전실(가속 사슬 따라가기, 설계 모드 미션 1~5)</td></tr>
+      <tr><td>2차시 (50분)</td><td><b>실험 A</b> 모둠 설계 프로젝트: 설계 제안서 작성(목표 에너지·자석 선택·크기와 비용 계산·장단점) → 가우스 가속기 모형 시연·측정 → 모둠 발표와 상호 평가 → 확인 문제·자기 평가</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="open">
+    <div class="section__head"><span class="section__tag">01</span><h2>생각 열기</h2></div>
+    <div class="box box--think prose">
+      <p>LHC 터널은 둘레 26.7 km, 지하 약 100 m에 있습니다. 그 안에 길이 15 m짜리 초전도 쌍극자석 1232개가 줄지어 있고, 영하 271 °C(1.9 K)의 초유체 헬륨으로 식혀 약 8.3 T의 자기장을 만듭니다. 지구 자기장(약 50 μT)의 10만 배가 넘는 세기입니다.</p>
+      <p>만약 초전도 기술이 없어서, 철심 전자석(최대 약 2 T)만 쓸 수 있었다면 어떻게 되었을까요? 같은 터널에서 양성자는 얼마나 높은 에너지까지 갈 수 있고, 지금과 같은 6.8 TeV를 얻으려면 터널은 얼마나 커져야 할까요?</p>
+    </div>
+    <label class="answer-field"><span>Q1. 자석이 약해지면(8.3 T → 2 T) 같은 터널에서 얻을 수 있는 최대 에너지는 어떻게 될지 예상하고 이유를 쓰세요. (주제 4의 r = p/(qB)를 떠올려 보세요.)</span><textarea id="open-q1"></textarea></label>
+    <label class="answer-field"><span>Q2. 가속기를 크게 만들수록 좋은 점과 곤란한 점을 각각 두 가지씩 떠올려 보세요.</span><textarea id="open-q2"></textarea></label>
+  </section>
+
+  <section class="section" id="concept">
+    <div class="section__head"><span class="section__tag">02</span><h2>핵심 개념</h2></div>
+    <div class="box box--cern prose">
+      <p><b>이 주제는 앞에서 배운 세 주제를 하나로 엮습니다.</b> 가속기가 하는 일은 세 가지입니다.</p>
+      <ul>
+        <li><b>주제 3 → 가속하기(전기장):</b> 고주파(RF) 공동의 전기장이 빔이 지나갈 때마다 에너지 qV를 준다. 원형 가속기는 같은 공동을 수백만 번 다시 쓴다.</li>
+        <li><b>주제 4 → 휘기(자기장):</b> 쌍극자석의 로런츠 힘이 빔을 원 궤도에 묶어 둔다. p = qBρ, 즉 p [GeV/c] = 0.3 · B [T] · ρ [m].</li>
+        <li><b>주제 6 → 상대론:</b> 에너지가 커지면 γ는 계속 커지지만 속력 β는 1에 다가갈 뿐이다. 그래서 회전 주파수가 거의 일정해지고, γ가 큰 입자일수록 복사로 에너지를 많이 잃는다.</li>
+      </ul>
+    </div>
+    <div class="prose">
+      <h3>① 가속 사슬: 한 번에 가속하지 않는 이유</h3>
+      <p>양성자는 다섯 단계를 거쳐 LHC에 들어갑니다. 각 가속기는 정해진 에너지 범위에서만 잘 동작합니다. 예를 들어 LHC 쌍극자석은 450 GeV 빔에 맞춘 약 0.54 T부터 8.3 T까지만 정밀하게 조절할 수 있어, 그보다 낮은 에너지의 빔은 다룰 수 없습니다.</p>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 700 170" width="700" role="img" aria-label="CERN 가속 사슬: Linac4, PS 부스터, PS, SPS, LHC와 각 단계 에너지">
+        <defs><marker id="ch" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ink-3)"/></marker></defs>
+        <rect x="10" y="70" width="70" height="14" rx="3" style="fill:var(--accent-soft);stroke:var(--accent)"/>
+        <text x="14" y="58" font-size="13" font-weight="700">Linac4</text>
+        <text x="14" y="108" font-size="12">160 MeV</text><text x="14" y="124" font-size="11" class="muted-fill">길이 86 m</text>
+        <line x1="84" y1="77" x2="112" y2="77" style="stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ch)"/>
+        <circle cx="132" cy="77" r="16" style="fill:none;stroke:var(--accent);stroke-width:2.5"/>
+        <text x="108" y="50" font-size="13" font-weight="700">PS 부스터</text>
+        <text x="114" y="114" font-size="12">2 GeV</text><text x="108" y="130" font-size="11" class="muted-fill">둘레 157 m</text>
+        <line x1="152" y1="77" x2="190" y2="77" style="stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ch)"/>
+        <circle cx="222" cy="77" r="28" style="fill:none;stroke:var(--accent);stroke-width:2.5"/>
+        <text x="212" y="40" font-size="13" font-weight="700">PS</text>
+        <text x="200" y="126" font-size="12">26 GeV</text><text x="196" y="142" font-size="11" class="muted-fill">둘레 628 m</text>
+        <line x1="254" y1="77" x2="292" y2="77" style="stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ch)"/>
+        <circle cx="345" cy="77" r="48" style="fill:none;stroke:var(--track);stroke-width:2.5"/>
+        <text x="328" y="22" font-size="13" font-weight="700">SPS</text>
+        <text x="318" y="82" font-size="12">450 GeV</text><text x="312" y="146" font-size="11" class="muted-fill">둘레 6.9 km</text>
+        <line x1="397" y1="77" x2="452" y2="77" style="stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ch)"/>
+        <circle cx="560" cy="85" r="75" style="fill:none;stroke:var(--track);stroke-width:4"/>
+        <text x="540" y="78" font-size="14" font-weight="700">LHC</text>
+        <text x="526" y="96" font-size="12">빔당 6.8 TeV</text><text x="522" y="112" font-size="11" class="muted-fill">둘레 26.7 km</text>
+      </svg>
+      <figcaption>그림 1. CERN 가속 사슬(원 크기는 비율을 줄인 개념도: 실제 LHC는 PS 부스터보다 약 170배 크다). 에너지는 운동 에너지 기준.</figcaption>
+    </figure>
+    <div class="formula">γ = 1 + <b>K</b>/(mc²),&nbsp;&nbsp; β = v/c = √(1 − 1/γ²),&nbsp;&nbsp; 회전 주파수 f = βc / C &nbsp;&nbsp;(양성자 mc² = 0.938 GeV)</div>
+    <div class="prose">
+      <h3>② 자기장과 링 크기: p = 0.3 B ρ</h3>
+      <p>주제 4에서 하전 입자는 자기장 속에서 반지름 r = p/(qB)인 원을 그린다고 배웠습니다. 전하가 e인 입자에 대해 단위를 정리하면 p [GeV/c] = 0.3 · B [T] · ρ [m]입니다. 고에너지에서는 E ≈ pc이므로, <b>빔 에너지를 키우려면 자기장을 세게 하거나 링을 크게</b> 해야 합니다.</p>
+      <p>여기서 ρ는 <b>쌍극자석이 만드는 휘는 반지름</b>입니다. 실제 가속기는 완전한 원이 아니라 휘는 구간(쌍극자석)과 직선 구간(가속 공동, 실험 장치, 빔 버림 장치)이 번갈아 있습니다. 빔은 쌍극자석 안에서만 휘므로, 쌍극자석들을 모두 이어 붙이면 반지름 ρ인 원이 됩니다. LHC는 기하학적 반지름 R ≈ 4.24 km(둘레 26.7 km)이지만 ρ ≈ 2.80 km로, 둘레의 약 66 %에만 쌍극자석이 있습니다(채움 비율 ρ/R ≈ 0.66).</p>
+    </div>
+    <div class="formula">p [GeV/c] = 0.3 · <b>B</b> [T] · <b>ρ</b> [m],&nbsp;&nbsp; ρ = (채움 비율) × R,&nbsp;&nbsp; 쌍극자석 총길이 = 2πρ</div>
+    <figure class="diagram">
+      <svg viewBox="0 0 560 300" width="560" role="img" aria-label="원형 가속기의 쌍극자석 구간과 직선 구간, 기하학적 반지름 R과 휘는 반지름 rho">
+        <g transform="translate(150 140)">
+          <circle r="110" style="fill:none;stroke:var(--line);stroke-width:2"/>
+          <g style="fill:none;stroke:var(--accent);stroke-width:9;stroke-linecap:butt">
+            <path d="M 104.6 34.0 A 110 110 0 0 1 64.7 89.0"/>
+            <path d="M 34.0 104.6 A 110 110 0 0 1 -34.0 104.6"/>
+            <path d="M -64.7 89.0 A 110 110 0 0 1 -104.6 34.0"/>
+            <path d="M -104.6 -34.0 A 110 110 0 0 1 -64.7 -89.0"/>
+            <path d="M -34.0 -104.6 A 110 110 0 0 1 34.0 -104.6"/>
+            <path d="M 64.7 -89.0 A 110 110 0 0 1 104.6 -34.0"/>
+          </g>
+          <line x1="0" y1="0" x2="-77.8" y2="77.8" style="stroke:currentColor;stroke-width:1.5"/>
+          <text x="-60" y="40" font-size="14" font-weight="700">R</text>
+          <circle r="3" style="fill:currentColor"/>
+        </g>
+        <text x="30" y="20" font-size="13" font-weight="700">실제 링 (기하학적 반지름 R)</text>
+        <text x="30" y="290" font-size="12">링의 틈(가는 선) = 직선 구간: 가속 공동·실험 장치·빔 버림 장치</text>
+        <g transform="translate(450 150)">
+          <circle r="72" style="fill:none;stroke:var(--accent);stroke-width:6"/>
+          <line x1="0" y1="0" x2="72" y2="0" style="stroke:currentColor;stroke-width:1.5;stroke-dasharray:5 3"/>
+          <text x="26" y="-8" font-size="14" font-weight="700">ρ</text>
+          <circle r="3" style="fill:currentColor"/>
+        </g>
+        <text x="370" y="56" font-size="13" font-weight="700">쌍극자석만 이어 붙이면</text>
+        <text x="380" y="250" font-size="12" class="muted-fill">ρ / R = 채움 비율 (LHC ≈ 0.66)</text>
+      </svg>
+      <figcaption>그림 2. 굵은 선은 쌍극자석(휘는 구간), 가는 선은 직선 구간. p = 0.3Bρ에는 R이 아니라 ρ를 넣어야 한다.</figcaption>
+    </figure>
+    <div class="prose">
+      <h3>③ 싱크로트론 복사: 원운동하는 전하는 빛을 낸다</h3>
+      <p>가속도 운동하는 전하는 전자기파를 내보냅니다. 원운동은 구심 가속도 운동이므로 빔은 한 바퀴 돌 때마다 앞쪽으로 빛(싱크로트론 복사)을 뿜으며 에너지 U₀를 잃습니다. 이 손실은 γ⁴에 비례하고 휘는 반지름 ρ에 반비례합니다. 같은 에너지라면 질량이 1836배 작은 전자는 γ가 1836배 커서 손실이 1836⁴ ≈ 10¹³배나 됩니다.</p>
+    </div>
+    <div class="formula">전자: U₀ [keV] = 88.5 · <b>E⁴</b> [GeV] / <b>ρ</b> [m]&nbsp;&nbsp;&nbsp; 양성자: 위 값 × (m<sub>e</sub>/m<sub>p</sub>)⁴ ≈ 위 값 × 8.8×10⁻¹⁴</div>
+    <div class="table-wrap"><table>
+      <tr><th>예</th><th>입자·에너지</th><th class="num">ρ</th><th class="num">회전당 손실 U₀</th><th>의미</th></tr>
+      <tr><td>LHC</td><td>양성자 7 TeV</td><td class="num">2.80 km</td><td class="num">약 6.7 keV</td><td>빔 에너지의 10억분의 1 수준: 쉽게 보충</td></tr>
+      <tr><td>LEP (1989~2000, 같은 터널)</td><td>전자 104.5 GeV</td><td class="num">약 3.0 km</td><td class="num">약 3.5 GeV</td><td>한 바퀴에 3 % 이상 잃음: 전자 원형 가속기의 한계</td></tr>
+    </table></div>
+    <div class="prose">
+      <h3>④ 공학적 절충: 자석 기술과 비용</h3>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>자석 종류</th><th class="num">자기장</th><th>특징</th></tr>
+      <tr><td>상온 철심 전자석</td><td class="num">최대 약 2 T</td><td>철이 포화되어 더 세게 못 함. 값싸고 냉각이 필요 없지만 전력 소모가 큼(SPS 등)</td></tr>
+      <tr><td>Nb-Ti 초전도 자석</td><td class="num">약 8~9 T</td><td>LHC 방식. 1.9 K 초유체 헬륨 냉각 필요. 검증된 기술</td></tr>
+      <tr><td>Nb₃Sn 초전도 자석</td><td class="num">약 11~16 T</td><td>고광도 LHC(HL-LHC)에 일부 도입, FCC 목표 14~16 T. 부서지기 쉬워 제작이 어렵고 비쌈</td></tr>
+      <tr><td>고온 초전도체(HTS) 자석</td><td class="num">약 20 T 목표</td><td>연구 단계. 가속기용 대량 생산 경험이 아직 없음</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">03</span><h2>실험 A: 팀 설계 프로젝트와 모형 가속기</h2></div>
+    <p class="prose">모둠은 "차세대 원형 충돌기 설계팀"입니다. 목표 빔 에너지를 정하고, 세 가지 자석 기술 중 하나를 골라 필요한 링 크기와 비용을 계산한 뒤 장단점을 발표합니다. 이어서 자석과 쇠구슬로 만드는 <b>가우스 가속기</b>로 "여러 번 나누어 가속하기"를 직접 측정합니다.</p>
+    <div class="grid-2">
+      <div class="box"><h3>준비물 (모둠별)</h3><ul>
+        <li>설계 제안서(이 활동지), 공학용 계산기 또는 스프레드시트</li>
+        <li>네오디뮴 원통 자석(지름 10~12 mm) 3개</li>
+        <li>쇠구슬(지름 12~16 mm, 자석에 붙는 강철) 10개</li>
+        <li>레일: 알루미늄 ㄱ자 앵글 1 m 또는 홈 파인 나무자 2개(V자로 붙임)</li>
+        <li>원형 트랙(선택): 반으로 가른 수영장 누들을 원형으로 테이프 고정</li>
+        <li>스마트폰(슬로모션), 줄자, 마스킹테이프(10 cm 간격 표시), 전자저울</li>
+        <li>보안경(모둠원 전원), 구슬 받이용 수건이나 상자</li>
+      </ul></div>
+      <div class="box box--safety"><h4>안전 수칙</h4><ul>
+        <li>네오디뮴 자석은 매우 강하다. 두 자석이 서로 달라붙으면 손가락이 끼거나 자석이 깨져 파편이 튈 수 있으니 하나씩 다룬다.</li>
+        <li>발사된 쇠구슬은 빠르다. <b>보안경을 쓰고</b>, 레일 끝에는 수건·상자를 두며, 사람 쪽으로 발사하지 않는다.</li>
+        <li>자석을 휴대폰·카드·컴퓨터에서 떨어뜨려 둔다. 심장 박동기 등 의료기기 사용자는 가까이 가지 않는다.</li>
+        <li>작은 자석과 구슬을 입에 넣지 않는다(삼키면 매우 위험). 실험 후 개수를 확인해 회수한다.</li>
+      </ul></div>
+    </div>
+    <h3>Part 1. 설계 제안서</h3>
+    <ol class="steps">
+      <li><span class="st">모둠의 목표 빔 에너지를 정한다(권장: 빔당 50 TeV, LHC의 약 7배). 양성자 가속기로 한다(이유는 핵심 개념 ③).</span></li>
+      <li><span class="st">세 가지 자석(2 T, 8 T, 16 T) 각각에 대해 휘는 반지름 ρ = p/(0.3B)를 구한다. 고에너지이므로 p [GeV/c] ≈ E [GeV]로 둔다.</span></li>
+      <li><span class="st">채움 비율을 0.66(LHC와 같음)으로 두고 링 반지름 R = ρ/0.66, 둘레 C = 2πR을 구한다.</span></li>
+      <li><span class="st">쌍극자석 한 개 길이를 15 m로 두고 필요한 개수 N = 2πρ / 15 m를 구한다.</span></li>
+      <li><span class="st">아래 <b>가상 단가표</b>로 터널·자석·냉각 비용과 합계를 계산한다.</span></li>
+      <li><span class="st">자석 하나를 골라 선택 이유, 장단점, 위험 요소를 쓰고, 주제 3·4·6의 개념이 설계의 어디에 쓰였는지 정리한다.</span></li>
+    </ol>
+    <h4>가상 단가표 (수업용으로 정한 값이며 실제 비용이 아님)</h4>
+    <div class="table-wrap"><table>
+      <tr><th>항목</th><th class="num">가상 단가</th><th>비고</th></tr>
+      <tr><td>터널 굴착·건설</td><td class="num" style="white-space:nowrap">1 km당 500억 원</td><td>지하 약 100 m, 지질에 따라 달라짐</td></tr>
+      <tr><td>상온 전자석 2 T (15 m)</td><td class="num" style="white-space:nowrap">1개 5억 원</td><td>냉각 불필요, 대신 전기 요금이 많이 듦</td></tr>
+      <tr><td>Nb-Ti 초전도 자석 8 T (15 m)</td><td class="num" style="white-space:nowrap">1개 15억 원</td><td>검증된 기술(LHC)</td></tr>
+      <tr><td>Nb₃Sn 초전도 자석 16 T (15 m)</td><td class="num" style="white-space:nowrap">1개 40억 원</td><td>개발 중, 일정 지연 위험 큼</td></tr>
+      <tr><td>극저온 냉각 설비 (초전도 자석일 때만)</td><td class="num" style="white-space:nowrap">둘레 1 km당 300억 원</td><td>헬륨 냉동기, 분배 배관</td></tr>
+    </table></div>
+    <div class="grid-2">
+      <label class="answer-field"><span>목표 빔 에너지 (TeV)</span><input type="number" step="any" id="des-E" aria-label="목표 빔 에너지 (TeV)"></label>
+      <label class="answer-field"><span>모둠 이름과 가속기 이름</span><input type="text" id="des-name" aria-label="모둠 이름과 가속기 이름"></label>
+    </div>
+    <h3>설계 계산표 (채움 비율 0.66, 자석 길이 15 m)</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-design">
+      <tr><th>자석</th><th>ρ (km)</th><th>R (km)</th><th>C (km)</th><th>자석 수</th><th>터널 (조 원)</th><th>자석 (조 원)</th><th>냉각 (조 원)</th><th>합계 (조 원)</th></tr>
+      <tr><td>2 T (상온)</td><td><input type="number" step="any" id="des-r1rho" aria-label="2 T (상온) 휘는 반지름 ρ (km)"></td><td><input type="number" step="any" id="des-r1R" aria-label="2 T (상온) 링 반지름 R (km)"></td><td><input type="number" step="any" id="des-r1C" aria-label="2 T (상온) 둘레 C (km)"></td><td><input type="number" step="any" id="des-r1n" aria-label="2 T (상온) 쌍극자석 수 (개)"></td><td><input type="number" step="any" id="des-r1tun" aria-label="2 T (상온) 터널 비용 (조 원)"></td><td><input type="number" step="any" id="des-r1mag" aria-label="2 T (상온) 자석 비용 (조 원)"></td><td><input type="number" step="any" id="des-r1cry" aria-label="2 T (상온) 냉각 비용 (조 원)"></td><td><input type="number" step="any" id="des-r1tot" aria-label="2 T (상온) 합계 (조 원)"></td></tr>
+      <tr><td>8 T (Nb-Ti)</td><td><input type="number" step="any" id="des-r2rho" aria-label="8 T (Nb-Ti) 휘는 반지름 ρ (km)"></td><td><input type="number" step="any" id="des-r2R" aria-label="8 T (Nb-Ti) 링 반지름 R (km)"></td><td><input type="number" step="any" id="des-r2C" aria-label="8 T (Nb-Ti) 둘레 C (km)"></td><td><input type="number" step="any" id="des-r2n" aria-label="8 T (Nb-Ti) 쌍극자석 수 (개)"></td><td><input type="number" step="any" id="des-r2tun" aria-label="8 T (Nb-Ti) 터널 비용 (조 원)"></td><td><input type="number" step="any" id="des-r2mag" aria-label="8 T (Nb-Ti) 자석 비용 (조 원)"></td><td><input type="number" step="any" id="des-r2cry" aria-label="8 T (Nb-Ti) 냉각 비용 (조 원)"></td><td><input type="number" step="any" id="des-r2tot" aria-label="8 T (Nb-Ti) 합계 (조 원)"></td></tr>
+      <tr><td>16 T (Nb₃Sn)</td><td><input type="number" step="any" id="des-r3rho" aria-label="16 T (Nb₃Sn) 휘는 반지름 ρ (km)"></td><td><input type="number" step="any" id="des-r3R" aria-label="16 T (Nb₃Sn) 링 반지름 R (km)"></td><td><input type="number" step="any" id="des-r3C" aria-label="16 T (Nb₃Sn) 둘레 C (km)"></td><td><input type="number" step="any" id="des-r3n" aria-label="16 T (Nb₃Sn) 쌍극자석 수 (개)"></td><td><input type="number" step="any" id="des-r3tun" aria-label="16 T (Nb₃Sn) 터널 비용 (조 원)"></td><td><input type="number" step="any" id="des-r3mag" aria-label="16 T (Nb₃Sn) 자석 비용 (조 원)"></td><td><input type="number" step="any" id="des-r3cry" aria-label="16 T (Nb₃Sn) 냉각 비용 (조 원)"></td><td><input type="number" step="any" id="des-r3tot" aria-label="16 T (Nb₃Sn) 합계 (조 원)"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-design">계산표 복사</button>
+    <p class="small muted">단위 환산: 1조 원 = 10,000억 원. 예) 터널 100 km × 500억 원 = 50,000억 원 = 5조 원.</p>
+    <label class="answer-field"><span>우리 모둠이 고른 자석</span>
+      <select id="des-choice" aria-label="우리 모둠이 고른 자석">
+        <option value="">— 고르세요 —</option>
+        <option value="2T">상온 전자석 2 T</option>
+        <option value="8T">Nb-Ti 초전도 8 T</option>
+        <option value="16T">Nb₃Sn 초전도 16 T</option>
+      </select></label>
+    <label class="answer-field"><span>D1. 이 자석을 고른 이유 (비용·크기·기술 위험을 비교해 근거를 숫자로 쓰기)</span><textarea id="des-why"></textarea></label>
+    <div class="grid-2">
+      <label class="answer-field"><span>D2. 우리 설계의 장점</span><textarea id="des-pro"></textarea></label>
+      <label class="answer-field"><span>D3. 우리 설계의 단점과 위험 요소</span><textarea id="des-con"></textarea></label>
+    </div>
+    <label class="answer-field"><span>D4. 주제 연결 — 주제 3(전기장 가속), 주제 4(자기장 휘기), 주제 6(상대론)이 우리 설계의 어디에 쓰였는지 각각 한 문장으로 쓰세요.</span><textarea id="des-link"></textarea></label>
+    <label class="answer-field"><span>D5. 같은 터널에서 양성자 대신 전자를 가속하면 어떤 문제가 생길까요? (실험 B의 미션 5 결과를 근거로)</span><textarea id="des-e"></textarea></label>
+    <label class="answer-field"><span>D6. 발표 요약(3문장): 목표, 선택, 가장 큰 근거</span><textarea id="des-pitch"></textarea></label>
+
+    <h3>Part 2. 모형 가속기 — 가우스 가속기</h3>
+    <ol class="steps">
+      <li><span class="st">레일에 마스킹테이프로 10 cm 간격 눈금을 붙인다. 쇠구슬 한 개의 질량을 잰다.</span></li>
+      <li><span class="st"><b>1단:</b> 레일 위에 자석 1개를 놓고, 자석 오른쪽에 쇠구슬 2개를 붙여 일렬로 둔다. 왼쪽 약 10 cm 거리에서 쇠구슬 1개를 살짝 굴려(또는 놓기만 해도 끌려감) 자석에 부딪치게 한다.</span></li>
+      <li><span class="st">맨 오른쪽 구슬이 튀어 나가는 장면을 슬로모션으로 찍어, 눈금 20 cm를 지나는 시간으로 발사 속력을 구한다. 3회 평균을 쓴다.</span></li>
+      <li><span class="st"><b>2단·3단:</b> 같은 구성을 10~15 cm 간격으로 2개, 3개 이어 놓는다. 앞 단에서 발사된 구슬이 다음 단의 입사 구슬이 된다. 마지막 구슬의 속력을 잰다.</span></li>
+      <li><span class="st">운동 에너지 E<sub>k</sub> = ½mv²를 계산하고, 한 단에서 얻은 에너지(이번 단 − 이전 단)를 비교한다.</span></li>
+      <li><span class="st">(선택) 원형 트랙에서 구슬이 벽을 따라 돌게 해 보고, 벽이 하는 역할을 쌍극자석과 비교한다.</span></li>
+    </ol>
+    <div class="table-wrap"><table class="data-table" id="tbl-gauss">
+      <tr><th>단수</th><th>입사 속력 (m/s)</th><th>발사 속력 (m/s)</th><th>발사 E<sub>k</sub> (mJ)</th><th>한 단에서 얻은 에너지 (mJ)</th></tr>
+      <tr><td>1단</td><td><input type="number" step="any" id="gauss-r1vin" aria-label="1단 입사 구슬 속력 (m/s)"></td><td><input type="number" step="any" id="gauss-r1vout" aria-label="1단 발사 구슬 속력 (m/s)"></td><td><input type="number" step="any" id="gauss-r1ke" aria-label="1단 발사 구슬 운동 에너지 (mJ)"></td><td><input type="number" step="any" id="gauss-r1dke" aria-label="1단 한 단에서 얻은 에너지 (mJ)"></td></tr>
+      <tr><td>2단</td><td><input type="number" step="any" id="gauss-r2vin" aria-label="2단 입사 구슬 속력 (m/s)"></td><td><input type="number" step="any" id="gauss-r2vout" aria-label="2단 발사 구슬 속력 (m/s)"></td><td><input type="number" step="any" id="gauss-r2ke" aria-label="2단 발사 구슬 운동 에너지 (mJ)"></td><td><input type="number" step="any" id="gauss-r2dke" aria-label="2단 한 단에서 얻은 에너지 (mJ)"></td></tr>
+      <tr><td>3단</td><td><input type="number" step="any" id="gauss-r3vin" aria-label="3단 입사 구슬 속력 (m/s)"></td><td><input type="number" step="any" id="gauss-r3vout" aria-label="3단 발사 구슬 속력 (m/s)"></td><td><input type="number" step="any" id="gauss-r3ke" aria-label="3단 발사 구슬 운동 에너지 (mJ)"></td><td><input type="number" step="any" id="gauss-r3dke" aria-label="3단 한 단에서 얻은 에너지 (mJ)"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-gauss">기록표 복사</button>
+    <label class="answer-field"><span>A1. 단수가 늘어날 때 발사 속력과 운동 에너지는 각각 어떻게 늘어났나요? 한 단에서 얻는 에너지가 거의 일정하다면 속력은 단수 n에 어떻게 비례할까요?</span><textarea id="lab-a1"></textarea></label>
+    <label class="answer-field"><span>A2. 가우스 가속기의 각 '단'은 실제 가속기의 무엇에 해당하나요? 원형 가속기가 선형 가속기보다 유리한 점을 이 모형으로 설명해 보세요.</span><textarea id="lab-a2"></textarea></label>
+    <label class="answer-field"><span>A3. 모형과 실제 가속기가 다른 점을 두 가지 이상 쓰세요. (가속하는 힘의 종류, 속력의 한계 등)</span><textarea id="lab-a3"></textarea></label>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">04</span><h2>실험 B: 3D 모의실험 — LHC 가상 운전실</h2></div>
+    <p class="prose">[가속 사슬] 화면에서는 양성자가 Linac4부터 LHC까지 옮겨 가며 가속되는 과정을 3D로 따라갑니다. 화면 축척을 '압축'과 '실제 비율'로 바꿔 크기를 비교해 보세요. [설계 모드]에서는 링 반지름, 쌍극자석 채움 비율, 자기장, 입자 종류를 바꾸며 최대 빔 에너지와 싱크로트론 복사 손실을 계산합니다.</p>
+    <a class="btn btn--sim no-print" href="../sims/t08.html">3D 모의실험 열기</a>
+    <h3>미션</h3>
+    <ol class="steps">
+      <li><span class="st"><b>가속 사슬 따라가기</b> — [빔 주입 시작]을 눌러 양성자가 LHC에 들어갈 때까지 지켜본다. 화면 축척을 [실제 비율]로 바꾸고 [전체 보기]로 다섯 가속기의 크기를 비교한다.</span></li>
+      <li><span class="st"><b>단계별 γ·β</b> — 아래 기록표 1에 각 단계의 γ와 β를 먼저 직접 계산해 적고, 모의실험의 단계 표 줄을 눌러 기록하며 비교한다.</span></li>
+      <li><span class="st"><b>LHC 재현</b> — [설계 모드], 양성자, R = 4.243 km, 채움 비율 0.661(ρ ≈ 2.80 km), B = 8.33 T로 맞춘다. 최대 에너지·회전 주파수·쌍극자석 수를 기록한다.</span></li>
+      <li><span class="st"><b>FCC-hh 추정</b> — 둘레 약 91 km(R ≈ 14.5 km), 채움 비율 0.66, B = 14 T와 16 T, 20 T일 때 빔 에너지를 각각 확인한다.</span></li>
+      <li><span class="st"><b>전자의 한계</b> — LHC 설정에서 입자를 전자로 바꾼다. [LEP 값(전자)] 버튼으로 실제 LEP 설정도 확인하고, 자기장을 조금씩 올려 회전당 손실이 3.5 GeV를 넘는 순간 [설계 기록]한다.</span></li>
+    </ol>
+    <h3>기록표 1 — 가속 사슬 (γ·β는 먼저 직접 계산)</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim">
+      <tr><th>단계</th><th>K (GeV)</th><th>γ (내 계산)</th><th>β (내 계산)</th><th>회전 주파수 f (Hz)</th></tr>
+      <tr><td>Linac4</td><td><input type="number" step="any" id="chain-r1K" aria-label="Linac4 운동 에너지 K (GeV)"></td><td><input type="number" step="any" id="chain-r1g" aria-label="Linac4 γ (내 계산)"></td><td><input type="number" step="any" id="chain-r1b" aria-label="Linac4 β (내 계산)"></td><td><input type="number" step="any" id="chain-r1f" aria-label="Linac4 회전 주파수 f (Hz)"></td></tr>
+      <tr><td>PS 부스터</td><td><input type="number" step="any" id="chain-r2K" aria-label="PS 부스터 운동 에너지 K (GeV)"></td><td><input type="number" step="any" id="chain-r2g" aria-label="PS 부스터 γ (내 계산)"></td><td><input type="number" step="any" id="chain-r2b" aria-label="PS 부스터 β (내 계산)"></td><td><input type="number" step="any" id="chain-r2f" aria-label="PS 부스터 회전 주파수 f (Hz)"></td></tr>
+      <tr><td>PS</td><td><input type="number" step="any" id="chain-r3K" aria-label="PS 운동 에너지 K (GeV)"></td><td><input type="number" step="any" id="chain-r3g" aria-label="PS γ (내 계산)"></td><td><input type="number" step="any" id="chain-r3b" aria-label="PS β (내 계산)"></td><td><input type="number" step="any" id="chain-r3f" aria-label="PS 회전 주파수 f (Hz)"></td></tr>
+      <tr><td>SPS</td><td><input type="number" step="any" id="chain-r4K" aria-label="SPS 운동 에너지 K (GeV)"></td><td><input type="number" step="any" id="chain-r4g" aria-label="SPS γ (내 계산)"></td><td><input type="number" step="any" id="chain-r4b" aria-label="SPS β (내 계산)"></td><td><input type="number" step="any" id="chain-r4f" aria-label="SPS 회전 주파수 f (Hz)"></td></tr>
+      <tr><td>LHC</td><td><input type="number" step="any" id="chain-r5K" aria-label="LHC 운동 에너지 K (GeV)"></td><td><input type="number" step="any" id="chain-r5g" aria-label="LHC γ (내 계산)"></td><td><input type="number" step="any" id="chain-r5b" aria-label="LHC β (내 계산)"></td><td><input type="number" step="any" id="chain-r5f" aria-label="LHC 회전 주파수 f (Hz)"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-sim">기록표 복사</button>
+    <h3>기록표 2 — 설계 모드</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim2">
+      <tr><th>설계</th><th>입자</th><th>R (km)</th><th>ρ (km)</th><th>B (T)</th><th>최대 빔 에너지 (TeV)</th><th>U₀ (회전당)</th></tr>
+      <tr><td>LHC 재현</td><td><input type="text" id="dsim-r1part" aria-label="LHC 재현 입자"></td><td><input type="number" step="any" id="dsim-r1R" aria-label="LHC 재현 R (km)"></td><td><input type="number" step="any" id="dsim-r1rho" aria-label="LHC 재현 ρ (km)"></td><td><input type="number" step="any" id="dsim-r1B" aria-label="LHC 재현 B (T)"></td><td><input type="number" step="any" id="dsim-r1E" aria-label="LHC 재현 최대 빔 에너지 (TeV)"></td><td><input type="text" id="dsim-r1U" aria-label="LHC 재현 회전당 복사 손실 U₀"></td></tr>
+      <tr><td>FCC-hh</td><td><input type="text" id="dsim-r2part" aria-label="FCC-hh 입자"></td><td><input type="number" step="any" id="dsim-r2R" aria-label="FCC-hh R (km)"></td><td><input type="number" step="any" id="dsim-r2rho" aria-label="FCC-hh ρ (km)"></td><td><input type="number" step="any" id="dsim-r2B" aria-label="FCC-hh B (T)"></td><td><input type="number" step="any" id="dsim-r2E" aria-label="FCC-hh 최대 빔 에너지 (TeV)"></td><td><input type="text" id="dsim-r2U" aria-label="FCC-hh 회전당 복사 손실 U₀"></td></tr>
+      <tr><td>LHC 터널 + 전자</td><td><input type="text" id="dsim-r3part" aria-label="LHC 터널 + 전자 입자"></td><td><input type="number" step="any" id="dsim-r3R" aria-label="LHC 터널 + 전자 R (km)"></td><td><input type="number" step="any" id="dsim-r3rho" aria-label="LHC 터널 + 전자 ρ (km)"></td><td><input type="number" step="any" id="dsim-r3B" aria-label="LHC 터널 + 전자 B (T)"></td><td><input type="number" step="any" id="dsim-r3E" aria-label="LHC 터널 + 전자 최대 빔 에너지 (TeV)"></td><td><input type="text" id="dsim-r3U" aria-label="LHC 터널 + 전자 회전당 복사 손실 U₀"></td></tr>
+      <tr><td>우리 모둠 설계</td><td><input type="text" id="dsim-r4part" aria-label="우리 모둠 설계 입자"></td><td><input type="number" step="any" id="dsim-r4R" aria-label="우리 모둠 설계 R (km)"></td><td><input type="number" step="any" id="dsim-r4rho" aria-label="우리 모둠 설계 ρ (km)"></td><td><input type="number" step="any" id="dsim-r4B" aria-label="우리 모둠 설계 B (T)"></td><td><input type="number" step="any" id="dsim-r4E" aria-label="우리 모둠 설계 최대 빔 에너지 (TeV)"></td><td><input type="text" id="dsim-r4U" aria-label="우리 모둠 설계 회전당 복사 손실 U₀"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-sim2">기록표 복사</button>
+    <label class="answer-field"><span>B1. PS 부스터에서 LHC로 가는 동안 운동 에너지는 약 3400배 커집니다. γ와 β는 각각 몇 배쯤 변했나요? 이 결과를 주제 6의 내용으로 설명하세요.</span><textarea id="sim-b1"></textarea></label>
+    <label class="answer-field"><span>B2. LHC 재현에서 쌍극자석 수가 몇 개로 나왔나요? 실제 LHC(1232개)와 비교하고, 계산에 R이 아니라 ρ를 써야 하는 까닭을 쓰세요.</span><textarea id="sim-b2"></textarea></label>
+    <label class="answer-field"><span>B3. FCC-hh에서 자기장을 14 T → 20 T로 올리면 빔 에너지는 몇 배가 되나요? 둘레와 자기장 중 무엇을 키우는 것이 더 현실적일지 근거를 들어 쓰세요.</span><textarea id="sim-b3"></textarea></label>
+    <label class="answer-field"><span>B4. LHC 터널에서 전자를 7 TeV로 돌리면 회전당 손실 U₀는 얼마였나요? 이것이 물리적으로 무엇을 뜻하는지, 그리고 LEP가 약 100 GeV에서 멈춘 까닭을 설명하세요.</span><textarea id="sim-b4"></textarea></label>
+  </section>
+
+  <section class="section" id="cern">
+    <div class="section__head"><span class="section__tag">05</span><h2>실제 CERN에서는</h2></div>
+    <div class="box box--cern prose">
+      <p><b>같은 터널, 다른 입자.</b> 지금 LHC가 있는 26.7 km 터널은 원래 전자–양전자 충돌기 LEP(1989~2000)를 위해 만들어졌습니다. LEP는 Z·W 보손을 정밀하게 측정했지만, 싱크로트론 복사 때문에 빔당 약 104.5 GeV가 한계였습니다. 그래서 같은 터널에 복사 손실이 아주 작은 양성자용 LHC를 설치했고, 2008년 가동을 시작했습니다.</p>
+      <p><b>LHC의 하루.</b> SPS에서 450 GeV 양성자 묶음을 두 고리에 반대 방향으로 채운 뒤, 약 20분 동안 쌍극자석 자기장을 약 0.54 T에서 약 8 T까지 올리며 빔당 6.8 TeV로 가속합니다. 빔은 1초에 약 11,245바퀴씩 돌며 ATLAS·CMS·ALICE·LHCb 네 지점에서 25 ns 간격으로 충돌합니다.</p>
+      <p><b>다음 가속기.</b> 2030년대에는 충돌 횟수를 크게 늘린 고광도 LHC(HL-LHC)가 운영될 예정입니다. 그다음으로 CERN은 둘레 약 91 km의 <b>미래 원형 충돌기(FCC)</b>를 연구하고 있습니다. 먼저 전자–양전자 충돌기(FCC-ee)로 힉스 보손을 정밀 측정하고, 이후 같은 터널에 14~20 T 자석을 쓰는 양성자 충돌기(FCC-hh)를 두는 2단계 구상입니다. 건설 여부는 2020년대 후반 CERN 회원국들이 결정할 예정이며, 막대한 비용과 과학적 가치를 두고 활발한 토론이 이어지고 있습니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="check">
+    <div class="section__head"><span class="section__tag">06</span><h2>확인 문제</h2></div>
+    <label class="answer-field"><span>1. (계산) LHC 터널(ρ = 2804 m)에 철심 전자석(2.0 T)만 설치했다면 양성자의 최대 운동량은 몇 TeV/c인가요? 생각 열기 Q1의 예상과 비교하세요.</span><textarea id="check-1"></textarea></label>
+    <label class="answer-field"><span>2. (계산) 6.8 TeV 양성자는 거의 빛의 속력으로 둘레 26,659 m인 LHC를 돕니다. 1초 동안의 회전수를 구하고, 빔이 10시간 동안 유지될 때 몇 바퀴를 도는지 구하세요.</span><textarea id="check-2"></textarea></label>
+    <label class="answer-field"><span>3. (계산) SPS에서 나온 450 GeV(운동 에너지) 양성자의 γ와 1 − β를 구하세요. 이 빔을 LHC(ρ = 2804 m)에 넣을 때 쌍극자석 자기장은 약 몇 T여야 하나요?</span><textarea id="check-3"></textarea></label>
+    <label class="answer-field"><span>4. (계산) 같은 에너지, 같은 휘는 반지름일 때 전자의 회전당 복사 손실은 양성자의 몇 배인가요? (m<sub>p</sub>/m<sub>e</sub> = 1836)</span><textarea id="check-4"></textarea></label>
+    <label class="answer-field"><span>5. (계산) LEP는 전자를 104.5 GeV까지 가속했습니다. ρ ≈ 3.0 km일 때 회전당 복사 손실 U₀와 빔 에너지 대비 비율(%)을 구하세요.</span><textarea id="check-5"></textarea></label>
+    <label class="answer-field"><span>6. (서술) 처음부터 LHC 한 대로 양성자를 0에서 6.8 TeV까지 가속하지 않고, 다섯 단계의 가속 사슬을 쓰는 이유를 두 가지 이상 쓰세요.</span><textarea id="check-6"></textarea></label>
+  </section>
+
+  <section class="section" id="up">
+    <div class="box box--up">
+      <h3>업그레이드 도전 — 에너지만이 전부가 아니다: 광도와 FCC 토론</h3>
+      <p><b>① 광도 계산.</b> 충돌기의 성능은 에너지와 함께 '얼마나 자주 충돌시키는가'(광도 L)로 평가합니다. 두 빔이 정면으로 만날 때 L = f · n<sub>b</sub> · N² / (4πσ²)입니다(f: 회전 주파수, n<sub>b</sub>: 묶음 수, N: 묶음당 양성자 수, σ: 충돌점에서 빔 단면의 크기). LHC 값 f = 11,245 Hz, n<sub>b</sub> = 2800, N = 1.1×10¹¹, σ = 16.7 μm로 L을 cm⁻²s⁻¹ 단위로 계산하고, 양성자 충돌 단면적 약 80 mb(= 8×10⁻²⁶ cm²)를 곱해 1초당 충돌 횟수를 추정해 보세요.</p>
+      <p><b>② 토론.</b> "인류는 수십조 원을 들여 FCC를 지어야 하는가?" 찬성·반대 근거를 각각 세 가지씩 찾아(과학적 가치, 기술 파급 효과, 비용, 다른 연구와의 우선순위, 국제 협력 등) 모둠 토론을 준비하세요.</p>
+      <label class="answer-field"><span>도전 기록</span><textarea id="up-1"></textarea></label>
+    </div>
+  </section>
+
+  <section class="section" id="self">
+    <div class="section__head"><span class="section__tag">07</span><h2>자기 평가</h2></div>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="self-1"> <span>운동 에너지로 γ, β, 회전 주파수를 계산하고, 에너지가 커질수록 β가 1에 다가가는 까닭을 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-2"> <span>p = 0.3Bρ로 목표 에너지에 필요한 자기장과 링 크기를 계산하고, R과 ρ의 차이를 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-3"> <span>싱크로트론 복사 손실을 계산해 전자와 양성자 원형 가속기를 비교할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-4"> <span>비용과 기술 위험을 숫자로 비교해 설계를 선택하고 근거를 들어 발표했다.</span></label></li>
+      <li><label><input type="checkbox" id="self-5"> <span>모둠 활동에서 내 역할(계산, 모형 측정, 발표 등)을 책임 있게 해냈다.</span></label></li>
+    </ul>
+    <label class="answer-field"><span>오늘 가장 궁금해진 것 한 가지</span><textarea id="self-q"></textarea></label>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

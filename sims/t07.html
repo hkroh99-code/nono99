@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>붕괴 재구성 실험실 모의실험</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/sim.css">
+<style>
+  /* 이 모의실험 전용 보조 스타일 (sim.css 변수만 사용) */
+  .fv-wrap { overflow-x: auto; border: 1px solid var(--s-line); border-radius: 7px; }
+  .fv { border-collapse: collapse; width: 100%; font-size: .78rem; }
+  .fv th, .fv td { padding: .28rem .4rem; border-bottom: 1px solid var(--s-line); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .fv th { background: var(--s-panel-2); color: var(--s-ink-2); font-weight: 700; }
+  .fv td { font-family: var(--font-mono); }
+  .fv td:first-child, .fv th:first-child { text-align: left; font-family: var(--font-body); }
+  .fv tr.sum td { color: var(--s-track); border-top: 2px solid var(--s-line); }
+  .fv tr:last-child td { border-bottom: 0; }
+  .dot { display: inline-block; width: .6rem; height: .6rem; border-radius: 50%; margin-right: .3rem; vertical-align: middle; }
+  .judge { font-size: .88rem; min-height: 1.4em; }
+  .inrow { display: flex; gap: .4rem; align-items: stretch; }
+  .inrow input { flex: 1; min-width: 0; font: inherit; font-family: var(--font-mono); font-size: .92rem; background: var(--s-panel-2); color: var(--s-ink); border: 1px solid var(--s-line); border-radius: 6px; padding: .35rem .5rem; }
+  .navrow { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; font-size: .85rem; }
+  .navrow .cnt { font-family: var(--font-mono); color: var(--s-track); margin: 0 .2rem; }
+  .hud b { color: var(--s-track); font-weight: 600; }
+  .ref-table { font-size: .78rem; color: var(--s-ink-2); }
+  @media (max-width: 860px) { .wide-only { display: none; } }
+  .ref-table td { padding: .1rem .5rem .1rem 0; }
+</style>
+</head>
+<body>
+<div class="sim">
+  <header class="sim-head">
+    <span class="tag">주제 07 · 3D</span>
+    <h1>붕괴 재구성 실험실</h1>
+    <nav aria-label="관련 자료">
+      <a href="../students/t07.html">학생용 활동지</a>
+      <a href="../teachers/t07.html">교사용 지도서</a>
+      <a href="index.html">모의실험 목록</a>
+    </nav>
+  </header>
+  <div class="sim-body">
+    <div class="stage" id="stage">
+      <div class="stage-overlay" id="overlay">
+        <div class="hud" id="hud-main"></div>
+        <div class="hud" id="hud-kin"></div>
+        <div class="hud" id="hud-scale"></div>
+      </div>
+      <div class="stage-hint">드래그: 회전 · 휠/두 손가락: 확대 · 오른쪽 드래그: 이동</div>
+    </div>
+    <aside class="panel" id="panel" aria-label="조작과 기록"></aside>
+  </div>
+</div>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/vendor/three/OrbitControls.js"></script>
+<script src="../assets/js/sim-kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var THREE = window.THREE, K = window.SimKit, ui = K.ui, COL = K.COLORS;
+  var sim = K.create({ stage: document.getElementById("stage"), cameraPos: [7.5, 5, 9], target: [0, 0, 0], grid: { size: 20, divisions: 20, y: -4 } });
+  var panel = document.getElementById("panel");
+  sim.controls.autoRotate = true;
+  sim.controls.autoRotateSpeed = 0.7;
+  sim.controls.addEventListener("start", function () { sim.controls.autoRotate = false; if (rotTg) rotTg.set(false); });
+
+  /* ---------- 입자 자료 (질량: GeV/c²) ---------- */
+  var DAU = {
+    mu: { m: K.C.mmu_MeV / 1000, names: ["μ⁺", "μ⁻"], colors: [COL.muon, COL.muon], kname: "뮤온" },
+    e: { m: K.C.me_MeV / 1000, names: ["e⁺", "e⁻"], colors: [COL.positron, COL.electron], kname: "전자" },
+    gamma: { m: 0, names: ["γ₁", "γ₂"], colors: [COL.photon, COL.photon], kname: "광자" },
+    pi: { m: 0.13957, names: ["π⁺", "π⁻"], colors: [COL.hadron, COL.hadron], kname: "파이온" }
+  };
+  var PARENTS = {
+    jpsi: { name: "J/ψ", M: 3.0969, d: "mu", label: "J/ψ → μ⁺μ⁻ (3.097 GeV/c²)" },
+    ups: { name: "Υ(1S)", M: 9.4603, d: "mu", label: "Υ(1S) → μ⁺μ⁻ (9.460 GeV/c²)" },
+    z: { name: "Z", M: 91.19, d: "mu", label: "Z → μ⁺μ⁻ (91.19 GeV/c²)" },
+    ze: { name: "Z", M: 91.19, d: "e", label: "Z → e⁺e⁻ (91.19 GeV/c²)" },
+    h: { name: "H", M: 125.1, d: "gamma", label: "H → γγ (125.1 GeV/c²)" },
+    k: { name: "K⁰ₛ", M: 0.4976, d: "pi", label: "K⁰ₛ → π⁺π⁻ (0.4976 GeV/c²)" },
+    custom: { name: "사용자 입자", M: 50, d: "mu", label: "직접 정하기 (질량·딸 입자 선택)" }
+  };
+  var HIDDEN = ["jpsi", "ups", "z", "h"];   // 미지 입자 후보
+  var HIDDEN_LABEL = { jpsi: "J/ψ (3.097 GeV/c²)", ups: "Υ(1S) (9.460 GeV/c²)", z: "Z (91.19 GeV/c²)", h: "힉스 H (125.1 GeV/c²)" };
+
+  /* ---------- 물리: 2체 붕괴 + 로런츠 변환 ---------- */
+  function pStar(M, m1, m2) {
+    var a = (M * M - (m1 + m2) * (m1 + m2)) * (M * M - (m1 - m2) * (m1 - m2));
+    return a > 0 ? Math.sqrt(a) / (2 * M) : 0;
+  }
+  function randDir() {
+    var c = 2 * Math.random() - 1, s = Math.sqrt(1 - c * c), ph = 2 * Math.PI * Math.random();
+    return [s * Math.cos(ph), s * Math.sin(ph), c];
+  }
+  /* 정지계에서 등방적으로 붕괴 → 부모 운동량 P(GeV/c), 방향 b̂ 로 부스트 */
+  function decay(M, m1, m2, P, b) {
+    var ps = pStar(M, m1, m2), n = randDir();
+    var d = [
+      { E: Math.sqrt(ps * ps + m1 * m1), px: ps * n[0], py: ps * n[1], pz: ps * n[2], m: m1 },
+      { E: Math.sqrt(ps * ps + m2 * m2), px: -ps * n[0], py: -ps * n[1], pz: -ps * n[2], m: m2 }
+    ];
+    if (P > 0) {
+      var Ep = Math.sqrt(P * P + M * M), beta = P / Ep, gam = Ep / M;
+      d.forEach(function (q) {
+        var pl = q.px * b[0] + q.py * b[1] + q.pz * b[2];
+        var k = (gam - 1) * pl + gam * beta * q.E;
+        q.E = gam * (q.E + beta * pl);
+        q.px += k * b[0]; q.py += k * b[1]; q.pz += k * b[2];
+      });
+    }
+    return { parts: d, pstar: ps };
+  }
+  /* 검출기 번짐: 운동량 크기에 (1 + σ·z) 곱하기, z는 사건마다 고정된 표준 정규 난수 */
+  function smear(q, sigma, z) {
+    var f = Math.max(0.05, 1 + sigma * z);
+    var px = q.px * f, py = q.py * f, pz = q.pz * f;
+    return { px: px, py: py, pz: pz, m: q.m, E: Math.sqrt(px * px + py * py + pz * pz + q.m * q.m) };
+  }
+  function pmag(q) { return Math.sqrt(q.px * q.px + q.py * q.py + q.pz * q.pz); }
+  function sum4(parts) {
+    var s = { E: 0, px: 0, py: 0, pz: 0 };
+    parts.forEach(function (q) { s.E += q.E; s.px += q.px; s.py += q.py; s.pz += q.pz; });
+    return s;
+  }
+  /* 표시 자릿수: 가벼운 입자가 빠르게 움직이면 E² − p² 계산에 더 많은 자릿수가 필요 */
+  var DEC = 4;
+  function setDec(M, P) { DEC = (M < 2 && P > 1) ? 6 : 4; }
+  function f4(x) { var e = 0.5 * Math.pow(10, -DEC); var s = (Math.abs(x) < e ? 0 : x).toFixed(DEC); return s.replace("-", "−"); }
+  function r4(x) { var k = Math.pow(10, DEC); return Math.round(x * k) / k; }
+
+  /* ---------- 상태 ---------- */
+  var state = { mode: "rest", parent: "z", P: 30, dirKey: "z" };
+  var ev = null;          // 화면에 보이는 사건
+  var unk = null;         // 미지 입자 표본
+  var identified = {};    // 맞힌 미지 입자 종류
+  var wrongCount = 0;
+
+  /* ---------- 3D 장면 ---------- */
+  var scene = sim.scene;
+  // 빔관(z축)과 좌표축
+  var pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 14, 24, 1, true),
+    new THREE.MeshBasicMaterial({ color: 0x7f9cff, transparent: true, opacity: 0.12, side: THREE.DoubleSide }));
+  pipe.rotation.x = Math.PI / 2; scene.add(pipe);
+  function axisLine(to, text) {
+    var g = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), to]);
+    scene.add(new THREE.Line(g, new THREE.LineBasicMaterial({ color: 0x4a5578 })));
+    var l = K.label(text, { size: 36, height: 0.38, color: "#a9b0c8" }); l.position.copy(to).multiplyScalar(1.08); scene.add(l);
+  }
+  axisLine(new THREE.Vector3(5.5, 0, 0), "x");
+  axisLine(new THREE.Vector3(0, 5.5, 0), "y");
+  axisLine(new THREE.Vector3(0, 0, 6.5), "z (빔 방향)");
+  // 검출기 경계(장식)
+  var shell = new THREE.Mesh(new THREE.SphereGeometry(6.2, 28, 16),
+    new THREE.MeshBasicMaterial({ color: 0x3a4670, wireframe: true, transparent: true, opacity: 0.12 }));
+  scene.add(shell);
+  var vtx = new THREE.Mesh(new THREE.SphereGeometry(0.09, 16, 12), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+  scene.add(vtx);
+
+  // 부모 입자
+  var parentMesh = new THREE.Mesh(new THREE.SphereGeometry(0.26, 24, 16), new THREE.MeshStandardMaterial({ color: 0xe6e9f4, emissive: 0x7f9cff, emissiveIntensity: 0.5 }));
+  scene.add(parentMesh);
+  var parentTrail = K.Trail(scene, { max: 2, color: 0xe6e9f4, dashed: true, opacity: 0.7 });
+  var parentLabel = K.label("Z", { size: 40, height: 0.42 }); scene.add(parentLabel);
+
+  // 딸 입자 2개: 공 + 비행선 + 운동량 화살표 + 이름표
+  var dObj = [0, 1].map(function () {
+    var mesh = new THREE.Mesh(new THREE.SphereGeometry(0.14, 16, 12), new THREE.MeshStandardMaterial({ color: COL.muon, emissive: COL.muon, emissiveIntensity: 0.6 }));
+    scene.add(mesh);
+    var trail = K.Trail(scene, { max: 2, color: COL.muon, opacity: 0.55 });
+    var arr = K.arrow(new THREE.Vector3(), new THREE.Vector3(1, 0, 0), 1, COL.muon); scene.add(arr);
+    var lab = K.label("μ", { size: 36, height: 0.4 }); scene.add(lab);
+    return { mesh: mesh, trail: trail, arr: arr, lab: lab, dir: new THREE.Vector3(1, 0, 0), len: 1, beta: 1 };
+  });
+  var sumArr = K.arrow(new THREE.Vector3(), new THREE.Vector3(0, 0, 1), 1, COL.ok); scene.add(sumArr);
+  var sumLab = K.label("Σp", { size: 36, height: 0.4, color: "#5fd08a" }); scene.add(sumLab);
+
+  /* ---------- 패널: 미션 ---------- */
+  var mission = K.Mission(ui.section(panel, "미션"), { id: "t07", steps: [
+    "<b>정지 붕괴</b> — [정지 붕괴] 모드에서 서로 다른 사건 2개를 [기록]해 두 딸 입자의 운동량 합 Σp가 0임을 확인하기",
+    "<b>불변질량 계산</b> — 4-벡터 표의 E, p<sub>x</sub>, p<sub>y</sub>, p<sub>z</sub>로 M을 직접 계산해 입력하고 [판정]에서 '정확' 받기",
+    "<b>움직이는 붕괴</b> — 같은 입자를 부모 운동량 P를 바꿔 가며(0 포함 가능, 최대–최소 20 GeV/c 이상) 3번 계산·판정하고 [기록]해 ΣE는 변해도 M은 같음을 확인하기",
+    "<b>미지 입자 판별</b> — [미지 입자] 모드에서 표본의 질량 분포로 숨은 입자의 정체를 맞히기 (서로 다른 3종)",
+    "<b>검출기 분해능</b> — 미지 입자 표본에서 분해능 σ를 0 %와 3 % 이상으로 바꿔 보며 히스토그램 폭(표준편차)이 커지는 것을 확인하기"
+  ] });
+
+  /* ---------- 패널: 조작 ---------- */
+  var ctl = ui.section(panel, "모드와 입자");
+  var modeSel = ui.select(ctl, { id: "mode", label: "실험 모드", value: "rest", options: [
+    { value: "rest", label: "정지 붕괴 (부모 입자가 멈춰 있음)" },
+    { value: "move", label: "움직이는 붕괴 (부모 입자가 날아가며 붕괴)" },
+    { value: "unknown", label: "미지 입자 (사건 10개로 정체 맞히기)" }
+  ], onChange: function (v) { setMode(v); } });
+  var knownBox = ui.html(ctl, "");
+  knownBox.style.display = "grid"; knownBox.style.gap = ".65rem";
+  var parOpts = Object.keys(PARENTS).map(function (k) { return { value: k, label: PARENTS[k].label }; });
+  var parSel = ui.select(knownBox, { id: "parent", label: "붕괴하는 입자 (모입자)", value: "z", options: parOpts, onChange: function (v) { state.parent = v; syncCustom(); newEvent(); } });
+  var customBox = ui.html(knownBox, "");
+  customBox.style.display = "grid"; customBox.style.gap = ".65rem";
+  var mSl = ui.slider(customBox, { id: "cm", label: "모입자 질량 M", min: 0.3, max: 200, step: 0.1, value: 50, unit: "GeV/c²", format: function (v) { return v.toFixed(1); }, onInput: function (v) { PARENTS.custom.M = v; newEvent(); } });
+  var dSel = ui.select(customBox, { id: "cd", label: "딸 입자 종류", value: "mu", options: [
+    { value: "mu", label: "뮤온 쌍 (각 0.1057 GeV/c²)" }, { value: "e", label: "전자 쌍 (각 0.000511 GeV/c²)" },
+    { value: "gamma", label: "광자 쌍 (질량 0)" }, { value: "pi", label: "파이온 쌍 (각 0.1396 GeV/c²)" }
+  ], onChange: function (v) { PARENTS.custom.d = v; newEvent(); } });
+  var moveBox = ui.html(knownBox, "");
+  moveBox.style.display = "grid"; moveBox.style.gap = ".65rem";
+  var pSl = ui.slider(moveBox, { id: "pp", label: "부모 운동량 P", min: 0, max: 100, step: 1, value: 30, unit: "GeV/c", format: function (v) { return v.toFixed(0); }, onInput: function (v) { state.P = v; newEvent(); } });
+  var dirSel = ui.select(moveBox, { id: "dir", label: "부모 진행 방향", value: "z", options: [
+    { value: "z", label: "+z (빔 방향)" }, { value: "x", label: "+x (빔에 수직)" }, { value: "diag", label: "비스듬히 (1, 1, 1) 방향" }, { value: "rand", label: "사건마다 무작위" }
+  ], onChange: function (v) { state.dirKey = v; newEvent(); } });
+  var r1 = ui.buttonRow(ctl);
+  var newBtn = ui.button(r1, { label: "새 사건", kind: "primary", onClick: function () { if (state.mode === "unknown") gotoEvent(unk.idx + 1); else newEvent(); } });
+  ui.button(r1, { label: "다시 재생", onClick: function () { tCycle = 0; } });
+  ui.button(r1, { label: "시점 초기화", onClick: function () { sim.resetCamera(); } });
+  var loopTg = ui.toggle(ctl, { id: "loop", label: "붕괴 장면 반복 재생 (끄면 마지막 장면 고정)", checked: true });
+  var rotTg = ui.toggle(ctl, { id: "rot", label: "자동 회전", checked: true, onChange: function (v) { sim.controls.autoRotate = v; } });
+
+  /* ---------- 패널: 미지 입자 ---------- */
+  var unkSec = ui.section(panel, "미지 입자 분석", "숨은 입자가 붕괴한 사건들입니다. 4-벡터로 불변질량을 구해 정체를 밝히세요.");
+  var r2 = ui.buttonRow(unkSec);
+  ui.button(r2, { label: "새 미지 입자 (사건 10개)", kind: "primary", onClick: function () { newSample(); } });
+  ui.button(r2, { label: "사건 100개 추가", onClick: function () { addEvents(100); } });
+  var nav = ui.html(unkSec, "", "navrow");
+  var prevB = document.createElement("button"); prevB.className = "sbtn"; prevB.type = "button"; prevB.textContent = "◀ 이전 사건";
+  var cnt = document.createElement("span"); cnt.className = "cnt";
+  var nextB = document.createElement("button"); nextB.className = "sbtn"; nextB.type = "button"; nextB.textContent = "다음 사건 ▶";
+  nav.appendChild(prevB); nav.appendChild(cnt); nav.appendChild(nextB);
+  prevB.addEventListener("click", function () { gotoEvent(unk.idx - 1); });
+  nextB.addEventListener("click", function () { gotoEvent(unk.idx + 1); });
+  var sigSl = ui.slider(unkSec, { id: "sig", label: "검출기 분해능 σ (운동량 크기의 상대 오차)", min: 0, max: 10, step: 0.5, value: 0, unit: "%", format: function (v) { return v.toFixed(1); }, onInput: function () { applySmear(); } });
+  var unkPlot = document.createElement("canvas"); unkPlot.className = "plot"; unkPlot.setAttribute("aria-label", "재구성한 불변질량 히스토그램"); unkSec.appendChild(unkPlot);
+  var unkRo = ui.readouts(unkSec, [
+    { key: "n", label: "표본 사건 수", unit: "개" }, { key: "mean", label: "평균 질량", unit: "GeV/c²" },
+    { key: "sd", label: "분포 폭 (표준편차)", unit: "GeV/c²" }, { key: "rel", label: "상대 폭 (표준편차/평균)", unit: "%" }
+  ]);
+  var guessSel = ui.select(unkSec, { id: "guess", label: "내가 판단한 입자", value: "", options: [{ value: "", label: "— 고르세요 —" }].concat(HIDDEN.map(function (k) { return { value: k, label: HIDDEN_LABEL[k] }; })) });
+  ui.button(unkSec, { label: "정체 제출", kind: "primary", onClick: submitGuess });
+  var guessOut = ui.html(unkSec, "", "judge");
+  ui.html(unkSec, '<table class="ref-table"><tr><td>J/ψ</td><td>3.097</td><td>Υ(1S)</td><td>9.460</td></tr><tr><td>Z</td><td>91.19</td><td>힉스 H</td><td>125.1</td></tr></table><p class="note">기준 질량(GeV/c²). 실제 검출기는 같은 붕괴라도 측정값이 조금씩 퍼집니다.</p>');
+
+  /* ---------- 패널: 4-벡터 표 ---------- */
+  var fvSec = ui.section(panel, "딸 입자 4-벡터");
+  var fvBox = ui.html(fvSec, "", "fv-wrap");
+  var fvNote = ui.html(fvSec, "", "note");
+
+  /* ---------- 패널: 내 계산 ---------- */
+  var mySec = ui.section(panel, "내 계산", "M² = (E₁+E₂)² − (p<sub>x1</sub>+p<sub>x2</sub>)² − (p<sub>y1</sub>+p<sub>y2</sub>)² − (p<sub>z1</sub>+p<sub>z2</sub>)²");
+  var inWrap = ui.html(mySec, '<label for="myM" class="note">내가 계산한 불변질량 M (GeV/c²)</label><div class="inrow"><input id="myM" type="number" step="any" inputmode="decimal" placeholder="예: 91.19"><button class="sbtn sbtn--primary" type="button" id="judgeBtn">판정</button></div>');
+  var myIn = inWrap.querySelector("#myM");
+  var judgeOut = ui.html(mySec, "", "judge");
+  inWrap.querySelector("#judgeBtn").addEventListener("click", judge);
+  myIn.addEventListener("keydown", function (e) { if (e.key === "Enter") judge(); });
+
+  /* ---------- 패널: 측정값 ---------- */
+  var roSec = ui.section(panel, "측정값");
+  var ro = ui.readouts(roSec, [
+    { key: "P", label: "부모 운동량 |Σp|", unit: "GeV/c" }, { key: "E", label: "에너지 합 ΣE", unit: "GeV" },
+    { key: "beta", label: "부모 속력 β = v/c", unit: "" }, { key: "gam", label: "로런츠 인자 γ", unit: "" },
+    { key: "ps", label: "정지계 딸 운동량 p*", unit: "GeV/c" }, { key: "M", label: "불변질량 M", unit: "GeV/c²" }
+  ]);
+  var showM = ui.toggle(roSec, { id: "showM", label: "불변질량 정답 보기 (스스로 계산한 뒤에 켜세요)", checked: false, onChange: function () { updateReadouts(); } });
+
+  /* ---------- 패널: 그래프 ---------- */
+  var plotSec = ui.section(panel, "그래프: 부모 운동량에 따른 ΣE와 M", "기록한 사건 중 지금 고른 입자만 표시합니다.");
+  var kPlot = document.createElement("canvas"); kPlot.className = "plot"; kPlot.setAttribute("aria-label", "부모 운동량에 따른 에너지 합과 불변질량 그래프"); plotSec.appendChild(kPlot);
+  ui.html(plotSec, '<div class="legend"><span><i style="background:#f0a35e"></i>에너지 합 ΣE</span><span><i style="background:#7f9cff"></i>내가 계산한 M</span></div>');
+
+  /* ---------- 패널: 기록표 ---------- */
+  var recSec = ui.section(panel, "기록표", "사건을 분석할 때마다 [기록]을 누르세요. 판정을 받은 뒤 기록하면 내 계산값도 함께 저장됩니다.");
+  ui.button(recSec, { label: "기록", kind: "primary", onClick: recordEvent });
+  var rec = K.Recorder(recSec, { id: "t07", columns: [
+    { key: "mode", label: "모드" }, { key: "par", label: "입자" }, { key: "P", label: "P", unit: "GeV/c", digits: 4 },
+    { key: "sumE", label: "ΣE", unit: "GeV", digits: 5 }, { key: "sump", label: "|Σp|", unit: "GeV/c", digits: 4 },
+    { key: "myM", label: "내 M", unit: "GeV/c²", digits: 5 }, { key: "verdict", label: "판정" }, { key: "sig", label: "σ", unit: "%", digits: 2 }
+  ], onChange: function () { drawKPlot(); checkMission3(); } });
+
+  /* ---------- 사건 만들기 ---------- */
+  function dirVec(key) {
+    if (key === "x") return [1, 0, 0];
+    if (key === "diag") { var s = 1 / Math.sqrt(3); return [s, s, s]; }
+    if (key === "rand") return randDir();
+    return [0, 0, 1];
+  }
+  function syncCustom() {
+    customBox.hidden = state.parent !== "custom";
+  }
+  function newEvent() {
+    var par = PARENTS[state.parent], d = DAU[par.d];
+    var M = par.M;
+    if (M <= 2 * d.m + 1e-4) {
+      M = Math.ceil((2 * d.m + 0.05) * 10) / 10; PARENTS.custom.M = M; mSl.set(M);
+      K.toast("모입자 질량이 두 딸 입자 질량의 합보다 커야 붕괴할 수 있어요. M을 " + M.toFixed(1) + " GeV/c²로 올렸습니다.");
+    }
+    var P = state.mode === "move" ? state.P : 0;
+    var b = dirVec(state.dirKey);
+    var r = decay(M, d.m, d.m, P, b);
+    ev = { parts: r.parts, pstar: r.pstar, M: M, P: P, dir: b, key: state.parent, parName: par.name, d: par.d, names: d.names, colors: d.colors, myM: null, verdict: "" };
+    onEventChanged();
+  }
+  function onEventChanged() {
+    myIn.value = ""; judgeOut.innerHTML = "";
+    buildTable(); updateReadouts(); setupScene(); tCycle = 0;
+  }
+
+  /* 미지 입자 표본 */
+  function makeUnknownEvent(key) {
+    var par = PARENTS[key], d = DAU[par.d];
+    var P = 5 + 55 * Math.random();
+    var r = decay(par.M, d.m, d.m, P, randDir());
+    return { truth: r.parts, z: [K.gauss(0, 1), K.gauss(0, 1)], pstar: r.pstar, M0: par.M, P: P, d: par.d };
+  }
+  function newSample() {
+    var choices = HIDDEN.filter(function (k) { return !unk || k !== unk.key; });
+    var key = choices[Math.floor(Math.random() * choices.length)];
+    unk = { key: key, events: [], idx: 0, guessed: false };
+    wrongCount = 0; guessOut.innerHTML = ""; guessSel.set("");
+    for (var i = 0; i < 10; i++) unk.events.push(makeUnknownEvent(key));
+    applySmear(); gotoEvent(0);
+  }
+  function addEvents(n) {
+    if (!unk) return;
+    for (var i = 0; i < n; i++) unk.events.push(makeUnknownEvent(unk.key));
+    applySmear(); gotoEvent(unk.idx);
+    K.toast("사건 " + n + "개를 추가했어요. 히스토그램 모양을 보세요.");
+  }
+  var smearSeen = { zero: false, big: false };
+  function applySmear() {
+    if (!unk) return;
+    var s = sigSl.get() / 100;
+    unk.events.forEach(function (e) {
+      e.parts = [smear(e.truth[0], s, e.z[0]), smear(e.truth[1], s, e.z[1])];
+      e.M = K.invariantMass(e.parts);
+    });
+    drawHist();
+    if (state.mode === "unknown" && unk.events[unk.idx]) showUnknownEvent(true);
+    if (unk.events.length >= 10) {
+      if (s === 0) smearSeen.zero = true;
+      if (s >= 0.03) smearSeen.big = true;
+      if (smearSeen.zero && smearSeen.big) mission.complete(4, "미션 5 완료! 분해능이 나쁠수록 질량 분포가 넓어집니다.");
+    }
+  }
+  function gotoEvent(i) {
+    if (!unk) return;
+    var n = unk.events.length;
+    unk.idx = ((i % n) + n) % n;
+    showUnknownEvent(false);
+  }
+  function showUnknownEvent(keepInput) {
+    var e = unk.events[unk.idx], d = DAU[e.d];
+    var Ps = sum4(e.parts);
+    ev = { parts: e.parts, pstar: e.pstar, M: e.M, P: pmag(Ps), dir: null, key: "unknown", parName: "?", d: e.d, names: d.names, colors: d.colors, myM: keepInput && ev ? ev.myM : null, verdict: keepInput && ev ? ev.verdict : "", unknownIdx: unk.idx };
+    cnt.textContent = "사건 " + (unk.idx + 1) + " / " + unk.events.length;
+    if (!keepInput) { myIn.value = ""; judgeOut.innerHTML = ""; }
+    buildTable(); updateReadouts(); setupScene();
+    if (!keepInput) tCycle = 0;
+  }
+  function submitGuess() {
+    if (!unk) return;
+    var g = guessSel.get();
+    if (!g) { guessOut.innerHTML = '<span class="result-bad">입자를 먼저 고르세요.</span>'; return; }
+    if (unk.guessed) { guessOut.innerHTML = '<span class="note">이미 판별한 표본입니다. [새 미지 입자]를 누르세요.</span>'; return; }
+    if (g === unk.key) {
+      unk.guessed = true; identified[g] = true;
+      var n = Object.keys(identified).length;
+      guessOut.innerHTML = '<span class="result-ok">정답! 숨은 입자는 ' + HIDDEN_LABEL[g] + ' 입니다.</span> <span class="note">(지금까지 ' + n + '종 판별)</span>';
+      if (n >= 3) mission.complete(3, "미션 4 완료! 서로 다른 미지 입자 3종을 판별했습니다.");
+    } else {
+      wrongCount++;
+      if (wrongCount >= 2) {
+        unk.guessed = true;
+        guessOut.innerHTML = '<span class="result-bad">아쉬워요. 정답은 ' + HIDDEN_LABEL[unk.key] + ' 였습니다.</span> <span class="note">평균 질량과 기준 질량을 비교해 보고, 새 표본으로 다시 도전하세요.</span>';
+      } else {
+        guessOut.innerHTML = '<span class="result-bad">아니에요.</span> <span class="note">히스토그램의 봉우리 위치(평균 질량)와 딸 입자 종류를 다시 확인하세요. 한 번 더 기회가 있어요.</span>';
+      }
+    }
+  }
+
+  /* ---------- 표·측정값 ---------- */
+  function hex(c) { return "#" + ("000000" + c.toString(16)).slice(-6); }
+  function buildTable() {
+    var s = sum4(ev.parts);
+    setDec(K.invariantMass(ev.parts), pmag(s));
+    var h = "<table class='fv'><tr><th>입자</th><th>E</th><th>p<sub>x</sub></th><th>p<sub>y</sub></th><th>p<sub>z</sub></th><th>|p|</th><th>m</th></tr>";
+    ev.parts.forEach(function (q, i) {
+      var pm = pmag(q), m2 = q.E * q.E - pm * pm;
+      h += "<tr><td><span class='dot' style='background:" + hex(ev.colors[i]) + "'></span>" + ev.names[i] + "</td><td>" + f4(q.E) + "</td><td>" + f4(q.px) + "</td><td>" + f4(q.py) + "</td><td>" + f4(q.pz) + "</td><td>" + f4(pm) + "</td><td>" + f4(Math.sqrt(Math.max(0, m2))) + "</td></tr>";
+    });
+    h += "<tr class='sum'><td>합 Σ</td><td>" + f4(s.E) + "</td><td>" + f4(s.px) + "</td><td>" + f4(s.py) + "</td><td>" + f4(s.pz) + "</td><td>" + f4(pmag(s)) + "</td><td></td></tr></table>";
+    fvBox.innerHTML = h;
+    fvNote.textContent = "단위는 c = 1로 둔 입자물리 단위입니다. E: 에너지(GeV), p: 운동량(GeV/c), m = √(E² − |p|²): 각 입자의 질량(GeV/c²). 합 행의 |p|는 두 운동량 벡터 합의 크기입니다.";
+  }
+  function updateReadouts() {
+    var s = sum4(ev.parts), P = pmag(s), M = K.invariantMass(ev.parts);
+    var beta = s.E > 0 ? P / s.E : 0, gam = M > 0 ? s.E / M : 1;
+    ro.set("P", P < 5e-5 ? "0.0000" : f4(P));
+    ro.set("E", f4(s.E));
+    var hide = state.mode === "unknown";   // 미지 입자: β·γ·p*로는 질량이 바로 드러나므로 숨김
+    ro.set("beta", hide ? "?" : (beta < 5e-6 ? "0" : beta.toFixed(5)));
+    ro.set("gam", hide ? "?" : gam.toFixed(4));
+    ro.set("ps", hide ? "?" : f4(ev.pstar));
+    ro.set("M", showM.get() ? f4(M) : (state.mode === "unknown" ? "?" : "계산해 보세요"));
+    var hm = document.getElementById("hud-main"), hk = document.getElementById("hud-kin");
+    var modeName = { rest: "정지 붕괴", move: "움직이는 붕괴", unknown: "미지 입자" }[state.mode];
+    hm.innerHTML = '<span class="k">모드</span> <span class="v">' + modeName + '</span> · <span class="k">붕괴</span> <span class="v">' + (state.mode === "unknown" ? "? → " : ev.parName + " → ") + ev.names[0].replace(/[₁₂]/, "") + " + " + ev.names[1].replace(/[₁₂]/, "") + "</span>";
+    hk.innerHTML = '<span class="k">|Σp|</span> <span class="v">' + (P < 5e-5 ? "0" : P.toFixed(2)) + '</span> <span class="k">GeV/c</span>' + (hide ? ' · <span class="k">ΣE</span> <span class="v">' + s.E.toFixed(2) + '</span> <span class="k">GeV</span>' : ' · <span class="k">β</span> <span class="v">' + (beta < 5e-6 ? "0" : beta.toFixed(4)) + '</span> · <span class="k">γ</span> <span class="v">' + gam.toFixed(3) + "</span>");
+  }
+
+  /* ---------- 판정 ---------- */
+  function judge() {
+    var x = parseFloat(myIn.value);
+    if (!isFinite(x)) { judgeOut.innerHTML = '<span class="result-bad">숫자를 입력하세요.</span>'; return; }
+    var M = K.invariantMass(ev.parts);
+    // 표에 보이는 (반올림된) 값으로 계산한 질량도 정답으로 인정
+    var shown = ev.parts.map(function (q) { return { E: r4(q.E), px: r4(q.px), py: r4(q.py), pz: r4(q.pz) }; });
+    var Ms = K.invariantMass(shown);
+    var tol = Math.max(0.01 * M, 0.002);
+    var ok = Math.abs(x - M) <= tol || Math.abs(x - Ms) <= tol;
+    ev.myM = x; ev.verdict = ok ? "정확" : "다시";
+    if (ok) {
+      judgeOut.innerHTML = '<span class="result-ok">정확합니다!</span> 불변질량 M = ' + f4(M) + ' GeV/c²' + (state.mode === "unknown" ? "" : " (모입자 질량 " + ev.M.toFixed(4) + ")") + ". [기록]을 누르세요.";
+      mission.complete(1, "미션 2 완료! 딸 입자만으로 사라진 입자의 질량을 알아냈어요.");
+    } else {
+      var hint = x > M * 1.5 ? "ΣE와 |Σp|를 각각 제곱한 뒤 빼야 합니다. 마지막에 제곱근을 잊지 않았나요?" :
+        (x < M * 0.7 ? "각 성분을 먼저 더한 뒤 제곱해야 합니다 (제곱한 뒤 더하면 안 돼요)." : "부호(−)와 반올림을 확인하세요.");
+      judgeOut.innerHTML = '<span class="result-bad">다시 계산해 보세요.</span> <span class="note">' + hint + " 허용 오차 ±1 %</span>";
+    }
+  }
+
+  /* ---------- 기록 ---------- */
+  var modeShort = { rest: "정지", move: "움직임", unknown: "미지" };
+  function recordEvent() {
+    var s = sum4(ev.parts), P = pmag(s);
+    rec.add({
+      mode: modeShort[state.mode], par: state.mode === "unknown" ? "?" : ev.parName + "→" + ev.names[0].replace(/[₁₂⁺⁻]/g, "") + ev.names[1].replace(/[₁₂⁺⁻]/g, ""),
+      key: ev.key, P: r4(P), sumE: r4(s.E), sump: r4(P), myM: ev.myM === null ? "" : ev.myM, verdict: ev.verdict || "미판정",
+      sig: state.mode === "unknown" ? sigSl.get() : 0
+    });
+    if (state.mode === "rest") {
+      var restRows = rec.rows.filter(function (r) { return r.mode === "정지"; });
+      if (restRows.length >= 2) mission.complete(0, "미션 1 완료! 정지 붕괴에서는 두 딸 입자의 운동량 합이 0입니다.");
+    }
+    K.toast("기록했어요 (" + rec.rows.length + "번째).");
+  }
+  function checkMission3() {
+    var groups = {};
+    rec.rows.forEach(function (r) {
+      if ((r.mode === "정지" || r.mode === "움직임") && r.verdict === "정확") {
+        (groups[r.key] = groups[r.key] || []).push(r.P);
+      }
+    });
+    Object.keys(groups).forEach(function (k) {
+      var ps = groups[k].slice().sort(function (a, b) { return a - b; });
+      var distinct = ps.filter(function (p, i) { return i === 0 || Math.abs(p - ps[i - 1]) > 1; });
+      if (distinct.length >= 3 && distinct[distinct.length - 1] - distinct[0] >= 20) {
+        mission.complete(2, "미션 3 완료! 부모가 움직여도 불변질량은 변하지 않습니다.");
+      }
+    });
+  }
+
+  /* ---------- 그래프 ---------- */
+  function drawKPlot() {
+    var key = state.mode === "unknown" ? null : state.parent;
+    var rows = rec.rows.filter(function (r) { return r.key === key; });
+    var se = rows.map(function (r) { return [r.P, r.sumE]; });
+    var sm = rows.filter(function (r) { return typeof r.myM === "number"; }).map(function (r) { return [r.P, r.myM]; });
+    var ymax = 1; se.concat(sm).forEach(function (p) { ymax = Math.max(ymax, p[1]); });
+    if (!rows.length && key) ymax = PARENTS[key].M * 2;
+    K.plot.xy(kPlot, { series: [{ points: se, color: "#f0a35e" }, { points: sm, color: "#7f9cff" }], xr: [0, 100], yr: [0, ymax * 1.15], xlabel: "부모 운동량 P (GeV/c)", ylabel: "GeV" });
+  }
+  function drawHist() {
+    if (!unk) return;
+    var ms = unk.events.map(function (e) { return e.M; });
+    var M0 = unk.events[0].M0, lo = M0 * 0.6, hi = M0 * 1.4;
+    var n = ms.length, mean = ms.reduce(function (a, b) { return a + b; }, 0) / n;
+    var sd = Math.sqrt(ms.reduce(function (a, b) { return a + (b - mean) * (b - mean); }, 0) / Math.max(1, n - 1));
+    K.plot.hist(unkPlot, { lo: lo, hi: hi, counts: K.plot.bin(ms, lo, hi, 40), xlabel: "재구성한 불변질량 (GeV/c²)", ylabel: "사건 수", marks: [{ x: mean, label: "평균 " + mean.toPrecision(4), color: "#5fd08a" }] });
+    unkRo.set("n", String(n)); unkRo.set("mean", mean, 5); unkRo.set("sd", sd < 1e-6 ? "0" : K.fmt(sd, 3)); unkRo.set("rel", sd < 1e-6 ? "0" : (100 * sd / mean).toFixed(2));
+  }
+
+  /* ---------- 장면 배치 ---------- */
+  var NICE = [0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100];
+  var scaleGeV = 10, tCycle = 0, T_IN = 1.2, T_CYCLE = 5.5;
+  var bdir = new THREE.Vector3(0, 0, 1);
+  function setupScene() {
+    var maxp = 0; ev.parts.forEach(function (q) { maxp = Math.max(maxp, pmag(q)); });
+    var s = sum4(ev.parts), P = pmag(s);
+    maxp = Math.max(maxp, P);
+    scaleGeV = NICE[NICE.length - 1];
+    for (var i = 0; i < NICE.length; i++) if (maxp / NICE[i] <= 5) { scaleGeV = NICE[i]; break; }
+    ev.parts.forEach(function (q, i) {
+      var o = dObj[i], pm = pmag(q);
+      o.dir.set(q.px, q.py, q.pz).normalize();
+      o.len = Math.max(0.05, pm / scaleGeV);
+      o.beta = q.E > 0 ? pm / q.E : 0;
+      o.mesh.material.color.setHex(ev.colors[i]); o.mesh.material.emissive.setHex(ev.colors[i]);
+      o.trail.setColor(ev.colors[i]);
+      o.arr.setColor(ev.colors[i]);
+      o.arr.setDirection(o.dir); o.arr.setLength(o.len, Math.min(0.45, o.len * 0.3), Math.min(0.22, o.len * 0.15));
+      o.lab.material.map.dispose(); scene.remove(o.lab);
+      o.lab = K.label(ev.names[i] + "  " + pm.toFixed(pm < 10 ? 3 : 1) + " GeV/c", { size: 34, height: 0.32, color: hex(ev.colors[i]) });
+      o.lab.position.copy(o.dir).multiplyScalar(o.len + 0.45); scene.add(o.lab);
+    });
+    if (P > 1e-6) {
+      bdir.set(s.px, s.py, s.pz).normalize();
+      var L = Math.max(0.05, P / scaleGeV);
+      sumArr.setDirection(bdir); sumArr.setLength(L, Math.min(0.45, L * 0.3), Math.min(0.22, L * 0.15));
+      sumLab.position.copy(bdir).multiplyScalar(L + 0.4);
+    } else { bdir.set(0, 0, 1); }
+    sumArr.userData.has = P > 1e-6;
+    scene.remove(parentLabel); parentLabel.material.map.dispose();
+    parentLabel = K.label(state.mode === "unknown" ? "?" : ev.parName, { size: 40, height: 0.42 }); scene.add(parentLabel);
+    document.getElementById("hud-scale").innerHTML = '<span class="k">화면 축척</span> 화살표 길이: 격자 1칸 = <b>' + scaleGeV + " GeV/c</b><span class=\"wide-only\"> · 공의 비행 속력은 실제 속력(β)에 비례, 시간은 매우 느리게</span>";
+    drawKPlot();
+  }
+
+  /* ---------- 매 프레임 ---------- */
+  var tmp = new THREE.Vector3();
+  sim.onFrame(function (dt) {
+    if (!ev) return;
+    tCycle += dt;
+    if (!loopTg.get() && tCycle > T_CYCLE - 0.01) tCycle = T_CYCLE - 0.01;
+    if (tCycle >= T_CYCLE) tCycle = 0;
+    var moving = pmag(sum4(ev.parts)) > 1e-6;
+    var tIn = moving ? T_IN : 0.6;
+    var after = tCycle - tIn;
+    // 부모
+    if (after < 0) {
+      parentMesh.visible = true; parentLabel.visible = true;
+      if (moving) {
+        var x = -3.5 * (1 - tCycle / tIn);
+        parentMesh.position.copy(bdir).multiplyScalar(x);
+        parentTrail.clear(); parentTrail.push(tmp.copy(bdir).multiplyScalar(-3.5)); parentTrail.push(parentMesh.position);
+      } else {
+        parentMesh.position.set(0, 0, 0); parentTrail.clear();
+        var sc = 1 + 0.15 * Math.sin(tCycle * 14); parentMesh.scale.set(sc, sc, sc);
+      }
+      parentLabel.position.copy(parentMesh.position).add(tmp.set(0, 0.6, 0));
+    } else {
+      parentMesh.visible = false; parentLabel.visible = false; parentMesh.scale.set(1, 1, 1);
+      if (moving) { parentTrail.clear(); parentTrail.push(tmp.copy(bdir).multiplyScalar(-3.5)); parentTrail.push(new THREE.Vector3()); }
+      else parentTrail.clear();
+    }
+    // 딸
+    var show = after >= 0;
+    dObj.forEach(function (o) {
+      o.mesh.visible = show; o.arr.visible = show; o.lab.visible = show;
+      o.trail.clear();
+      if (show) {
+        var r = Math.min(6, 2.6 * o.beta * after);
+        o.mesh.position.copy(o.dir).multiplyScalar(r);
+        o.trail.push(new THREE.Vector3()); o.trail.push(o.mesh.position);
+      }
+    });
+    sumArr.visible = show && sumArr.userData.has && after > 0.6;
+    sumLab.visible = sumArr.visible;
+  });
+
+  /* ---------- 모드 전환 ---------- */
+  function setMode(v) {
+    state.mode = v;
+    knownBox.hidden = v === "unknown";
+    moveBox.hidden = v !== "move";
+    unkSec.hidden = v !== "unknown";
+    plotSec.hidden = v === "unknown";
+    newBtn.textContent = v === "unknown" ? "다음 사건" : "새 사건";
+    if (v === "unknown") {
+      if (!unk) newSample(); else { drawHist(); gotoEvent(unk.idx); }
+    } else newEvent();
+  }
+
+  syncCustom();
+  setMode("rest");
+  window.addEventListener("resize", function () { if (state.mode === "unknown") drawHist(); else drawKPlot(); });
+})();
+</script>
+</body>
+</html>

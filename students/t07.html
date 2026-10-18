@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 07 불변질량 · 학생용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-page="student" data-topic="07" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--student">학생용</span>
+      <span class="badge badge--adv">심화과정</span>
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 07</p>
+    <h1>보존 법칙과 불변질량</h1>
+    <p class="lead">충돌 뒤에 남은 조각들만 측정해서, 이미 사라져 버린 입자의 질량을 어떻게 알아낼 수 있을까?</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--sim" href="../sims/t07.html">3D 모의실험 열기</a>
+      <button class="btn" type="button" data-copy-answers>내 답안 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>답안 지우기</button>
+    </div>
+    <p class="save-note">입력한 답은 이 기기의 브라우저에만 자동 저장됩니다. 제출할 때는 [내 답안 복사]를 눌러 붙여 넣으세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#goals">학습 목표</a><a href="#open">생각 열기</a><a href="#concept">핵심 개념</a>
+      <a href="#lab">실험 A</a><a href="#sim">실험 B: 3D</a><a href="#cern">CERN에서는</a>
+      <a href="#check">확인 문제</a><a href="#up">업그레이드</a><a href="#self">자기 평가</a>
+    </nav>
+  </header>
+
+  <section class="section" id="goals">
+    <div class="box box--goal">
+      <h2 class="box__title" style="font-size:var(--step-1)">학습 목표</h2>
+      <ol>
+        <li>2차원 충돌을 촬영·분석해 운동량이 x, y <b>성분별로</b> 보존됨을 측정값으로 확인할 수 있다.</li>
+        <li>상대론적 에너지–운동량 관계 E² = (pc)² + (mc²)²를 이해하고, 입자를 4-벡터 (E, p<sub>x</sub>, p<sub>y</sub>, p<sub>z</sub>)로 나타낼 수 있다.</li>
+        <li>딸 입자들의 측정값으로 불변질량 M² = (ΣE)² − |Σ<b>p</b>|²을 계산해 붕괴한 입자의 정체를 밝힐 수 있다.</li>
+        <li>불변질량이 관찰자(기준계)에 관계없이 같은 값임을 설명하고, 검출기 분해능이 질량 분포의 폭에 주는 영향을 해석할 수 있다.</li>
+      </ol>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>활동</th></tr>
+      <tr><td>1차시 (50분)</td><td>생각 열기(교통사고 조사관) → 핵심 개념 ① 운동량 보존과 벡터 합 → <b>실험 A</b> 동전(또는 퍽) 2차원 충돌 촬영과 영상 분석 → 폭발형 분리(정지 입자 붕괴 비유) → 결과 정리</td></tr>
+      <tr><td>2차시 (50분)</td><td>핵심 개념 ② 에너지–운동량 관계와 불변질량, 풀이 예제 → <b>실험 B</b> 3D 붕괴 재구성 실험실(미션 1~5) → 실제 CERN에서는 → 확인 문제 → 자기 평가</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="open">
+    <div class="section__head"><span class="section__tag">01</span><h2>생각 열기</h2></div>
+    <div class="box box--think prose">
+      <p>교차로에서 두 자동차가 부딪쳤습니다. 목격자는 없고, 남은 것은 두 차가 충돌 뒤 미끄러진 <b>자국의 방향과 길이</b>, 그리고 두 차의 <b>질량</b>뿐입니다. 교통사고 조사관은 이것만으로 "충돌 직전 어느 차가 얼마나 빨랐는지"를 계산해 냅니다. 비결은 <b>운동량 보존</b>입니다.</p>
+      <p>LHC의 검출기도 같은 처지입니다. Z 보손은 생겨난 뒤 약 3×10⁻²⁵초 만에 붕괴해 버려서, 검출기에 닿는 것은 붕괴로 나온 조각(딸 입자)뿐입니다. 물리학자들은 조각들의 <b>에너지와 운동량</b>만으로 사라진 입자의 질량을 알아냅니다. 오늘 우리도 그 방법을 직접 써 봅니다.</p>
+    </div>
+    <label class="answer-field"><span>Q1. 교통사고 조사관이 충돌 전 속력을 알아내려면 충돌 뒤의 어떤 값들이 꼭 필요할까요? 왜 '방향'도 필요한지 함께 쓰세요.</span><textarea id="open-q1"></textarea></label>
+    <label class="answer-field"><span>Q2. 정지해 있던 폭죽이 두 조각으로 터졌습니다. 한 조각이 동쪽으로 날아갔다면 다른 조각은 어느 쪽으로 날아갔을까요? 그렇게 생각한 까닭은?</span><textarea id="open-q2"></textarea></label>
+  </section>
+
+  <section class="section" id="concept">
+    <div class="section__head"><span class="section__tag">02</span><h2>핵심 개념</h2></div>
+    <div class="prose">
+      <h3>① 운동량 보존은 '벡터'로 성립한다</h3>
+      <p>운동량은 <b>p</b> = m<b>v</b>로, 크기와 방향을 함께 가진 벡터량입니다. 외부에서 알짜힘이 작용하지 않으면 충돌 전후 운동량의 <b>벡터 합</b>은 변하지 않습니다. 평면에서는 x성분과 y성분이 <b>각각 따로</b> 보존됩니다.</p>
+    </div>
+    <div class="formula">Σp<sub>x</sub>(전) = Σp<sub>x</sub>(후),&nbsp;&nbsp; Σp<sub>y</sub>(전) = Σp<sub>y</sub>(후) &nbsp;&nbsp;→&nbsp;&nbsp; m<sub>A</sub><b>v</b><sub>A</sub> + m<sub>B</sub><b>v</b><sub>B</sub> = m<sub>A</sub><b>v</b><sub>A</sub>′ + m<sub>B</sub><b>v</b><sub>B</sub>′</div>
+    <figure class="diagram">
+      <svg viewBox="0 0 660 230" width="660" role="img" aria-label="2차원 충돌 전후의 운동량 벡터와 벡터 합 삼각형">
+        <defs>
+          <marker id="ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--accent)"/></marker>
+          <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--track)"/></marker>
+          <marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--lv-adv)"/></marker>
+        </defs>
+        <text x="20" y="24" font-size="14" font-weight="700">충돌 전</text>
+        <circle cx="40" cy="120" r="16" style="fill:none;stroke:var(--accent);stroke-width:2"/><text x="34" y="125" font-size="13">A</text>
+        <line x1="58" y1="120" x2="150" y2="120" style="stroke:var(--accent);stroke-width:3" marker-end="url(#ah1)"/>
+        <text x="80" y="108" font-size="13">p<tspan baseline-shift="sub" font-size="10">A</tspan></text>
+        <circle cx="185" cy="120" r="16" style="fill:none;stroke:var(--track);stroke-width:2"/><text x="179" y="125" font-size="13">B</text>
+        <text x="160" y="160" font-size="12" class="muted-fill">정지</text>
+        <line x1="225" y1="20" x2="225" y2="210" style="stroke:var(--line);stroke-dasharray:4 4"/>
+        <text x="240" y="24" font-size="14" font-weight="700">충돌 후</text>
+        <circle cx="290" cy="120" r="5" style="fill:currentColor"/>
+        <line x1="292" y1="118" x2="372" y2="58" style="stroke:var(--accent);stroke-width:3" marker-end="url(#ah1)"/>
+        <text x="335" y="70" font-size="13">p<tspan baseline-shift="sub" font-size="10">A</tspan>′</text>
+        <line x1="292" y1="122" x2="382" y2="178" style="stroke:var(--track);stroke-width:3" marker-end="url(#ah2)"/>
+        <text x="340" y="190" font-size="13">p<tspan baseline-shift="sub" font-size="10">B</tspan>′</text>
+        <line x1="420" y1="20" x2="420" y2="210" style="stroke:var(--line);stroke-dasharray:4 4"/>
+        <text x="435" y="24" font-size="14" font-weight="700">벡터 합 확인</text>
+        <line x1="450" y1="150" x2="530" y2="90" style="stroke:var(--accent);stroke-width:3" marker-end="url(#ah1)"/>
+        <line x1="532" y1="90" x2="622" y2="146" style="stroke:var(--track);stroke-width:3" marker-end="url(#ah2)"/>
+        <line x1="450" y1="152" x2="622" y2="152" style="stroke:var(--lv-adv);stroke-width:3;stroke-dasharray:7 4" marker-end="url(#ah3)"/>
+        <text x="470" y="180" font-size="13">p<tspan baseline-shift="sub" font-size="10">A</tspan>′ + p<tspan baseline-shift="sub" font-size="10">B</tspan>′ = p<tspan baseline-shift="sub" font-size="10">A</tspan></text>
+        <text x="455" y="205" font-size="12" class="muted-fill">y성분: 위(+)와 아래(−)가 상쇄</text>
+      </svg>
+      <figcaption>그림 1. 정지한 B에 A가 비스듬히 부딪치면 두 공은 갈라져 날아가지만, 충돌 후 두 운동량을 이어 붙이면(벡터 합) 충돌 전 A의 운동량과 같다.</figcaption>
+    </figure>
+    <div class="prose">
+      <h3>② 정지한 입자의 붕괴 = '폭발'</h3>
+      <p>정지해 있던 입자의 운동량은 0입니다. 이 입자가 두 조각으로 붕괴하면 두 딸 입자의 운동량 합도 0이어야 하므로, 두 조각은 <b>크기가 같고 방향이 정반대</b>인 운동량을 가집니다(<b>p</b>₁ = −<b>p</b>₂). 용수철로 밀려나는 두 수레, 터지는 폭죽과 같은 원리입니다.</p>
+      <h3>③ 빠른 입자의 에너지와 운동량 — 상대론</h3>
+      <p>빛의 속력에 가까운 입자는 고전 공식 p = mv, E<sub>k</sub> = ½mv²를 쓸 수 없습니다. 주제 6에서 배운 로런츠 인자 γ = 1/√(1 − v²/c²)를 쓰면</p>
+    </div>
+    <div class="formula">E = <b>γmc²</b>,&nbsp;&nbsp; p = <b>γmv</b> &nbsp;&nbsp;⇒&nbsp;&nbsp; E² = (pc)² + (mc²)²</div>
+    <div class="prose">
+      <p>입자물리학에서는 c = 1로 두는 단위를 씁니다. 에너지는 GeV, 운동량은 GeV/c, 질량은 GeV/c²로 적고 계산할 때는 c를 생략합니다. 그러면 관계식은 간단히 <b>E² = p² + m²</b>이 됩니다. 정지한 입자(p = 0)는 E = m, 질량이 0인 광자는 E = |p|입니다.</p>
+      <p>입자 하나는 네 개의 수 (E, p<sub>x</sub>, p<sub>y</sub>, p<sub>z</sub>)로 완전히 나타낼 수 있습니다. 이것을 <b>4-벡터</b>라고 부릅니다.</p>
+      <h3>④ 불변질량: 조각들로 원래 입자의 질량 되찾기</h3>
+      <p>질량 M인 입자가 붕괴해도 <b>에너지와 운동량은 모두 보존</b>됩니다. 따라서 딸 입자들의 에너지 합 ΣE와 운동량 합 Σ<b>p</b>는 붕괴 전 입자의 E와 <b>p</b>와 같고, 붕괴 전 입자에 대해 E² = p² + M²이 성립하므로</p>
+    </div>
+    <div class="formula">M² = (E₁ + E₂)² − (p<sub>x1</sub>+p<sub>x2</sub>)² − (p<sub>y1</sub>+p<sub>y2</sub>)² − (p<sub>z1</sub>+p<sub>z2</sub>)² &nbsp;&nbsp;(c = 1)</div>
+    <div class="prose">
+      <p>이 M을 <b>불변질량</b>이라 합니다. '불변'인 까닭은, 붕괴하는 입자가 멈춰 있든 빠르게 날아가든, 누가 어느 기준계에서 측정하든 <b>항상 같은 값</b>이 나오기 때문입니다. ΣE와 |Σ<b>p</b>|는 관찰자마다 다르지만, 그 둘의 '제곱의 차'는 변하지 않습니다.</p>
+      <p><b>주의:</b> 질량은 그냥 더해지지 않습니다. 뮤온 두 개의 질량을 더하면 0.21 GeV/c²이지만, 이 두 뮤온의 불변질량은 91 GeV/c²일 수도 있습니다. 붕괴할 때 질량 에너지의 대부분이 딸 입자의 운동 에너지로 바뀌었기 때문입니다.</p>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 660 240" width="660" role="img" aria-label="정지 상태 붕괴와 움직이는 상태 붕괴의 운동량 비교">
+        <defs>
+          <marker id="bh1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--track)"/></marker>
+          <marker id="bh2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--lv-adv)"/></marker>
+          <marker id="bh3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ink-3)"/></marker>
+        </defs>
+        <text x="20" y="24" font-size="14" font-weight="700">(가) 정지 상태에서 붕괴</text>
+        <circle cx="160" cy="125" r="9" style="fill:currentColor"/>
+        <text x="150" y="155" font-size="12" class="muted-fill">Z</text>
+        <line x1="166" y1="119" x2="250" y2="55" style="stroke:var(--track);stroke-width:3" marker-end="url(#bh1)"/>
+        <text x="245" y="48" font-size="13">μ⁺ (p₁)</text>
+        <line x1="154" y1="131" x2="70" y2="195" style="stroke:var(--track);stroke-width:3" marker-end="url(#bh1)"/>
+        <text x="30" y="215" font-size="13">μ⁻ (p₂ = −p₁)</text>
+        <text x="20" y="235" font-size="12" class="muted-fill">Σp = 0, ΣE = M → M = ΣE</text>
+        <line x1="330" y1="20" x2="330" y2="220" style="stroke:var(--line);stroke-dasharray:4 4"/>
+        <text x="345" y="24" font-size="14" font-weight="700">(나) 날아가면서 붕괴</text>
+        <line x1="350" y1="130" x2="440" y2="130" style="stroke:var(--ink-3);stroke-width:2;stroke-dasharray:6 4" marker-end="url(#bh3)"/>
+        <text x="350" y="120" font-size="12" class="muted-fill">Z의 운동량 P</text>
+        <circle cx="450" cy="130" r="9" style="fill:currentColor"/>
+        <line x1="456" y1="125" x2="610" y2="60" style="stroke:var(--track);stroke-width:3" marker-end="url(#bh1)"/>
+        <text x="575" y="50" font-size="13">μ⁺</text>
+        <line x1="456" y1="135" x2="540" y2="200" style="stroke:var(--track);stroke-width:3" marker-end="url(#bh1)"/>
+        <text x="545" y="212" font-size="13">μ⁻</text>
+        <line x1="456" y1="132" x2="640" y2="132" style="stroke:var(--lv-adv);stroke-width:2.5;stroke-dasharray:7 4" marker-end="url(#bh2)"/>
+        <text x="565" y="150" font-size="12">Σp = P</text>
+        <text x="345" y="235" font-size="12" class="muted-fill">ΣE, |Σp| 모두 커지지만 √(ΣE² − |Σp|²) = M 그대로</text>
+      </svg>
+      <figcaption>그림 2. 붕괴하는 입자가 멈춰 있으면 두 딸 입자는 반대 방향으로 날아간다. 입자가 날아가며 붕괴하면 두 딸 입자가 앞쪽으로 몰리지만, 불변질량은 같다.</figcaption>
+    </figure>
+    <div class="box prose">
+      <h4>풀이 예제 — CMS가 기록한 두 뮤온 (값은 반올림, 뮤온 질량 0.106 GeV/c²은 무시할 만큼 작음)</h4>
+      <div class="table-wrap"><table>
+        <tr><th>입자</th><th class="num">E (GeV)</th><th class="num">p<sub>x</sub></th><th class="num">p<sub>y</sub></th><th class="num">p<sub>z</sub> (GeV/c)</th></tr>
+        <tr><td>μ⁺</td><td class="num">50.0</td><td class="num">30.0</td><td class="num">40.0</td><td class="num">0.0</td></tr>
+        <tr><td>μ⁻</td><td class="num">42.0</td><td class="num">−26.0</td><td class="num">−32.0</td><td class="num">8.0</td></tr>
+        <tr><td>합</td><td class="num">92.0</td><td class="num">4.0</td><td class="num">8.0</td><td class="num">8.0</td></tr>
+      </table></div>
+      <p>M² = 92.0² − (4.0² + 8.0² + 8.0²) = 8464 − 144 = 8320 → <b>M ≈ 91.2 GeV/c²</b>. Z 보손(91.19 GeV/c²)입니다! 이 Z는 |Σ<b>p</b>| = 12 GeV/c로 움직이고 있었습니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">03</span><h2>실험 A: 2차원 충돌과 운동량 보존</h2></div>
+    <p class="prose">책상 위에서 동전(또는 에어하키 퍽)을 비스듬히 충돌시키고 위에서 촬영합니다. 영상 분석으로 충돌 전후 속도 벡터를 재서 운동량이 x, y 성분별로 보존되는지 확인합니다. 마지막으로 두 수레를 용수철로 밀어내는 '폭발형 분리'로 정지 입자의 붕괴를 흉내 냅니다.</p>
+    <div class="grid-2">
+      <div class="box"><h3>준비물 (모둠별)</h3><ul>
+        <li>500원 동전 2개(각 7.70 g), 100원 동전 1개(5.42 g) — 또는 에어하키 퍽 2개</li>
+        <li>매끄러운 판: 유리판·아크릴판·코팅된 책상(가로 60 cm 이상)</li>
+        <li>스마트폰(슬로모션 120~240 fps 권장, 60 fps도 가능)과 삼각대 또는 책상 위 거치대</li>
+        <li>30 cm 자(화면 축척용), 모눈종이, 마스킹테이프, 지름 8 mm 원형 스티커(동전 중심 표시)</li>
+        <li>영상 분석: Tracker(무료) 설치 컴퓨터 또는 프레임 단위 재생 앱</li>
+        <li>전자저울(0.01 g)</li>
+        <li>보충 실험: 역학 수레 2대, 수레용 용수철(플런저), 추, 1 m 자</li>
+      </ul></div>
+      <div class="box box--safety"><h4>안전 수칙</h4><ul>
+        <li>동전을 튕길 때 다른 사람 쪽을 향하지 않는다. 얼굴 높이로 튀지 않게 손가락으로만 가볍게 튕긴다.</li>
+        <li>삼각대·거치대는 넘어지지 않게 다리를 충분히 벌리고, 스마트폰이 떨어지지 않도록 끈으로 고정한다.</li>
+        <li>유리판을 쓸 때는 모서리에 테이프를 붙여 베이지 않게 한다.</li>
+        <li>압축한 용수철 앞에 손가락을 두지 않는다. 수레가 책상 끝에서 떨어지지 않게 끝에 책을 막아 둔다.</li>
+      </ul></div>
+    </div>
+    <h3>실험 방법</h3>
+    <ol class="steps">
+      <li><span class="st">저울로 동전(또는 퍽)의 질량을 재고, 중심에 원형 스티커를 붙인다.</span></li>
+      <li><span class="st">판 위 1 m 높이에 카메라를 <b>수평으로</b> 고정한다. 화면 안쪽, 동전과 같은 높이에 30 cm 자를 놓아 축척 기준으로 쓴다.</span></li>
+      <li><span class="st">표적 동전 B를 판 가운데에 놓는다. 동전 A를 B의 중심에서 <b>약간 비켜서</b>(정면충돌이 아니게) 튕겨 부딪치게 한다.</span></li>
+      <li><span class="st">충돌 장면을 촬영한다. 동전이 충돌 후 화면 밖으로 나가기 전까지 찍히도록 한다. 같은 조건으로 연습 1~2회 후 본 실험을 한다.</span></li>
+      <li><span class="st">Tracker에서 영상을 열고 [보정 막대]를 자에 맞춰 30 cm로 설정한다. <b>x축을 충돌 전 A의 진행 방향</b>으로 맞추면 충돌 전 A의 v<sub>y</sub> = 0이 된다.</span></li>
+      <li><span class="st">각 동전의 중심을 프레임마다 찍는다. 마찰로 점점 느려지므로 <b>충돌 직전 3프레임, 직후 3프레임</b>의 위치로 속도 성분을 구한다(v = Δ위치 / Δ시간).</span></li>
+      <li><span class="st">기록표 1에 값을 적고, 기록표 2에 운동량 성분의 합을 계산한다. ① 500원→500원 ② 500원→100원 ③ 100원→500원으로 3회 실험한다.</span></li>
+      <li><span class="st">(보충) 두 수레 사이에 압축한 용수철을 두고 정지 상태에서 풀어 준다. 한 수레에 추를 올려 질량을 다르게 하고, 영상으로 두 수레의 속도를 재서 기록표 3에 적는다.</span></li>
+    </ol>
+    <h3>기록표 1 — 측정값 (충돌 전 A의 진행 방향 = +x)</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-lab">
+      <tr><th>회</th><th>충돌 종류</th><th>m<sub>A</sub> (g)</th><th>m<sub>B</sub> (g)</th><th>A 전 v<sub>x</sub> (cm/s)</th><th>A 후 v<sub>x</sub></th><th>A 후 v<sub>y</sub></th><th>B 후 v<sub>x</sub></th><th>B 후 v<sub>y</sub> (cm/s)</th></tr>
+      <tr><td>1회</td><td><input type="text" id="lab-r1kind" aria-label="1회 충돌 종류"></td><td><input type="number" step="any" id="lab-r1ma" aria-label="1회 m_A (g)"></td><td><input type="number" step="any" id="lab-r1mb" aria-label="1회 m_B (g)"></td><td><input type="number" step="any" id="lab-r1va" aria-label="1회 충돌 전 A의 vx (cm/s)"></td><td><input type="number" step="any" id="lab-r1vax" aria-label="1회 충돌 후 A의 vx (cm/s)"></td><td><input type="number" step="any" id="lab-r1vay" aria-label="1회 충돌 후 A의 vy (cm/s)"></td><td><input type="number" step="any" id="lab-r1vbx" aria-label="1회 충돌 후 B의 vx (cm/s)"></td><td><input type="number" step="any" id="lab-r1vby" aria-label="1회 충돌 후 B의 vy (cm/s)"></td></tr>
+      <tr><td>2회</td><td><input type="text" id="lab-r2kind" aria-label="2회 충돌 종류"></td><td><input type="number" step="any" id="lab-r2ma" aria-label="2회 m_A (g)"></td><td><input type="number" step="any" id="lab-r2mb" aria-label="2회 m_B (g)"></td><td><input type="number" step="any" id="lab-r2va" aria-label="2회 충돌 전 A의 vx (cm/s)"></td><td><input type="number" step="any" id="lab-r2vax" aria-label="2회 충돌 후 A의 vx (cm/s)"></td><td><input type="number" step="any" id="lab-r2vay" aria-label="2회 충돌 후 A의 vy (cm/s)"></td><td><input type="number" step="any" id="lab-r2vbx" aria-label="2회 충돌 후 B의 vx (cm/s)"></td><td><input type="number" step="any" id="lab-r2vby" aria-label="2회 충돌 후 B의 vy (cm/s)"></td></tr>
+      <tr><td>3회</td><td><input type="text" id="lab-r3kind" aria-label="3회 충돌 종류"></td><td><input type="number" step="any" id="lab-r3ma" aria-label="3회 m_A (g)"></td><td><input type="number" step="any" id="lab-r3mb" aria-label="3회 m_B (g)"></td><td><input type="number" step="any" id="lab-r3va" aria-label="3회 충돌 전 A의 vx (cm/s)"></td><td><input type="number" step="any" id="lab-r3vax" aria-label="3회 충돌 후 A의 vx (cm/s)"></td><td><input type="number" step="any" id="lab-r3vay" aria-label="3회 충돌 후 A의 vy (cm/s)"></td><td><input type="number" step="any" id="lab-r3vbx" aria-label="3회 충돌 후 B의 vx (cm/s)"></td><td><input type="number" step="any" id="lab-r3vby" aria-label="3회 충돌 후 B의 vy (cm/s)"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-lab">기록표 복사</button>
+    <h3>기록표 2 — 운동량 성분의 합 (단위: g·cm/s)</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-lab2">
+      <tr><th>회</th><th>Σp<sub>x</sub> 전</th><th>Σp<sub>x</sub> 후</th><th>x 차이 (%)</th><th>Σp<sub>y</sub> 전</th><th>Σp<sub>y</sub> 후</th><th>운동 에너지 비 (후/전)</th></tr>
+      <tr><td>1회</td><td><input type="number" step="any" id="calc-r1px0" aria-label="1회 충돌 전 Σpx"></td><td><input type="number" step="any" id="calc-r1px1" aria-label="1회 충돌 후 Σpx"></td><td><input type="number" step="any" id="calc-r1dpx" aria-label="1회 x성분 차이(%)"></td><td><input type="number" step="any" id="calc-r1py0" aria-label="1회 충돌 전 Σpy"></td><td><input type="number" step="any" id="calc-r1py1" aria-label="1회 충돌 후 Σpy"></td><td><input type="number" step="any" id="calc-r1ke" aria-label="1회 운동 에너지 비(후/전)"></td></tr>
+      <tr><td>2회</td><td><input type="number" step="any" id="calc-r2px0" aria-label="2회 충돌 전 Σpx"></td><td><input type="number" step="any" id="calc-r2px1" aria-label="2회 충돌 후 Σpx"></td><td><input type="number" step="any" id="calc-r2dpx" aria-label="2회 x성분 차이(%)"></td><td><input type="number" step="any" id="calc-r2py0" aria-label="2회 충돌 전 Σpy"></td><td><input type="number" step="any" id="calc-r2py1" aria-label="2회 충돌 후 Σpy"></td><td><input type="number" step="any" id="calc-r2ke" aria-label="2회 운동 에너지 비(후/전)"></td></tr>
+      <tr><td>3회</td><td><input type="number" step="any" id="calc-r3px0" aria-label="3회 충돌 전 Σpx"></td><td><input type="number" step="any" id="calc-r3px1" aria-label="3회 충돌 후 Σpx"></td><td><input type="number" step="any" id="calc-r3dpx" aria-label="3회 x성분 차이(%)"></td><td><input type="number" step="any" id="calc-r3py0" aria-label="3회 충돌 전 Σpy"></td><td><input type="number" step="any" id="calc-r3py1" aria-label="3회 충돌 후 Σpy"></td><td><input type="number" step="any" id="calc-r3ke" aria-label="3회 운동 에너지 비(후/전)"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-lab2">기록표 복사</button>
+    <h3>기록표 3 — 폭발형 분리 (오른쪽 = +)</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-lab3">
+      <tr><th>회</th><th>m₁ (kg)</th><th>v₁ (m/s)</th><th>m₂ (kg)</th><th>v₂ (m/s)</th><th>p₁ (kg·m/s)</th><th>p₂ (kg·m/s)</th><th>p₁ + p₂</th></tr>
+      <tr><td>1회</td><td><input type="number" step="any" id="exp-r1m1" aria-label="1회 수레 1 질량 (kg)"></td><td><input type="number" step="any" id="exp-r1v1" aria-label="1회 수레 1 속도 (m/s)"></td><td><input type="number" step="any" id="exp-r1m2" aria-label="1회 수레 2 질량 (kg)"></td><td><input type="number" step="any" id="exp-r1v2" aria-label="1회 수레 2 속도 (m/s)"></td><td><input type="number" step="any" id="exp-r1p1" aria-label="1회 p1 (kg·m/s)"></td><td><input type="number" step="any" id="exp-r1p2" aria-label="1회 p2 (kg·m/s)"></td><td><input type="number" step="any" id="exp-r1ps" aria-label="1회 p1+p2 (kg·m/s)"></td></tr>
+      <tr><td>2회</td><td><input type="number" step="any" id="exp-r2m1" aria-label="2회 수레 1 질량 (kg)"></td><td><input type="number" step="any" id="exp-r2v1" aria-label="2회 수레 1 속도 (m/s)"></td><td><input type="number" step="any" id="exp-r2m2" aria-label="2회 수레 2 질량 (kg)"></td><td><input type="number" step="any" id="exp-r2v2" aria-label="2회 수레 2 속도 (m/s)"></td><td><input type="number" step="any" id="exp-r2p1" aria-label="2회 p1 (kg·m/s)"></td><td><input type="number" step="any" id="exp-r2p2" aria-label="2회 p2 (kg·m/s)"></td><td><input type="number" step="any" id="exp-r2ps" aria-label="2회 p1+p2 (kg·m/s)"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-lab3">기록표 복사</button>
+    <h3>결과 분석</h3>
+    <label class="answer-field"><span>A1. 충돌 전후 Σp<sub>x</sub>는 몇 % 차이가 났나요? 운동량이 보존되었다고 말할 수 있는지 판단하고 근거를 쓰세요.</span><textarea id="lab-a1"></textarea></label>
+    <label class="answer-field"><span>A2. 충돌 전 Σp<sub>y</sub>는 0이었습니다. 충돌 후 두 동전의 p<sub>y</sub>는 어떤 관계였나요? 그림 1과 비교해 설명하세요.</span><textarea id="lab-a2"></textarea></label>
+    <label class="answer-field"><span>A3. 측정값이 완전히 보존되지 않은 원인을 두 가지 이상 들고, 그 영향을 줄이는 방법을 제안하세요.</span><textarea id="lab-a3"></textarea></label>
+    <label class="answer-field"><span>A4. 운동 에너지 비(후/전)는 1보다 작았나요? 운동량은 보존되는데 운동 에너지는 왜 줄어들 수 있을까요?</span><textarea id="lab-a4"></textarea></label>
+    <label class="answer-field"><span>A5. 폭발형 분리에서 질량이 큰 수레와 작은 수레의 속력은 어떻게 달랐나요? 이 결과를 '정지한 입자가 두 입자로 붕괴하는 경우'와 연결해 설명하세요.</span><textarea id="lab-a5"></textarea></label>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">04</span><h2>실험 B: 3D 모의실험 — 붕괴 재구성 실험실</h2></div>
+    <p class="prose">질량 M인 입자가 두 딸 입자로 붕괴하는 장면을 3D로 봅니다. 화살표는 딸 입자의 운동량 벡터입니다. 패널의 <b>4-벡터 표</b>(E, p<sub>x</sub>, p<sub>y</sub>, p<sub>z</sub>)로 불변질량을 직접 계산해 입력하면 판정해 줍니다. '미지 입자' 모드에서는 정체를 모르는 입자의 사건 10개를 분석해 무엇인지 맞힙니다. 계산기를 준비하세요.</p>
+    <a class="btn btn--sim no-print" href="../sims/t07.html">3D 모의실험 열기</a>
+    <h3>미션</h3>
+    <ol class="steps">
+      <li><span class="st"><b>정지 붕괴</b> — [정지 붕괴] 모드, Z → μ⁺μ⁻에서 [새 사건]을 눌러 가며 사건 2개를 [기록]한다. 표의 '합 Σ' 줄에서 p<sub>x</sub>, p<sub>y</sub>, p<sub>z</sub>가 모두 0인지, 두 화살표가 정반대인지 확인한다.</span></li>
+      <li><span class="st"><b>불변질량 계산</b> — 표의 값으로 M² = (ΣE)² − (Σp<sub>x</sub>)² − (Σp<sub>y</sub>)² − (Σp<sub>z</sub>)²를 계산해 [내 계산]에 넣고 [판정]을 누른다. '정확'이 나오면 [기록]한다.</span></li>
+      <li><span class="st"><b>움직이는 붕괴</b> — [움직이는 붕괴] 모드에서 같은 입자를 부모 운동량 P = 0, 30, 80 GeV/c처럼 서로 다르게(최대–최소 20 GeV/c 이상) 바꿔 가며 3번 계산·판정·기록한다. 그래프에서 ΣE와 M이 P에 따라 어떻게 달라지는지 본다.</span></li>
+      <li><span class="st"><b>미지 입자 판별</b> — [미지 입자] 모드에서 사건 몇 개의 M을 직접 계산하고, 히스토그램의 평균 질량을 기준 질량 표와 비교해 정체를 제출한다. [새 미지 입자]로 서로 다른 3종을 맞힌다.</span></li>
+      <li><span class="st"><b>검출기 분해능</b> — 같은 표본에서 분해능 σ를 0 %로 두었을 때와 3 %, 5 %, 10 %로 올렸을 때 분포 폭(표준편차)을 기록한다. [사건 100개 추가]로 모양을 더 분명하게 본다.</span></li>
+    </ol>
+    <h3>기록표 4 — 붕괴 사건 분석</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim">
+      <tr><th>사건</th><th>모드</th><th>입자</th><th>P (GeV/c)</th><th>ΣE (GeV)</th><th>|Σp| (GeV/c)</th><th>내 M (GeV/c²)</th><th>판정</th></tr>
+      <tr><td>사건 1</td><td><input type="text" id="sim-r1mode" aria-label="사건 1 모드"></td><td><input type="text" id="sim-r1par" aria-label="사건 1 입자"></td><td><input type="number" step="any" id="sim-r1P" aria-label="사건 1 부모 운동량 P (GeV/c)"></td><td><input type="number" step="any" id="sim-r1E" aria-label="사건 1 ΣE (GeV)"></td><td><input type="number" step="any" id="sim-r1p" aria-label="사건 1 |Σp| (GeV/c)"></td><td><input type="number" step="any" id="sim-r1M" aria-label="사건 1 내가 계산한 M (GeV/c²)"></td><td><input type="text" id="sim-r1ok" aria-label="사건 1 판정"></td></tr>
+      <tr><td>사건 2</td><td><input type="text" id="sim-r2mode" aria-label="사건 2 모드"></td><td><input type="text" id="sim-r2par" aria-label="사건 2 입자"></td><td><input type="number" step="any" id="sim-r2P" aria-label="사건 2 부모 운동량 P (GeV/c)"></td><td><input type="number" step="any" id="sim-r2E" aria-label="사건 2 ΣE (GeV)"></td><td><input type="number" step="any" id="sim-r2p" aria-label="사건 2 |Σp| (GeV/c)"></td><td><input type="number" step="any" id="sim-r2M" aria-label="사건 2 내가 계산한 M (GeV/c²)"></td><td><input type="text" id="sim-r2ok" aria-label="사건 2 판정"></td></tr>
+      <tr><td>사건 3</td><td><input type="text" id="sim-r3mode" aria-label="사건 3 모드"></td><td><input type="text" id="sim-r3par" aria-label="사건 3 입자"></td><td><input type="number" step="any" id="sim-r3P" aria-label="사건 3 부모 운동량 P (GeV/c)"></td><td><input type="number" step="any" id="sim-r3E" aria-label="사건 3 ΣE (GeV)"></td><td><input type="number" step="any" id="sim-r3p" aria-label="사건 3 |Σp| (GeV/c)"></td><td><input type="number" step="any" id="sim-r3M" aria-label="사건 3 내가 계산한 M (GeV/c²)"></td><td><input type="text" id="sim-r3ok" aria-label="사건 3 판정"></td></tr>
+      <tr><td>사건 4</td><td><input type="text" id="sim-r4mode" aria-label="사건 4 모드"></td><td><input type="text" id="sim-r4par" aria-label="사건 4 입자"></td><td><input type="number" step="any" id="sim-r4P" aria-label="사건 4 부모 운동량 P (GeV/c)"></td><td><input type="number" step="any" id="sim-r4E" aria-label="사건 4 ΣE (GeV)"></td><td><input type="number" step="any" id="sim-r4p" aria-label="사건 4 |Σp| (GeV/c)"></td><td><input type="number" step="any" id="sim-r4M" aria-label="사건 4 내가 계산한 M (GeV/c²)"></td><td><input type="text" id="sim-r4ok" aria-label="사건 4 판정"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-sim">기록표 복사</button>
+    <h3>기록표 5 — 미지 입자 표본</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim2">
+      <tr><th>표본</th><th>딸 입자</th><th>σ (%)</th><th>평균 질량 (GeV/c²)</th><th>분포 폭 (GeV/c²)</th><th>내 판단</th></tr>
+      <tr><td>표본 1</td><td><input type="text" id="unk-r1d" aria-label="표본 1 딸 입자"></td><td><input type="number" step="any" id="unk-r1sig" aria-label="표본 1 분해능 σ (%)"></td><td><input type="number" step="any" id="unk-r1mean" aria-label="표본 1 평균 질량 (GeV/c²)"></td><td><input type="number" step="any" id="unk-r1sd" aria-label="표본 1 분포 폭 (GeV/c²)"></td><td><input type="text" id="unk-r1id" aria-label="표본 1 내가 판단한 입자"></td></tr>
+      <tr><td>표본 2</td><td><input type="text" id="unk-r2d" aria-label="표본 2 딸 입자"></td><td><input type="number" step="any" id="unk-r2sig" aria-label="표본 2 분해능 σ (%)"></td><td><input type="number" step="any" id="unk-r2mean" aria-label="표본 2 평균 질량 (GeV/c²)"></td><td><input type="number" step="any" id="unk-r2sd" aria-label="표본 2 분포 폭 (GeV/c²)"></td><td><input type="text" id="unk-r2id" aria-label="표본 2 내가 판단한 입자"></td></tr>
+      <tr><td>표본 3</td><td><input type="text" id="unk-r3d" aria-label="표본 3 딸 입자"></td><td><input type="number" step="any" id="unk-r3sig" aria-label="표본 3 분해능 σ (%)"></td><td><input type="number" step="any" id="unk-r3mean" aria-label="표본 3 평균 질량 (GeV/c²)"></td><td><input type="number" step="any" id="unk-r3sd" aria-label="표본 3 분포 폭 (GeV/c²)"></td><td><input type="text" id="unk-r3id" aria-label="표본 3 내가 판단한 입자"></td></tr>
+      <tr><td>표본 4</td><td><input type="text" id="unk-r4d" aria-label="표본 4 딸 입자"></td><td><input type="number" step="any" id="unk-r4sig" aria-label="표본 4 분해능 σ (%)"></td><td><input type="number" step="any" id="unk-r4mean" aria-label="표본 4 평균 질량 (GeV/c²)"></td><td><input type="number" step="any" id="unk-r4sd" aria-label="표본 4 분포 폭 (GeV/c²)"></td><td><input type="text" id="unk-r4id" aria-label="표본 4 내가 판단한 입자"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-sim2">기록표 복사</button>
+    <label class="answer-field"><span>B1. 정지 붕괴에서 두 딸 입자의 에너지 합 ΣE는 무엇과 같았나요? 그 까닭을 E² = p² + m²으로 설명하세요.</span><textarea id="sim-b1"></textarea></label>
+    <label class="answer-field"><span>B2. 부모 운동량 P를 키우면 ΣE, |Σp|, M은 각각 어떻게 변했나요? '불변'질량이라는 이름이 붙은 까닭을 쓰세요.</span><textarea id="sim-b2"></textarea></label>
+    <label class="answer-field"><span>B3. 미지 입자 중 딸 입자가 광자 두 개인 경우는 무엇이었나요? 광자의 질량이 0인데도 두 광자의 불변질량이 125 GeV/c²가 될 수 있는 이유는?</span><textarea id="sim-b3"></textarea></label>
+    <label class="answer-field"><span>B4. 분해능 σ를 키우면 히스토그램이 어떻게 변했나요? σ와 상대 폭(표준편차/평균) 사이에 어떤 관계가 보이나요? 실제 실험에서 좋은 분해능이 왜 중요한지 쓰세요.</span><textarea id="sim-b4"></textarea></label>
+    <label class="answer-field"><span>B5. (선택) 직접 정하기에서 K⁰ₛ → π⁺π⁻ (0.4976 GeV/c²)를 고르고, 딸 입자 질량을 무시하고 계산(E = |p|로 두기)하면 M이 얼마나 틀리는지 확인해 보세요. Z → μ⁺μ⁻에서는 왜 무시해도 괜찮았나요?</span><textarea id="sim-b5"></textarea></label>
+  </section>
+
+  <section class="section" id="cern">
+    <div class="section__head"><span class="section__tag">05</span><h2>실제 CERN에서는</h2></div>
+    <div class="box box--cern prose">
+      <p><b>불변질량은 입자물리학의 '발견 도구'입니다.</b> 1974년 J/ψ(브룩헤이븐·SLAC), 1977년 Υ(페르미 연구소)가 모두 두 렙톤의 불변질량 분포에 솟은 봉우리로 발견되었습니다.</p>
+      <p>1983년 CERN은 SPS를 양성자–반양성자 충돌기로 바꾸어 UA1·UA2 실험에서 W와 Z 보손을 발견했습니다. Z는 전자 쌍·뮤온 쌍의 불변질량이 약 91 GeV/c²에 모인 사건들로 확인되었고, 이 업적으로 카를로 루비아와 시몬 반 데르 메르가 1984년 노벨 물리학상을 받았습니다.</p>
+      <p>2012년 7월 4일 ATLAS와 CMS는 힉스 보손 발견을 발표했습니다. 핵심 증거가 바로 <b>H → γγ</b>(두 광자)와 <b>H → ZZ → 4렙톤</b>의 불변질량 분포에서 약 125 GeV/c²에 나타난 작은 봉우리였습니다. 수십억 번의 충돌 중 대부분은 배경 사건이어서, 봉우리를 찾으려면 엄청나게 많은 사건과 좋은 분해능이 필요합니다.</p>
+      <p>CMS 검출기는 3.8 T 솔레노이드 자기장 속에서 뮤온 트랙의 휘어짐으로 운동량을 재고(주제 4·5), 광자는 전자기 칼로리미터(ECAL)로 에너지를 잽니다. 주제 10에서는 CMS가 실제로 기록한 이중뮤온 데이터로 오늘 배운 계산을 그대로 해 봅니다.</p>
+    </div>
+  </section>
+
+  <section class="section" id="check">
+    <div class="section__head"><span class="section__tag">06</span><h2>확인 문제</h2></div>
+    <label class="answer-field"><span>1. (개념) 정지해 있던 입자가 두 입자로 붕괴할 때, 두 딸 입자가 반드시 정반대 방향으로 날아가는 까닭을 운동량 보존으로 설명하세요. 만약 같은 방향으로 날아가는 두 조각이 관측된다면 무엇을 알 수 있나요?</span><textarea id="check-1"></textarea></label>
+    <label class="answer-field"><span>2. (계산) 마찰 없는 평면에서 질량 2.0 kg인 공 A가 +x 방향으로 4.0 m/s로 움직여 정지한 같은 질량의 공 B와 충돌했습니다. 충돌 후 A의 속도가 (v<sub>x</sub>, v<sub>y</sub>) = (2.0, 2.0) m/s라면 B의 속도는? 이 충돌은 탄성 충돌인가요?</span><textarea id="check-2"></textarea></label>
+    <label class="answer-field"><span>3. (계산) 어떤 입자의 운동량이 3.0 GeV/c, 질량이 4.0 GeV/c²입니다. 이 입자의 에너지 E와 로런츠 인자 γ를 구하세요.</span><textarea id="check-3"></textarea></label>
+    <label class="answer-field"><span>4. (계산) 두 광자의 4-벡터가 γ₁ = (80.0, 80.0, 0.0, 0.0), γ₂ = (50.0, −47.8, 14.6, 0.0) [GeV]입니다. 두 광자를 만든 입자의 불변질량을 구하고, 어떤 입자인지 판단하세요. 이 입자의 운동량 크기도 구하세요.</span><textarea id="check-4"></textarea></label>
+    <label class="answer-field"><span>5. (개념) 같은 Z 보손 붕괴 사건을 땅에 정지한 관찰자와 빠르게 움직이는 우주선 안의 관찰자가 함께 측정합니다. 두 관찰자가 측정한 ΣE, |Σp|, 불변질량 M 가운데 같은 값은 무엇인가요? 이것이 실험에서 왜 편리한가요?</span><textarea id="check-5"></textarea></label>
+    <label class="answer-field"><span>6. (해석) 검출기 X는 운동량 분해능 1 %, 검출기 Y는 5 %입니다. 같은 J/ψ → μ⁺μ⁻ 사건들로 질량 히스토그램을 그리면 어떤 차이가 생길까요? 질량이 3.10 GeV/c²와 3.69 GeV/c²인 두 입자(J/ψ와 ψ(2S))를 구별하는 데에는 어느 검출기가 유리한가요?</span><textarea id="check-6"></textarea></label>
+  </section>
+
+  <section class="section" id="up">
+    <div class="box box--up">
+      <h3>업그레이드 도전 — 사라진 에너지와 중성미자</h3>
+      <p>β 붕괴는 원자핵 속 중성자가 양성자로 바뀌면서 전자를 내보내는 과정입니다. 1914년 채드윅이 처음 관측하고 1920년대에 정밀하게 확인한 사실은 놀라웠습니다. 만약 붕괴가 n → p + e⁻ 처럼 <b>두 입자로</b> 나뉜다면, 정지 붕괴의 두 딸 입자는 운동량 크기가 정해지므로 전자의 에너지는 언제나 <b>같은 값</b>이어야 합니다. 그런데 실제로는 0부터 최댓값까지 <b>연속적인</b> 에너지 분포가 나왔습니다.</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 520 220" width="520" role="img" aria-label="베타 붕괴 전자 에너지 분포: 2체 붕괴 예상과 실제 관측 비교">
+          <line x1="50" y1="180" x2="500" y2="180" style="stroke:currentColor;stroke-width:1.5"/>
+          <line x1="50" y1="180" x2="50" y2="20" style="stroke:currentColor;stroke-width:1.5"/>
+          <path d="M50 180 C 90 60, 150 40, 210 60 S 360 150, 430 180" style="fill:none;stroke:var(--accent);stroke-width:3"/>
+          <line x1="430" y1="180" x2="430" y2="30" style="stroke:var(--track);stroke-width:3;stroke-dasharray:6 4"/>
+          <text x="300" y="45" font-size="12">2체 붕괴라면: 모두 이 에너지</text>
+          <text x="345" y="62" font-size="12">(약 0.78 MeV)</text>
+          <text x="120" y="38" font-size="12">실제 관측: 연속 분포</text>
+          <text x="200" y="208" font-size="12">전자의 운동 에너지 →</text>
+          <text x="14" y="110" font-size="12" transform="rotate(-90 14 110)">전자 수</text>
+          <text x="420" y="198" font-size="11" class="muted-fill">0.78</text>
+          <text x="44" y="198" font-size="11" class="muted-fill">0</text>
+        </svg>
+        <figcaption>그림 3. β 붕괴 전자의 에너지 분포(모양은 개념도).</figcaption>
+      </figure>
+      <ol>
+        <li>정지한 중성자(939.565 MeV/c²)가 양성자(938.272 MeV/c²)와 전자(0.511 MeV/c²) 두 개로만 붕괴한다고 가정하고, 2체 붕괴 공식 E<sub>e</sub> = (M² + m<sub>e</sub>² − m<sub>p</sub>²) / (2M)로 전자의 에너지를 구한 뒤 운동 에너지(E<sub>e</sub> − m<sub>e</sub>)를 계산해 보세요.</li>
+        <li>파울리는 1930년, 에너지 보존을 지키기 위해 "보이지 않는 세 번째 입자"가 에너지를 나눠 가진다고 제안했습니다(지금의 반중성미자). 세 입자로 붕괴하면 왜 전자의 에너지가 연속 분포가 되는지 설명해 보세요.</li>
+        <li>더 나아가기: 주제 9에서는 LHC 검출기에서 중성미자가 남기는 '누락 운동량'을 이용해 W 보손을 찾습니다.</li>
+      </ol>
+      <label class="answer-field"><span>도전 기록</span><textarea id="up-1"></textarea></label>
+    </div>
+  </section>
+
+  <section class="section" id="self">
+    <div class="section__head"><span class="section__tag">07</span><h2>자기 평가</h2></div>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="self-1"> <span>2차원 충돌에서 운동량이 x, y 성분별로 보존됨을 내 측정값으로 보일 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-2"> <span>영상 분석으로 속도 성분을 구하고, 측정 오차의 원인을 설명할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-3"> <span>E² = (pc)² + (mc²)²를 써서 에너지·운동량·질량 중 두 값으로 나머지 하나를 구할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-4"> <span>4-벡터 표로 두 입자의 불변질량을 계산하고 입자의 정체를 판단할 수 있다.</span></label></li>
+      <li><label><input type="checkbox" id="self-5"> <span>불변질량이 기준계에 관계없이 같다는 것과 분해능이 질량 분포 폭에 주는 영향을 설명할 수 있다.</span></label></li>
+    </ul>
+    <label class="answer-field"><span>오늘 가장 궁금해진 것 한 가지</span><textarea id="self-q"></textarea></label>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>
