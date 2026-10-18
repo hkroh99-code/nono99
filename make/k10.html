@@ -20,8 +20,8 @@
 .kx-note { font-size: 8pt; color: #4a5064; }
 .kx-facts { border: .8pt solid #111522; border-radius: 1.5mm; padding: 2mm 3mm; font-size: 8.6pt; line-height: 1.45; display: grid; grid-template-columns: 1fr 1fr; gap: .4mm 5mm; }
 .kx-facts b { font-weight: 700; }
-.sheet .write-lines.kx-wl { min-height: 15.2mm; }
-.sheet .write-lines.kx-wl1 { min-height: 7.6mm; }
+.sheet .write-lines.kx-wl { min-height: 22.8mm; }
+.sheet .write-lines.kx-wl1 { min-height: 15.2mm; }
 .sheet table.kx-t { border-collapse: collapse; width: 100%; font-size: 8.6pt; }
 .sheet table.kx-t th, .sheet table.kx-t td { padding: .9mm 1.6mm; border: 1px solid var(--paper-line); }
 .sheet table.kx-t tr:last-child td { border-bottom: 1px solid var(--paper-line); }
@@ -91,10 +91,10 @@
 <text x="110.37" y="34" font-size="2.3" text-anchor="middle" transform="rotate(-90 110.37 34)" style="fill:#4a5064">빔 방향(v)</text>
 <text x="76.23" y="75.4" font-size="2.3" text-anchor="end" style="fill:#4a5064">B 자리</text>
 <text x="109.77" y="75.4" font-size="2.3" style="fill:#4a5064">B 자리</text>
-<text x="83.23" y="104.5" font-size="2.6" text-anchor="middle" font-weight="700">안쪽 빔관</text>
-<text x="83.23" y="107.6" font-size="2.3" text-anchor="middle">빔 1</text>
-<text x="102.77" y="104.5" font-size="2.6" text-anchor="middle" font-weight="700">바깥쪽 빔관</text>
-<text x="102.77" y="107.6" font-size="2.3" text-anchor="middle">빔 2</text>
+<text x="81.73" y="102" font-size="2.6" text-anchor="end" font-weight="700">안쪽 빔관</text>
+<text x="81.73" y="105.4" font-size="2.3" text-anchor="end">빔 1</text>
+<text x="104.27" y="102" font-size="2.6" font-weight="700">바깥쪽 빔관</text>
+<text x="104.27" y="105.4" font-size="2.3" >빔 2</text>
 <text x="25.21" y="12" font-size="4.4" font-weight="700">LHC 쌍극자석</text>
 <text x="25.21" y="17.4" font-size="3" >축척 1:10 · 윗면 반쪽(A)</text>
 <text x="25.21" y="25" font-size="2.5" >진공 용기 지름 914 mm</text>
@@ -122,7 +122,7 @@
 <text x="31.21" y="131" font-size="3.6" font-weight="700">아랫면 반쪽(B) · LHC 주 쌍극자석의 수치</text>
 <text x="31.21" y="138" font-size="2.7" >· 개수 1232개 · 길이 약 15 m · 무게 약 35 t</text>
 <text x="31.21" y="142.6" font-size="2.7" >· 초전도 코일(니오브–타이타늄), 초유체 헬륨으로 1.9 K까지 냉각</text>
-<text x="31.21" y="147.2" font-size="2.7" >· 약 11.8 kA의 전류로 약 8.33 T (근삿값, 설계 최대)</text>
+<text x="31.21" y="147.2" font-size="2.7" >· 약 11.8 kA의 전류로 약 8.33 T (근삿값, 7 TeV 설계값)</text>
 <text x="31.21" y="151.8" font-size="2.7" >· 빔관 2개를 한 자석에 넣은 "투 인 원(two-in-one)" 설계</text>
 <text x="31.21" y="156.4" font-size="2.7" >· 냉각 질량(철 요크와 코일) 지름 약 570 mm → 모형 57 mm</text>
 <text x="31.21" y="166" font-size="2.6" font-weight="600">1:10 자: 모형 10 cm = 실제 1 m (인쇄 후 자로 확인)</text>
@@ -246,7 +246,7 @@
 <article class="sheet">
 <header class="sheet-head"><h2>② 끝 뚜껑 — 1:10 단면 (앞·뒤)</h2><span class="kit-no">CERN 탐구 교실 · 키트 K10 · 2/5</span></header>
 <div class="name-line">학번 <span></span> 이름 <span></span></div>
-<div class="kx-center"><svg width="186mm" height="178mm" viewBox="0 0 186 178" role="img" aria-label="끝 뚜껑 두 개: 1:10 쌍극자석 단면. 두 빔관의 자기장 방향이 서로 반대">
+<div class="kx-center"><svg width="186mm" height="174mm" viewBox="0 0 186 174" role="img" aria-label="끝 뚜껑 두 개: 1:10 쌍극자석 단면. 두 빔관의 자기장 방향이 서로 반대">
 <defs><pattern id="k10g2" width="2.4" height="2.4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2.4" height="2.4" fill="#e9eef9"/><line x1="0" y1="0" x2="0" y2="2.4" stroke="#fff" stroke-width="1.1"/></pattern></defs>
 <polygon points="97.72,44.6 102.81,39.9 97.84,27.9 90.92,28.17" fill="url(#k10g2)"/>
 <polygon points="90.92,28.17 93.81,21.87 84.63,12.69 78.33,15.58" fill="url(#k10g2)"/>
@@ -339,88 +339,88 @@
 <line x1="53.31" y1="89" x2="53" y2="91.5" stroke="#111522" stroke-width="0.18"/><circle cx="53" cy="91.5" r="0.45" fill="#111522"/><circle cx="53.31" cy="89" r="2.1" fill="#fff" stroke="#111522" stroke-width="0.25"/><text x="53.31" y="90.05" font-size="2.8" text-anchor="middle" font-weight="700">9</text>
 <polygon points="97.72,44.6 90.92,28.17 78.33,15.58 61.9,8.78 44.1,8.78 27.67,15.58 15.08,28.17 8.28,44.6 8.28,62.4 15.08,78.83 27.67,91.42 44.1,98.22 61.9,98.22 78.33,91.42 90.92,78.83 97.72,62.4" stroke="#6a3fb5" stroke-width="0.3" stroke-dasharray="1 0.9" fill="none"/>
 <polygon points="97.72,44.6 102.81,39.9 97.84,27.9 90.92,28.17 93.81,21.87 84.63,12.69 78.33,15.58 78.6,8.66 66.6,3.69 61.9,8.78 59.5,2.28 46.5,2.28 44.1,8.78 39.4,3.69 27.4,8.66 27.67,15.58 21.37,12.69 12.19,21.87 15.08,28.17 8.16,27.9 3.19,39.9 8.28,44.6 1.78,47 1.78,60 8.28,62.4 3.19,67.1 8.16,79.1 15.08,78.83 12.19,85.13 21.37,94.31 27.67,91.42 27.4,98.34 39.4,103.31 44.1,98.22 46.5,104.72 59.5,104.72 61.9,98.22 66.6,103.31 78.6,98.34 78.33,91.42 84.63,94.31 93.81,85.13 90.92,78.83 97.84,79.1 102.81,67.1 97.72,62.4 104.22,60 104.22,47" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
-<polygon points="177.22,115.1 182.31,110.4 177.34,98.4 170.42,98.67" fill="url(#k10g2)"/>
-<polygon points="170.42,98.67 173.31,92.37 164.13,83.19 157.83,86.08" fill="url(#k10g2)"/>
-<polygon points="157.83,86.08 158.1,79.16 146.1,74.19 141.4,79.28" fill="url(#k10g2)"/>
-<polygon points="141.4,79.28 139,72.78 126,72.78 123.6,79.28" fill="url(#k10g2)"/>
-<polygon points="123.6,79.28 118.9,74.19 106.9,79.16 107.17,86.08" fill="url(#k10g2)"/>
-<polygon points="107.17,86.08 100.87,83.19 91.69,92.37 94.58,98.67" fill="url(#k10g2)"/>
-<polygon points="94.58,98.67 87.66,98.4 82.69,110.4 87.78,115.1" fill="url(#k10g2)"/>
-<polygon points="87.78,115.1 81.28,117.5 81.28,130.5 87.78,132.9" fill="url(#k10g2)"/>
-<polygon points="87.78,132.9 82.69,137.6 87.66,149.6 94.58,149.33" fill="url(#k10g2)"/>
-<polygon points="94.58,149.33 91.69,155.63 100.87,164.81 107.17,161.92" fill="url(#k10g2)"/>
-<polygon points="107.17,161.92 106.9,168.84 118.9,173.81 123.6,168.72" fill="url(#k10g2)"/>
-<polygon points="123.6,168.72 126,175.22 139,175.22 141.4,168.72" fill="url(#k10g2)"/>
-<polygon points="141.4,168.72 146.1,173.81 158.1,168.84 157.83,161.92" fill="url(#k10g2)"/>
-<polygon points="157.83,161.92 164.13,164.81 173.31,155.63 170.42,149.33" fill="url(#k10g2)"/>
-<polygon points="170.42,149.33 177.34,149.6 182.31,137.6 177.22,132.9" fill="url(#k10g2)"/>
-<polygon points="177.22,132.9 183.72,130.5 183.72,117.5 177.22,115.1" fill="url(#k10g2)"/>
-<polygon points="177.22,115.1 170.42,98.67 157.83,86.08 141.4,79.28 123.6,79.28 107.17,86.08 94.58,98.67 87.78,115.1 87.78,132.9 94.58,149.33 107.17,161.92 123.6,168.72 141.4,168.72 157.83,161.92 170.42,149.33 177.22,132.9" fill="#fff"/>
-<path fill-rule="evenodd" d="M177.2 124 A44.7 44.7 0 1 0 87.8 124 A44.7 44.7 0 1 0 177.2 124 Z M176.4 124 A43.9 43.9 0 1 0 88.6 124 A43.9 43.9 0 1 0 176.4 124 Z" fill="#4f6796"/>
-<circle cx="132.5" cy="124" r="38.5" fill="none" stroke="#7d879c" stroke-width="0.4" stroke-dasharray="1.6 0.9"/>
-<polygon points="129.1,152.2 135.9,152.2 138.1,167.95 126.9,167.95" fill="#efe7cf" stroke="#111522" stroke-width="0.25"/>
-<path fill-rule="evenodd" d="M161 124 A28.5 28.5 0 1 0 104 124 A28.5 28.5 0 1 0 161 124 Z M160.1 124 A27.6 27.6 0 1 0 104.9 124 A27.6 27.6 0 1 0 160.1 124 Z" fill="#8f95a3"/>
-<circle cx="132.5" cy="124" r="27.6" fill="#d9dce3" stroke="#111522" stroke-width="0.2"/>
-<circle cx="132.5" cy="105.8" r="2.4" fill="#fff" stroke="#111522" stroke-width="0.25"/>
-<circle cx="142.2" cy="124" r="9" fill="#eef0f4" stroke="#111522" stroke-width="0.22"/>
-<path d="M146.45 123.93 A4.25 4.25 0 0 0 146.17 122.48 L144.81 123 A2.8 2.8 0 0 1 145 123.95 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M146.17 125.52 A4.25 4.25 0 0 0 146.45 124.07 L145 124.05 A2.8 2.8 0 0 1 144.81 125 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M138.23 122.48 A4.25 4.25 0 0 0 137.95 123.93 L139.4 123.95 A2.8 2.8 0 0 1 139.59 123 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M137.95 124.07 A4.25 4.25 0 0 0 138.23 125.52 L139.59 125 A2.8 2.8 0 0 1 139.4 124.05 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M146.05 122.2 A4.25 4.25 0 0 0 145.21 120.99 L144.18 122.02 A2.8 2.8 0 0 1 144.74 122.82 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M145.21 127.01 A4.25 4.25 0 0 0 146.05 125.8 L144.74 125.18 A2.8 2.8 0 0 1 144.18 125.98 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M139.19 120.99 A4.25 4.25 0 0 0 138.35 122.2 L139.66 122.82 A2.8 2.8 0 0 1 140.22 122.02 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M138.35 125.8 A4.25 4.25 0 0 0 139.19 127.01 L140.22 125.98 A2.8 2.8 0 0 1 139.66 125.18 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M144.99 120.79 A4.25 4.25 0 0 0 143.65 120.01 L143.16 121.37 A2.8 2.8 0 0 1 144.04 121.89 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M143.65 127.99 A4.25 4.25 0 0 0 144.99 127.21 L144.04 126.11 A2.8 2.8 0 0 1 143.16 126.63 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M140.75 120.01 A4.25 4.25 0 0 0 139.41 120.79 L140.36 121.89 A2.8 2.8 0 0 1 141.24 121.37 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M139.41 127.21 A4.25 4.25 0 0 0 140.75 127.99 L141.24 126.63 A2.8 2.8 0 0 1 140.36 126.11 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M148.05 123.9 A5.85 5.85 0 0 0 147.58 121.71 L146.25 122.28 A4.4 4.4 0 0 1 146.6 123.92 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M147.58 126.29 A5.85 5.85 0 0 0 148.05 124.1 L146.6 124.08 A4.4 4.4 0 0 1 146.25 125.72 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M136.82 121.71 A5.85 5.85 0 0 0 136.35 123.9 L137.8 123.92 A4.4 4.4 0 0 1 138.15 122.28 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M136.35 124.1 A5.85 5.85 0 0 0 136.82 126.29 L138.15 125.72 A4.4 4.4 0 0 1 137.8 124.08 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M147.41 121.34 A5.85 5.85 0 0 0 146.11 119.65 L145.14 120.73 A4.4 4.4 0 0 1 146.12 122 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M146.11 128.35 A5.85 5.85 0 0 0 147.41 126.66 L146.12 126 A4.4 4.4 0 0 1 145.14 127.27 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M138.29 119.65 A5.85 5.85 0 0 0 136.99 121.34 L138.28 122 A4.4 4.4 0 0 1 139.26 120.73 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M136.99 126.66 A5.85 5.85 0 0 0 138.29 128.35 L139.26 127.27 A4.4 4.4 0 0 1 138.28 126 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<circle cx="142.2" cy="124" r="2.5" fill="#fff" stroke="#111522" stroke-width="0.25"/>
-<circle cx="122.8" cy="124" r="9" fill="#eef0f4" stroke="#111522" stroke-width="0.22"/>
-<path d="M127.05 123.93 A4.25 4.25 0 0 0 126.77 122.48 L125.41 123 A2.8 2.8 0 0 1 125.6 123.95 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M126.77 125.52 A4.25 4.25 0 0 0 127.05 124.07 L125.6 124.05 A2.8 2.8 0 0 1 125.41 125 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M118.83 122.48 A4.25 4.25 0 0 0 118.55 123.93 L120 123.95 A2.8 2.8 0 0 1 120.19 123 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M118.55 124.07 A4.25 4.25 0 0 0 118.83 125.52 L120.19 125 A2.8 2.8 0 0 1 120 124.05 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M126.65 122.2 A4.25 4.25 0 0 0 125.81 120.99 L124.78 122.02 A2.8 2.8 0 0 1 125.34 122.82 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M125.81 127.01 A4.25 4.25 0 0 0 126.65 125.8 L125.34 125.18 A2.8 2.8 0 0 1 124.78 125.98 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M119.79 120.99 A4.25 4.25 0 0 0 118.95 122.2 L120.26 122.82 A2.8 2.8 0 0 1 120.82 122.02 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M118.95 125.8 A4.25 4.25 0 0 0 119.79 127.01 L120.82 125.98 A2.8 2.8 0 0 1 120.26 125.18 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M125.59 120.79 A4.25 4.25 0 0 0 124.25 120.01 L123.76 121.37 A2.8 2.8 0 0 1 124.64 121.89 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M124.25 127.99 A4.25 4.25 0 0 0 125.59 127.21 L124.64 126.11 A2.8 2.8 0 0 1 123.76 126.63 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M121.35 120.01 A4.25 4.25 0 0 0 120.01 120.79 L120.96 121.89 A2.8 2.8 0 0 1 121.84 121.37 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M120.01 127.21 A4.25 4.25 0 0 0 121.35 127.99 L121.84 126.63 A2.8 2.8 0 0 1 120.96 126.11 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M128.65 123.9 A5.85 5.85 0 0 0 128.18 121.71 L126.85 122.28 A4.4 4.4 0 0 1 127.2 123.92 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M128.18 126.29 A5.85 5.85 0 0 0 128.65 124.1 L127.2 124.08 A4.4 4.4 0 0 1 126.85 125.72 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M117.42 121.71 A5.85 5.85 0 0 0 116.95 123.9 L118.4 123.92 A4.4 4.4 0 0 1 118.75 122.28 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M116.95 124.1 A5.85 5.85 0 0 0 117.42 126.29 L118.75 125.72 A4.4 4.4 0 0 1 118.4 124.08 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M128.01 121.34 A5.85 5.85 0 0 0 126.71 119.65 L125.74 120.73 A4.4 4.4 0 0 1 126.72 122 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M126.71 128.35 A5.85 5.85 0 0 0 128.01 126.66 L126.72 126 A4.4 4.4 0 0 1 125.74 127.27 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M118.89 119.65 A5.85 5.85 0 0 0 117.59 121.34 L118.88 122 A4.4 4.4 0 0 1 119.86 120.73 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<path d="M117.59 126.66 A5.85 5.85 0 0 0 118.89 128.35 L119.86 127.27 A4.4 4.4 0 0 1 118.88 126 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
-<circle cx="122.8" cy="124" r="2.5" fill="#fff" stroke="#111522" stroke-width="0.25"/>
-<path d="M142.2 133 L142.2 115 C142.2 109 122.8 109 122.8 115 L122.8 133 C122.8 139 142.2 139 142.2 133" fill="none" stroke="#6a3fb5" stroke-width="0.32"/>
-<path d="M142.2 115 C142.2 103 156.5 105 156.5 124 C156.5 143 142.2 145 142.2 133" fill="none" stroke="#6a3fb5" stroke-width="0.32"/>
-<path d="M122.8 115 C122.8 103 108.5 105 108.5 124 C108.5 143 122.8 145 122.8 133" fill="none" stroke="#6a3fb5" stroke-width="0.32"/>
-<polygon points="142.2,116.4 141.26,118.1 143.14,118.1" fill="#6a3fb5"/><polygon points="142.2,129.2 141.26,130.9 143.14,130.9" fill="#6a3fb5"/>
-<polygon points="122.8,131.6 123.74,129.9 121.87,129.9" fill="#6a3fb5"/><polygon points="122.8,118.8 123.74,117.1 121.87,117.1" fill="#6a3fb5"/>
-<polygon points="156.5,125.5 157.38,123.9 155.62,123.9" fill="#6a3fb5"/><polygon points="108.5,122.5 107.62,124.1 109.38,124.1" fill="#6a3fb5"/>
-<polygon points="130.9,110.5 132.4,111.33 132.4,109.68" fill="#6a3fb5"/><polygon points="134.1,137.5 132.6,136.68 132.6,138.32" fill="#6a3fb5"/>
-<circle cx="142.2" cy="124" r="1.15" fill="#fff" stroke="#c0182d" stroke-width="0.25"/><path d="M141.49 123.29 L142.91 124.71 M142.91 123.29 L141.49 124.71" stroke="#c0182d" stroke-width="0.25"/>
-<circle cx="122.8" cy="124" r="1.15" fill="#fff" stroke="#c0182d" stroke-width="0.25"/><circle cx="122.8" cy="124" r="0.35" fill="#c0182d"/>
-<text x="145.8" y="134.4" font-size="2.6" text-anchor="middle" font-weight="700" style="fill:#6a3fb5">B</text>
-<text x="119.2" y="134.4" font-size="2.6" text-anchor="middle" font-weight="700" style="fill:#6a3fb5">B</text>
-<text x="153" y="153.6" font-size="2.4" text-anchor="middle" font-weight="700">링 중심 쪽 →</text>
-<text x="154.5" y="93.8" font-size="2.3" text-anchor="middle" font-weight="700">뒤(B)</text>
-<polygon points="177.22,115.1 170.42,98.67 157.83,86.08 141.4,79.28 123.6,79.28 107.17,86.08 94.58,98.67 87.78,115.1 87.78,132.9 94.58,149.33 107.17,161.92 123.6,168.72 141.4,168.72 157.83,161.92 170.42,149.33 177.22,132.9" stroke="#6a3fb5" stroke-width="0.3" stroke-dasharray="1 0.9" fill="none"/>
-<polygon points="177.22,115.1 182.31,110.4 177.34,98.4 170.42,98.67 173.31,92.37 164.13,83.19 157.83,86.08 158.1,79.16 146.1,74.19 141.4,79.28 139,72.78 126,72.78 123.6,79.28 118.9,74.19 106.9,79.16 107.17,86.08 100.87,83.19 91.69,92.37 94.58,98.67 87.66,98.4 82.69,110.4 87.78,115.1 81.28,117.5 81.28,130.5 87.78,132.9 82.69,137.6 87.66,149.6 94.58,149.33 91.69,155.63 100.87,164.81 107.17,161.92 106.9,168.84 118.9,173.81 123.6,168.72 126,175.22 139,175.22 141.4,168.72 146.1,173.81 158.1,168.84 157.83,161.92 164.13,164.81 173.31,155.63 170.42,149.33 177.34,149.6 182.31,137.6 177.22,132.9 183.72,130.5 183.72,117.5" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
+<polygon points="177.22,112.3 182.31,107.6 177.34,95.6 170.42,95.87" fill="url(#k10g2)"/>
+<polygon points="170.42,95.87 173.31,89.57 164.13,80.39 157.83,83.28" fill="url(#k10g2)"/>
+<polygon points="157.83,83.28 158.1,76.36 146.1,71.39 141.4,76.48" fill="url(#k10g2)"/>
+<polygon points="141.4,76.48 139,69.98 126,69.98 123.6,76.48" fill="url(#k10g2)"/>
+<polygon points="123.6,76.48 118.9,71.39 106.9,76.36 107.17,83.28" fill="url(#k10g2)"/>
+<polygon points="107.17,83.28 100.87,80.39 91.69,89.57 94.58,95.87" fill="url(#k10g2)"/>
+<polygon points="94.58,95.87 87.66,95.6 82.69,107.6 87.78,112.3" fill="url(#k10g2)"/>
+<polygon points="87.78,112.3 81.28,114.7 81.28,127.7 87.78,130.1" fill="url(#k10g2)"/>
+<polygon points="87.78,130.1 82.69,134.8 87.66,146.8 94.58,146.53" fill="url(#k10g2)"/>
+<polygon points="94.58,146.53 91.69,152.83 100.87,162.01 107.17,159.12" fill="url(#k10g2)"/>
+<polygon points="107.17,159.12 106.9,166.04 118.9,171.01 123.6,165.92" fill="url(#k10g2)"/>
+<polygon points="123.6,165.92 126,172.42 139,172.42 141.4,165.92" fill="url(#k10g2)"/>
+<polygon points="141.4,165.92 146.1,171.01 158.1,166.04 157.83,159.12" fill="url(#k10g2)"/>
+<polygon points="157.83,159.12 164.13,162.01 173.31,152.83 170.42,146.53" fill="url(#k10g2)"/>
+<polygon points="170.42,146.53 177.34,146.8 182.31,134.8 177.22,130.1" fill="url(#k10g2)"/>
+<polygon points="177.22,130.1 183.72,127.7 183.72,114.7 177.22,112.3" fill="url(#k10g2)"/>
+<polygon points="177.22,112.3 170.42,95.87 157.83,83.28 141.4,76.48 123.6,76.48 107.17,83.28 94.58,95.87 87.78,112.3 87.78,130.1 94.58,146.53 107.17,159.12 123.6,165.92 141.4,165.92 157.83,159.12 170.42,146.53 177.22,130.1" fill="#fff"/>
+<path fill-rule="evenodd" d="M177.2 121.2 A44.7 44.7 0 1 0 87.8 121.2 A44.7 44.7 0 1 0 177.2 121.2 Z M176.4 121.2 A43.9 43.9 0 1 0 88.6 121.2 A43.9 43.9 0 1 0 176.4 121.2 Z" fill="#4f6796"/>
+<circle cx="132.5" cy="121.2" r="38.5" fill="none" stroke="#7d879c" stroke-width="0.4" stroke-dasharray="1.6 0.9"/>
+<polygon points="129.1,149.4 135.9,149.4 138.1,165.15 126.9,165.15" fill="#efe7cf" stroke="#111522" stroke-width="0.25"/>
+<path fill-rule="evenodd" d="M161 121.2 A28.5 28.5 0 1 0 104 121.2 A28.5 28.5 0 1 0 161 121.2 Z M160.1 121.2 A27.6 27.6 0 1 0 104.9 121.2 A27.6 27.6 0 1 0 160.1 121.2 Z" fill="#8f95a3"/>
+<circle cx="132.5" cy="121.2" r="27.6" fill="#d9dce3" stroke="#111522" stroke-width="0.2"/>
+<circle cx="132.5" cy="103" r="2.4" fill="#fff" stroke="#111522" stroke-width="0.25"/>
+<circle cx="142.2" cy="121.2" r="9" fill="#eef0f4" stroke="#111522" stroke-width="0.22"/>
+<path d="M146.45 121.13 A4.25 4.25 0 0 0 146.17 119.68 L144.81 120.2 A2.8 2.8 0 0 1 145 121.15 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M146.17 122.72 A4.25 4.25 0 0 0 146.45 121.27 L145 121.25 A2.8 2.8 0 0 1 144.81 122.2 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M138.23 119.68 A4.25 4.25 0 0 0 137.95 121.13 L139.4 121.15 A2.8 2.8 0 0 1 139.59 120.2 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M137.95 121.27 A4.25 4.25 0 0 0 138.23 122.72 L139.59 122.2 A2.8 2.8 0 0 1 139.4 121.25 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M146.05 119.4 A4.25 4.25 0 0 0 145.21 118.19 L144.18 119.22 A2.8 2.8 0 0 1 144.74 120.02 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M145.21 124.21 A4.25 4.25 0 0 0 146.05 123 L144.74 122.38 A2.8 2.8 0 0 1 144.18 123.18 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M139.19 118.19 A4.25 4.25 0 0 0 138.35 119.4 L139.66 120.02 A2.8 2.8 0 0 1 140.22 119.22 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M138.35 123 A4.25 4.25 0 0 0 139.19 124.21 L140.22 123.18 A2.8 2.8 0 0 1 139.66 122.38 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M144.99 117.99 A4.25 4.25 0 0 0 143.65 117.21 L143.16 118.57 A2.8 2.8 0 0 1 144.04 119.09 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M143.65 125.19 A4.25 4.25 0 0 0 144.99 124.41 L144.04 123.31 A2.8 2.8 0 0 1 143.16 123.83 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M140.75 117.21 A4.25 4.25 0 0 0 139.41 117.99 L140.36 119.09 A2.8 2.8 0 0 1 141.24 118.57 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M139.41 124.41 A4.25 4.25 0 0 0 140.75 125.19 L141.24 123.83 A2.8 2.8 0 0 1 140.36 123.31 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M148.05 121.1 A5.85 5.85 0 0 0 147.58 118.91 L146.25 119.48 A4.4 4.4 0 0 1 146.6 121.12 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M147.58 123.49 A5.85 5.85 0 0 0 148.05 121.3 L146.6 121.28 A4.4 4.4 0 0 1 146.25 122.92 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M136.82 118.91 A5.85 5.85 0 0 0 136.35 121.1 L137.8 121.12 A4.4 4.4 0 0 1 138.15 119.48 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M136.35 121.3 A5.85 5.85 0 0 0 136.82 123.49 L138.15 122.92 A4.4 4.4 0 0 1 137.8 121.28 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M147.41 118.54 A5.85 5.85 0 0 0 146.11 116.85 L145.14 117.93 A4.4 4.4 0 0 1 146.12 119.2 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M146.11 125.55 A5.85 5.85 0 0 0 147.41 123.86 L146.12 123.2 A4.4 4.4 0 0 1 145.14 124.47 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M138.29 116.85 A5.85 5.85 0 0 0 136.99 118.54 L138.28 119.2 A4.4 4.4 0 0 1 139.26 117.93 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M136.99 123.86 A5.85 5.85 0 0 0 138.29 125.55 L139.26 124.47 A4.4 4.4 0 0 1 138.28 123.2 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<circle cx="142.2" cy="121.2" r="2.5" fill="#fff" stroke="#111522" stroke-width="0.25"/>
+<circle cx="122.8" cy="121.2" r="9" fill="#eef0f4" stroke="#111522" stroke-width="0.22"/>
+<path d="M127.05 121.13 A4.25 4.25 0 0 0 126.77 119.68 L125.41 120.2 A2.8 2.8 0 0 1 125.6 121.15 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M126.77 122.72 A4.25 4.25 0 0 0 127.05 121.27 L125.6 121.25 A2.8 2.8 0 0 1 125.41 122.2 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M118.83 119.68 A4.25 4.25 0 0 0 118.55 121.13 L120 121.15 A2.8 2.8 0 0 1 120.19 120.2 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M118.55 121.27 A4.25 4.25 0 0 0 118.83 122.72 L120.19 122.2 A2.8 2.8 0 0 1 120 121.25 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M126.65 119.4 A4.25 4.25 0 0 0 125.81 118.19 L124.78 119.22 A2.8 2.8 0 0 1 125.34 120.02 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M125.81 124.21 A4.25 4.25 0 0 0 126.65 123 L125.34 122.38 A2.8 2.8 0 0 1 124.78 123.18 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M119.79 118.19 A4.25 4.25 0 0 0 118.95 119.4 L120.26 120.02 A2.8 2.8 0 0 1 120.82 119.22 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M118.95 123 A4.25 4.25 0 0 0 119.79 124.21 L120.82 123.18 A2.8 2.8 0 0 1 120.26 122.38 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M125.59 117.99 A4.25 4.25 0 0 0 124.25 117.21 L123.76 118.57 A2.8 2.8 0 0 1 124.64 119.09 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M124.25 125.19 A4.25 4.25 0 0 0 125.59 124.41 L124.64 123.31 A2.8 2.8 0 0 1 123.76 123.83 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M121.35 117.21 A4.25 4.25 0 0 0 120.01 117.99 L120.96 119.09 A2.8 2.8 0 0 1 121.84 118.57 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M120.01 124.41 A4.25 4.25 0 0 0 121.35 125.19 L121.84 123.83 A2.8 2.8 0 0 1 120.96 123.31 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M128.65 121.1 A5.85 5.85 0 0 0 128.18 118.91 L126.85 119.48 A4.4 4.4 0 0 1 127.2 121.12 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M128.18 123.49 A5.85 5.85 0 0 0 128.65 121.3 L127.2 121.28 A4.4 4.4 0 0 1 126.85 122.92 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M117.42 118.91 A5.85 5.85 0 0 0 116.95 121.1 L118.4 121.12 A4.4 4.4 0 0 1 118.75 119.48 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M116.95 121.3 A5.85 5.85 0 0 0 117.42 123.49 L118.75 122.92 A4.4 4.4 0 0 1 118.4 121.28 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M128.01 118.54 A5.85 5.85 0 0 0 126.71 116.85 L125.74 117.93 A4.4 4.4 0 0 1 126.72 119.2 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M126.71 125.55 A5.85 5.85 0 0 0 128.01 123.86 L126.72 123.2 A4.4 4.4 0 0 1 125.74 124.47 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M118.89 116.85 A5.85 5.85 0 0 0 117.59 118.54 L118.88 119.2 A4.4 4.4 0 0 1 119.86 117.93 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<path d="M117.59 123.86 A5.85 5.85 0 0 0 118.89 125.55 L119.86 124.47 A4.4 4.4 0 0 1 118.88 123.2 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.1"/>
+<circle cx="122.8" cy="121.2" r="2.5" fill="#fff" stroke="#111522" stroke-width="0.25"/>
+<path d="M142.2 130.2 L142.2 112.2 C142.2 106.2 122.8 106.2 122.8 112.2 L122.8 130.2 C122.8 136.2 142.2 136.2 142.2 130.2" fill="none" stroke="#6a3fb5" stroke-width="0.32"/>
+<path d="M142.2 112.2 C142.2 100.2 156.5 102.2 156.5 121.2 C156.5 140.2 142.2 142.2 142.2 130.2" fill="none" stroke="#6a3fb5" stroke-width="0.32"/>
+<path d="M122.8 112.2 C122.8 100.2 108.5 102.2 108.5 121.2 C108.5 140.2 122.8 142.2 122.8 130.2" fill="none" stroke="#6a3fb5" stroke-width="0.32"/>
+<polygon points="142.2,113.6 141.26,115.3 143.14,115.3" fill="#6a3fb5"/><polygon points="142.2,126.4 141.26,128.1 143.14,128.1" fill="#6a3fb5"/>
+<polygon points="122.8,128.8 123.74,127.1 121.87,127.1" fill="#6a3fb5"/><polygon points="122.8,116 123.74,114.3 121.87,114.3" fill="#6a3fb5"/>
+<polygon points="156.5,122.7 157.38,121.1 155.62,121.1" fill="#6a3fb5"/><polygon points="108.5,119.7 107.62,121.3 109.38,121.3" fill="#6a3fb5"/>
+<polygon points="130.9,107.7 132.4,108.53 132.4,106.88" fill="#6a3fb5"/><polygon points="134.1,134.7 132.6,133.88 132.6,135.52" fill="#6a3fb5"/>
+<circle cx="142.2" cy="121.2" r="1.15" fill="#fff" stroke="#c0182d" stroke-width="0.25"/><path d="M141.49 120.49 L142.91 121.91 M142.91 120.49 L141.49 121.91" stroke="#c0182d" stroke-width="0.25"/>
+<circle cx="122.8" cy="121.2" r="1.15" fill="#fff" stroke="#c0182d" stroke-width="0.25"/><circle cx="122.8" cy="121.2" r="0.35" fill="#c0182d"/>
+<text x="145.8" y="131.6" font-size="2.6" text-anchor="middle" font-weight="700" style="fill:#6a3fb5">B</text>
+<text x="119.2" y="131.6" font-size="2.6" text-anchor="middle" font-weight="700" style="fill:#6a3fb5">B</text>
+<text x="153" y="150.8" font-size="2.4" text-anchor="middle" font-weight="700">링 중심 쪽 →</text>
+<text x="154.5" y="91" font-size="2.3" text-anchor="middle" font-weight="700">뒤(B)</text>
+<polygon points="177.22,112.3 170.42,95.87 157.83,83.28 141.4,76.48 123.6,76.48 107.17,83.28 94.58,95.87 87.78,112.3 87.78,130.1 94.58,146.53 107.17,159.12 123.6,165.92 141.4,165.92 157.83,159.12 170.42,146.53 177.22,130.1" stroke="#6a3fb5" stroke-width="0.3" stroke-dasharray="1 0.9" fill="none"/>
+<polygon points="177.22,112.3 182.31,107.6 177.34,95.6 170.42,95.87 173.31,89.57 164.13,80.39 157.83,83.28 158.1,76.36 146.1,71.39 141.4,76.48 139,69.98 126,69.98 123.6,76.48 118.9,71.39 106.9,76.36 107.17,83.28 100.87,80.39 91.69,89.57 94.58,95.87 87.66,95.6 82.69,107.6 87.78,112.3 81.28,114.7 81.28,127.7 87.78,130.1 82.69,134.8 87.66,146.8 94.58,146.53 91.69,152.83 100.87,162.01 107.17,159.12 106.9,166.04 118.9,171.01 123.6,165.92 126,172.42 139,172.42 141.4,165.92 146.1,171.01 158.1,166.04 157.83,159.12 164.13,162.01 173.31,152.83 170.42,146.53 177.34,146.8 182.31,134.8 177.22,130.1 183.72,127.7 183.72,114.7" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
 <text x="110" y="4.5" font-size="3.4" font-weight="700">앞(A) 뚜껑의 번호</text>
 <circle cx="111.8" cy="9.5" r="1.9" fill="#fff" stroke="#111522" stroke-width="0.25"/><text x="111.8" y="10.5" font-size="2.6" text-anchor="middle" font-weight="700">1</text>
 <text x="115" y="10.5" font-size="2.55" ><tspan font-weight="700">빔관(냉각 보어)</tspan> 양성자가 지나는 진공관, 안지름 약 5 cm</text>
@@ -440,22 +440,26 @@
 <text x="115" y="46.9" font-size="2.55" ><tspan font-weight="700">진공 용기</tspan> 지름 91.4 cm, 안은 단열용 진공</text>
 <circle cx="111.8" cy="51.1" r="1.9" fill="#fff" stroke="#111522" stroke-width="0.25"/><text x="111.8" y="52.1" font-size="2.6" text-anchor="middle" font-weight="700">9</text>
 <text x="115" y="52.1" font-size="2.55" ><tspan font-weight="700">지지대</tspan> 유리섬유 강화 플라스틱 기둥</text>
-<text x="3" y="118" font-size="3.4" font-weight="700">그림 읽는 법</text>
-<circle cx="5" cy="123" r="1.5" fill="#fff" stroke="#c0182d" stroke-width="0.33"/><circle cx="5" cy="123" r="0.45" fill="#c0182d"/>
-<text x="10" y="124" font-size="2.6" >빔이 나를 향해 나옴(⊙)</text>
-<circle cx="5" cy="128.4" r="1.5" fill="#fff" stroke="#c0182d" stroke-width="0.33"/><path d="M4.07 127.47 L5.93 129.33 M5.93 127.47 L4.07 129.33" stroke="#c0182d" stroke-width="0.33"/>
-<text x="10" y="129.4" font-size="2.6" >빔이 내게서 멀어짐(⊗)</text>
-<line x1="3" y1="133.8" x2="7.4" y2="133.8" stroke="#6a3fb5" stroke-width="0.4"/><polygon points="7.6,133.8 6.1,132.98 6.1,134.63" fill="#6a3fb5"/>
-<text x="10" y="134.8" font-size="2.6" >자기력선(B), 화살표 = 방향</text>
-<line x1="3" y1="139.2" x2="7.4" y2="139.2" stroke="#7d879c" stroke-width="0.4" stroke-dasharray="1.6 0.9"/>
-<text x="10" y="140.2" font-size="2.6" >열차폐막(점선)</text>
-<text x="3" y="148" font-size="2.5" >두 뚜껑은 같은 자석을 앞·뒤에서 본</text>
-<text x="3" y="151.6" font-size="2.5" >모습이라 좌우가 뒤집혀 있습니다.</text>
-<text x="3" y="155.2" font-size="2.5" >자기장은 안쪽 빔관에서 위, 바깥쪽</text>
-<text x="3" y="158.8" font-size="2.5" >빔관에서 아래로 늘 같습니다.</text>
-<text x="3" y="164" font-size="2.5" style="fill:#4a5064">날개 16개를 접는 선에서 뒤로 접고</text>
-<text x="3" y="167.6" font-size="2.5" style="fill:#4a5064">바깥면에 풀칠해 원통 안에 붙입니다.</text>
+<text x="3" y="116" font-size="3.4" font-weight="700">그림 읽는 법</text>
+<circle cx="5" cy="121" r="1.5" fill="#fff" stroke="#c0182d" stroke-width="0.33"/><circle cx="5" cy="121" r="0.45" fill="#c0182d"/>
+<text x="10" y="122" font-size="2.6" >빔이 나를 향해 나옴(⊙)</text>
+<circle cx="5" cy="126.4" r="1.5" fill="#fff" stroke="#c0182d" stroke-width="0.33"/><path d="M4.07 125.47 L5.93 127.33 M5.93 125.47 L4.07 127.33" stroke="#c0182d" stroke-width="0.33"/>
+<text x="10" y="127.4" font-size="2.6" >빔이 내게서 멀어짐(⊗)</text>
+<line x1="3" y1="131.8" x2="7.4" y2="131.8" stroke="#6a3fb5" stroke-width="0.4"/><polygon points="7.6,131.8 6.1,130.98 6.1,132.63" fill="#6a3fb5"/>
+<text x="10" y="132.8" font-size="2.6" >자기력선(B), 화살표 = 방향</text>
+<line x1="3" y1="137.2" x2="7.4" y2="137.2" stroke="#7d879c" stroke-width="0.4" stroke-dasharray="1.6 0.9"/>
+<text x="10" y="138.2" font-size="2.6" >열차폐막(점선)</text>
+<text x="3" y="146" font-size="2.5" >두 뚜껑은 같은 자석을 앞·뒤에서 본</text>
+<text x="3" y="149.6" font-size="2.5" >모습이라 좌우가 뒤집혀 있습니다.</text>
+<text x="3" y="153.2" font-size="2.5" >자기장은 안쪽 빔관에서 위, 바깥쪽</text>
+<text x="3" y="156.8" font-size="2.5" >빔관에서 아래로 늘 같습니다.</text>
+<text x="3" y="162" font-size="2.5" style="fill:#4a5064">날개 16개를 접는 선에서 뒤로 접고</text>
+<text x="3" y="165.6" font-size="2.5" style="fill:#4a5064">바깥면에 풀칠해 원통 안에 붙입니다.</text>
 </svg></div>
+<div class="kx-two" style="align-items:center">
+<div style="flex:0 0 58mm"><svg width="58mm" height="46mm" viewBox="0 0 58 46" role="img" aria-label="안쪽 빔관 코일 확대: 왼쪽 절반 전류 나옴, 오른쪽 절반 전류 들어감, 빔관 안 자기장 위쪽"><circle cx="29" cy="23" r="22.4" fill="#eef0f4" stroke="#111522" stroke-width="0.25"/><path d="M44.3 22.73 A15.3 15.3 0 0 0 43.28 17.52 L38.41 19.39 A10.08 10.08 0 0 1 39.08 22.82 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="41.46" cy="20.58" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><path d="M40.68 19.8 L42.23 21.35 M42.23 19.8 L40.68 21.35" stroke="#111522" stroke-width="0.28"/><path d="M43.28 28.48 A15.3 15.3 0 0 0 44.3 23.27 L39.08 23.18 A10.08 10.08 0 0 1 38.41 26.61 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="41.46" cy="25.42" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><path d="M40.68 24.65 L42.23 26.2 M42.23 24.65 L40.68 26.2" stroke="#111522" stroke-width="0.28"/><path d="M14.72 17.52 A15.3 15.3 0 0 0 13.7 22.73 L18.92 22.82 A10.08 10.08 0 0 1 19.59 19.39 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="16.54" cy="20.58" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><circle cx="16.54" cy="20.58" r="0.38" fill="#111522"/><path d="M13.7 23.27 A15.3 15.3 0 0 0 14.72 28.48 L19.59 26.61 A10.08 10.08 0 0 1 18.92 23.18 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="16.54" cy="25.42" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><circle cx="16.54" cy="25.42" r="0.38" fill="#111522"/><path d="M42.87 16.53 A15.3 15.3 0 0 0 39.82 12.18 L36.13 15.87 A10.08 10.08 0 0 1 38.14 18.74 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="39.4" cy="15.72" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><path d="M38.62 14.95 L40.17 16.5 M40.17 14.95 L38.62 16.5" stroke="#111522" stroke-width="0.28"/><path d="M39.82 33.82 A15.3 15.3 0 0 0 42.87 29.47 L38.14 27.26 A10.08 10.08 0 0 1 36.13 30.13 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="39.4" cy="30.28" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><path d="M38.62 29.5 L40.17 31.05 M40.17 29.5 L38.62 31.05" stroke="#111522" stroke-width="0.28"/><path d="M18.18 12.18 A15.3 15.3 0 0 0 15.13 16.53 L19.86 18.74 A10.08 10.08 0 0 1 21.87 15.87 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="18.6" cy="15.72" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><circle cx="18.6" cy="15.72" r="0.38" fill="#111522"/><path d="M15.13 29.47 A15.3 15.3 0 0 0 18.18 33.82 L21.87 30.13 A10.08 10.08 0 0 1 19.86 27.26 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="18.6" cy="30.28" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><circle cx="18.6" cy="30.28" r="0.38" fill="#111522"/><path d="M39.04 11.45 A15.3 15.3 0 0 0 34.23 8.62 L32.45 13.53 A10.08 10.08 0 0 1 35.61 15.39 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="35.44" cy="12.07" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><path d="M34.67 11.29 L36.22 12.84 M36.22 11.29 L34.67 12.84" stroke="#111522" stroke-width="0.28"/><path d="M34.23 37.38 A15.3 15.3 0 0 0 39.04 34.55 L35.61 30.61 A10.08 10.08 0 0 1 32.45 32.47 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="35.44" cy="33.93" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><path d="M34.67 33.16 L36.22 34.71 M36.22 33.16 L34.67 34.71" stroke="#111522" stroke-width="0.28"/><path d="M23.77 8.62 A15.3 15.3 0 0 0 18.96 11.45 L22.39 15.39 A10.08 10.08 0 0 1 25.55 13.53 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="22.56" cy="12.07" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><circle cx="22.56" cy="12.07" r="0.38" fill="#111522"/><path d="M18.96 34.55 A15.3 15.3 0 0 0 23.77 37.38 L25.55 32.47 A10.08 10.08 0 0 1 22.39 30.61 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="22.56" cy="33.93" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><circle cx="22.56" cy="33.93" r="0.38" fill="#111522"/><path d="M50.06 22.63 A21.06 21.06 0 0 0 48.39 14.77 L43.58 16.81 A15.84 15.84 0 0 1 44.84 22.72 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="47.05" cy="19.16" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><path d="M46.27 18.39 L47.82 19.94 M47.82 18.39 L46.27 19.94" stroke="#111522" stroke-width="0.28"/><path d="M48.39 31.23 A21.06 21.06 0 0 0 50.06 23.37 L44.84 23.28 A15.84 15.84 0 0 1 43.58 29.19 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="47.05" cy="26.84" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><path d="M46.27 26.06 L47.82 27.61 M47.82 26.06 L46.27 27.61" stroke="#111522" stroke-width="0.28"/><path d="M9.61 14.77 A21.06 21.06 0 0 0 7.94 22.63 L13.16 22.72 A15.84 15.84 0 0 1 14.42 16.81 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="10.95" cy="19.16" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><circle cx="10.95" cy="19.16" r="0.38" fill="#111522"/><path d="M7.94 23.37 A21.06 21.06 0 0 0 9.61 31.23 L14.42 29.19 A15.84 15.84 0 0 1 13.16 23.28 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="10.95" cy="26.84" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><circle cx="10.95" cy="26.84" r="0.38" fill="#111522"/><path d="M47.76 13.44 A21.06 21.06 0 0 0 43.09 7.35 L39.6 11.23 A15.84 15.84 0 0 1 43.11 15.81 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="43.64" cy="11.77" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><path d="M42.86 10.99 L44.41 12.54 M44.41 10.99 L42.86 12.54" stroke="#111522" stroke-width="0.28"/><path d="M43.09 38.65 A21.06 21.06 0 0 0 47.76 32.56 L43.11 30.19 A15.84 15.84 0 0 1 39.6 34.77 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="43.64" cy="34.23" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><path d="M42.86 33.46 L44.41 35.01 M44.41 33.46 L42.86 35.01" stroke="#111522" stroke-width="0.28"/><path d="M14.91 7.35 A21.06 21.06 0 0 0 10.24 13.44 L14.89 15.81 A15.84 15.84 0 0 1 18.4 11.23 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="14.36" cy="11.77" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><circle cx="14.36" cy="11.77" r="0.38" fill="#111522"/><path d="M10.24 32.56 A21.06 21.06 0 0 0 14.91 38.65 L18.4 34.77 A15.84 15.84 0 0 1 14.89 30.19 Z" fill="#c98a4b" stroke="#111522" stroke-width="0.15"/><circle cx="14.36" cy="34.23" r="1.25" fill="#fff" stroke="#111522" stroke-width="0.28"/><circle cx="14.36" cy="34.23" r="0.38" fill="#111522"/><circle cx="29" cy="23" r="9" fill="#fff" stroke="#111522" stroke-width="0.3"/><line x1="24.5" y1="29.8" x2="24.5" y2="17.4" stroke="#6a3fb5" stroke-width="0.45"/><polygon points="24.5,15.7 23.57,17.4 25.44,17.4" fill="#6a3fb5"/><line x1="29" y1="29.8" x2="29" y2="17.4" stroke="#6a3fb5" stroke-width="0.45"/><polygon points="29,15.7 28.07,17.4 29.94,17.4" fill="#6a3fb5"/><line x1="33.5" y1="29.8" x2="33.5" y2="17.4" stroke="#6a3fb5" stroke-width="0.45"/><polygon points="33.5,15.7 32.57,17.4 34.44,17.4" fill="#6a3fb5"/><circle cx="29" cy="24.5" r="1.4" fill="#fff" stroke="#c0182d" stroke-width="0.31"/><circle cx="29" cy="24.5" r="0.42" fill="#c0182d"/><text x="34.4" y="26.4" font-size="2.8" font-weight="700" style="fill:#6a3fb5">B</text></svg></div>
+<div style="font-size:8.8pt;line-height:1.45"><b>확대해 보기: 코일 전류와 자기장</b> <span class="kx-note">(작은 ⊙·⊗ = 코일 전류, 빨간 ⊙ = 빔 1)</span><br>앞(A) 뚜껑의 안쪽 빔관을 3.6배로 키운 그림입니다. 코일의 왼쪽 절반에는 전류가 나를 향해 나오고(⊙), 오른쪽 절반에는 들어갑니다(⊗). 이렇게 흐르는 전류가 빔관 안에 <b>위쪽으로 고른 자기장</b>을 만듭니다. 바깥쪽 빔관의 코일은 전류 방향이 반대라서 자기장이 <b>아래쪽</b>입니다. 코일은 빔관을 따라 약 15 m 뻗어 있고, 양 끝에서 둥글게 돌아 나오는 안장 모양입니다.</div>
+</div>
 <p class="kx-note">단면은 실제 치수를 1:10으로 줄인 것입니다(코일 모양 등 세부는 단순화). 두 빔관 중심 사이를 자로 재어 보세요: <span class="kx-fill"></span> mm → 실제 <span class="kx-fill"></span> mm. 뚜껑의 '링 중심 쪽'이 원통 윗면(A)의 '← 링 중심 쪽'과 같은 쪽에 오도록 끼웁니다.</p>
 <footer class="sheet-foot"><span>키트 K10 LHC 쌍극자석 1:10 페이퍼크래프트</span><span>✂ 굵은 점선 = 자르는 선 · 보라 점선 = 접는 선 · 빗금 = 풀칠</span></footer>
 </article>
@@ -465,17 +469,17 @@
 <h3>화살표 스티커 — 자기장 B, 빔 방향 v, 힘 F</h3>
 <div class="kx-center"><svg width="186mm" height="74mm" viewBox="0 0 186 74" role="img" aria-label="화살표 스티커: 빔 방향 v 4개, 힘 F 4개, 자기장 B 화살표 4개, B 점·가위표 4개, 이름표">
 <rect x="1" y="1" width="46" height="9" fill="#fff" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
-<line x1="5" y1="5.5" x2="42" y2="5.5" stroke="#c0182d" stroke-width="1.6"/><polygon points="44.6,5.5 41.4,3.74 41.4,7.26" fill="#c0182d"/>
-<text x="15" y="4.1" font-size="2.6" font-weight="700">빔 1 · 양성자 v</text>
+<line x1="5" y1="7.2" x2="42" y2="7.2" stroke="#c0182d" stroke-width="1.4"/><polygon points="44.6,7.2 41.6,5.55 41.6,8.85" fill="#c0182d"/>
+<text x="15" y="4.4" font-size="2.4" font-weight="700">빔 1 · 양성자 v</text>
 <rect x="1" y="12" width="46" height="9" fill="#fff" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
-<line x1="5" y1="16.5" x2="42" y2="16.5" stroke="#c0182d" stroke-width="1.6"/><polygon points="44.6,16.5 41.4,14.74 41.4,18.26" fill="#c0182d"/>
-<text x="15" y="15.1" font-size="2.6" font-weight="700">빔 1 · 양성자 v</text>
+<line x1="5" y1="18.2" x2="42" y2="18.2" stroke="#c0182d" stroke-width="1.4"/><polygon points="44.6,18.2 41.6,16.55 41.6,19.85" fill="#c0182d"/>
+<text x="15" y="15.4" font-size="2.4" font-weight="700">빔 1 · 양성자 v</text>
 <rect x="1" y="23" width="46" height="9" fill="#fff" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
-<line x1="5" y1="27.5" x2="42" y2="27.5" stroke="#c0182d" stroke-width="1.6"/><polygon points="44.6,27.5 41.4,25.74 41.4,29.26" fill="#c0182d"/>
-<text x="15" y="26.1" font-size="2.6" font-weight="700">빔 2 · 양성자 v</text>
+<line x1="5" y1="29.2" x2="42" y2="29.2" stroke="#c0182d" stroke-width="1.4"/><polygon points="44.6,29.2 41.6,27.55 41.6,30.85" fill="#c0182d"/>
+<text x="15" y="26.4" font-size="2.4" font-weight="700">빔 2 · 양성자 v</text>
 <rect x="1" y="34" width="46" height="9" fill="#fff" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
-<line x1="5" y1="38.5" x2="42" y2="38.5" stroke="#c0182d" stroke-width="1.6"/><polygon points="44.6,38.5 41.4,36.74 41.4,40.26" fill="#c0182d"/>
-<text x="15" y="37.1" font-size="2.6" font-weight="700">빔 2 · 양성자 v</text>
+<line x1="5" y1="40.2" x2="42" y2="40.2" stroke="#c0182d" stroke-width="1.4"/><polygon points="44.6,40.2 41.6,38.55 41.6,41.85" fill="#c0182d"/>
+<text x="15" y="37.4" font-size="2.4" font-weight="700">빔 2 · 양성자 v</text>
 <rect x="50" y="1" width="26" height="9" fill="#fff" stroke="#111522" stroke-width="0.42" stroke-dasharray="2.2 1.3" fill="none"/>
 <polygon points="53,4 66,4 66,2.4 73.4,5.5 66,8.6 66,7 53,7" fill="#c4661a" stroke="#111522" stroke-width="0.2"/>
 <text x="59.5" y="6.4" font-size="2.8" text-anchor="middle" font-weight="700" style="fill:#fff">F</text>
@@ -601,7 +605,7 @@
 </svg></div>
 <div class="kx-two" style="font-size:8.4pt;line-height:1.45">
 <div><b>읽는 법</b><br>■ 실험(ATLAS·ALICE·CMS·LHCb) &nbsp;○ 다른 시설<br>빗금 = 휘는 구간(호) 8개 — 호마다 쌍극자석 154개(× 8 = 1232개)<br>굵은 선 = 직선 구간(실험·가속·빔 정화·빔 버림 장치)</div>
-<div><b>생각해 보기</b><br>이 축척에서 쌍극자석 1개(약 15 m)의 길이는? <span class="kx-fill"></span> mm<br>1:10 모형(앞 쪽)과 이 링 띠는 축척이 몇 배 다른가? <span class="kx-fill"></span> 배</div>
+<div><b>생각해 보기</b><br>이 축척에서 쌍극자석 1개(약 15 m)의 길이는? <span class="kx-fill"></span> mm<br>1:10 모형(앞 쪽)과 이 링 띠는 축척이 몇 배 다른가? <span class="kx-fill"></span> 배<br>거의 빛의 속력인 양성자가 26.7 km를 한 바퀴 도는 시간은? <span class="kx-fill"></span> μs → 1초에 약 <span class="kx-fill"></span> 바퀴</div>
 </div>
 <footer class="sheet-foot"><span>키트 K10 LHC 쌍극자석 1:10 페이퍼크래프트</span><span>✂ 굵은 점선 = 자르는 선 · 보라 점선 = 접는 선 · 빗금 = 풀칠</span></footer>
 </article>
@@ -657,6 +661,7 @@
 <div class="write-lines kx-wl1"></div>
 <h3>2. 6.8 TeV 양성자를 돌리는 데 필요한 자기장 (r ≈ 2804 m)</h3>
 <p>B = p ÷ (0.3 × r) = <span class="kx-fill"></span> T. &nbsp;주입할 때(450 GeV) 필요한 자기장 = <span class="kx-fill"></span> T</p>
+<p>빔 에너지를 450 GeV에서 6.8 TeV로 올리는 동안 자기장은 어떻게 해야 하나요? <span class="kx-fill" style="min-width:60mm"></span></p>
 <h3>3. 다른 자석과 비교하기</h3>
 <table class="kx-t">
 <tr><th>자석</th><th>자기장 (T)</th><th>LHC 쌍극자석(약 8.1 T)은 몇 배?</th></tr>
@@ -671,7 +676,7 @@
 <p>자석 하나가 빔을 꺾는 각도 = 360° ÷ 1232 = <span class="kx-fill"></span>°. 길이 14.3 m인 자석 안에서 빔 경로가 직선에서 벗어나는 최대 거리(화살 높이) s ≈ L² ÷ (8r) = <span class="kx-fill"></span> mm. 1:10 모형이라면 <span class="kx-fill"></span> mm입니다. 빔관 안지름(약 5 cm)과 비교해 자석을 곧게 만들면 어떤 문제가 생길지 쓰세요.</p>
 <div class="write-lines kx-wl1"></div>
 <h3>6. 도전</h3>
-<p>(1) 자기장이 전류에 비례한다고 보면, 8.1 T에 필요한 전류는 약 <span class="kx-fill"></span> kA. (2) 쌍극자석 전체 무게는 약 <span class="kx-fill"></span> t으로, CMS 검출기(약 14 000 t)의 약 <span class="kx-fill"></span> 배입니다.</p>
+<p>(1) 자기장이 전류에 비례한다고 보면, 8.1 T에 필요한 전류는 약 <span class="kx-fill"></span> kA. (2) 쌍극자석 전체 무게는 약 <span class="kx-fill"></span> t으로, CMS 검출기(약 14 000 t)의 약 <span class="kx-fill"></span> 배입니다. (3) 1:10 모형의 원통(길이 11 cm)을 실제 크기로 만들면 길이는 몇 m? <span class="kx-fill"></span> m</p>
 </div>
 <footer class="sheet-foot"><span>키트 K10 LHC 쌍극자석 1:10 페이퍼크래프트</span><span>주제 4·8과 연결 · 값은 근삿값</span></footer>
 </article>
@@ -686,7 +691,7 @@
       <p><b>정확성 메모</b>: 진공 용기 바깥 지름 914 mm, 냉각 질량(철 요크와 외피) 지름 약 570 mm(요크 약 550 mm), 두 빔관 중심 사이 194 mm(1.9 K 기준), 코일 안지름 56 mm, 냉각 보어 안지름 약 50 mm는 CERN 자료의 값입니다. 코일 블록 모양, 열교환 관과 지지대 위치는 단순화한 그림입니다. 전류 약 11.8 kA·8.33 T는 7 TeV 설계값이고, Run 3(6.8 TeV)에서는 약 8.1 T로 운전합니다. 쌍극자석 길이 '약 15 m'는 저온 질량 기준이며 자기장 구간은 약 14.3 m입니다. 냉장고 자석은 종류에 따라 0.001~0.01 T 정도로 차이가 큽니다(주제 4 활동지는 '0.01 T 정도'로 씀).</p>
     </details>
     <details><summary>정답과 해설</summary>
-      <p><b>2쪽 측정</b>: 두 빔관 중심 사이 19.4 mm → 실제 194 mm. <b>3쪽 링 띠</b>: 15 m ÷ 100 000 = 0.15 mm, 두 축척의 비 100 000 ÷ 10 = 10 000배.</p>
+      <p><b>2쪽 측정</b>: 두 빔관 중심 사이 19.4 mm → 실제 194 mm. <b>3쪽 링 띠</b>: 15 m ÷ 100 000 = 0.15 mm, 두 축척의 비 100 000 ÷ 10 = 10 000배. 한 바퀴 시간 = 26 659 m ÷ (3.0 × 10⁸ m/s) ≈ 89 μs → 1초에 약 11 245바퀴.</p>
       <p><b>활동지 1 — 1·2번</b>: 두 양성자 모두 F는 링 중심 쪽(그림의 아래). 안쪽 빔관: v 오른쪽, F 아래 → 엄지를 오른쪽, 손바닥을 아래로 하면 네 손가락이 종이에서 나오는 쪽 → <b>B 위(⊙)</b>. 바깥쪽 빔관: v 왼쪽, F 아래 → <b>B 아래(⊗)</b>. 벡터로는 x̂ × ẑ = −ŷ, (−x̂) × (−ẑ) = −ŷ. 끝 뚜껑의 자기력선(안쪽 빔관 위로, 바깥쪽 빔관 아래로)과 같습니다.</p>
       <p><b>4번</b>: 같은 방향이면 v가 반대인 빔 2는 F = q v × B도 반대가 되어 링 <b>바깥쪽</b>으로 밀립니다. 원 궤도를 유지하지 못하고 빔관 벽에 부딪혀 잃게 됩니다(실제로는 빔이 벽에 닿기 전에 빔 버림 장치가 빔을 내보냄).</p>
       <p><b>5번</b>(두 가지 이상): ① 터널(LEP 터널을 다시 씀, 지름 약 3.8 m)에 자석 두 줄을 나란히 놓을 공간이 없다. ② 철 요크·냉각 장치·진공 용기를 함께 써서 재료와 비용, 냉각 부담이 줄어든다. ③ 한 빔관의 자기력선이 요크를 지나 다른 빔관으로 돌아오므로(2쪽 그림의 가운데 고리) 반대 방향 자기장을 효율적으로 만든다.</p>
@@ -695,7 +700,8 @@
       <p><b>3번</b>: 냉장고 자석의 약 1600배(8.1 ÷ 0.005), MRI의 약 2.7~5.4배, 지구 자기장의 약 16만 배.</p>
       <p><b>4번</b>: r = 6800 ÷ (0.3 × 2) ≈ 11 300 m, 2πr ≈ 71 km(직선 구간까지 더하면 100 km 안팎). 26.7 km 터널에 들어가지 않으므로 8 T 이상의 강한 자기장, 곧 저항 없이 큰 전류를 흘리는 초전도 코일이 필요합니다.</p>
       <p><b>5번</b>: 360° ÷ 1232 ≈ <b>0.29°</b>(약 5.1 mrad). s ≈ 14.3² ÷ (8 × 2804) m ≈ 0.0091 m = <b>9.1 mm</b>, 1:10 모형이면 약 0.9 mm. 곧은 자석이라면 빔이 관의 가운데에서 약 9 mm까지 벗어나 쓸 수 있는 빔관 공간(반지름 약 2.5 cm)의 상당 부분을 잃습니다. 그래서 실제 LHC 쌍극자석은 빔 궤도를 따라 살짝 휘게(화살 높이 약 9 mm) 만들었습니다.</p>
-      <p><b>6번 도전</b>: (1) 11.8 × 8.1 ÷ 8.33 ≈ 11.4 kA(실제로는 철의 포화 때문에 정확히 비례하지는 않음). (2) 1232 × 35 t ≈ 43 000 t, CMS의 약 3배.</p>
+      <p><b>6번 도전</b>: (1) 11.8 × 8.1 ÷ 8.33 ≈ 11.4 kA(실제로는 철의 포화 때문에 정확히 비례하지는 않음). (2) 1232 × 35 t ≈ 43 000 t, CMS의 약 3배. (3) 11 cm × 10 = 1.1 m(실제 자석 15 m의 약 1/14 토막).</p>
+      <p><b>2번 추가 문항</b>: p = 0.3·B·r에서 r이 고정이므로 B를 p에 비례해 0.54 T에서 8.1 T까지 함께 올려야 합니다(자기장 램프).</p>
     </details>
   </section>
 
