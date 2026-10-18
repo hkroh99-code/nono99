@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>__짧은 이름__ 모의실험</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/sim.css">
+</head>
+<body>
+<div class="sim">
+  <header class="sim-head">
+    <span class="tag">주제 NN · 3D</span>
+    <h1>__모의실험 제목__</h1>
+    <nav aria-label="관련 자료">
+      <a href="../students/tNN.html">학생용 활동지</a>
+      <a href="../teachers/tNN.html">교사용 지도서</a>
+      <a href="index.html">모의실험 목록</a>
+    </nav>
+  </header>
+  <div class="sim-body">
+    <div class="stage" id="stage">
+      <div class="stage-overlay" id="overlay"><!-- .hud 요소들 --></div>
+      <div class="stage-hint">드래그: 회전 · 휠/두 손가락: 확대 · 오른쪽 드래그: 이동</div>
+    </div>
+    <aside class="panel" id="panel" aria-label="조작과 기록"></aside>
+  </div>
+</div>
+<script src="../assets/vendor/three/three.min.js"></script>
+<script src="../assets/vendor/three/OrbitControls.js"></script>
+<script src="../assets/js/sim-kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var THREE = window.THREE, K = window.SimKit, ui = K.ui;
+  var sim = K.create({ stage: document.getElementById("stage"), cameraPos: [8, 6, 10], target: [0, 0, 0] });
+  var panel = document.getElementById("panel");
+
+  // 1) 미션
+  var mission = K.Mission(ui.section(panel, "미션"), { id: "tNN", steps: [
+    "<b>관찰</b> — …", "<b>측정</b> — …", "<b>규칙 찾기</b> — …"
+  ] });
+
+  // 2) 조작
+  var ctl = ui.section(panel, "조작");
+  var speed = ui.slider(ctl, { id: "speed", label: "속력", min: 1, max: 10, step: 0.1, value: 5, unit: "m/s" });
+  var row = ui.buttonRow(ctl);
+  ui.button(row, { label: "발사", kind: "primary", onClick: function () {} });
+  ui.button(row, { label: "일시정지/재생", onClick: function () { sim.toggle(); } });
+  ui.button(row, { label: "시점 초기화", onClick: function () { sim.resetCamera(); } });
+
+  // 3) 측정값
+  var ro = ui.readouts(ui.section(panel, "측정값"), [{ key: "r", label: "반지름", unit: "m" }]);
+
+  // 4) 기록표
+  var recSec = ui.section(panel, "기록표", "측정할 때마다 [기록]을 누르세요.");
+  var rec = K.Recorder(recSec, { id: "tNN", columns: [{ key: "v", label: "속력", unit: "m/s" }] });
+
+  // 5) 장면 + 매 프레임 갱신
+  sim.onFrame(function (dt, t) { /* dt초 동안 물리 갱신 */ });
+})();
+</script>
+</body>
+</html>

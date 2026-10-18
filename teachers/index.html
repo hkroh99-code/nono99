@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>교사용 지도서</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .list { display: grid; gap: .6rem; }
+  .row { display: grid; grid-template-columns: 3rem minmax(0, 1fr) auto; gap: .3rem 1rem; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: .8rem 1rem; text-decoration: none; color: var(--ink); }
+  .row:hover { border-color: var(--accent); }
+  .row__n { font-family: var(--font-mono); font-weight: 600; font-size: 1.3rem; }
+  .row__t { font-weight: 700; }
+  .row__d { font-size: var(--step--1); color: var(--ink-2); grid-column: 2; }
+  .row .badge { grid-row: 1; grid-column: 3; }
+  .lv-basic .row__n { color: var(--lv-basic); } .lv-adv .row__n { color: var(--lv-adv); } .lv-int .row__n { color: var(--lv-int); }
+  @media (max-width: 520px) { .row { grid-template-columns: 2.4rem minmax(0,1fr); } .row .badge { grid-column: 2; grid-row: auto; justify-self: start; } }
+</style>
+</head>
+<body data-page="teacher" data-root="../">
+<main class="page">
+  <header class="doc-head">
+    <div class="doc-head__meta"><span class="badge badge--teacher">교사용</span></div>
+    <h1>교사용 지도서</h1>
+    <p class="lead">수업 준비부터 평가까지 한 문서로 정리했습니다. 각 지도서의 ‘차시 조정’에는 1차시 압축안과 3차시 확장안이 있습니다.</p>
+  </header>
+  <p class="prose"><a href="../docs/curriculum-spec.md">교육과정 설계서</a>와 <a href="../upgrade/u6.html">차시 재구성과 평가 설계(U6)</a>도 함께 보세요.</p>
+  <div class="list" id="list"></div>
+</main>
+<script src="../assets/js/common.js"></script>
+<script>
+(function () {
+  var T = window.CERNClass.TOPICS, L = window.CERNClass.LEVELS, pad = window.CERNClass.pad;
+  var D = ["준비물·안전·분 단위 흐름·발문·정답·루브릭", "준비물·안전·분 단위 흐름·발문·정답·루브릭", "준비물·안전·분 단위 흐름·발문·정답·루브릭", "준비물·안전·분 단위 흐름·발문·정답·루브릭", "준비물·안전·분 단위 흐름·발문·정답·루브릭", "준비물·안전·분 단위 흐름·발문·정답·루브릭", "준비물·안전·분 단위 흐름·발문·정답·루브릭", "준비물·안전·분 단위 흐름·발문·정답·루브릭", "준비물·안전·분 단위 흐름·발문·정답·루브릭", "준비물·안전·분 단위 흐름·발문·정답·루브릭"];
+  document.getElementById("list").innerHTML = T.map(function (t) {
+    return '<a class="row lv-' + t.level + '" href="t' + pad(t.n) + '.html"><span class="row__n">' + pad(t.n) + '</span><span class="row__t">' + t.title + '</span>' +
+      '<span class="badge ' + L[t.level].cls + '">' + L[t.level].name + '</span><span class="row__d">' + D[t.n - 1] + '</span></a>';
+  }).join("");
+})();
+</script>
+</body>
+</html>

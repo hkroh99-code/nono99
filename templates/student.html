@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>주제 NN __짧은 이름__ · 학생용</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-page="student" data-topic="NN" data-root="../">
+<main class="page worksheet">
+
+  <header class="doc-head">
+    <div class="doc-head__meta">
+      <span class="badge badge--student">학생용</span>
+      <span class="badge badge--basic">기본과정</span>   <!-- 기본: badge--basic / 심화: badge--adv / 종합: badge--int -->
+      <span class="badge badge--time">2차시 · 100분</span>
+    </div>
+    <p class="eyebrow">주제 NN</p>
+    <h1>__주제 제목__</h1>
+    <p class="lead">__핵심 질문 한 문장: 학생이 이 주제를 마치면 답할 수 있게 될 질문__</p>
+    <div class="doc-head__actions no-print">
+      <a class="btn btn--sim" href="../sims/tNN.html">3D 모의실험 열기</a>
+      <button class="btn" type="button" data-copy-answers>내 답안 복사</button>
+      <button class="btn btn--ghost" type="button" data-clear-answers>답안 지우기</button>
+    </div>
+    <p class="save-note">입력한 답은 이 기기의 브라우저에만 자동 저장됩니다. 제출할 때는 [내 답안 복사]를 눌러 붙여 넣으세요.</p>
+    <nav class="toc no-print" aria-label="이 문서의 차례">
+      <a href="#goals">학습 목표</a><a href="#open">생각 열기</a><a href="#concept">핵심 개념</a>
+      <a href="#lab">실험 A</a><a href="#sim">실험 B: 3D</a><a href="#cern">CERN에서는</a>
+      <a href="#check">확인 문제</a><a href="#up">업그레이드</a><a href="#self">자기 평가</a>
+    </nav>
+  </header>
+
+  <section class="section" id="goals">
+    <div class="box box--goal">
+      <h2 class="box__title" style="font-size:var(--step-1)">학습 목표</h2>
+      <ol><li>…</li><li>…</li><li>…</li></ol>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>차시</th><th>활동</th></tr>
+      <tr><td>1차시 (50분)</td><td>…</td></tr>
+      <tr><td>2차시 (50분)</td><td>…</td></tr>
+    </table></div>
+  </section>
+
+  <section class="section" id="open">
+    <div class="section__head"><span class="section__tag">01</span><h2>생각 열기</h2></div>
+    <div class="box box--think prose">
+      <p>__흥미를 끄는 장면이나 질문__</p>
+    </div>
+    <label class="answer-field"><span>Q1. …?</span><textarea id="open-q1"></textarea></label>
+  </section>
+
+  <section class="section" id="concept">
+    <div class="section__head"><span class="section__tag">02</span><h2>핵심 개념</h2></div>
+    <div class="prose">
+      <h3>…</h3>
+      <p>…</p>
+    </div>
+    <div class="formula">r = <b>mv</b> / (qB)</div>
+    <figure class="diagram"><!-- 인라인 SVG: 색은 currentColor 또는 var(--…) 사용 --><figcaption>그림 1. …</figcaption></figure>
+  </section>
+
+  <section class="section" id="lab">
+    <div class="section__head"><span class="section__tag">03</span><h2>실험 A: __실물 실험 이름__</h2></div>
+    <div class="grid-2">
+      <div class="box"><h3>준비물</h3><ul><li>…</li></ul></div>
+      <div class="box box--safety"><h4>안전 수칙</h4><ul><li>…</li></ul></div>
+    </div>
+    <h3>실험 방법</h3>
+    <ol class="steps"><li>…</li><li>…</li></ol>
+    <h3>기록표</h3>
+    <div class="table-wrap"><table class="data-table" id="tbl-lab">
+      <tr><th>회</th><th>측정값 (단위)</th><th>…</th></tr>
+      <tr><td>1</td><td><input type="number" id="lab-r1c1" aria-label="1회 측정값"></td><td><input type="text" id="lab-r1c2" aria-label="1회 …"></td></tr>
+    </table></div>
+    <button class="btn no-print" type="button" data-copy-table="tbl-lab">기록표 복사</button>
+    <h3>결과 분석</h3>
+    <label class="answer-field"><span>A1. …?</span><textarea id="lab-a1"></textarea></label>
+  </section>
+
+  <section class="section" id="sim">
+    <div class="section__head"><span class="section__tag">04</span><h2>실험 B: 3D 모의실험 — __이름__</h2></div>
+    <p class="prose">__모의실험에서 무엇을 탐구하는지__</p>
+    <a class="btn btn--sim no-print" href="../sims/tNN.html">3D 모의실험 열기</a>
+    <h3>미션</h3>
+    <ol class="steps"><li>…</li></ol>
+    <div class="table-wrap"><table class="data-table" id="tbl-sim">…</table></div>
+    <label class="answer-field"><span>B1. …?</span><textarea id="sim-b1"></textarea></label>
+  </section>
+
+  <section class="section" id="cern">
+    <div class="section__head"><span class="section__tag">05</span><h2>실제 CERN에서는</h2></div>
+    <div class="box box--cern prose"><p>…</p></div>
+  </section>
+
+  <section class="section" id="check">
+    <div class="section__head"><span class="section__tag">06</span><h2>확인 문제</h2></div>
+    <label class="answer-field"><span>1. …</span><textarea id="check-1"></textarea></label>
+  </section>
+
+  <section class="section" id="up">
+    <div class="box box--up">
+      <h3>업그레이드 도전</h3>
+      <p>…</p>
+      <label class="answer-field"><span>도전 기록</span><textarea id="up-1"></textarea></label>
+    </div>
+  </section>
+
+  <section class="section" id="self">
+    <div class="section__head"><span class="section__tag">07</span><h2>자기 평가</h2></div>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="self-1"> <span>…을 설명할 수 있다.</span></label></li>
+    </ul>
+    <label class="answer-field"><span>오늘 가장 궁금해진 것 한 가지</span><textarea id="self-q"></textarea></label>
+  </section>
+
+  <nav data-pager></nav>
+</main>
+<script src="../assets/js/common.js"></script>
+</body>
+</html>
